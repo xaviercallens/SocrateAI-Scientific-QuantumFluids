@@ -209,6 +209,57 @@ evidence about the specific limit it takes.
 
 ---
 
+### LL-12: A stand-in you introduce yourself can mask the finding
+
+**Lesson:** M2 compared a *dispersive* against a *viscous* regulator, and the viscous arm
+behaved perfectly — passing every check in the validation battery while the dispersive arm
+failed seven observables. That asymmetry drove the whole diagnosis: "the dispersive case is
+awkward." It was wrong, and specifically it was wrong because **viscosity is not one of the
+three regulators the experiment was about.** I introduced it myself as a
+dimensionally-matched stand-in for `D`, since `ν` and `D` share units.
+
+It was the only *dissipative* element in the study. All three of E1 §4's actual regulators
+— truncation, bounce, dispersive — are energy-conserving. So the well-behaved arm was
+well-behaved precisely because it wasn't part of the experiment, and the "one side works"
+pattern was an artifact of my own substitution. The real finding is much wider: the
+obstruction covers every regulator in the design, including the control.
+
+**Impact:** the finding was stated too narrowly for several hours, and the truncation
+control's degeneracy (β → −1, the trivial energy bound) went unnoticed because the control
+was never actually run at `ν = 0`.
+
+**Recommendation:** when you introduce a comparison arm that was not in the original design
+— a stand-in, a control, a simplification — label it as yours and check whether its good
+behaviour is a property of the system or of the substitution. Ask specifically: *is the
+well-behaved case one of the things being studied, or something I added?* Re-derive which
+properties the actual objects share before generalising from the one that worked.
+
+---
+
+### LL-13: Do not put the restore step of a destructive check inside a background job
+
+**Lesson:** Verifying that Gate 2 catches an unproved hole required temporarily inserting
+`sorry` into the Lean source, building, then restoring from backup. The whole
+mutate-build-restore sequence was launched as one backgrounded command. It exceeded the
+foreground timeout, so it kept running detached — and while it was still mid-sequence I
+moved on, edited other files, and staged a commit. The Lean file at that moment still
+contained a real `sorry` at line 101. I caught it in a pre-commit check and restored, but
+the margin was one grep.
+
+**Impact:** near-miss. Committing would have shipped an unproved theorem behind a green
+Gate-2 badge — the exact failure the gate exists to prevent, introduced by the act of
+testing the gate.
+
+**Recommendation:** never leave a repository in a deliberately-broken state across an
+asynchronous boundary. Either run mutate-check-restore synchronously to completion, or
+mutate a *copy* outside the working tree. And when a destructive check is in flight, verify
+the restore landed before staging anything — `git status` will not tell you, because the
+file is modified either way. This generalises the mutation-testing practice recorded in
+`tests/test_shell_dynamics.py`: those mutations were safe because each ran to completion in
+one foreground command.
+
+---
+
 ### LL-9: A cross-repo "import this" plan needs to check the other repo before it's load-bearing
 
 **Lesson:** EXPRESSION_MEMO_E1.md §4 described a "MechanicaFluidorum

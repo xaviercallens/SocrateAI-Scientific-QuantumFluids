@@ -56,7 +56,7 @@ The dual-scale hypothesis, atomized into four testable principles:
 
 | Field | Established result | Principle(s) | Status | What expression gains | Action |
 |---|---|---|---|---|---|
-| **Quantum fluids: dual-scale regularization** | Quantized circulation; vortex cores pinned at healing length ξ ~ ℏ/√(mα'); quantum-pressure regulator; ξ→0 limit open | P2, P3, P4; sibling of MechanicaFluidorum Hyp. U | Expression memo **E1** filed (docs/EXPRESSION_MEMO_E1.md); all citations `[LL-6 pending]` (LITERATURE_LEDGER.md); M0 blocking | "Nature already implements a topological cascade cutoff" becomes citable (in He II, not water); Hyp. U gains a named sibling with experimental grounding | E1 §5 literature retrieval (M0); W4 experiment design and execution (M1–M3) |
+| **Quantum fluids: dual-scale regularization** | Quantized circulation; vortex cores pinned at healing length ξ ~ ℏ/√(mα'); quantum-pressure regulator; ξ→0 limit open | P2, P3, P4; sibling of MechanicaFluidorum Hyp. U | Expression memo **E1** filed; all citations **VERIFIED** (M0 complete). M1 reproduced the Landau fit to 0.2–0.33%; M2 formalised the model in Lean (Tier A) and returned a **negative finding** on the W4 measurement | "Nature already implements a topological cascade cutoff" becomes citable (in He II, not water); Hyp. U gains a named sibling with experimental grounding | M0/M1/M2 done. W4 execution **obstructed**: all three E1 §4 regulators are energy-conserving, hence have no attractor, hence admit no well-posed peak-enstrophy observable (M2_REPORT.md §6a) |
 
 **Notes:**
 - QuantumFluids instantiates P2 (hydrodynamic modes as products of phonon×roton) and P3 (healing length pinned by circulation quantum).

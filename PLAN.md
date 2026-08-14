@@ -2,7 +2,12 @@
 
 **Stream coordinator:** (TBD)  
 **Last updated:** 2026-08-14  
-**Status:** Proposal stage (M0 pending approval)
+**Status:** M0–M2 complete. M3 blocked by the M2 finding (by design, not by failure).
+M4 open, needs owner action.
+
+| M0 | M1 | M2 | M3 | M4 |
+|---|---|---|---|---|
+| ✅ | ✅ | ✅ (negative finding) | 🛑 blocked by M2 | ⏸ open |
 
 ---
 
@@ -87,7 +92,12 @@ EXPRESSION_MEMO_E1.md §4 correction and LL.md LL-9 for the full account.
 **M2 must now build the regulator interface and exponent-fitting harness
 itself**, not import one. This is a larger scope than originally planned.
 
-**Objective:** Implement dispersive/quantum-pressure shell-model variant per E1 §4; build a peak-enstrophy exponent-fitting harness with a pluggable regulator interface (informed by, not copied from, MechanicaFluidorum's real script and design memo).
+**Status:** ✅ **COMPLETE** (2026-08-14) — with a negative result as the finding.
+See `M2_REPORT.md`. Design memo audited; Lean formalisation landed (CLAIM-007, Tier A);
+Positive Control #1 passed at exactly `0.00e+00`; the W4 measurement itself is
+obstructed and that obstruction is the reported result (CLAIM-005/006/008/009/010).
+
+**Objective (as originally set):** Implement dispersive/quantum-pressure shell-model variant per E1 §4; build a peak-enstrophy exponent-fitting harness with a pluggable regulator interface (informed by, not copied from, MechanicaFluidorum's real script and design memo).
 
 **Tasks:**
 - [x] **Decision:** harness lives in QuantumFluids, offered upstream later

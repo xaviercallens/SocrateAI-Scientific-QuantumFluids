@@ -2,13 +2,24 @@
 
 **Quantum Fluids as the Realized Instance of Dual-Scale Regularization**
 
-[![Status](https://img.shields.io/badge/Status-Proposal-yellow)]() [![Mathesis Dependent](https://img.shields.io/badge/Depends%20on-Mathesis%20Stream%200-blue)]()
+[![Status](https://img.shields.io/badge/M0--M2-complete-brightgreen)]() [![Tests](https://img.shields.io/badge/tests-130%20passing-brightgreen)]() [![Lean](https://img.shields.io/badge/Lean-kernel--checked-blue)]() [![Mathesis Dependent](https://img.shields.io/badge/Depends%20on-Mathesis%20Stream%200-blue)]()
 
 ---
 
 ## Overview
 
-This stream expresses established quantum-fluid physics in the dual-scale regularization language (Tier A/B, citation-verified) and runs the W4 pre-registered experiment (three regulators, one instrument). The work is grounded in published experimental data and outreach to the physics community.
+This stream expresses established quantum-fluid physics in the dual-scale regularization
+language (Tier A/B, citation-verified) and was to run the W4 pre-registered experiment
+(three regulators, one instrument).
+
+**M1 succeeded**: the Landau dispersion fit reproduces Godfrin et al. (2021)'s own
+published data to 0.2–0.33%, well inside the ±5% / ±10% targets.
+
+**M2 returned a negative finding**, which is the stream's substantive result so far: all
+three of E1 §4's regulators are *energy-conserving*, so none has an attractor, so
+`sup_t Ω` and every variant tried fails to converge — the W4 measurement is not well-posed
+as designed. The model itself is validated (bit-for-bit against MechanicaFluidorum) and
+its central identity is kernel-checked in Lean.
 
 **Key documents:**
 - **[SPEC.md](SPEC.md)** — Specification and contract (pinned from Mathesis Stream 0)
@@ -20,27 +31,28 @@ This stream expresses established quantum-fluid physics in the dual-scale regula
 
 ## Quick start
 
-### M0: Bootstrap & Literature Ledger (Current)
-
-Get started by reviewing and retrieving literature:
-
 ```bash
-# Check literature retrieval status
-grep -A2 "Status: PENDING" docs/LITERATURE_LEDGER.md
-
-# Run verification script
+# Run everything: 130 tests + Lean kernel check with axiom audit
 bash scripts/verify.sh
+
+# Tests only (no Lean toolchain needed)
+python3 -m pytest tests/ -q
+
+# Reproduce the M1 dispersion fit against Godfrin et al.'s published data
+PYTHONPATH=src python3 -c "
+from quantumfluids.adapters.godfrin_ancillary import load_godfrin_p0_dispersion
+from quantumfluids.dispersion_fit.fit_dispersion import run_dispersion_fit, compare_to_literature
+d = load_godfrin_p0_dispersion('data/external/godfrin_2021_arxiv_ancillary/DispersionP0allRange.txt')
+r = run_dispersion_fit(d, phonon_q_max=0.05, roton_q_center=1.9, roton_half_width=0.2)
+print(compare_to_literature(r, 'godfrin_2021'))"
+
+# Lean (first time: downloads ~7GB of prebuilt Mathlib)
+cd lean_src && lake update && lake exe cache get && lake build QuantumFluidsShell
 ```
 
-**Blocking items:** [LIT-005] through [LIT-010] (see LITERATURE_LEDGER.md for retrieval paths)
-
-### M1: Dispersion-Relation Reproduction
-
-After M0, set up the data pipeline and dispersion-fit tools:
-
-```bash
-# (TBD: Instructions for M1 setup)
-```
+**Reading order for someone picking this up:** `M2_REPORT.md` (the headline finding and
+how it was reached) → `LL.md` (the transferable lessons, several of them corrections to
+my own earlier work) → `LEDGER.md` (every claim, including the retracted ones).
 
 ---
 
@@ -58,7 +70,11 @@ After M0, set up the data pipeline and dispersion-fit tools:
 │   ├── LITERATURE_LEDGER.md         # Citation registry (retrieval-verified)
 │   ├── GODFRIN_CORRESPONDENCE.md    # Outreach log
 │   └── narrative/                   # Dark-matter speculation (Tier C, quarantined)
-├── lean_src/                        # Lean theorems (imports Mathesis)
+├── M1_REPORT.md                     # M1 result (dispersion fit)
+├── M2_REPORT.md                     # M2 result -- the negative finding
+├── docs/designs/                    # Design memos (audit-gated, per E-1)
+├── exploration/                     # Tier C scripts + archived run outputs
+├── lean_src/                        # Lean: complexification's conservation (Tier A)
 ├── src/quantumfluids/
 │   ├── adapters/                    # Data readers (numor, .nxs, ASCII S(Q,ω))
 │   ├── w4_shell_model/              # Dispersive shell model (quantum pressure)
@@ -68,7 +84,7 @@ After M0, set up the data pipeline and dispersion-fit tools:
 │   │   └── *.meta                   # Provenance (DOI, retrieval date, checksum)
 │   └── derived/                     # Reductions from this stream
 ├── tests/                           # Tier-B harnesses (negative controls mandatory)
-└── scripts/verify.sh                # Gate 1 (tests) + Gate 2 (Lean imports)
+└── scripts/verify.sh                # Gate 1 (pytest) + Gate 2 (Lean build + axiom audit)
 ```
 
 ---
@@ -84,18 +100,23 @@ After M0, set up the data pipeline and dispersion-fit tools:
 
 ## Milestones
 
-| Milestone | Status | Objective | Blocking |
-|-----------|--------|-----------|----------|
-| **M0** | Proposal | Bootstrap repo; verify literature | M1, M2 |
-| **M1** | TBD | Reproduce Landau fit (c, Δ); validate adapters | M2, M3 |
-| **M2** | TBD | Implement W4 shell model; integrate instrument | M3 |
-| **M3** | TBD | Run W4 under three regulators; CIC score | — |
-| **M4** | TBD | Outreach (Godfrin, Institut Néel); engagement | — |
+| Milestone | Status | Outcome |
+|-----------|--------|---------|
+| **M0** | ✅ complete | All 10 literature entries retrieved and verified; repo, Lean and Mathesis integration bootstrapped |
+| **M1** | ✅ complete | Landau fit reproduced on Godfrin et al.'s own published data: **c within 0.20%, Δ within 0.03–0.33%** of six independent determinations (targets were ±5% / ±10%). See `M1_REPORT.md` |
+| **M2** | ✅ complete | **Negative finding**: an energy-conserving regulator admits no well-posed peak-enstrophy observable, and all three of E1 §4's regulators are conservative. Model validated bit-for-bit against MechanicaFluidorum; Tier A Lean formalisation landed. See `M2_REPORT.md` |
+| **M3** | 🛑 blocked *by the M2 finding* | The W4 run cannot proceed in its designed form. Reformulation options in `M2_REPORT.md` §7 — awaiting an owner decision |
+| **M4** | ⏸ open | Godfrin outreach drafted (`docs/GODFRIN_CORRESPONDENCE.md`), not yet sent |
+
+**Verification:** `bash scripts/verify.sh` — Gate 1 (130 pytest tests) and Gate 2
+(Lean build + axiom audit; requires `lake`, see `lean_src/`).
 
 ---
 
 ## Getting help
 
+- **What was actually found?** [M2_REPORT.md](M2_REPORT.md) — the finding, the seven
+  observables tried, and §6a on why it covers the whole experiment
 - **Questions about this stream?** Check [PLAN.md](PLAN.md) §"Decision points requiring owner approval"
 - **Literature retrieval stuck?** See [LITERATURE_LEDGER.md](docs/LITERATURE_LEDGER.md#retrieval-summary-m0-progress)
 - **Outreach strategy?** Read [GODFRIN_CORRESPONDENCE.md](docs/GODFRIN_CORRESPONDENCE.md)
