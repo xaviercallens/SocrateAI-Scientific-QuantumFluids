@@ -134,7 +134,7 @@ the amplitude converges. Two were run through the battery (`exploration/run_batt
 | candidate | viscous | dispersive |
 |---|---|---|
 | `t_peak` — time of first local maximum | **PASS** both conventions | **FAIL** B2 non-monotonic; r² = 0.24 / 0.10 |
-| `t_cross(θ)` — first `t` with `Ω ≥ θ·Ω(0)` | **UNDEFINED** — Ω never reaches 4·Ω(0) under strong damping | PASS \[sum]; FAIL \[max]; **B3 drift 161%** |
+| `t_cross(θ)` — first `t` with `Ω ≥ θ·Ω(0)` | **UNDEFINED** — Ω never reaches 4·Ω(0) under strong damping | PASS [sum]; FAIL [max]; **B3 drift 161%** |
 
 Two things here are new and more informative than another failure.
 
