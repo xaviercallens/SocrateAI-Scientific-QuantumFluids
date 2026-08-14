@@ -47,6 +47,13 @@ data/external/*.csv
 data/derived/*
 !data/external/.gitkeep
 !data/derived/.gitkeep
+# M1 Tier-C digitized fallback dataset + its fit outputs: small, sourced,
+# and documented (see fig5_digitized_visual.csv.meta) -- worth tracking.
+!data/derived/fig5_digitized_fit.png
+!data/derived/godfrin_2021_fit_results.json
+
+# Local Claude Code session config (not project content)
+.claude/
 
 # Temporary / Logs
 *.log

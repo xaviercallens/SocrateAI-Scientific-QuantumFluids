@@ -28,10 +28,17 @@ def c_ms_to_meV_angstrom(c_ms: float) -> float:
     return c_ms * _HBAR_MEV_S * 1e10
 
 
+# NOTE: the roton gap is conventionally quoted in the literature in Kelvin
+# (Delta/k_B); values below are converted to meV via k_B = 0.08617333 meV/K.
+# An earlier version of this table entered the Kelvin figures directly as
+# "delta_meV", overstating Delta by a factor of ~11.6 -- caught before any
+# fit was run against it (see M1_CHECKLIST.md).
+_K_B_MEV_PER_K = 0.08617333262
+
 REFERENCE_VALUES = {
-    "cowley_woods_1971": {"c_ms": 238.0, "delta_meV": 8.65, "q_m_angstrom": 1.92},
-    "glyde_1998": {"c_ms": 239.0, "delta_meV": 8.63, "q_m_angstrom": 1.91},
-    "godfrin_2021": {"c_ms": 238.2, "delta_meV": 8.64, "q_m_angstrom": 1.925},
+    "cowley_woods_1971": {"c_ms": 238.0, "delta_K": 8.65, "q_m_angstrom": 1.92},
+    "glyde_1998": {"c_ms": 239.0, "delta_K": 8.63, "q_m_angstrom": 1.91},
+    "godfrin_2021": {"c_ms": 238.2, "delta_K": 8.64, "q_m_angstrom": 1.925},
 }
 
 
@@ -94,7 +101,7 @@ def compare_to_literature(report: DispersionFitReport, reference: str = "godfrin
     """
     ref = REFERENCE_VALUES[reference]
     c_lit = c_ms_to_meV_angstrom(ref["c_ms"])
-    delta_lit = ref["delta_meV"]
+    delta_lit = ref["delta_K"] * _K_B_MEV_PER_K
 
     c_pct = 100.0 * abs(report.phonon.c - c_lit) / c_lit
     delta_pct = 100.0 * abs(report.roton.delta - delta_lit) / delta_lit
@@ -107,5 +114,8 @@ def compare_to_literature(report: DispersionFitReport, reference: str = "godfrin
         "delta_lit": delta_lit,
         "delta_fit": report.roton.delta,
         "delta_pct_diff": delta_pct,
-        "within_tolerance": c_pct <= 5.0 and delta_pct <= 10.0,
+        # bool(...) avoids returning numpy.bool_, which json.dump() rejects
+        # (report.phonon.c / report.roton.delta are numpy float64 from
+        # curve_fit, so the comparisons above are numpy bool_ too).
+        "within_tolerance": bool(c_pct <= 5.0 and delta_pct <= 10.0),
     }

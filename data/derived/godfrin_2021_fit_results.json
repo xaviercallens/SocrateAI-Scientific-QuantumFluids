@@ -1,0 +1,32 @@
+{
+  "source": "data/external/godfrin_krotscheck_2022_review/fig5_digitized_visual.csv",
+  "tier": "C",
+  "fit_regions": {
+    "phonon_q_max": 0.3,
+    "roton_q_center": 1.9,
+    "roton_half_width": 0.5
+  },
+  "phonon": {
+    "c_meV_angstrom": 1.1500000000000001,
+    "c_stderr": 9.813077847700603e-17,
+    "n_points": 3
+  },
+  "roton": {
+    "delta_meV": 0.7305965042802958,
+    "delta_stderr": 0.0039898777334073775,
+    "q_m_angstrom": 1.9192043311266767,
+    "q_m_stderr": 0.004428545146287338,
+    "mu_over_m_he4": 0.39990176389041465,
+    "n_points": 10
+  },
+  "comparison_to_godfrin_2021": {
+    "reference": "godfrin_2021",
+    "c_lit_meV_angstrom": 1.5678608813357997,
+    "c_fit": 1.1500000000000001,
+    "c_pct_diff": 26.65165553335235,
+    "delta_lit": 0.7445375938368001,
+    "delta_fit": 0.7305965042802958,
+    "delta_pct_diff": 1.8724493795756054,
+    "within_tolerance": false
+  }
+}

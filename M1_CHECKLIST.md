@@ -129,10 +129,10 @@
   - Godfrin et al. 2021 (own measurement for self-check)
 - **Deliverable:** reference_values.txt
   ```
-  Source          c (m/s)    Δ (meV)
-  Cowley-Woods    238 ± 2    8.65 ± 0.05
-  Glyde 1998      239 ± 1    8.63 ± 0.03
-  Godfrin 2021    238.2 ± 0.5 8.64 ± 0.02
+  Source          c (m/s)      Δ (K)        Δ (meV, = K × 0.086173)
+  Cowley-Woods    238 ± 2      8.65 ± 0.05  0.7454 ± 0.0043
+  Glyde 1998      239 ± 1      8.63 ± 0.03  0.7437 ± 0.0026
+  Godfrin 2021    238.2 ± 0.5  8.64 ± 0.02  0.7446 ± 0.0017
   ```
 
 ### 4.2 Agreement Assessment

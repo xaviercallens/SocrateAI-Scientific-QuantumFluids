@@ -1,0 +1,38 @@
+Source: Godfrin & Krotscheck (2022), "The Dynamics of Quantum Fluids", arXiv:2206.06039
+Cited as: LITERATURE_LEDGER.md [LIT-001]
+Figure: Figure 5 (top panel), "The dispersion relation epsilon(k) of excitations
+        in superfluid 4He at zero pressure" -- experimental data panel.
+Underlying dataset represented: Godfrin et al. (2021), Phys. Rev. B 103:104516
+        (LITERATURE_LEDGER.md [LIT-002]) -- per the Fig. 5 caption, "the red
+        dots are recent high-accuracy, highly-pixelated data ... seen at this
+        scale as a continuous line".
+
+Retrieval:
+  PDF source: https://arxiv.org/pdf/2206.06039
+  PDF cached at: data/external/godfrin_krotscheck_2022_review/arxiv_2206.06039.pdf
+  PDF SHA256: (compute with `sha256sum arxiv_2206.06039.pdf` if a checksum
+              record is required downstream)
+  Retrieved: 2026-08-14
+
+Digitization method: VISUAL TRACING (not pixel-level tool extraction, e.g.
+  not WebPlotDigitizer). Points read directly from the rendered curve in
+  the downloaded PDF by inspecting Figure 5's top panel.
+
+Estimated reading uncertainty: +/- 0.03 Angstrom^-1 (Q), +/- 0.02 meV (E).
+  This is a rough visual estimate, not a calibrated pixel-to-data-unit
+  measurement, and should not be treated as a rigorous error bar.
+
+Tier: C (steering/narrative-adjacent, not a substitute for raw instrument
+  data). See M1_DATA_ACCESS_STRATEGY.md for the raw ILL-DATA access
+  pathway that would promote this dataset toward Tier B.
+
+Known limitation (see M1_REPORT.md for full writeup): the roton-branch
+parameters (Delta, Q_m) fit well against this digitization (Delta within
+1.9% of Godfrin et al. 2021's literature value; Q_m within 0.3%), but the
+phonon-branch slope (sound velocity c) does NOT reproduce the literature
+value from this digitization (~27% low, robust across several q_max
+choices) -- the near-origin curve height is small on the figure's scale,
+making the true asymptotic tangent slope hard to read accurately by eye.
+Recovering c reliably from this figure would need finer-grained sampling
+at Q < 0.1 Angstrom^-1 than this pass attempted, or (preferably) the raw
+instrument data.

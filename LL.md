@@ -68,9 +68,67 @@
 
 ---
 
-## Stream-specific entries (to be added during execution)
+## Stream-specific entries
 
-*None yet.*
+### LL-7: Synthetic round-trip tests can hide unit errors that real data exposes
+
+**Lesson:** `fit_dispersion.py`'s `REFERENCE_VALUES` table entered the
+literature roton gap in Kelvin (8.65, 8.63, 8.64 — the conventional way
+the literature quotes it) but labeled and used the field as `delta_meV`
+directly, overstating Δ by the Boltzmann-constant factor (~11.6×). A
+second, independent bug in `landau_model.py` had the ℏ²/(2m_He4)
+conversion constant off by exactly 2× (a dropped factor of 2 in the
+denominator). Neither was caught by the Tier-B test suite, because the
+synthetic test data was generated using the *same* wrong constants it
+was then checked against — the tests validated internal
+self-consistency, not physical correctness.
+
+Both bugs surfaced only when the pipeline was run against real
+(digitized) published data and the fitted roton gap disagreed with the
+literature table by a suspicious, precisely-factor-of-~11.6 amount.
+
+**Impact:** Any pipeline with a literature-comparison step is only as
+honest as the literature constants it was tested against. A synthetic
+test that generates its own ground truth cannot catch an error shared
+between the generator and the checker.
+
+**Recommendation:** When writing a synthetic round-trip test for a
+physical-quantity fit, hardcode the "true" parameters as literature
+values computed independently of the module's own conversion constants
+(e.g. compute meV from K by hand in the test, don't import the module's
+conversion function to do it) — see `tests/test_dispersion_fit.py`
+TRUE_C/TRUE_DELTA for the corrected version. Better still: as done here,
+run the pipeline against *some* real external dataset (even a rough
+digitized one) before trusting a literature-agreement claim, precisely
+because it can catch unit/constant bugs synthetic tests structurally
+cannot.
+
+---
+
+### LL-8: A rough digitized dataset can validate part of a pipeline and correctly fail on another part
+
+**Lesson:** Running M1's dispersion fit against a hand-digitized version
+of Fig. 5 (Godfrin & Krotscheck 2022) recovered the roton gap Δ and
+momentum Q_m within 2% of literature, but failed to recover the phonon
+sound velocity c by ~27%, stably across several region-width choices
+(see M1_REPORT.md). This was not a pipeline bug (confirmed by scanning
+`phonon_q_max` and finding a stable, not narrowing, discrepancy) — it is
+a real limitation of visual digitization for a parameter (the Q→0
+tangent slope) that is disproportionately sensitive to reading precision
+at small values, versus a parameter (a curve minimum) that is robust to
+the same reading precision.
+
+**Impact:** A single Tier-C dataset does not uniformly validate or
+invalidate a fitting pipeline — different fitted parameters can have
+very different sensitivity to the same data-quality limitation.
+
+**Recommendation:** Report per-parameter validation status, not a single
+pass/fail for the whole pipeline. Do not adjust digitized data points to
+force agreement with literature after the fact — a fit failure with a
+documented, checked root cause (as here) is more valuable evidence than
+a forced match. Re-test the same fitting code against Tier-B (raw
+instrument) data once available, rather than assuming the Tier-C result
+generalizes.
 
 ---
 

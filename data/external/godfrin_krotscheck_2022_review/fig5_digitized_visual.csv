@@ -1,0 +1,50 @@
+# Digitized from Godfrin & Krotscheck (2022), arXiv:2206.06039, Figure 5 (top panel)
+# "The dispersion relation epsilon(k) of excitations in superfluid 4He at zero pressure"
+# Points visually traced from the published curve (P=0 bar), NOT pixel-level
+# WebPlotDigitizer extraction. Per the figure caption: "The red dots are recent
+# high-accuracy, highly-pixelated data ... seen at this scale as a continuous
+# line" (i.e. Godfrin et al. 2021 PRB 103:104516 data, LIT-002) -- tracing the
+# rendered curve at this resolution is a reasonable Tier-C approximation of
+# that dataset, not a substitute for the raw numor/NeXus data (see
+# M1_DATA_ACCESS_STRATEGY.md for the raw-data access pathway).
+#
+# Estimated reading uncertainty: +/- 0.03 Angstrom^-1 (Q), +/- 0.02 meV (E).
+# Source PDF: data/external/godfrin_krotscheck_2022_review/arxiv_2206.06039.pdf
+# Digitized: 2026-08-14
+# Columns: Q_angstrom_inv, E_meV
+0.00,0.000
+0.10,0.115
+0.20,0.230
+0.30,0.335
+0.40,0.430
+0.50,0.520
+0.60,0.610
+0.70,0.700
+0.80,0.800
+0.90,0.940
+1.00,1.090
+1.05,1.190
+1.10,1.270
+1.15,1.290
+1.20,1.260
+1.30,1.150
+1.40,1.040
+1.50,0.950
+1.60,0.870
+1.70,0.800
+1.80,0.755
+1.90,0.735
+1.95,0.730
+2.00,0.735
+2.10,0.760
+2.20,0.830
+2.30,0.930
+2.40,1.050
+2.50,1.170
+2.60,1.290
+2.70,1.390
+2.80,1.450
+2.90,1.480
+3.00,1.495
+3.20,1.500
+3.50,1.500

@@ -1,0 +1,11 @@
+Source: Godfrin, H. & Krotscheck, E. (2022). "The Dynamics of Quantum Fluids."
+DOI/identifier: arXiv:2206.06039
+Cited as: LITERATURE_LEDGER.md [LIT-001]
+URL: https://arxiv.org/pdf/2206.06039
+Retrieved: 2026-08-14
+SHA256: 3877e8f8e0818efb36ea5472f500d06fb554ea08f7094067d9e6e435966d8ac3
+Pages: 16
+License: arXiv non-exclusive distribution license (see arXiv submission page)
+Purpose: Source of Figure 5 (phonon-roton dispersion) used for the M1
+         Tier-C digitized fallback (see fig5_digitized_visual.csv.meta,
+         M1_DATA_ACCESS_STRATEGY.md).

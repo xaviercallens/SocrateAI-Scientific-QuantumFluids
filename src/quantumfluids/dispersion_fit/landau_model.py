@@ -69,10 +69,12 @@ class RotonFitResult:
         """Roton effective mass in units of the He-4 atomic mass (m_He4).
 
         mu = hbar^2 / (2 * inv_two_mu); converts to m_He4 using
-        m_He4 c^2-equivalent via the standard neutron-scattering relation
-        hbar^2 / (2 m_He4) = 1.0454 meV*Angstrom^2 (from m_He4 = 4.0026 u).
+        hbar^2 / (2 m_He4) = 0.52218 meV*Angstrom^2 (from m_He4 = 4.002602 u,
+        hbar = 1.054571817e-34 J*s — verified against the neutron-mass
+        reference value hbar^2/(2 m_n) = 2.0721 meV*Angstrom^2 scaled by
+        m_n/m_He4 = 1.00867/4.002602).
         """
-        HBAR2_OVER_2M_HE4 = 1.0454  # meV * Angstrom^2
+        HBAR2_OVER_2M_HE4 = 0.52218  # meV * Angstrom^2
         mu_over_m_he4 = HBAR2_OVER_2M_HE4 / self.inv_two_mu
         return mu_over_m_he4
 
@@ -96,14 +98,17 @@ def fit_roton_branch(
     Q: np.ndarray,
     E: np.ndarray,
     dE: np.ndarray | None = None,
-    p0: tuple[float, float, float] = (8.6, 1.9, 5.0),
+    p0: tuple[float, float, float] = (0.745, 1.9, 3.3),
 ) -> RotonFitResult:
     """Fit (delta, q_m, inv_two_mu) to the near-roton-minimum region.
 
     p0 defaults are literature-typical starting points for saturated vapor
-    pressure He-4 (delta ~ 8.6 meV, q_m ~ 1.9 Angstrom^-1) — see
-    LITERATURE_LEDGER.md [LIT-001], [LIT-002]. Caller selects the Q-range
-    mask around the minimum before calling this.
+    pressure He-4: delta ~ 0.745 meV (= 8.65 K * k_B, the conventional
+    Kelvin quotation converted), q_m ~ 1.9 Angstrom^-1 — see
+    LITERATURE_LEDGER.md [LIT-001], [LIT-002]. inv_two_mu ~ 3.3
+    meV*Angstrom^2 corresponds to a roton effective mass mu ~ 0.16 m_He4,
+    the literature-typical value. Caller selects the Q-range mask around
+    the minimum before calling this.
     """
     if len(Q) < 4:
         raise ValueError(

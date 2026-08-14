@@ -25,10 +25,14 @@ from quantumfluids.dispersion_fit.landau_model import (
 )
 
 # Known "true" parameters, literature-typical (LITERATURE_LEDGER.md).
-TRUE_C = 0.16  # meV*Angstrom (~ 240 m/s converted)
-TRUE_DELTA = 8.65
+# c and delta are physically realistic (not just internally self-consistent):
+# c = 238 m/s -> 1.5665 meV*Angstrom; delta = 8.65 K -> 0.7454 meV (the
+# roton gap is conventionally quoted in K in the literature — see
+# fit_dispersion.REFERENCE_VALUES and its _K_B_MEV_PER_K conversion note).
+TRUE_C = 1.5665  # meV*Angstrom (238 m/s)
+TRUE_DELTA = 0.7454  # meV (8.65 K)
 TRUE_QM = 1.92
-TRUE_INV_TWO_MU = 5.0
+TRUE_INV_TWO_MU = 3.3  # meV*Angstrom^2 (mu ~ 0.16 m_He4)
 
 
 def synth_phonon(rng, n=20, q_max=0.4, noise=0.001):
