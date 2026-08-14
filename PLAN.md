@@ -90,10 +90,21 @@ itself**, not import one. This is a larger scope than originally planned.
 **Objective:** Implement dispersive/quantum-pressure shell-model variant per E1 §4; build a peak-enstrophy exponent-fitting harness with a pluggable regulator interface (informed by, not copied from, MechanicaFluidorum's real script and design memo).
 
 **Tasks:**
-- [ ] **Decision needed (see below):** where should the exponent-fitting
-      harness live — in QuantumFluids (self-contained), contributed
-      upstream to MechanicaFluidorum (shared infrastructure, cross-repo
-      coordination), or built in parallel by both with a shared spec?
+- [x] **Decision:** harness lives in QuantumFluids, offered upstream later
+      if it proves generally useful (option 2c below; owner, 2026-08-14).
+- [x] **Design memo written and awaiting audit:**
+      `docs/designs/M2_W4_DISPERSIVE_SHELL.md` (2026-08-14). Establishes
+      that a real-amplitude shell model *structurally cannot* host a
+      dispersive regulator, and resolves it with a conjugated
+      complexification verified to conserve energy exactly and to reduce
+      exactly to MechanicaFluidorum's real model. **Nothing may be
+      implemented until this memo is marked AUDITED in LEDGER.md** (E-1).
+      Raises 5 open items (O1–O5) for the auditor, including a defect
+      found in MechanicaFluidorum's own enstrophy observable (O1).
+- [ ] **AUDIT the design memo** ← next action, requires owner
+- [ ] Promote `exploration/verify_complexification.py` (Tier C scratch) to
+      a Tier B harness with negative controls — the memo's §8 requires this
+      as the *first* implementation step after audit, not a retrofit
 - [ ] Design the regulator interface (function signature or class) that
       truncation, bounce, and dispersive/quantum-pressure regulators can
       all implement — does not exist anywhere yet, must be designed
@@ -102,9 +113,12 @@ itself**, not import one. This is a larger scope than originally planned.
       referenced in this stream's own docs but not implemented anywhere
       either; needs its own design or a scoped-down substitute)
 - [ ] Implement w4_shell_model/ submodule (quantum-pressure term, dispersion relation integration)
-- [ ] Implement truncation-control and W2-bounce regulators as the first
-      two instances of the interface (both currently unimplemented
-      anywhere), to validate the harness before adding W4
+- [ ] Implement truncation-control regulator as the first instance of the
+      interface, to validate the harness before adding W4
+- [ ] **W2 (bounce) deferred to its own design memo** — per M2 memo §5, no
+      reflective-seam regulator exists or is designed, and whether any
+      such seam preserves energy is unresolved. W4 does not wait for it;
+      the E1 §4 comparison runs as two-then-three.
 - [ ] Human audit of shell model before any run (checklist: term signs, dimension consistency, E1 fidelity)
 - [ ] Document W4 assumptions and parameter choices in src/quantumfluids/w4_shell_model/README.md
 

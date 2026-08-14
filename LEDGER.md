@@ -81,6 +81,36 @@ Notes: Tier B — author-published, exact tabulated data, not raw ILL numor
 
 ---
 
+## Design-memo audit register
+
+Per E-1 (definition first, audit before code) and the house pattern inherited from
+MechanicaFluidorum `PLAN.md` §6: **authorship never unblocks a track — only audit does.**
+A design memo listed here as PENDING AUDIT may not be implemented, cited, or measured.
+
+| Memo | Date authored | Status | Blocks |
+|---|---|---|---|
+| `docs/designs/M2_W4_DISPERSIVE_SHELL.md` | 2026-08-14 | ⏳ **PENDING AUDIT** | all M2 implementation |
+| W2 (bounce regulator) | not authored | — | W2 only; W4 proceeds without it |
+
+**M2 memo — open items awaiting the auditor's ruling** (full text in the memo, §7):
+
+- **O1 (blocking):** Which Ω? MechanicaFluidorum's `dyadic_cascade.py` defines
+  `Ω = ½Σₙkₙ²aₙ²` in its docstring and `enstrophy()` helper, but the `sup_Omega` it
+  actually writes to CSV is a **max over shells**, not a sum (demonstrated: ratio 9.0 = N+1
+  on that repo's profile P2 at N=8). Recommendation: use the sum; **also report to
+  MechanicaFluidorum as a defect in their data** — this stream does not modify another
+  stream's code.
+- **O2:** Is complexifying the dyadic model acceptable? It forfeits the existing Lean
+  backing and is a non-unique modeling choice. Recommendation: accept, labelled as a
+  deformation.
+- **O3:** What is `c` (sound speed) for the shell model? Recommendation: sweep `D` directly,
+  drop `ξ` unless `c` can be defined non-circularly.
+- **O4:** Scope is BEC/GPE (Bogoliubov, monotonic), **not ⁴He** (which has a roton, and is
+  what M1 measured). Recommendation: accept the BEC scope; do not bolt on a roton.
+- **O5:** Harness location — provisionally resolved (build here, offer upstream later).
+
+---
+
 ## Claim status history
 
 | Claim ID | Status → | Date | Notes |
