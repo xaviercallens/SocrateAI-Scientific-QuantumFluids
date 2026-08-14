@@ -167,6 +167,45 @@
 > or that this holds for every profile and `D`. The ceiling `k_N²E` guarantees it is
 > bounded; the question is only whether the bound is approached on any timescale where
 > the measurement means anything.
+>
+> ### ✅ O7 RESOLVED 2026-08-14 — owner ruled (c), change the observable
+>
+> The replacement was selected **on measurement, not intuition** — picking by intuition
+> is how O7 arose. Five candidates were tested for horizon-convergence on *both*
+> regulators (`exploration/observable_convergence.py`); relative change between `T = 32`
+> and `T = 64`:
+>
+> | observable | viscous | dispersive | |
+> |---|---|---|---|
+> | `sup_t Ω` (incumbent) | 0.00% | **10.35%** | FAILS |
+> | **Ω at first peak** | 0.00% | 0.00% | ✅ adopted |
+> | Ω(T*) at fixed T* | 0.00% | 0.00% | ✅ viable, not adopted |
+> | time-averaged Ω | **49.99%** | 2.90% | FAILS (decays ~1/T) |
+> | max_t dΩ/dt | 0.00% | **19.31%** | FAILS |
+>
+> **Adopted: Ω at the first peak.** Chosen over `Ω(T*)` because it is a *dynamically*
+> defined event — the initial cascade's arrival at the smallest resolved scale — so it
+> compares the two regulators at the same physical stage. A fixed clock time does not:
+> the viscous run may have finished cascading while the dispersive one is still going.
+> It also stays closest to OP2_LITE §3's "peak enstrophy", limiting the comparability
+> cost of departing from that protocol.
+>
+> **§6's inclusion criterion is amended accordingly. It now has THREE parts, not one** —
+> each added because the previous set was shown to be insufficient:
+>
+> 1. **Timestep refinement** (original): `sup`/peak agrees within 1% at `dt` and `dt/2`.
+> 2. **Sampling adequacy** (new): the first peak must survive 2× subsampling of the
+>    trace, checked in *both* phases. Without it an under-resolved trace silently
+>    returns a later, larger peak — measured at +11% for `trace_every=50`.
+> 3. **Minimum rise** (new): the peak must exceed `Ω(0)` by ≥ **10%**. Without it,
+>    over-damped configurations return `Ω(0)` itself — measured rise of 0.0025% at
+>    `ν = 0.3` — and since that value is *constant in the swept parameter*, it drags the
+>    fitted slope toward zero, **manufacturing the pre-registered `β = 0` "mechanism is
+>    irrelevant" outcome**. This is the most dangerous of the three because it biases
+>    systematically toward a specific pre-registered conclusion.
+>
+> All three thresholds are pre-registered, configurable for sensitivity checking, and
+> pinned by tests so that loosening one is visible in a diff.
 
 ---
 
