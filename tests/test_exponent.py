@@ -119,15 +119,37 @@ def test_flat_response_gives_beta_zero_not_nan():
 # =====================================================================
 
 def test_refinement_accepts_a_converged_configuration():
-    """A well-resolved run must survive halving dt."""
-    *_, ok, why = refine_and_check(N=4, nu=0.1, D=0.0, profile="P3", t_horizon=0.5)
+    """A well-resolved run must survive halving dt.
+
+    Horizon must be long enough to CONTAIN the first cascade peak; the
+    observable refuses rather than returning an endpoint (see
+    test_horizon_too_short_is_excluded_with_a_reason)."""
+    *_, ok, why = refine_and_check(N=4, nu=0.15, D=0.0, profile="P3", t_horizon=2.0)
     assert ok, f"a converged configuration was excluded: {why}"
 
 
 def test_refinement_reports_both_conventions():
-    cs, cm, fs, fm, ok, _ = refine_and_check(N=4, nu=0.1, D=0.0, profile="P3", t_horizon=0.5)
+    cs, cm, fs, fm, ok, _ = refine_and_check(N=4, nu=0.15, D=0.0, profile="P3", t_horizon=2.0)
     for v in (cs, cm, fs, fm):
         assert np.isfinite(v) and v > 0
+
+
+def test_horizon_too_short_is_excluded_with_a_reason():
+    """NEGATIVE CONTROL: a horizon that does not reach the first peak must be
+    excluded with a stated reason, not admitted with an endpoint value."""
+    *_, ok, why = refine_and_check(N=4, nu=0.05, D=0.0, profile="P3", t_horizon=0.3)
+    assert not ok
+    assert "local maximum" in why or "horizon" in why
+
+
+def test_overdamped_configuration_is_excluded():
+    """NEGATIVE CONTROL: under strong damping the cascade never builds
+    enstrophy, and the 'peak' is just Omega(0). Admitting it would drag the
+    fitted slope toward zero -- manufacturing the pre-registered
+    'mechanism is irrelevant' outcome. Must be excluded."""
+    *_, ok, why = refine_and_check(N=4, nu=0.3, D=0.0, profile="P3", t_horizon=4.0)
+    assert not ok
+    assert "rise" in why.lower() or "initial condition" in why
 
 
 def test_refinement_excludes_a_diverged_configuration():
@@ -144,15 +166,17 @@ def test_refinement_excludes_a_diverged_configuration():
 # =====================================================================
 
 def test_sweep_fits_both_conventions():
-    res = run_sweep("viscous", [0.4, 0.3, 0.2, 0.15], N=4, profile="P3", t_horizon=0.5)
+    res = run_sweep("viscous", [0.2, 0.15, 0.1, 0.05], N=4, profile="P3", t_horizon=4.0)
     assert res.fit_sum is not None and res.fit_max is not None
     assert res.fit_sum.convention == "sum"
     assert res.fit_max.convention == "max"
 
 
 def test_sweep_reports_exclusions_with_a_count():
-    """Memo §6: exclusions are reported with their count, never dropped."""
-    res = run_sweep("viscous", [0.4, 0.3, 0.2], N=4, profile="P3", t_horizon=0.5)
+    """Memo §6: exclusions are reported with their count, never dropped.
+    0.4 and 0.3 are overdamped and must appear in the exclusion report."""
+    res = run_sweep("viscous", [0.4, 0.3, 0.2], N=4, profile="P3", t_horizon=4.0)
+    assert res.n_excluded >= 2
     report = res.exclusion_report()
     assert str(len(res.points)) in report
     assert res.n_excluded == sum(1 for p in res.points if not p.included)
@@ -160,14 +184,15 @@ def test_sweep_reports_exclusions_with_a_count():
 
 def test_sweep_leaves_fits_none_when_too_few_points_survive():
     """Rather than fitting a slope through 2 points and reporting it."""
-    res = run_sweep("viscous", [0.4, 0.3], N=4, profile="P3", t_horizon=0.5)
+    res = run_sweep("viscous", [0.2, 0.15], N=4, profile="P3", t_horizon=4.0)
     assert res.fit_sum is None and res.fit_max is None
 
 
 def test_truncation_sweep_records_exact_alpha_prime():
     """alpha' = 4^-N is exact for truncation and is the ONLY regulator for
     which the memo's alpha' axis is unambiguous (see O6)."""
-    res = run_sweep("truncation", [3, 4], N=0, profile="P3", t_horizon=0.2)
+    res = run_sweep("truncation", [3, 4], N=0, profile="P3", t_horizon=0.2,
+                    observable="sup")
     for p in res.points:
         assert p.alpha_prime == pytest.approx(4.0 ** (-int(p.param)))
 
@@ -175,7 +200,8 @@ def test_truncation_sweep_records_exact_alpha_prime():
 def test_diffusivity_sweeps_record_no_alpha_prime():
     """Honesty guard for O6: nu and D sweeps must NOT silently invent an
     alpha' value, since the diffusivity->length^2 conversion is unresolved."""
-    res = run_sweep("dispersive", [0.3, 0.2], N=4, profile="P3", t_horizon=0.3)
+    res = run_sweep("dispersive", [0.3, 0.2], N=4, profile="P3", t_horizon=0.3,
+                    observable="sup")
     assert all(p.alpha_prime is None for p in res.points)
 
 

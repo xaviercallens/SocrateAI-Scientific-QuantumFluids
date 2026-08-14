@@ -51,6 +51,7 @@ __all__ = [
     "first_peak",
     "check_sampling_adequacy",
     "SAMPLING_TOL",
+    "MIN_RISE",
 ]
 
 # A peak is accepted only if re-detecting it on a 2x-subsampled copy of the
@@ -58,6 +59,22 @@ __all__ = [
 # the pre-registered dt-refinement criterion of memo section 6, applied to the
 # other discretisation parameter -- the one nothing previously checked.
 SAMPLING_TOL = 0.01
+
+# A first peak counts only if the cascade actually BUILT enstrophy: the peak
+# must exceed Omega(0) by at least this relative margin. Pre-registered here,
+# before any fit, and configurable so its influence can be checked.
+#
+# Why this exists. Under strong damping the cascade never gets going: at N=4,
+# nu=0.3, profile P3 the enstrophy rises by 2.5e-5 relative (1.0000248 vs
+# 1.000000) and then declines monotonically. That IS a local maximum, so a
+# naive detector returns 1.0000 -- which is Omega(0), the initial condition,
+# not a measurement of anything the regulator did. Worse, it corrupts a fit
+# systematically rather than randomly: as the damping grows the observable
+# tends to Omega(0), a CONSTANT independent of the swept parameter, flattening
+# the log-log slope toward zero. Since beta = 0 is the pre-registered
+# "cutoff mechanism is irrelevant" outcome, that would manufacture the very
+# result the experiment is trying to test for.
+MIN_RISE = 0.10
 
 
 @dataclass(frozen=True)
@@ -69,6 +86,8 @@ class PeakResult:
     sampling_ok: bool
     sampling_rel_change: float
     reason: str = ""
+    rise: float = 0.0
+    """(peak - Omega(0)) / Omega(0): how much enstrophy the cascade built."""
 
 
 def _detect(y: np.ndarray) -> int | None:
@@ -79,13 +98,19 @@ def _detect(y: np.ndarray) -> int | None:
     return None
 
 
-def first_peak(t: np.ndarray, y: np.ndarray, tol: float = SAMPLING_TOL) -> PeakResult:
+def first_peak(t: np.ndarray, y: np.ndarray, tol: float = SAMPLING_TOL,
+               min_rise: float = MIN_RISE) -> PeakResult:
     """Enstrophy at the first local maximum of the trace, with an adequacy check.
 
     Raises ValueError if no interior local maximum exists -- which means the
     horizon did not contain the initial cascade peak, and the caller must
     extend T rather than receive a number that is really just Omega at the
     end of the run.
+
+    Also raises if the peak fails to exceed Omega(0) by min_rise, i.e. the
+    cascade never built appreciable enstrophy (see MIN_RISE). Both are
+    refusals rather than flags, because in each case the returned number
+    would not be a measurement of the regulator.
     """
     t = np.asarray(t, dtype=float)
     y = np.asarray(y, dtype=float)
@@ -102,10 +127,19 @@ def first_peak(t: np.ndarray, y: np.ndarray, tol: float = SAMPLING_TOL) -> PeakR
             "Extend t_horizon rather than treating the endpoint as a peak."
         )
 
+    rise = (float(y[i]) - float(y[0])) / abs(float(y[0])) if y[0] != 0 else float("inf")
+    if rise < min_rise:
+        raise ValueError(
+            f"first peak rises only {rise:.3%} above Omega(0), below the "
+            f"pre-registered {min_rise:.0%} minimum: the cascade did not build "
+            f"appreciable enstrophy, so this value is the initial condition "
+            f"rather than a measurement of the regulator (see MIN_RISE)"
+        )
+
     ok, rel, why = check_sampling_adequacy(y, i, tol)
     return PeakResult(
         value=float(y[i]), t_peak=float(t[i]), index=i, n_samples=len(y),
-        sampling_ok=ok, sampling_rel_change=rel, reason=why,
+        sampling_ok=ok, sampling_rel_change=rel, reason=why, rise=rise,
     )
 
 

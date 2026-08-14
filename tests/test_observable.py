@@ -14,6 +14,7 @@ import pytest
 
 from quantumfluids.w4_shell_model.integrate import integrate
 from quantumfluids.w4_shell_model.observable import (
+    MIN_RISE,
     SAMPLING_TOL,
     check_sampling_adequacy,
     first_peak,
@@ -145,3 +146,54 @@ def test_real_model_trace_passes_the_sampling_guard_at_trace_every_one():
     """Production setting must be adequate, or the guard is unusable."""
     r = integrate(N=4, nu=0.0, D=0.02, profile="P3", t_horizon=8.0, trace_every=1)
     assert first_peak(r.trace_t, r.trace_omega_sum).sampling_ok
+
+
+# =====================================================================
+# Minimum-rise criterion (MIN_RISE) -- the overdamped-degenerate guard
+# =====================================================================
+
+def test_rejects_a_peak_that_is_really_the_initial_condition():
+    """NEGATIVE CONTROL for MIN_RISE. A trace that ticks up microscopically
+    and then declines has a genuine local maximum, but its value IS Omega(0).
+    Measured on the real model at N=4, nu=0.3: a rise of 0.0025%."""
+    t = np.linspace(0, 5, 501)
+    y = np.full_like(t, 1.0)
+    y[:6] = [1.0, 1.000010, 1.000018, 1.000025, 1.000020, 1.000008]  # tick up, turn over
+    y[6:] = 1.0 - 0.1 * t[6:]                                        # then decline
+    res_rise = (y[3] - y[0]) / y[0]
+    assert res_rise < 1e-4, "test fixture must have a microscopic rise"
+    with pytest.raises(ValueError, match="rises only"):
+        first_peak(t, y)
+
+
+def test_accepts_a_peak_with_a_genuine_rise():
+    t = np.linspace(0, 5, 501)
+    y = 1.0 + 3.0 * np.exp(-((t - 1.0) ** 2))
+    res = first_peak(t, y)
+    assert res.rise > MIN_RISE
+    assert res.value == pytest.approx(4.0, abs=0.01)
+
+
+def test_min_rise_is_configurable_for_sensitivity_checks():
+    """The threshold is pre-registered but its influence must be checkable."""
+    t = np.linspace(0, 5, 501)
+    # Narrow enough that y(0) is essentially 1.0, so the rise really is ~5%
+    # (an earlier version used a wide Gaussian whose y(0) was already 1.018,
+    # making the true rise 3.1% -- the fixture, not the code, was wrong).
+    y = 1.0 + 0.05 * np.exp(-((t - 1.0) ** 2) / 0.01)
+    assert y[0] == pytest.approx(1.0, abs=1e-6)
+    with pytest.raises(ValueError, match="rises only"):
+        first_peak(t, y)                            # default 10% -> rejected
+    assert first_peak(t, y, min_rise=0.01).rise == pytest.approx(0.05, abs=1e-3)
+
+
+def test_overdamped_real_run_is_rejected():
+    """On the actual model, not a synthetic trace."""
+    r = integrate(N=4, nu=0.3, D=0.0, profile="P3", t_horizon=4.0, trace_every=1)
+    with pytest.raises(ValueError, match="rises only"):
+        first_peak(r.trace_t, r.trace_omega_sum)
+
+
+def test_pre_registered_min_rise_is_ten_percent():
+    """Pinned so a later edit that loosens it is visible in a diff."""
+    assert MIN_RISE == 0.10

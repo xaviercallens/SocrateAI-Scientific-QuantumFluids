@@ -46,6 +46,7 @@ import numpy as np
 from scipy import stats
 
 from quantumfluids.w4_shell_model.integrate import integrate
+from quantumfluids.w4_shell_model.observable import first_peak
 
 __all__ = [
     "SweepPoint",
@@ -183,6 +184,36 @@ def fit_loglog(params: np.ndarray, values: np.ndarray, convention: str) -> Expon
     )
 
 
+def _measure(run, observable: str) -> tuple[float, float, str]:
+    """Extract (value_sum, value_max, problem) from a completed run.
+
+    observable="first_peak" is the ruled default (O7): sup_t Omega does not
+    converge in the horizon for a purely dispersive regulator. "sup" is kept
+    available so the O7 finding itself stays reproducible.
+    """
+    if observable == "sup":
+        return run.sup_enstrophy_sum, run.sup_enstrophy_max, ""
+    if observable != "first_peak":
+        raise ValueError(
+            f"unknown observable {observable!r}; expected 'first_peak' or 'sup'"
+        )
+    if run.trace_t is None:
+        raise ValueError("first_peak requires a traced run (trace_every=1)")
+    try:
+        ps = first_peak(run.trace_t, run.trace_omega_sum)
+        pm = first_peak(run.trace_t, run.trace_omega_max)
+    except ValueError as exc:
+        return np.nan, np.nan, str(exc)
+    # Sampling adequacy is part of the inclusion criterion, not a warning:
+    # an unresolved first peak silently returns a LATER, larger one (+11% in
+    # the case that motivated the guard), which would enter the fit as data.
+    if not ps.sampling_ok:
+        return ps.value, pm.value, f"sampling inadequate (sum): {ps.reason}"
+    if not pm.sampling_ok:
+        return ps.value, pm.value, f"sampling inadequate (max): {pm.reason}"
+    return ps.value, pm.value, ""
+
+
 def refine_and_check(
     N: int,
     nu: float,
@@ -191,50 +222,60 @@ def refine_and_check(
     t_horizon: float,
     tol: float = DT_REFINEMENT_TOL,
     max_steps: int | None = None,
+    observable: str = "first_peak",
 ) -> tuple[float, float, float, float, bool, str]:
     """Run at dt and dt/2; report both, and whether they agree within tol.
 
-    This is the pre-registered inclusion criterion. It is applied to BOTH
-    enstrophy conventions: a point is included only if both agree, since a
-    point whose fitted value depends on the timestep in either convention
-    is not a measurement of the model.
+    This is the pre-registered inclusion criterion, now covering BOTH
+    discretisation parameters:
+      - the TIMESTEP, via the dt/2 refinement (original protocol), and
+      - the TRACE SAMPLING, via observable.py's adequacy guard,
+
+    the latter added because O7 showed that testing convergence in one limit
+    says nothing about the other. It is applied to BOTH enstrophy conventions
+    (ruling O1): a point enters the fit only if every check passes for each.
     """
+    trace = 1 if observable == "first_peak" else None
     # integrate() REFUSES (raises) rather than silently truncating a run it
     # cannot complete. In a sweep that refusal is not a fatal error -- it is
     # exactly what the inclusion criterion exists to record. Convert it to a
     # stated exclusion so the point is reported and counted, never dropped.
     try:
         coarse = integrate(N=N, nu=nu, D=D, profile=profile, t_horizon=t_horizon,
-                           max_steps=max_steps)
+                           max_steps=max_steps, trace_every=trace)
     except ValueError as exc:
         return (np.nan, np.nan, np.nan, np.nan, False, f"run refused: {exc}")
 
     if coarse.status != "OK":
-        return (coarse.sup_enstrophy_sum, coarse.sup_enstrophy_max, np.nan, np.nan,
+        return (np.nan, np.nan, np.nan, np.nan,
                 False, f"coarse run status={coarse.status}")
+
+    cs, cm, problem = _measure(coarse, observable)
+    if problem:
+        return (cs, cm, np.nan, np.nan, False, problem)
 
     try:
         fine = integrate(N=N, nu=nu, D=D, profile=profile, t_horizon=t_horizon,
-                         dt=coarse.dt / 2.0,
+                         dt=coarse.dt / 2.0, trace_every=trace,
                          max_steps=None if max_steps is None else 2 * max_steps)
     except ValueError as exc:
-        return (coarse.sup_enstrophy_sum, coarse.sup_enstrophy_max, np.nan, np.nan,
-                False, f"refined run refused: {exc}")
+        return (cs, cm, np.nan, np.nan, False, f"refined run refused: {exc}")
 
     if fine.status != "OK":
-        return (coarse.sup_enstrophy_sum, coarse.sup_enstrophy_max,
-                fine.sup_enstrophy_sum, fine.sup_enstrophy_max,
-                False, f"refined run status={fine.status}")
+        return (cs, cm, np.nan, np.nan, False, f"refined run status={fine.status}")
 
-    d_sum = abs(fine.sup_enstrophy_sum - coarse.sup_enstrophy_sum) / abs(coarse.sup_enstrophy_sum)
-    d_max = abs(fine.sup_enstrophy_max - coarse.sup_enstrophy_max) / abs(coarse.sup_enstrophy_max)
+    fs, fm, problem = _measure(fine, observable)
+    if problem:
+        return (cs, cm, fs, fm, False, f"refined run: {problem}")
+
+    d_sum = abs(fs - cs) / abs(cs)
+    d_max = abs(fm - cm) / abs(cm)
     ok = d_sum <= tol and d_max <= tol
     reason = "" if ok else (
-        f"dt refinement changed sup_Omega by {d_sum:.2%} (sum) / {d_max:.2%} (max), "
-        f"exceeding the pre-registered {tol:.0%} tolerance"
+        f"dt refinement changed the observable by {d_sum:.2%} (sum) / "
+        f"{d_max:.2%} (max), exceeding the pre-registered {tol:.0%} tolerance"
     )
-    return (coarse.sup_enstrophy_sum, coarse.sup_enstrophy_max,
-            fine.sup_enstrophy_sum, fine.sup_enstrophy_max, ok, reason)
+    return (cs, cm, fs, fm, ok, reason)
 
 
 def run_sweep(
@@ -245,6 +286,7 @@ def run_sweep(
     t_horizon: float = 1.0,
     tol: float = DT_REFINEMENT_TOL,
     max_steps: int | None = None,
+    observable: str = "first_peak",
 ) -> SweepResult:
     """Sweep one regulator's parameter and fit beta under both conventions.
 
@@ -259,14 +301,14 @@ def run_sweep(
 
     for v in values:
         if regulator == "viscous":
-            cs, cm, fs, fm, ok, why = refine_and_check(N, v, 0.0, profile, t_horizon, tol, max_steps)
+            cs, cm, fs, fm, ok, why = refine_and_check(N, v, 0.0, profile, t_horizon, tol, max_steps, observable)
             alpha = None
         elif regulator == "dispersive":
-            cs, cm, fs, fm, ok, why = refine_and_check(N, 0.0, v, profile, t_horizon, tol, max_steps)
+            cs, cm, fs, fm, ok, why = refine_and_check(N, 0.0, v, profile, t_horizon, tol, max_steps, observable)
             alpha = None
         elif regulator == "truncation":
             n = int(v)
-            cs, cm, fs, fm, ok, why = refine_and_check(n, 0.0, 0.0, profile, t_horizon, tol, max_steps)
+            cs, cm, fs, fm, ok, why = refine_and_check(n, 0.0, 0.0, profile, t_horizon, tol, max_steps, observable)
             alpha = 4.0 ** (-n)
         else:
             raise ValueError(

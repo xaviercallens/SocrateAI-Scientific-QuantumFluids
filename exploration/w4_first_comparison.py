@@ -26,13 +26,13 @@ import numpy as np
 from quantumfluids.w4_shell_model.exponent import run_sweep
 from quantumfluids.w4_shell_model.integrate import integrate
 
-N = 7
+N = 6
 PROFILE = "P3"
-T = 1.0
+T = 8.0
 # Matched diffusivity values -- identical for both regulators, which is the
 # whole point: nu and D share dimensions, so this comparison needs no
 # conversion (memo O6).
-VALUES = [0.05, 0.035, 0.025, 0.018, 0.012, 0.008]
+VALUES = [0.20, 0.15, 0.10, 0.07, 0.05, 0.035, 0.025, 0.018]
 
 
 def n_independence_check():
