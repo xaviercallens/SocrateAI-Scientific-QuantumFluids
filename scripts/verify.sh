@@ -92,9 +92,11 @@ fi
 if [ -f "$REPO_ROOT/docs/LITERATURE_LEDGER.md" ]; then
     echo "  ✓ docs/LITERATURE_LEDGER.md exists"
 
-    # Count verified vs pending
-    verified=$(grep -c "Status: VERIFIED" "$REPO_ROOT/docs/LITERATURE_LEDGER.md" || echo 0)
-    pending=$(grep -c "Status: PENDING" "$REPO_ROOT/docs/LITERATURE_LEDGER.md" || echo 0)
+    # Count verified vs pending (grep -c always prints a count, even 0,
+    # so no "|| echo 0" fallback is needed — that pattern double-prints
+    # when grep exits 1 on zero matches)
+    verified=$(grep -c "Status:.*VERIFIED" "$REPO_ROOT/docs/LITERATURE_LEDGER.md")
+    pending=$(grep -c "Status:.*PENDING" "$REPO_ROOT/docs/LITERATURE_LEDGER.md")
 
     echo "    - Verified: $verified, Pending: $pending"
 
@@ -109,7 +111,7 @@ fi
 # Check PLAN.md for milestone status
 if [ -f "$REPO_ROOT/PLAN.md" ]; then
     echo "  ✓ PLAN.md exists"
-    completed=$(grep -c "✓\|✔" "$REPO_ROOT/PLAN.md" || echo 0)
+    completed=$(grep -c "✓\|✔" "$REPO_ROOT/PLAN.md")
     echo "    - Completed tasks: $completed"
 else
     echo "  ✗ PLAN.md not found"

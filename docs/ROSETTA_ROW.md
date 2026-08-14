@@ -99,9 +99,23 @@
 
 ---
 
+## Relation to MEMO_ROSETTA.md
+
+This page synchronizes **terminology** across Mathesis and QuantumFluids.
+
+For the broader **cross-domain catalog** of how the dual-scale principles (P1–P4) manifest across physics, mathematics, and industry, see **[MEMO_ROSETTA.md](MEMO_ROSETTA.md)**, which records:
+- The four atomic principles (P1: self-dual bound, P2: Sym² lock, P3: discrete pins continuous, P4: bounce)
+- Instantiations in Finite Fourier analysis, Ising model, Quantum Fluids, Quantum Hall metrology, Discrete geometry, Number theory, String T-duality, Operations research (EOQ), and K3 arithmetic
+- Kernel-proved theorems with `#print axioms` certificates
+- Pending targets (T-DS, T-KW2, T-QF1)
+- Change Request CR-1 (the √|disc| refinement)
+
+---
+
 ## How to maintain this catalog
 
 1. When a term is introduced in EXPRESSION_MEMO_E1.md or PLAN.md, add a row here.
 2. Flag status as PENDING until Mathesis equivalent is located.
 3. After M0 (literature verification), update all statuses to SYNCED or DIVERGENT.
 4. If DIVERGENT, file an issue in the Mathesis repo and notify the stream coordinator.
+5. For broad cross-domain patterns, file a row in MEMO_ROSETTA.md per Rule E-X (express before extend).
