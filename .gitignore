@@ -51,6 +51,10 @@ data/derived/*
 # and documented (see fig5_digitized_visual.csv.meta) -- worth tracking.
 !data/derived/fig5_digitized_fit.png
 !data/derived/godfrin_2021_fit_results.json
+# M1 Tier-B (author-published ancillary data) fit outputs -- the primary
+# M1 result, see M1_REPORT.md Part 1.
+!data/derived/godfrin_2021_ancillary_fit.png
+!data/derived/godfrin_2021_ancillary_fit_results.json
 
 # Local Claude Code session config (not project content)
 .claude/

@@ -1,0 +1,32 @@
+{
+  "source": "data/external/godfrin_2021_arxiv_ancillary/DispersionP0allRange.txt",
+  "tier": "B",
+  "fit_regions": {
+    "phonon_q_max": 0.05,
+    "roton_q_center": 1.9,
+    "roton_half_width": 0.2
+  },
+  "phonon": {
+    "c_meV_angstrom": 1.571622448980959,
+    "c_stderr": 0.00034628164150925114,
+    "n_points": 25
+  },
+  "roton": {
+    "delta_meV": 0.7442376685268444,
+    "delta_stderr": 0.0004670912369869531,
+    "q_m_angstrom": 1.907439638277818,
+    "q_m_stderr": 0.0004329851869804753,
+    "mu_over_m_he4": 0.16519234279074463,
+    "n_points": 200
+  },
+  "comparison_to_godfrin_2021": {
+    "reference": "godfrin_2021",
+    "c_lit_meV_angstrom": 1.5678608813357997,
+    "c_fit": 1.571622448980959,
+    "c_pct_diff": 0.23991718206237864,
+    "delta_lit": 0.7445375938368001,
+    "delta_fit": 0.7442376685268444,
+    "delta_pct_diff": 0.04028343396471246,
+    "within_tolerance": true
+  }
+}

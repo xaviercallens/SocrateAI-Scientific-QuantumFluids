@@ -1,8 +1,16 @@
 # M1 Data Access Strategy
 
-**Blocking Issue:** Godfrin et al. 2021 raw experimental data (ILL-DATA DOI) not web-indexed  
-**Impact:** M1 timeline depends on data access approval  
-**Status:** Requires direct contact with authors or ILL data portal
+**Original blocking issue:** Godfrin et al. 2021 raw experimental data (ILL-DATA DOI) not web-indexed  
+**Status update (2026-08-14): no longer M1-blocking.** Godfrin et al.
+(2021)'s own arXiv preprint (2012.09067) publishes an exact ancillary
+dispersion-curve table (`DispersionP0allRange.txt`), which was retrieved
+directly and used as Tier-B data — both M1 fit metrics passed decisively
+(see M1_REPORT.md Part 1). The raw ILL numor request below remains worth
+pursuing for **M2/M3** (which may need full S(Q,ω) intensity data, not
+just the extracted ω(Q) curve the ancillary file provides) and for **M4**
+(relationship-building ahead of outreach), but M1's own objective is met
+without it. The pathways below are unchanged and still valid for that
+ongoing, now-lower-priority purpose.
 
 ---
 

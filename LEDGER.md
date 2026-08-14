@@ -57,6 +57,28 @@ Notes: Attributed to near-origin visual-reading precision limits of hand
        M1-DATA-001 (raw/reduced instrument data) to re-test on Tier-B data.
 ```
 
+```
+[CLAIM-003] [TIER-B] [VERIFIED]
+Statement: "Fitting the Landau phonon (linear) and roton (parabolic) forms
+           to Godfrin et al. (2021)'s own published dispersion-curve table
+           ([LIT-002], arXiv:2012.09067 ancillary file DispersionP0allRange.txt)
+           recovers c = 1.5716 +/- 0.0003 meV*Angstrom (0.24% from literature,
+           window Q<0.05 Angstrom^-1) and Delta = 0.7442 +/- 0.0005 meV
+           (0.04% from literature, window |Q-1.9|<0.2 Angstrom^-1) -- both
+           within the M1 tolerance (c +/-5%, Delta +/-10%; PLAN.md)."
+Source: M1_REPORT.md Part 1, data/derived/godfrin_2021_ancillary_fit_results.json,
+        data/external/godfrin_2021_arxiv_ancillary/DispersionP0allRange.txt.meta,
+        test:test_godfrin_ancillary.py (10 tests)
+Filed: 2026-08-14
+Updated: 2026-08-14
+Notes: Tier B — author-published, exact tabulated data, not raw ILL numor
+       (M1-DATA-001 still open) but a legitimate substitute for M1's stated
+       objective. Supersedes CLAIM-002 (Tier-C phonon-fit failure) for
+       practical purposes; CLAIM-002's root-cause diagnosis was confirmed
+       correct by this result's fit-window sensitivity scan. M1 milestone
+       objective (PLAN.md) met.
+```
+
 ---
 
 ## Claim status history
@@ -64,7 +86,8 @@ Notes: Attributed to near-origin visual-reading precision limits of hand
 | Claim ID | Status → | Date | Notes |
 |---|---|---|---|
 | CLAIM-001 | PENDING → VERIFIED | 2026-08-14 | Roton branch fit, digitized Fig. 5 |
-| CLAIM-002 | PENDING → VERIFIED | 2026-08-14 | Confirmed negative finding: phonon branch fit fails on digitized data; root cause documented in M1_REPORT.md, not yet resolved |
+| CLAIM-002 | PENDING → VERIFIED | 2026-08-14 | Confirmed negative finding: phonon branch fit fails on digitized data; root cause documented in M1_REPORT.md |
+| CLAIM-003 | PENDING → VERIFIED | 2026-08-14 | Both c and Delta recovered within tolerance on Tier-B author-published data; CLAIM-002's diagnosis confirmed correct |
 
 ---
 

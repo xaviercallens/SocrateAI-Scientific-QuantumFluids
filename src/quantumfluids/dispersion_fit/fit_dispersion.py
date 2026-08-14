@@ -59,8 +59,7 @@ def select_phonon_region(data: SQwData, q_max: float = 0.4) -> tuple[np.ndarray,
     mask = data.Q < q_max
     if not np.any(mask):
         raise ValueError(f"No points with Q < {q_max} found in {data.source}")
-    dS = data.dS[mask] if data.dS is not None else None
-    return data.Q[mask], data.omega[mask], dS
+    return data.Q[mask], data.omega[mask], _sanitize_sigma(data.dS, mask)
 
 
 def select_roton_region(
@@ -72,8 +71,26 @@ def select_roton_region(
         raise ValueError(
             f"No points within {half_width} of Q={q_center} found in {data.source}"
         )
-    dS = data.dS[mask] if data.dS is not None else None
-    return data.Q[mask], data.omega[mask], dS
+    return data.Q[mask], data.omega[mask], _sanitize_sigma(data.dS, mask)
+
+
+def _sanitize_sigma(dS: np.ndarray | None, mask: np.ndarray) -> np.ndarray | None:
+    """Return dS[mask], or None if that would contain any NaN.
+
+    scipy.optimize.curve_fit's sigma parameter cannot handle partial NaNs
+    (it does not error cleanly -- it silently returns garbage covariances).
+    Some sources (e.g. adapters.godfrin_ancillary) report per-point
+    uncertainty for only a sparse subset of rows, using NaN elsewhere as a
+    documented "no estimate available" sentinel, not a corruption signal.
+    Falling back to unweighted (sigma=None) fitting is the correct response
+    to that sparsity, not an error.
+    """
+    if dS is None:
+        return None
+    sub = dS[mask]
+    if np.any(np.isnan(sub)):
+        return None
+    return sub
 
 
 def run_dispersion_fit(

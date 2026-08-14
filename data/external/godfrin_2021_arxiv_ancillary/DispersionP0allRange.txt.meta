@@ -1,0 +1,36 @@
+Source: Godfrin, H., Beauvois, K., Sultan, A., Krotscheck, E., Dawidowski, J.,
+        Fåk, B., & Ollivier, J. (2021). "Dispersion relation of Landau
+        elementary excitations and thermodynamic properties of superfluid
+        4He." Physical Review B, 103, 104516.
+Cited as: LITERATURE_LEDGER.md [LIT-002]
+Preprint: arXiv:2012.09067v1
+Journal DOI: 10.1103/PhysRevB.103.104516
+Ancillary file URL: https://arxiv.org/src/2012.09067v1/anc/DispersionP0allRange.txt
+Retrieved: 2026-08-14
+
+Content: the paper's own published, author-processed dispersion curve
+  omega(Q) at P=0 bar (saturated vapor pressure), tabulated at fine Q
+  spacing (0.002 Angstrom^-1 near the origin, coarser at high Q), with
+  sparse per-point uncertainty estimates in a third column.
+
+Format (verified against the file, see adapters/godfrin_ancillary.py):
+  ISO-8859-1 encoding, CRLF line endings, tab-separated, 2 header rows
+  (column names, then units), columns (k [Angstrom^-1], e [meV], err(e)
+  [meV, sparse -- "--" where absent]). One documented all-"--" gap-
+  separator row observed near Q=3.44-3.45.
+
+Tier: B. This is NOT raw ILL numor/instrument-count data (M1-DATA-001,
+  the persistent ILL-DATA DOI, is still pending -- see
+  M1_DATA_ACCESS_STRATEGY.md), but it IS the paper's own exact published
+  numerical result: author-processed, citable, and precise (not subject
+  to the visual-reading limitations of the Tier-C digitized fallback
+  used in the earlier M1 pass -- see fig5_digitized_visual.csv.meta and
+  M1_REPORT.md for that comparison).
+
+Used for: M1 dispersion-fit validation (M1_REPORT.md). Result: c and
+  Delta both recovered within the M1 tolerance (c within 0.24% at
+  phonon_q_max=0.05; Delta within 0.04% at roton_half_width=0.2),
+  substantially exceeding the +/-5%/+/-10% targets in PLAN.md.
+
+License: arXiv non-exclusive distribution license (ancillary files are
+  distributed under the same terms as the paper submission).
