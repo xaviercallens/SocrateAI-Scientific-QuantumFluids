@@ -8,11 +8,17 @@
 
 ## 1. The finding
 
-> **A dissipative and an energy-conserving regulator do not admit a common well-posed
-> peak-enstrophy observable.** The comparison W4 was designed to make — β measured for a
-> dispersive regulator against β for a dissipative one — cannot be carried out in that form,
-> because no observable tested is simultaneously bounded, monotonic, parameter-stable, and
-> *defined* for both.
+> **An energy-conserving regulator admits no well-posed peak-enstrophy observable, and
+> all three of E1 §4's regulators are energy-conserving.** No dissipation ⇒ no attractor ⇒
+> `sup_t Ω` (and every variant tried) fails to converge in the horizon, saturating instead
+> at the truncation ceiling `k_N²E` — a property of the cutoff, not of the dynamics. The
+> comparison W4 was designed to make therefore cannot be carried out in that form.
+
+*(The statement above is the ADDENDUM's sharpened form. §§2–3 were written first, framing
+this as a mismatch between a dissipative and a conserving regulator; §6a shows the
+dissipative arm was a stand-in of mine, not one of E1 §4's three, so the obstruction is
+experiment-wide rather than a mismatch. §§2–3 are left as written — the evidence there
+stands and the narrowing is corrected, not concealed.)*
 
 This is a negative result, and under the audited memo's own §6 framing it is a successful
 outcome rather than a failure: *"three equal exponents ⇒ the cutoff mechanism is irrelevant
@@ -91,8 +97,8 @@ infrastructure are validated and stand on their own:
 - **Tier B harnesses**, 126 tests, including mutation testing of the production module
   (three injected bugs, all caught) and negative controls establishing that each guard
   actually fires.
-- **The complexification's Lean formalisation** — closing audit ruling O2 — in progress
-  (§6).
+- **CLAIM-007 (Tier A) — the complexification's Lean formalisation**, closing audit
+  ruling O2: exact energy conservation and the invariant-subspace property, kernel-checked.
 
 ---
 
@@ -119,26 +125,101 @@ Recorded because the process matters as much as the result:
 
 ## 6. Open items carried forward
 
-- **O2 (Lean).** The conjugated complexification's energy-conservation identity is being
-  formalised, mirroring MechanicaFluidorum's real-model `shellB_energy_conservation`. Until
-  it lands, W4 carries no Tier A backing.
+- **O2 (Lean).** ✅ **CLOSED.** `lean_src/QuantumFluidsShell.lean` —
+  `shellBc_energy_conservation` and `shellBc_real`, kernel-checked with axiom footprint
+  `[propext, Classical.choice, Quot.sound]` against the same pinned Mathlib revision
+  MechanicaFluidorum uses (CLAIM-007). Scope: the algebraic identity only.
 - **O6.** The three regulators do not share a common `α′` axis (dimensional; `η² ~ ν^{3/2}`
   needs `ε`, `ξ² = D²/c²` needs `c`). Moot for the primary comparison, which is now not
   being made in that form.
-- **W2 (bounce regulator).** Never designed. Whether any reflective seam preserves
-  `Σ|aₙ|²` is unresolved — the dyadic energy cancellation is a telescoping identity that
-  depends on the `a_{N+1} = 0` boundary convention.
+- **W2 (bounce regulator).** Still undesigned as a regulator, but the *conservation*
+  question is now **resolved** — see §6a. A seam conserves iff
+  `Re(conj(v_N)²·v_{N+1}) = 0`; on real data only truncation qualifies, while the
+  complexified model admits `v_{N+1} = i·μ·v_N²`. Either way W2 is caught by the §6a
+  obstruction (conserving) or measures an artifact (non-conserving).
 - **M1-DATA-001.** Raw ILL numor access still pending; not blocking.
+
+---
+
+## 6a. ADDENDUM (2026-08-14): the obstruction covers ALL THREE of E1 §4's regulators
+
+Written after §1–6, on a question the Lean formalisation made precise: does the
+obstruction apply only to the dispersive arm, or to the experiment as a whole?
+
+**It applies to all three.** The reason is that E1 §4's three regulators are *all
+energy-conserving*. None of them dissipates:
+
+| E1 §4 regulator | conserves energy? | why |
+|---|---|---|
+| truncation (the control) | **yes, exactly** | `v_{N+1} = 0` makes the telescoping outflux vanish |
+| bounce (W2) | **only for special seams** — see below | |
+| dispersive (W4) | **yes, exactly** | `−iDk²a` is energy-neutral by construction |
+
+The `sup_t Ω` obstruction follows from energy conservation, not from dispersion
+specifically: no dissipation ⇒ no attractor ⇒ the enstrophy keeps exploring up to the
+`k_N²E` ceiling. **Measured for the truncation control** (`ν = D = 0`, profile P3):
+
+| T | N=4 | N=5 | N=6 |
+|---|---|---|---|
+| 2 | 104.10 | 384.67 | 1439.96 |
+| 8 | 149.60 | 600.34 | 2409.23 |
+| 32 | **157.76** | **634.78** | **2540.02** |
+
+Still climbing at `T = 32`, at 99.2% of the ceiling.
+
+**Worse: the truncation control's β converges to the trivial bound.** Since
+`sup_t Ω → k_N²E = 4^N E` and `α′ = 4^{−N}`, the exponent tends to **−1 exactly**, which
+is just the energy-conservation bound restated. Measured:
+
+| T | 2 | 4 | 8 | 16 | 32 |
+|---|---|---|---|---|---|
+| β vs α′ | −0.948 | −0.990 | −1.002 | −1.003 | −1.002 |
+
+So even at a fixed horizon the control is measuring `sup Ω ≤ k_N²E`, carrying **no
+dynamical information**.
+
+**Why this was not visible earlier.** The comparisons in §3 used a *viscous* regulator as
+one arm, and it behaved perfectly — passing every battery check. But **viscosity is not one
+of E1 §4's three regulators.** It was introduced as a dimensionally-matched stand-in for
+comparison against `D`. It is the only *dissipative* thing in the study, which is exactly
+why it was the only well-behaved arm. The apparent pattern "one side works, one doesn't"
+was an artifact of that substitution.
+
+### The W2 bounce regulator, resolved
+
+Memo §5 left open whether any reflective seam preserves `Σ|aₙ|²`. The Lean telescoping
+theorem answers it exactly: the energy pairing is `−k_N·Re(conj(v_N)²·v_{N+1})`, so **a
+seam conserves energy iff `Re(conj(v_N)²·v_{N+1}) = 0`** — i.e. iff `v_{N+1}` is orthogonal
+to `v_N²` under the real inner product `Re(conj(x)y)`. Two consequences:
+
+- **On real data, truncation is the only conserving boundary condition.** The expression
+  reduces to `v_N²·v_{N+1}`, zero only when the reflected value is. A naive real reflective
+  seam (`v_{N+1} = v_{N−1}`) **leaks energy**, so a W2 built that way would measure broken
+  conservation rather than the bounce — precisely the failure OP2_LITE flags for its
+  Candidate A.
+- **In the complexified model a conserving seam does exist**: `v_{N+1} = i·μ·v_N²` gives
+  `conj(v_N)²·(iμv_N²) = iμ|v_N|⁴`, purely imaginary, so the pairing is exactly zero. This
+  has **no real analogue** — an unanticipated second dividend of the complexification, which
+  was adopted for the dispersive regulator alone.
+
+Both are pinned by tests (`tests/test_shell_dynamics.py`, seam section). But note the sting:
+a *conserving* W2 seam inherits the very obstruction described above, while a
+*non-conserving* one measures an artifact. W2 is caught either way.
 
 ---
 
 ## 7. Recommended next step
 
 If the W4 question is to be pursued further, the honest reformulation is **not** another
-observable. It is to make the two systems comparable in kind — e.g. by giving the dispersive
-regulator a small pre-registered `ν` floor so it acquires an attractor, and then sweeping
-`D` at fixed `ν`. That measures dispersion-on-top-of-dissipation rather than dispersion
-alone, and the floor becomes a free parameter needing its own B3 stability check — but it is
-well-posed, which the current formulation is not.
+observable. It is to give the conservative regulators an attractor — a small pre-registered
+`ν` floor — so that `sup_t Ω` converges, then sweep each regulator's own parameter at fixed
+`ν`.
+
+Per §6a this floor is needed for **all three** regulators, not just the dispersive one: the
+truncation control is equally conservative and its β otherwise degenerates to the trivial
+energy bound `−1`. That is a larger change to E1 §4's design than it first appears, and it
+means the comparison becomes "dispersion-on-top-of-dissipation vs truncation-on-top-of-
+dissipation" — well-posed, but a different question from the one E1 §4 asked. The floor also
+becomes a free parameter requiring its own B3 stability check.
 
 That is a design decision for the owner, not a continuation of M2.

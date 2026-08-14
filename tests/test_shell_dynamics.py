@@ -290,3 +290,63 @@ def test_rejects_mismatched_array_lengths(fn):
 def test_energy_rate_rejects_mismatched_shapes():
     with pytest.raises(ValueError, match="shape mismatch"):
         energy_rate(np.zeros(5), np.zeros(6))
+
+
+# =====================================================================
+# Boundary-condition / seam analysis (W2 bounce regulator)
+#
+# The Lean telescoping theorem (lean_src/QuantumFluidsShell.lean,
+# sum_re_conj_mul_shellBc) gives the energy pairing as -k_N * Re(conj(v_N)^2
+# * v_{N+1}). So ANY boundary condition conserves energy IFF that real part
+# vanishes. These tests pin what that means for a reflective seam.
+# =====================================================================
+
+def _pairing(vN, vNp1, kN=1.0):
+    """The quantity the Lean theorem says the energy pairing equals (up to sign)."""
+    return kN * float(np.real(np.conj(vN) ** 2 * vNp1))
+
+
+def test_truncation_seam_conserves():
+    """v_{N+1} = 0 -- the only conserving choice for REAL data."""
+    rng = _rng()
+    for _ in range(50):
+        assert _pairing(rng.normal(), 0.0) == 0.0
+
+
+def test_real_reflective_seam_leaks_energy():
+    """NEGATIVE CONTROL and a real finding: on real data a reflective seam
+    v_{N+1} = v_{N-1} does NOT conserve. The pairing reduces to
+    v_N^2 * v_{N-1}, which vanishes only if the reflected value is zero.
+    A W2 bounce built this way would measure broken conservation rather than
+    the bounce -- the failure OP2_LITE flags for its Candidate A."""
+    rng = _rng()
+    leaks = 0
+    for _ in range(50):
+        vN, vNm1 = rng.normal(), rng.normal()
+        if abs(_pairing(vN, vNm1)) > 1e-12:
+            leaks += 1
+    assert leaks >= 45, "a real reflective seam should generically leak energy"
+
+
+def test_complex_seam_can_conserve_exactly():
+    """The complexification BUYS something beyond the dispersive regulator:
+    the seam v_{N+1} = i*mu*v_N^2 conserves exactly, because
+    conj(v_N)^2 * (i mu v_N^2) = i mu |v_N|^4 is purely imaginary.
+    No real analogue exists -- see test_real_reflective_seam_leaks_energy."""
+    rng = _rng()
+    for mu in (0.5, 1.0, 2.0, -1.5):
+        for _ in range(20):
+            vN = rng.normal() + 1j * rng.normal()
+            assert abs(_pairing(vN, 1j * mu * vN**2)) < 1e-9
+
+
+def test_conserving_seam_condition_is_exactly_orthogonality():
+    """Restates the condition: v_{N+1} must be orthogonal to v_N^2 under the
+    real inner product Re(conj(x) y). Anything satisfying that conserves."""
+    rng = _rng()
+    for _ in range(50):
+        vN = rng.normal() + 1j * rng.normal()
+        target = vN**2
+        perp = 1j * target                      # rotate 90 degrees
+        assert abs(float(np.real(np.conj(target) * perp))) < 1e-9
+        assert abs(_pairing(vN, perp)) < 1e-9

@@ -288,6 +288,83 @@ Notes: TIER A. Closes audit ruling O2, which accepted the complexification as
        inserting a sorry and confirming sorryAx appears in the certificate.
 ```
 
+```
+[CLAIM-008] [TIER-B] [VERIFIED]
+Statement: "All three of EXPRESSION_MEMO_E1 section 4's regulators are
+           energy-conserving -- truncation exactly (v_{N+1}=0 kills the
+           telescoping outflux), dispersive exactly (-iDk^2 a is energy-neutral),
+           and bounce only for special seams. None dissipates. The sup_t Omega
+           obstruction of CLAIM-005 therefore applies to the ENTIRE experiment,
+           not only its dispersive arm. Measured for the truncation control
+           (nu = D = 0, profile P3): sup_t Omega still climbing at T=32, at 99.2%
+           of the k_N^2 E ceiling, at every N in {4,5,6}."
+Source: M2_REPORT.md section 6a; lean_src/QuantumFluidsShell.lean
+        (sum_re_conj_mul_shellBc gives the outflux form the argument rests on);
+        tests/test_shell_dynamics.py seam section.
+Filed: 2026-08-14
+Updated: 2026-08-14
+Notes: Why this was not visible earlier: the comparisons in M2_REPORT sections
+       2-3 used a VISCOUS regulator as one arm, and it passed every check. But
+       viscosity is NOT one of E1 section 4's three regulators -- it was
+       introduced by this stream as a dimensionally-matched stand-in for D. It
+       is the only dissipative element in the study, which is exactly why it was
+       the only well-behaved arm. The apparent "one side works, one doesn't"
+       pattern was an artifact of that substitution.
+```
+
+```
+[CLAIM-009] [TIER-B] [VERIFIED]
+Statement: "For the truncation control at nu = D = 0, sup_t Omega saturates at the
+           energy-conservation ceiling k_N^2 E, so beta measured against
+           alpha' = 4^-N converges to -1 EXACTLY -- the trivial bound restated.
+           Measured across horizons T = 2,4,8,16,32: beta = -0.948, -0.990,
+           -1.002, -1.003, -1.002."
+Source: M2_REPORT.md section 6a.
+Filed: 2026-08-14
+Updated: 2026-08-14
+Notes: Consequence: even at a FIXED horizon the truncation control is measuring
+       sup Omega <= k_N^2 E and carries no dynamical information. A control that
+       returns the trivial bound cannot serve as a baseline for detecting whether
+       another regulator's beta differs.
+
+       Note this is a different number from OP2_LITE section 3's pre-registered
+       beta = -2/3 "no effect" threshold. No conflict is claimed: their protocol
+       runs at nu > 0, i.e. WITH dissipation and hence with an attractor, which is
+       a different regime from the nu = 0 case measured here.
+```
+
+```
+[CLAIM-010] [TIER-B] [VERIFIED]
+Statement: "A boundary seam conserves energy in the complexified dyadic model IFF
+           Re(conj(v_N)^2 * v_{N+1}) = 0. On REAL data this reduces to
+           v_N^2 * v_{N+1}, so truncation (v_{N+1} = 0) is the ONLY conserving
+           boundary condition and a reflective seam v_{N+1} = v_{N-1} leaks. In
+           the COMPLEXIFIED model a conserving seam exists: v_{N+1} = i*mu*v_N^2
+           gives conj(v_N)^2 * (i mu v_N^2) = i mu |v_N|^4, purely imaginary,
+           so the pairing is exactly zero."
+Source: derived from lean_src/QuantumFluidsShell.lean's sum_re_conj_mul_shellBc,
+        which gives the energy pairing as -k_N * Re(conj(v_N)^2 * v_{N+1});
+        pinned by tests/test_shell_dynamics.py seam section.
+Filed: 2026-08-14
+Updated: 2026-08-14
+Notes: Resolves the question memo section 5 left open about W2. The condition is
+       exactly orthogonality of v_{N+1} to v_N^2 under the real inner product
+       Re(conj(x) y).
+
+       Two consequences. (i) A naive real reflective seam would measure BROKEN
+       CONSERVATION rather than the bounce -- the failure OP2_LITE flags for its
+       Candidate A. (ii) The complexification, adopted solely for the dispersive
+       regulator, unexpectedly also ENABLES a conserving bounce seam with no real
+       analogue.
+
+       But W2 is caught either way: a conserving seam inherits the CLAIM-008
+       obstruction, and a non-conserving one measures an artifact.
+
+       This is a case where the Lean formalisation did work beyond certifying a
+       known result -- it converted an open design question ("does a bounce
+       conserve energy?") into a precise, checkable condition.
+```
+
 ---
 
 ## Design-memo audit register
@@ -359,6 +436,9 @@ code or data.**
 | CLAIM-R2 | — → RETRACTED | 2026-08-14 | Never promoted. Re-run on first-peak also invalid: non-monotonic in the sweep, conventions disagreed, N-check used the retracted observable |
 | CLAIM-006 | PENDING → VERIFIED | 2026-08-14 | Five observables fail on the dispersive side with a common root: no attractor. Bears on whether peak-enstrophy is the right framing |
 | CLAIM-007 | PENDING → VERIFIED | 2026-08-14 | TIER A: complexified nonlinearity's exact energy conservation, kernel-checked in Lean. Closes audit ruling O2 |
+| CLAIM-008 | PENDING → VERIFIED | 2026-08-14 | All three E1 §4 regulators are conservative; the obstruction is experiment-wide, not dispersive-only |
+| CLAIM-009 | PENDING → VERIFIED | 2026-08-14 | Truncation control's β converges to the trivial energy bound −1, carrying no dynamical information |
+| CLAIM-010 | PENDING → VERIFIED | 2026-08-14 | Seam conserves iff Re(conj(v_N)²·v_{N+1})=0; resolves the W2 question left open by memo §5 |
 
 ---
 
