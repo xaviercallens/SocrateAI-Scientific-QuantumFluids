@@ -96,6 +96,15 @@ class ShellRun:
     sqrt(2E) in the conservative case, which is why a TRUNCATED inviscid
     dyadic model cannot blow up -- see ERRATUM E1 in the design memo."""
 
+    trace_t: np.ndarray | None = field(default=None)
+    trace_omega_sum: np.ndarray | None = field(default=None)
+    trace_omega_max: np.ndarray | None = field(default=None)
+    """Optional (t, Omega_sum, Omega_max) time series, recorded when
+    integrate(trace_every=k) is passed. Needed because OPEN ITEM O7
+    established that sup_t Omega does not converge in T for a purely
+    dispersive regulator, so candidate replacement observables have to be
+    evaluated from the trajectory rather than from a running maximum."""
+
     def as_row(self) -> dict:
         return {
             "N": self.N,
@@ -123,6 +132,7 @@ def integrate(
     t_horizon: float = T_HORIZON,
     dt: float | None = None,
     max_steps: int | None = None,
+    trace_every: int | None = None,
 ) -> ShellRun:
     """Integrate the shell model with classical RK4 and a divergence guard.
 
@@ -131,6 +141,11 @@ def integrate(
     meaningless sliver of the horizon is worse than no number at all
     (the failure mode MechanicaFluidorum's own feasibility guard exists
     to avoid).
+
+    trace_every: if set, record (t, Omega_sum, Omega_max) every k-th step.
+    Needed to evaluate candidate observables other than sup_t Omega, which
+    OPEN ITEM O7 established does not converge in T for a purely
+    dispersive regulator.
     """
     k = k_shells(N)
     a = make_profile(profile, N)
@@ -157,6 +172,11 @@ def integrate(
     t = 0.0
     steps_done = 0
     status = "OK"
+    tr_t: list[float] = []
+    tr_s: list[float] = []
+    tr_m: list[float] = []
+    if trace_every:
+        tr_t.append(0.0); tr_s.append(sup_sum); tr_m.append(sup_max)
 
     for _ in range(steps_required):
         remaining = t_horizon - t
@@ -180,6 +200,10 @@ def integrate(
         sup_sum = max(sup_sum, enstrophy_sum(a, k))
         sup_max = max(sup_max, enstrophy_max(a, k))
         sup_abs = max(sup_abs, float(np.max(np.abs(a))))
+        if trace_every and steps_done % trace_every == 0:
+            tr_t.append(t)
+            tr_s.append(enstrophy_sum(a, k))
+            tr_m.append(enstrophy_max(a, k))
         if np.iscomplexobj(a):
             max_abs_imag = max(max_abs_imag, float(np.max(np.abs(np.imag(a)))))
 
@@ -202,4 +226,7 @@ def integrate(
         t_stop=t,
         max_abs_imag=max_abs_imag,
         sup_abs_amplitude=sup_abs,
+        trace_t=np.array(tr_t) if trace_every else None,
+        trace_omega_sum=np.array(tr_s) if trace_every else None,
+        trace_omega_max=np.array(tr_m) if trace_every else None,
     )
