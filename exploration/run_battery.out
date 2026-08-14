@@ -1,0 +1,35 @@
+
+==========================================================================
+CANDIDATE: t_peak  (time of first local maximum)
+==========================================================================
+
+  --- viscous ---
+    [sum] beta=-0.6359 r2=0.9098 | B1=0.00% B2=ok B4dt=0.07% B4samp=0.13% B5=0.05% B6=ok -> PASS
+    [max] beta=-0.1738 r2=0.8197 | B1=0.00% B2=ok B4dt=0.09% B4samp=0.23% B5=0.10% B6=ok -> PASS
+
+  --- dispersive ---
+    [sum] beta=-0.0999 r2=0.2407 | B1=0.00% B2=FAIL B4dt=0.04% B4samp=0.08% B5=0.04% B6=ok -> FAIL
+    [max] beta=-0.0593 r2=0.0996 | B1=0.00% B2=FAIL B4dt=0.05% B4samp=0.00% B5=0.04% B6=ok -> FAIL
+
+  OVERALL: FAILS
+
+==========================================================================
+CANDIDATE: t_cross(4)  (first time Omega >= 4*Omega(0))
+==========================================================================
+
+  --- viscous ---
+    [sum] UNDEFINED for some parameter values -> DISQUALIFIED
+    [max] UNDEFINED for some parameter values -> DISQUALIFIED
+
+  --- dispersive ---
+    [sum] beta=+0.0472 r2=0.8181 | B1=0.00% B2=ok B4dt=0.11% B4samp=0.26% B5=0.14% B6=ok -> PASS
+    [max] beta=-0.0001 r2=0.0017 | B1=0.00% B2=FAIL B4dt=0.06% B4samp=0.25% B5=0.10% B6=FAIL -> FAIL
+
+  --- B3 (own free parameter) ---
+       viscous  th=2.0:+nan  th=4.0:+nan  th=8.0:+nan   drift=nan% -> FAIL
+    dispersive  th=2.0:+0.0051  th=4.0:+0.0472  th=8.0:+nan   drift=161.01% -> FAIL
+
+  OVERALL: FAILS
+
+Exploratory: one profile, N=5/6, limited sweep. A PASS here licenses
+running the comparison, not filing a claim.

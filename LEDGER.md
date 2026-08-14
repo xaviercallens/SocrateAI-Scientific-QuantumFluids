@@ -220,6 +220,27 @@ Notes: Common root, identified: a purely dispersive regulator has NO ATTRACTOR.
        NOT a claim that no suitable observable exists -- only that none of the
        five tried works, and that the reason they fail is now understood rather
        than incidental.
+
+UPDATE 2026-08-14, round 2 -- TIMESCALE observables also fail, and reveal a
+       THIRD failure class that reframes the problem. t_peak PASSES the full
+       battery on the viscous side but on the dispersive side is non-monotonic
+       with r^2 = 0.24 / 0.10 -- no power-law relationship at all, so there is
+       no exponent there to measure. t_cross(theta) REVERSES the asymmetry: it
+       is well-behaved for the DISPERSIVE regulator and UNDEFINED for the
+       VISCOUS one, because under strong damping the cascade never reaches
+       4 x Omega(0) and there is no crossing time.
+
+       That reversal matters. Every earlier failure was on the dispersive side,
+       which invited "the dispersive case is awkward, keep looking". It is not.
+       The two regulators DO NOT SHARE A COMMON DOMAIN on which one observable
+       is well-posed: amplitude observables are convergent for the viscous
+       regulator and horizon-divergent for the dispersive one; threshold
+       observables are defined for the dispersive one and undefined for the
+       viscous one. The dynamics differ in KIND -- attractor vs no attractor --
+       not in degree.
+
+       Seven candidates now, three distinct failure classes: horizon
+       divergence, parameter discontinuity, domain non-overlap.
 ```
 
 ---

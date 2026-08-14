@@ -124,6 +124,51 @@ common and now-identified mechanism.
 
 ---
 
+## Round 2 (2026-08-14): timescale observables — also fail, and reveal a new failure class
+
+The five candidates above were all **amplitude** observables ("how large does Ω become"),
+and all failed on the *dispersive* side. The obvious response was to try **timescales**
+("when does something happen"), which are bounded for both regulators regardless of whether
+the amplitude converges. Two were run through the battery (`exploration/run_battery.py`):
+
+| candidate | viscous | dispersive |
+|---|---|---|
+| `t_peak` — time of first local maximum | **PASS** both conventions | **FAIL** B2 non-monotonic; r² = 0.24 / 0.10 |
+| `t_cross(θ)` — first `t` with `Ω ≥ θ·Ω(0)` | **UNDEFINED** — Ω never reaches 4·Ω(0) under strong damping | PASS \[sum]; FAIL \[max]; **B3 drift 161%** |
+
+Two things here are new and more informative than another failure.
+
+**(i) `t_peak` has no power law to fit on the dispersive side at all.** r² of 0.24 and 0.10
+— not a marginal fit, no relationship. So it is not merely non-monotonic; there is no
+exponent there to measure.
+
+**(ii) `t_cross` REVERSES the asymmetry.** Every previous failure was on the dispersive
+side, which invited the reading "the dispersive case is awkward, keep looking." But
+`t_cross` is perfectly well-behaved for the dispersive regulator and **undefined for the
+viscous one** — under strong damping the cascade never quadruples the initial enstrophy, so
+there is no crossing time to measure.
+
+That reframes the problem. It is not that one side is difficult. It is that
+**the two regulators do not share a common domain on which a single observable is
+well-posed**:
+
+- amplitude observables are well-defined and convergent for the *viscous* regulator, and
+  horizon-divergent for the *dispersive* one;
+- threshold-crossing observables are well-defined for the *dispersive* regulator, and
+  undefined for the *viscous* one.
+
+The underlying dynamics differ in kind, not degree: the dissipative system has an attractor
+and decays; the conservative system has none and explores upward toward the truncation
+ceiling. An observable that is bounded, monotonic, parameter-stable and *defined* for both
+may not exist.
+
+**Seven candidates, three distinct failure classes** (horizon divergence, parameter
+discontinuity, domain non-overlap). This is recorded as strengthened evidence for
+revisiting the framing — option (c) of the 2026-08-14 decision — not as a claim that no
+observable exists.
+
+---
+
 ## What passing looks like
 
 An observable clearing B1–B6 on both regulators, with B7 reported. Until one does, no β
