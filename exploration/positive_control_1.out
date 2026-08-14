@@ -1,0 +1,31 @@
+POSITIVE CONTROL #1  (memo section 6): D=0, real data, N=8
+Reference: MechanicaFluidorum data/dyadic_omega_sup.csv (MAX convention)
+
+     nu  prof     MF sup_Omega       ours (max)    rel.diff   E_final rel.diff
+------------------------------------------------------------------------------------------
+  0.001    P1    70.8795916148    70.8795916148    0.00e+00           0.00e+00
+  0.001    P2    73.5174811307    73.5174811307    0.00e+00           0.00e+00
+  0.001    P3   115.7586335141   115.7586335141    0.00e+00           0.00e+00
+   0.01    P1     6.6626333021     6.6626333021    0.00e+00           0.00e+00
+   0.01    P2     7.8652392316     7.8652392316    0.00e+00           0.00e+00
+   0.01    P3     9.8048937602     9.8048937602    0.00e+00           0.00e+00
+    0.1    P1     0.5416451355     0.5416451355    0.00e+00           0.00e+00
+    0.1    P2     0.8753841785     0.8753841785    0.00e+00           0.00e+00
+    0.1    P3     0.9011104740     0.9011104740    0.00e+00           0.00e+00
+
+worst relative difference: sup_Omega 0.000e+00   E_final 0.000e+00
+POSITIVE CONTROL #1: PASS
+
+
+Why the agreement is EXACT rather than merely close: k_n = 2^n are exact
+powers of two, so multiplying by them only shifts the IEEE754 exponent and
+leaves the mantissa untouched. The two implementations associate their
+products differently -- (k*a)*a here, k*(a*a) there -- which for a generic
+k would differ at ~1e-14, but for a power of two is bit-identical. A shell
+model with spacing lambda != 2 would NOT reproduce exactly, and this
+control would then need a tolerance rather than an equality.
+
+--
+Archived from the 2026-08-14 run. Reproduce with:
+  PYTHONPATH=src python3 exploration/positive_control_1.py
+Reference: SocrateAI-Scientific-MechanicaFluidorum data/dyadic_omega_sup.csv

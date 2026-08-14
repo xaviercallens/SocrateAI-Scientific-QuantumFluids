@@ -79,6 +79,43 @@ Notes: Tier B — author-published, exact tabulated data, not raw ILL numor
        objective (PLAN.md) met.
 ```
 
+```
+[CLAIM-004] [TIER-B] [VERIFIED]
+Statement: "At D = 0 with real initial data, the complexified dyadic shell model
+           (adapters: w4_shell_model.shell_dynamics + .integrate) reproduces
+           MechanicaFluidorum's independently-written reference implementation
+           (exploration/dyadic_cascade.py) EXACTLY -- relative difference
+           0.00e+00 on all 9 tested configurations (N=8, nu in {0.1, 0.01,
+           0.001}, profiles P1/P2/P3), for both sup_Omega and E_final, across
+           ~2.4e6 RK4 steps."
+Source: exploration/positive_control_1.py, output archived at
+        exploration/positive_control_1.out; Positive Control #1 of
+        docs/designs/M2_W4_DISPERSIVE_SHELL.md section 6.
+Filed: 2026-08-14
+Updated: 2026-08-14
+Notes: This is the audited memo's own pre-registered positive control, and it
+       confirms three things at once: (i) the conjugated complexification really
+       does reduce exactly to the real Katz-Pavlovic model, (ii) the reals really
+       are an exactly invariant subspace -- which is what keeps the O5
+       Katz-Pavlovic falsification trap applicable, and (iii) this stream's
+       integrator implements the same scheme as the reference.
+
+       The agreement is EXACT, not merely within round-off, and the reason was
+       checked rather than assumed: k_n = 2^n are exact powers of two, so scaling
+       by them shifts the IEEE754 exponent without touching the mantissa. The two
+       implementations associate their products differently ((k*a)*a vs k*(a*a)),
+       which for a generic k differs at ~1e-14 but for a power of two is
+       bit-identical (measured: 0.0 vs 1.42e-14). A shell model with spacing
+       lambda != 2 would NOT reproduce exactly and this control would need a
+       tolerance -- recorded so the exactness is not mistaken for a general
+       property.
+
+       Comparison uses the MAX enstrophy convention because that is what
+       MechanicaFluidorum's _simulate actually computes (see
+       docs/DEFECT_REPORT_MF_ENSTROPHY.md). Having both conventions available
+       -- audit ruling O1 -- is what made a like-for-like comparison possible.
+```
+
 ---
 
 ## Design-memo audit register
@@ -124,6 +161,7 @@ code or data.**
 | CLAIM-001 | PENDING → VERIFIED | 2026-08-14 | Roton branch fit, digitized Fig. 5 |
 | CLAIM-002 | PENDING → VERIFIED | 2026-08-14 | Confirmed negative finding: phonon branch fit fails on digitized data; root cause documented in M1_REPORT.md |
 | CLAIM-003 | PENDING → VERIFIED | 2026-08-14 | Both c and Delta recovered within tolerance on Tier-B author-published data; CLAIM-002's diagnosis confirmed correct |
+| CLAIM-004 | PENDING → VERIFIED | 2026-08-14 | M2 Positive Control #1 PASS at 0.00e+00 across 2.4e6 RK4 steps; complexification validated against MechanicaFluidorum's reference |
 
 ---
 
