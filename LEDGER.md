@@ -147,6 +147,25 @@ A design memo listed here as PENDING AUDIT may not be implemented, cited, or mea
   Δ, Q_m have no counterpart in it.
 - **O5 — RULED:** harness built in QuantumFluids, offered upstream later if generally useful.
 
+**Post-audit items on the M2 memo** (both found before any W4 experiment was run):
+
+- **ERRATUM E1 — §6's O5 falsification trap was stated wrongly.** It demanded that the
+  truncated inviscid model exhibit finite-time blow-up. It cannot: energy conservation
+  gives `|aₙ| ≤ √(2E)` and `Ω ≤ k_N²E`, so a *truncated* model is globally bounded —
+  Katz–Pavlović is a theorem about the *infinite* system. As stated the trap could never
+  fire and would have condemned a correct implementation. Corrected to
+  MechanicaFluidorum's original formulation: the trap is about the **exponent**
+  (`β = 0` at `ν = 0` is presumptively wrong), not a single trajectory.
+  *Status: corrected in the memo as a dated erratum; bounds now unit-tested.*
+- **O6 (new, needs ruling) — the three regulators do not share one α′ axis.** `α′` is a
+  length²; `ν` and `D` are diffusivities (length²/time). The conversion differs by
+  regulator (`η² ~ ν^{3/2}` needing `ε`; `ξ² = D²/c²` needing `c`) and neither quantity
+  is defined for this model. **Does not block the primary experiment:** `ν` and `D`
+  share dimensions *with each other*, so `β_ν` vs `β_D` at matched diffusivity is
+  dimensionally airtight and is precisely the memo §3 design. Comparison against the
+  truncation control is secondary and blocked. *Recommendation: adopt `β_D` vs `β_ν` as
+  the primary readout; rule separately on whether the truncation comparison is needed.*
+
 **Cross-stream defect (arising from O1):** the MechanicaFluidorum sum-vs-max inconsistency is
 written up as a portable, standalone report at `docs/DEFECT_REPORT_MF_ENSTROPHY.md` for the
 owner to route to that stream's own audit. **This stream does not modify another stream's

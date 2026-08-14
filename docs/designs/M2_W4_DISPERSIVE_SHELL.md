@@ -61,6 +61,52 @@
 
 ---
 
+> ## ⚠ OPEN ITEM O6 — 2026-08-14, post-audit: the three regulators do not share one α′ axis
+>
+> **Raised while implementing the exponent harness. Needs an owner ruling, but does
+> NOT block the primary experiment** — see the resolution below.
+>
+> §3 proposes putting all three regulators on a common `α′` axis so their β's are
+> comparable. That works for truncation and fails for the other two, dimensionally:
+>
+> ```
+>     α′        has dimensions  LENGTH²
+>     ν and D   have dimensions  LENGTH² / TIME
+> ```
+>
+> Converting a diffusivity to a length² requires a second quantity, and the natural
+> choice **differs by regulator**:
+>
+> | regulator | regularization length | α′ | needs |
+> |---|---|---|---|
+> | truncation | `k_N⁻¹` | `4^{−N}` — **exact** | nothing |
+> | viscous | Kolmogorov `η ~ (ν³/ε)^{1/4}` | `η² ~ ν^{3/2}` | dissipation rate `ε` |
+> | dispersive | healing `ξ = D/c` | `ξ² = D²/c²` | sound speed `c` |
+>
+> Different powers (**1.5 vs 2.0**), and neither `ε` nor `c` is defined for this model —
+> audit ruling O3 deferred exactly that for `c`. So `β` against `α′` is **not** obtained
+> from `β` against the swept parameter by any single shared factor, and §3's table
+> should be read as a proposal that does not yet close.
+>
+> **Resolution, and why the experiment is still sound.** `ν` and `D` have the *same*
+> dimensions **as each other**. So `β_ν` and `β_D` are directly comparable with no
+> conversion whatsoever — and that comparison is exactly §3's design: identical `k²`
+> structure, coefficient rotated 90°, isolating dispersive-vs-dissipative without
+> confounding it with a different spectral slope.
+>
+> - **PRIMARY experiment: `β_D` vs `β_ν` at matched diffusivity.** Dimensionally
+>   airtight, needs no `ε` or `c`, and is the sharpest form of the question W4 asks.
+> - **SECONDARY, blocked on O6: comparison against the truncation control** on a shared
+>   `α′` axis, which needs `ε` and `c` (or an explicit decision to compare only
+>   *ratios* of β within each regulator family).
+>
+> The implementation follows this: `exponent.run_sweep` fits β against each regulator's
+> own parameter, records `alpha_prime` **only** for truncation where it is exact, and
+> deliberately leaves it `None` for `ν` and `D` sweeps rather than inventing a value —
+> pinned by `test_diffusivity_sweeps_record_no_alpha_prime`.
+
+---
+
 **Status when authored: Tier C, AWAITING HUMAN AUDIT.** Nothing here may be implemented,
 cited, or measured until this memo is marked AUDITED in `LEDGER.md`. This document is that
 audit's *input*. Follows the house pattern of MechanicaFluidorum
