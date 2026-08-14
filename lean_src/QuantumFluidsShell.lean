@@ -1,0 +1,127 @@
+/-
+Formalisation of the conjugated complexification's energy conservation.
+
+Closes audit ruling O2 of docs/designs/M2_W4_DISPERSIVE_SHELL.md, which
+accepted the complexification as a labelled deformation "carrying no Tier A
+backing until it has its own Lean development".
+
+Deliberately mirrors MechanicaFluidorum's real-model development
+(lean_src/DyadicShell_Statements.lean: `shellB`, `sum_mul_shellB`,
+`shellB_energy_conservation`) so the two can be compared line for line, and
+against the SAME pinned Mathlib revision, so a theorem here is checked
+against the same library every result in that stream's LEDGER was verified
+against.
+
+WHAT IS AND IS NOT PROVED HERE. This file proves the algebraic identity that
+the complexified nonlinearity conserves the energy pairing exactly. That is
+the single load-bearing claim under W4's model -- memo section 2b, and the
+property that makes the complexification usable at all. It says nothing about
+boundedness, blow-up, or the dispersive regulator's effect on any observable;
+those are Tier B or open.
+-/
+
+import Mathlib
+
+namespace QuantumFluids.ShellComplex
+
+/-- The complexified Katz-Pavlović shell nonlinearity, in the CONJUGATED form
+selected by memo section 2b:
+
+  `B_0(v)     = -(k_0 * conj(v_0) * v_1)`
+  `B_{m+1}(v) = k_m * v_m^2 - k_{m+1} * conj(v_{m+1}) * v_{m+2}`
+
+Squares are written as explicit products rather than `^2` to keep every
+`Complex.re` expansion below a product of at most three factors, which `simp`
+plus `ring` handles directly.
+
+The single conjugation on the OUTGOING term is what makes the energy
+cancellation work; the unconjugated version does not conserve (measured
+numerically at ~1e+3 in exploration/verify_complexification.py). It is not
+the unique conserving choice -- see memo section 2c(iii); it is chosen for
+the invariant-subspace property proved as `shellBc_real` below. -/
+noncomputable def shellBc (k : ℕ → ℝ) : ℕ → (ℕ → ℂ) → ℂ
+  | 0,     v => -((k 0 : ℂ) * (starRingEnd ℂ) (v 0) * v 1)
+  | m + 1, v => (k m : ℂ) * (v m * v m)
+                  - (k (m + 1) : ℂ) * (starRingEnd ℂ) (v (m + 1)) * v (m + 2)
+
+/-- The outflux through the seam above shell `m`, as a real number.
+The energy pairing telescopes into differences of this quantity. -/
+noncomputable def out (k : ℕ → ℝ) (v : ℕ → ℂ) (m : ℕ) : ℝ :=
+  k m * ((starRingEnd ℂ) (v m) * (starRingEnd ℂ) (v m) * v (m + 1)).re
+
+/-- **The identity that makes the cancellation work.**
+`Re(conj(a)^2 * b) = Re(conj(b) * a^2)`.
+
+Both sides are the real part of a pair of complex conjugates: applying
+`starRingEnd` to `conj(a) * conj(a) * b` gives `a * a * conj b`, and
+conjugation preserves the real part. This is the formal content of the
+hand-derivation in memo section 2b. -/
+theorem re_conj_sq_mul (a b : ℂ) :
+    ((starRingEnd ℂ) a * (starRingEnd ℂ) a * b).re
+      = ((starRingEnd ℂ) b * a * a).re := by
+  simp [Complex.mul_re, Complex.mul_im]
+  ring
+
+/-- **Telescoping** (mirrors `sum_mul_shellB`): the energy pairing summed over
+shells `0..N` collapses to minus the outflux at the top shell. -/
+theorem sum_re_conj_mul_shellBc (k : ℕ → ℝ) (v : ℕ → ℂ) :
+    ∀ N : ℕ, ∑ n ∈ Finset.range (N + 1),
+        ((starRingEnd ℂ) (v n) * shellBc k n v).re = -(out k v N)
+  | 0 => by
+      rw [Finset.sum_range_one]
+      show ((starRingEnd ℂ) (v 0) * -((k 0 : ℂ) * (starRingEnd ℂ) (v 0) * v 1)).re = _
+      simp [out, Complex.mul_re, Complex.mul_im]
+      ring
+  | N + 1 => by
+      rw [Finset.sum_range_succ, sum_re_conj_mul_shellBc k v N]
+      have hkey := re_conj_sq_mul (v N) (v (N + 1))
+      -- Expand every complex operation into real/imaginary components, so both
+      -- the goal and the key identity become polynomial identities over ℝ.
+      simp only [shellBc, out, Complex.sub_re, Complex.sub_im, Complex.mul_re,
+                 Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im,
+                 Complex.conj_re, Complex.conj_im] at hkey ⊢
+      -- The cancellation is exactly `k N` times the key identity: the influx
+      -- into shell N+1 is the outflux from shell N. `linarith` cannot scale a
+      -- hypothesis by the VARIABLE `k N`, so `linear_combination` is required.
+      linear_combination (k N) * hkey
+
+/-- **Exact energy conservation for the complexified model (Tier A).**
+
+Under the truncation boundary condition `v_{N+1} = 0`, the conjugated
+complexified nonlinearity conserves the energy pairing exactly:
+`Σ_{n≤N} Re(conj(v_n) · B_n(v)) = 0`, i.e. `d/dt (½ Σ |v_n|²) = 0` along the
+nonlinear flow.
+
+This is the complex counterpart of MechanicaFluidorum's
+`shellB_energy_conservation`, and the formal backing audit ruling O2 required
+before W4's model could carry a Tier A claim. -/
+theorem shellBc_energy_conservation (k : ℕ → ℝ) (v : ℕ → ℂ) (N : ℕ)
+    (hbc : v (N + 1) = 0) :
+    ∑ n ∈ Finset.range (N + 1), ((starRingEnd ℂ) (v n) * shellBc k n v).re = 0 := by
+  rw [sum_re_conj_mul_shellBc, out, hbc]
+  simp
+
+/-- **The reals are an invariant subspace.**
+
+On real data the conjugation is inert, so `shellBc` returns a real number.
+This is what makes MechanicaFluidorum's real Katz-Pavlović solutions -- including
+the Katz-Pavlović finite-time blow-up solutions of the inviscid infinite system --
+solutions of this model too, which is why the memo's O5 falsification trap survives
+the change of model (memo section 2c(i)). Verified numerically to exactly 0.0;
+here it is exact by construction. -/
+theorem shellBc_real (k : ℕ → ℝ) (v : ℕ → ℂ) (hv : ∀ n, (v n).im = 0) (n : ℕ) :
+    (shellBc k n v).im = 0 := by
+  cases n <;>
+    simp [shellBc, Complex.mul_im, Complex.mul_re, Complex.sub_im, hv]
+
+/-! ## Audit certificates (Gate 2 / L4.1)
+
+Expected on every line: `[propext, Classical.choice, Quot.sound]` and nothing
+else -- in particular no `sorryAx`, which would mean an unproved hole. -/
+
+#print axioms re_conj_sq_mul
+#print axioms sum_re_conj_mul_shellBc
+#print axioms shellBc_energy_conservation
+#print axioms shellBc_real
+
+end QuantumFluids.ShellComplex

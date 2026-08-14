@@ -40,38 +40,38 @@ fi
 
 echo ""
 
-# Gate 2: Lean footprint check (Tier-A formal imports)
-echo "[GATE 2] Checking Lean imports..."
+# Gate 2: Lean kernel check (Tier-A formal claims)
+echo "[GATE 2] Building and axiom-auditing Lean..."
 
-if [ -d "$REPO_ROOT/lean_src" ]; then
-    lean_files=$(find "$REPO_ROOT/lean_src" -name "*.lean" | wc -l)
-
-    if [ "$lean_files" -gt 0 ]; then
-        echo "  Found $lean_files Lean file(s)"
-
-        # Check for Mathesis imports
-        if grep -r "import Mathesis" "$REPO_ROOT/lean_src" &>/dev/null; then
-            echo "  ✓ Mathesis imports detected"
-
-            # Verify no undefined Mathesis references
-            undefined=$(grep -r "Mathesis\." "$REPO_ROOT/lean_src" | grep -v "import" | wc -l)
-            echo "  Found $undefined Mathesis reference(s); verify versions pinned in SPEC.md"
+if [ -f "$REPO_ROOT/lean_src/lakefile.lean" ]; then
+    if command -v lake &>/dev/null; then
+        # Actually BUILD, rather than grepping for import lines. A text check
+        # cannot distinguish a proved theorem from one containing `sorry`,
+        # which is the entire point of Gate 2.
+        if (cd "$REPO_ROOT/lean_src" && lake build QuantumFluidsShell 2>&1 | tee /tmp/qf_lean_build.log | grep -qE "^error"); then
+            echo "  ✗ Lean build FAILED"
+            grep -E "^error" /tmp/qf_lean_build.log | head -5
+            exit 1
         fi
 
-        # Check for version comments or tags
-        if grep -r "-- Tag:" "$REPO_ROOT/lean_src" &>/dev/null; then
-            echo "  ✓ Version tags found in Lean source"
-        else
-            echo "  ⚠ No version tags found (add '-- Tag: ...' comments per LL-3)"
+        # Every theorem must depend on exactly the three standard axioms.
+        # sorryAx would mean an unproved hole shipped as a theorem.
+        if grep -q "sorryAx" /tmp/qf_lean_build.log; then
+            echo "  ✗ GATE 2 FAILED: a theorem depends on sorryAx (unproved hole)"
+            grep "sorryAx" /tmp/qf_lean_build.log
+            exit 1
         fi
 
-        echo "  ✓ GATE 2 PASSED (manual review required for tag correctness)"
+        n_certs=$(grep -c "depends on axioms" /tmp/qf_lean_build.log || true)
+        echo "  ✓ Lean builds clean; $n_certs axiom certificate(s) emitted"
+        grep "depends on axioms" /tmp/qf_lean_build.log | sed 's/^/    /'
+        echo "  ✓ GATE 2 PASSED"
     else
-        echo "  ⚠ No Lean files found (expected after M2)"
+        echo "  ⚠ lake not found; cannot verify Lean claims"
         echo "  ⚠ GATE 2 SKIPPED"
     fi
 else
-    echo "  ⚠ lean_src/ directory not found"
+    echo "  ⚠ no lean_src/lakefile.lean"
     echo "  ⚠ GATE 2 SKIPPED"
 fi
 

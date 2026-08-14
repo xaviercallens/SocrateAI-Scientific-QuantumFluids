@@ -9,10 +9,16 @@
 >   **This overrides §6/§7's own recommendation (use the sum)** and is the stronger
 >   ruling: it settles empirically whether the two definitions yield different β.
 >   §6's protocol is amended accordingly.
-> - **O2 — accept** the complexification, labelled as a deformation. **O3 — sweep `D`
->   directly**, report `ξ` only if `c` is non-circularly definable. **O4 — accept the
->   BEC/GPE scope**; no roton, and M1's Δ/Q_m have no counterpart here.
->   **O5 — build here**, offer upstream later.
+> - **O2 — accept** the complexification, labelled as a deformation.
+>   **✅ CLOSED 2026-08-14:** the Lean development O2 required now exists —
+>   `lean_src/QuantumFluidsShell.lean`, `shellBc_energy_conservation`, kernel-checked
+>   with axiom footprint `[propext, Classical.choice, Quot.sound]` against the same
+>   pinned Mathlib revision MechanicaFluidorum uses. W4's model carries Tier A backing
+>   for its central algebraic claim (CLAIM-007). Scope: the identity only — nothing
+>   about boundedness, blow-up, or any observable.
+> - **O3 — sweep `D` directly**, report `ξ` only if `c` is non-circularly definable.
+> - **O4 — accept the BEC/GPE scope**; no roton, and M1's Δ/Q_m have no counterpart here.
+> - **O5 — build here**, offer upstream later.
 >
 > *The body below is preserved unedited as the artifact that was audited.*
 

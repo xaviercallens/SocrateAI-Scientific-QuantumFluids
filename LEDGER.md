@@ -243,6 +243,51 @@ UPDATE 2026-08-14, round 2 -- TIMESCALE observables also fail, and reveal a
        divergence, parameter discontinuity, domain non-overlap.
 ```
 
+```
+[CLAIM-007] [TIER-A] [VERIFIED]
+Statement: "The conjugated complexified dyadic shell nonlinearity
+           B_n(v) = k_{n-1} v_{n-1}^2 - k_n conj(v_n) v_{n+1}
+           conserves the energy pairing EXACTLY under the truncation boundary
+           condition v_{N+1} = 0: sum_{n<=N} Re(conj(v_n) * B_n(v)) = 0.
+           Additionally, the reals are an invariant subspace: real data has
+           Im(B_n(v)) = 0."
+Source: lean_src/QuantumFluidsShell.lean --
+        theorem shellBc_energy_conservation, theorem shellBc_real,
+        with supporting re_conj_sq_mul and sum_re_conj_mul_shellBc.
+        Kernel-checked against Mathlib rev 6d605ae1 (the SAME revision
+        MechanicaFluidorum pins), toolchain leanprover/lean4:v4.33.0-rc2.
+Filed: 2026-08-14
+Updated: 2026-08-14
+Notes: TIER A. Closes audit ruling O2, which accepted the complexification as
+       a labelled deformation "carrying no Tier A backing until it has its own
+       Lean development". W4's model now has formal backing for its single
+       load-bearing algebraic claim.
+
+       Axiom footprint verified on all four theorems:
+         [propext, Classical.choice, Quot.sound]
+       and nothing else -- in particular no sorryAx.
+
+       Deliberately mirrors MechanicaFluidorum's real-model development
+       (shellB / sum_mul_shellB / shellB_energy_conservation) so the two can be
+       compared line for line, and is checked against the same pinned Mathlib.
+
+       The proof turns on one identity, re_conj_sq_mul:
+         Re(conj(a) * conj(a) * b) = Re(conj(b) * a * a)
+       -- both sides are the real part of a conjugate pair. That is the formal
+       content of the hand-derivation in memo section 2b, and the reason the
+       SINGLE conjugation placement works where the unconjugated version fails.
+
+       SCOPE: this is an algebraic identity about the nonlinearity. It says
+       nothing about boundedness, blow-up, or any observable -- those remain
+       Tier B or open. In particular it does NOT give Tier A status to
+       anything in the W4 measurement programme.
+
+       Gate 2 of scripts/verify.sh now BUILDS and axiom-audits Lean rather
+       than grepping for import lines; a text check cannot distinguish a proved
+       theorem from one containing sorry. The gate was negative-controlled by
+       inserting a sorry and confirming sorryAx appears in the certificate.
+```
+
 ---
 
 ## Design-memo audit register
@@ -313,6 +358,7 @@ code or data.**
 | CLAIM-R1 | — → RETRACTED | 2026-08-14 | Never promoted to a claim. beta_D vs beta_nu comparison invalid: horizon artifact (LL-11) |
 | CLAIM-R2 | — → RETRACTED | 2026-08-14 | Never promoted. Re-run on first-peak also invalid: non-monotonic in the sweep, conventions disagreed, N-check used the retracted observable |
 | CLAIM-006 | PENDING → VERIFIED | 2026-08-14 | Five observables fail on the dispersive side with a common root: no attractor. Bears on whether peak-enstrophy is the right framing |
+| CLAIM-007 | PENDING → VERIFIED | 2026-08-14 | TIER A: complexified nonlinearity's exact energy conservation, kernel-checked in Lean. Closes audit ruling O2 |
 
 ---
 

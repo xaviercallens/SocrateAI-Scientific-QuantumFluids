@@ -85,3 +85,9 @@ Thumbs.db
 # Keep metadata files tracked
 !data/external/*.meta
 !data/derived/*.meta
+
+# Lean build artifacts and fetched dependencies (multi-GB: Mathlib alone is
+# ~6.5GB of prebuilt oleans). Reproduced by `lake update && lake exe cache get`
+# against the pinned revision in lean_src/lakefile.lean.
+lean_src/.lake/
+lean_src/lake-manifest.json
