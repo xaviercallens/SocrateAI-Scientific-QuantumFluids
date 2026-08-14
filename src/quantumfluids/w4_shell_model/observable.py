@@ -176,3 +176,92 @@ def check_sampling_adequacy(y: np.ndarray, i: int, tol: float = SAMPLING_TOL):
     if worst_rel > tol:
         return (False, worst_rel, worst_why)
     return (True, worst_rel, "")
+
+
+# =====================================================================
+# Crossing time -- the round-3 observable (battery pre-registration,
+# docs/designs/M2_OBSERVABLE_VALIDATION_BATTERY.md "Round 3")
+# =====================================================================
+
+@dataclass(frozen=True)
+class CrossingResult:
+    time: float
+    index: int          # first sample index at or above the level
+    n_samples: int
+    sampling_ok: bool
+    sampling_rel_change: float
+    reason: str = ""
+
+
+def crossing_time(t, y, level, tol: float = SAMPLING_TOL) -> CrossingResult:
+    """First time y(t) reaches `level`, linearly interpolated between the
+    bracketing samples.
+
+    Adopted for round 3 because, unlike every amplitude observable and unlike
+    first_peak, a threshold crossing (a) is defined for EVERY conservative arm
+    -- all of them climb toward the ceiling (M2_REPORT section 6a) -- and
+    (b) does not depend on peak STRUCTURE, so the extra local maxima that
+    broke first_peak's parameter-monotonicity cannot move it.
+
+    Guards, all refusals rather than flags (a number that is not a
+    measurement must not be returned):
+      - y[0] >= level: the threshold is at or below the initial condition,
+        so the "crossing" would be the initial condition in disguise (the
+        MIN_RISE failure mode, transposed).
+      - no sample reaches level: the horizon does not contain the crossing;
+        extend t_horizon rather than treating the endpoint as an answer.
+    Sampling adequacy is checked as for first_peak: the interpolated
+    crossing time re-computed on each 2x-subsampled phase must agree within
+    tol (relative in time).
+    """
+    t = np.asarray(t, dtype=float)
+    y = np.asarray(y, dtype=float)
+    if t.shape != y.shape:
+        raise ValueError(f"shape mismatch: t {t.shape} vs y {y.shape}")
+    if len(y) < 2:
+        raise ValueError(f"need at least 2 trace samples, got {len(y)}")
+    if y[0] >= level:
+        raise ValueError(
+            f"threshold {level:g} is at or below the initial value {y[0]:g}: "
+            f"the crossing would be the initial condition in disguise"
+        )
+
+    tc = _interp_crossing(t, y, level)
+    if tc is None:
+        raise ValueError(
+            f"trace never reaches level {level:g} within the horizon "
+            f"(max reached: {float(np.max(y)):g}); extend t_horizon rather "
+            f"than treating the endpoint as a crossing"
+        )
+    tc_time, idx = tc
+
+    worst_rel = 0.0
+    worst_why = ""
+    for phase in (0, 1):
+        sub = _interp_crossing(t[phase::2], y[phase::2], level)
+        if sub is None:
+            return CrossingResult(tc_time, idx, len(y), False, float("nan"),
+                                  f"2x-subsampled trace (phase {phase}) never crosses; "
+                                  f"sampling adequacy cannot be established")
+        rel = abs(sub[0] - tc_time) / tc_time if tc_time > 0 else float("inf")
+        if rel > worst_rel:
+            worst_rel = rel
+            worst_why = (f"crossing time moved by {rel:.2%} under 2x subsampling "
+                         f"(phase {phase}), exceeding the {tol:.0%} tolerance")
+    if worst_rel > tol:
+        return CrossingResult(tc_time, idx, len(y), False, worst_rel, worst_why)
+    return CrossingResult(tc_time, idx, len(y), True, worst_rel, "")
+
+
+def _interp_crossing(t, y, level):
+    """(interpolated time, first index at/above level), or None if no crossing."""
+    above = np.flatnonzero(y >= level)
+    if len(above) == 0:
+        return None
+    i = int(above[0])
+    if i == 0:
+        return float(t[0]), 0
+    t0, t1, y0, y1 = t[i - 1], t[i], y[i - 1], y[i]
+    if y1 == y0:
+        return float(t1), i
+    return float(t0 + (level - y0) / (y1 - y0) * (t1 - t0)), i

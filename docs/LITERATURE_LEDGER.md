@@ -287,3 +287,57 @@ Physical Review Letters, 7(2), 51–52.
 | LIT-010 | Deaver–Fairbank / Doll–Näbauer | 1961 | ✓ VERIFIED | 2026-08-14 |
 
 **M0 DoD:** ✅ **COMPLETE** — All 10 entries VERIFIED. Repo locked for M1 start.
+
+---
+
+## Thermalization / absolute equilibrium of truncated conservative systems
+### (retrieved 2026-08-14 for the M2 §6b reframing; agent-verified from primary sources)
+
+### [LIT-011] Lee (1952) — origin of absolute equilibrium
+Lee, T. D. (1952). "On some statistical properties of hydrodynamical and magneto-hydrodynamical fields." *Quarterly of Applied Mathematics* **10**, 69–74. DOI: 10.1090/qam/51081.
+**Status:** VERIFIED (metadata via Crossref + a citing bibliography read locally; the paper's own text was NOT readable — publisher 403 — so its content is characterized only via the citing literature). Role: equipartition ensembles for truncated ideal fields.
+
+### [LIT-012] Kraichnan (1973) — absolute equilibrium, truncated Euler
+Kraichnan, R. H. (1973). "Helical turbulence and absolute equilibrium." *J. Fluid Mech.* **59**(4), 745–752. DOI: 10.1017/S0022112073001837.
+**Status:** VERIFIED (publisher abstract page). Role: canonical absolute-equilibrium spectra for inviscid, spectrally truncated flow.
+
+### [LIT-013] Cichowlas, Bonaïti, Debbasch & Brachet (2005) — truncated Euler thermalizes
+"Effective Dissipation and Turbulence in Spectrally Truncated Euler Flows." *Phys. Rev. Lett.* **95**, 264502. DOI: 10.1103/PhysRevLett.95.264502; arXiv:nlin/0410064 (open).
+**Status:** VERIFIED (arXiv abstract, verbatim: "relaxation towards absolute equilibrium of the conservative and time-reversible 3-D Euler equation with high-wavenumber spectral truncation"; the large-scale transient behaves dissipatively). Role: the transient-vs-equilibrium split the M2 relaunch is built on.
+
+### [LIT-014] Connaughton, Josserand, Picozzi, Pomeau & Rica (2005)
+"Condensation of Classical Nonlinear Waves." *Phys. Rev. Lett.* **95**, 263901. DOI: 10.1103/PhysRevLett.95.263901; arXiv:cond-mat/0502499 (open).
+**Status:** VERIFIED. Role: thermodynamics of the truncated defocusing NLS (GPE-family), wave-turbulence description with UV cutoff.
+
+### [LIT-015] Davis, Morgan & Burnett (2001) — truncated GPE equilibrates
+"Simulations of Bose Fields at Finite Temperature." *Phys. Rev. Lett.* **87**, 160402. DOI: 10.1103/PhysRevLett.87.160402; arXiv:cond-mat/0011431 (open).
+**Status:** VERIFIED (abstract verbatim: the projected GPE "will evolve randomised initial wave functions to equilibrium"). Role: the quantum-fluids instance of the phenomenon — this stream's own domain.
+
+### [LIT-016] Krstulovic & Brachet (2011) — dispersion DELAYS thermalization
+"Dispersive Bottleneck Delaying Thermalization of Turbulent Bose-Einstein Condensates." *Phys. Rev. Lett.* **106**, 115303. DOI: 10.1103/PhysRevLett.106.115303; arXiv:1007.4441 (open).
+**Status:** VERIFIED (abstract: "A bottleneck that produces spontaneous effective self-truncation and delays thermalization"). Role: **direct precedent for round 3's hypothesis** — that dispersion delays thermalization is established in truncated GPE; round 3 measures the analogue in the complexified dyadic model.
+
+### Shell-model statistical equilibrium (the novelty search — PRIOR WORK EXISTS)
+
+### [LIT-017] Aurell, Boffetta, Crisanti, Frick, Paladin & Vulpiani (1994)
+"Statistical mechanics of shell models for two-dimensional turbulence." *Phys. Rev. E* **50**, 4705–4715. DOI: 10.1103/PhysRevE.50.4705.
+**Status:** PARTIALLY VERIFIED (metadata via Crossref; abstract-level description from a search snippet only — do not quote its content until read).
+
+### [LIT-018] Ditlevsen & Mogensen (1996)
+"Cascades and statistical equilibrium in shell models of turbulence." *Phys. Rev. E* **53**, 4785–4793. DOI: 10.1103/PhysRevE.53.4785; arXiv:chao-dyn/9811006.
+**Status:** VERIFIED. Role: cascade-vs-statistical-equilibrium regimes in GOY-type shell models.
+
+### [LIT-019] Thalabard & Turkington (2016) — **closest single match to the M2 observation**
+"Optimal thermalization in a shell model of homogeneous turbulence." *J. Phys. A: Math. Theor.* **49**, 165502. arXiv:1509.09156 (verified firsthand).
+**Status:** VERIFIED (abstract verbatim: "the relaxation arbitrarily far-from-equilibrium of a single energy shell towards Gibbs equilibrium in an inviscid shell model of 3D turbulence").
+
+### [LIT-020] Tom & Ray (2017)
+"Revisiting the SABRA Model: Statics and Dynamics." *EPL* **120**, 34002. DOI: 10.1209/0295-5075/120/34002; arXiv:1801.00031.
+**Status:** VERIFIED. Role: equipartition-vs-turbulent regimes in Sabra; "absence of a sharp transition."
+
+**Novelty verdict for CLAIM-006/M2 §6b (recorded per Rule E-X):** equilibration of
+truncated conservative shell models is **established territory** ([LIT-017]–[LIT-020]);
+the agent found no thermalization study of the **Katz–Pavlović/Desnyansky–Novikov dyadic
+model specifically** (that literature centres on blowup/regularity). The M2 observation
+is therefore a *re-expression* — confirmation in a specific dyadic variant — not a new
+phenomenon, and is recorded as such.

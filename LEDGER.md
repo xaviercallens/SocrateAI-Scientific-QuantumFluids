@@ -248,6 +248,18 @@ UPDATE 2026-08-14, round 2 -- TIMESCALE observables also fail, and reveal a
 
        Seven candidates now, three distinct failure classes: horizon
        divergence, parameter discontinuity, domain non-overlap.
+
+REFRAMING + NOVELTY VERDICT (2026-08-15, retrieval complete): the phenomenon
+       is thermalization toward ABSOLUTE EQUILIBRIUM of a Galerkin-truncated
+       conservative system -- established for truncated Euler ([LIT-012],
+       [LIT-013]), truncated GPE/NLS ([LIT-014]-[LIT-016]), and, decisively
+       for novelty, for SHELL MODELS themselves ([LIT-017]-[LIT-020];
+       closest: Thalabard-Turkington 2016, "relaxation ... towards Gibbs
+       equilibrium in an inviscid shell model of 3D turbulence"). No prior
+       thermalization study of the KP/DN dyadic model specifically was found
+       (that literature centres on blowup/regularity), so this claim is a
+       RE-EXPRESSION confirming known behaviour in a dyadic variant --
+       recorded per Rule E-X, novelty withdrawn.
 ```
 
 ```
@@ -372,6 +384,62 @@ Notes: Resolves the question memo section 5 left open about W2. The condition is
        conserve energy?") into a precise, checkable condition.
 ```
 
+```
+[CLAIM-011] [TIER-A] [VERIFIED]
+Statement: "The conjugated complexified dyadic model preserves phase-space volume
+           (Liouville property), while the REAL Katz-Pavlovic model does not.
+           Formalised core (kernel-checked, Lean): the shell-diagonal derivative
+           blocks have zero R-trace -- rtrace_conj_mul (v |-> conj(v)*w has zero
+           trace for every w), rtrace_mul_I (multiplication by a purely imaginary
+           constant has zero trace), shell_divergence_zero (their sum), with
+           rtrace_mulRight (trace of mult-by-c is 2*Re c) as the sanity anchor.
+           Numerically: full-field divergence 4e-9 (complexified, with and
+           without dispersion) vs. -sum k_n a_{n+1} for the real model,
+           verified against the analytic formula to 4 decimals."
+Source: lean_src/QuantumFluidsShell.lean (Liouville section; axiom footprint
+        [propext, Classical.choice, Quot.sound] on all four lemmas);
+        M2_REPORT.md section 6b(ii) (numeric verification record).
+Filed: 2026-08-15
+Updated: 2026-08-15
+Notes: TIER SPLIT, stated exactly: Tier A covers the trace identities; the
+       assembly "these maps ARE the diagonal blocks of the flow derivative"
+       is by inspection of shellBc and is the numerically verified Tier-B
+       part. Fourth dividend of the conjugation (after invariant subspace,
+       conserving seam, and the free bit-for-bit positive control).
+
+       Consequence: volume preservation on the compact energy sphere gives
+       Poincare recurrence and licenses the statistical-equilibrium
+       description of CLAIM-012. Interpretive remark (flagged as such): the
+       real KP model's non-Liouville, volume-contracting character is
+       consistent with its blowup-oriented literature; the complexification
+       moves it into the Liouville family where the shell-model
+       statistical-equilibrium literature ([LIT-017]-[LIT-020]) operates.
+```
+
+```
+[CLAIM-012] [TIER-B] [VERIFIED]
+Statement: "Time-averaged enstrophy of the conservative complexified model is
+           consistent with microcanonical equipartition on the energy sphere,
+           <Omega_sum>_eq = E(4^{N+1}-1)/(3(N+1)) = 42.625 at N=4, E=0.625:
+           measured second-half means 37.8 (88.6%, truncation), 46.2 (108.3%,
+           D=0.02), 31.1 (73.0%, D=0.1 -- still relaxing). First-quarter means
+           differ 4x across regulators (32.3 / 65.5 / 17.6) while late-time
+           means converge: the regulator's signature is in the TRANSIENT."
+Source: M2_REPORT.md section 6b(iii) (runs of 2026-08-14, complex-phase
+        initial data, single trajectories).
+Filed: 2026-08-15
+Updated: 2026-08-15
+Notes: LIMITS, stated in advance of any use: five shells, single trajectories,
+       +/-20-30% expected fluctuation scale; unknown additional invariants
+       would shift the prediction (open question); the D=0.1 run had not
+       equilibrated by its horizon (itself evidence of slower relaxation --
+       the round-3 hypothesis, and the direct analogue of the "dispersive
+       bottleneck delaying thermalization" of [LIT-016]).
+
+       Also resolves the 'mean' observable's battery failure retroactively:
+       it was relaxing toward equilibrium, not misbehaving.
+```
+
 ---
 
 ## Design-memo audit register
@@ -446,6 +514,9 @@ code or data.**
 | CLAIM-008 | PENDING → VERIFIED | 2026-08-14 | All three E1 §4 regulators are conservative; the obstruction is experiment-wide, not dispersive-only |
 | CLAIM-009 | PENDING → VERIFIED | 2026-08-14 | Truncation control's β converges to the trivial energy bound −1, carrying no dynamical information |
 | CLAIM-010 | PENDING → VERIFIED | 2026-08-14 | Seam conserves iff Re(conj(v_N)²·v_{N+1})=0; resolves the W2 question left open by memo §5 |
+| CLAIM-006 | VERIFIED → VERIFIED (reframed) | 2026-08-15 | Novelty withdrawn: phenomenon identified as absolute-equilibrium thermalization, established incl. for shell models ([LIT-017]–[LIT-020]); re-expression per Rule E-X |
+| CLAIM-011 | PENDING → VERIFIED | 2026-08-15 | TIER A core: Liouville property of the complexification, kernel-checked trace identities; real KP is non-Liouville |
+| CLAIM-012 | PENDING → VERIFIED | 2026-08-15 | Equipartition prediction consistent; regulator signature is in the transient (measured) |
 
 ---
 

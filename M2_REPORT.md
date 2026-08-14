@@ -212,24 +212,38 @@ a *conserving* W2 seam inherits the very obstruction described above, while a
 
 Three results from the review pass, each verified before being written down.
 
-### (i) The phenomenon is (candidate-)known: thermalization to absolute equilibrium
+### (i) The phenomenon is known — retrieval complete, novelty verdict: NOT novel
 
-"Spectrally truncated conservative system relaxes toward an equipartition-like state,
-and sup-type observables measure the truncated equilibrium rather than the cascade" is,
-to the best of available recollection, the *absolute equilibrium / thermalization*
-phenomenon studied for truncated Euler and truncated GPE. Candidate anchors — **all
-[RETRIEVAL IN PROGRESS], none citable until verified (LL-10)**: T.D. Lee (~1952,
-equipartition ensembles for truncated ideal hydrodynamics); Kraichnan (~1973, absolute
-equilibrium); Cichowlas et al. (~PRL 2005, truncated Euler thermalizes, transient acts
-dissipative); Connaughton et al. (~PRL 2005, condensation of classical nonlinear waves);
-Davis–Morgan–Burnett (~PRL 2001, classical-field GPE thermalization); Krstulovic–Brachet
-(~PRL 2011, truncated GPE). A dedicated search for *shell-model-specific* absolute
-equilibrium work is part of the retrieval task — if it exists, §1's finding is a
-re-expression of it and will be recorded as such (Rule E-X).
+All anchors are now retrieval-verified ([LIT-011]–[LIT-020], LITERATURE_LEDGER.md).
+The phenomenon is **absolute equilibrium / thermalization** of spectrally truncated
+conservative systems: Lee (1952) and Kraichnan (1973) for the ensembles; Cichowlas,
+Bonaïti, Debbasch & Brachet (PRL 2005) for truncated Euler *relaxing toward absolute
+equilibrium with a dissipative-looking transient*; Davis–Morgan–Burnett (PRL 2001),
+Connaughton et al. (PRL 2005) and Krstulovic–Brachet (PRL 2011) for the truncated
+GPE/NLS family — the last of these establishing precisely that **dispersion delays
+thermalization** ("dispersive bottleneck"), which is the hypothesis round 3 measures in
+this model.
 
-Under this reading, the M2 negative sharpens into a positive research direction: **the
-cascade physics lives in the pre-thermalization transient**, and the natural observable
-is a *thermalization time*, not a peak amplitude.
+**The novelty search returned prior art.** Statistical equilibrium in truncated
+conservative *shell models* is established territory: Aurell et al. (PRE 1994),
+Ditlevsen–Mogensen (PRE 1996), Tom–Ray (EPL 2017), and — closest of all —
+Thalabard–Turkington (J. Phys. A 2016): "relaxation arbitrarily far-from-equilibrium
+… towards Gibbs equilibrium in an inviscid shell model of 3D turbulence." What the agent
+did *not* find is a thermalization study of the Katz–Pavlović/Desnyansky–Novikov dyadic
+model specifically — that literature centres on blowup/regularity. **So §1's finding is
+a re-expression, recorded as such per Rule E-X**: the observation confirms known
+shell-model equilibration in a dyadic variant apparently not previously examined this
+way. One honest interpretive remark, flagged as interpretation: the real KP dyadic model
+is *not* volume-preserving (§(ii)), while the shell models of the statistical-equilibrium
+literature are complex-amplitude models — the conjugated complexification appears to move
+KP from the blowup-oriented family into the Liouville family where equilibrium
+statistical mechanics applies. That observation, and the Liouville dichotomy itself, is
+the part of §6b not found in the retrieved literature.
+
+Under this reading, the M2 negative sharpens into a positive direction with a named
+precedent: **the cascade physics lives in the pre-thermalization transient**
+(Cichowlas et al.'s transient; Krstulovic–Brachet's delayed thermalization), and the
+natural observable is a *thermalization time*, not a peak amplitude.
 
 ### (ii) New result: the complexification restores the Liouville property
 

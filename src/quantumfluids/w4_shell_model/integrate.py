@@ -133,6 +133,7 @@ def integrate(
     dt: float | None = None,
     max_steps: int | None = None,
     trace_every: int | None = None,
+    a0: np.ndarray | None = None,
 ) -> ShellRun:
     """Integrate the shell model with classical RK4 and a divergence guard.
 
@@ -144,11 +145,23 @@ def integrate(
 
     trace_every: if set, record (t, Omega_sum, Omega_max) every k-th step.
     Needed to evaluate candidate observables other than sup_t Omega, which
-    OPEN ITEM O7 established does not converge in T for a purely
-    dispersive regulator.
+    OPEN ITEM O7 established degenerates for a purely dispersive regulator.
+
+    a0: optional explicit initial state (length N+1; may be complex),
+    overriding `profile`. Added for battery round 3, whose pre-registration
+    fixes ONE complexified initial condition for every arm including D=0 --
+    the real subspace is a measure-zero non-Liouville skeleton of the
+    volume-preserving complex flow, so generic complex data is the
+    comparable regime (M2_REPORT section 6b).
     """
     k = k_shells(N)
-    a = make_profile(profile, N)
+    if a0 is not None:
+        a = np.asarray(a0)
+        if a.shape != (N + 1,):
+            raise ValueError(f"a0 has shape {a.shape}, expected ({N+1},)")
+        a = a.astype(np.complex128) if np.iscomplexobj(a) else a.astype(np.float64)
+    else:
+        a = make_profile(profile, N)
     if D:
         a = a.astype(np.complex128)
 

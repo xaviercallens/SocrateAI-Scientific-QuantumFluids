@@ -197,3 +197,51 @@ def test_overdamped_real_run_is_rejected():
 def test_pre_registered_min_rise_is_ten_percent():
     """Pinned so a later edit that loosens it is visible in a diff."""
     assert MIN_RISE == 0.10
+
+
+# =====================================================================
+# Crossing time (round-3 observable)
+# =====================================================================
+
+from quantumfluids.w4_shell_model.observable import crossing_time
+
+
+def test_crossing_time_exact_on_linear_ramp():
+    t = np.linspace(0, 10, 101)
+    res = crossing_time(t, 2.0 * t, 7.0)   # crosses at t = 3.5 exactly
+    assert res.time == pytest.approx(3.5, abs=1e-12)
+    assert res.sampling_ok
+
+
+def test_crossing_rejects_threshold_below_initial():
+    """The MIN_RISE failure mode transposed: never return the initial
+    condition dressed up as a crossing."""
+    t = np.linspace(0, 5, 51)
+    with pytest.raises(ValueError, match="initial condition in disguise"):
+        crossing_time(t, 1.0 + t, 0.5)
+
+
+def test_crossing_rejects_never_reached():
+    t = np.linspace(0, 5, 51)
+    with pytest.raises(ValueError, match="never reaches"):
+        crossing_time(t, 0.1 * t, 10.0)
+
+
+def test_crossing_sampling_guard_fires_when_crossing_underresolved():
+    """A crossing at small t with coarse samples: subsampling shifts the
+    interpolated time by ~one sample spacing, a large RELATIVE error."""
+    t = np.linspace(0, 100, 21)             # 5-unit spacing
+    y = np.where(t < 4, 0.0, 10.0) + 0.01 * t   # jump near t~4, first spacing
+    res = crossing_time(t, y, 5.0)
+    assert not res.sampling_ok
+
+
+def test_crossing_on_real_model_is_horizon_independent():
+    """Once the horizon contains the crossing, extending it cannot move it."""
+    from quantumfluids.w4_shell_model.integrate import integrate, make_profile
+    vals = []
+    for T in (8.0, 16.0):
+        r = integrate(N=4, nu=0.0, D=0.02, profile="P3", t_horizon=T, trace_every=1)
+        level = 0.25 * (2.0**4) ** 2 * r.energy_initial   # f=1/4 of the ceiling
+        vals.append(crossing_time(r.trace_t, r.trace_omega_sum, level).time)
+    assert vals[0] == pytest.approx(vals[1], rel=1e-9)

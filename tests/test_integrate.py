@@ -199,3 +199,17 @@ def test_divergence_guard_trips_on_numerical_instability():
         "cannot be relied on to catch integrator instability"
     )
     assert run.t_stop < 50.0
+
+
+def test_explicit_initial_state_overrides_profile():
+    """Round-3 support: a0 (possibly complex) overrides profile, and a
+    complex a0 is honoured even at D=0."""
+    a0 = make_profile("P3", 4).astype(complex) * np.exp(1j * 0.7 * np.arange(5))
+    run = integrate(N=4, nu=0.0, D=0.0, profile="P1", t_horizon=0.2, a0=a0, trace_every=1)
+    assert run.energy_initial == pytest.approx(0.625)   # P3's energy, not P1's
+    assert run.max_abs_imag > 0.0                       # stayed complex at D=0
+
+
+def test_a0_shape_mismatch_rejected():
+    with pytest.raises(ValueError, match="expected"):
+        integrate(N=4, nu=0.1, a0=np.zeros(3))

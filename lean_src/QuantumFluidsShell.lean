@@ -114,6 +114,62 @@ theorem shellBc_real (k : ℕ → ℝ) (v : ℕ → ℂ) (hv : ∀ n, (v n).im =
   cases n <;>
     simp [shellBc, Complex.mul_im, Complex.mul_re, Complex.sub_im, hv]
 
+
+/-! ## Liouville: the complexified flow is volume-preserving (shell-local part)
+
+The review of 2026-08-14 (M2_REPORT §6b) established numerically that the realified
+flow of the conjugated complexification has phase-space divergence ~4e-9 (round-off),
+while the REAL Katz-Pavlović model has divergence `-Σ k_n a_{n+1} ≠ 0`. This section
+formalises the algebraic core of that result.
+
+SCOPE, stated precisely. `dv_n/dt` depends on `v_n` itself only through
+(a) the outgoing term `-k_n · conj(v_n) · v_{n+1}` — an ℝ-linear map in `v_n` for
+fixed `v_{n+1}` — and (b) the dispersive rotation `-(i D k_n²) v_n`. The phase-space
+divergence is the sum over shells of the ℝ-trace of these diagonal blocks. The
+theorems below prove each such trace is ZERO. What is NOT formalised here is the
+differentiation-level statement that these maps ARE the diagonal blocks of the flow's
+derivative — that step is by inspection of `shellBc` and is verified numerically
+(finite-difference Jacobian trace, exploration record in M2_REPORT §6b). Tier A for
+the trace identities; Tier B for the assembled model statement. -/
+
+/-- The trace, over ℝ, of an ℝ-linear endomorphism of ℂ, read off in the basis
+`{1, I}`: the coordinate of `f 1` along `1` plus the coordinate of `f I` along `I`. -/
+noncomputable def rtrace (f : ℂ →ₗ[ℝ] ℂ) : ℝ := (f 1).re + (f Complex.I).im
+
+theorem rtrace_add (f g : ℂ →ₗ[ℝ] ℂ) : rtrace (f + g) = rtrace f + rtrace g := by
+  simp [rtrace]; ring
+
+/-- `rtrace` is the trace: sanity anchor for the definition. Trace of multiplication
+by `c` on ℂ ≅ ℝ² is `2·Re c`. -/
+theorem rtrace_mulRight (c : ℂ) : rtrace (LinearMap.mulRight ℝ c) = 2 * c.re := by
+  simp [rtrace, Complex.mul_im]
+  ring
+
+/-- **Dispersive block has zero trace**: multiplication by a purely imaginary constant
+`d·I` (the quantum-pressure term has `d = -D k²`) preserves phase-space volume. -/
+theorem rtrace_mul_I (d : ℝ) :
+    rtrace (LinearMap.mulRight ℝ ((d : ℂ) * Complex.I)) = 0 := by
+  rw [rtrace_mulRight]
+  simp
+
+/-- **Outgoing block has zero trace**: for every fixed `w`, the ℝ-linear map
+`v ↦ conj(v) · w` has zero trace. This is why the conjugated nonlinearity —
+unlike the real Katz-Pavlović form, whose divergence is `-Σ k_n a_{n+1}` —
+contributes nothing to the phase-space divergence. -/
+theorem rtrace_conj_mul (w : ℂ) :
+    rtrace ((LinearMap.mulRight ℝ w).comp Complex.conjAe.toLinearMap) = 0 := by
+  simp [rtrace, Complex.mul_im]
+
+/-- **Shell-diagonal divergence vanishes.** The full diagonal block at shell `n` —
+outgoing conjugated term (with `w = -k_n·v_{n+1}` folded into `w`) plus dispersive
+rotation — has zero ℝ-trace. Summed over shells this is the Liouville property of
+the complexified model. -/
+theorem shell_divergence_zero (d : ℝ) (w : ℂ) :
+    rtrace ((LinearMap.mulRight ℝ w).comp Complex.conjAe.toLinearMap
+      + LinearMap.mulRight ℝ ((d : ℂ) * Complex.I)) = 0 := by
+  rw [rtrace_add, rtrace_conj_mul, rtrace_mul_I]
+  norm_num
+
 /-! ## Audit certificates (Gate 2 / L4.1)
 
 Expected on every line: `[propext, Classical.choice, Quot.sound]` and nothing
@@ -123,5 +179,9 @@ else -- in particular no `sorryAx`, which would mean an unproved hole. -/
 #print axioms sum_re_conj_mul_shellBc
 #print axioms shellBc_energy_conservation
 #print axioms shellBc_real
+#print axioms rtrace_mulRight
+#print axioms rtrace_mul_I
+#print axioms rtrace_conj_mul
+#print axioms shell_divergence_zero
 
 end QuantumFluids.ShellComplex
