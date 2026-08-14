@@ -101,10 +101,17 @@ itself**, not import one. This is a larger scope than originally planned.
       implemented until this memo is marked AUDITED in LEDGER.md** (E-1).
       Raises 5 open items (O1–O5) for the auditor, including a defect
       found in MechanicaFluidorum's own enstrophy observable (O1).
-- [ ] **AUDIT the design memo** ← next action, requires owner
-- [ ] Promote `exploration/verify_complexification.py` (Tier C scratch) to
-      a Tier B harness with negative controls — the memo's §8 requires this
-      as the *first* implementation step after audit, not a retrofit
+- [x] **AUDIT the design memo** — ✅ APPROVED by owner 2026-08-14, with
+      rulings O1–O5 recorded in LEDGER.md's design-memo audit register.
+      O1 ruled *record both* enstrophy conventions (stronger than the
+      memo's own recommendation of using the sum).
+- [x] Promote `exploration/verify_complexification.py` (Tier C scratch) to
+      a Tier B harness with negative controls — done 2026-08-14:
+      `src/quantumfluids/w4_shell_model/shell_dynamics.py` +
+      `tests/test_shell_dynamics.py` (23 tests, 5 negative controls,
+      mutation-tested with 3 injected production bugs, all caught).
+- [x] Write the MechanicaFluidorum defect report as a portable standalone
+      document — `docs/DEFECT_REPORT_MF_ENSTROPHY.md` (owner to route)
 - [ ] Design the regulator interface (function signature or class) that
       truncation, bounce, and dispersive/quantum-pressure regulators can
       all implement — does not exist anywhere yet, must be designed

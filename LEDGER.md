@@ -89,25 +89,31 @@ A design memo listed here as PENDING AUDIT may not be implemented, cited, or mea
 
 | Memo | Date authored | Status | Blocks |
 |---|---|---|---|
-| `docs/designs/M2_W4_DISPERSIVE_SHELL.md` | 2026-08-14 | ⏳ **PENDING AUDIT** | all M2 implementation |
+| `docs/designs/M2_W4_DISPERSIVE_SHELL.md` | 2026-08-14 | ✅ **AUDITED 2026-08-14** (owner) | — unblocked |
 | W2 (bounce regulator) | not authored | — | W2 only; W4 proceeds without it |
 
-**M2 memo — open items awaiting the auditor's ruling** (full text in the memo, §7):
+**M2 memo — auditor's rulings (owner, 2026-08-14):**
 
-- **O1 (blocking):** Which Ω? MechanicaFluidorum's `dyadic_cascade.py` defines
-  `Ω = ½Σₙkₙ²aₙ²` in its docstring and `enstrophy()` helper, but the `sup_Omega` it
-  actually writes to CSV is a **max over shells**, not a sum (demonstrated: ratio 9.0 = N+1
-  on that repo's profile P2 at N=8). Recommendation: use the sum; **also report to
-  MechanicaFluidorum as a defect in their data** — this stream does not modify another
-  stream's code.
-- **O2:** Is complexifying the dyadic model acceptable? It forfeits the existing Lean
-  backing and is a non-unique modeling choice. Recommendation: accept, labelled as a
-  deformation.
-- **O3:** What is `c` (sound speed) for the shell model? Recommendation: sweep `D` directly,
-  drop `ξ` unless `c` can be defined non-circularly.
-- **O4:** Scope is BEC/GPE (Bogoliubov, monotonic), **not ⁴He** (which has a roton, and is
-  what M1 measured). Recommendation: accept the BEC scope; do not bolt on a roton.
-- **O5:** Harness location — provisionally resolved (build here, offer upstream later).
+- **O1 — RULED: record BOTH.** Every run computes and reports both
+  `Ω_sum = ½Σₙkₙ²|aₙ|²` and `Ω_max = maxₙ ½kₙ²|aₙ|²`, and β is fitted against each.
+  *This overrides the memo's own recommendation (use the sum) and is the stronger
+  ruling:* it settles empirically whether the two definitions actually yield different β,
+  rather than assuming they do or don't, and preserves comparability with
+  MechanicaFluidorum's existing CSVs at no meaningful cost.
+- **O2 — RULED: accept** the conjugated complexification, explicitly labelled as a
+  deformation with a stated motivation (the invariant-subspace property), and carrying no
+  Tier A backing until it has its own Lean development.
+- **O3 — RULED: sweep `D` directly.** `ξ = D/c` is reported only if `c` can be defined
+  non-circularly for the shell model; otherwise omitted.
+- **O4 — RULED: accept the BEC/GPE scope.** W4 is a Bogoliubov-regime experiment with no
+  roton. It must not be reported as modeling ⁴He's excitation spectrum, and M1's fitted
+  Δ, Q_m have no counterpart in it.
+- **O5 — RULED:** harness built in QuantumFluids, offered upstream later if generally useful.
+
+**Cross-stream defect (arising from O1):** the MechanicaFluidorum sum-vs-max inconsistency is
+written up as a portable, standalone report at `docs/DEFECT_REPORT_MF_ENSTROPHY.md` for the
+owner to route to that stream's own audit. **This stream does not modify another stream's
+code or data.**
 
 ---
 

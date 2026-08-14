@@ -1,6 +1,24 @@
 # M2 / W4 — the dispersive (quantum-pressure) shell regulator
 
-**Status: Tier C authoring, AWAITING HUMAN AUDIT.** Nothing here may be implemented,
+> ## ✅ AUDIT OUTCOME — 2026-08-14 (owner)
+>
+> **APPROVED.** Implementation unblocked. Rulings on §7's open items, recorded in
+> `LEDGER.md`'s design-memo audit register:
+>
+> - **O1 — record BOTH** `Ω_sum` and `Ω_max`, fitting β against each.
+>   **This overrides §6/§7's own recommendation (use the sum)** and is the stronger
+>   ruling: it settles empirically whether the two definitions yield different β.
+>   §6's protocol is amended accordingly.
+> - **O2 — accept** the complexification, labelled as a deformation. **O3 — sweep `D`
+>   directly**, report `ξ` only if `c` is non-circularly definable. **O4 — accept the
+>   BEC/GPE scope**; no roton, and M1's Δ/Q_m have no counterpart here.
+>   **O5 — build here**, offer upstream later.
+>
+> *The body below is preserved unedited as the artifact that was audited.*
+
+---
+
+**Status when authored: Tier C, AWAITING HUMAN AUDIT.** Nothing here may be implemented,
 cited, or measured until this memo is marked AUDITED in `LEDGER.md`. This document is that
 audit's *input*. Follows the house pattern of MechanicaFluidorum
 `docs/designs/OP2_LITE_CANDIDATES.md` (design memo → audit → code; E-1).
