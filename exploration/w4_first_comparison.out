@@ -1,0 +1,95 @@
+N-independence check (is the regulator biting inside the grid?)
+  N    nu=0.02 supOm     D=0.02 supOm
+----------------------------------------
+  4        10.103475        72.117038
+  5        10.134045       222.764761
+  6        10.134045       326.835744
+  7        10.134045       329.378472
+
+(if the last rows agree, the grid resolves the regulator scale)
+
+=== sweep: viscous (N=6, profile=P3, T=8.0) ===
+8 points, 0 excluded
+      nu      supOm_sum      supOm_max  dt-refine sum
+     0.2       1.126905       0.686232         0.00%
+    0.15       1.334712       0.765881         0.00%
+     0.1       1.837058       0.861119         0.00%
+    0.07       2.569699       0.924634         0.00%
+    0.05       3.646736       0.969113         0.00%
+   0.035       5.381843       1.003404         0.00%
+   0.025       7.859638       1.026647         0.00%
+   0.018      11.424414       1.043081         0.00%
+
+    beta[sum] = -0.9774 (95% CI -1.0631 .. -0.8916, r^2 = 0.9923, n = 8)
+    beta[max] = -0.1677 (95% CI -0.2214 .. -0.1140, r^2 = 0.9069, n = 8)
+
+=== sweep: dispersive (N=6, profile=P3, T=8.0) ===
+8 points, 0 excluded
+       D      supOm_sum      supOm_max  dt-refine sum
+     0.2       6.633006       4.233812         0.00%
+    0.15       9.749846       5.288258         0.00%
+     0.1      11.391866       5.995343         0.00%
+    0.07      17.445039      10.280745         0.00%
+    0.05      30.204550      15.553356         0.00%
+   0.035      55.019186      15.183748         0.00%
+   0.025      48.231646      26.988332         0.00%
+   0.018      88.099387      46.412183         0.00%
+
+    beta[sum] = -1.0696 (95% CI -1.2603 .. -0.8789, r^2 = 0.9691, n = 8)
+    beta[max] = -0.9574 (95% CI -1.1468 .. -0.7680, r^2 = 0.9623, n = 8)
+
+========================================================================
+PRIMARY COMPARISON: beta_D vs beta_nu at matched diffusivity
+========================================================================
+[sum] viscous    beta[sum] = -0.9774 (95% CI -1.0631 .. -0.8916, r^2 = 0.9923, n = 8)
+[sum] dispersive beta[sum] = -1.0696 (95% CI -1.2603 .. -0.8789, r^2 = 0.9691, n = 8)
+[sum] 95% CIs OVERLAP -> not distinguishable at this grid
+
+[max] viscous    beta[max] = -0.1677 (95% CI -0.2214 .. -0.1140, r^2 = 0.9069, n = 8)
+[max] dispersive beta[max] = -0.9574 (95% CI -1.1468 .. -0.7680, r^2 = 0.9623, n = 8)
+[max] 95% CIs DISJOINT -> distinguishable at this grid
+
+Reminder: exploratory. Not a W4 result -- see this file's docstring
+for the pre-registration and control requirements it does not meet.
+
+================================================================================
+!! DO NOT CITE THESE BETA VALUES EITHER -- four defects found on inspection !!
+================================================================================
+This is the RE-RUN on the first-peak observable, after O7 invalidated the
+sup_t Omega version above. It is also not usable, for different reasons:
+
+1. THE TWO ENSTROPHY CONVENTIONS DISAGREE ON THE CONCLUSION.
+   [sum] CIs overlap  -> not distinguishable
+   [max] CIs disjoint -> distinguishable
+   Audit ruling O1 ("record both") exists precisely to surface this, and it
+   did. A result that depends on which convention is chosen is not a result.
+
+2. THE VISCOUS max-CONVENTION DATA IS SATURATING, NOT A POWER LAW.
+   supOm_max runs 0.686, 0.766, 0.861, 0.925, 0.969, 1.003, 1.027, 1.043 --
+   approaching an asymptote near ~1.05. Fitting a straight line in log-log to
+   saturating data yields beta[max] = -0.168, which describes the fit, not the
+   physics. The r^2 of 0.9069 -- the lowest in the run -- is the guard
+   correctly signalling this.
+
+3. THE DISPERSIVE sum-COLUMN IS NON-MONOTONIC.
+   D=0.035 -> 55.019 but D=0.025 -> 48.232, i.e. LOWER at smaller D.
+   Diagnosed: the number of local maxima before t=2 grows as D decreases
+   (1, 2, 2, 3 at D = 0.05, 0.035, 0.025, 0.018), so "the first peak" is NOT
+   the same physical feature at every D. At D=0.025 the detector catches a
+   newly-appeared earlier, smaller peak (t=1.20, 48.2) rather than the later
+   one it caught at D=0.035 (t=1.52, 55.0).
+
+   => first_peak is HORIZON-robust (it fixes O7) but DISCONTINUOUS in the
+      swept parameter. A new local maximum appearing shifts the measured
+      value abruptly. That is a defect of the same seriousness as O7.
+
+4. THE N-INDEPENDENCE CHECK PRINTED ABOVE IS INVALID.
+   It still evaluates sup_Omega, the observable O7 retracted, so the growth
+   it shows (72 -> 223 -> 327 -> 329) is the O7 horizon artifact rather than a
+   statement about grid resolution. It must be re-done on whatever observable
+   is finally adopted.
+
+Candidate successor under evaluation: sup over a PRE-REGISTERED FINITE WINDOW,
+max_{t <= T*} Omega(t) -- horizon-independent by construction and continuous in
+the swept parameter, hence immune to both O7 and defect 3 above. See
+exploration/windowed_sup_check.py.
