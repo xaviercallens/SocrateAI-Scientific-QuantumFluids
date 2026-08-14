@@ -10,10 +10,12 @@
 ## Phase 1: Data Access & Retrieval
 
 ### 1.1 ILL-DATA DOI Identification
-- **Status:** ⏳ AGENT RETRIEVING (a25c3d8801aee519c)
-- **Target:** Find persistent DOI from Godfrin et al. 2021 (PRB 103:104516) data-availability statement
-- **Expected format:** 10.5291/ILL-DATA.xxxxx
-- **Fallback:** Digitize Fig. 5 from review (Tier C steering data)
+- **Status:** ✅ AGENT COMPLETED (a25c3d8801aee519c, 2026-08-14)
+- **Finding:** DOI NOT web-indexed; data is RESTRICTED (requires ILL account or author request)
+- **Journal DOI:** 10.1103/PhysRevB.103.104516 ✓
+- **ILL-DATA DOI:** NOT YET RETRIEVED (requires direct contact)
+- **Recommendation:** Email H. Godfrin or ILL data-portal (data-portal@ill.fr) for access
+- **Fallback:** Digitize Fig. 5 from review (Tier C steering data) + arXiv supplementary tables
 
 ### 1.2 Data Access & Licensing
 - **Status:** PENDING
