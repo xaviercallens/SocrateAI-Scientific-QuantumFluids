@@ -25,3 +25,31 @@ alone; disagreement is itself informative.
 - **Interpretation, fixed in advance:** measures dispersion-ON-TOP-OF-dissipation, a
   DIFFERENT question from E1 §4's. Consistency statement to make afterwards: does the
   sign/ordering of the C effect agree with round 3's transient-delay measurement?
+
+---
+
+## RESULT (2026-08-15) — the pre-registered floor-stability criterion FAILS, which is the result
+
+Full output: `exploration/run_nu_floor.out`.
+
+- **B1 passed perfectly** (0.000% change at 2T, both floors, both spot points): the floor
+  does create an attractor and `sup_t Ω` is genuinely well-posed here. The mechanism
+  diagnosis behind M2 §6a is thereby confirmed from the other side.
+- **Floor stability FAILED decisively**: β_D = −0.380 → −0.192 [sum] as ν goes
+  0.01 → 0.02 (|Δβ| = 0.19 ≫ 0.05); [max] worse (−0.305 → −0.012, r² collapsing to 0.008).
+  The within-fit windows disagree as well ([sum] at ν=0.01: −0.53 large-D half vs −0.16
+  small-D half) — not a clean power law even at fixed floor.
+- Pure viscous comparator: β_ν = −0.869 [sum], r² = 0.993 — the instrument is fine; the
+  ν-floor *question* is the problem.
+
+**Verdict, per the pre-registered interpretation:** dispersion-on-top-of-dissipation has
+**no floor-independent exponent** — the dispersive effect on peak enstrophy halves when
+the floor doubles. The old §7 recommendation (ν-floor as the W4 reformulation) would
+never have produced a clean number; this is now measured rather than suspected, which is
+what conducting C alongside A bought.
+
+**What C *does* contribute to triangulation:** the **sign** is consistent and real at both
+floors — larger D ⇒ smaller peak enstrophy, i.e. dispersion suppresses/delays the
+cascade's build-up, agreeing in direction with the round-3 hypothesis ([LIT-016]'s
+dispersive bottleneck). C corroborates the direction of the effect while demonstrating
+that this formulation cannot quantify it cleanly.

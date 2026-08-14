@@ -1,0 +1,23 @@
+OPTION C: sup_t Omega with a viscous floor (N=5, T=8.0, common complex data)
+
+--- floor nu=0.01 ---
+  B1 D=0.2: sup changes 0.000% at 2T -> ok
+  B1 D=0.018: sup changes 0.000% at 2T -> ok
+  [sum] n=8 beta_D=-0.3802 r2=0.9312 windows[-0.528,-0.164]
+  [max] n=8 beta_D=-0.3050 r2=0.8050 windows[-0.432,-0.197]
+
+--- floor nu=0.02 ---
+  B1 D=0.2: sup changes 0.000% at 2T -> ok
+  B1 D=0.018: sup changes 0.000% at 2T -> ok
+  [sum] n=8 beta_D=-0.1923 r2=0.7954 windows[-0.344,+0.006]
+  [max] n=8 beta_D=-0.0123 r2=0.0078 windows[-0.227,+0.224]
+
+Floor stability (B3' absolute):
+  [sum] |beta(0.01) - beta(0.02)| = 0.1880 -> FAIL (floor-dependence is the result)
+  [max] |beta(0.01) - beta(0.02)| = 0.2927 -> FAIL (floor-dependence is the result)
+
+--- pure viscous comparator (D=0), same values as nu ---
+  [sum] beta_nu=-0.8687 r2=0.9928
+  [max] beta_nu=-0.7343 r2=0.9764
+
+Exploratory cross-check; interpretation pre-registered in C_NU_FLOOR_CROSSCHECK.md.
