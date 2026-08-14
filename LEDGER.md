@@ -173,6 +173,13 @@ Notes: Mechanism: dispersion is energy-neutral by construction, so at nu = 0 the
        LIMITS: demonstrated non-convergence by T=64 at N=4 with the mechanism
        clear. NOT demonstrated that it never converges at any horizon, nor that
        this holds for every profile and D.
+
+PRECISION ERRATUM (2026-08-14, Fable review): "does not converge in T" is
+       corrected to: sup_{t<=T} Omega is monotone and bounded (by k_N^2 E),
+       hence convergent in principle; on all tested horizons it remains
+       horizon-dependent, and its empirical limit is ceiling-scale, so the
+       observable DEGENERATES to the trivial energy bound rather than
+       diverging. Conclusions unchanged; wording corrected for exactness.
 ```
 
 ```

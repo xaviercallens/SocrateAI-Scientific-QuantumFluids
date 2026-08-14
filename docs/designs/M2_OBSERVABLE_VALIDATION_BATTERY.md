@@ -173,3 +173,61 @@ observable exists.
 
 An observable clearing B1–B6 on both regulators, with B7 reported. Until one does, no β
 comparison is run and no claim is filed.
+
+---
+
+## Amendments (pre-registered 2026-08-14, BEFORE round 3 is run)
+
+Two metric defects in the battery itself, found by the Fable review, fixed before any
+further use:
+
+**B3′ — absolute floor for near-zero slopes.** B3's relative-drift metric explodes when
+the underlying slopes are near zero: round 2 reported "161% drift" for `t_cross` from
+comparing β = 0.005 against β = 0.047 — both tiny. Amended criterion: when any variant's
+|β| < 0.1, B3 uses the **absolute** difference, requiring max|Δβ| ≤ 0.05; otherwise the
+relative criterion stands.
+
+**B5′ — ratio form for intrinsically N-dependent observables.** B5 as written ("< 1%
+between the two largest N") presumes the observable approximates an N-independent limit.
+A thermalization time to a *ceiling-relative* threshold intrinsically depends on N (the
+ceiling itself is `k_N²E`). Amended: for such observables B5 applies to the **normalized
+ratio** `O(param)/O(baseline)` at each N — the regulator-induced *delay factor* — and
+requires the β fitted to that ratio to be stable across consecutive N (|Δβ| ≤ 0.05).
+
+**Fit reporting (from review F5).** All sweeps are deterministic; t-distribution CIs are
+not sampling uncertainty but lack-of-fit gauges, and are relabeled as such. Every fit
+additionally reports **windowed-slope stability**: β over the first half and second half
+of the sweep range separately. A "distinguishable" conclusion requires the windows to
+agree within the sweep and the arms to differ by more than the window spread.
+
+---
+
+## Round 3 pre-registration (2026-08-14): thermalization time, all-conservative family
+
+**Motivation** (M2_REPORT §6a/§6b): all three of E1 §4's regulators are conservative; the
+regulator's signature is in the pre-thermalization transient; timescales are well-defined
+for every conservative arm (each trajectory climbs toward the ceiling).
+
+- **Observable:** `τ_f` = first time `Ω_sum(t)` reaches `f · k_N²E` (linear interpolation
+  between bracketing samples), for **f ∈ {1/8, 1/4, 1/2}** — f is the B3′-checked free
+  parameter.
+- **Arms:** pure truncation (baseline, D = 0) and dispersive (sweep D over
+  {0.2, 0.15, 0.1, 0.07, 0.05, 0.035, 0.025, 0.018}) at ν = 0. The bounce arm waits for
+  the W2 design memo's audit (exploratory Tier C preview only).
+- **Initial data — common to all arms, pre-registered:** P3 with per-shell phases
+  `e^{i·0.7n}` (same |aₙ|, same E). Rationale: the real subspace is a measure-zero,
+  *non-Liouville* skeleton inside the volume-preserving complex flow; generic complex
+  data is the regime where the statistical description (and the equipartition ceiling)
+  applies, and using identical data for every arm removes initial-condition confounds.
+- **Grids:** N ∈ {4, 5} primary; N = 6 at three D values for the B5′ ratio check.
+- **Horizons:** ladder up to T = 64; a configuration whose crossing does not occur is
+  EXCLUDED WITH ITS REASON, never assigned the endpoint.
+- **Discretisation (B4):** dt vs dt/2 within 1%; two-phase 2× trace-subsample agreement
+  of τ within 1%.
+- **Conventions (B7):** τ computed from Ω_sum is primary-reported; Ω_max version recorded
+  and reported alongside; disagreement stated plainly with no single headline.
+- **Interpretation, fixed in advance:** β from `τ_f ∝ D^β`. β ≈ 0 with the delay ratio
+  ≈ 1 across the sweep ⇒ dispersion does not delay thermalization at these scales (a real
+  negative). β > 0 stable across f, N, windows ⇒ dispersion delays thermalization with a
+  measurable exponent — the first well-posed quantitative signature distinguishing the
+  dispersive cutoff from bare truncation.

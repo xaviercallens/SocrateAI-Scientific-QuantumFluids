@@ -174,6 +174,15 @@
 > bounded; the question is only whether the bound is approached on any timescale where
 > the measurement means anything.
 >
+> ### ⚠ PRECISION ERRATUM E2 — 2026-08-14, from the Fable review
+>
+> O7's phrase "**does not converge** in T" overstates. `sup_{t≤T} Ω` is nondecreasing in
+> `T` and bounded by `k_N²E`, hence **convergent** as `T → ∞`. The correct statement:
+> on every tested horizon it remains horizon-dependent, and its limit is (empirically)
+> ceiling-scale — the observable **degenerates to the trivial energy bound** rather than
+> diverging. All conclusions stand; ledger language is corrected because ledgers should
+> be exact. Same correction applies to CLAIM-005's wording (noted there).
+>
 > ### ✅ O7 RESOLVED 2026-08-14 — owner ruled (c), change the observable
 >
 > The replacement was selected **on measurement, not intuition** — picking by intuition

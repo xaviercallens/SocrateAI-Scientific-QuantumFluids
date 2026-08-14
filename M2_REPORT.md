@@ -208,6 +208,75 @@ a *conserving* W2 seam inherits the very obstruction described above, while a
 
 ---
 
+## 6b. SECOND ADDENDUM (2026-08-14, top-tier review): the finding has a name, a mechanism theorem, and a validated statistical prediction
+
+Three results from the review pass, each verified before being written down.
+
+### (i) The phenomenon is (candidate-)known: thermalization to absolute equilibrium
+
+"Spectrally truncated conservative system relaxes toward an equipartition-like state,
+and sup-type observables measure the truncated equilibrium rather than the cascade" is,
+to the best of available recollection, the *absolute equilibrium / thermalization*
+phenomenon studied for truncated Euler and truncated GPE. Candidate anchors — **all
+[RETRIEVAL IN PROGRESS], none citable until verified (LL-10)**: T.D. Lee (~1952,
+equipartition ensembles for truncated ideal hydrodynamics); Kraichnan (~1973, absolute
+equilibrium); Cichowlas et al. (~PRL 2005, truncated Euler thermalizes, transient acts
+dissipative); Connaughton et al. (~PRL 2005, condensation of classical nonlinear waves);
+Davis–Morgan–Burnett (~PRL 2001, classical-field GPE thermalization); Krstulovic–Brachet
+(~PRL 2011, truncated GPE). A dedicated search for *shell-model-specific* absolute
+equilibrium work is part of the retrieval task — if it exists, §1's finding is a
+re-expression of it and will be recorded as such (Rule E-X).
+
+Under this reading, the M2 negative sharpens into a positive research direction: **the
+cascade physics lives in the pre-thermalization transient**, and the natural observable
+is a *thermalization time*, not a peak amplitude.
+
+### (ii) New result: the complexification restores the Liouville property
+
+The realified flow of the **conjugated complexified** model has phase-space divergence
+**exactly zero** — verified numerically (max |div| = 4×10⁻⁹ over random states, both with
+and without the dispersive term) and provable shell-by-shell: `dv_n/dt` depends on `v_n`
+only through `−k_n conj(v_n) v_{n+1}` (an ℝ-linear map with zero trace, for every
+`v_{n+1}`) and the dispersive rotation `−iDk_n² v_n` (trace `2·Re(−iDk²) = 0`). The
+**real** Katz–Pavlović model, by contrast, has divergence `−Σ k_n a_{n+1} ≠ 0` (verified
+numerically to 4 decimals against the analytic formula).
+
+Consequences: volume preservation on the compact energy sphere ⇒ Poincaré recurrence and
+a legitimate statistical-mechanics description — the "no attractor" observation upgraded
+from empirical remark to mechanism. This is the **third** unanticipated dividend of the
+conjugation (after the invariant real subspace and the conserving seam), and a genuine
+qualitative property of the deformation that memo §2c should carry: the real model's flow
+*contracts* phase-space volume along cascade states; the complexified one cannot. The
+shell-local trace identities are formalised in Lean (see `lean_src/QuantumFluidsShell.lean`,
+Liouville section); the assembly into the full field's divergence is the numerically
+verified, hand-derived part.
+
+### (iii) A quantitative equilibrium prediction, checked
+
+Liouville + energy as (sole known) invariant ⇒ microcanonical equipartition on the
+energy sphere: `⟨|v_n|²⟩ = 2E/(N+1)`, hence
+
+```
+⟨Ω_sum⟩_eq = E·(4^{N+1} − 1) / (3(N+1))     = 42.625  at N = 4, E = 0.625
+```
+
+Measured second-half time averages (complex-phase initial data, single trajectories):
+
+| regulator | Q1 mean | Q4 mean | 2nd-half mean | % of prediction |
+|---|---|---|---|---|
+| truncation (ν = D = 0) | 32.3 | 35.8 | 37.8 | 88.6% |
+| dispersive D = 0.02 | 65.5 | 42.6 | 46.2 | 108.3% |
+| dispersive D = 0.1 | 17.6 | 30.8 | 31.1 | 73.0% — quarters still climbing |
+
+Five-shell, single-trajectory caveats apply (±20–30% expected; unknown additional
+invariants would shift the prediction and are an open question). The decisive pattern:
+**first-quarter means differ by 4× across regulators while late-time means converge
+toward one predicted value.** The regulator's signature is in the transient — measured,
+not argued. This also retroactively explains the `mean` candidate's battery failure: it
+was *relaxing toward equilibrium*, not misbehaving.
+
+---
+
 ## 7. Recommended next step
 
 If the W4 question is to be pursued further, the honest reformulation is **not** another
