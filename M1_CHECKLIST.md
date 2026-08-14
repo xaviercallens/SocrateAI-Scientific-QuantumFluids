@@ -38,87 +38,83 @@
 ## Phase 2: Adapter Implementation
 
 ### 2.1 ILL Numor Reader (`src/quantumfluids/adapters/ill_numor.py`)
-- **Status:** NOT STARTED
-- **Task:** Parse ILL binary numor format
-- **Requirements:**
-  - Read instrument metadata (beamline, sample, geometry)
-  - Extract (Q, ω, intensity) grid
-  - Handle errors gracefully
-- **Tests:** tests/test_ill_numor.py
-  - Happy path: valid numor → correct shape, values
-  - Negative control: corrupted header → error
-  - Negative control: missing file → error
+- **Status:** ⏸️ PLACEHOLDER (deliberate — see notes)
+- **Decision:** Implementing a binary numor parser without a real sample
+  file to validate against would mean shipping untested format-guessing
+  logic — the exact failure mode LL-2 warns against. Module raises
+  `NumorNotImplementedError` with guidance to use `nexus_reader` or
+  `load_digitized_csv` instead.
+- **Unblocks when:** M1-DATA-001 yields a real numor file (see
+  M1_DATA_ACCESS_STRATEGY.md) to write and regression-test against.
 
 ### 2.2 NeXus Reader (`src/quantumfluids/adapters/nexus_reader.py`)
-- **Status:** NOT STARTED
-- **Task:** Parse HDF5 NeXus structure for inelastic neutron scattering
-- **Requirements:**
-  - Standard NeXus entry point paths
-  - Extract Q, ω, S(Q,ω) datasets
-  - Preserve metadata (sample, instrument)
-- **Tests:** tests/test_nexus_reader.py
-  - Happy path: valid .nxs → correct extraction
-  - Negative control: axis swap → error
-  - Negative control: missing dataset → error
+- **Status:** ✅ IMPLEMENTED (2026-08-14)
+- **Coverage:** Tries known Mantid/LAMP layout templates (`_KNOWN_LAYOUTS`);
+  refuses to guess at unrecognized structure.
+- **Caveat:** Layout templates NOT yet validated against a real Godfrin
+  et al. 2021 file — populated from general Mantid/LAMP convention.
+  Extend `_KNOWN_LAYOUTS` once a real sample is available.
+- **Tests:** tests/test_nexus_reader.py (skipped — h5py not installed,
+  blocked on python3.12-venv/sudo; see decision point below)
+  - ✅ Happy path: valid .nxs → correct extraction
+  - ✅ Negative control: unknown layout → error
+  - ✅ Negative control: axis swap (shape mismatch) → error
+  - ✅ Negative control: NaN in Q axis → error
+  - ✅ Negative control: non-monotonic Q axis → error
 
 ### 2.3 ASCII Reader (`src/quantumfluids/adapters/ascii_sqw.py`)
-- **Status:** NOT STARTED
-- **Task:** Parse plain-text S(Q,ω) data (space/comma-separated)
-- **Requirements:**
-  - Auto-detect delimiter
-  - Column header parsing (Q, omega, S, dS)
-  - Skip comments (#)
-- **Tests:** tests/test_ascii_sqw.py
-  - Happy path: valid ASCII → correct arrays
-  - Negative control: malformed columns → error
-  - Negative control: NaN in critical columns → error or flag
+- **Status:** ✅ IMPLEMENTED (2026-08-14)
+- **Coverage:** Auto-detects delimiter (comma/whitespace), 2–4 columns
+  (Q, ω[, S[, dS]]), skips `#` comments. Includes `load_digitized_csv()`
+  for the Tier-C fallback pathway (WebPlotDigitizer CSV export).
+- **Tests:** tests/test_ascii_sqw.py — 13 tests, all PASSING
+  - ✅ Happy path: 4-column, 2-column, comma-delimited, S-has-NaN (flagged not rejected)
+  - ✅ Negative control: single column → error
+  - ✅ Negative control: ragged rows → error
+  - ✅ Negative control: non-numeric value → error
+  - ✅ Negative control: NaN in Q axis → error
+  - ✅ Negative control: inf in ω axis → error
+  - ✅ Negative control: empty file → error
+  - ✅ Digitized-CSV happy path + 2 negative controls
 
 ### 2.4 Adapter Registry & Testing
-- **Status:** NOT STARTED
-- **Task:** Consolidate adapters in `src/quantumfluids/adapters/__init__.py`
-- **Negation Controls (LL-2 inheritance):**
-  - Axis swap detection
-  - Metadata consistency checks
-  - NaN/inf handling policy
+- **Status:** ✅ IMPLEMENTED (`src/quantumfluids/adapters/__init__.py`)
+- **Negative Controls (LL-2 inheritance):** ✅ Axis swap, metadata
+  consistency, NaN/inf handling — all enforced per adapter above.
 
 ---
 
 ## Phase 3: Dispersion-Fit Implementation
 
 ### 3.1 Landau Model (`src/quantumfluids/dispersion_fit/landau_model.py`)
-- **Status:** NOT STARTED
-- **Task:** Implement two-parameter Landau model
-- **Physics:**
-  ```
-  E(q) = c·q + Δ·(1 + (q/q_m)²)^{1/3}
-  ```
-  where:
-  - c: sound velocity
-  - Δ: roton gap
-  - q_m: roton momentum (~1.9 Å⁻¹ in ⁴He)
+- **Status:** ✅ IMPLEMENTED (2026-08-14)
+- **Physics (as implemented — two separate regions, not one closed form):**
+  - Phonon branch (linear): `E(Q) = c·Q`
+  - Roton branch (parabolic): `E(Q) = Δ + (ħ²/2μ)·(Q − Q_m)²`
 - **Implementation:**
-  - Nonlinear least-squares fit (scipy.optimize.curve_fit)
-  - Parameter bounds (c > 0, Δ > 0)
-  - Covariance matrix → confidence intervals
+  - `scipy.optimize.curve_fit` per branch, with `sigma`/`absolute_sigma`
+    support when `dS` uncertainties are available
+  - Covariance matrix → stderr on c, Δ, Q_m, effective mass
+  - `RotonFitResult.effective_mass_amu()` converts to units of m(⁴He)
+- **Validated:** synthetic-data recovery tests (known c/Δ/Q_m recovered
+  within M1 tolerance from noisy synthetic data)
 
 ### 3.2 Fitting Harness (`src/quantumfluids/dispersion_fit/fit_dispersion.py`)
-- **Status:** NOT STARTED
-- **Task:** End-to-end fit workflow
-- **Steps:**
-  1. Load S(Q,ω) data via adapters
-  2. Identify roton peak (ω vs. Q) manually or auto-detect
-  3. Extract phonon branch (low-Q, low-ω) and roton branch (high-Q)
-  4. Fit c to phonon region
-  5. Fit Δ, q_m to roton region
-  6. Compute residuals and uncertainties
+- **Status:** ✅ IMPLEMENTED (2026-08-14)
+- **Workflow:** `run_dispersion_fit()` — select phonon region (Q < 0.4 Å⁻¹
+  default) and roton region (|Q − 1.9| < 0.5 Å⁻¹ default) → fit both →
+  return `DispersionFitReport`. `compare_to_literature()` checks against
+  `REFERENCE_VALUES` (Cowley–Woods 1971, Glyde 1998, Godfrin 2021) using
+  the PLAN.md M1 tolerance (c ±5%, Δ ±10%).
+- **Tested:** end-to-end via synthetic SQwData and via a full ASCII-file
+  pipeline (load → fit → compare).
 
 ### 3.3 Visualization & Analysis
-- **Status:** NOT STARTED
-- **Task:** Plotting harness for fit results
-- **Outputs:**
-  - E(q) experimental points + fitted curve
-  - Residuals (experiment - model)
-  - Comparison to literature (Cowley–Woods, Glyde, etc.)
+- **Status:** ✅ IMPLEMENTED (`src/quantumfluids/dispersion_fit/plotting.py`)
+- **Outputs:** `plot_dispersion_fit()` saves E(Q) data + phonon/roton fit
+  curves + residuals to a PNG (Agg backend, headless-safe).
+- **Not yet run:** against real data — awaiting M1-DATA-001 or digitized
+  Fig. 5 fallback (Phase 1.3 fallback path).
 
 ---
 
