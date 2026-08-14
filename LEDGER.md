@@ -188,6 +188,40 @@ Reason for retraction: invalid. The beta_D value was an artifact of the T=1.0
 Filed: 2026-08-14 (as a retraction; the result was never promoted to a claim)
 ```
 
+```
+[CLAIM-006] [TIER-B] [VERIFIED]
+Statement: "Every observable of the form 'how large does Omega become' so far tested
+           inherits a horizon dependence on the DISPERSIVE side and none on the
+           viscous side. Five candidates failed: sup_t Omega (10.35% horizon
+           drift), time-averaged Omega (49.99%), max_t dOmega/dt (19.31%),
+           Omega-at-first-peak (horizon-stable but non-monotonic in the swept
+           parameter), and max_{t<=T*} Omega (beta drifts 40%, -1.062 to -1.496,
+           as T* goes 1.5 to 4.0). The viscous regulator passes every check for
+           every candidate tried."
+Source: exploration/observable_convergence.out,
+        exploration/windowed_sup_check.out,
+        exploration/w4_first_comparison.out (both annotated invalidations),
+        docs/designs/M2_OBSERVABLE_VALIDATION_BATTERY.md
+Filed: 2026-08-14
+Updated: 2026-08-14
+Notes: Common root, identified: a purely dispersive regulator has NO ATTRACTOR.
+       Dissipation removes energy so the viscous system settles and "how large
+       does Omega get" has a converged answer; dispersion is energy-neutral by
+       construction (memo section 3) so the conservative system keeps exploring,
+       measured at 66% of the k_N^2 E ceiling at T=64 and still climbing.
+
+       This is a structural consequence of comparing a system WITH an attractor
+       against one WITHOUT, not a run of bad luck in choosing observables. It is
+       evidence bearing on whether peak-enstrophy is the right framing for W4 at
+       all -- option (c) in the 2026-08-14 decision, not selected at the time,
+       when the evidence was three failures rather than five with a known
+       mechanism.
+
+       NOT a claim that no suitable observable exists -- only that none of the
+       five tried works, and that the reason they fail is now understood rather
+       than incidental.
+```
+
 ---
 
 ## Design-memo audit register
@@ -256,6 +290,8 @@ code or data.**
 | CLAIM-003 | VERIFIED → VERIFIED (references corrected) | 2026-08-14 | Reference values had been misattributed (LL-10); recomputed against 6 correct determinations, conclusion unchanged and better supported |
 | CLAIM-005 | PENDING → VERIFIED | 2026-08-14 | sup_t Omega does not converge in T for a purely dispersive regulator; blocks the primary W4 experiment as specified (O7) |
 | CLAIM-R1 | — → RETRACTED | 2026-08-14 | Never promoted to a claim. beta_D vs beta_nu comparison invalid: horizon artifact (LL-11) |
+| CLAIM-R2 | — → RETRACTED | 2026-08-14 | Never promoted. Re-run on first-peak also invalid: non-monotonic in the sweep, conventions disagreed, N-check used the retracted observable |
+| CLAIM-006 | PENDING → VERIFIED | 2026-08-14 | Five observables fail on the dispersive side with a common root: no attractor. Bears on whether peak-enstrophy is the right framing |
 
 ---
 

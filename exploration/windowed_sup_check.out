@@ -1,0 +1,17 @@
+--- viscous (N=5, T_run=6.0) ---
+     T*   beta[sum]      r^2   mono     beta[max]      r^2   mono
+    1.5     -0.9774   0.9923   True       -0.8437   0.9784   True
+    2.0     -0.9774   0.9923   True       -0.8437   0.9784   True
+    3.0     -0.9774   0.9923   True       -0.8437   0.9784   True
+    4.0     -0.9774   0.9923   True       -0.8437   0.9784   True
+
+--- dispersive (N=5, T_run=6.0) ---
+     T*   beta[sum]      r^2   mono     beta[max]      r^2   mono
+    1.5     -1.0617   0.9815  False       -1.0322   0.9784  False
+    2.0     -1.0651   0.9863   True       -1.0272   0.9814   True
+    3.0     -1.4520   0.9673   True       -1.5402   0.9457   True
+    4.0     -1.4962   0.9992   True       -1.5789   0.9892   True
+
+An observable qualifies only if beta is STABLE across T* and the
+response is MONOTONIC in the swept parameter. Exploratory: one N,
+one profile.
