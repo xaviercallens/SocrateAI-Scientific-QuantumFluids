@@ -81,23 +81,64 @@ This expression memo does not dissolve the quarantine; it sharpens it. The quant
 
 ## 4. W4 (Pre-Registered Experiment Proposal): Dispersive vs. Truncation Regularization
 
+**⚠️ Corrected 2026-08-14 (M2 scoping investigation):** the paragraphs
+below originally described a "MechanicaFluidorum exponent instrument"
+and a "W2 (reflective seam, already proposed in MechanicaFluidorum)"
+regulator as existing artifacts to import. **Neither exists.** A targeted
+search of MechanicaFluidorum (Explore agent, 2026-08-14) found:
+- A real, working Tier-C dyadic shell-model simulation
+  (`exploration/dyadic_cascade.py`, ad-hoc script, no regulator
+  abstraction, "no claims" banner) — usable as a numerical starting
+  point, not an instrument.
+- A design memo for a peak-enstrophy exponent-fitting protocol
+  (`docs/designs/OP2_LITE_CANDIDATES.md`) that explicitly states "No
+  code is written" — a pre-registered design, not an implementation.
+- No file, function, or object named "W2," "exponent instrument," or
+  "CIC"/"Certified Interval Criterion" anywhere in MechanicaFluidorum or
+  Mathesis. The `Reff_bounce` Lean theorem (`CallensDualScale.lean`) is
+  a scalar real-analysis result (`max(R, α/R)`), not a numerical shell-
+  model regulator, despite the name-association with "T-dual bounce."
+
+This was this stream's own aspirational description of itself, stated as
+though already true elsewhere — exactly the "two-definitions-under-one-
+name" and "building on a fiction" failure the programme's own governance
+(Rule E-X, LL-3) exists to catch. See LL-9 in LL.md for the lesson.
+**The design below is retained as the physics proposal it always was;
+the "already exists, just import it" framing is removed.** M2 must build
+the regulator abstraction and exponent-fitting harness as new work,
+informed by (not assumed identical to) MechanicaFluidorum's real Tier-C
+script and OP2_LITE design pattern. See PLAN.md M2 for the corrected
+task breakdown and a decision point on where this harness should live.
+
 ### Design Overview
 
-Add to the dyadic laboratory (MechanicaFluidorum exponent instrument) a **dispersively regularized shell model**: the Katz–Pavlović nonlinearity plus a **quantum-pressure analogue** term active below a healing scale ξ.
+Build a dispersively regularized variant of the dyadic shell cascade: the
+Katz–Pavlović nonlinearity plus a **quantum-pressure analogue** term
+active below a healing scale ξ.
 
-**Construction status:** candidate is a two-field (phase/amplitude) shell system whose amplitude equation acquires the Madelung-type quantum-pressure correction. **To be drafted and human-audited before any run** (see Actions, §5).
+**Construction status:** candidate is a two-field (phase/amplitude) shell
+system whose amplitude equation acquires the Madelung-type quantum-
+pressure correction. **To be drafted and human-audited before any run**
+(see Actions, §5) — this now includes designing the regulator interface
+and exponent-fitting harness itself, not just the physics term.
 
 ### Three Regulators, One Instrument
 
-Run the **Stage-1 exponent instrument** (dyadic lab from MechanicaFluidorum, already calibrated) on three regulators of the **same bare cascade**:
+Run a peak-enstrophy exponent-fitting harness (to be built — see above)
+on three regulators of the **same bare cascade**:
 
-1. **T-dual truncation** (existing control)
-   - Regulator: β_control = −2/3 (standard truncation cutoff)
+1. **T-dual truncation** (control)
+   - Regulator: standard truncation cutoff at a fixed shell index
    - Represents: a geometric cutoff with no internal structure
+   - Note: β_control = −2/3 appears in MechanicaFluidorum's
+     `OP2_LITE_CANDIDATES.md` as a *pre-registered threshold*, not a
+     measured/calibrated result from a run — do not cite it as an
+     empirical value until independently measured
 
-2. **T-dual bounce** (W2, reflective seam — already proposed in MechanicaFluidorum)
+2. **T-dual bounce** ("W2", reflective seam)
    - Regulator: reflective boundary condition at some mode wavenumber
    - Represents: a bounce mechanism (reflection/inversion symmetry)
+   - Status: proposed here, not implemented anywhere yet
 
 3. **Dispersive / quantum-pressure** (W4 — this proposal)
    - Regulator: healing-length-scale quantum-pressure term

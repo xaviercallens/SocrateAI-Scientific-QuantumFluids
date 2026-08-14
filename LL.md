@@ -40,6 +40,11 @@
 
 **Recommendation:** At M2, commit to a specific dyadic-lab git tag (e.g., `mf/instrument-v1.2.3`). Document the import in lean_src/: which file, which version, when last updated. Any upstream update requires deliberate re-audit of W4.
 
+**Superseded in part by LL-9 (2026-08-14):** this lesson assumed the
+thing to be version-pinned already existed. It didn't. Version-pinning
+discipline is still correct advice for *whenever* a real instrument
+exists to import — but check that first.
+
 ---
 
 ### LL-4: Dark-matter claims attract low-quality engagement
@@ -129,6 +134,44 @@ documented, checked root cause (as here) is more valuable evidence than
 a forced match. Re-test the same fitting code against Tier-B (raw
 instrument) data once available, rather than assuming the Tier-C result
 generalizes.
+
+---
+
+### LL-9: A cross-repo "import this" plan needs to check the other repo before it's load-bearing
+
+**Lesson:** EXPRESSION_MEMO_E1.md §4 described a "MechanicaFluidorum
+exponent instrument" and a "W2 (reflective seam) regulator, already
+proposed in MechanicaFluidorum" as things M2 would import. Neither
+existed. MechanicaFluidorum has a real Tier-C shell-model script
+(`exploration/dyadic_cascade.py`) and an *un-implemented* design memo
+for an exponent-fitting protocol — but no regulator abstraction, no
+fitting harness, and nothing named "W2" anywhere. The phrase "already
+proposed in MechanicaFluidorum" was QuantumFluids describing its own
+aspiration, written in a way that read back as a citation to an
+external fact once enough time had passed and enough documents referred
+to it.
+
+This was caught only because a scoped Explore-agent search was run
+*before* M2 code was written, specifically to locate the file paths and
+interface being planned around — not because anyone doubted the claim.
+
+**Impact:** Building M2 on the assumed-existing instrument would have
+produced code that imports nothing real, silently reimplementing
+whatever it needed while the documentation kept saying "imported" — the
+exact double-bookkeeping failure Rule E-X and LL-3 exist to prevent, just
+arrived at from the opposite direction (assuming an external artifact
+exists, rather than reusing a name for two different local claims).
+
+**Recommendation:** Before any milestone whose plan says "import X from
+[sister repo]," actually go look at [sister repo] for X — a cheap,
+scoped search, not a full audit — and update the plan with what's
+actually there before writing integration code. Do this as a standing
+practice at the start of any cross-repo milestone, not only when
+something feels suspicious. See MEMO_ROSETTA.md / MATHESIS_INTEGRATION.md
+for the (verified, real) Mathesis import pattern this should be checked
+against as a positive example — Mathesis's Duality.lean theorems were
+independently confirmed to exist and be kernel-checked before QuantumFluids
+built on them.
 
 ---
 

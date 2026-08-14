@@ -76,16 +76,45 @@
 
 ### M2 — W4 Construction (Shell Model, Quantum-Pressure Variant)
 
-**Objective:** Implement dispersive/quantum-pressure shell-model variant per E1 §4; integrate with dyadic-lab instrument from MechanicaFluidorum.
+**⚠️ Scope corrected 2026-08-14.** Original plan assumed a "dyadic-lab
+exponent instrument" and a "W2 regulator" already existed in
+MechanicaFluidorum, ready to import. A targeted search (Explore agent)
+found neither exists — MechanicaFluidorum has a real Tier-C shell-model
+script (`exploration/dyadic_cascade.py`) and an un-implemented design
+memo for exponent-fitting (`docs/designs/OP2_LITE_CANDIDATES.md`), but
+no regulator abstraction, no fitting harness, no "W2." See
+EXPRESSION_MEMO_E1.md §4 correction and LL.md LL-9 for the full account.
+**M2 must now build the regulator interface and exponent-fitting harness
+itself**, not import one. This is a larger scope than originally planned.
+
+**Objective:** Implement dispersive/quantum-pressure shell-model variant per E1 §4; build a peak-enstrophy exponent-fitting harness with a pluggable regulator interface (informed by, not copied from, MechanicaFluidorum's real script and design memo).
 
 **Tasks:**
+- [ ] **Decision needed (see below):** where should the exponent-fitting
+      harness live — in QuantumFluids (self-contained), contributed
+      upstream to MechanicaFluidorum (shared infrastructure, cross-repo
+      coordination), or built in parallel by both with a shared spec?
+- [ ] Design the regulator interface (function signature or class) that
+      truncation, bounce, and dispersive/quantum-pressure regulators can
+      all implement — does not exist anywhere yet, must be designed
+- [ ] Implement the exponent-fitting harness (peak-enstrophy β vs. cutoff
+      parameter, with confidence intervals — a CIC/MENSURA framework is
+      referenced in this stream's own docs but not implemented anywhere
+      either; needs its own design or a scoped-down substitute)
 - [ ] Implement w4_shell_model/ submodule (quantum-pressure term, dispersion relation integration)
+- [ ] Implement truncation-control and W2-bounce regulators as the first
+      two instances of the interface (both currently unimplemented
+      anywhere), to validate the harness before adding W4
 - [ ] Human audit of shell model before any run (checklist: term signs, dimension consistency, E1 fidelity)
-- [ ] Import dyadic-lab exponent instrument from MechanicaFluidorum (MF version/commit TBD)
-- [ ] Wire W4 shell model into instrument; prepare pre-registered readout
 - [ ] Document W4 assumptions and parameter choices in src/quantumfluids/w4_shell_model/README.md
 
-**Definition of Done:** Audited shell model, integrated instrument, pre-registered readout specification. Zero unaudited code paths in W4 branch.
+**Definition of Done:** Audited shell model, working exponent-fitting harness with 3 regulators (truncation, bounce, dispersive), pre-registered readout specification. Zero unaudited code paths in W4 branch.
+
+**Recommended model tier:** this involves real physics-modeling and
+architecture judgment (regulator interface design, quantum-pressure term
+form, dimensional consistency, fidelity to E1) — not mechanical
+implementation. Consider a higher-effort/higher-tier model for the
+design step specifically.
 
 **Blocks:** M3
 
@@ -137,7 +166,18 @@
 
 ## Decision points requiring owner approval
 
-1. **M0 approval:** Go ahead with literature retrieval as planned?
-2. **M2 instrument choice:** Which specific dyadic-lab instrument to import from MechanicaFluidorum?
-3. **M3 regulators:** Which three regulators to use in W4 (see E1 §4 for options)?
+1. ~~**M0 approval:**~~ ✅ Resolved — M0 complete (2026-08-14).
+2. **M2 harness location (was: "instrument choice" — corrected 2026-08-14):**
+   Since no exponent-fitting harness exists in MechanicaFluidorum to
+   import, where should QuantumFluids build one?
+   - **(a) Self-contained in QuantumFluids** — no cross-repo dependency,
+     but potentially duplicates future MechanicaFluidorum work if they
+     build their own instrument later.
+   - **(b) Contribute upstream to MechanicaFluidorum** — becomes real
+     shared infrastructure both streams can use, but requires
+     cross-repo coordination and MechanicaFluidorum's own audit process.
+   - **(c) Build in QuantumFluids now, offer to upstream later** if it
+     proves generally useful — avoids blocking on coordination, keeps
+     the option open.
+3. **M3 regulators:** Which three regulators to use in W4 (see E1 §4 for options)? Unchanged from original plan, but now depends on M2 actually building them.
 4. **M4 timeline:** Proceed with outreach now, or only after M3 results?
