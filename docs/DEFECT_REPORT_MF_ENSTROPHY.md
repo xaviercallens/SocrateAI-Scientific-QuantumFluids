@@ -54,6 +54,36 @@ are computed with two different definitions.
 
 ---
 
+## 2a. The shipped data file already contains both conventions, in one column
+
+This is the strongest form of the evidence and does not depend on reading the code at all.
+
+The `INFEASIBLE` rows take zero integration steps and report `sup_Omega` at `t = 0`
+(line 225, via `enstrophy()` — the **sum**). The `OK` rows report the value accumulated
+inside `_simulate` (the **max**). Both land in the same `sup_Omega` column of
+`data/dyadic_omega_sup.csv`.
+
+Because the INFEASIBLE rows are evaluated at a known state, both conventions can be computed
+exactly and compared against what was written:
+
+```
+  N  prof   reported    SUM@t=0    MAX@t=0   which?
+ ---------------------------------------------------
+ 12    P2     6.5000     6.5000     0.5000   SUM
+ 12    P3     1.0000     1.0000     0.5000   SUM
+ 16    P2     8.5000     8.5000     0.5000   SUM
+ 16    P3     1.0000     1.0000     0.5000   SUM
+```
+
+(P1 is degenerate — a single non-zero shell makes sum = max = 0.5 — so it cannot
+discriminate, and indeed reports 0.5 under both.)
+
+So `sup_Omega` in the published CSV is **not a single observable**: which one a row carries
+depends on its `status`. Any fit that pools `OK` and `INFEASIBLE` rows — or any comparison
+between them — is mixing two different quantities.
+
+---
+
 ## 3. Reproduction
 
 Run against the repo's own profile P2 at `N=8`, chosen because P2 (`aₙ = 2⁻ⁿ`) makes every
