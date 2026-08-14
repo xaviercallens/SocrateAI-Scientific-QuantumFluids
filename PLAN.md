@@ -7,7 +7,16 @@ M4 open, needs owner action.
 
 | M0 | M1 | M2 | M3 | M4 |
 |---|---|---|---|---|
-| ✅ | ✅ | ✅ (negative finding) | 🛑 blocked by M2 | ⏸ open |
+| ✅ | ✅ | ✅ (finding, reframed per Rule E-X) | 🔄 relaunched (round 3 + C running) | ⏸ open |
+
+**M3 relaunch (2026-08-15, owner options A+C+D):** the W4 comparison is re-posed on the
+pre-thermalization transient — observable τ_f (thermalization time), all-conservative
+arms, with named precedent (Krstulovic–Brachet's "dispersive bottleneck delaying
+thermalization", [LIT-016]) — plus the ν-floor cross-check (option C) as an independent
+triangulation. Pre-registrations: battery "Round 3" section and
+docs/designs/C_NU_FLOOR_CROSSCHECK.md. The M2 finding itself is reframed as a
+re-expression of established shell-model equilibration ([LIT-017]–[LIT-020]); the
+Liouville dichotomy (CLAIM-011) is the part not found in the retrieved literature.
 
 ---
 
