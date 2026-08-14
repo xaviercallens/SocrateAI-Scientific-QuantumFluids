@@ -1,76 +1,194 @@
-# EXPRESSION MEMO E1: Dual-Scale Language Dictionary
+# EXPRESSION MEMO E1: Quantum Fluids as the Realized Instance of Dual-Scale Regularization
 
-**Status:** [unverified — to be promoted from QuantumFluids proposal after M0 verification]
+**Status:** expression memo (Rule E-X: express before extend — every entry below first restates an ESTABLISHED result in the programme's language, and only then states what is conjectured).
 
-**Purpose:** Establish the dual-scale regularization framework for quantum-fluid physics.
+**Citation status:** Every citation in this memo is `[LL-6 pending]`: written from memory, none may be cited in a tiered artifact before retrieval (see LITERATURE_LEDGER.md, §4).
 
-**Depends on:** SocrateAI-Scientific-Mathesis (Tier A/B foundational definitions)
-
----
-
-## Structure
-
-This memo will be populated with:
-
-1. **§0** — Naming and scope clarification (vs. Poly-Algebraic Calculus stream)
-2. **§1** — Tier-A physics: Landau two-parameter model, DMBT kinetic theory
-3. **§2** — Tier-A definitions: phonon, roton, excitation spectrum, quantum pressure
-4. **§3** — Dual-scale duality application: macro (hydrodynamic) vs. micro (excitation-based)
-5. **§4** — W4 pre-registered experiment design: three regulators, instrument, readout
-6. **§5** — Dataset lineage: ILL Data Portal, open repositories, FAIR metadata
-7. **§6** — Outreach strategy and contact log (Godfrin correspondence)
+**Quarantine:** No claim about classical Navier–Stokes is made or implied by any Tier A/B row; the bridge statements are Tier C and labeled as such (see §3, §4).
 
 ---
 
-## Current status
+## 1. The Claim of This Memo, in One Sentence
 
-- [unverified] All claims in §1–5 pending M0 literature retrieval
-- [unverified] Expression is complete and ready for promotion after literature verification
-- [unverified] No [unverified] tags should remain in this memo before it is moved from proposal to docs/
+> There exists a real fluid in which the programme's four atomic principles are not hypotheses but **measured facts** — the superfluid — and the honest expression of that fact repositions Hypothesis U as the classical sibling of an open problem the quantum-fluids community already owns.
 
 ---
 
-## Promotion criteria (M0 DoD)
+## 2. The Dictionary: Established Physics → Programme Language
 
-Before E1 is promoted from the proposal to docs/ in this repo:
+### E1.1 — Quantum Pressure & Healing Length (P1: Self-Dual Bound)
 
-1. Every Tier-A reference in §1–7 must have a LITERATURE_LEDGER.md entry (LIT-NNN ID)
-2. Every [unverified] tag must be resolved (either cite it or move to narrative/)
-3. W4 experiment design (§4) must be audited for dimensional consistency and E1 fidelity
-4. Dual-scale terminology must be cross-checked against Mathesis definitions
+| Established result | Tier | Programme reading |
+|---|---|---|
+| **Gross–Pitaevskii (GPE) dynamics.** Madelung transform splits GPE into fluid equations plus a quantum-pressure term active at the healing length ξ = ℏ/√(mα'), where α' is kinematic viscosity and m is particle mass. The healing length is the length scale below which quantum effects dominate. [LL-6: Madelung 1927; Gérard 2006 / Bethuel–Saut for GPE well-posedness classes] | A | The quantum-pressure term is a **regulator confined below a fundamental length** — the ξ-incarnation of the sub-√α′ deformation, with inertial invisibility above ξ (P1 + the Reff_inertial requirement from Mathesis). The bound √α' ≤ max(ξ, α'/ξ) is not a theorem here; it is **Nature's choice**. |
 
----
-
-## Outline (to be expanded)
-
-### §0 Naming and scope
-
-[Content TBD: explains separation from Poly-Algebraic Calculus stream per RES-1]
-
-### §1 Landau excitation spectrum
-
-[Content TBD: cites Feynman 1955, Godfrin & Krotscheck 2022, dispersion relation]
-
-### §2 Dual-scale framework
-
-[Content TBD: Madelung transform, DMBT, macro–micro duality]
-
-### §3 Tier-A physics definitions
-
-[Content TBD: phonon (acoustic excitation), roton (minimal-energy excitation), quantum pressure]
-
-### §4 W4 experiment design
-
-[Content TBD: three regulators, pre-registered readout, instrument specification]
-
-### §5 Open datasets and FAIR metadata
-
-[Content TBD: ILL Data Portal, DOI structure, checksum provenance]
-
-### §6 Outreach strategy
-
-[Content TBD: Godfrin correspondence plan, Institut Néel contacts]
+**Physics note:** The healing length is the coherence length of the order parameter. Below ξ, quantum phase information matters; above ξ, the fluid looks classical.
 
 ---
 
-**Next:** Expand each section during M0 with verified citations from LITERATURE_LEDGER.md.
+### E1.2 — Circulation Quantization & Vortex Cascade (P4: Bounce + P3: Discrete Pins Continuous)
+
+| Established result | Tier | Programme reading |
+|---|---|---|
+| **Circulation quantization.** Γ = n·ℏ/m (n integer); vortex cores have fixed size ~ξ and cannot collapse. Quantum-turbulence cascade terminates in reconnections of quantized vortices; it does not cascade to ever-smaller vortex cores. [LL-6: Onsager 1949; Feynman 1955; Barenghi–Skrbek–Sreenivasan PNAS 2014 review] | A | **P4 (no-collapse / bounce)** and **P3 (continuous circulation pinned by an integer)** — both running in a laboratory fluid at K = 1.8 K. The cascade has a bottom rung, and it is **topological** (quantization), not merely viscous. Vortex reconnections are the deflection mechanism (bounce) at the scale floor. |
+
+**Experiment:** Direct numerical simulations and neutron-scattering experiments (Godfrin et al. 2021, LIT-002) show the phonon-roton excitation spectrum; the quantum-turbulence studies (Polanco et al. 2025, Institut Néel, LIT-004) image vortex structures.
+
+---
+
+### E1.3 — Cooper Pairing & Flux Quantization (P2: Sym² Lock, Analogy)
+
+| Established result | Tier | Programme reading |
+|---|---|---|
+| **Cooper pairing.** Two microscopic fermionic modes (e.g., electrons near the Fermi surface) bind into one macroscopic bosonic mode (Cooper pair, charge 2e). Flux quantization Φ = n·h/(2e) is metrology-grade. [LL-6: BCS 1957; Deaver–Fairbank / Doll–Näbauer 1961] | A (physics); C (analogy) | **Structural analogue of Sym² lock (P2):** macroscopic degrees of freedom generated as pair-composites of microscopic ones, with the composite charge 2e read directly off the quantization. The analogy to hydrodynamic modes as Sym² of excitations is **Tier C** (exploratory); the cited BCS physics is **Tier A**. |
+
+**Caveat:** Superconductors (fermionic) and superfluids (bosonic, e.g., ⁴He) are different phases, but both instantiate topological quantization. The analogy is suggestive, not proven.
+
+---
+
+### E1.4 — Semiclassical Limit & Open Problem (Hypothesis U's Sibling)
+
+| Established result | Tier | Programme reading |
+|---|---|---|
+| **The vanishing-ξ limit.** The semiclassical limit of quantum hydrodynamics toward classical hydrodynamics is a hard open analysis problem: vortex-filament limits, ξ → 0 asymptotics, uniform regularity bounds. [LL-6: quantum-hydrodynamic-limit literature to be assembled; Bethuel–Saut, Spirn, Schweyer recent works] | A (open problem, not solved) | **Hypothesis U's sibling**, restated in fluid language. α' → 0 (this programme: Navier–Stokes limit of T-dual regularization) and ξ → 0 (quantum fluids: classical hydrodynamics limit of GPE) are the **same epistemic object:** a regularized family, globally well-behaved at fixed cutoff, whose uniform control in the vanishing-cutoff limit is the open core. Neither limit is known. |
+
+**Implication:** The programme's obstruction O5 (well-posedness of NS does not follow from GPE) is not a programme failure; it is the quantum-fluids community's **known open problem** restated in the programme's language.
+
+---
+
+## 3. What the Expression Buys (and What It Does Not)
+
+### Buys
+
+**(i) Citable grounding in nature.**  
+The sentence "nature already implements a topological cascade cutoff" becomes **citable** — in helium II and BECs, not in water, and that **qualification is what makes it defensible**. No overreach to classical water; the physics is specific to the quantum case.
+
+**(ii) No isolation.**  
+The programme stops being isolated. Its open problem (the ξ → 0 limit, or α' → 0 for T-duality) has a **named sibling with an active community** and partial results to import or contrast. The quantum-fluids community has 50+ years of experimental and computational work on this exact limit; that work is now accessible as a comparison point, not a claim.
+
+**(iii) One concrete, falsifiable experiment (W4).**  
+An experiment that costs one model variant, not a new theory (see §4).
+
+### Does NOT Buy
+
+**No transfer of regularity from GPE to Navier–Stokes.**  
+The quantum regulator (quantum pressure) is **dispersive** (energy-preserving, complex dispersion relation), not dissipative (viscous, real damping). The two limits (ξ → 0, α' → 0) may fail or succeed **independently**. Any claim that GPE regularity implies NS regularity dies at obstruction O5 review (see MechanicaFluidorum §4.1).
+
+**Quarantine maintained.**  
+This expression memo does not dissolve the quarantine; it sharpens it. The quantum-fluids instantiation is a **sibling problem**, not a bridge to NS.
+
+---
+
+## 4. W4 (Pre-Registered Experiment Proposal): Dispersive vs. Truncation Regularization
+
+### Design Overview
+
+Add to the dyadic laboratory (MechanicaFluidorum exponent instrument) a **dispersively regularized shell model**: the Katz–Pavlović nonlinearity plus a **quantum-pressure analogue** term active below a healing scale ξ.
+
+**Construction status:** candidate is a two-field (phase/amplitude) shell system whose amplitude equation acquires the Madelung-type quantum-pressure correction. **To be drafted and human-audited before any run** (see Actions, §5).
+
+### Three Regulators, One Instrument
+
+Run the **Stage-1 exponent instrument** (dyadic lab from MechanicaFluidorum, already calibrated) on three regulators of the **same bare cascade**:
+
+1. **T-dual truncation** (existing control)
+   - Regulator: β_control = −2/3 (standard truncation cutoff)
+   - Represents: a geometric cutoff with no internal structure
+
+2. **T-dual bounce** (W2, reflective seam — already proposed in MechanicaFluidorum)
+   - Regulator: reflective boundary condition at some mode wavenumber
+   - Represents: a bounce mechanism (reflection/inversion symmetry)
+
+3. **Dispersive / quantum-pressure** (W4 — this proposal)
+   - Regulator: healing-length-scale quantum-pressure term
+   - Represents: dispersive regularization (energy-preserving)
+
+### Pre-Registered Readout
+
+**Observable:** Peak-enstrophy exponent β(ξ) or β(α') per regulator.
+
+**Experimental protocol:**
+- Identical four-arm sampling controls (same initial conditions, same box, same time window)
+- Certified Interval Criterion (CIC) per Mathesis/MENSURA framework
+- Report β with 95% confidence intervals
+- File results in LEDGER.md immediately
+
+### Fixed-in-Advance Interpretations
+
+**Scenario 1: Three equal exponents.**  
+⇒ The cutoff mechanism is **irrelevant at this observable** (a real and useful negative result).
+
+**Scenario 2: Dispersive regulator flattening β where truncation does not.**  
+⇒ The regularization mechanism **carries information the exponent sees**. This is the first experimental daylight between "a cutoff" and "**this cutoff**" — which is exactly the daylight the programme's geometry claims exists.
+
+### Why This Matters
+
+The experiment is not attempting to resolve ξ → 0 (known open problem). It is asking: **at fixed ξ**, does the *type* of regulator leave a signature in a measured exponent? If yes, that signature is the programme's first measured datum in quantum fluids.
+
+---
+
+## 5. Actions
+
+### A1. Literature Retrieval (LL-6 blocking)
+Retrieve and date every `[LL-6 pending]` reference in §2:
+- Madelung (1927) — Zeitschrift für Physik
+- Onsager (1949) — Nuovo Cimento
+- Feynman (1955) — Progress in Low Temperature Physics
+- BCS (1957) — Physical Review
+- Deaver–Fairbank (1961) & Doll–Näbauer (1961) — Phys. Rev. Lett.
+- Barenghi–Skrbek–Sreenivasan (2014) — PNAS
+- Bethuel–Saut (GPE well-posedness) — archival or textbook
+- Godfrin et al. (2021) — PRB 103:104516 (already VERIFIED, LIT-002)
+- Polanco et al. (2025) — PNAS 122(27) (already VERIFIED, LIT-004)
+
+**Owner:** M0 milestone, target 2026-08-31. See LITERATURE_LEDGER.md for retrieval paths.
+
+### A2. W4 Shell Construction (Design Memo, Pre-Audit)
+Draft a design memo (E-1: definition first, audit before code) specifying:
+1. The two-field (phase/amplitude) shell Hamiltonian
+2. Madelung-correction term (quantum-pressure analogue)
+3. Dimension consistency checks
+4. Comparison against DMBT literature values
+5. Proposed healing length ξ (as a free parameter for W4)
+
+**Owner:** M2 milestone, target before W4 run. Will undergo human audit (checklist: term signs, ξ interpretation, fidelity to E1.1).
+
+### A3. Related-Work Paragraph (NS Article)
+One paragraph in the NS article's related-work section (after E1 is promoted):
+- Express E1.2/E1.4 (quantum-fluids sibling problem)
+- Replace any temptation to cite quantum fluids as *evidence* with citing them as the *realized sibling*
+- Cite LIT-001 (Godfrin & Krotscheck 2022) as the entry point to the quantum-fluids literature
+
+**Owner:** M4 milestone (post-W4 results). Tone: recognition of a parallel open problem, not a solution claim.
+
+### A4. Rosetta Table Sync
+Keep row entries in MEMO_ROSETTA.md (especially the **Quantum Fluids** row) in sync with revisions to E1 as literature retrieval completes.
+
+**Owner:** Continuous during M0. When A1 completes, the Quantum Fluids row status changes from `[LL-6 pending]` to `VERIFIED`, and the Action column updates.
+
+---
+
+## 6. Appendix: Tier Labeling Convention
+
+| Tier | Meaning | Example from this memo |
+|---|---|---|
+| **Tier A** | Citation-verified, established result | Madelung 1927; Onsager 1949; Feynman 1955; Godfrin et al. 2021 (once [LL-6] retrieved) |
+| **Tier B** | Unit-testable, reproducible within this programme | W4 shell model once constructed and audited; enstrophy exponent measurement |
+| **Tier C** | Narrative, exploratory, not verifiable by external citation or test | The Sym² analogy between BCS and hydrodynamic modes (E1.3); any speculation beyond named experiments |
+
+---
+
+## 7. Cross-References
+
+- **Mathesis.Duality.lean** (lean_src/): Core theorems P1–P4
+- **MEMO_ROSETTA.md** (docs/): Quantum Fluids row (status: Tier A physics → programme reading)
+- **LITERATURE_LEDGER.md** (docs/): Citation registry; [LL-6 pending] items from this memo
+- **PLAN.md** (root): Milestones M0–M4; M0 unlocks all [LL-6 pending]
+- **LEDGER.md** (root): Claims filed post-M1/M3
+- **LL.md** (root): Lessons learned, especially LL-6 (pending literature assembly)
+
+---
+
+**Version:** 2026-08-14 (proposal stage, awaiting M0 retrieval)  
+**Status:** Ready for literature audit; no claims filed until [LL-6 pending] → VERIFIED  
+**Next action:** A1 (literature retrieval), blocking A2–A4
