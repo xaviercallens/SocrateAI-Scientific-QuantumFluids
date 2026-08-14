@@ -148,10 +148,54 @@ def test_max_steps_raises_rather_than_truncating():
         integrate(N=16, nu=0.1, D=0.0, profile="P1", max_steps=1000)
 
 
-def test_divergence_guard_trips_on_blowup():
-    """Inviscid, undispersed, long horizon: the guard must catch the
-    magnitude excursion rather than returning inf/nan silently."""
-    run = integrate(N=6, nu=0.0, D=0.0, profile="P1", t_horizon=50.0, dt=1e-3)
-    assert run.status in {"OK", "DIVERGED"}
-    if run.status == "DIVERGED":
-        assert run.t_stop < 50.0
+# =====================================================================
+# Boundedness of the TRUNCATED inviscid model -- design memo ERRATUM E1
+#
+# These replace an earlier test that asserted the truncated inviscid model
+# "must blow up", accepting either outcome and therefore asserting nothing.
+# It cannot blow up: energy conservation bounds every amplitude by sqrt(2E),
+# hence Omega by k_N^2 * E. Katz-Pavlovic blow-up is a statement about the
+# INFINITE system. Getting this wrong would have made the memo's O5
+# falsification trap unfireable.
+# =====================================================================
+
+def test_truncated_inviscid_model_stays_bounded():
+    """No finite-time blow-up with finitely many shells, however long we run."""
+    run = integrate(N=6, nu=0.0, D=0.0, profile="P3", t_horizon=40.0, dt=1e-3)
+    assert run.status == "OK", "truncated inviscid model diverged -- it cannot"
+    assert run.t_stop == pytest.approx(40.0)
+
+
+def test_amplitudes_respect_the_sqrt_2E_bound():
+    """|a_n| <= sqrt(2E) for all n,t -- the bound that forbids blow-up."""
+    run = integrate(N=6, nu=0.0, D=0.0, profile="P3", t_horizon=40.0, dt=1e-3)
+    bound = np.sqrt(2.0 * run.energy_initial)
+    assert run.sup_abs_amplitude <= bound * (1 + 1e-6), (
+        f"sup|a| = {run.sup_abs_amplitude:.6f} exceeded sqrt(2E) = {bound:.6f}"
+    )
+
+
+def test_enstrophy_respects_the_kN_squared_energy_bound():
+    """Omega <= k_N^2 * E, the consequence of the amplitude bound."""
+    run = integrate(N=6, nu=0.0, D=0.0, profile="P3", t_horizon=40.0, dt=1e-3)
+    bound = (2.0**6) ** 2 * run.energy_initial
+    assert run.sup_enstrophy_sum <= bound * (1 + 1e-6)
+
+
+def test_the_bound_also_holds_under_pure_dispersion():
+    """Dispersion is energy-neutral, so the same bound applies at nu=0, D>0.
+    If it did not, the dispersive term would be secretly injecting energy."""
+    run = integrate(N=6, nu=0.0, D=0.1, profile="P3", t_horizon=5.0, dt=1e-4)
+    bound = np.sqrt(2.0 * run.energy_initial)
+    assert run.sup_abs_amplitude <= bound * (1 + 1e-6)
+
+
+def test_divergence_guard_trips_on_numerical_instability():
+    """The guard's real job: catching an RK4 instability from too large a dt,
+    which IS reachable (unlike blow-up). Uses a deliberately reckless step."""
+    run = integrate(N=8, nu=0.0, D=0.0, profile="P1", t_horizon=50.0, dt=0.5)
+    assert run.status == "DIVERGED", (
+        "an absurdly large dt did not trip the divergence guard; the guard "
+        "cannot be relied on to catch integrator instability"
+    )
+    assert run.t_stop < 50.0

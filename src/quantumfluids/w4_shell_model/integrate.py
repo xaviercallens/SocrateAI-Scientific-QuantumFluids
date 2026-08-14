@@ -91,6 +91,10 @@ class ShellRun:
     energy_final: float
     t_stop: float
     max_abs_imag: float = field(default=0.0)
+    sup_abs_amplitude: float = field(default=0.0)
+    """sup over t and n of |a_n|. Energy conservation bounds this by
+    sqrt(2E) in the conservative case, which is why a TRUNCATED inviscid
+    dyadic model cannot blow up -- see ERRATUM E1 in the design memo."""
 
     def as_row(self) -> dict:
         return {
@@ -107,6 +111,7 @@ class ShellRun:
             "E_final": self.energy_final,
             "t_stop": self.t_stop,
             "max_abs_imag": self.max_abs_imag,
+            "sup_abs_amplitude": self.sup_abs_amplitude,
         }
 
 
@@ -147,6 +152,7 @@ def integrate(
     sup_sum = enstrophy_sum(a, k)
     sup_max = enstrophy_max(a, k)
     max_abs_imag = float(np.max(np.abs(np.imag(a)))) if np.iscomplexobj(a) else 0.0
+    sup_abs = float(np.max(np.abs(a)))
 
     t = 0.0
     steps_done = 0
@@ -173,10 +179,13 @@ def integrate(
 
         sup_sum = max(sup_sum, enstrophy_sum(a, k))
         sup_max = max(sup_max, enstrophy_max(a, k))
+        sup_abs = max(sup_abs, float(np.max(np.abs(a))))
         if np.iscomplexobj(a):
             max_abs_imag = max(max_abs_imag, float(np.max(np.abs(np.imag(a)))))
 
-    e_final = energy(a) if np.all(np.isfinite(a)) else float("nan")
+    # A diverged state's energy is meaningless and its square overflows, so
+    # report nan rather than computing a number nobody should use.
+    e_final = float("nan") if status == "DIVERGED" else energy(a)
 
     return ShellRun(
         N=N,
@@ -192,4 +201,5 @@ def integrate(
         energy_final=e_final,
         t_stop=t,
         max_abs_imag=max_abs_imag,
+        sup_abs_amplitude=sup_abs,
     )

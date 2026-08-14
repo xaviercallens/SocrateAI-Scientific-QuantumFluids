@@ -18,6 +18,49 @@
 
 ---
 
+> ## ⚠ ERRATUM E1 — 2026-08-14, post-audit: §6's O5 trap was stated wrongly
+>
+> **This corrects a pre-registered protocol item and therefore needs the owner's
+> notice, not merely a silent edit.** It was found before any W4 experiment was run.
+>
+> §6 states the O5 falsification trap as:
+>
+> > *"at `ν = D = 0` with real initial data, the model must exhibit finite-time
+> > blow-up (Katz–Pavlović 2005). If it does not, the implementation is wrong."*
+>
+> **That trap can never fire, and demanding it would condemn a correct
+> implementation.** With `N+1` shells the nonlinearity conserves `E = ½Σ|aₙ|²`
+> exactly (CLAIM-004), so `|aₙ|² ≤ Σₘ|aₘ|² = 2E` for every shell and every time,
+> giving the uniform bounds
+>
+> ```
+>     |aₙ(t)|  ≤  √(2E)              Ω(t)  ≤  ½ k_N² · 2E  =  k_N² E
+> ```
+>
+> A **truncated** inviscid dyadic model is therefore globally bounded and cannot
+> blow up in finite time. Katz–Pavlović (2005) is a theorem about the **infinite**
+> system, where energy reaches arbitrarily high shells; truncation is precisely
+> what removes that possibility.
+>
+> **Corrected statement**, which restores MechanicaFluidorum's original and correct
+> formulation (`OP2_LITE_CANDIDATES.md` §3, "O5 (Euler test)") that §6 mis-transcribed:
+>
+> > **O5 falsification trap (corrected).** Re-run the sweep at `ν = 0`. The trap is
+> > about the *exponent*, not about a single trajectory: if the dispersive regulator
+> > alone yields `β = 0` at `ν = 0` — i.e. `sup_t Ω` bounded **uniformly in `N`** as
+> > `N → ∞` — treat the result as presumptively wrong, since it would amount to
+> > proving regularity for the inviscid dyadic model, where finite-time blow-up is a
+> > published theorem. A *finite* `sup_t Ω` at any *fixed* `N` is expected and
+> > carries no information; only its growth rate with `N` does.
+>
+> Nothing built so far depends on the incorrect form: no W4 experiment has been run,
+> and the code and Positive Control #1 are unaffected. The weak unit test that
+> encoded the same confusion (`test_divergence_guard_trips_on_blowup`, which accepted
+> either outcome and so asserted nothing) is replaced by tests asserting the bounds
+> above, which are the real, checkable content.
+
+---
+
 **Status when authored: Tier C, AWAITING HUMAN AUDIT.** Nothing here may be implemented,
 cited, or measured until this memo is marked AUDITED in `LEDGER.md`. This document is that
 audit's *input*. Follows the house pattern of MechanicaFluidorum
