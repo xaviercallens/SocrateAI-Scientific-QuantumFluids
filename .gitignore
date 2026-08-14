@@ -1,0 +1,76 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Lean / Mathlib
+*.olean
+lake-packages/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Data / Large files
+data/external/*.nxs
+data/external/*.numor
+data/external/*.dat
+data/external/*.csv
+data/derived/*
+!data/external/.gitkeep
+!data/derived/.gitkeep
+
+# Temporary / Logs
+*.log
+tmp/
+temp/
+*.tmp
+*.bak
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local environment variables
+.env
+.env.local
+.env*.local
+
+# Lean build artifacts
+.lake/
+
+# Keep metadata files tracked
+!data/external/*.meta
+!data/derived/*.meta
