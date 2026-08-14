@@ -137,6 +137,78 @@ generalizes.
 
 ---
 
+### LL-10: Citation discipline has to reach into source code, not just documents
+
+**Lesson:** This stream has rigorous machinery for verifying citations in
+*documents* — LITERATURE_LEDGER.md, the `[LL-6 pending]` tag, the M0
+retrieval gate. None of it reached a Python dict. `fit_dispersion.py`'s
+`REFERENCE_VALUES` carried Landau parameters recalled from memory and
+attributed them to `"cowley_woods_1971"` and `"glyde_1998"`. Retrieval
+later established that **neither paper reports those values**: Cowley &
+Woods (1971) is a broad inelastic-scattering study that Godfrin et al.
+(2021) explicitly exclude from their Table IV of roton parameters, and
+Glyde et al. (1998) measures `2.0 ≤ Q ≤ 4.0 Å⁻¹` — entirely beyond the
+roton, with no phonon region, so it *cannot* report a sound velocity and
+reports no numerical Δ or Q_m at all. The numbers attributed to
+Cowley–Woods appear to belong to Henshaw & Woods (1961) instead.
+
+The values were plausible — within ~0.3% of the true ones — which is
+precisely why this survived. A wildly wrong number would have failed the
+M1 fit comparison immediately.
+
+**Impact:** CLAIM-003's headline agreement figures were computed against
+partly-invented reference values. The *conclusion* survived recomputation
+against six correctly-attributed determinations (c within 0.198%, Δ within
+0.03–0.33%, all inside tolerance) — but that was luck, not process.
+
+**Recommendation:** any numeric constant in source code that represents a
+published measurement needs the same provenance as a document citation:
+the source, the table or page it came from, its uncertainty, and its
+conditions — in a comment beside the value. Where a constant is a
+*derived* or *quoted* value rather than the source's own measurement, say
+so (Godfrin et al.'s `c` is an ultrasonic result quoted from Abraham
+et al.; their P=0 `Δ_R` is itself taken from Stirling as a calibration
+input, so agreeing with it is partly circular). Prefer values a source
+tabulates over values recalled as "literature-typical". Cross-check at
+least one against primary data you hold: the roton minimum of Godfrin's
+own published dispersion table sits at 0.7413 meV / 1.9200 Å⁻¹, which
+confirmed the corrected values and refuted the coded ones.
+
+---
+
+### LL-11: Check that an observable converges before fitting an exponent to it
+
+**Lesson:** The W4 experiment fits `β` from `sup_t Ω`. The first
+exploratory run produced a clean, tempting result — `β_ν = −0.91` vs
+`β_D = −0.63`, 95% CIs disjoint under both enstrophy conventions, r² > 0.96,
+zero excluded points. It was invalid. `sup_t Ω` does not converge in the
+horizon `T` for a purely dispersive regulator: at `ν = 0` the dynamics is
+energy-conserving, so there is no attractor and the enstrophy keeps finding
+new maxima up to the truncation ceiling `k_N²E`. Measured at N=4: the
+viscous value is stable from `T = 2` through `T = 64`, while the dispersive
+value climbs monotonically across the same range and is still climbing at
+the end. `β_ν` was a model property; `β_D` was a property of the horizon
+I happened to pick.
+
+Every quality signal looked good. High r², tight CIs, and — the most
+seductive one — the dt-refinement inclusion criterion passed at **0.00%**
+for all twelve points. That criterion tests convergence in the *timestep*.
+Nothing in the pre-registered protocol tested convergence in the *horizon*.
+
+**Impact:** would have produced a headline result that was an artifact of
+an arbitrary parameter, passing every check the protocol specified.
+
+**Recommendation:** before fitting an exponent to a `sup over t` quantity,
+demonstrate that the quantity has converged in `t` — for **every** regulator
+separately, since the convergence mechanism may differ between them (here,
+dissipation is what produces convergence, so the regulator being tested is
+exactly the one that removes it). Add a horizon-refinement check alongside
+the timestep-refinement check; the two are independent, and passing one says
+nothing about the other. More generally: an inclusion criterion is only
+evidence about the specific limit it takes.
+
+---
+
 ### LL-9: A cross-repo "import this" plan needs to check the other repo before it's load-bearing
 
 **Lesson:** EXPRESSION_MEMO_E1.md §4 described a "MechanicaFluidorum

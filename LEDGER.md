@@ -70,13 +70,40 @@ Source: M1_REPORT.md Part 1, data/derived/godfrin_2021_ancillary_fit_results.jso
         data/external/godfrin_2021_arxiv_ancillary/DispersionP0allRange.txt.meta,
         test:test_godfrin_ancillary.py (10 tests)
 Filed: 2026-08-14
-Updated: 2026-08-14
+Updated: 2026-08-14 (reference values CORRECTED -- see below)
 Notes: Tier B — author-published, exact tabulated data, not raw ILL numor
        (M1-DATA-001 still open) but a legitimate substitute for M1's stated
        objective. Supersedes CLAIM-002 (Tier-C phonon-fit failure) for
        practical purposes; CLAIM-002's root-cause diagnosis was confirmed
        correct by this result's fit-window sensitivity scan. M1 milestone
        objective (PLAN.md) met.
+
+CORRECTION 2026-08-14 (LL-10): the agreement percentages originally filed here
+       were computed against reference values that were partly invented —
+       recalled from memory and misattributed to Cowley-Woods (1971) and
+       Glyde et al. (1998), neither of which reports the Landau triple.
+       RECOMPUTED against six correctly-attributed determinations from
+       Godfrin et al. 2021 Table IV (all natively in meV):
+
+         reference        c %diff   Delta %diff   within tolerance
+         godfrin_2021      0.198%       0.329%    yes
+         woods_1977        0.198%       0.221%    yes
+         stirling          0.198%       0.329%    yes
+         andersen          0.198%       0.167%    yes
+         gibbs_1999        0.198%       0.221%    yes
+         pearce_2001       0.198%       0.032%    yes
+
+       The CONCLUSION is unchanged and is now better supported (six
+       independent references rather than one invented number). The fitted
+       values themselves never changed; only what they were compared against.
+
+CAVEAT, newly recorded: Godfrin et al.'s own P=0 Delta_R is taken from
+       Stirling as an energy-calibration input, so this stream's fit —
+       which extracts Delta from THEIR published curve — is partly
+       circular with respect to Stirling's value. What the fit
+       legitimately demonstrates is that the pipeline RECOVERS the
+       parameter encoded in the curve, not that the curve's absolute
+       energy scale is independently correct.
 ```
 
 ```
@@ -114,6 +141,51 @@ Notes: This is the audited memo's own pre-registered positive control, and it
        MechanicaFluidorum's _simulate actually computes (see
        docs/DEFECT_REPORT_MF_ENSTROPHY.md). Having both conventions available
        -- audit ruling O1 -- is what made a like-for-like comparison possible.
+```
+
+```
+[CLAIM-005] [TIER-B] [VERIFIED]
+Statement: "sup_t Omega does not converge in the horizon T for a purely dispersive
+           regulator (nu = 0, D > 0) in the complexified dyadic shell model. At
+           N=4, profile P3, D=0.02, it climbs monotonically from 30.7 at T=1 to
+           105.8 at T=64 and is still climbing, against an energy-conservation
+           ceiling k_N^2 * E = 160.0. The viscous comparison (nu=0.02, D=0) is
+           stable at 10.1035 from T=2 through T=64."
+Source: docs/designs/M2_W4_DISPERSIVE_SHELL.md OPEN ITEM O7;
+        exploration/w4_first_comparison.out (invalidation section)
+Filed: 2026-08-14
+Updated: 2026-08-14
+Notes: Mechanism: dispersion is energy-neutral by construction, so at nu = 0 the
+       system has no attractor and the enstrophy keeps finding new maxima,
+       bounded only by k_N^2 * E -- a property of the TRUNCATION, not the
+       dispersion. Dissipation is what makes sup_t Omega converge.
+
+       This BLOCKS the primary W4 experiment as specified in the audited memo,
+       which fits beta from sup_t Omega for all regulators. beta_nu is a model
+       property; beta_D is a property of the chosen horizon. See O7 for four
+       options and a recommendation.
+
+       Under the memo's own section 6 framing this counts as "a real and useful
+       negative" and a successful outcome, not a failure -- arguably a sharper
+       statement about dispersive-vs-dissipative regularization than the beta
+       comparison would have been.
+
+       LIMITS: demonstrated non-convergence by T=64 at N=4 with the mechanism
+       clear. NOT demonstrated that it never converges at any horizon, nor that
+       this holds for every profile and D.
+```
+
+```
+[CLAIM-R1] [RETRACTED] -- never filed as a claim, recorded here so it cannot resurface
+Statement (WITHDRAWN): "beta_nu = -0.91 and beta_D = -0.63 with disjoint 95%
+           confidence intervals, i.e. dissipative and dispersive regularization
+           give distinguishable peak-enstrophy exponents."
+Reason for retraction: invalid. The beta_D value was an artifact of the T=1.0
+       horizon (CLAIM-005). Every quality signal looked good -- r^2 > 0.96, tight
+       CIs, zero exclusions, and dt-refinement passing at 0.00% on all 12 points --
+       because the pre-registered protocol tested convergence in the TIMESTEP and
+       nothing tested convergence in the HORIZON. See LL-11.
+Filed: 2026-08-14 (as a retraction; the result was never promoted to a claim)
 ```
 
 ---
@@ -181,6 +253,9 @@ code or data.**
 | CLAIM-002 | PENDING → VERIFIED | 2026-08-14 | Confirmed negative finding: phonon branch fit fails on digitized data; root cause documented in M1_REPORT.md |
 | CLAIM-003 | PENDING → VERIFIED | 2026-08-14 | Both c and Delta recovered within tolerance on Tier-B author-published data; CLAIM-002's diagnosis confirmed correct |
 | CLAIM-004 | PENDING → VERIFIED | 2026-08-14 | M2 Positive Control #1 PASS at 0.00e+00 across 2.4e6 RK4 steps; complexification validated against MechanicaFluidorum's reference |
+| CLAIM-003 | VERIFIED → VERIFIED (references corrected) | 2026-08-14 | Reference values had been misattributed (LL-10); recomputed against 6 correct determinations, conclusion unchanged and better supported |
+| CLAIM-005 | PENDING → VERIFIED | 2026-08-14 | sup_t Omega does not converge in T for a purely dispersive regulator; blocks the primary W4 experiment as specified (O7) |
+| CLAIM-R1 | — → RETRACTED | 2026-08-14 | Never promoted to a claim. beta_D vs beta_nu comparison invalid: horizon artifact (LL-11) |
 
 ---
 

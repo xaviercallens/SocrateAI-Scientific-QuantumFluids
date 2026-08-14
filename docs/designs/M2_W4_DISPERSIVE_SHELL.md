@@ -107,6 +107,69 @@
 
 ---
 
+> ## 🛑 OPEN ITEM O7 — 2026-08-14: `sup_t Ω` is not a well-defined observable for a purely dispersive regulator
+>
+> **This is a design flaw in §3/§6 of this memo, found by running the first
+> exploratory comparison. It blocks the primary experiment as specified and needs an
+> owner ruling.** It was found before any result was filed as a claim.
+>
+> §6 fits `β` from `sup_t Ω`, tacitly assuming that quantity converges in the horizon
+> `T` for every regulator. **It does not converge for the dispersive regulator at
+> `ν = 0`.** Measured (N=4, profile P3, `k_N²E = 160.00`):
+>
+> | T | ν=0.02 | D=0.02 | D as % of ceiling |
+> |---|---|---|---|
+> | 1 | 8.9691 | 30.7189 | 19.2% |
+> | 2 | **10.1035** | 49.8122 | 31.1% |
+> | 4 | 10.1035 | 72.1170 | 45.1% |
+> | 16 | 10.1035 | 82.9879 | 51.9% |
+> | 64 | **10.1035** | 105.8236 | 66.1% |
+>
+> The viscous column converges by `T = 2` and is stable to `T = 64`. The dispersive
+> column is **still climbing at `T = 64`**, creeping toward the energy-conservation
+> ceiling `k_N²E`.
+>
+> **Mechanism, and why this is physics rather than a bug.** Dispersion is
+> energy-neutral (that is its defining property, §3). With `ν = 0` the system has no
+> attractor: energy is conserved exactly, phases keep rotating, and the enstrophy keeps
+> finding new maxima — bounded only by `k_N²E`, which is a property of the
+> **truncation**, not of the dispersion. *Dissipation is what makes `sup_t Ω`
+> converge.*
+>
+> **Consequence.** `β_ν` is a property of the model; `β_D` as measured is a property of
+> the chosen horizon. They are not commensurable, and the first exploratory run's
+> apparent "β_ν = −0.91 vs β_D = −0.63, CIs disjoint" does **not** stand. Those numbers
+> are archived with an invalidation notice (`exploration/w4_first_comparison.out`) and
+> are not filed as a claim.
+>
+> **Options for the auditor** (none is obviously right; this needs a physics judgement):
+>
+> - **(a) Put a small fixed `ν` floor under the `D` sweep**, so the system dissipates
+>   and `sup_t Ω` converges, then sweep `D` at fixed `ν`. Well-defined, but measures
+>   dispersion-on-top-of-dissipation rather than dispersion alone.
+> - **(b) Change the observable** to one that converges for both — time-averaged
+>   enstrophy, enstrophy at a pre-registered fixed time, or the enstrophy growth *rate*.
+>   Departs from OP2_LITE §3's `sup_t Ω`, costing comparability with that protocol.
+> - **(c) Pre-register `T` explicitly** and report `β(T)` as horizon-dependent. Honest
+>   but weak, and invites exactly the tuning the pre-registration exists to prevent.
+> - **(d) Treat the non-convergence itself as the finding**: a purely dispersive
+>   regulator does not produce a convergent peak-enstrophy observable at all. Under §6's
+>   own framing this is a legitimate outcome — "a real and useful negative" — and it is
+>   arguably a sharper statement about dispersive-vs-dissipative regularization than any
+>   β comparison would have been.
+>
+> *Recommendation: report (d) as the finding, and adopt (a) as the follow-up measurement
+> so a `β_D` exists at all — with the `ν` floor pre-registered and its value swept
+> separately to show the result is not an artifact of that choice.*
+>
+> **Honest limits of the evidence.** Demonstrated: no convergence by `T = 64` at `N = 4`,
+> and the mechanism is clear. NOT demonstrated: that it never converges at any horizon,
+> or that this holds for every profile and `D`. The ceiling `k_N²E` guarantees it is
+> bounded; the question is only whether the bound is approached on any timescale where
+> the measurement means anything.
+
+---
+
 **Status when authored: Tier C, AWAITING HUMAN AUDIT.** Nothing here may be implemented,
 cited, or measured until this memo is marked AUDITED in `LEDGER.md`. This document is that
 audit's *input*. Follows the house pattern of MechanicaFluidorum
