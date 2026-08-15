@@ -231,3 +231,44 @@ for every conservative arm (each trajectory climbs toward the ceiling).
   negative). β > 0 stable across f, N, windows ⇒ dispersion delays thermalization with a
   measurable exponent — the first well-posed quantitative signature distinguishing the
   dispersive cutoff from bare truncation.
+
+
+---
+
+## Round 3 — execution notes and a CONSTRAINT on the pre-registration (2026-08-15)
+
+**v1 timed out (my error, not the physics.)** The first script re-integrated the model
+once per `(f, convention)` pair rather than once per `(N, D, dt-level)` — a 12× waste
+that exhausted a ~58-minute budget with no output. Fixed by caching one trace per
+configuration and reading every `f` and both conventions off it. **No results were
+produced by v1**; nothing is being reported from it.
+
+**CONSTRAINT DISCOVERED, recorded before any β is fitted.** A smoke test (N=4, D=0.1,
+T=64) shows the pre-registered level **f = 1/2 is not attained**: the trace never reaches
+`0.5·k_N²E = 80` within the horizon. `f = 1/8` (τ = 2.66) and `f = 1/4` (τ = 17.58) are
+attained comfortably.
+
+This is a *factual attainability constraint*, not a threshold being tuned to get a
+result — the distinction matters and is why it is recorded here, in the pre-registration,
+rather than silently dropped. **No β was computed at f = 1/2 and none will be reported.**
+
+### ⚠ A SELECTION-BIAS HAZARD this exposes, which needs an owner ruling
+
+f = 1/2 is *not* uniformly unreachable — earlier measurement (CLAIM-005 era) reached
+sup Ω ≈ 105.8 > 80 at N = 4, **D = 0.02**, T = 64, while D = 0.1 fails to reach it. So
+attainability itself depends on D, in the direction the hypothesis predicts (more
+dispersion ⇒ slower thermalization ⇒ level reached later or not at all).
+
+That is simultaneously **signal and hazard**:
+
+- as *signal*, it is the coarsest possible confirmation that dispersion delays
+  thermalization — the [LIT-016] bottleneck;
+- as *hazard*, it means the exclusion rule ("configuration excluded if the level is not
+  reached") **preferentially removes the slowest — i.e. most strongly affected —
+  configurations**. Fitting β on the survivors would systematically understate the
+  effect, and would do so invisibly.
+
+This is a *different* failure mode from the six the battery already covers: not a broken
+observable, but an **informative-censoring** problem in the inclusion criterion itself.
+Options for the ruling are recorded in the session summary; nothing is fitted until it is
+settled.

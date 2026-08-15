@@ -23,12 +23,25 @@ def a0_for(N):
     a = make_profile("P3", N).astype(complex)
     return a * np.exp(1j * 0.7 * np.arange(N + 1))
 
-def tau(N, D, f, which="sum", dt=None, T=T_MAX):
-    r = integrate(N=N, nu=0.0, D=D, t_horizon=T, dt=dt, trace_every=1, a0=a0_for(N))
-    ceiling = (2.0**N) ** 2 * r.energy_initial
+_RUN_CACHE = {}
+
+def get_run(N, D, fine=False, T=T_MAX):
+    """ONE integration per (N, D, dt-level); every f and convention reads the
+    same trace. (v1 re-integrated per (f, which) -- a 12x waste that timed the
+    whole job out.)"""
+    key = (N, D, fine, T)
+    if key not in _RUN_CACHE:
+        dt = step_size(N, 0.0, D) / (2.0 if fine else 1.0)
+        _RUN_CACHE[key] = integrate(N=N, nu=0.0, D=D, t_horizon=T, dt=dt,
+                                    trace_every=1, a0=a0_for(N))
+        print(f"    [integrated N={N} D={D} fine={fine}: {_RUN_CACHE[key].steps} steps]",
+              flush=True)
+    return _RUN_CACHE[key]
+
+def tau_from(r, f, which="sum"):
+    ceiling = (2.0**r.N) ** 2 * r.energy_initial
     y = r.trace_omega_sum if which == "sum" else r.trace_omega_max
-    res = crossing_time(r.trace_t, y, f * ceiling)
-    return res
+    return crossing_time(r.trace_t, y, f * ceiling)
 
 def slope(xs, ys):
     r = stats.linregress(np.log(xs), np.log(ys))
@@ -47,9 +60,10 @@ def main():
     for N in (4, 5):
         print(f"\n=== N={N}  (ceiling = {(2.0**N)**2*0.625:.1f}) ===")
         base = {}
+        rb = get_run(N, 0.0)
         for f in FRACTIONS:
             try:
-                base[f] = tau(N, 0.0, f).time
+                base[f] = tau_from(rb, f).time
             except ValueError as e:
                 base[f] = None
                 print(f"  baseline f={f}: EXCLUDED  {str(e)[:70]}")
@@ -60,11 +74,11 @@ def main():
                 xs, ys, excl = [], [], []
                 for D in D_VALUES:
                     try:
-                        res = tau(N, D, f, which)
+                        res = tau_from(get_run(N, D), f, which)
                         if not res.sampling_ok:
                             excl.append((D, f"sampling: {res.reason[:50]}")); continue
-                        # B4: dt refinement
-                        fine = tau(N, D, f, which, dt=step_size(N, 0.0, D)/2.0)
+                        # B4: dt refinement (same fine trace reused across f, which)
+                        fine = tau_from(get_run(N, D, fine=True), f, which)
                         rel = abs(fine.time - res.time)/res.time
                         if rel > 0.01:
                             excl.append((D, f"dt-refine {rel:.2%}")); continue
