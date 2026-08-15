@@ -94,3 +94,14 @@ lean_src/lake-manifest.json
 
 # uv-created virtualenv (no sudo needed; reproduce with: uv venv .venv && uv pip install --python .venv/bin/python -e ".[nexus,test]")
 .venv/
+
+# LaTeX build artifacts (the PDF itself IS committed -- it is the deliverable)
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.toc
+paper/*.bbl
+paper/*.blg
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.synctex.gz
