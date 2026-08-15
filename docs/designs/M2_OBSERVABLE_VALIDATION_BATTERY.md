@@ -272,3 +272,21 @@ This is a *different* failure mode from the six the battery already covers: not 
 observable, but an **informative-censoring** problem in the inclusion criterion itself.
 Options for the ruling are recorded in the session summary; nothing is fitted until it is
 settled.
+
+### Round 3 — AMENDED SCOPE AND CENSORING RULE (owner rulings, 2026-08-15, pre-run)
+
+Both amendments are recorded **before** the run; no β has been fitted.
+
+**Scope (ruling 1):** N = 4 only; f ∈ {1/8, 1/4} (f = 1/2 dropped as unattainable);
+T = 32; the eight pre-registered D values; baseline D = 0. Checks retained: dt-refinement
+(B4), two-phase sampling adequacy (B4), monotonicity (B2), and B3′ across the two
+attainable f. **B5′ grid-independence is DEFERRED**, not waived — N = 5 is run only if
+N = 4 shows an effect worth confirming, and any result stands as single-grid until then.
+
+**Censoring rule (ruling 2):** configurations whose level is never attained are
+**reported as a result in their own right** — a censoring table giving which (D, f) failed
+and at what horizon — and *not* treated as a footnote to the fit. Because non-attainment
+correlates with the hypothesised effect (slower thermalization ⇒ level reached later or
+not at all), **any β fitted on the attained subset is labelled a LOWER BOUND on the
+magnitude of the effect**, never a point estimate. If censoring is absent, that is stated
+explicitly too, since it makes the fit unbiased.

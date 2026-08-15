@@ -16,8 +16,9 @@ from quantumfluids.w4_shell_model.integrate import integrate, make_profile, step
 from quantumfluids.w4_shell_model.observable import crossing_time
 
 D_VALUES = [0.2, 0.15, 0.1, 0.07, 0.05, 0.035, 0.025, 0.018]
-FRACTIONS = [0.125, 0.25, 0.5]
-T_MAX = 64.0
+FRACTIONS = [0.125, 0.25]        # f=1/2 dropped: unattainable (pre-registration amendment)
+T_MAX = 32.0                      # amended scope, owner ruling 2026-08-15
+N_VALUES = [4]                    # N=5 deferred, not waived
 
 def a0_for(N):
     a = make_profile("P3", N).astype(complex)
@@ -54,10 +55,12 @@ def windowed(xs, ys):
     b_hi, _ = slope(xs[:h+1], ys[:h+1]) if h + 1 >= 3 else (float("nan"), 0)
     return b_full, r2, b_hi, b_lo   # hi = large-D half (list is descending)
 
+CENSORED = []
+
 def main():
     print("ROUND 3: tau_f (thermalization time), all-conservative, common complex data")
     results = {}
-    for N in (4, 5):
+    for N in N_VALUES:
         print(f"\n=== N={N}  (ceiling = {(2.0**N)**2*0.625:.1f}) ===")
         base = {}
         rb = get_run(N, 0.0)
@@ -84,7 +87,10 @@ def main():
                             excl.append((D, f"dt-refine {rel:.2%}")); continue
                         xs.append(D); ys.append(res.time)
                     except ValueError as e:
-                        excl.append((D, str(e)[:55]))
+                        msg = str(e)
+                        excl.append((D, msg[:55]))
+                        if "never reaches" in msg:
+                            CENSORED.append((N, which, f, D))
                 mono_inc = all(ys[i] >= ys[i+1] for i in range(len(ys)-1))
                 mono_dec = all(ys[i] <= ys[i+1] for i in range(len(ys)-1))
                 tag = f"[{which}] f={f}"
@@ -99,7 +105,7 @@ def main():
                     print(f"      excluded D={D}: {why}")
     # B3': stability across f (absolute floor)
     print("\nB3' across f (per N, [sum]):")
-    for N in (4, 5):
+    for N in N_VALUES:
         bs = [results.get((N, "sum", f), (None,))[0] for f in FRACTIONS]
         bs = [b for b in bs if b is not None]
         if len(bs) >= 2:
@@ -109,12 +115,25 @@ def main():
                   f"{'PASS' if d <= max(0.05, 0.05*abs(np.mean(bs))) else 'FAIL'}")
     # B5': delay-ratio stability across N
     print("\nB5' delay ratio tau(D)/tau(0) beta across N (f=0.25, [sum]):")
-    for N in (4, 5):
+    for N in N_VALUES:
         if (N, "sum", 0.25) in results and results[(N,"sum",0.25)][3]:
             b, xs, ys, b0 = results[(N, "sum", 0.25)]
             ratios = [y/b0 for y in ys]
             br, r2 = slope(xs, ratios)
             print(f"  N={N}: beta_ratio={br:+.4f} (r2={r2:.4f})")
+    print("\n" + "="*70)
+    print("CENSORING TABLE (owner ruling 2026-08-15: reported as a result, not a footnote)")
+    print("="*70)
+    if CENSORED:
+        for N, which, f, D in CENSORED:
+            print(f"  N={N} [{which}] f={f}: D={D} NEVER ATTAINED within T={T_MAX}")
+        print("\n  Non-attainment correlates with the hypothesised effect (slower")
+        print("  thermalization), so every beta above is a LOWER BOUND on the effect,")
+        print("  not a point estimate.")
+    else:
+        print("  No configuration was censored: every D attained every f within the")
+        print("  horizon. The fits are therefore UNBIASED by censoring -- betas may be")
+        print("  read as point estimates rather than lower bounds.")
     print("\nExploratory. A PASS licenses the comparison; nothing here is a claim.")
     return 0
 
