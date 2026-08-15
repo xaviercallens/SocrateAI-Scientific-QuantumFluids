@@ -440,6 +440,62 @@ Notes: LIMITS, stated in advance of any use: five shells, single trajectories,
        it was relaxing toward equilibrium, not misbehaving.
 ```
 
+```
+[CLAIM-013] [TIER-B] [VERIFIED]
+Statement: "In the conservative complexified dyadic model at N=4, stronger dispersion
+           delays thermalization, ORDINALLY and without exception: the time tau_f to
+           reach a ceiling-relative enstrophy level f*k_N^2*E increases with D, and at
+           sufficiently large D the level is never reached within T=32 at all. Censoring
+           is perfectly ordered -- it always strikes the largest D first and strikes more
+           often at the harder level -- with NO inversion at any D, level, or enstrophy
+           convention. Censored (D, level) pairs: [sum] f=1/8: D=0.2; [sum] f=1/4:
+           D=0.2, 0.15; [max] f=1/8: D=0.2, 0.15; [max] f=1/4: D=0.2, 0.15, 0.1."
+Source: exploration/run_battery_round3.out (run + post-run analysis of 2026-08-15),
+        pre-registered in docs/designs/M2_OBSERVABLE_VALIDATION_BATTERY.md
+        ("Round 3" + "AMENDED SCOPE AND CENSORING RULE").
+Filed: 2026-08-15
+Updated: 2026-08-15
+Notes: ORDINAL ONLY. No exponent is claimed -- see CLAIM-R3 for the withdrawn
+       quantitative fit. The censoring pattern is reported as a first-class
+       result per owner ruling 2 (2026-08-15) precisely because non-attainment
+       correlates with the hypothesised effect.
+
+       This is the model's analogue of the "dispersive bottleneck delaying
+       thermalization" established for the truncated GPE by Krstulovic-Brachet
+       ([LIT-016]) -- a re-expression in the dyadic setting, not a new
+       phenomenon, per Rule E-X.
+
+       Direction agrees with the independent Option C evidence (dispersion
+       suppresses peak enstrophy, sign consistent at both viscous floors,
+       docs/designs/C_NU_FLOOR_CROSSCHECK.md). Two methodologically different
+       routes, same direction.
+
+       LIMITS: single grid (N=4; B5' deferred, not waived), single trajectory
+       per configuration, T=32, f=1/2 unattainable and dropped pre-run.
+```
+
+```
+[CLAIM-R3] [RETRACTED] -- never promoted; recorded so it cannot resurface
+Statement (WITHDRAWN): "beta for tau_f vs D is +0.97 (f=1/8) / +1.33 (f=1/4) [sum],
+           +0.69 / +0.65 [max]."
+Reason: FAILS its own pre-registered battery. B2 monotonicity fails for [sum]
+       f=1/8; B3' across f fails (|dbeta| = 0.36 >> 0.05); r^2 = 0.66/0.72 [sum];
+       windowed slopes disagree by ~50x ([sum] f=1/8: +2.210 large-D half vs
+       +0.042 small-D half).
+
+       DIAGNOSIS, and it is arithmetic rather than speculation: the baseline is
+       NONZERO -- tau(D=0) = 0.993 (f=1/8), 1.499 (f=1/4). Since tau(D) tends to
+       tau(0) != 0 as D -> 0, log(tau) vs log(D) MUST flatten to slope zero at
+       small D whatever the physics. A pure power law tau ~ D^beta forces
+       tau(0) = 0 and is therefore the WRONG MODEL; the observed window
+       signature is exactly its fingerprint.
+
+       The natural form is tau(D) = tau_0 + c*D^alpha, whose EXCESS DELAY
+       tau(D) - tau_0 could carry a clean exponent. Fitting that on this data
+       would be post-hoc and is NOT done; it requires its own pre-registration.
+Filed: 2026-08-15 (as a retraction; never promoted to a claim)
+```
+
 ---
 
 ## Design-memo audit register
@@ -517,6 +573,8 @@ code or data.**
 | CLAIM-006 | VERIFIED → VERIFIED (reframed) | 2026-08-15 | Novelty withdrawn: phenomenon identified as absolute-equilibrium thermalization, established incl. for shell models ([LIT-017]–[LIT-020]); re-expression per Rule E-X |
 | CLAIM-011 | PENDING → VERIFIED | 2026-08-15 | TIER A core: Liouville property of the complexification, kernel-checked trace identities; real KP is non-Liouville |
 | CLAIM-012 | PENDING → VERIFIED | 2026-08-15 | Equipartition prediction consistent; regulator signature is in the transient (measured) |
+| CLAIM-013 | PENDING → VERIFIED | 2026-08-15 | Ordinal: dispersion delays thermalization, censoring perfectly ordered, no inversion. Dyadic analogue of [LIT-016] |
+| CLAIM-R3 | — → RETRACTED | 2026-08-15 | β for τ_f vs D fails its own battery; nonzero baseline makes a pure power law the wrong model |
 
 ---
 
