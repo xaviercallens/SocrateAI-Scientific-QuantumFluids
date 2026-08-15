@@ -56,6 +56,7 @@ def windowed(xs, ys):
     return b_full, r2, b_hi, b_lo   # hi = large-D half (list is descending)
 
 CENSORED = []
+TAU_ROWS = []   # (N, which, f, D, tau, attained)
 
 def main():
     print("ROUND 3: tau_f (thermalization time), all-conservative, common complex data")
@@ -70,6 +71,13 @@ def main():
             except ValueError as e:
                 base[f] = None
                 print(f"  baseline f={f}: EXCLUDED  {str(e)[:70]}")
+        for f in FRACTIONS:
+            if base[f] is not None:
+                for which in ("sum", "max"):
+                    try:
+                        TAU_ROWS.append((N, which, f, 0.0, tau_from(rb, f, which).time, 1))
+                    except ValueError:
+                        pass
         print("  baseline tau_f (truncation, D=0): " +
               "  ".join(f"f={f}:{(base[f] if base[f] is None else round(base[f],4))}" for f in FRACTIONS))
         for which in ("sum", "max"):
@@ -86,11 +94,13 @@ def main():
                         if rel > 0.01:
                             excl.append((D, f"dt-refine {rel:.2%}")); continue
                         xs.append(D); ys.append(res.time)
+                        TAU_ROWS.append((N, which, f, D, res.time, 1))
                     except ValueError as e:
                         msg = str(e)
                         excl.append((D, msg[:55]))
                         if "never reaches" in msg:
                             CENSORED.append((N, which, f, D))
+                            TAU_ROWS.append((N, which, f, D, float("nan"), 0))
                 mono_inc = all(ys[i] >= ys[i+1] for i in range(len(ys)-1))
                 mono_dec = all(ys[i] <= ys[i+1] for i in range(len(ys)-1))
                 tag = f"[{which}] f={f}"
@@ -134,6 +144,12 @@ def main():
         print("  No configuration was censored: every D attained every f within the")
         print("  horizon. The fits are therefore UNBIASED by censoring -- betas may be")
         print("  read as point estimates rather than lower bounds.")
+    import csv, os
+    out = os.path.join(os.path.dirname(__file__), "round3_tau.csv")
+    with open(out, "w", newline="") as fh:
+        w = csv.writer(fh); w.writerow(["N","convention","f","D","tau","attained"])
+        w.writerows(TAU_ROWS)
+    print(f"\ntau values dumped to {out} ({len(TAU_ROWS)} rows) for round-4 reuse.")
     print("\nExploratory. A PASS licenses the comparison; nothing here is a claim.")
     return 0
 

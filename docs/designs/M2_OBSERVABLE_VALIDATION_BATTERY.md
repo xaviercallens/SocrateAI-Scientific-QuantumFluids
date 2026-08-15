@@ -290,3 +290,46 @@ correlates with the hypothesised effect (slower thermalization ⇒ level reached
 not at all), **any β fitted on the attained subset is labelled a LOWER BOUND on the
 magnitude of the effect**, never a point estimate. If censoring is absent, that is stated
 explicitly too, since it makes the fit unbiased.
+
+---
+
+## Round 4 — excess delay Δτ = τ(D) − τ₀ (specified 2026-08-15, BEFORE the run)
+
+### Honesty label, stated first
+
+**This is post-hoc MOTIVATED but pre-run SPECIFIED.** It is written knowing round 3's
+outcome, which is precisely the situation pre-registration exists to guard against. Three
+things make it defensible, and they are the only things that do:
+
+1. **The functional form was derived, not fitted.** τ(D=0) = 0.993 (f=1/8) and 1.499
+   (f=1/4) are nonzero, so τ(D) → τ₀ ≠ 0 as D → 0, so log τ vs log D must flatten to
+   slope zero at small D *as arithmetic*, independent of any physics. A pure power law
+   forces τ(0) = 0 and is therefore the wrong model. `τ = τ₀ + c·D^α` follows from that
+   observation alone — no exponent was fitted to motivate it.
+2. **The criteria are inherited unchanged** from the existing battery (B2, B3′, windowed
+   stability, B4, sampling adequacy, censoring rule). Nothing is loosened for this round.
+3. **The kill criterion is fixed here, in advance**, and it is genuinely reachable.
+
+Anyone reading this later should weight it accordingly: it is one degree weaker than
+rounds 1–3's pre-registrations, and that is recorded rather than concealed.
+
+### Specification
+
+- **Observable:** `Δτ_f(D) = τ_f(D) − τ_f(0)`, the *excess* thermalization delay over the
+  pure-truncation baseline at the same level.
+- **Fit:** α from `Δτ ∝ D^α`, per f ∈ {1/8, 1/4}, per convention.
+- **Data:** unchanged from round 3 — N=4, T=32, the eight D values, common complexified
+  initial data. Re-used via a dumped CSV so no configuration is re-tuned.
+- **New exclusion, needed because Δτ may be non-positive:** if `τ(D) ≤ τ₀` the point is
+  excluded with its reason. Such a point would mean dispersion *accelerates* thermalization
+  at that D, which would itself be a finding and is to be reported, not hidden.
+- **Censoring:** unchanged — reported first-class; α on the attained subset is a LOWER
+  BOUND, since censoring removes the most-delayed configurations.
+
+### Kill criterion, fixed in advance
+
+**If α is not stable across both f AND both conventions (B3′ metric: |Δα| ≤ 0.05, or
+absolute floor if |α| < 0.1), then the delay has no exponent in this model.** In that case
+M3 closes on CLAIM-013's ordinal finding, no quantitative claim is made, and no fifth
+observable is attempted — the ordinal result plus Option C's triangulation is the final
+answer. This is a real stopping rule, not a formality.
