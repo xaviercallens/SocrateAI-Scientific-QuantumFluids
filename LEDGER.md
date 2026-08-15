@@ -572,6 +572,31 @@ Notes: THIS IS THE METHODOLOGICAL FINDING OF THE M3 RELAUNCH, and it retracts
        The damage is confined to the W4 measurement programme.
 ```
 
+```
+[CLAIM-015] [TIER-B] [VERIFIED]
+Statement: "From Godfrin et al. 2021's all-pressure dispersion table (7 pressures,
+           per-point uncertainties), weighted parabolic fits over |Q-1.9|<=0.2 give
+           Delta(P) = 0.7438, 0.7413, 0.7386, 0.7338, 0.7199, 0.6963, 0.6185 meV
+           and Q_m(P) = 1.9085, 1.9131, 1.9177, 1.9267, 1.9517, 1.9909, 2.1147 A^-1
+           at P = 0, 0.51, 1.02, 2.01, 5.01, 10.01, 24.08 bar (all +/- <= 0.0007).
+           Neither is a power law in P (windowed slopes disagree; r^2 ~ 0.75). The
+           low-P regime is LINEAR: Delta at -0.67%/bar, Q_m at +0.475%/bar, constant
+           across three independent points."
+Source: exploration/pressure_scaling.py, output exploration/pressure_scaling.out;
+        data/external/godfrin_2021_arxiv_ancillary/DispersionAllPressures.txt(.meta).
+Filed: 2026-08-15
+Updated: 2026-08-15
+Notes: DETERMINISTIC (weighted least squares on published data) -- immune to the
+       single-trajectory problem of CLAIM-014. P=0 cross-checks M1's CLAIM-003 to
+       0.05% (0.7438 vs 0.7442).
+
+       Role for the theory (THEORY_MEMO section 4): a CONSTRAINT on the form of any
+       T-dual coupling law tested against these parameters -- it cannot be a pure
+       power law in pressure, and must be stated in the physical variable (density,
+       not P). It is NOT a measurement of the CR-1 exponent s. Density is not in the
+       file; converting requires a separately sourced equation of state.
+```
+
 ---
 
 ## Design-memo audit register
@@ -650,6 +675,7 @@ code or data.**
 | CLAIM-011 | PENDING → VERIFIED | 2026-08-15 | TIER A core: Liouville property of the complexification, kernel-checked trace identities; real KP is non-Liouville |
 | CLAIM-012 | VERIFIED → **QUANTITATIVE CONTENT WITHDRAWN** | 2026-08-15 | Ensemble CV 25–84%; percentages were single-trajectory draws. Weak D=0 consistency survives; "signature in the transient" withdrawn |
 | CLAIM-013 | VERIFIED → **RETRACTED** | 2026-08-15 | Ensemble check: single-trajectory artifact. At D=0.05, 3/6 realisations censored, 3 attained. Ordering not established |
+| CLAIM-015 | PENDING → VERIFIED | 2026-08-15 | Delta(P), Q_m(P) from 7-pressure published data: linear at low P (−0.67%/bar, +0.475%/bar), not power-law; constrains CR-1's form |
 | CLAIM-014 | PENDING → VERIFIED | 2026-08-15 | Single-trajectory measurement is noise-dominated (CV 23–49%); battery tested deterministic, never statistical, reproducibility |
 | CLAIM-R3 | — → RETRACTED | 2026-08-15 | β for τ_f vs D fails its own battery; nonzero baseline makes a pure power law the wrong model |
 
