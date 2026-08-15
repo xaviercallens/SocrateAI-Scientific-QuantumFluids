@@ -2,8 +2,14 @@
 
 Status (2026-08-14):
   ascii_sqw          - IMPLEMENTED (plain-text and digitized-CSV readers)
-  nexus_reader       - IMPLEMENTED (requires h5py; layout list not yet
-                       validated against a real Godfrin et al. 2021 file)
+  nexus_reader       - IMPLEMENTED and TESTED (h5py available via the uv venv;
+                       10 tests incl. negative controls now execute rather than
+                       skip). CAVEAT UNCHANGED: the _KNOWN_LAYOUTS templates are
+                       still not validated against a real ILL file, because
+                       M1-DATA-001 never delivered one -- the tests exercise
+                       synthetic NeXus files matching those templates, which
+                       proves the reader handles the layouts it claims to and
+                       proves nothing about whether ILL actually writes them.
   godfrin_ancillary  - IMPLEMENTED (Tier B: Godfrin et al. 2021's own
                        published dispersion-curve tables from arXiv
                        ancillary files, see M1_DATA_ACCESS_STRATEGY.md)

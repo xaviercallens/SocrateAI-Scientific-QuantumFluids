@@ -91,3 +91,6 @@ Thumbs.db
 # against the pinned revision in lean_src/lakefile.lean.
 lean_src/.lake/
 lean_src/lake-manifest.json
+
+# uv-created virtualenv (no sudo needed; reproduce with: uv venv .venv && uv pip install --python .venv/bin/python -e ".[nexus,test]")
+.venv/

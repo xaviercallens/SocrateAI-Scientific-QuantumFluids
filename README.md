@@ -49,6 +49,12 @@ bash scripts/verify.sh
 # Tests only (no Lean toolchain needed)
 python3 -m pytest tests/ -q
 
+# Optional: h5py for the NeXus adapter's tests (otherwise 1 test skips).
+# This system's python3-venv is absent and `sudo` is unavailable in-session,
+# but `uv` sidesteps both -- it builds a venv without ensurepip:
+uv venv .venv && uv pip install --python .venv/bin/python numpy scipy matplotlib h5py pytest
+.venv/bin/python -m pytest tests/ -q
+
 # Reproduce the M1 dispersion fit against Godfrin et al.'s published data
 PYTHONPATH=src python3 -c "
 from quantumfluids.adapters.godfrin_ancillary import load_godfrin_p0_dispersion
@@ -119,7 +125,7 @@ my own earlier work) → `LEDGER.md` (every claim, including the retracted ones)
 | **M3** | ✅ closed, no quantitative result | Four measurement rounds, all failed. The fourth invalidated the first three: **single trajectories of a chaotic system**, effect smaller than the 72–105% fixed-parameter scatter. Durable output is methodological (CLAIM-014). See `M3_REPORT.md` |
 | **M4** | ⏸ open | Godfrin outreach drafted (`docs/GODFRIN_CORRESPONDENCE.md`), not yet sent |
 
-**Verification:** `bash scripts/verify.sh` — Gate 1 (130 pytest tests) and Gate 2
+**Verification:** `bash scripts/verify.sh` — Gate 1 (143 pytest tests, 0 skipped) and Gate 2
 (Lean build + axiom audit; requires `lake`, see `lean_src/`).
 
 ---
