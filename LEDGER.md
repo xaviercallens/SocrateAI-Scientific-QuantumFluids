@@ -428,7 +428,29 @@ Statement: "Time-averaged enstrophy of the conservative complexified model is
 Source: M2_REPORT.md section 6b(iii) (runs of 2026-08-14, complex-phase
         initial data, single trajectories).
 Filed: 2026-08-15
-Updated: 2026-08-15
+Updated: 2026-08-15 -- *** QUANTITATIVE CONTENT WITHDRAWN, see below ***
+
+*** WITHDRAWAL 2026-08-15 (ensemble check, exploration/equipartition_ensemble.out) ***
+       The reported percentages (88.6% / 108.3% / 73.0%) are single-trajectory
+       draws from very wide distributions. Fixed-D ensemble CV of the
+       time-averaged Omega is 25.5% (D=0) and 84.0% (D=0.02) -- comparable to
+       or worse than tau's, so time-averaging did NOT rescue the observable as
+       hypothesised. At D=0.02 four realisations span 6.0-57.1; the single
+       trajectory behind the claim reported 46.2, the four-realisation mean is
+       23.8.
+
+       SURVIVES WEAKLY: at D=0 the ensemble mean is 85.5% of prediction with
+       SEM ~12.7% (n=4) -- consistent with equipartition within ~1.1 sigma.
+       A weak consistency statement, not quantitative agreement.
+
+       ALSO WITHDRAWN: the "first-quarter means differ 4x while late-time means
+       converge" observation, and with it the inference that the regulator's
+       signature is in the transient. At CV 25-84% a 4x difference between
+       single-trajectory quarter-means is not distinguishable from noise.
+
+       UNAFFECTED: the equipartition FORMULA itself,
+       <Omega_sum>_eq = E(4^{N+1}-1)/(3(N+1)), which is analytic.
+
 Notes: LIMITS, stated in advance of any use: five shells, single trajectories,
        +/-20-30% expected fluctuation scale; unknown additional invariants
        would shift the prediction (open question); the D=0.1 run had not
@@ -626,7 +648,7 @@ code or data.**
 | CLAIM-010 | PENDING → VERIFIED | 2026-08-14 | Seam conserves iff Re(conj(v_N)²·v_{N+1})=0; resolves the W2 question left open by memo §5 |
 | CLAIM-006 | VERIFIED → VERIFIED (reframed) | 2026-08-15 | Novelty withdrawn: phenomenon identified as absolute-equilibrium thermalization, established incl. for shell models ([LIT-017]–[LIT-020]); re-expression per Rule E-X |
 | CLAIM-011 | PENDING → VERIFIED | 2026-08-15 | TIER A core: Liouville property of the complexification, kernel-checked trace identities; real KP is non-Liouville |
-| CLAIM-012 | PENDING → VERIFIED | 2026-08-15 | Equipartition prediction consistent; regulator signature is in the transient (measured) |
+| CLAIM-012 | VERIFIED → **QUANTITATIVE CONTENT WITHDRAWN** | 2026-08-15 | Ensemble CV 25–84%; percentages were single-trajectory draws. Weak D=0 consistency survives; "signature in the transient" withdrawn |
 | CLAIM-013 | VERIFIED → **RETRACTED** | 2026-08-15 | Ensemble check: single-trajectory artifact. At D=0.05, 3/6 realisations censored, 3 attained. Ordering not established |
 | CLAIM-014 | PENDING → VERIFIED | 2026-08-15 | Single-trajectory measurement is noise-dominated (CV 23–49%); battery tested deterministic, never statistical, reproducibility |
 | CLAIM-R3 | — → RETRACTED | 2026-08-15 | β for τ_f vs D fails its own battery; nonzero baseline makes a pure power law the wrong model |

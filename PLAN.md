@@ -7,9 +7,16 @@ M4 open, needs owner action.
 
 | M0 | M1 | M2 | M3 | M4 |
 |---|---|---|---|---|
-| ✅ | ✅ | ✅ (finding, reframed per Rule E-X) | 🔄 relaunched (round 3 + C running) | ⏸ open |
+| ✅ | ✅ | ✅ (finding, reframed per Rule E-X) | ✅ closed, no quantitative result | ⏸ open |
 
-**M3 relaunch (2026-08-15, owner options A+C+D):** the W4 comparison is re-posed on the
+**M3 CLOSED 2026-08-15** after four failed measurement rounds — see `M3_REPORT.md`. The
+durable output is methodological (CLAIM-014: single-trajectory measurement in a chaotic
+system is noise-dominated; the battery tested deterministic but never statistical
+reproducibility, now fixed as criterion B8). Retracted along the way: CLAIM-013, the
+quantitative content of CLAIM-012, and the round-3/4 exponents. What stands is analytic
+and deterministic — see the report's §4.
+
+*Original relaunch note follows.* **M3 relaunch (2026-08-15, owner options A+C+D):** the W4 comparison is re-posed on the
 pre-thermalization transient — observable τ_f (thermalization time), all-conservative
 arms, with named precedent (Krstulovic–Brachet's "dispersive bottleneck delaying
 thermalization", [LIT-016]) — plus the ν-floor cross-check (option C) as an independent

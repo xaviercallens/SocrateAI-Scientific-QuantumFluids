@@ -15,11 +15,22 @@ language (Tier A/B, citation-verified) and was to run the W4 pre-registered expe
 **M1 succeeded**: the Landau dispersion fit reproduces Godfrin et al. (2021)'s own
 published data to 0.2–0.33%, well inside the ±5% / ±10% targets.
 
-**M2 returned a negative finding**, which is the stream's substantive result so far: all
-three of E1 §4's regulators are *energy-conserving*, so none has an attractor, so
-`sup_t Ω` and every variant tried fails to converge — the W4 measurement is not well-posed
-as designed. The model itself is validated (bit-for-bit against MechanicaFluidorum) and
-its central identity is kernel-checked in Lean.
+**M2 returned a negative finding:** all three of E1 §4's regulators are *energy-conserving*,
+so none has an attractor, so `sup_t Ω` degenerates to the truncation ceiling — the W4
+measurement is not well-posed as designed.
+
+**M3 relaunched the measurement four times and closed without a quantitative result.** The
+final round established why: the observables are single trajectories of a **chaotic** system
+with 72–105% fixed-parameter scatter, and the effect sought is below that resolution. Several
+earlier results were retracted as a consequence, each with its reason recorded.
+
+**What stands** is the structural work: a model validated bit-for-bit against
+MechanicaFluidorum, eight kernel-checked Lean theorems (energy conservation, the invariant
+real subspace, and the **Liouville property** — the complexified flow preserves phase-space
+volume where the real Katz–Pavlović model does not), the conserving-seam condition, and the
+identification of the whole phenomenon as absolute-equilibrium thermalization against ten
+verified citations — with novelty explicitly withdrawn, since prior art exists for shell
+models.
 
 **Key documents:**
 - **[SPEC.md](SPEC.md)** — Specification and contract (pinned from Mathesis Stream 0)
@@ -105,7 +116,7 @@ my own earlier work) → `LEDGER.md` (every claim, including the retracted ones)
 | **M0** | ✅ complete | All 10 literature entries retrieved and verified; repo, Lean and Mathesis integration bootstrapped |
 | **M1** | ✅ complete | Landau fit reproduced on Godfrin et al.'s own published data: **c within 0.20%, Δ within 0.03–0.33%** of six independent determinations (targets were ±5% / ±10%). See `M1_REPORT.md` |
 | **M2** | ✅ complete | **Negative finding**: an energy-conserving regulator admits no well-posed peak-enstrophy observable, and all three of E1 §4's regulators are conservative. Model validated bit-for-bit against MechanicaFluidorum; Tier A Lean formalisation landed. See `M2_REPORT.md` |
-| **M3** | 🛑 blocked *by the M2 finding* | The W4 run cannot proceed in its designed form. Reformulation options in `M2_REPORT.md` §7 — awaiting an owner decision |
+| **M3** | ✅ closed, no quantitative result | Four measurement rounds, all failed. The fourth invalidated the first three: **single trajectories of a chaotic system**, effect smaller than the 72–105% fixed-parameter scatter. Durable output is methodological (CLAIM-014). See `M3_REPORT.md` |
 | **M4** | ⏸ open | Godfrin outreach drafted (`docs/GODFRIN_CORRESPONDENCE.md`), not yet sent |
 
 **Verification:** `bash scripts/verify.sh` — Gate 1 (130 pytest tests) and Gate 2
