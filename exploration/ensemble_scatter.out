@@ -13,3 +13,56 @@ ENSEMBLE SCATTER of tau at FIXED D  (N=4, f=0.125, T=24.0, 6 phase realisations,
     [D=0.018 real 3/6: tau=1.7992]
     [D=0.018 real 4/6: tau=1.7499]
     [D=0.018 real 5/6: tau=1.0112]
+    [D=0.018 real 6/6: tau=0.9396]
+  0.018   6    1.228    0.388    0.902    1.799       73.1%
+    [D=0.05 real 1/6: tau=1.0077]
+    [D=0.05 real 2/6: tau=nan]
+    [D=0.05 real 3/6: tau=1.0436]
+    [D=0.05 real 4/6: tau=nan]
+    [D=0.05 real 5/6: tau=nan]
+    [D=0.05 real 6/6: tau=2.6629]
+   0.05   3    1.571    0.772    1.008    2.663      105.3%
+    [D=0.1 real 1/6: tau=2.6594]
+    [D=0.1 real 2/6: tau=3.3312]
+    [D=0.1 real 3/6: tau=4.0324]
+    [D=0.1 real 4/6: tau=2.6523]
+    [D=0.1 real 5/6: tau=1.8555]
+    [D=0.1 real 6/6: tau=3.4730]
+    0.1   6    3.001    0.701    1.855    4.032       72.5%
+
+Round-4 'acceleration' signal was |Delta-tau| ~ 0.02-0.35 (2-20% of tau_0).
+If the spread above is comparable or larger, that signal is trajectory
+noise -- and single-trajectory exponents in rounds 3-4 are noise-dominated.
+
+================================================================================
+VERDICT (2026-08-15), against the decision rule fixed before looking
+================================================================================
+Fixed-D spread is 72-105% of the mean (CV 23-49%). The round-4 "acceleration"
+signal was 2-20% of tau_0. The signal is swamped by a factor of ~5-40x.
+
+WORSE, and decisive for CLAIM-013: at D=0.05, THREE OF SIX realisations were
+CENSORED (tau = nan) while three attained (tau = 1.008, 1.044, 2.663).
+Attainment at that D is close to a coin flip. CLAIM-013's "perfectly ordered
+censoring, no inversion" rested on exactly ONE sample per configuration; with
+six samples at a single D the ordering already breaks.
+
+Ensemble size required for a 5% measurement of the mean:
+    D=0.0   CV=37%  -> n ~ 54
+    D=0.018 CV=32%  -> n ~ 40
+    D=0.05  CV=49%  -> n ~ 97
+    D=0.1   CV=23%  -> n ~ 22
+
+WHY THE BATTERY NEVER CAUGHT THIS. All six criteria test DETERMINISTIC
+reproducibility -- same trajectory, finer discretisation (dt-refinement,
+sampling adequacy) or a neighbouring parameter on the same trajectory family
+(monotonicity, own-parameter stability). NONE tests STATISTICAL
+reproducibility: a different trajectory drawn from the same physical
+ensemble. In a chaotic system that is the binding constraint, and it was
+absent from the battery by construction.
+
+This also offers a UNIFIED explanation for the observable failures. Rather
+than seven observables failing for six distinct reasons, the
+parameter-discontinuity, own-parameter drift, non-monotonicity and B3'
+failures are all consistent with ONE cause: single-trajectory sampling of a
+chaotic system. (The horizon-divergence failures are separate and remain
+real -- those concern the k_N^2 E ceiling, not sampling.)

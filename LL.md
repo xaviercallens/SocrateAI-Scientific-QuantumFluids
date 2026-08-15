@@ -209,6 +209,44 @@ evidence about the specific limit it takes.
 
 ---
 
+### LL-14: In a chaotic system, convergence checks are not reproducibility checks
+
+**Lesson:** The validation battery grew to six criteria, each added after a
+real failure, and it still missed the thing that invalidated four rounds of
+measurement. Every criterion tested **deterministic** reproducibility — the
+same trajectory at a finer timestep, a finer trace sampling, a neighbouring
+parameter on the same trajectory family. **None tested statistical
+reproducibility**: a different trajectory drawn from the same physical
+ensemble.
+
+The model is chaotic. Measured at fixed D with identical |aₙ| and identical
+energy, varying only initial phases, the thermalization time τ scatters by
+**72–105% of its mean** (CV 23–49%). At D = 0.05, three of six realisations
+were censored while three attained the level. Every τ in rounds 3 and 4, and
+every sup_t Ω in Option C, came from **one** trajectory. All of those results
+were noise-dominated, and dt-refinement passing at 0.00% said nothing about it
+— it is the wrong limit.
+
+**Impact:** two claims retracted (CLAIM-R3's exponents, CLAIM-013's ordinal
+censoring result), and a "signal" that looked consistent across all four
+(f, convention) combinations — dispersion *accelerating* thermalization at
+small D, 2–20% of τ₀ — turned out to be noise swamped by a 5–40× larger
+spread. Consistency across sub-analyses is not evidence when they share a
+trajectory.
+
+**Recommendation:** before fitting anything to a trajectory-derived observable
+in a chaotic or mixing system, **measure the fixed-parameter ensemble spread
+first** and size the required ensemble from it (here: n ≈ 22–97 per point for
+5% precision — 1–2 orders more compute than was being spent). Add ensemble
+reproducibility as an explicit criterion alongside the discretisation ones;
+they answer different questions and passing one is silent about the other.
+The tell that should have prompted this earlier: repeated, *inconsistent*
+failures across observables that were individually well-motivated. Seven
+observables failing for six different reasons was the signature of one shared
+cause, not six independent ones.
+
+---
+
 ### LL-12: A stand-in you introduce yourself can mask the finding
 
 **Lesson:** M2 compared a *dispersive* against a *viscous* regulator, and the viscous arm

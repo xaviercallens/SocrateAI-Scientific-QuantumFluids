@@ -291,7 +291,56 @@ was *relaxing toward equilibrium*, not misbehaving.
 
 ---
 
+## 6c. THIRD ADDENDUM (2026-08-15): the M3 relaunch measured noise — retraction
+
+The relaunch ran to completion and its quantitative results are **withdrawn**. The reason
+is a single methodological fact that invalidates rounds 3, 4 and Option C alike, and it
+retracts work rather than adding to it.
+
+**The model is chaotic and every measurement used one trajectory.** At fixed D, with
+identical |aₙ| and identical energy and only the initial phases varied, τ scatters by
+**72–105% of its mean** (CV 23–49%). At D = 0.05, **three of six realisations were
+censored while three attained** the level. Rounds 3 and 4 used n = 1.
+
+Retracted as a consequence:
+
+| result | status |
+|---|---|
+| β for τ_f vs D (round 3) | **retracted** (CLAIM-R3) — failed its own battery, and now known to be noise-fitting |
+| ordinal censoring order (round 3) | **retracted** (CLAIM-013) — single-sample artifact |
+| α for excess delay (round 4) | **killed** by its own pre-registered criterion (spread 4.88 vs 0.05) |
+| "dispersion accelerates at small D" | **withdrawn** — 2–20% signal against 72–105% scatter |
+| Option C sign-consistency | **unestablished** — also single-trajectory |
+
+**Why the battery missed it, and the unified explanation it yields.** All six criteria
+tested *deterministic* reproducibility — finer dt, finer sampling, neighbouring parameter
+on the same trajectory family. None tested *statistical* reproducibility across
+trajectories. So dt-refinement passing at 0.00% was silent about the binding constraint.
+This also replaces the "seven observables, six failure modes" story with one cause:
+parameter-discontinuity, own-parameter drift, non-monotonicity and B3′ failures are all
+consistent with single-trajectory sampling of a chaotic system. (The horizon-divergence
+failures are separate and remain real — those concern the `k_N²E` ceiling, not sampling.)
+Criterion **B8** is added to the battery, to be run *first* in future.
+
+**What is unaffected** — everything analytic or deterministic: CLAIM-004 (bit-exact
+positive control), CLAIM-010/011 (seam algebra, Liouville, Lean), CLAIM-005/008/009
+(ceiling degeneracy, which concern T-behaviour rather than sampling), and all of M1
+(deterministic fits to published data). **The damage is confined to the W4 measurement
+programme** — which is to say, to the part that was already failing.
+
+---
+
 ## 7. Recommended next step
+
+**Superseded by §6c (2026-08-15).** The obstacle is no longer the choice of observable but
+the **sampling**: any quantitative W4 result needs ensemble measurement, n ≈ 22–97 per
+point (1–2 orders more compute than was spent), with B8 run first to size it. Absent that,
+the honest position is that no quantitative or ordinal W4 result has been established, and
+what stands is the structural work — the Liouville dichotomy, the conservation and seam
+algebra, the bit-exact positive control, and the identification of the whole phenomenon as
+absolute-equilibrium thermalization ([LIT-011]–[LIT-020]).
+
+*Original §7 text follows, retained for the record:*
 
 If the W4 question is to be pursued further, the honest reformulation is **not** another
 observable. It is to give the conservative regulators an attractor — a small pre-registered

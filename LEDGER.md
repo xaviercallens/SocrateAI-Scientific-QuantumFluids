@@ -454,7 +454,22 @@ Source: exploration/run_battery_round3.out (run + post-run analysis of 2026-08-1
         pre-registered in docs/designs/M2_OBSERVABLE_VALIDATION_BATTERY.md
         ("Round 3" + "AMENDED SCOPE AND CENSORING RULE").
 Filed: 2026-08-15
-Updated: 2026-08-15
+Updated: 2026-08-15 -- *** RETRACTED, see below ***
+
+*** RETRACTION 2026-08-15 (ensemble check) ***
+       WITHDRAWN. The censoring pattern was measured with exactly ONE
+       trajectory per configuration. An ensemble check at fixed D
+       (exploration/ensemble_scatter.out; identical |a_n| and energy, phases
+       varied) shows tau scatter of 72-105% of the mean, and -- decisively --
+       at D=0.05 THREE OF SIX realisations were censored while three attained
+       (tau = 1.008, 1.044, 2.663). Attainment there is close to a coin flip.
+       "Perfectly ordered censoring with no inversion" is therefore an
+       artifact of single-sampling, not an established property. The
+       DIRECTION of the effect may well be real -- the D >= 0.15 censoring
+       is an 8x gap against ~40% scatter -- but it is NOT established at the
+       strength claimed, and no ordinal claim is made pending an ensemble
+       measurement (n ~ 40-100 per D for 5% precision).
+
 Notes: ORDINAL ONLY. No exponent is claimed -- see CLAIM-R3 for the withdrawn
        quantitative fit. The censoring pattern is reported as a first-class
        result per owner ruling 2 (2026-08-15) precisely because non-attainment
@@ -494,6 +509,45 @@ Reason: FAILS its own pre-registered battery. B2 monotonicity fails for [sum]
        tau(D) - tau_0 could carry a clean exponent. Fitting that on this data
        would be post-hoc and is NOT done; it requires its own pre-registration.
 Filed: 2026-08-15 (as a retraction; never promoted to a claim)
+```
+
+```
+[CLAIM-014] [TIER-B] [VERIFIED]
+Statement: "Single-trajectory measurement of tau in this chaotic model carries a
+           fixed-D ensemble spread of 72-105% of the mean (CV 23-49%), measured
+           across phase realisations with identical |a_n| and identical energy at
+           N=4, f=1/8, T=24. At D=0.05, three of six realisations failed to attain
+           the level while three attained it (tau = 1.008, 1.044, 2.663). A 5%
+           measurement of the mean requires n ~ 22-97 realisations per D."
+Source: exploration/ensemble_scatter.py, output exploration/ensemble_scatter.out.
+Filed: 2026-08-15
+Updated: 2026-08-15
+Notes: THIS IS THE METHODOLOGICAL FINDING OF THE M3 RELAUNCH, and it retracts
+       work rather than adding to it. Every tau in rounds 3 and 4, and every
+       sup_t Omega in Option C, came from a SINGLE trajectory. All of those
+       quantitative and ordinal results are therefore noise-dominated and
+       unestablished (CLAIM-R3, CLAIM-013 retracted; C's sign-consistency
+       likewise unestablished).
+
+       WHY THE BATTERY MISSED IT: all six criteria test DETERMINISTIC
+       reproducibility -- same trajectory at finer discretisation, or a
+       neighbouring parameter on the same trajectory family. NONE tests
+       STATISTICAL reproducibility across trajectories drawn from the same
+       physical ensemble. In a chaotic system that is the binding constraint,
+       and it was absent from the battery by construction. A seventh criterion
+       (B8, ensemble reproducibility) is the correct fix.
+
+       UNIFIED EXPLANATION: rather than seven observables failing for six
+       distinct reasons, the parameter-discontinuity, own-parameter-drift,
+       non-monotonicity and B3' failures are all consistent with this ONE
+       cause. The horizon-divergence failures are separate and remain real --
+       those concern the k_N^2 E ceiling, not sampling.
+
+       UNAFFECTED: everything analytic or deterministic -- CLAIM-004 (bit-exact
+       positive control), CLAIM-010/011 (seam algebra, Liouville, Lean),
+       CLAIM-005/008/009 (ceiling/degeneracy, which are about T-behaviour not
+       sampling), and all M1 results (deterministic fits to published data).
+       The damage is confined to the W4 measurement programme.
 ```
 
 ---
@@ -573,7 +627,8 @@ code or data.**
 | CLAIM-006 | VERIFIED → VERIFIED (reframed) | 2026-08-15 | Novelty withdrawn: phenomenon identified as absolute-equilibrium thermalization, established incl. for shell models ([LIT-017]–[LIT-020]); re-expression per Rule E-X |
 | CLAIM-011 | PENDING → VERIFIED | 2026-08-15 | TIER A core: Liouville property of the complexification, kernel-checked trace identities; real KP is non-Liouville |
 | CLAIM-012 | PENDING → VERIFIED | 2026-08-15 | Equipartition prediction consistent; regulator signature is in the transient (measured) |
-| CLAIM-013 | PENDING → VERIFIED | 2026-08-15 | Ordinal: dispersion delays thermalization, censoring perfectly ordered, no inversion. Dyadic analogue of [LIT-016] |
+| CLAIM-013 | VERIFIED → **RETRACTED** | 2026-08-15 | Ensemble check: single-trajectory artifact. At D=0.05, 3/6 realisations censored, 3 attained. Ordering not established |
+| CLAIM-014 | PENDING → VERIFIED | 2026-08-15 | Single-trajectory measurement is noise-dominated (CV 23–49%); battery tested deterministic, never statistical, reproducibility |
 | CLAIM-R3 | — → RETRACTED | 2026-08-15 | β for τ_f vs D fails its own battery; nonzero baseline makes a pure power law the wrong model |
 
 ---

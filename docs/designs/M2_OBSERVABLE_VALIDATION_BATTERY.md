@@ -333,3 +333,28 @@ absolute floor if |α| < 0.1), then the delay has no exponent in this model.** I
 M3 closes on CLAIM-013's ordinal finding, no quantitative claim is made, and no fifth
 observable is attempted — the ordinal result plus Option C's triangulation is the final
 answer. This is a real stopping rule, not a formality.
+
+---
+
+## B8 — Ensemble reproducibility (added 2026-08-15, after it invalidated four rounds)
+
+**The battery was missing its binding criterion.** B1–B7 all test *deterministic*
+reproducibility: the same trajectory at finer discretisation, or a neighbouring parameter
+on the same trajectory family. None tests whether a **different trajectory from the same
+physical ensemble** gives the same answer. In a chaotic system that is the constraint that
+actually binds, and its absence invalidated rounds 3, 4 and Option C.
+
+**B8.** Before any fit, measure the observable at **fixed parameters** across ≥ 6
+realisations that differ only in a physically irrelevant way (here: initial phases at
+identical |aₙ| and identical energy). Report the coefficient of variation. Then either
+
+- size the ensemble so the standard error of the mean is below the effect being claimed
+  (n ≈ (CV/target)²), and fit ensemble means; or
+- if that ensemble is unaffordable, **make no quantitative or ordinal claim** — state the
+  CV and stop.
+
+**Measured for τ in this model:** CV 23–49%, requiring n ≈ 22–97 per point for 5%
+precision. Rounds 3–4 used n = 1.
+
+**Ordering note:** B8 should run *first*, not last. It is cheap relative to a full sweep
+and it determines whether the sweep is worth running at all.
