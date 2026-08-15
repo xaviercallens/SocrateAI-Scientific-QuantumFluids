@@ -29,7 +29,7 @@ theory content is entirely structural.
 
 **Setting.** Truncated dyadic model, complexified: $B_n = k_{n-1}v_{n-1}^2 - k_n\overline{v_n}v_{n+1}$.
 
-**Theorem (seam characterisation) [A]** — `seam_conserves_iff`. A boundary value $w$ at
+**Theorem (seam characterisation) [A, CLAIM-016]** — `seam_conserves_iff`, both directions kernel-checked 2026-08-15. A boundary value $w$ at
 shell $N{+}1$ conserves the energy pairing **iff** $\mathrm{Re}(\overline{v_N}^2 w) = 0$,
 i.e. iff $w \perp v_N^2$ under $\mathrm{Re}(\bar{x}y)$.
 

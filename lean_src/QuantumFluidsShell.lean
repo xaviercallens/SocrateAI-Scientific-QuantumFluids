@@ -174,70 +174,49 @@ theorem shell_divergence_zero (d : ℝ) (w : ℂ) :
 /-! ## The conserving-seam theorem (both directions)
 
 CLAIM-010 established, and `shellBc_energy_conservation` formalised, the
-`⇐` half: the truncation seam conserves. The telescoping identity
-`sum_re_conj_mul_shellBc` in fact characterises EVERY conserving seam, and
-the characterisation is the theorem that says what a T-dual "bounce" can be:
-a boundary value `w` for `v_{N+1}` conserves the energy pairing iff
-`Re(conj(v_N)² · w) = 0`, i.e. iff `w ⊥ v_N²` under `Re(conj x · y)`.
+`⇐` half for the truncation seam. The telescoping identity
+`sum_re_conj_mul_shellBc` in fact characterises EVERY conserving seam, and the
+characterisation is the theorem that says what a T-dual "bounce" can be.
 
-Consequence, recorded numerically (exploration, 2026-08-15) and provable
-from this theorem: any seam that reads a NEIGHBOURING shell -- a geometric
-mirror `v_{N+1} = ± v_{N-1}`, its conjugate, its rotation -- generically
-violates the criterion and leaks; the conserving family depends on `v_N`
-alone. The T-dual bounce, if energy-conserving, is therefore local phase
-rotation at the cutoff, not spatial reflection. -/
+The clean way to state it avoids `Function.update` entirely: the telescoping
+identity already gives the pairing as `-(out k v N)`, and `out k v N` is
+`k N * Re(conj(v N)^2 * v (N+1))`. So "the seam value at N+1 conserves" is
+literally "that real part vanishes", for the field `v` in which `v (N+1)` IS
+the seam value. No update needed. -/
 
-/-- The energy pairing under a general seam value `w` placed at shell N+1. -/
-noncomputable def pairing_with_seam (k : ℕ → ℝ) (v : ℕ → ℂ) (N : ℕ) (w : ℂ) : ℝ :=
-  ∑ n ∈ Finset.range (N + 1),
-    ((starRingEnd ℂ) (v n) * shellBc k n (Function.update v (N + 1) w)).re
-
-/-- **Seam characterisation.** For `k N ≠ 0`, the seam value `w` at shell N+1
-conserves the energy pairing iff `Re(conj(v_N)² · w) = 0`.
-
-The proof is `sum_re_conj_mul_shellBc` applied to the updated field, whose
-top-shell outflux is `k N · Re(conj(v_N)² · w)`, so the pairing is exactly
-`-(k N) · Re(conj(v_N)² · w)`, and vanishing of a nonzero-scaled real is
-vanishing of the real. -/
-theorem seam_conserves_iff (k : ℕ → ℝ) (v : ℕ → ℂ) (N : ℕ) (w : ℂ) (hk : k N ≠ 0) :
-    pairing_with_seam k v N w = 0
-      ↔ ((starRingEnd ℂ) (v N) * (starRingEnd ℂ) (v N) * w).re = 0 := by
-  unfold pairing_with_seam
-  -- The updated field agrees with v on shells 0..N and takes value w at N+1.
-  have hupd_lt : ∀ n, n ≤ N → Function.update v (N + 1) w n = v n := by
-    intro n hn; exact Function.update_of_ne (by omega) _ _
-  have hupd_top : Function.update v (N + 1) w (N + 1) = w := Function.update_self _ _ _
-  -- shellBc at shell n ≤ N only reads shells n-1, n, n+1 ≤ N+1, so on 0..N the
-  -- pairing with the updated field equals the pairing computed via the
-  -- telescoping identity for the updated field itself.
-  rw [sum_re_conj_mul_shellBc k (Function.update v (N + 1) w) N]
-  simp only [out, hupd_lt N (le_refl N), hupd_top]
+/-- **Seam characterisation.** For `k N ≠ 0`, the energy pairing over shells
+`0..N` vanishes iff `Re(conj(v_N)² · v_{N+1}) = 0` -- i.e. iff the boundary
+value `v_{N+1}` is orthogonal to `v_N²` under `Re(conj x · y)`. -/
+theorem seam_conserves_iff (k : ℕ → ℝ) (v : ℕ → ℂ) (N : ℕ) (hk : k N ≠ 0) :
+    (∑ n ∈ Finset.range (N + 1), ((starRingEnd ℂ) (v n) * shellBc k n v).re = 0)
+      ↔ ((starRingEnd ℂ) (v N) * (starRingEnd ℂ) (v N) * v (N + 1)).re = 0 := by
+  rw [sum_re_conj_mul_shellBc, out]
   constructor
   · intro h
-    have : k N * ((starRingEnd ℂ) (v N) * (starRingEnd ℂ) (v N) * w).re = 0 := by
+    have h' : k N * ((starRingEnd ℂ) (v N) * (starRingEnd ℂ) (v N) * v (N + 1)).re = 0 := by
       linarith
-    exact (mul_eq_zero.mp this).resolve_left hk
+    exact (mul_eq_zero.mp h').resolve_left hk
   · intro h
-    simp [h]
+    rw [h]; ring
 
-/-- The truncation seam `w = 0` conserves (recovers `shellBc_energy_conservation`). -/
-theorem seam_zero_conserves (k : ℕ → ℝ) (v : ℕ → ℂ) (N : ℕ) (hk : k N ≠ 0) :
-    pairing_with_seam k v N 0 = 0 := by
-  rw [seam_conserves_iff k v N 0 hk]; simp
+/-- Truncation `v_{N+1} = 0` conserves -- recovers `shellBc_energy_conservation`
+from the characterisation. -/
+theorem seam_zero_conserves (k : ℕ → ℝ) (v : ℕ → ℂ) (N : ℕ) (hk : k N ≠ 0)
+    (hbc : v (N + 1) = 0) :
+    ∑ n ∈ Finset.range (N + 1), ((starRingEnd ℂ) (v n) * shellBc k n v).re = 0 := by
+  rw [seam_conserves_iff k v N hk, hbc]; simp
 
-/-- **The GPE-like family conserves.** `w = I·μ·v_N²` satisfies the criterion:
-`conj(v_N)² · (I μ v_N²) = I μ |v_N|⁴` is purely imaginary. -/
-theorem seam_gpe_conserves (k : ℕ → ℝ) (v : ℕ → ℂ) (N : ℕ) (μ : ℝ) (hk : k N ≠ 0) :
-    pairing_with_seam k v N (Complex.I * (μ : ℂ) * (v N * v N)) = 0 := by
-  rw [seam_conserves_iff k v N _ hk]
-  -- Re( conj(z)·conj(z)·(I μ z z) ) = Re( I μ |z|⁴ ) = 0
-  have : (starRingEnd ℂ) (v N) * (starRingEnd ℂ) (v N)
-            * (Complex.I * (μ : ℂ) * (v N * v N))
-         = Complex.I * (μ : ℂ) * (Complex.normSq (v N) : ℂ) ^ 2 := by
-    rw [Complex.normSq_eq_conj_mul_self]
-    push_cast; ring
-  rw [this]
-  simp [Complex.mul_re, Complex.mul_im, Complex.I_re, Complex.I_im]
+/-- **The GPE-like family conserves.** If `v_{N+1} = I·μ·v_N²` then the pairing
+vanishes: `conj(v_N)² · (I μ v_N²) = I μ |v_N|⁴` is purely imaginary. -/
+theorem seam_gpe_conserves (k : ℕ → ℝ) (v : ℕ → ℂ) (N : ℕ) (μ : ℝ) (hk : k N ≠ 0)
+    (hbc : v (N + 1) = Complex.I * (μ : ℂ) * (v N * v N)) :
+    ∑ n ∈ Finset.range (N + 1), ((starRingEnd ℂ) (v n) * shellBc k n v).re = 0 := by
+  rw [seam_conserves_iff k v N hk, hbc]
+  -- Expand into real and imaginary parts: the expression is I·μ·|v_N|⁴, whose
+  -- real part is a polynomial identity that vanishes.
+  simp only [Complex.mul_re, Complex.mul_im, Complex.conj_re, Complex.conj_im,
+             Complex.I_re, Complex.I_im, Complex.ofReal_re, Complex.ofReal_im]
+  ring
 
 /-! ## Audit certificates (Gate 2 / L4.1)
 

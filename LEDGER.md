@@ -597,6 +597,34 @@ Notes: DETERMINISTIC (weighted least squares on published data) -- immune to the
        file; converting requires a separately sourced equation of state.
 ```
 
+```
+[CLAIM-016] [TIER-A] [VERIFIED]
+Statement: "In the complexified dyadic model with k_N != 0, the energy pairing
+           over shells 0..N vanishes IFF Re(conj(v_N)^2 * v_{N+1}) = 0 -- i.e. a
+           boundary seam conserves energy iff its value is orthogonal to v_N^2 under
+           Re(conj x * y). Both directions kernel-checked (seam_conserves_iff).
+           Corollaries, also kernel-checked: truncation conserves
+           (seam_zero_conserves); the GPE-like family v_{N+1} = i*mu*v_N^2 conserves
+           (seam_gpe_conserves)."
+Source: lean_src/QuantumFluidsShell.lean, axiom footprint
+        [propext, Classical.choice, Quot.sound] on all three; eleven theorems total.
+Filed: 2026-08-15
+Updated: 2026-08-15
+Notes: This is the theorem that says what a T-dual "bounce" CAN be. Upgrades
+       CLAIM-010 (which established the <= direction and the family numerically) to
+       a full characterisation at Tier A.
+
+       Combined with the numerical mirror test (exploration, 2026-08-15: every seam
+       reading a NEIGHBOURING shell -- v_{N-1}, its conjugate, negation, i-rotation
+       -- leaks at |dE/dt| ~ 1e2-1e3), the consequence for P4 is: an energy-
+       conserving T-dual bounce cannot be a spatial reflection about the self-dual
+       scale; it must be LOCAL PHASE ROTATION at the cutoff, GPE-like. That mirror
+       test is [C-num]; the theorem it rests on is [A].
+
+       This is the stream's principal theoretical output and the first retrofit
+       item for Mathesis (THEORY_MEMO section 6, item 1).
+```
+
 ---
 
 ## Design-memo audit register
@@ -675,6 +703,7 @@ code or data.**
 | CLAIM-011 | PENDING → VERIFIED | 2026-08-15 | TIER A core: Liouville property of the complexification, kernel-checked trace identities; real KP is non-Liouville |
 | CLAIM-012 | VERIFIED → **QUANTITATIVE CONTENT WITHDRAWN** | 2026-08-15 | Ensemble CV 25–84%; percentages were single-trajectory draws. Weak D=0 consistency survives; "signature in the transient" withdrawn |
 | CLAIM-013 | VERIFIED → **RETRACTED** | 2026-08-15 | Ensemble check: single-trajectory artifact. At D=0.05, 3/6 realisations censored, 3 attained. Ordering not established |
+| CLAIM-016 | PENDING → VERIFIED | 2026-08-15 | TIER A: seam characterisation both directions; the T-dual bounce must be local phase rotation, not spatial reflection |
 | CLAIM-015 | PENDING → VERIFIED | 2026-08-15 | Delta(P), Q_m(P) from 7-pressure published data: linear at low P (−0.67%/bar, +0.475%/bar), not power-law; constrains CR-1's form |
 | CLAIM-014 | PENDING → VERIFIED | 2026-08-15 | Single-trajectory measurement is noise-dominated (CV 23–49%); battery tested deterministic, never statistical, reproducibility |
 | CLAIM-R3 | — → RETRACTED | 2026-08-15 | β for τ_f vs D fails its own battery; nonzero baseline makes a pure power law the wrong model |

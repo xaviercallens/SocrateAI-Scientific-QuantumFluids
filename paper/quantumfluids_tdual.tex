@@ -289,7 +289,7 @@ is treated as no more than that; the content here is the algebra.
 \label{sec:formal}
 
 Theorems~\ref{thm:conservation}, \ref{thm:liouville} and
-Propositions~\ref{prop:real}, \ref{prop:seam}'s algebraic core are machine-checked in
+Propositions~\ref{prop:real}, \ref{prop:seam} (both directions) are machine-checked in
 Lean~4 against Mathlib~\cite{Mathlib}, deliberately mirroring the real-model development of
 the sibling stream so the two compare line by line and pinning the same library revision.
 
@@ -307,6 +307,9 @@ Lean name & Content & Axioms \\
 \lean{rtrace\_mul\_I} & imaginary multiplier: zero trace & standard \\
 \lean{rtrace\_conj\_mul} & $v\mapsto\conj{v}w$: zero trace & standard \\
 \lean{shell\_divergence\_zero} & Theorem~\ref{thm:liouville} (shell block) & standard \\
+\lean{seam\_conserves\_iff} & Proposition~\ref{prop:seam}, both directions & standard \\
+\lean{seam\_zero\_conserves} & truncation conserves (corollary) & standard \\
+\lean{seam\_gpe\_conserves} & $v_{N+1}=i\mu v_N^2$ conserves (corollary) & standard \\
 \bottomrule
 \end{tabular}
 \end{center}
