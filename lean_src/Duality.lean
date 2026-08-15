@@ -131,7 +131,6 @@ theorem eoq_lower_bound {D K h Q : ℝ}
     2 * Real.sqrt (D * K * h / 2) ≤ D * K / Q + h * Q / 2 := by
   have hxy : (D * K / Q) * (h * Q / 2) = D * K * h / 2 := by
     field_simp
-    ring
   calc 2 * Real.sqrt (D * K * h / 2)
       = 2 * Real.sqrt ((D * K / Q) * (h * Q / 2)) := by rw [hxy]
     _ ≤ D * K / Q + h * Q / 2 :=
@@ -152,7 +151,7 @@ hydrodynamic and excitation pictures) coincide. -/
 theorem kramers_wannier_self_dual {K : ℝ} (hK : 0 < K)
     (hfix : Real.sinh (2 * K) * Real.sinh (2 * K) = 1) :
     K = Real.log (1 + Real.sqrt 2) / 2 := by
-  have hpos : 0 < Real.sinh (2 * K) := Real.sinh_pos.mpr (by linarith)
+  have hpos : 0 < Real.sinh (2 * K) := Real.sinh_pos_iff.mpr (by linarith)
   have h2 : (Real.sinh (2 * K) - 1) * (Real.sinh (2 * K) + 1) = 0 := by
     linear_combination hfix
   have h1 : Real.sinh (2 * K) = 1 := by
