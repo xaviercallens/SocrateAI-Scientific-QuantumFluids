@@ -5,3 +5,54 @@ ROUND 3: tau_f (thermalization time), all-conservative, common complex data
   baseline tau_f (truncation, D=0): f=0.125:0.9932  f=0.25:1.4985
     [integrated N=4 D=0.2 fine=False: 21504 steps]
     [integrated N=4 D=0.15 fine=False: 17408 steps]
+    [integrated N=4 D=0.15 fine=True: 34816 steps]
+    [integrated N=4 D=0.1 fine=False: 13312 steps]
+    [integrated N=4 D=0.1 fine=True: 26624 steps]
+    [integrated N=4 D=0.07 fine=False: 10855 steps]
+    [integrated N=4 D=0.07 fine=True: 21709 steps]
+    [integrated N=4 D=0.05 fine=False: 9216 steps]
+    [integrated N=4 D=0.05 fine=True: 18432 steps]
+    [integrated N=4 D=0.035 fine=False: 7988 steps]
+    [integrated N=4 D=0.035 fine=True: 15975 steps]
+    [integrated N=4 D=0.025 fine=False: 7168 steps]
+    [integrated N=4 D=0.025 fine=True: 14336 steps]
+    [integrated N=4 D=0.018 fine=False: 6595 steps]
+    [integrated N=4 D=0.018 fine=True: 13190 steps]
+  [sum] f=0.125: n=7 excl=1 beta=+0.9732 r2=0.6566 windows[+2.210,+0.042] B2=FAIL
+      excluded D=0.2: trace never reaches level 20 within the horizon (max re
+  [sum] f=0.25: n=6 excl=2 beta=+1.3329 r2=0.7173 windows[+1.986,+0.755] B2=ok
+      excluded D=0.2: trace never reaches level 40 within the horizon (max re
+      excluded D=0.15: trace never reaches level 40 within the horizon (max re
+  [max] f=0.125: n=6 excl=2 beta=+0.6896 r2=0.9052 windows[+0.922,+0.068] B2=ok
+      excluded D=0.2: trace never reaches level 20 within the horizon (max re
+      excluded D=0.15: trace never reaches level 20 within the horizon (max re
+  [max] f=0.25: n=5 excl=3 beta=+0.6466 r2=0.9348 windows[+0.551,+0.735] B2=ok
+      excluded D=0.2: trace never reaches level 40 within the horizon (max re
+      excluded D=0.15: trace never reaches level 40 within the horizon (max re
+      excluded D=0.1: trace never reaches level 40 within the horizon (max re
+
+B3' across f (per N, [sum]):
+  N=4: betas ['+0.9732', '+1.3329']  max|dbeta|=0.3597 -> FAIL
+
+B5' delay ratio tau(D)/tau(0) beta across N (f=0.25, [sum]):
+  N=4: beta_ratio=+1.3329 (r2=0.7173)
+
+======================================================================
+CENSORING TABLE (owner ruling 2026-08-15: reported as a result, not a footnote)
+======================================================================
+  N=4 [sum] f=0.125: D=0.2 NEVER ATTAINED within T=32.0
+  N=4 [sum] f=0.25: D=0.2 NEVER ATTAINED within T=32.0
+  N=4 [sum] f=0.25: D=0.15 NEVER ATTAINED within T=32.0
+  N=4 [max] f=0.125: D=0.2 NEVER ATTAINED within T=32.0
+  N=4 [max] f=0.125: D=0.15 NEVER ATTAINED within T=32.0
+  N=4 [max] f=0.25: D=0.2 NEVER ATTAINED within T=32.0
+  N=4 [max] f=0.25: D=0.15 NEVER ATTAINED within T=32.0
+  N=4 [max] f=0.25: D=0.1 NEVER ATTAINED within T=32.0
+
+  Non-attainment correlates with the hypothesised effect (slower
+  thermalization), so every beta above is a LOWER BOUND on the effect,
+  not a point estimate.
+
+tau values dumped to /home/xavkal/xdev/SocrateAI-Scientific-QuantumFluids/exploration/round3_tau.csv (36 rows) for round-4 reuse.
+
+Exploratory. A PASS licenses the comparison; nothing here is a claim.
