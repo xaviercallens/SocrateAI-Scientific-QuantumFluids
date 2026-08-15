@@ -46,7 +46,7 @@
 
 **Mathesis formal name:** Mathesis.Verified (protocol for Tier-A claims)
 
-**Link:** All claims in LEDGER.md marked TIER-A must have a LITERATURE_LEDGER.md entry with retrieval date and DOI/URL.
+**Link:** All claims in LEDGER.md marked `QF-VERIFIED` must have a LITERATURE_LEDGER.md entry with retrieval date and DOI/URL. (Renamed from `TIER-A` on 2026-08-15 — see the legend in LEDGER.md for why those letters collided with Stream 0's tier calculus.)
 
 **Cross-reference:** SPEC.md, LEDGER.md, LITERATURE_LEDGER.md
 

@@ -165,10 +165,10 @@ Per LEDGER.md governance (Tier C claims are narrative-adjacent, not
 peer-review-grade, but the underlying fit code is the same Tier-B-eligible
 machinery that will run against Tier-B data once M1-DATA-001 resolves):
 
-- **[CLAIM-001]** [TIER-C] — "The roton-branch fit recovers Δ and Q_m
+- **[CLAIM-001]** [QF-NARRATIVE] — "The roton-branch fit recovers Δ and Q_m
   from a hand-digitized version of Godfrin et al. 2021's own published
   curve within 2%." — Source: this report, `data/derived/godfrin_2021_fit_results.json`
-- **[CLAIM-002]** [TIER-C] — "The phonon-branch fit does NOT recover c
+- **[CLAIM-002]** [QF-NARRATIVE] — "The phonon-branch fit does NOT recover c
   from this same digitization; the gap (~27%) is stable against region
   width and attributable to near-origin visual reading precision, not
   a code defect." — Source: this report

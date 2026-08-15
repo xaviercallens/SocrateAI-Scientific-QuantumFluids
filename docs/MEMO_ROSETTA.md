@@ -43,7 +43,7 @@ The dual-scale hypothesis, atomized into four testable principles:
 
 | Field | Established result | Principle(s) | Status | What expression gains | Action |
 |---|---|---|---|---|---|
-| **2D Ising duality** | Kramers–Wannier duality `sinh(2K)·sinh(2K*) = 1`; self-dual point = critical point; K_c = log(1+√2)/2 | P1, A.5 fixed point | **Kernel-proved**: `kramers_wannier_self_dual` (lean_src/Duality.lean L98) | The critical temperature of a real phase transition located *purely by self-duality* — the stat-mech twin of √α′ | T-KW2 (involution packaging); Tier B finite-lattice identities to go to exact-arithmetic harness |
+| **2D Ising duality** | Kramers–Wannier duality `sinh(2K)·sinh(2K*) = 1`; self-dual point gives K = log(1+√2)/2, which IS Onsager's K_c — but *self-dual point = critical point* needs uniqueness of the transition and is NOT proved here | P1, A.5 fixed point | **Kernel-proved (since 2026-08-15)**: `sinh_selfDual_coupling` (lean_src/Duality.lean). Before that commit it carried `sorryAx`. Renamed: the file has no Ising model | The algebra of the fixed point, kernel-checked. The identification with a real phase transition is Tier C (Stream 0 `MX-C-0009`) | T-KW2 (involution packaging); Tier B finite-lattice identities to go to exact-arithmetic harness |
 
 **Notes:**
 - Kramers–Wannier (1941, *Phys. Rev.*) is Tier A.

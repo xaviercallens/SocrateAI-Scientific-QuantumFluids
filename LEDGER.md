@@ -2,7 +2,30 @@
 
 **Purpose:** Track all empirical/theoretical claims made in this stream. Every claim must have:
 1. A clear statement
-2. Evidentiary tier (A=citation-verified, B=unit-testable, C=narrative/speculation)
+2. Confidence label — **`QF-VERIFIED` / `QF-TESTED` / `QF-NARRATIVE`**
+
+   **These were `TIER-A` / `TIER-B` / `TIER-C` and were renamed on 2026-08-15,
+   because those letters already mean something else in this programme.**
+   Stream 0's tier calculus is five-valued, `X < C < L < B < A`, and in it a
+   letter is a *citation-strength* claim with a hard cap set by the kind of
+   evidence: `lean_axioms → A`, `exact_harness → B`, `citation → L`,
+   `argument → C`, `numeric`/`llm_output → X`.
+
+   So `A` there means **kernel-proved in Lean, footprint audited** — it does
+   **not** mean "citation-verified", and a literature-backed result caps at `L`.
+   A row marked `TIER-A` here for a curve fit to published data would read to
+   any Stream 0 consumer as a kernel proof. That is why the letters had to go.
+
+   | this repo | means | nearest Stream 0 tier |
+   |---|---|---|
+   | `QF-VERIFIED` | checked against literature **or** kernel-proved | `L` if by citation, `A` only if by Lean |
+   | `QF-TESTED` | covered by a unit test | `B` if the test is exact, `X` if floating-point |
+   | `QF-NARRATIVE` | reasoning, analogy, speculation | `C` |
+
+   The mapping is **not** one-to-one, and that is the point: `QF-VERIFIED`
+   merges two Stream 0 tiers that the calculus deliberately separates. Any row
+   exported to Stream 0 must be re-tiered by evidence kind, not translated by
+   position in this table.
 3. Status (PENDING, VERIFIED, DISPUTED, RETRACTED)
 4. Source references (LITERATURE_LEDGER.md entry or unit test ID)
 5. Date filed and last-updated timestamp
@@ -12,7 +35,7 @@
 ## Template entry
 
 ```
-[CLAIM-001] [TIER-A] [PENDING]
+[CLAIM-001] [QF-VERIFIED] [PENDING]
 Statement: "The Landau two-parameter form (c, Δ) fits the Godfrin et al. 2021 
            dispersion data to within ±5% on phonon branch."
 Source: LITERATURE_LEDGER.md#Godfrin2021, test:dispersion_fit::test_landau_fit
@@ -26,7 +49,7 @@ Notes: Blocking M1 definition-of-done.
 ## Current claims
 
 ```
-[CLAIM-001] [TIER-C] [VERIFIED]
+[CLAIM-001] [QF-NARRATIVE] [VERIFIED]
 Statement: "Fitting the roton branch (Landau parabolic form) to a hand-digitized
            version of Fig. 5 (Godfrin & Krotscheck 2022, [LIT-001], representing
            Godfrin et al. 2021 [LIT-002] data) recovers Delta = 0.7306 +/- 0.0040 meV
@@ -42,7 +65,7 @@ Notes: Tier C (digitized fallback data, not raw instrument data — see
 ```
 
 ```
-[CLAIM-002] [TIER-C] [VERIFIED]
+[CLAIM-002] [QF-NARRATIVE] [VERIFIED]
 Statement: "The phonon-branch fit (linear form) applied to the same digitized
            Fig. 5 data does NOT recover the literature sound velocity
            c = 1.568 meV*Angstrom (238 m/s); fitted c = 1.10-1.15 meV*Angstrom
@@ -58,7 +81,7 @@ Notes: Attributed to near-origin visual-reading precision limits of hand
 ```
 
 ```
-[CLAIM-003] [TIER-B] [VERIFIED]
+[CLAIM-003] [QF-TESTED] [VERIFIED]
 Statement: "Fitting the Landau phonon (linear) and roton (parabolic) forms
            to Godfrin et al. (2021)'s own published dispersion-curve table
            ([LIT-002], arXiv:2012.09067 ancillary file DispersionP0allRange.txt)
@@ -107,7 +130,7 @@ CAVEAT, newly recorded: Godfrin et al.'s own P=0 Delta_R is taken from
 ```
 
 ```
-[CLAIM-004] [TIER-B] [VERIFIED]
+[CLAIM-004] [QF-TESTED] [VERIFIED]
 Statement: "At D = 0 with real initial data, the complexified dyadic shell model
            (adapters: w4_shell_model.shell_dynamics + .integrate) reproduces
            MechanicaFluidorum's independently-written reference implementation
@@ -144,7 +167,7 @@ Notes: This is the audited memo's own pre-registered positive control, and it
 ```
 
 ```
-[CLAIM-005] [TIER-B] [VERIFIED]
+[CLAIM-005] [QF-TESTED] [VERIFIED]
 Statement: "sup_t Omega does not converge in the horizon T for a purely dispersive
            regulator (nu = 0, D > 0) in the complexified dyadic shell model. At
            N=4, profile P3, D=0.02, it climbs monotonically from 30.7 at T=1 to
@@ -196,7 +219,7 @@ Filed: 2026-08-14 (as a retraction; the result was never promoted to a claim)
 ```
 
 ```
-[CLAIM-006] [TIER-B] [VERIFIED]
+[CLAIM-006] [QF-TESTED] [VERIFIED]
 Statement: "Every observable of the form 'how large does Omega become' so far tested
            inherits a horizon dependence on the DISPERSIVE side and none on the
            viscous side. Five candidates failed: sup_t Omega (10.35% horizon
@@ -263,7 +286,7 @@ REFRAMING + NOVELTY VERDICT (2026-08-15, retrieval complete): the phenomenon
 ```
 
 ```
-[CLAIM-007] [TIER-A] [VERIFIED]
+[CLAIM-007] [QF-VERIFIED] [VERIFIED]
 Statement: "The conjugated complexified dyadic shell nonlinearity
            B_n(v) = k_{n-1} v_{n-1}^2 - k_n conj(v_n) v_{n+1}
            conserves the energy pairing EXACTLY under the truncation boundary
@@ -308,7 +331,7 @@ Notes: TIER A. Closes audit ruling O2, which accepted the complexification as
 ```
 
 ```
-[CLAIM-008] [TIER-B] [VERIFIED]
+[CLAIM-008] [QF-TESTED] [VERIFIED]
 Statement: "All three of EXPRESSION_MEMO_E1 section 4's regulators are
            energy-conserving -- truncation exactly (v_{N+1}=0 kills the
            telescoping outflux), dispersive exactly (-iDk^2 a is energy-neutral),
@@ -332,7 +355,7 @@ Notes: Why this was not visible earlier: the comparisons in M2_REPORT sections
 ```
 
 ```
-[CLAIM-009] [TIER-B] [VERIFIED]
+[CLAIM-009] [QF-TESTED] [VERIFIED]
 Statement: "For the truncation control at nu = D = 0, sup_t Omega saturates at the
            energy-conservation ceiling k_N^2 E, so beta measured against
            alpha' = 4^-N converges to -1 EXACTLY -- the trivial bound restated.
@@ -353,7 +376,7 @@ Notes: Consequence: even at a FIXED horizon the truncation control is measuring
 ```
 
 ```
-[CLAIM-010] [TIER-B] [VERIFIED]
+[CLAIM-010] [QF-TESTED] [VERIFIED]
 Statement: "A boundary seam conserves energy in the complexified dyadic model IFF
            Re(conj(v_N)^2 * v_{N+1}) = 0. On REAL data this reduces to
            v_N^2 * v_{N+1}, so truncation (v_{N+1} = 0) is the ONLY conserving
@@ -385,7 +408,7 @@ Notes: Resolves the question memo section 5 left open about W2. The condition is
 ```
 
 ```
-[CLAIM-011] [TIER-A] [VERIFIED]
+[CLAIM-011] [QF-VERIFIED] [VERIFIED]
 Statement: "The conjugated complexified dyadic model preserves phase-space volume
            (Liouville property), while the REAL Katz-Pavlovic model does not.
            Formalised core (kernel-checked, Lean): the shell-diagonal derivative
@@ -417,7 +440,7 @@ Notes: TIER SPLIT, stated exactly: Tier A covers the trace identities; the
 ```
 
 ```
-[CLAIM-012] [TIER-B] [VERIFIED]
+[CLAIM-012] [QF-TESTED] [VERIFIED]
 Statement: "Time-averaged enstrophy of the conservative complexified model is
            consistent with microcanonical equipartition on the energy sphere,
            <Omega_sum>_eq = E(4^{N+1}-1)/(3(N+1)) = 42.625 at N=4, E=0.625:

@@ -105,15 +105,18 @@ theorem Reff_ge_sqrt_of_selfDual {α R : ℝ} (hα : 0 < α) (hR : 0 < R) :
     rw [mul_comm]; exact div_mul_cancel₀ α hR.ne'
   exact sqrt_le_max_of_le_mul hR.le (div_nonneg hα.le hR.le) hprod.ge
 
-/-- **B.2 (Finite support balance — the Donoho–Stark consequence).**
-Whenever two support sizes obey a product lower bound `N ≤ a·b` (as the
-Donoho–Stark uncertainty principle asserts for a nonzero vector and its
-finite Fourier transform), the larger support is at least `√N`.
-The product hypothesis is a parameter here; discharging it is TARGET T-DS.
+/-- **B.2 (Support balance).** A.1 cast to naturals: whenever two support
+sizes obey a product lower bound `N ≤ a·b`, the larger is at least `√N`.
+
+**This file contains no Fourier analysis.** The Donoho–Stark uncertainty
+principle IS the hypothesis `N ≤ a·b`, not the conclusion — naming this
+theorem after it would name it after the part that is assumed. Stream 0
+has since PROVED that hypothesis (`MX-A-0014`, `Duality/Uncertainty.lean`),
+so it may now be supplied rather than assumed.
 
 **Physics comment:** This is the mechanism underlying the dual-scale bound:
 a product constraint in Fourier space forces a minimum scale. -/
-theorem support_balance {a b N : ℕ} (h : N ≤ a * b) :
+theorem sqrt_le_max_of_le_mul_nat {a b N : ℕ} (h : N ≤ a * b) :
     Real.sqrt (N : ℝ) ≤ max (a : ℝ) (b : ℝ) :=
   sqrt_le_max_of_le_mul (Nat.cast_nonneg a) (Nat.cast_nonneg b)
     (by exact_mod_cast h)
@@ -131,15 +134,21 @@ theorem eoq_lower_bound {D K h Q : ℝ}
     2 * Real.sqrt (D * K * h / 2) ≤ D * K / Q + h * Q / 2 := by
   have hxy : (D * K / Q) * (h * Q / 2) = D * K * h / 2 := by
     field_simp
-    ring
   calc 2 * Real.sqrt (D * K * h / 2)
       = 2 * Real.sqrt ((D * K / Q) * (h * Q / 2)) := by rw [hxy]
     _ ≤ D * K / Q + h * Q / 2 :=
         two_sqrt_mul_le_add (by positivity) (by positivity)
 
-/-! ## Part C — Rung 1: the Kramers–Wannier self-dual point (Tier A) -/
+/-! ## Part C — Rung 1: the self-dual coupling (Tier A)
 
-/-- **C.1 (Kramers–Wannier critical coupling).** The 2D Ising duality pairs
+NOTE: there is NO Ising model in this file — no lattice, no partition
+function, no duality map. The theorem proves `sinh(2K)² = 1 ∧ K > 0 →
+K = log(1+√2)/2`. That value IS Onsager's critical coupling, but going from
+*self-dual point* to *critical point* needs the transition to be unique,
+which Kramers–Wannier (1941) assumed and Onsager (1944) proved, and which
+appears nowhere here. The physics reading is Stream 0's `MX-C-0009`. -/
+
+/-- **C.1 (The self-dual coupling).** The 2D Ising duality pairs
 couplings by `sinh(2K)·sinh(2K*) = 1`. At the self-dual point the fixed-point
 equation `sinh(2K)² = 1` (with `K > 0`) forces
 `K = log(1 + √2)/2` — the exact critical coupling, located purely by
@@ -149,10 +158,10 @@ self-duality. The statistical-mechanics twin of A.5.
 to the macro–micro duality in quantum fluids: both systems have a
 self-dual critical point where the two "faces" (low-T and high-T spins;
 hydrodynamic and excitation pictures) coincide. -/
-theorem kramers_wannier_self_dual {K : ℝ} (hK : 0 < K)
+theorem sinh_selfDual_coupling {K : ℝ} (hK : 0 < K)
     (hfix : Real.sinh (2 * K) * Real.sinh (2 * K) = 1) :
     K = Real.log (1 + Real.sqrt 2) / 2 := by
-  have hpos : 0 < Real.sinh (2 * K) := Real.sinh_pos.mpr (by linarith)
+  have hpos : 0 < Real.sinh (2 * K) := Real.sinh_pos_iff.mpr (by linarith)
   have h2 : (Real.sinh (2 * K) - 1) * (Real.sinh (2 * K) + 1) = 0 := by
     linear_combination hfix
   have h1 : Real.sinh (2 * K) = 1 := by
@@ -202,8 +211,8 @@ else. -/
 #print axioms two_sqrt_mul_le_add
 #print axioms self_dual_fixed_point
 #print axioms Reff_ge_sqrt_of_selfDual
-#print axioms support_balance
+#print axioms sqrt_le_max_of_le_mul_nat
 #print axioms eoq_lower_bound
-#print axioms kramers_wannier_self_dual
+#print axioms sinh_selfDual_coupling
 
 end Mathesis.Duality

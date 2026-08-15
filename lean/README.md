@@ -77,7 +77,7 @@ mathesis = {
 - `sqrt_le_max_of_le_mul` — Self-dual bound (P1)
 - `two_sqrt_mul_le_add` — AM–GM additive twin (A.4)
 - `self_dual_fixed_point` — Fixed-point equivalence (A.5)
-- `kramers_wannier_self_dual` — Ising critical coupling from self-duality (C.1)
+- `sinh_selfDual_coupling` — the fixed point of `sinh(2K)² = 1`. **Not** an Ising theorem: the file has no lattice and no partition function (Stream 0 `MX-C-0009`)
 
 **Status:** Kernel-proved; audit: `#print axioms` yields only Classical.choice, propext, Quot.sound (per L4.1).
 

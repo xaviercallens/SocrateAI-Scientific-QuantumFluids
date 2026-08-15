@@ -1,6 +1,6 @@
 # MATHESIS INTEGRATION: QuantumFluids as Dependent Stream
 
-**Role of Mathesis:** Mathematical command center and foundational harness for QuantumFluids (Stream 1).
+**Role of Mathesis:** notation, verification kernel and epistemic bookkeeping for QuantumFluids (Stream QF).
 
 **Contract:** SocrateAI-Scientific-Mathesis (Stream 0) provides:
 1. Proven foundational theorems (Duality, Scale.Reff, Tier-A certification)
@@ -19,17 +19,17 @@ Mathesis (Stream 0)
   │   ├── sqrt_le_max_of_le_mul (self-dual bound, P1)
   │   ├── two_sqrt_mul_le_add (AM–GM, A.4)
   │   ├── self_dual_fixed_point (fixed point, A.5)
-  │   └── kramers_wannier_self_dual (Ising, C.1)
+  │   └── sinh_selfDual_coupling (fixed point of sinh(2K)²=1; NOT Ising)
   │
   ├── Mathesis.Scale.Reff (fundamental length scale)
   │
-  ├── Mathesis.Verification (axiom-free proofs; L4.1)
+  ├── Mathesis.Duality.Uncertainty (Parseval + Donoho-Stark on ZMod N)
   │
-  └── Mathesis.Governance (Rule E-X, Tier-A/B/C)
+  └── Mathesis.TierCalculus (the tier order and its soundness theorem)
 
               ↓↓↓ QuantumFluids imports ↓↓↓
 
-QuantumFluids (Stream 1)
+QuantumFluids (Stream QF)
   ├── lean_src/Duality.lean (re-export with QF commentary)
   ├── lean/QuantumFluids/HealingLength.lean (TARGET T-QF1: Reff instance)
   ├── lean/QuantumFluids/W4Model.lean (shell model, M2)
