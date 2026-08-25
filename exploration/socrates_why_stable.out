@@ -1,0 +1,22 @@
+k_eff profile (alpha'=1e-06, N=30): NON-MONOTONIC by construction
+  k_eff = min(k, 1/(alpha' k)); peak 976.6 at shell 10
+  k_eff at top shell (n=29): 0.001863  -- trans-cutoff modes act as their DUALS, so the top shells are SOFT
+
+--- (a) Does Omega climb toward equipartition on long horizons? ---
+   t_max      sup Omega     E drift   terminated
+      12        11425.5    1.34e-07        t_max
+      48        11425.5    1.34e-07        t_max
+     200        10950.9    1.34e-07        t_max
+     800        9885.81    1.34e-07        t_max
+
+  equipartition value for THIS k_eff profile: Omega_eq = E*sum(k_eff^2)/N = 27018.2
+  measured sup Omega at t=800:                9885.81
+  ratio sup/eq = 0.3659
+  growth of sup Omega from t=12 to t=800: -13.476%
+  => MIXED; report the numbers, do not round toward the hypothesis.
+
+--- (b) Is the real model phase-chaotic? Structural check ---
+  Their state vector is REAL by construction (np.zeros(n), float dtype):
+  there is no phase degree of freedom to perturb, so the phase-randomisation
+  ensemble that produced this stream's CV 23-49% has NO ANALOGUE here.
+  Consistent with the measured seed spread of 0.0005 in beta.

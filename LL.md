@@ -334,6 +334,37 @@ against as a positive example — Mathesis's Duality.lean theorems were
 independently confirmed to exist and be kernel-checked before QuantumFluids
 built on them.
 
+### LL-15: Transfer a result with its hypotheses, not just its conclusion
+
+**What happened.** Two conclusions from this stream were carried into a cross-stream note
+to SOCRATES/Mensura: (a) a conservative truncated cascade thermalizes, so their nu=0
+exponent -0.672 must drift to -1 on longer horizons; (b) single-trajectory exponents in
+this model class are noise-dominated (CV 23-49%). Both are true HERE. Both are false
+THERE. Tested in their code: beta = -0.6721 at t_max = 6, 12, 24, 48 (drift -0.0001) and
+seed spread 0.0006.
+
+**Why.** Both conclusions depend on properties their model does not have, and *this
+stream had already proven the discriminating property in both cases*:
+  - Thermalization needs a LIOUVILLE flow. CLAIM-011: the real Katz-Pavlovic flow is
+    volume-CONTRACTING; only the complexified model is Liouville. beta -> -1 was measured
+    in the complexified model.
+  - Phase-randomisation scatter needs PHASES. The M2 obstruction proposition: a real
+    amplitude has no phase. Their state vector is real by construction.
+
+**The failure mode** is not ignorance -- the hypotheses were available and proven
+in-house. It is that a conclusion travels more easily than its preconditions: "the model
+thermalizes" is memorable, "the model thermalizes IF the flow is volume-preserving" is
+the actual result.
+
+**Rule.** Before exporting a finding to another stream, write down the hypotheses it
+rests on and check each one against the target model explicitly. If a hypothesis is one
+this stream itself proved discriminating, that check is mandatory, not optional.
+
+**Silver lining, and the reason this is worth the cost.** Testing the prediction in their
+code before shipping it (a) caught it in the same turn rather than after it had
+propagated, and (b) found a real defect in their measurement instrument as a by-product
+(CLAIM-018). The prediction was wrong; running it was right.
+
 ---
 
 ## Decision log
@@ -349,3 +380,4 @@ built on them.
 - **MechanicaFluidorum:** This stream does NOT resolve MF obstruction O5 (GPE–NS well-posedness). LL-3 requires version pinning of dyadic-lab imports.
 - **Mathesis:** This stream imports Tier-A Duality and Scale.Reff frameworks. No new foundational theorems proposed unless audited.
 - **Poly-Algebraic-Calculus:** Naming separation (RES-1) is maintained. No re-use of that name.
+- **SOCRATES / Mensura (`/home/xavkal/socrates-project`):** retrofit delivered — Lean port (11 theorems, rebuilt on their v4.32.2 pin) + `docs/QUANTUMFLUIDS_RETROFIT.md`. One exported prediction (CLAIM-017) was tested in their code and RETRACTED; a real instrument defect (CLAIM-018) was found in the process. See LL-15.

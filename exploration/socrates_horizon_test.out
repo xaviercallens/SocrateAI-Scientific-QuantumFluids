@@ -1,0 +1,26 @@
+========================================================================
+R1 TEST: is SOCRATES' -0.672 a horizon-dependent transient?
+Their protocol: N=30, nu=0, cfl=0.05, 9 alphas
+========================================================================
+
+--- Horizon sweep (default seed, their default initial condition) ---
+   t_max       beta   n_conv   peak enstrophy at alpha=1e-2, 1e-6, 1e-10
+       6    -0.6721        9   19.26 1.143e+04 4.749e+06
+      12    -0.6721        9   19.26 1.143e+04 4.748e+06
+      24    -0.6721        9   19.26 1.143e+04 4.748e+06
+      48    -0.6721        9   19.26 1.143e+04 4.748e+06
+
+--- Verdict on the horizon prediction ---
+  beta(6) = -0.6721 -> beta(48) = -0.6721   drift = -0.0001
+  monotonically decreasing toward -1: False
+  distance from -1 at longest horizon: 0.3279
+  => PREDICTION NOT SUPPORTED: beta is horizon-stable. R1 must be retracted.
+
+--- Control (R2): seed scatter in beta at FIXED t_max=12 ---
+  If this scatter rivals the horizon drift above, both are underdetermined.
+  seed 0: beta = -0.6721  (n_conv=9)
+  seed 1: beta = -0.6720  (n_conv=9)
+  seed 2: beta = -0.6725  (n_conv=9)
+  seed 3: beta = -0.6719  (n_conv=9)
+  seed spread = 0.0006   horizon drift = 0.0001   ratio drift/spread = 0.1
+  => WARNING: seed scatter EXCEEDS horizon drift. R1 is not separable from seed noise on this evidence.

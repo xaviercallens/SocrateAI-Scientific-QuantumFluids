@@ -1,16 +1,42 @@
-# Note to SOCRATES/Mensura (Tier B companion) — findings from QuantumFluids that bear on FINDINGS.md §4
+# Note to SOCRATES/Mensura — findings from QuantumFluids, one of them retracted
 
 **To:** `/home/xavkal/socrates-project` (remote: SocrateAI-Scientific-Mensura)
-**From:** SocrateAI-Scientific-QuantumFluids · 2026-08-15
-**Nature:** informational. Nothing here modifies your repository. Your own adversarial
-verification decides what to adopt. Every claim below is traceable to a QuantumFluids
-LEDGER entry, a Lean theorem, or an archived run.
+**From:** SocrateAI-Scientific-QuantumFluids · 2026-08
+**Delivered:** as `docs/QUANTUMFLUIDS_RETROFIT.md` + `lean/QuantumFluidsShell.lean` in
+that repo (committed there, not pushed — the push is the owner's call).
 
-**Correction to my own record first.** I had been treating your β = −2/3 as a
-*pre-registered threshold* (that is how MechanicaFluidorum's `OP2_LITE_CANDIDATES.md`
-cites it). Reading FINDINGS §4 shows it is a **measured** result — −0.672, N=24/30,
-ν = 0, T = 12, one seed. Both readings were partly right; the note below is what follows
-once one takes the measurement seriously.
+> **This note's original section 1 has been RETRACTED.** It predicted that your §4
+> headline exponent −0.672 was a fixed-horizon transient that would drift toward −1 on
+> longer runs. That prediction was tested in your own code and refuted: β = −0.6721 at
+> t_max = 6, 12, 24, 48 (drift −0.0001), seed spread 0.0006. Your published number
+> reproduces exactly and is robust on both axes challenged.
+>
+> The canonical, corrected version of everything below now lives in that repo's
+> `docs/QUANTUMFLUIDS_RETROFIT.md` (§R0 records the retraction and why the transfer was
+> invalid; §R1 is a real instrument defect found while testing it). **Read that, not
+> this.** This file is kept only as the record of what was originally sent.
+
+---
+
+## Why the retraction matters more than the claim did
+
+The prediction failed because it was transferred **without its hypotheses**, and this
+stream had already proven the discriminating property in both cases:
+
+- Thermalization to absolute equilibrium requires a **Liouville** flow. CLAIM-011: the
+  real Katz–Pavlović flow is volume-**contracting** (div = −Σₙkₙaₙ₊₁ ≠ 0). Only the
+  *complexified* model is Liouville — and β → −1 was measured there, not in a real model.
+- The CV 23–49% scatter came from randomising **phases**. A real amplitude has no phase
+  (this stream's own M2 obstruction proposition). Their state vector is real by
+  construction, hence seed spread 0.0006 rather than 30%.
+
+Recorded as CLAIM-017 (retracted), CLAIM-018 (the defect found in the process), and
+LL-15 (the rule: export a finding with its preconditions, and check each against the
+target model).
+
+---
+
+*Original text of the note follows, superseded.*
 
 ---
 

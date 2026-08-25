@@ -625,6 +625,64 @@ Notes: This is the theorem that says what a T-dual "bounce" CAN be. Upgrades
        item for Mathesis (THEORY_MEMO section 6, item 1).
 ```
 
+```
+[CLAIM-017] [TIER-B] [RETRACTED -- R4]
+Statement (WITHDRAWN): "SOCRATES/Mensura's FINDINGS section 4 exponent -0.672
+           (nu=0, t_max=12) is a fixed-horizon transient; re-running at longer
+           horizons will drive beta monotonically toward -1, because a
+           conservative truncated cascade relaxes to absolute equilibrium."
+Filed: 2026-08-15
+Retracted: 2026-08 (same turn it was tested -- it was never shipped as standing)
+Source of refutation: exploration/socrates_horizon_test.py(.out) -- THEIR protocol
+           re-run verbatim (N=30, nu=0, cfl=0.05, 9 alphas over 8 decades) at
+           t_max in {6,12,24,48}.
+Result: beta = -0.6721 at EVERY horizon. Drift over an 8x range: -0.0001.
+           4-seed control at t_max=12: spread 0.0006. Their published -0.672
+           reproduces exactly and is robust on both challenged axes.
+
+WHY THE PREDICTION WAS WRONG (this is the retained content):
+  - Absolute-equilibrium/thermalization arguments require a LIOUVILLE flow.
+    This stream itself proved the REAL Katz-Pavlovic flow is volume-CONTRACTING
+    (div = -sum k_n a_{n+1} != 0, CLAIM-011). Only the COMPLEXIFIED model is
+    Liouville -- and that is the model in which beta -> -1 was measured. The
+    transfer to their real-amplitude model was invalid on this stream's own
+    theorem.
+  - Similarly, CLAIM-014's CV 23-49% came from randomising PHASES. A real
+    amplitude has no phase to randomise (the same structural fact as the M2
+    obstruction proposition). Their seed spread is 0.0006, not 30%, for exactly
+    that reason.
+
+LESSON (LL-15): a result must be transferred with its HYPOTHESES, not just its
+conclusion. Both transferred conclusions were true in this stream and false
+next door, and this stream had already proven the discriminating property.
+```
+
+```
+[CLAIM-018] [TIER-B] [VERIFIED]
+Statement: "SOCRATES/Mensura's sup-enstrophy readout is sampling-limited, not a
+           supremum: ShellResult.max_enstrophy maxes over RECORDED SAMPLES while
+           sample_times = linspace(0, t_max, n_samples) with n_samples fixed at
+           2000, so the sampling interval scales with the horizon. At alpha'=1e-6
+           the reported value FALLS 11425.5 -> 11425.5 -> 10950.9 -> 9885.8
+           (-13.5%) as t_max goes 12 -> 48 -> 200 -> 800, which is impossible for
+           a supremum over a nested growing window. Energy drift is 1.34e-7
+           throughout, so the integrator is sound and only the readout is not.
+           Their PUBLISHED section-4 exponent is NOT affected: varying only
+           n_samples (2000 vs 200000) across all nine alpha' moves the worst peak
+           by 0.051% and beta by 0.0000."
+Source: exploration/socrates_why_stable.py(.out),
+        exploration/socrates_sampled_max_defect.py(.out).
+Filed: 2026-08
+Notes: Found as a by-product of testing CLAIM-017, which refuted itself. Same
+       defect CLASS as DEFECT_REPORT_MF_ENSTROPHY (a measurement instrument
+       silently reporting something other than the named observable), and the
+       same class this stream's own observable.py guards with SAMPLING_TOL.
+       Latent, not live: it bites when the horizon grows or the peak sharpens.
+       Fix available in their code: retain a running max of the per-step
+       current_enstrophy already computed at shell.py:183 for the ceiling test.
+       Reported in socrates-project docs/QUANTUMFLUIDS_RETROFIT.md section R1.
+```
+
 ---
 
 ## Design-memo audit register
@@ -703,6 +761,8 @@ code or data.**
 | CLAIM-011 | PENDING → VERIFIED | 2026-08-15 | TIER A core: Liouville property of the complexification, kernel-checked trace identities; real KP is non-Liouville |
 | CLAIM-012 | VERIFIED → **QUANTITATIVE CONTENT WITHDRAWN** | 2026-08-15 | Ensemble CV 25–84%; percentages were single-trajectory draws. Weak D=0 consistency survives; "signature in the transient" withdrawn |
 | CLAIM-013 | VERIFIED → **RETRACTED** | 2026-08-15 | Ensemble check: single-trajectory artifact. At D=0.05, 3/6 realisations censored, 3 attained. Ordering not established |
+| CLAIM-018 | PENDING → VERIFIED | 2026-08 | Mensura's sup-enstrophy is a sampled max; "sup" falls 13.5% as the window grows; their published beta unaffected (0.051%) |
+| CLAIM-017 | PENDING → **RETRACTED** | 2026-08 | Predicted their -0.672 was a horizon transient; tested in their code, beta stable to 4 decimals across 8x horizons. Retracted same turn |
 | CLAIM-016 | PENDING → VERIFIED | 2026-08-15 | TIER A: seam characterisation both directions; the T-dual bounce must be local phase rotation, not spatial reflection |
 | CLAIM-015 | PENDING → VERIFIED | 2026-08-15 | Delta(P), Q_m(P) from 7-pressure published data: linear at low P (−0.67%/bar, +0.475%/bar), not power-law; constrains CR-1's form |
 | CLAIM-014 | PENDING → VERIFIED | 2026-08-15 | Single-trajectory measurement is noise-dominated (CV 23–49%); battery tested deterministic, never statistical, reproducibility |
