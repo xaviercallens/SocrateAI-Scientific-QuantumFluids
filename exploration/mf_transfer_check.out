@@ -1,0 +1,24 @@
+MF model, N=12, nu=0.0, profile P3.  E0 = 0.625
+ceiling k_N^2 * E = 1.04858e+07   (our complexified model reaches this)
+
+--- T1: horizon dependence of sup_t Omega (Priority 3) ---
+       T      sup Omega   /ceiling    E drift  diverged
+       2    5.42396e+06    0.5173   1.46e-14     False
+       8    9.96585e+06    0.9504   5.54e-14     False
+      32    1.04457e+07    0.9962   2.69e-13     False
+      64    1.04749e+07    0.9990   1.84e-13     False
+
+  growth of sup Omega, T=2 -> T=64: +93.123%
+  fraction of ceiling at T=64: 0.9990
+  => Priority 3 TRANSFERS: MF's model does climb toward the ceiling.
+
+--- T2: ensemble scatter at FIXED energy (Priority 4) ---
+  n = 10 realisations at fixed E = 0.625, T = 8.0
+  sup Omega: mean 9.96396e+06  sd 1.505e+04  CV 0.15%  spread 0.53%
+  (this stream's COMPLEX model, same kind of test: CV 23-49%)
+  => Priority 4 DOES NOT TRANSFER at this amplitude: MF's real model is
+     reproducible. The CV numbers are phase-driven and have no analogue.
+
+--- Instrument note (contrast with Mensura's CLAIM-018) ---
+  MF's _simulate tracks sup_om at EVERY STEP, not on a sampled grid,
+  so MF does NOT have the sampled-max defect found in Mensura's shell.py.

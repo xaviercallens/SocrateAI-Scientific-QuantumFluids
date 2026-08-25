@@ -365,6 +365,26 @@ code before shipping it (a) caught it in the same turn rather than after it had
 propagated, and (b) found a real defect in their measurement instrument as a by-product
 (CLAIM-018). The prediction was wrong; running it was right.
 
+**Applied prospectively the same turn (CLAIM-019), with a two-sided result.** The
+MechanicaFluidorum note carried the SAME two conclusions and MF is also real-amplitude,
+so both were tested in MF's code before sending. They SPLIT:
+  - thermalization degeneracy **transfers** (sup Omega reaches 99.90% of the ceiling by
+    T=64) -- so that item was upgraded from analogy to measurement;
+  - single-trajectory noise **does not** (CV 0.15% vs 23-49%) -- retracted before sending.
+
+The discriminating features are now identified, which is what makes the rule usable
+rather than merely cautionary:
+  - degeneracy needs an UNBOUNDED k profile. MF's k_n = 2^n has one; Mensura's dual cap
+    k_eff = min(k, 1/(alpha' k)) does not, which is why the claim held for MF and failed
+    for Mensura. (Corollary worth stating: the T-dual cap PROTECTS against the sup-Omega
+    degeneracy of plain truncation.)
+  - scatter needs PHASE FREEDOM, absent in both real models.
+
+**Sharpened rule.** Do not ask "does this result transfer?" Ask "what property does this
+result depend on, and does the target model have that property?" The first question has
+no method; the second is a checklist, and the checklist is cheap -- one script per
+neighbour, versus a retraction after the claim has propagated.
+
 ---
 
 ## Decision log

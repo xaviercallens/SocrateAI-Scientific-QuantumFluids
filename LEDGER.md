@@ -683,6 +683,39 @@ Notes: Found as a by-product of testing CLAIM-017, which refuted itself. Same
        Reported in socrates-project docs/QUANTUMFLUIDS_RETROFIT.md section R1.
 ```
 
+```
+[CLAIM-019] [TIER-B] [VERIFIED]
+Statement: "Applying the LL-15 rule to the MechanicaFluidorum note BEFORE sending it,
+           both exported conclusions were tested in MF's own code (nu=0, N=12, P3,
+           exploration/mf_transfer_check.py). They SPLIT:
+
+           (a) THERMALIZATION/DEGENERACY TRANSFERS. sup_t Omega reaches 51.7%, 95.0%,
+               99.6%, 99.90% of the ceiling k_N^2 E at T = 2, 8, 32, 64 (energy drift
+               <= 2.7e-13). By T=64 the observable is a readout of the truncation.
+
+           (b) SINGLE-TRAJECTORY NOISE DOES NOT TRANSFER. 10 realisations at identical
+               energy, amplitudes perturbed 10%, T=8: CV 0.15%, spread 0.53% -- two
+               orders of magnitude below the complexified model's CV 23-49%.
+
+           The discriminating feature for (a) is the wavenumber profile: MF's k_n = 2^n
+           is UNBOUNDED so the cutoff shell dominates, whereas SOCRATES/Mensura's dual
+           cap k_eff = min(k, 1/(alpha' k)) makes trans-cutoff shells SOFT -- which is
+           why the same claim failed there (CLAIM-017) and holds here. The
+           discriminating feature for (b) is phase freedom, absent in both real models.
+
+           Instrument contrast: MF's _simulate accumulates sup_om at EVERY STEP, so MF
+           does NOT have the sampled-max defect found in Mensura (CLAIM-018)."
+Source: exploration/mf_transfer_check.py, output .out
+Filed: 2026-08
+Notes: This is LL-15 applied prospectively rather than learned retrospectively. The
+       cost was one script; it caught a false claim before it left the stream and
+       upgraded a true one from analogy to measurement.
+
+       Consequence for Mensura, recorded in their retrofit doc: their T-dual cap
+       PROTECTS against the sup-Omega degeneracy that plain truncation suffers. That
+       is a positive result for their design, found while checking a claim against it.
+```
+
 ---
 
 ## Design-memo audit register
@@ -761,6 +794,7 @@ code or data.**
 | CLAIM-011 | PENDING → VERIFIED | 2026-08-15 | TIER A core: Liouville property of the complexification, kernel-checked trace identities; real KP is non-Liouville |
 | CLAIM-012 | VERIFIED → **QUANTITATIVE CONTENT WITHDRAWN** | 2026-08-15 | Ensemble CV 25–84%; percentages were single-trajectory draws. Weak D=0 consistency survives; "signature in the transient" withdrawn |
 | CLAIM-013 | VERIFIED → **RETRACTED** | 2026-08-15 | Ensemble check: single-trajectory artifact. At D=0.05, 3/6 realisations censored, 3 attained. Ordering not established |
+| CLAIM-019 | PENDING → VERIFIED | 2026-08 | LL-15 applied prospectively to MF: thermalization degeneracy TRANSFERS (99.9% of ceiling by T=64), single-trajectory noise DOES NOT (CV 0.15%) |
 | CLAIM-018 | PENDING → VERIFIED | 2026-08 | Mensura's sup-enstrophy is a sampled max; "sup" falls 13.5% as the window grows; their published beta unaffected (0.051%) |
 | CLAIM-017 | PENDING → **RETRACTED** | 2026-08 | Predicted their -0.672 was a horizon transient; tested in their code, beta stable to 4 decimals across 8x horizons. Retracted same turn |
 | CLAIM-016 | PENDING → VERIFIED | 2026-08-15 | TIER A: seam characterisation both directions; the T-dual bounce must be local phase rotation, not spatial reflection |
