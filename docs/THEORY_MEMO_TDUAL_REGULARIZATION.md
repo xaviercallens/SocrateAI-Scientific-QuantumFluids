@@ -3,8 +3,10 @@
 **Stream:** SocrateAI-Scientific-QuantumFluids · **Date:** 2026-08-15
 **Purpose:** the retrofit input for Mathesis. Every statement is tagged with its
 evidentiary status so the retrofit can place it at the right tier without re-deriving.
-**Retrofit target:** `/home/xavkal/socrates-project/home` — **not present on this machine
-as of writing**; path recorded, integration deferred until it exists.
+**Retrofit target:** `/home/xavkal/socrates-project` (SOCRATES / SocrateAI-Scientific-Mensura,
+the programme's Tier-B companion; earlier note recorded a mistyped path). Integration
+performed 2026: see that repo's `docs/QUANTUMFLUIDS_RETROFIT.md` and
+`docs/NOTE_TO_SOCRATES_MENSURA.md` here.
 
 Status tags: **[A]** kernel-checked · **[B]** deterministic, tested · **[C-num]** numerically
 verified this stream, not formalised · **[open]** conjecture · **[refuted]** ruled out.
