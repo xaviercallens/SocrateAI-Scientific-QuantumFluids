@@ -1,0 +1,17 @@
+{
+  "challenge_module": "ComparatorChallenges.ShellHamiltonian",
+  "solution_module": "ShellHamiltonian",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.ShellComplex.im_core",
+    "QuantumFluids.ShellComplex.sum_dT",
+    "QuantumFluids.ShellComplex.hamiltonian_rate_zero",
+    "QuantumFluids.ShellComplex.weights_ok",
+    "QuantumFluids.ShellComplex.T_real"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

@@ -136,6 +136,23 @@ theorem eoq_lower_bound {D K h Q : ℝ}
     _ ≤ D * K / Q + h * Q / 2 :=
         two_sqrt_mul_le_add (by positivity) (by positivity)
 
+/-- **B.4 (Quantum fluids: the Bogoliubov dispersion is a dual-scale form).**
+`ω² = c²k² + c²k⁴/k*²` (phonon branch plus free-particle branch, `k* = 2mc/ħ = √2/ξ`) satisfies
+`ω² = (c²k³/k*)·(k/k* + k*/k)`, the `R + α'/R` shape, hence `ω² ≥ 2c²k³/k*` with equality
+exactly at the self-dual wavenumber `k = k*`. An instance of A.4, not a new result. -/
+theorem bogoliubov_dual_form {c ks k : ℝ} (hks : 0 < ks) (hk : 0 < k) :
+    c ^ 2 * k ^ 2 + c ^ 2 * k ^ 4 / ks ^ 2 = c ^ 2 * k ^ 3 / ks * (k / ks + ks / k) := by
+  field_simp
+  ring
+
+theorem bogoliubov_selfdual_bound {c ks k : ℝ} (hks : 0 < ks) (hk : 0 < k) :
+    2 * c ^ 2 * k ^ 3 / ks ≤ c ^ 2 * k ^ 2 + c ^ 2 * k ^ 4 / ks ^ 2 := by
+  have h : c ^ 2 * k ^ 2 + c ^ 2 * k ^ 4 / ks ^ 2 - 2 * c ^ 2 * k ^ 3 / ks
+      = c ^ 2 * k ^ 2 * (1 - k / ks) ^ 2 := by
+    field_simp; ring
+  have : 0 ≤ c ^ 2 * k ^ 2 * (1 - k / ks) ^ 2 := by positivity
+  linarith
+
 /-! ## Part C — Rung 1: the Kramers–Wannier self-dual point (Tier A) -/
 
 /-- **C.1 (Kramers–Wannier critical coupling).** The 2D Ising duality pairs
@@ -206,3 +223,5 @@ else. -/
 #print axioms kramers_wannier_self_dual
 
 end Mathesis.Duality
+#print axioms Mathesis.Duality.bogoliubov_dual_form
+#print axioms Mathesis.Duality.bogoliubov_selfdual_bound
