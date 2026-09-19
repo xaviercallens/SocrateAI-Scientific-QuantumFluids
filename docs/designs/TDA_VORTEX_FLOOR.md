@@ -132,3 +132,36 @@ Corrected, and this is the form that will be used:
 T4 is replaced by **T4′**: for a real (disordered) vortex configuration, `L₁/F > 1` measurably,
 while `mst_mean_over_xi` estimates `ℓ_v/ξ`. As with the A1.2 dimension-count error in the
 second-invariant memo, this is recorded rather than silently corrected.
+
+### T5 made quantitative (2026-09-20) — the link to DS-QF′
+
+T5 was registered as qualitative ("the separation of scales should degrade in ⁴He"). It can be made
+a number, using `ξ` from this repo's own measurement (CLAIM-024) and the ratio that decides whether
+a persistence floor is *resolvable at all*:
+
+```
+        ξ / d ,   d = n^(-1/3) = interparticle spacing          ξ/d = (8π (n a³)^{1/3})^{-1/2}
+```
+
+| system | `ξ/d` | is a TDA floor resolvable? |
+|---|---|---|
+| dilute BEC, `n a³ = 10⁻⁶` | 1.99 | yes — core is larger than the particle spacing |
+| BEC, `n a³ = 10⁻⁴` | 0.93 | marginal |
+| **superfluid ⁴He (measured `ξ` = 0.471 Å, `d` = 3.58 Å)** | **0.132** | **no** — the core is *smaller* than the interatomic spacing |
+
+So in ⁴He the vortex core is not a resolvable continuum object at all: `ξ/d ≈ 0.13` puts it below the
+granularity of the fluid. Inverting the dilute-gas formula on the measured `ξ/d` returns an implied
+`n a³ ≈ 12`, i.e. wildly outside the dilute regime where that formula is even valid — which is the
+correct conclusion stated in the formula's own terms.
+
+**This is the same localisation as DS-QF′, reached through an unrelated quantity.** DS-QF′ found
+⁴He 21–51× below the dual-scale floor in the *excitation spectrum*; T5 finds its healing length
+0.13× the interatomic spacing in *real space*. Neither measurement feeds the other.
+
+Consequence for this workstream, fixed now: **⁴He is not a valid target for TDA-DS** — not because
+the test fails there but because the scale it would test does not exist as a resolvable length.
+Dataset selection must therefore prefer **dilute-BEC** configurations (`ξ/d ≳ 1`), and any ⁴He
+vortex-tangle data would be analysed for `ℓ_v` only, never for a floor at `ξ`.
+
+*Caveat:* the He-II density 145.1 kg/m³ is a standard literature value **not verified in this
+repository**; a 2× density error moves `ξ/d` by only 1.26×, so the conclusion is insensitive to it.
