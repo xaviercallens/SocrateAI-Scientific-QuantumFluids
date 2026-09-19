@@ -315,3 +315,77 @@ def random_shift_null(points: np.ndarray, labels: np.ndarray, L: float, xi: floa
     q = lambda a: {"mean": float(np.mean(a)), "p05": float(np.percentile(a, 5)),
                    "p95": float(np.percentile(a, 95)), "min": float(np.min(a))}
     return {"reps": reps, "F": q(F), "f_below": q(fb), "mst_mean_over_xi": q(mm)}
+
+
+# ------------------------------------------------------------------ threshold-free line tracing
+
+def _pierced_faces(psi: np.ndarray) -> dict[str, np.ndarray]:
+    """Windings indexed so that face arrays align with the cube lattice.
+
+    Conventions, stated because an index error here is invisible downstream:
+      wz[k, r, c] : face normal to z at z = k, spanning y in [r, r+1], x in [c, c+1]
+      wy[r, k, c] : face normal to y at y = r, spanning z in [k, k+1], x in [c, c+1]
+      wx[c, k, r] : face normal to x at x = c, spanning z in [k, k+1], y in [r, r+1]
+    """
+    return phase_winding_3d(psi)
+
+
+def trace_lines(psi: np.ndarray, dx: float = 1.0) -> tuple[np.ndarray, np.ndarray, dict]:
+    """Group pierced faces into vortex lines by CUBE ADJACENCY -- no distance threshold.
+
+    Two pierced faces belong to the same line when they are faces of the same grid cube; a
+    vortex line enters a cube through one face and leaves through another. Connectivity is
+    therefore combinatorial, fixed by the grid, and carries no tunable parameter. This is the fix
+    for the confound found in the first real-data run, where a proximity threshold imposed the very
+    floor it was meant to measure (docs/designs/TDA_VORTEX_FLOOR.md section 10).
+
+    Returns (points, labels, diagnostics). `diagnostics["multi_face_cubes"]` counts cubes pierced by
+    more than two faces: there the line identity is genuinely ambiguous (reconnection, or two lines
+    crossing one cube) and distinct lines may be merged. It is reported, not hidden.
+    """
+    from scipy.sparse import coo_matrix
+    from scipy.sparse.csgraph import connected_components
+
+    w = _pierced_faces(psi)
+    nz, ny, nx = psi.shape
+    faces, cube_of, pos = [], [], []
+
+    def add(arr, kind):
+        for idx in np.argwhere(arr != 0):
+            a, b, c = (int(v) for v in idx)
+            if kind == "z":      # z = a, y in [b,b+1], x in [c,c+1]
+                p = ((c + 0.5), (b + 0.5), float(a))
+                cubes = (((a - 1) % nz, b, c), (a % nz, b, c))
+            elif kind == "y":    # y = a, z in [b,b+1], x in [c,c+1]
+                p = ((c + 0.5), float(a), (b + 0.5))
+                cubes = ((b, (a - 1) % ny, c), (b, a % ny, c))
+            else:                # x = a, z in [b,b+1], y in [c,c+1]
+                p = (float(a), (c + 0.5), (b + 0.5))
+                cubes = ((b, c, (a - 1) % nx), (b, c, a % nx))
+            faces.append(len(faces)); pos.append(p); cube_of.append(cubes)
+
+    for kind in ("z", "y", "x"):
+        add(w[kind], kind)
+    if not faces:
+        return np.empty((0, 3)), np.empty(0, dtype=int), {"n_faces": 0}
+
+    by_cube: dict[tuple, list[int]] = {}
+    for fi, cubes in enumerate(cube_of):
+        for cu in cubes:
+            by_cube.setdefault(cu, []).append(fi)
+
+    rows, cols = [], []
+    multi = 0
+    for cu, fl in by_cube.items():
+        if len(fl) > 2:
+            multi += 1
+        for i in range(len(fl)):
+            for j in range(i + 1, len(fl)):
+                rows.append(fl[i]); cols.append(fl[j])
+    n = len(faces)
+    adj = coo_matrix((np.ones(len(rows)), (rows, cols)), shape=(n, n)) if rows else coo_matrix((n, n))
+    _, labels = connected_components(adj, directed=False)
+    pts = np.asarray(pos) * dx
+    diag = {"n_faces": n, "multi_face_cubes": multi,
+            "frac_multi": float(multi / max(len(by_cube), 1)), "n_cubes_pierced": len(by_cube)}
+    return pts, labels, diag

@@ -253,3 +253,51 @@ two cells, which on this dataset is *the same size as ξ*, so threshold and sign
    which assigns line identity **without any proximity threshold** and removes the confound at its root.
    This is the principled fix and is the recommended next step.
 3. Either way the null must be re-segmented by the identical pipeline before comparison.
+
+---
+
+## §11 SECOND REAL-DATA RUN — threshold-free tracing. **Split verdict.**
+
+`exploration/tda/run_polanco_traced.py`, implementing §10.4 fix 2. Line identity now comes from
+**cube adjacency**: a vortex line enters a grid cube through one face and leaves by another, so
+connectivity is combinatorial and there is **no parameter for the floor to track**.
+
+### 11.1 Validation of the tracing
+
+**`multi_face_cubes = 0`** out of 46 762 pierced cubes: every pierced cube has exactly two faces, so
+line identity is unambiguous everywhere in this snapshot — no reconnection-site or crossing ambiguity
+to hide. 181 components, 175 with more than 10 faces (largest holds 3.4 % of faces). The earlier
+proximity method reported only 67 lines at `link_radius = 2 Δx`: **it was merging distinct lines**.
+
+### 11.2 Result
+
+| statistic | data | random-shift null | verdict |
+|---|---|---|---|
+| floor `F` | **0.943 ξ** | 0.105 (p95 **0.156**) | **6.1× above the null's p95** |
+| `f_<` (fraction of MST edges below ξ) | **0.402** | **0.381** | **indistinguishable** |
+| mean MST | 1.75 ξ | 1.78 ξ | indistinguishable |
+
+### 11.3 Verdict against the pre-registration — it splits, and both halves are reported
+
+§3 fixed two refutation conditions. They disagree:
+
+- **The floor statistic supports TDA-DS.** `F = 0.943 ξ` — the minimum separation between distinct
+  vortex lines sits essentially *at* the healing length — and is 6.1× the null's 95th percentile. With
+  no threshold in the method, this cannot be the parameter artefact of §10.
+- **`f_<` refutes it as written.** §3: *"Refuted if `f_<` is statistically indistinguishable from the
+  null."* It is: 0.402 against 0.381. **Prediction T2 (`f_< < 0.1`) is wrong**, and by a wide margin.
+
+The two are consistent once looked at: both distributions put ~40 % of edges below `ξ`, but the data's
+edges *stop* at 0.943 ξ while the null's continue down to 0.105 ξ. `f_<` at a single threshold is
+simply a poor discriminator here; the minimum is the informative statistic. That is a lesson about the
+statistic, not a rescue of the prediction — **T2 stands as refuted.**
+
+### 11.4 The limit that remains, unchanged
+
+`ξ = 1.5 Δx`, so `F = 0.943 ξ = 1.41 Δx`. The geometry of face centres permits distinct traced lines to
+approach ≈ 0.707 Δx = 0.47 ξ, so the measured floor sits a factor **2** above what discretisation alone
+allows. Real, and above both the null and the geometric minimum — but a factor 2 is not a wide margin.
+
+**Net status: TDA-DS is partially supported and not established.** The floor result is reportable with
+its caveat; the hypothesis as pre-registered is not confirmed, because one of its own refutation
+criteria fired. A dataset with `ξ/Δx ≳ 5` remains required for a strong claim.
