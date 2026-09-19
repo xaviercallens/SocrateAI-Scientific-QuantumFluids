@@ -161,3 +161,14 @@ Copy-with-attribution of a *few* lemmas, re-proved against our pin, is the only 
    identities, seam iff) and are already more than LeanMaster's; do not import its "certified" framing.
 5. Hygiene: the LeanMaster peer review report says "ACCEPTED & FULLY CERTIFIED / APPROVED FOR WORLD PUBLICATION"
    while the same repo's RIGOR_ROADMAP says otherwise. Any cross-citation must use the roadmap, not the report.
+
+## 7. Status 2026-09-19 (same day)
+- **Toolchain moved to Lean 4.34.0-rc2 / Mathlib tag v4.34.0-rc2 (owner decision).** Verified by compiling with the Mathlib
+  build already present in the OpenAI tree (read-only): the 11 `QuantumFluidsShell` theorems compile unchanged;
+  `Duality.lean` needed two API-drift fixes (`sinh_pos` -> `sinh_pos_iff`, redundant `ring` after `field_simp`).
+  `lake-manifest.json` was NOT regenerated (`lake update` would fetch a second ~10 GB Mathlib; disk had 7 GB free).
+  Run `lake update` once on a machine with space. Until then `lake build` here will re-resolve.
+- **D4 done (CLAIM-020):** `lean_src/MadelungSplit.lean`. `Duality` and `MadelungSplit` are now registered `lean_lib`s (previously Duality was not built).
+- **D1 number recorded (CLAIM-021).**
+- **D6 blocked on tooling, not on statements:** Comparator needs `landrun`, `nanoda_bin`, `lean4export` on PATH and the
+  `Comparator` package built; none are installed here and the OpenAI tree has the package source but no built binaries.

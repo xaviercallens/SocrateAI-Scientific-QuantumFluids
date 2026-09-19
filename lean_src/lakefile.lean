@@ -13,3 +13,7 @@ require mathlib from git
 
 @[default_target]
 lean_lib QuantumFluidsShell
+
+lean_lib MadelungSplit
+
+lean_lib Duality
