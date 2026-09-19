@@ -43,6 +43,9 @@ lake-packages/
 data/external/*.nxs
 data/external/*.numor
 data/external/*.dat
+data/external/**/*.dat
+data/external/**/*.wdat
+data/external/**/dl.log
 data/external/*.csv
 data/derived/*
 !data/external/.gitkeep

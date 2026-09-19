@@ -160,3 +160,158 @@ def synthetic_vortex_field(centres: np.ndarray, charges: np.ndarray, shape: tupl
         r = np.abs(d)
         psi = psi * np.tanh(r / xi) * np.exp(1j * q * np.angle(d))
     return psi
+
+
+# ------------------------------------------------------------------ 3D: vortex LINES, not points
+
+def phase_winding_3d(psi: np.ndarray) -> dict[str, np.ndarray]:
+    """Topological charge on plaquettes normal to each axis of a 3D complex field `psi[z,y,x]`.
+
+    A vortex line pierces a plaquette whose winding is nonzero, so the three arrays together trace
+    the line set whatever its orientation.
+    """
+    if psi.ndim != 3:
+        raise ValueError(f"phase_winding_3d expects a 3D field, got shape {psi.shape}")
+    out = {}
+    for axis, name in ((0, "z"), (1, "y"), (2, "x")):
+        sl = np.moveaxis(psi, axis, 0)
+        w = np.stack([phase_winding(sl[i]) for i in range(sl.shape[0])], axis=0)
+        out[name] = w
+    return out
+
+
+def extract_vortex_points_3d(psi: np.ndarray, dx: float = 1.0) -> np.ndarray:
+    """Points tracing the vortex lines: centres of pierced plaquettes, in physical units."""
+    w = phase_winding_3d(psi)
+    pts = []
+    for name, arr in w.items():
+        idx = np.argwhere(arr != 0).astype(float)          # (slice, row, col) in the moved frame
+        if not len(idx):
+            continue
+        s, r, c = idx[:, 0], idx[:, 1] + 0.5, idx[:, 2] + 0.5
+        if name == "z":      p = np.stack([c, r, s], axis=1)          # (x, y, z)
+        elif name == "y":    p = np.stack([c, s, r], axis=1)
+        else:                p = np.stack([s, c, r], axis=1)
+        pts.append(p * dx)
+    return np.concatenate(pts, axis=0) if pts else np.empty((0, 3))
+
+
+def segment_lines(points: np.ndarray, link_radius: float) -> np.ndarray:
+    """Label points by connected component under a `link_radius` proximity graph.
+
+    WHY THIS EXISTS. In 3D the extractor returns points spaced by the GRID along each vortex line.
+    Feeding them straight into `floor_stats` would report the grid spacing as the "floor" -- the
+    resolution artefact C-RES exists to catch. The floor must be measured BETWEEN DISTINCT LINES, so
+    points are first grouped into lines and the statistics are computed on the line-to-line
+    distances (`inter_line_stats`).
+    """
+    from scipy.sparse.csgraph import connected_components
+    from scipy.spatial import cKDTree
+    if len(points) == 0:
+        return np.empty(0, dtype=int)
+    tree = cKDTree(points)
+    adj = tree.sparse_distance_matrix(tree, link_radius, output_type="coo_matrix")
+    _, labels = connected_components(adj, directed=False)
+    return labels
+
+
+def inter_line_distances(points: np.ndarray, labels: np.ndarray) -> np.ndarray:
+    """Minimum distance between every pair of distinct lines (the condensed inter-line metric)."""
+    uniq = np.unique(labels)
+    n = len(uniq)
+    D = np.zeros((n, n))
+    for a in range(n):
+        Pa = points[labels == uniq[a]]
+        for b in range(a + 1, n):
+            Pb = points[labels == uniq[b]]
+            d = np.min(np.linalg.norm(Pa[:, None, :] - Pb[None, :, :], axis=2))
+            D[a, b] = D[b, a] = d
+    return D
+
+
+def inter_line_stats(points: np.ndarray, labels: np.ndarray, xi: float) -> FloorStats:
+    """Floor statistics on the LINE graph: H0 deaths are MST edges of the inter-line metric."""
+    D = inter_line_distances(points, labels)
+    if D.shape[0] < 2:
+        return FloorStats(n_points=D.shape[0], xi=float(xi), F=float("nan"), f_below=float("nan"),
+                          mst_mean_over_xi=float("nan"), L1_over_xi=float("nan"), n_h1=0)
+    d0 = np.sort(minimum_spanning_tree(D).tocoo().data)
+    return FloorStats(n_points=D.shape[0], xi=float(xi),
+                      F=float(d0[0] / xi), f_below=float(np.mean(d0 < xi)),
+                      mst_mean_over_xi=float(np.mean(d0) / xi),
+                      L1_over_xi=float("nan"), n_h1=0)
+
+
+def synthetic_line_field_3d(xy_centres: np.ndarray, charges: np.ndarray,
+                            shape: tuple[int, int, int], dx: float, xi: float) -> np.ndarray:
+    """3D field with straight vortex lines along z at the given (x, y). CONTROLS ONLY."""
+    nz, ny, nx = shape
+    psi2 = synthetic_vortex_field(xy_centres, charges, (ny, nx), dx, xi)
+    return np.repeat(psi2[None, :, :], nz, axis=0)
+
+
+# ------------------------------------------------------------------ periodic box support
+
+def periodic_inter_line_distances(points: np.ndarray, labels: np.ndarray, L: float) -> np.ndarray:
+    """Minimum-image minimum distance between every pair of distinct lines in a periodic box.
+
+    Periodicity is not optional here: ignoring it drops pairs that are close across a face and so
+    INFLATES the measured floor, which is the direction that would manufacture a false positive.
+    """
+    from scipy.spatial import cKDTree
+    uniq = np.unique(labels)
+    trees = {u: cKDTree(np.mod(points[labels == u], L), boxsize=L) for u in uniq}
+    n = len(uniq)
+    D = np.zeros((n, n))
+    for a in range(n):
+        Pa = np.mod(points[labels == uniq[a]], L)
+        for b in range(a + 1, n):
+            d, _ = trees[uniq[b]].query(Pa, k=1)
+            D[a, b] = D[b, a] = float(np.min(d))
+    return D
+
+
+def periodic_segment_lines(points: np.ndarray, link_radius: float, L: float) -> np.ndarray:
+    """Connected components under a periodic proximity graph."""
+    from scipy.sparse.csgraph import connected_components
+    from scipy.spatial import cKDTree
+    if len(points) == 0:
+        return np.empty(0, dtype=int)
+    P = np.mod(points, L)
+    tree = cKDTree(P, boxsize=L)
+    adj = tree.sparse_distance_matrix(tree, link_radius, output_type="coo_matrix")
+    _, labels = connected_components(adj, directed=False)
+    return labels
+
+
+def line_floor_stats(D: np.ndarray, xi: float) -> dict:
+    """Floor statistics from an inter-line distance matrix (H0 deaths = MST edges of that metric)."""
+    if D.shape[0] < 2:
+        return {"n_lines": int(D.shape[0]), "F": float("nan"), "f_below": float("nan"),
+                "mst_mean_over_xi": float("nan")}
+    d0 = np.sort(minimum_spanning_tree(D).tocoo().data)
+    return {"n_lines": int(D.shape[0]), "F": float(d0[0] / xi),
+            "f_below": float(np.mean(d0 < xi)),
+            "mst_mean_over_xi": float(np.mean(d0) / xi),
+            "mst_edges_over_xi": (d0 / xi).tolist()}
+
+
+def random_shift_null(points: np.ndarray, labels: np.ndarray, L: float, xi: float,
+                      reps: int, rng: np.random.Generator) -> dict:
+    """Null model: keep every line's SHAPE, give each an independent random periodic translation.
+
+    This is the right null for extended objects. A Poisson point null would destroy the fact that a
+    vortex line is a connected curve and would therefore compare against the wrong thing; here only
+    the inter-line arrangement is randomised, so the test isolates exactly the correlation of interest.
+    """
+    F, fb, mm = [], [], []
+    uniq = np.unique(labels)
+    for _ in range(reps):
+        P = points.copy()
+        for u in uniq:
+            P[labels == u] = np.mod(P[labels == u] + rng.uniform(0, L, 3), L)
+        s = line_floor_stats(periodic_inter_line_distances(P, labels, L), xi)
+        F.append(s["F"]); fb.append(s["f_below"]); mm.append(s["mst_mean_over_xi"])
+    q = lambda a: {"mean": float(np.mean(a)), "p05": float(np.percentile(a, 5)),
+                   "p95": float(np.percentile(a, 95)), "min": float(np.min(a))}
+    return {"reps": reps, "F": q(F), "f_below": q(fb), "mst_mean_over_xi": q(mm)}
