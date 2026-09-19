@@ -172,3 +172,25 @@ Copy-with-attribution of a *few* lemmas, re-proved against our pin, is the only 
 - **D1 number recorded (CLAIM-021).**
 - **D6 blocked on tooling, not on statements:** Comparator needs `landrun`, `nanoda_bin`, `lean4export` on PATH and the
   `Comparator` package built; none are installed here and the OpenAI tree has the package source but no built binaries.
+
+## 8. D3 first pass (2026-09-19): `lean_src/GPGalerkin.lean` (CLAIM-022)
+
+Proved for **every** finite truncation Λ of an additive group (ℤ³ included), footprint standard axioms only:
+`Q = Σ_k conj(ψ_k)N_k = Σ_q |A_q|²` (so Q is real and ≥ 0: the defocusing sign, independent of Λ);
+`Σ_k Im(conj ψ_k G_k) = 0` (algebraic core of mass conservation); `Σ ω|ψ|² ≤ E` when `E = Σ ω|ψ|² + (g/2)Q`, g ≥ 0.
+Numeric mirror (random ψ on a 5×5 lattice): Q = Σ|A|² = 4762.78, mass rate 0; negative control without the conjugate: Q complex, rate 843.
+
+**Not proved:** conservation of E along the flow (the Hamiltonian gradient identity ∂Q/∂ψ̄_k = N_k). Until it is, the kinetic bound is an
+inequality between functions of ψ, not yet an a-priori bound. That identity is the next Lean step.
+
+**LL-15 check for the dual-scale shell model.** The property the GP bound depends on is a *positive quartic form*
+(Q = Σ|A_q|²). Our complexified Katz–Pavlović shell model has a *triadic quadratic* coupling with exact energy
+conservation (CLAIM-007) and Liouville (CLAIM-011), but no such sign-definite interaction energy: the coercivity does
+**not** transfer, and the shell-model sup Ω degeneracy measured in M3 is consistent with that. What the shell model shares with GP is the
+conservation structure, not the coercive one. So the reading for the dual-scale study is:
+- a regulator that is Hamiltonian (Liouville, energy-conserving) is not by itself regularizing; the extra ingredient GP has is a
+  positive interaction energy;
+- the question for the shell model becomes "does the dual-scale (T-dual) cap supply a positive functional playing the role of Q?"
+  That is a precise, testable question for the next design memo, not a claim.
+
+Tools: Comparator toolchain built on the large disk (`landrun`, `lean4export`, `nanoda_bin`, `comparator`); a run needs `lake update` first.

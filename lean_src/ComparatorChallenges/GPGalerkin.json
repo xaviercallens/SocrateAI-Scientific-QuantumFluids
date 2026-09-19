@@ -1,0 +1,17 @@
+{
+  "challenge_module": "ComparatorChallenges.GPGalerkin",
+  "solution_module": "GPGalerkin",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.GPGalerkin.pairing_eq_sum",
+    "QuantumFluids.GPGalerkin.pairing_nonneg",
+    "QuantumFluids.GPGalerkin.pairing_im_zero",
+    "QuantumFluids.GPGalerkin.mass_rate_zero",
+    "QuantumFluids.GPGalerkin.kinetic_le_energy"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}
