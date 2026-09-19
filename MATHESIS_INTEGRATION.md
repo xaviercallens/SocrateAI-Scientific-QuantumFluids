@@ -111,7 +111,7 @@ theorem healing_length_bound {Δ ξ α : ℝ}
 
 ### Toolchain
 
-QuantumFluids uses the **same Lean version** as Mathesis (v4.33.0-rc2) to ensure binary compatibility and transparent error messages.
+QuantumFluids uses the **same Lean version** as Mathesis (was v4.33.0-rc2; QuantumFluids moved to v4.34.0-rc2 on 2026-09-19, Mathesis to follow) to ensure binary compatibility and transparent error messages.
 
 **File:** `lean-toolchain`
 
@@ -196,7 +196,7 @@ Extension (Tier C): Hypothesis that all dispersive regulators are equivalent
 
 **M0 (Bootstrap):**
 - ✅ Mathesis repository identified and locally available
-- ✅ Lean toolchain synchronized (v4.33.0-rc2)
+- ⏳ Lean toolchain: QuantumFluids on v4.34.0-rc2 (2026-09-19); synchronized again once Mathesis migrates
 - ✅ Duality.lean re-exported with QuantumFluids commentary
 - ✅ Import pattern documented (lean/README.md)
 - ⏳ Awaiting M0 literature retrieval before formalizing E1.1–E1.4

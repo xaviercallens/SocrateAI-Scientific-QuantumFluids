@@ -2,7 +2,7 @@
 
 **Status:** Prototype; depends on Mathesis (Stream 0) as mathematical command center.
 
-**Toolchain:** Lean 4.33.0-rc2 (synchronized with Mathesis)
+**Toolchain:** Lean 4.34.0-rc2 (moved 2026-09-19 as part of the all-streams alignment; Mathesis is expected to follow)
 
 ---
 
@@ -22,7 +22,7 @@ QuantumFluids (this stream)
 
 ```
 lean/
-├── lean-toolchain          (pinned to Mathesis version: v4.33.0-rc2)
+├── lean-toolchain          (v4.34.0-rc2; Mathesis was on v4.33.0-rc2 until its own migration)
 ├── QuantumFluids/          (this project's theorems)
 │   ├── DualityInstance.lean  (QuantumFluids application of Mathesis.Duality)
 │   ├── HealingLength.lean    (healing-length scale as Reff instance)
@@ -98,7 +98,7 @@ mathesis = {
 ### Prerequisites
 
 ```bash
-# Lean 4.33.0-rc2 (via elan or local install)
+# Lean 4.34.0-rc2 (via elan or local install)
 lean --version
 
 # Lake (included with Lean 4)
