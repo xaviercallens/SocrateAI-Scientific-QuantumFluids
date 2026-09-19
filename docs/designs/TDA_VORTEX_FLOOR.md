@@ -165,3 +165,37 @@ vortex-tangle data would be analysed for `ℓ_v` only, never for a floor at `ξ`
 
 *Caveat:* the He-II density 145.1 kg/m³ is a standard literature value **not verified in this
 repository**; a 2× density error moves `ξ/d` by only 1.26×, so the conclusion is insensitive to it.
+
+---
+
+## §6 DATA — selection recorded 2026-09-20, before any measurement
+
+A search over HuggingFace, Zenodo, NIST and lab portals returned **one** dataset meeting the
+critical criterion (a real quantum-fluid field with a recoverable healing length, downloadable
+without authentication, within the disk budget). Negative results are recorded because they bound
+what this workstream can ever claim:
+
+- **HuggingFace has nothing.** Direct API queries for `superfluid`, `gross-pitaevskii`,
+  `bose einstein`, `quantum turbulence`, `cold atom`, `helium neutron` return zero relevant datasets;
+  the full 21-dataset `polymathic-ai`/"The Well" collection contains no GPE/BEC entry.
+- **No public superfluid ⁴He `S(Q,ω)` or `S(Q)` dataset was found.** ILL raw data are credentialled;
+  the classic static `S(Q)` tables are print-only behind a paywall. **This blocks the structure-factor
+  test** `S(k) ≤ √(k/2k*)` proposed in `DUAL_SCALE_PROPOSAL.md` §4 — recorded as a data gap, not a result.
+- **No public vortex-filament / Biot–Savart tangle coordinates** from the usual groups. A genuine gap.
+
+### Selected: Zenodo 5510351 — Polanco, Müller & Krstulovic
+
+`data/external/polanco_2021_gp_turbulence/` (see `README.meta`). CC-BY-4.0, 268 MB, 256³ complex
+wavefunction, `L = 2π`, `c = 1`, **`ξ = 1.5 Δx`** taken from the authors' own analysis code.
+
+**Two caveats fixed before measuring, both of which constrain what may be concluded:**
+
+1. **`ξ` is only 1.5 grid cells.** A floor *at* `ξ` is therefore barely above the discretisation, and a
+   raw point-cloud floor would measure the grid (demonstrated in `tests/test_vortex_3d.py`). The
+   measurement is therefore made on the **line graph** — distinct vortex lines, whose separation the
+   paper puts at `ℓ_v ≈ 28 ξ ≈ 42 cells` and which is well resolved. The raw-point-cloud number will
+   be reported *alongside*, explicitly labelled as the artefact it is.
+2. **This is a roton-bearing generalised GP, not a weakly interacting BEC** (LL-15: the property that
+   must transfer is *quantized circulation with a resolvable core*; it has that, but it does **not**
+   have Bogoliubov's dispersion). It therefore sits **between** the two ends of DS-QF′ by construction,
+   and must not be reported as a test of the weakly interacting regime.

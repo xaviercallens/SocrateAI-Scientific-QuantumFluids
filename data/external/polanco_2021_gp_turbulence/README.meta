@@ -1,0 +1,21 @@
+Source: Polanco, Muller & Krstulovic, "Vortex clustering, polarisation and circulation
+        intermittency in classical and quantum turbulence", Nature Communications 12, 7090 (2021);
+        dataset supports the circulation-statistics analysis (see also PRX 11, 011053 (2021)).
+Record: https://zenodo.org/records/5510351  (concept DOI 10.5281/zenodo.5510350)
+Licence: CC-BY-4.0, open, no authentication.
+Retrieved: 2026-09-20.
+Files: ReaPsi.001.dat, ImaPsi.001.dat -- each exactly 134,217,728 bytes = 256^3 * 8.
+Format: headerless raw binary, float64 little-endian, COLUMN-MAJOR (Fortran) order.
+        psi = Re + i*Im on a 256^3 periodic grid.
+        np.fromfile(f, dtype='<f8').reshape(256, 256, 256, order='F')
+Physics: instantaneous 3D wavefunction of a GENERALISED (nonlocal, roton-bearing) Gross-Pitaevskii
+        simulation of quantum turbulence. NOT a plain weakly-interacting BEC: the model is tuned to
+        reproduce a roton in the He-4 dispersion.
+Scales:  L = 2*pi periodic, sound speed c = 1, dx = 2*pi/256 = 0.0245437,
+         xi = 1.5*dx = 0.0368155, so the box is 170.7 xi.
+         SOURCE OF xi: the authors' own analysis code, ParamsGP(dims; L=(2pi,2pi,2pi), c=1.0,
+         nxi=1.5) in examples/circulation_GP.jl of github.com/jipolanco/Circulation.jl.
+         It is THEIR convention, adopted here, not derived in this repository.
+Tier: B (author-published simulation output, exact binary, parameters recoverable).
+Used for: workstream T (docs/designs/TDA_VORTEX_FLOOR.md).
+Not in file: any in-band metadata. No time series (single snapshot).
