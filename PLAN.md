@@ -25,6 +25,25 @@ docs/designs/C_NU_FLOOR_CROSSCHECK.md. The M2 finding itself is reframed as a
 re-expression of established shell-model equilibration ([LIT-017]–[LIT-020]); the
 Liouville dichotomy (CLAIM-011) is the part not found in the retrieved literature.
 
+
+---
+
+## Dual-scale phase (2026-09-19/20) — after M3 closed
+
+| line | status |
+|---|---|
+| Lean toolchain 4.34.0-rc2 / Mathlib v4.34.0-rc2 (all-stream alignment) | ✅ done; `lake build` clean, 44 theorems across 5 libraries |
+| Comparator (statement-equivalence + second kernel), tools on the large disk | ✅ operational; every library accepted by Lean + nanoda |
+| Madelung split (CLAIM-020), Landau velocity v_L = 57.9 m/s (CLAIM-021) | ✅ |
+| Truncated Gross–Pitaevskii: `Q = Σ|A_q|² ≥ 0`, mass/energy algebra, uniform-in-cutoff kinetic bound (CLAIM-022) | ✅ Tier A |
+| Second invariant of the complexified shell model; Hamiltonian SHG structure; σ-rule (CLAIM-023) | ✅ Tier A + exact symbolic + search (N ≤ 6) |
+| **Dual length `ℓ(k) = ε²/(ħ²c²k³)`; DS-QF stated, proved for Bogoliubov, REFUTED for ⁴He (CLAIM-024)** | ✅ Tier A (12 theorems) + Tier B (7 pressures) |
+| DS-QF′ (weak-coupling regime; `ℓ/√2ξ` as correlation measure) | ⏸ proposed, untested — needs cold-atom or S(k) data |
+| `σ = 3` regulator ⇒ cutoff-uniform enstrophy bound | ⏸ open; conservation exact-symbolic, bound not yet in Lean |
+| Literature check before any novelty language | ⏸ **blocking** any external communication |
+
+Consolidated: `docs/DUAL_SCALE_PROPOSAL.md`.
+
 ---
 
 ## Milestones
