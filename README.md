@@ -2,7 +2,7 @@
 
 **A dual-scale proposal for quantum fluids — stated as a measurable quantity, proved where it is provable, and refuted where it is false**
 
-[![Tests](https://img.shields.io/badge/tests-163%20passing-brightgreen)]() [![Lean](https://img.shields.io/badge/Lean-4.34.0--rc2-blue)]() [![Theorems](https://img.shields.io/badge/theorems-57%20kernel--checked-blue)]() [![Comparator](https://img.shields.io/badge/Comparator-55%20re--verified-success)]() [![Release](https://img.shields.io/badge/release-v1.0.0-orange)](https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids/releases)
+[![Tests](https://img.shields.io/badge/tests-166%20passing-brightgreen)]() [![Lean](https://img.shields.io/badge/Lean-4.34.0--rc2-blue)]() [![Theorems](https://img.shields.io/badge/theorems-57%20kernel--checked-blue)]() [![Comparator](https://img.shields.io/badge/Comparator-55%20re--verified-success)]() [![Release](https://img.shields.io/badge/release-v1.0.0-orange)](https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids/releases)
 
 ---
 
@@ -33,7 +33,7 @@ Full statement: **[docs/DUAL_SCALE_PROPOSAL.md](docs/DUAL_SCALE_PROPOSAL.md)**.
 | DS-QF′ — the structure belongs to the weakly interacting regime | **proposed, untested** | needs cold-atom or `S(k)` data |
 | Second invariant of the complexified shell model; Hamiltonian SHG structure; the σ-rule | **proved** (7 theorems) + exact symbolic + search | CLAIM-023 |
 | Truncated Gross–Pitaevskii: `Q = Σ_q|A_q|² ≥ 0` for every truncation | **proved** (7 theorems) | `lean_src/GPGalerkin.lean` |
-| TDA floor in a real vortex tangle (workstream T) | **inconclusive** — the statistic was confounded by its own threshold | CLAIM-T1 |
+| TDA floor in a real vortex tangle (workstream T) | **partial, split verdict** — floor `F = 0.943 ξ` at 6.1× the null, but the `f_<` criterion refutes the hypothesis as written | CLAIM-T1, CLAIM-T2 |
 | Novelty of any of the physics | **not claimed**; literature check pending | blocks external claims |
 
 ## Negative results are first-class here
@@ -43,10 +43,12 @@ level of detail as the successes:
 
 - **A pre-registered positive control voided an entire run** by revealing that `k*` lay outside the
   7-pressure table's range — a data-scope error, not a code error.
-- **The TDA floor measurement did not survive its own check.** A line-graph floor of `F = 1.491 ξ`
-  against a null of `0.101` looked like a clean confirmation; a threshold sweep showed `F` tracks the
+- **A TDA measurement did not survive its own check.** A line-graph floor of `F = 1.491 ξ` against a
+  null of `0.101` looked like a clean confirmation; a threshold sweep showed `F` tracks the
   segmentation threshold (ratio 1.00–1.24 across a 4× change). The floor was the parameter, not the
-  physics. Nothing from that run is citable.
+  physics. Rebuilt with threshold-free topological line tracing, the floor survives (`F = 0.943 ξ`,
+  6.1× the null) — but the pre-registered `f_<` criterion then **refutes the hypothesis as written**
+  (0.402 vs 0.381 in the null). The split verdict is reported as a split verdict.
 - **Registered predictions that were wrong** are recorded as wrong: a nullspace dimension (the trivial
   invariant `mass²` was forgotten) and prediction T4 (for an ordered lattice the floor, mean and loop
   scales coincide, so their ratio is 1, not ≫ 1).
@@ -64,7 +66,7 @@ kernels* (Lean's own and `nanoda`). A pass means the proof is sound and uses onl
 which remains a human audit.
 
 ```bash
-# 163 tests
+# 166 tests
 uv run pytest tests/ -q
 
 # Lean (4.34.0-rc2, Mathlib v4.34.0-rc2); 57 theorems across 7 libraries
