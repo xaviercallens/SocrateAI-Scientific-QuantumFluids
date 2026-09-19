@@ -98,6 +98,66 @@ theorem not_bogoliubov_of_lt {hc ks k epsSq : ℝ} (hhc : hc ≠ 0) (hk : 0 < k)
   rw [h, dualLength_bogoliubov hhc (ne_of_gt hk) (ne_of_gt hks)] at hmeas
   exact absurd hmeas (not_lt.mpr (ell_ge hk hks))
 
+/-- **The bound as a `k^{3/2}` envelope on the dispersion.** `ℓ(k) ≥ 2/ks` says exactly that
+`ε(k)² ≥ (2 hc²/ks) k³`, i.e. the dispersion never dips below a `3/2`-power envelope, which it
+touches at the self-dual point. This is the form compared against measured `ε(k)`: in ⁴He the
+roton sits a factor `√0.047 ≈ 4.6` **below** this envelope. -/
+theorem ell_ge_iff_envelope {hc ks k epsSq : ℝ} (hhc : hc ≠ 0) (hk : 0 < k) (hks : 0 < ks) :
+    2 / ks ≤ dualLength hc k epsSq ↔ 2 * hc ^ 2 / ks * k ^ 3 ≤ epsSq := by
+  unfold dualLength
+  rw [le_div_iff₀ (by positivity)]
+  have e : 2 / ks * (hc ^ 2 * k ^ 3) = 2 * hc ^ 2 / ks * k ^ 3 := by ring
+  rw [e]
+
+/-- The Bogoliubov dispersion satisfies the envelope bound at every positive wavenumber. -/
+theorem bogoliubov_envelope {hc ks k : ℝ} (hhc : hc ≠ 0) (hk : 0 < k) (hks : 0 < ks) :
+    2 * hc ^ 2 / ks * k ^ 3 ≤ bogoliubovSq hc ks k := by
+  rw [← ell_ge_iff_envelope hhc hk hks, dualLength_bogoliubov hhc (ne_of_gt hk) (ne_of_gt hks)]
+  exact ell_ge hk hks
+
+/-! ## The bound restated on the static structure factor
+
+Feynman's relation writes the excitation energy through the static structure factor `S(k)`:
+`ε_F(k) = ħ²k²/(2mS(k))`, which in these variables is `hc·k²/(ks·S)` (the free-particle energy
+divided by `S`). Feynman's argument is *variational*, so `ε ≤ ε_F` for the true dispersion;
+that inequality is taken below as a hypothesis (it is physics input, not proved here).
+
+The consequence is that the dual-scale bound is **equivalent to a bound on `S`**, and `S` is what a
+diffraction experiment measures directly, without any dispersion measurement. -/
+
+/-- Under Feynman's relation the dual length is `k/(ks² S²)`. -/
+theorem dualLength_feynman {hc ks k S : ℝ} (hhc : hc ≠ 0) (hk : k ≠ 0) (hks : ks ≠ 0) (hS : S ≠ 0) :
+    dualLength hc k ((hc * k ^ 2 / (ks * S)) ^ 2) = k / (ks ^ 2 * S ^ 2) := by
+  unfold dualLength; field_simp
+
+/-- **The dual-scale bound is a structure-factor bound.** `ℓ_F(k) ≥ 2/ks` exactly when
+`S(k)² ≤ k/(2ks)`. A structure-factor peak above `√(k/(2ks))` therefore breaks it. -/
+theorem feynman_ge_iff {ks k S : ℝ} (_hk : 0 < k) (hks : 0 < ks) (hS : 0 < S) :
+    2 / ks ≤ k / (ks ^ 2 * S ^ 2) ↔ S ^ 2 ≤ k / (2 * ks) := by
+  have h1 : (0 : ℝ) < ks ^ 2 * S ^ 2 := by positivity
+  have h2 : (0 : ℝ) < 2 * ks := by positivity
+  have key : k / (ks ^ 2 * S ^ 2) - 2 / ks = (k - 2 * ks * S ^ 2) / (ks ^ 2 * S ^ 2) := by
+    field_simp
+  rw [← sub_nonneg, key, le_div_iff₀ h1, le_div_iff₀ h2]
+  constructor <;> intro h <;> linarith
+
+/-- **Refutation from `S(k)` alone.** If the measured structure factor exceeds `√(k/(2ks))` at some
+`k`, then — given Feynman's variational inequality `ε ≤ ε_F` — the dispersion is not Bogoliubov
+there. In ⁴He the `S(k)` peak near `2 Å⁻¹` does exceed it, which is the same physics as the
+measured `ℓ(k_roton)/(√2ξ) = 0.047`, reached without using the dispersion data. -/
+theorem not_bogoliubov_of_structure_factor {hc ks k S epsSq : ℝ}
+    (hhc : hc ≠ 0) (hk : 0 < k) (hks : 0 < ks) (hS : 0 < S)
+    (hfeyn : epsSq ≤ (hc * k ^ 2 / (ks * S)) ^ 2)        -- Feynman's variational bound
+    (hpeak : k / (2 * ks) < S ^ 2) :                      -- measured: S above the dual-scale bound
+    epsSq ≠ bogoliubovSq hc ks k := by
+  have hlt : k / (ks ^ 2 * S ^ 2) < 2 / ks := by
+    by_contra hcon
+    exact absurd ((feynman_ge_iff hk hks hS).mp (not_lt.mp hcon)) (not_le.mpr hpeak)
+  refine not_bogoliubov_of_lt hhc hk hks (lt_of_le_of_lt ?_ hlt)
+  rw [← dualLength_feynman hhc (ne_of_gt hk) (ne_of_gt hks) (ne_of_gt hS)]
+  unfold dualLength
+  gcongr
+
 end QuantumFluids.DualLength
 
 #print axioms QuantumFluids.DualLength.dualLength_phonon
@@ -107,3 +167,8 @@ end QuantumFluids.DualLength
 #print axioms QuantumFluids.DualLength.ell_ge
 #print axioms QuantumFluids.DualLength.ell_eq_iff
 #print axioms QuantumFluids.DualLength.not_bogoliubov_of_lt
+#print axioms QuantumFluids.DualLength.dualLength_feynman
+#print axioms QuantumFluids.DualLength.feynman_ge_iff
+#print axioms QuantumFluids.DualLength.not_bogoliubov_of_structure_factor
+#print axioms QuantumFluids.DualLength.ell_ge_iff_envelope
+#print axioms QuantumFluids.DualLength.bogoliubov_envelope

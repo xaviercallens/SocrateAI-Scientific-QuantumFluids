@@ -86,3 +86,45 @@ If P-b fails, the derivation above is wrong and is retracted. Novelty is **not**
 
 **A1.3 Deviation from §3 (precision).** Full span: float64 SVD (criterion as in §3). Exactness is obtained differently and more strongly: the candidate
 invariant is checked as a **symbolic polynomial identity** (sympy, generic symbols), then in Lean.
+
+
+---
+
+## §5 RESULTS (run 2026-09-20)
+
+### 5.0 Scope deviation, declared
+
+The pre-registered `N ∈ {6, 8, 10}` was **not completed**. The first attempt was killed by its own 50-minute budget
+(exit 143) — a *bookkeeping stop*, not a finding (MechanicaFluidorum LL-18). Cause, found and fixed: `lie_matrix`
+cached every monomial's Lie derivative, `S × J` complex entries ≈ **1.25 GB at N = 10**, which made the machine thrash.
+With the cache removed the same work takes seconds. Scope run: **`N ∈ {4, 5, 6}`**. `N = 8, 10` were **not attempted**
+and nothing is claimed for them. Each case was run at two sample sizes (`2J` and `4J`) to check stability.
+
+### 5.1 Controls
+
+| control | requirement | result |
+|---|---|---|
+| positive (truncated GP, theorem-backed by `GPGalerkin.energy_rate_zero`) | the GP energy must lie in the nullspace | **PASS**, distance `2.2×10⁻¹⁵` |
+| negative (leaking seam) | mass must **not** lie in the nullspace | **PASS**, distance `1.0` (fully outside) |
+
+### 5.2 Outcome
+
+| span | `N = 4, 5, 6`, all seams, `D = 0` and `0.3`, both sample sizes | verdict |
+|---|---|---|
+| **pre-registered** (quadratics + quartics) | nullspace dimension **2**, spanned by `{mass, mass²}` | **§3 kill criterion FIRES**: no null vector has an `Ω` coefficient |
+| **extension E1** (+ cubics `Re/Im(conj(v_n)²v_{n+1})`) | nullspace dimension **3**, spanned by `{mass, mass², H}` | the predicted `H` is conserved |
+
+`max‖known − proj(known)‖/‖known‖ = 1.9×10⁻¹³`, `max‖null − proj_known(null)‖ = 1.9×10⁻¹³`: the nullspace is **exactly**
+the known invariants, nothing further hides in the span. Smallest retained singular-value gap `1.5×10⁻³`, far above the
+`10⁻⁸` threshold; dimensions unchanged when the sample size is doubled.
+
+### 5.3 Predictions vs outcome
+
+| | prediction (A1.2) | outcome |
+|---|---|---|
+| **P-a** | kill criterion fires in the pre-registered span | **CONFIRMED** |
+| **P-b** | with cubics, nullspace dim **2** = `{mass, H}` | **WRONG IN THE COUNT, RIGHT IN THE CONTENT**: dim **3** = `{mass, mass², H}`. The addendum forgot `mass²`, a trivial quartic consequence of mass conservation. `H` itself is exactly as predicted, coefficients `2⁻ⁿk_n` on `Im`, zero on `Re`. |
+| **P-c** | `H ≡ 0` on real data | **CONFIRMED**, identically `0.0` |
+| **P-d** | uniform-in-cutoff bound | proved in Lean (`ShellHamiltonian.dispersive_norm_le`), not measured |
+
+The A1.2 derivation therefore stands; only its dimension count was off, and by a trivial invariant.

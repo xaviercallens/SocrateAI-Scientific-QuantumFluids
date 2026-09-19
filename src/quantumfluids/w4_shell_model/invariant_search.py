@@ -43,12 +43,21 @@ def lie_derivative(mono: Monomial, V: np.ndarray, dV: np.ndarray) -> np.ndarray:
 
 
 def lie_matrix(basis: list[Functional], V: np.ndarray, dV: np.ndarray) -> np.ndarray:
+    """Columns are (L phi_j)(v_s).
+
+    The Re and Im parts of one monomial share a Lie derivative, so the basis is grouped by
+    monomial and each derivative is computed once and then DISCARDED. An earlier version cached
+    every monomial, which cost S*J complex entries (1.25 GB at N = 10) and made the run thrash.
+    """
     M = np.empty((V.shape[0], len(basis)))
-    cache: dict[Monomial, np.ndarray] = {}
+    by_mono: dict[Monomial, list[int]] = {}
     for j, phi in enumerate(basis):
-        if phi.mono not in cache:
-            cache[phi.mono] = lie_derivative(phi.mono, V, dV)
-        M[:, j] = cache[phi.mono].real if phi.part == "re" else cache[phi.mono].imag
+        by_mono.setdefault(phi.mono, []).append(j)
+    for mono, cols in by_mono.items():
+        d = lie_derivative(mono, V, dV)
+        for j in cols:
+            M[:, j] = d.real if basis[j].part == "re" else d.imag
+        del d
     return M
 
 

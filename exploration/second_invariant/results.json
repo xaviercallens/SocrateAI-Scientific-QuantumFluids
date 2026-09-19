@@ -1,0 +1,474 @@
+{
+ "scope_note": "N in (4,5,6); pre-registered N=8,10 not attempted (see module docstring)",
+ "controls": {
+  "positive_GP_energy_dist": 2.1892415473747634e-15,
+  "negative_leak_mass_dist": 1.0
+ },
+ "preregistered": [
+  {
+   "N": 4,
+   "seam": "trunc",
+   "mu": 0.0,
+   "D": 0.0,
+   "cubic": false,
+   "basis": 230,
+   "S=2x": {
+    "null_dim": 2,
+    "gap": 0.005568697490121173,
+    "known_in_null": 1.1578370207684363e-14,
+    "null_explained_by_known": 1.1579721033977373e-14,
+    "sec": 0.6
+   },
+   "S=4x": {
+    "null_dim": 2,
+    "gap": 0.009990127308450157,
+    "known_in_null": 1.1580680715301055e-14,
+    "null_explained_by_known": 1.1550432257274664e-14,
+    "sec": 0.9
+   }
+  },
+  {
+   "N": 4,
+   "seam": "gpe",
+   "mu": 0.5,
+   "D": 0.0,
+   "cubic": false,
+   "basis": 230,
+   "S=2x": {
+    "null_dim": 2,
+    "gap": 0.006315225270318523,
+    "known_in_null": 4.210816939775004e-14,
+    "null_explained_by_known": 4.2089571855986173e-14,
+    "sec": 0.6
+   },
+   "S=4x": {
+    "null_dim": 2,
+    "gap": 0.009352920447103272,
+    "known_in_null": 1.713251233199055e-14,
+    "null_explained_by_known": 1.7131859348285278e-14,
+    "sec": 0.5
+   }
+  },
+  {
+   "N": 4,
+   "seam": "gpe",
+   "mu": 1.0,
+   "D": 0.0,
+   "cubic": false,
+   "basis": 230,
+   "S=2x": {
+    "null_dim": 2,
+    "gap": 0.007156477837377472,
+    "known_in_null": 9.17685087304854e-15,
+    "null_explained_by_known": 9.172632370987829e-15,
+    "sec": 0.5
+   },
+   "S=4x": {
+    "null_dim": 2,
+    "gap": 0.0068154946456108504,
+    "known_in_null": 1.637291652193332e-14,
+    "null_explained_by_known": 1.6288304133590166e-14,
+    "sec": 0.9
+   }
+  },
+  {
+   "N": 5,
+   "seam": "trunc",
+   "mu": 0.0,
+   "D": 0.0,
+   "cubic": false,
+   "basis": 447,
+   "S=2x": {
+    "null_dim": 2,
+    "gap": 0.003086519638652209,
+    "known_in_null": 2.2904668875099493e-14,
+    "null_explained_by_known": 2.2905862865257304e-14,
+    "sec": 2.4
+   },
+   "S=4x": {
+    "null_dim": 2,
+    "gap": 0.006021086956905709,
+    "known_in_null": 3.804607053371685e-14,
+    "null_explained_by_known": 3.8098721569126344e-14,
+    "sec": 5.3
+   }
+  },
+  {
+   "N": 5,
+   "seam": "gpe",
+   "mu": 0.5,
+   "D": 0.0,
+   "cubic": false,
+   "basis": 447,
+   "S=2x": {
+    "null_dim": 2,
+    "gap": 0.0032234724910664603,
+    "known_in_null": 3.361250519523456e-14,
+    "null_explained_by_known": 3.3598268715516884e-14,
+    "sec": 4.3
+   },
+   "S=4x": {
+    "null_dim": 2,
+    "gap": 0.004518528057321978,
+    "known_in_null": 1.9021066412290056e-14,
+    "null_explained_by_known": 1.9024956638731317e-14,
+    "sec": 5.1
+   }
+  },
+  {
+   "N": 5,
+   "seam": "gpe",
+   "mu": 1.0,
+   "D": 0.0,
+   "cubic": false,
+   "basis": 447,
+   "S=2x": {
+    "null_dim": 2,
+    "gap": 0.0024731924196505577,
+    "known_in_null": 3.260893465186765e-14,
+    "null_explained_by_known": 3.2609311198522454e-14,
+    "sec": 4.5
+   },
+   "S=4x": {
+    "null_dim": 2,
+    "gap": 0.004979403793374239,
+    "known_in_null": 1.866845821393061e-14,
+    "null_explained_by_known": 1.8871056900974276e-14,
+    "sec": 5.6
+   }
+  },
+  {
+   "N": 6,
+   "seam": "trunc",
+   "mu": 0.0,
+   "D": 0.0,
+   "cubic": false,
+   "basis": 791,
+   "S=2x": {
+    "null_dim": 2,
+    "gap": 0.002117157768617382,
+    "known_in_null": 5.1364859921368097e-14,
+    "null_explained_by_known": 5.135865313013002e-14,
+    "sec": 7.0
+   },
+   "S=4x": {
+    "null_dim": 2,
+    "gap": 0.004097791462518133,
+    "known_in_null": 3.2216104262729665e-14,
+    "null_explained_by_known": 3.223676864226514e-14,
+    "sec": 14.8
+   }
+  },
+  {
+   "N": 6,
+   "seam": "gpe",
+   "mu": 0.5,
+   "D": 0.0,
+   "cubic": false,
+   "basis": 791,
+   "S=2x": {
+    "null_dim": 2,
+    "gap": 0.0020972145801508774,
+    "known_in_null": 1.8489831899475568e-13,
+    "null_explained_by_known": 1.8491161875568878e-13,
+    "sec": 13.3
+   },
+   "S=4x": {
+    "null_dim": 2,
+    "gap": 0.003049088708450601,
+    "known_in_null": 4.8220642064038037e-14,
+    "null_explained_by_known": 4.8248789414372055e-14,
+    "sec": 16.9
+   }
+  },
+  {
+   "N": 6,
+   "seam": "gpe",
+   "mu": 1.0,
+   "D": 0.0,
+   "cubic": false,
+   "basis": 791,
+   "S=2x": {
+    "null_dim": 2,
+    "gap": 0.0019767694137872486,
+    "known_in_null": 2.872102582441053e-14,
+    "null_explained_by_known": 2.875151269735071e-14,
+    "sec": 10.0
+   },
+   "S=4x": {
+    "null_dim": 2,
+    "gap": 0.003509982336519675,
+    "known_in_null": 4.792314346296289e-14,
+    "null_explained_by_known": 4.787453178892773e-14,
+    "sec": 9.4
+   }
+  }
+ ],
+ "extension_E1": [
+  {
+   "N": 4,
+   "seam": "trunc",
+   "mu": 0.0,
+   "D": 0.0,
+   "cubic": true,
+   "basis": 238,
+   "S=2x": {
+    "null_dim": 3,
+    "gap": 0.004708032621098201,
+    "known_in_null": 1.9136721850320025e-14,
+    "null_explained_by_known": 1.2918798658363265e-14,
+    "sec": 0.6
+   },
+   "S=4x": {
+    "null_dim": 3,
+    "gap": 0.0069442124386825625,
+    "known_in_null": 8.054002675301418e-15,
+    "null_explained_by_known": 6.858061065256292e-15,
+    "sec": 1.2
+   }
+  },
+  {
+   "N": 4,
+   "seam": "gpe",
+   "mu": 1.0,
+   "D": 0.0,
+   "cubic": true,
+   "basis": 238,
+   "S=2x": {
+    "null_dim": 3,
+    "gap": 0.004076910684169964,
+    "known_in_null": 1.1783009404914393e-14,
+    "null_explained_by_known": 1.1014830994271158e-14,
+    "sec": 0.6
+   },
+   "S=4x": {
+    "null_dim": 3,
+    "gap": 0.013711559016231256,
+    "known_in_null": 2.174082551656124e-14,
+    "null_explained_by_known": 2.518715438084092e-14,
+    "sec": 1.1
+   }
+  },
+  {
+   "N": 4,
+   "seam": "trunc",
+   "mu": 0.0,
+   "D": 0.3,
+   "cubic": true,
+   "basis": 238,
+   "S=2x": {
+    "null_dim": 3,
+    "gap": 0.006868847546485734,
+    "known_in_null": 1.1919676797742562e-14,
+    "null_explained_by_known": 1.1671901563273859e-14,
+    "sec": 0.9
+   },
+   "S=4x": {
+    "null_dim": 3,
+    "gap": 0.014354034501162655,
+    "known_in_null": 1.7708088924840922e-14,
+    "null_explained_by_known": 1.8510733673848973e-14,
+    "sec": 1.2
+   }
+  },
+  {
+   "N": 4,
+   "seam": "gpe",
+   "mu": 1.0,
+   "D": 0.3,
+   "cubic": true,
+   "basis": 238,
+   "S=2x": {
+    "null_dim": 3,
+    "gap": 0.005540320093391821,
+    "known_in_null": 2.035769200723779e-14,
+    "null_explained_by_known": 9.583114948335926e-15,
+    "sec": 0.7
+   },
+   "S=4x": {
+    "null_dim": 3,
+    "gap": 0.012542812708752118,
+    "known_in_null": 5.547993194530774e-15,
+    "null_explained_by_known": 3.3225212787111357e-15,
+    "sec": 1.0
+   }
+  },
+  {
+   "N": 5,
+   "seam": "trunc",
+   "mu": 0.0,
+   "D": 0.0,
+   "cubic": true,
+   "basis": 457,
+   "S=2x": {
+    "null_dim": 3,
+    "gap": 0.004512074707481358,
+    "known_in_null": 1.0855258154844574e-14,
+    "null_explained_by_known": 1.0872823886885445e-14,
+    "sec": 3.4
+   },
+   "S=4x": {
+    "null_dim": 3,
+    "gap": 0.008066446499382988,
+    "known_in_null": 1.119305656336825e-14,
+    "null_explained_by_known": 1.1132596058334112e-14,
+    "sec": 3.6
+   }
+  },
+  {
+   "N": 5,
+   "seam": "gpe",
+   "mu": 1.0,
+   "D": 0.0,
+   "cubic": true,
+   "basis": 457,
+   "S=2x": {
+    "null_dim": 3,
+    "gap": 0.002786922771684973,
+    "known_in_null": 1.4145009746621931e-14,
+    "null_explained_by_known": 1.753517712499249e-14,
+    "sec": 2.2
+   },
+   "S=4x": {
+    "null_dim": 3,
+    "gap": 0.004687340892180923,
+    "known_in_null": 3.688257001827089e-14,
+    "null_explained_by_known": 3.7604180199436467e-14,
+    "sec": 2.7
+   }
+  },
+  {
+   "N": 5,
+   "seam": "trunc",
+   "mu": 0.0,
+   "D": 0.3,
+   "cubic": true,
+   "basis": 457,
+   "S=2x": {
+    "null_dim": 3,
+    "gap": 0.004499358234498641,
+    "known_in_null": 2.04526033918171e-14,
+    "null_explained_by_known": 1.663809771002359e-14,
+    "sec": 5.2
+   },
+   "S=4x": {
+    "null_dim": 3,
+    "gap": 0.009432297147816475,
+    "known_in_null": 2.6624323163620312e-14,
+    "null_explained_by_known": 2.4702118134300226e-14,
+    "sec": 2.7
+   }
+  },
+  {
+   "N": 5,
+   "seam": "gpe",
+   "mu": 1.0,
+   "D": 0.3,
+   "cubic": true,
+   "basis": 457,
+   "S=2x": {
+    "null_dim": 3,
+    "gap": 0.003378298709915492,
+    "known_in_null": 1.9828045516358243e-14,
+    "null_explained_by_known": 1.954249840446448e-14,
+    "sec": 1.3
+   },
+   "S=4x": {
+    "null_dim": 3,
+    "gap": 0.007655433098124611,
+    "known_in_null": 2.0055785259270436e-14,
+    "null_explained_by_known": 2.0312759153367762e-14,
+    "sec": 2.6
+   }
+  },
+  {
+   "N": 6,
+   "seam": "trunc",
+   "mu": 0.0,
+   "D": 0.0,
+   "cubic": true,
+   "basis": 803,
+   "S=2x": {
+    "null_dim": 3,
+    "gap": 0.0021235749869700175,
+    "known_in_null": 3.5413415550306964e-14,
+    "null_explained_by_known": 3.39560842738968e-14,
+    "sec": 3.6
+   },
+   "S=4x": {
+    "null_dim": 3,
+    "gap": 0.0033313238621155337,
+    "known_in_null": 8.049946093317621e-14,
+    "null_explained_by_known": 8.055294411227257e-14,
+    "sec": 4.8
+   }
+  },
+  {
+   "N": 6,
+   "seam": "gpe",
+   "mu": 1.0,
+   "D": 0.0,
+   "cubic": true,
+   "basis": 803,
+   "S=2x": {
+    "null_dim": 3,
+    "gap": 0.0014660988224146343,
+    "known_in_null": 9.957059597971383e-14,
+    "null_explained_by_known": 9.437188421661012e-14,
+    "sec": 2.4
+   },
+   "S=4x": {
+    "null_dim": 3,
+    "gap": 0.002264056891622753,
+    "known_in_null": 9.140886739715038e-14,
+    "null_explained_by_known": 9.233741436434824e-14,
+    "sec": 5.0
+   }
+  },
+  {
+   "N": 6,
+   "seam": "trunc",
+   "mu": 0.0,
+   "D": 0.3,
+   "cubic": true,
+   "basis": 803,
+   "S=2x": {
+    "null_dim": 3,
+    "gap": 0.002587239550472871,
+    "known_in_null": 1.3198441024276992e-13,
+    "null_explained_by_known": 1.560437306414251e-13,
+    "sec": 5.2
+   },
+   "S=4x": {
+    "null_dim": 3,
+    "gap": 0.005611688969424559,
+    "known_in_null": 6.093756640775276e-14,
+    "null_explained_by_known": 5.691064223870762e-14,
+    "sec": 9.9
+   }
+  },
+  {
+   "N": 6,
+   "seam": "gpe",
+   "mu": 1.0,
+   "D": 0.3,
+   "cubic": true,
+   "basis": 803,
+   "S=2x": {
+    "null_dim": 3,
+    "gap": 0.001657546899400251,
+    "known_in_null": 1.637689083096843e-14,
+    "null_explained_by_known": 1.5802053296767064e-14,
+    "sec": 7.4
+   },
+   "S=4x": {
+    "null_dim": 3,
+    "gap": 0.003177465844090893,
+    "known_in_null": 5.772636472744028e-14,
+    "null_explained_by_known": 5.652008018636057e-14,
+    "sec": 9.3
+   }
+  }
+ ],
+ "P_c_H_on_real_data_max_abs": 0.0
+}

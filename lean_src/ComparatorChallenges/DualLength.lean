@@ -45,4 +45,44 @@ then the dispersion at that `k` is not Bogoliubov. This is the form in which the
 theorem not_bogoliubov_of_lt {hc ks k epsSq : ℝ} (hhc : hc ≠ 0) (hk : 0 < k) (hks : 0 < ks)
     (hmeas : dualLength hc k epsSq < 2 / ks) : epsSq ≠ bogoliubovSq hc ks k := by
   sorry
+/-- **The bound as a `k^{3/2}` envelope on the dispersion.** `ℓ(k) ≥ 2/ks` says exactly that
+`ε(k)² ≥ (2 hc²/ks) k³`, i.e. the dispersion never dips below a `3/2`-power envelope, which it
+touches at the self-dual point. This is the form compared against measured `ε(k)`: in ⁴He the
+roton sits a factor `√0.047 ≈ 4.6` **below** this envelope. -/
+theorem ell_ge_iff_envelope {hc ks k epsSq : ℝ} (hhc : hc ≠ 0) (hk : 0 < k) (hks : 0 < ks) :
+    2 / ks ≤ dualLength hc k epsSq ↔ 2 * hc ^ 2 / ks * k ^ 3 ≤ epsSq := by
+  sorry
+/-- The Bogoliubov dispersion satisfies the envelope bound at every positive wavenumber. -/
+theorem bogoliubov_envelope {hc ks k : ℝ} (hhc : hc ≠ 0) (hk : 0 < k) (hks : 0 < ks) :
+    2 * hc ^ 2 / ks * k ^ 3 ≤ bogoliubovSq hc ks k := by
+  sorry
+/-! ## The bound restated on the static structure factor
+
+Feynman's relation writes the excitation energy through the static structure factor `S(k)`:
+`ε_F(k) = ħ²k²/(2mS(k))`, which in these variables is `hc·k²/(ks·S)` (the free-particle energy
+divided by `S`). Feynman's argument is *variational*, so `ε ≤ ε_F` for the true dispersion;
+that inequality is taken below as a hypothesis (it is physics input, not proved here).
+
+The consequence is that the dual-scale bound is **equivalent to a bound on `S`**, and `S` is what a
+diffraction experiment measures directly, without any dispersion measurement. -/
+
+/-- Under Feynman's relation the dual length is `k/(ks² S²)`. -/
+theorem dualLength_feynman {hc ks k S : ℝ} (hhc : hc ≠ 0) (hk : k ≠ 0) (hks : ks ≠ 0) (hS : S ≠ 0) :
+    dualLength hc k ((hc * k ^ 2 / (ks * S)) ^ 2) = k / (ks ^ 2 * S ^ 2) := by
+  sorry
+/-- **The dual-scale bound is a structure-factor bound.** `ℓ_F(k) ≥ 2/ks` exactly when
+`S(k)² ≤ k/(2ks)`. A structure-factor peak above `√(k/(2ks))` therefore breaks it. -/
+theorem feynman_ge_iff {ks k S : ℝ} (_hk : 0 < k) (hks : 0 < ks) (hS : 0 < S) :
+    2 / ks ≤ k / (ks ^ 2 * S ^ 2) ↔ S ^ 2 ≤ k / (2 * ks) := by
+  sorry
+/-- **Refutation from `S(k)` alone.** If the measured structure factor exceeds `√(k/(2ks))` at some
+`k`, then — given Feynman's variational inequality `ε ≤ ε_F` — the dispersion is not Bogoliubov
+there. In ⁴He the `S(k)` peak near `2 Å⁻¹` does exceed it, which is the same physics as the
+measured `ℓ(k_roton)/(√2ξ) = 0.047`, reached without using the dispersion data. -/
+theorem not_bogoliubov_of_structure_factor {hc ks k S epsSq : ℝ}
+    (hhc : hc ≠ 0) (hk : 0 < k) (hks : 0 < ks) (hS : 0 < S)
+    (hfeyn : epsSq ≤ (hc * k ^ 2 / (ks * S)) ^ 2)        -- Feynman's variational bound
+    (hpeak : k / (2 * ks) < S ^ 2) :                      -- measured: S above the dual-scale bound
+    epsSq ≠ bogoliubovSq hc ks k := by
+  sorry
 end QuantumFluids.DualLength
