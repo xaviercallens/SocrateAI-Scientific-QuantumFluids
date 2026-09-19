@@ -97,3 +97,38 @@ Lean-checked honestly. Anything beyond it is out of scope for this memo.
 Dynamics and reconnection events (snapshots only); any claim about ⁴He from BEC data or vice versa (LL-15 — the
 property that must transfer is *quantized circulation with a resolvable core*, and it must be checked per dataset);
 any novelty claim (TDA on vortex tangles has a literature, which must be checked before any external communication).
+
+---
+
+## §9 Control baseline (run 2026-09-20, synthetic by construction — controls only, never a result)
+
+`exploration/tda/controls_baseline.py` → `controls_baseline.json`. Configuration: triangular
+(Abrikosov-like) lattice, the arrangement a rotating condensate actually forms.
+
+| control | requirement | result |
+|---|---|---|
+| **C-POS** | recover planted vortices; `F` within 10 % | **PASS**: 36/36 recovered at every spacing; `F` = 3.816 / 5.831 / 7.846 for planted 4 / 6 / 8 (deficit 4.6 → 1.9 %, the half-cell quantisation of plaquette centres) |
+| **C-RES** | `F` stable under a change of grid | **PASS, decisively**: `dx/ξ` = 0.5 → 0.125 (a 4× change) moves `F` from 5.831 to 5.938, **1.8 %**. A resolution artefact would have moved it 4×. |
+| **C-NEG** | Poisson shows no floor | **PASS**: matched count `F` = 1.22 (p05 0.41, p95 2.39), `f_<` = 0.016; dense (n = 1600) `F` = 0.024, `f_<` = 0.48 |
+| **C-PERM** | shuffled positions reproduce the null | **PASS**: `F` = 0.717, inside the C-NEG p05–p95 band |
+
+**Discrimination, and an honest limit.** Lattice `F` = 6.00 against null p95 = 2.39 is only a
+**2.5×** separation at 36 points: with few vortices the null is broad. Discrimination improves with
+vortex count, so a real dataset needs **many** vortices for this test to bite. This is a
+quantitative precondition on dataset selection, recorded before any dataset was chosen.
+
+### Correction to prediction T4 (registered error)
+
+T4 predicted "`L₁/F ≫ 1`, an estimate of `ℓ_v/ξ`". **The baseline shows this is wrong.** For an
+ordered lattice `F`, mean-MST and `L₁` all coincide (e.g. 5.83 / 5.95 / 6.05 at spacing 6), so
+`L₁/F` ≈ **1.03**, not ≫ 1. The error was conceptual: for a regular configuration the minimum, mean
+and loop scales are the *same* length, so their ratios cannot carry `ℓ_v/ξ`.
+
+Corrected, and this is the form that will be used:
+- `ℓ_v/ξ` is estimated by **`mst_mean_over_xi`** (mean separation), not by any ratio;
+- `F` is the **floor** (minimum separation) and equals `ℓ_v/ξ` only for an ordered configuration;
+- **`L₁/F` measures disorder**: it is 1 for a lattice and grows as the configuration becomes irregular.
+
+T4 is replaced by **T4′**: for a real (disordered) vortex configuration, `L₁/F > 1` measurably,
+while `mst_mean_over_xi` estimates `ℓ_v/ξ`. As with the A1.2 dimension-count error in the
+second-invariant memo, this is recorded rather than silently corrected.
