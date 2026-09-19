@@ -30,15 +30,16 @@
 \newtcolorbox{keybox}[1][]{colback=blue!3,colframe=blue!45!black,
   boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
 
-\title{\textbf{A T-dual--motivated dispersive regulator for a dyadic shell model:}\\
-\large conservation, Liouville structure, and why the intended measurement
-could not be made}
+\title{\textbf{A dual-scale length for quantum fluids, and a dispersive regulator for a
+dyadic shell model:}\\
+\large a measurable bound that superfluid $^4$He violates, a Hamiltonian second invariant,
+and why the intended measurement could not be made}
 
 \author{Xavier Callens\\
 \small SocrateAI-Scientific-QuantumFluids\\
 \small \texttt{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}}
 
-\date{15 August 2026}
+\date{20 September 2026}
 
 \begin{document}
 \maketitle
@@ -77,6 +78,26 @@ believe, the most transferable output: the model is chaotic, all measurements us
 trajectories, and the fixed-parameter ensemble scatter is $72$--$105\%$ of the mean, far
 exceeding the effect sought. Every quantitative and ordinal measurement result in this
 work is accordingly retracted, and we state what would be required to obtain one.
+
+Two results added in September 2026 change what the dual-scale idea can be asked to do.
+First, the complexified model is \emph{Hamiltonian}: under $w_n = 2^{-n/2}v_n$ it is a
+second-harmonic-generation chain, with a second invariant
+$H = \sum_n 2^{-n}[\omega_n|v_n|^2 + k_n\,\mathrm{Im}(\conj{v_n}^2 v_{n+1})]$ conserved for
+arbitrary real dispersion. Energy conservation is then the Manley--Rowe relation and the
+Liouville property is a corollary; $H$ vanishes identically on real data, so the phase is
+what carries the second conservation law. A consequence we state as a design rule: a
+regulator of order $k^\sigma$ controls the norm of order $k^{\sigma-1}$ uniformly in the
+cutoff, so quantum pressure ($\sigma=2$) does \emph{not} reach enstrophy. Second, the
+dual-scale shape is made measurable. For a quantum fluid we define the dual length
+$\ell(k) = \varepsilon(k)^2/(\hbar^2c^2k^3)$, whose phonon and free-particle limits are
+$1/k$ and $k/k_*^2$ with $k_* = 2mc/\hbar$; because the Bogoliubov dispersion is
+Pythagorean in those branches, $\ell_B = 1/k + k/k_*^2$ \emph{exactly}, invariant under
+$k \mapsto k_*^2/k$ and bounded below by $\sqrt2\,\xi$, with equality at the self-dual
+point. On published $^4$He data, with a positive control that first \emph{voided} an
+earlier run, the bound fails by a factor $21$ at saturated vapour pressure and $51$ at
+$24$~bar. The dual-scale structure is therefore not universal but \emph{localised} to the
+weakly interacting regime, and $\ell/(\sqrt2\,\xi)$ is a single dimensionless measure of
+the distance from it. No novelty is claimed for the underlying physics.
 \end{abstract}
 
 \tableofcontents
@@ -95,12 +116,20 @@ retraction and reason.
 \section{Motivation and the question}
 \label{sec:intro}
 
-T-duality in string theory identifies compactification radii $R$ and $\alpha'/R$, so that
-the spectrum is invariant under $R \leftrightarrow \alpha'/R$ and no scale below
-$\sqrt{\alpha'}$ is physically distinguishable~\cite{GPR1994}. Read as a template rather
-than as physics---the transfer is not claimed here---this suggests a class of small-scale
-regulators that \emph{reflect} rather than \emph{absorb}: at the self-dual scale,
-contraction turns into dilation, and no energy need be removed.
+Consider a quantity built from two competing scales, $R + \alpha'/R$. It is invariant
+under $R \leftrightarrow \alpha'/R$ and, by the arithmetic--geometric mean inequality,
+bounded below by $2\sqrt{\alpha'}$, with equality at the self-dual point
+$R = \sqrt{\alpha'}$. We call this shape \emph{dual-scale}. It suggests a class of
+small-scale regulators that \emph{reflect} rather than \emph{absorb}: at the self-dual
+scale, contraction turns into dilation, and no energy need be removed.
+
+\paragraph{On provenance, stated plainly.} This shape appears in the T-duality relation of
+string theory~\cite{GPR1994}, which was the historical motivation for the present work.
+\textbf{No string-theoretic content is claimed or used anywhere below}, and an earlier
+framing of this programme, which leaned on that language, has been withdrawn. What
+survives is arithmetic on two positive terms---and, as \S\ref{sec:duallength} shows, the
+fact that the shape occurs \emph{exactly} in a standard dispersion relation, where it
+becomes measurable and can therefore be wrong.
 
 Quantum fluids furnish the physical instance in which such a regulator is not
 hypothetical. In the Gross--Pitaevskii description, quantum pressure supplies a
@@ -484,6 +513,161 @@ performed \emph{first} to size the campaign. Whether an exponent then exists is 
 that is currently established is that the effect, if real, lies below the resolution of
 what was spent.
 
+\section{A Hamiltonian second invariant, and what a dispersive regulator buys}
+\label{sec:hamiltonian}
+
+The obstruction of \S\ref{sec:measure} is that every regulator considered conserves energy,
+so the truncated system thermalizes and amplitude observables measure the cutoff. That
+raises a structural question the measurement programme never reached: \emph{is
+conservation all there is}, or does the complexified model carry more?
+
+\paragraph{Riding the graded phase.} The uniform phase rotation $v_n \mapsto e^{i\theta}v_n$
+is \emph{not} a symmetry of the flow, since $v_{n-1}^2$ acquires $e^{2i\theta}$. The
+\emph{graded} rotation $v_n \mapsto e^{i2^n\theta}v_n$ is: both $k_{n-1}v_{n-1}^2$ and
+$k_n\conj{v_n}v_{n+1}$ carry charge $2^n$. A continuous symmetry suggests a Hamiltonian
+structure, and the rescaling $w_n = 2^{-n/2}v_n$ exhibits one: in those variables the model
+is a chain of second-harmonic generators, two quanta of shell $n$ fusing into one of shell
+$n+1$.
+
+\begin{theorem}[Second invariant]
+\label{thm:second}
+For weights satisfying $g_{n+1}\,(2k_n) = g_n\,k_{n+1}$---for instance $g_n = 2^{-n}k_n$---the
+functional
+\[
+   H(v) \;=\; \sum_n g_n\,\mathrm{Im}\!\left(\conj{v_n}^2 v_{n+1}\right)
+\]
+is conserved by the truncated flow. With a dispersive term $-i\omega_n v_n$ the conserved
+functional is $H = \sum_n 2^{-n}\bigl[\omega_n|v_n|^2 + k_n\,\mathrm{Im}(\conj{v_n}^2
+v_{n+1})\bigr]$, for \emph{arbitrary} real $\omega_n$, and the conserving seam
+$v_{N+1} = i\mu v_N^2$ adds $\tfrac12\mu k_N 2^{-N}|v_N|^4$.
+\end{theorem}
+
+The telescoping identity and the vanishing of the rate under truncation are machine-checked
+(\lean{ShellHamiltonian.lean}, axiom footprint $\{$\lean{propext}, \lean{Classical.choice},
+\lean{Quot.sound}$\}$); a control with the factor $2$ removed fails to compile. The
+dispersive and seam extensions are verified as exact polynomial identities in computer
+algebra for general $k_n$, $\omega_n$, $\mu$, not in Lean.
+
+Three consequences follow, and they reorganise \S\ref{sec:liouville}:
+\begin{enumerate}\itemsep2pt
+\item the Liouville property (Thm.~\ref{thm:liouville}) is a \emph{corollary} of Hamiltonian
+      structure, not an independent fact;
+\item exact energy conservation (Thm.~\ref{thm:conservation}) is the Manley--Rowe relation,
+      the Noether charge of the graded phase;
+\item $H \equiv 0$ identically on real data. \emph{The phase is what carries the second
+      conservation law}, which is the precise sense in which the complexification is not
+      cosmetic.
+\end{enumerate}
+
+\paragraph{The $\sigma$-rule.} Bounding the cubic term by $\sqrt{S}\,S$ with
+$S = \sum|v_n|^2$ gives, uniformly in the cutoff,
+\[
+   \textstyle\sum_n 2^{-n}\omega_n |v_n|^2 \;\le\; H + (2E)^{3/2},
+\]
+also machine-checked. Reading $\omega_n = D k_n^\sigma$ with $k_n = 2^n$: \emph{a dispersive
+regulator of order $k^\sigma$ controls the norm of order $k^{\sigma-1}$, uniformly in the
+truncation}. Quantum pressure has $\sigma = 2$ and therefore controls $\sum k_n|v_n|^2$ and
+\textbf{not} the enstrophy $\sum k_n^2|v_n|^2$; reaching enstrophy would require
+$\sigma = 3$. This is the sharpest available answer to the question of \S\ref{sec:intro}:
+the dispersive regulator does buy something uniform in the cutoff, but one power of $k$ less
+than the quantity the measurement programme was built around.
+
+\paragraph{What is \emph{not} there.} A deterministic search over all quadratic and quartic
+functionals ($N \le 6$, both seams, with a positive control backed by the truncated
+Gross--Pitaevskii energy and a negative control on a leaking seam) finds the nullspace to be
+exactly $\{$mass, mass$^2$, $H\}$ and \emph{no} invariant of the form ``enstrophy $+$
+positive quartic''. So a Hamiltonian, volume-preserving, energy-conserving regulator is not
+thereby regularising. The ingredient the Gross--Pitaevskii system has and this one lacks is a
+\emph{positive} interaction energy: for every finite truncation $\Lambda$ of an additive
+group, $Q = \sum_{k\in\Lambda}\conj{\psi_k}N_k = \sum_q|A_q|^2 \ge 0$, where $A_q$ is the
+transform of $|\psi|^2$ (machine-checked, \lean{GPGalerkin.lean}).
+
+\section{A dual length for quantum fluids, and its failure in $^4$He}
+\label{sec:duallength}
+
+The dual-scale shape of \S\ref{sec:intro} has so far been a motivation. It can be made a
+\emph{measurable functional of a measured dispersion}, and then tested.
+
+\begin{definition}[Dual length]
+For a quantum fluid with excitation energy $\varepsilon(k)$, sound speed $c$ and mass $m$,
+\[
+   \ell(k) \;:=\; \frac{\varepsilon(k)^2}{\hbar^2c^2k^3},
+   \qquad k_* := \frac{2mc}{\hbar}, \qquad \sqrt2\,\xi = \frac{\hbar}{mc}.
+\]
+\end{definition}
+
+Both ingredients are measured: $\varepsilon(k)$ is what neutron scattering reports and $c$
+is the $k\to0$ slope. The phonon limit $\varepsilon = \hbar ck$ gives $\ell = 1/k$; the
+free-particle limit $\varepsilon = \hbar^2k^2/2m$ gives $\ell = k/k_*^2$. The Bogoliubov
+dispersion is \emph{Pythagorean} in these two branches,
+$\varepsilon^2 = (\hbar ck)^2 + (\hbar^2k^2/2m)^2$, whence
+
+\begin{theorem}[Dual-scale bound; machine-checked, \lean{DualLength.lean}]
+\label{thm:duallength}
+$\ell_B(k) = 1/k + k/k_*^2$ exactly. It is invariant under the involution
+$k \mapsto k_*^2/k$, which exchanges the phonon and free-particle terms, and
+$\ell_B(k) \ge 2/k_* = \sqrt2\,\xi$ with equality \emph{iff} $k = k_*$. Equivalently
+$\varepsilon(k)^2 \ge (2\hbar^2c^2/k_*)\,k^3$: the dispersion never dips below a
+$k^{3/2}$ envelope, tangent at the self-dual point.
+\end{theorem}
+
+Two restatements matter. Under Feynman's relation $\varepsilon_F = \hbar^2k^2/(2mS(k))$ the
+bound becomes exactly $S(k) \le \sqrt{k/2k_*}$---a statement about the \emph{static structure
+factor}, testable by diffraction alone. And a measured $\ell < 2/k_*$ \emph{proves} the
+dispersion is not Bogoliubov at that $k$: this falsification lemma, not an inference, is what
+licenses the measurement below. Perturbing either the floor or the structure-factor bound
+makes the Lean development fail to compile.
+
+\paragraph{Measurement.} Using the published $^4$He dispersion of
+Godfrin et al.~\cite{Godfrin2021} (their own ancillary tables, $1726$ points,
+$k\in[0.002,3.600]\,\text{\AA}^{-1}$). The Bogoliubov positive control returns
+$k_{\min}/k_* = 0.9998$ and $\ell_{\min}/(\sqrt2\,\xi) = 1.0000$; a pure-phonon negative
+control correctly reports no interior minimum; the sound speed recovers to $238.8$ m/s
+against the literature $238.3$. \emph{An earlier run was declared void by this same control},
+which revealed that $k_*$ lay outside the range of the multi-pressure table---a data-scope
+error found by the control rather than by inspection.
+
+\begin{center}\small
+\begin{tabular}{@{}lcc@{}}
+\toprule
+quantity & dual-scale expects & measured in $^4$He \\
+\midrule
+interior minimum of $\ell$ & at $k = k_*$ & none; $\ell$ falls across every decade \\
+$\ell/(\sqrt2\,\xi)$ at the roton & $\ge 1$ & $\mathbf{0.047}$ ($4.6\times$ below in energy) \\
+$\ell_{\min}/(\sqrt2\,\xi)$ & $1$ & $0.032$ \\
+duality error $\max|\ell(k)/\ell(k_*^2/k)-1|$ & $0$ & $132\%$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Across seven pressures the violation deepens monotonically, $\ell/(\sqrt2\,\xi) = 0.0473$ at
+saturated vapour pressure falling to $0.0197$ at $24.08$~bar---a shortfall of $21\times$
+rising to $51\times$.
+
+\paragraph{What this does and does not mean.} The physics is textbook: the roton lies far
+below the weakly interacting curve because $^4$He is strongly correlated, and it deepens
+toward the freezing line. \textbf{No novelty is claimed for that.} What the dual length adds
+is that the statement compresses into one dimensionless number with a machine-checked
+meaning. Nor is the conclusion ``$^4$He has no minimum length'': $\ell$ must eventually rise,
+so a minimum exists beyond the measured range: the claim is that it lies outside it and that
+$\ell$ there is already $32\times$ below the Bogoliubov floor.
+
+The surviving proposal is therefore a \emph{localisation} rather than a retraction: the
+dual-scale structure is a property of the weakly interacting regime, where it is exact, and
+$\ell/(\sqrt2\,\xi)$ measures the distance from it. Testing that requires cold-atom or
+$S(k)$ data; a search established that no public superfluid $^4$He $S(Q)$ dataset exists,
+which blocks the structure-factor route and is recorded as a data gap.
+
+\paragraph{An independent observable, and an inconclusive attempt at it.} Quantized
+circulation with a finite core implies a minimum vortex separation, which is a floor in a
+persistence diagram---an entirely real-space test sharing no instrument with the above. On a
+published $256^3$ Gross--Pitaevskii turbulence snapshot the line-graph floor came out at
+$1.491\,\xi$ with no separation below $\xi$, against a null of $0.101$. It does \emph{not}
+stand: a threshold sweep shows the statistic tracks the segmentation threshold that produced
+it (ratio $1.00$--$1.24$ across a fourfold change), because that dataset resolves the healing
+length by only $1.5$ grid cells. The measurement is inconclusive and nothing from it is cited;
+a valid attempt needs $\xi/\Delta x \gtrsim 5$ or threshold-free topological line tracing.
+
 \section{What stands, and what does not}
 \label{sec:standing}
 
@@ -501,11 +685,18 @@ Conserving-seam criterion (Prop.~\ref{prop:seam}) & stands & Lean-derived \\
 Bit-exact reproduction of the sibling implementation & stands & deterministic, $0.00\mathrm{e}{+}00$ \\
 $^4$He dispersion reproduction (\S\ref{sec:m1}) & stands & deterministic fit \\
 Degeneracy of $\sup_t\Omega$ (\S\ref{sec:degeneracy}) & stands & concerns $T$, not sampling \\
+Second invariant (Thm.~\ref{thm:second}) & stands & Lean + computer algebra \\
+$\sigma$-rule, uniform in the cutoff & stands & Lean \\
+No ``enstrophy $+$ positive quartic'' invariant & stands & search, $N\le6$, controls passing \\
+Dual-length bound (Thm.~\ref{thm:duallength}) & stands & Lean, machine-checked \\
+$^4$He violates it, $21\times$ to $51\times$ & stands & measured, controls passing \\
 \midrule
 Exponents for $\tau_f$ and for $\tau-\tau_0$ & \textbf{retracted} & failed pre-registered criteria \\
 Ordinal ``dispersion delays thermalization'' & \textbf{retracted} & single-sample artifact \\
 Small-$D$ sign reversal & \textbf{retracted} & below ensemble scatter \\
 Equipartition agreement (percentages) & \textbf{withdrawn} & ensemble CV $25$--$84\%$ \\
+TDA vortex-floor measurement & \textbf{inconclusive} & confounded by its own threshold \\
+Dual-scale structure as universal & \textbf{localised} & holds in weak coupling only \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -519,8 +710,13 @@ about which results feel deterministic.}
 \section{Conclusion}
 
 We set out to ask whether a dispersive small-scale regulator leaves a different signature
-on a cascade than a dissipative one. We could not answer it. What we can offer is the
-apparatus, some structure, and a clear account of the obstacle.
+on a cascade than a dissipative one. By measurement we could not answer it. By structure we
+now can, partially and in the negative direction: a dispersive regulator of order $k^\sigma$
+does buy a bound uniform in the cutoff, but on the norm of order $k^{\sigma-1}$, so quantum
+pressure falls one power of $k$ short of the enstrophy the programme was built around
+(\S\ref{sec:hamiltonian}). Conservation, volume preservation and a second invariant are not
+by themselves regularising; what the Gross--Pitaevskii system adds, and this model lacks, is
+a positive interaction energy.
 
 The apparatus: a complexification of the dyadic shell model that conserves energy exactly,
 reduces exactly to the real model, and---unexpectedly---restores the Liouville property
@@ -535,12 +731,25 @@ rediscover. Methodologically, the cascade is chaotic and the effect sought is sm
 the trajectory-to-trajectory scatter; single-trajectory measurement, however carefully
 refined in timestep, cannot see it.
 
+The dual-scale motivation itself fared better by being made falsifiable. Written as the
+dual length $\ell(k) = \varepsilon(k)^2/(\hbar^2c^2k^3)$ it is exact for the Bogoliubov
+dispersion and bounded below by $\sqrt2\,\xi$; superfluid $^4$He then violates that bound by
+$21$ to $51$ times (\S\ref{sec:duallength}). The idea is therefore not refuted but
+\emph{localised}: it describes the weakly interacting regime, and the violation is a
+dimensionless measure of distance from it. We regard turning a motivation into a number that
+could come out wrong---and did---as the more useful move.
+
 If there is a transferable lesson, it is the last one. A validation battery grew to six
 criteria over four rounds, each added in response to a real failure, and still missed the
 binding constraint---because every criterion tested convergence of a computation rather
 than reproducibility of a measurement. \textbf{Convergence checks are not reproducibility
 checks.} In a chaotic system, ensemble scatter should be measured before anything is fitted,
-and it is cheap relative to the sweep it would have saved.
+and it is cheap relative to the sweep it would have saved. The same pattern recurred twice
+more while preparing this revision, and in both cases a pre-registered control caught it: one
+run was voided because the control revealed the self-dual point lay outside the data's range,
+and a topological measurement was withdrawn because a threshold sweep showed the statistic
+tracked the threshold that produced it. \textbf{A control that cannot fail is not a control},
+and the parameters a statistic is conditioned on must be swept, not chosen.
 
 \paragraph{Reproducibility.} All code, data, pre-registrations, the claim ledger with its
 retractions, and the Lean development are public at
