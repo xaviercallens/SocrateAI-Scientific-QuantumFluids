@@ -1,0 +1,23 @@
+{
+  "challenge_module": "ComparatorChallenges.QuantumFluidsShell",
+  "solution_module": "QuantumFluidsShell",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.ShellComplex.re_conj_sq_mul",
+    "QuantumFluids.ShellComplex.sum_re_conj_mul_shellBc",
+    "QuantumFluids.ShellComplex.shellBc_energy_conservation",
+    "QuantumFluids.ShellComplex.shellBc_real",
+    "QuantumFluids.ShellComplex.rtrace_mulRight",
+    "QuantumFluids.ShellComplex.rtrace_mul_I",
+    "QuantumFluids.ShellComplex.rtrace_conj_mul",
+    "QuantumFluids.ShellComplex.shell_divergence_zero",
+    "QuantumFluids.ShellComplex.seam_conserves_iff",
+    "QuantumFluids.ShellComplex.seam_zero_conserves",
+    "QuantumFluids.ShellComplex.seam_gpe_conserves"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

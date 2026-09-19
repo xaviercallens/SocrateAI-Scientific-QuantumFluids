@@ -1,0 +1,17 @@
+{
+  "challenge_module": "ComparatorChallenges.MadelungSplit",
+  "solution_module": "MadelungSplit",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.Madelung.normSq_phase_mul",
+    "QuantumFluids.Madelung.hasDerivAt_psi_line",
+    "QuantumFluids.Madelung.norm_sq_deriv_psi",
+    "QuantumFluids.Madelung.madelung_gradient_split",
+    "QuantumFluids.Madelung.kinetic_density_split"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

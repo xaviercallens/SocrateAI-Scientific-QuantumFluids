@@ -1,0 +1,21 @@
+{
+  "challenge_module": "ComparatorChallenges.Duality",
+  "solution_module": "Duality",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "Mathesis.Duality.sqrt_le_max_of_le_mul",
+    "Mathesis.Duality.min_le_sqrt_of_mul_le",
+    "Mathesis.Duality.sqrt_between_duals",
+    "Mathesis.Duality.two_sqrt_mul_le_add",
+    "Mathesis.Duality.self_dual_fixed_point",
+    "Mathesis.Duality.Reff_ge_sqrt_of_selfDual",
+    "Mathesis.Duality.support_balance",
+    "Mathesis.Duality.eoq_lower_bound",
+    "Mathesis.Duality.kramers_wannier_self_dual"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}
