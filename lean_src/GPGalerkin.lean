@@ -145,6 +145,141 @@ theorem kinetic_le_energy (Λ : Finset G) (ψ : G → ℂ) (ω : G → ℝ) (g E
   rw [hE]
   nlinarith
 
+/-! ## Hamiltonian gradient identity (algebraic core of energy conservation) -/
+
+/-- `N_k = Σ_b ψ_b A_{k-b}`: the nonlinearity as a convolution with the density transform. -/
+theorem nl_eq_dens (Λ : Finset G) (ψ : G → ℂ) (k : G) :
+    nl Λ ψ k = ∑ b ∈ Λ, ψ b * dens Λ ψ (k - b) := by
+  unfold nl dens ff
+  simp only [Finset.sum_product, Finset.mul_sum, mul_ite, mul_zero]
+  conv_lhs => arg 2; intro k1; rw [Finset.sum_comm]
+  conv_lhs => rw [Finset.sum_comm]
+  refine Finset.sum_congr rfl (fun k3 _ => ?_)
+  refine Finset.sum_congr rfl (fun k1 _ => ?_)
+  refine Finset.sum_congr rfl (fun k2 _ => ?_)
+  have hc : (k1 + k3 = k + k2) ↔ (k1 - k2 = k - k3) := (sub_eq_sub_iff_add_eq_add).symm
+  by_cases h : k1 - k2 = k - k3
+  · have h' := hc.mpr h
+    simp [h, h']; ring
+  · have h' : ¬ (k1 + k3 = k + k2) := fun hh => h (hc.mp hh)
+    simp [h, h']
+
+/-- `A_{-q} = conj(A_q)`: the density transform of a real density is Hermitian. -/
+theorem dens_neg (Λ : Finset G) (ψ : G → ℂ) (q : G) :
+    dens Λ ψ (-q) = (starRingEnd ℂ) (dens Λ ψ q) := by
+  unfold dens ff
+  simp only [Finset.sum_product, map_sum, apply_ite (starRingEnd ℂ), map_zero, map_mul,
+    Complex.conj_conj]
+  rw [Finset.sum_comm]
+  refine Finset.sum_congr rfl (fun a _ => Finset.sum_congr rfl (fun b _ => ?_))
+  have hc : (b - a = -q) ↔ (a - b = q) := by
+    rw [← neg_sub a b, neg_inj]
+  by_cases h : a - b = q
+  · simp [h, hc.mpr h, mul_comm]
+  · simp [h, mt hc.mp h]
+
+/-- Polarised density transform: the first variation of `A_q` in direction `δ`. -/
+noncomputable def densVar (Λ : Finset G) (ψ δ : G → ℂ) (q : G) : ℂ :=
+  ∑ p ∈ Λ ×ˢ Λ, if p.1 - p.2 = q then δ p.1 * (starRingEnd ℂ) (ψ p.2)
+      + ψ p.1 * (starRingEnd ℂ) (δ p.2) else 0
+
+/-- Sum over `q` collapses to a sum over pairs. -/
+theorem sum_densVar (Λ : Finset G) (ψ δ : G → ℂ) :
+    ∑ q ∈ diffs Λ, (starRingEnd ℂ) (dens Λ ψ q) * densVar Λ ψ δ q
+      = ∑ p ∈ Λ ×ˢ Λ, (starRingEnd ℂ) (dens Λ ψ (p.1 - p.2)) *
+          (δ p.1 * (starRingEnd ℂ) (ψ p.2) + ψ p.1 * (starRingEnd ℂ) (δ p.2)) := by
+  unfold densVar
+  simp_rw [Finset.mul_sum]
+  rw [Finset.sum_comm]
+  refine Finset.sum_congr rfl (fun p hp => ?_)
+  have hmem : p.1 - p.2 ∈ diffs Λ := Finset.mem_image.mpr ⟨p, hp, rfl⟩
+  rw [Finset.sum_eq_single (p.1 - p.2)]
+  · simp
+  · intro q _ hq
+    have : ¬ (p.1 - p.2 = q) := fun h => hq h.symm
+    simp [this]
+  · intro hn; exact absurd hmem hn
+
+/-- **Hamiltonian gradient identity (polarised).** For every truncation `Λ`, state `ψ` and
+perturbation `δ`:  `Σ_q 2 Re(conj(A_q) · dA_q[δ]) = 4 Re Σ_k conj(δ_k) N_k`. That is
+`d Q[δ] = 4 Re⟨δ, N(ψ)⟩`, i.e. `N = ∂Q/∂conj(ψ)` up to the factor. -/
+theorem grad_identity (Λ : Finset G) (ψ δ : G → ℂ) :
+    ∑ q ∈ diffs Λ, 2 * ((starRingEnd ℂ) (dens Λ ψ q) * densVar Λ ψ δ q).re
+      = 4 * (∑ k ∈ Λ, (starRingEnd ℂ) (δ k) * nl Λ ψ k).re := by
+  rw [← Finset.mul_sum, ← Complex.re_sum, sum_densVar]
+  -- split the pair sum into T1 + T2
+  simp_rw [mul_add, Finset.sum_add_distrib]
+  set T1 := ∑ p ∈ Λ ×ˢ Λ, (starRingEnd ℂ) (dens Λ ψ (p.1 - p.2)) * (δ p.1 * (starRingEnd ℂ) (ψ p.2)) with hT1
+  set T2 := ∑ p ∈ Λ ×ˢ Λ, (starRingEnd ℂ) (dens Λ ψ (p.1 - p.2)) * (ψ p.1 * (starRingEnd ℂ) (δ p.2)) with hT2
+  -- T2 = conj T1 (swap the pair, use Hermiticity of A)
+  have hT2c : T2 = (starRingEnd ℂ) T1 := by
+    rw [hT1, hT2, map_sum]
+    simp only [Finset.sum_product]
+    rw [Finset.sum_comm]
+    refine Finset.sum_congr rfl (fun a _ => Finset.sum_congr rfl (fun b _ => ?_))
+    have := dens_neg Λ ψ (b - a)
+    rw [neg_sub] at this
+    simp only [map_mul, Complex.conj_conj]
+    rw [← this]
+    ring
+  -- T1 = Σ_k δ_k conj(N_k)
+  have hT1n : T1 = ∑ k ∈ Λ, δ k * (starRingEnd ℂ) (nl Λ ψ k) := by
+    rw [hT1]
+    simp only [Finset.sum_product]
+    refine Finset.sum_congr rfl (fun a _ => ?_)
+    rw [nl_eq_dens, map_sum, Finset.mul_sum]
+    refine Finset.sum_congr rfl (fun b _ => ?_)
+    rw [map_mul]; ring
+  have hre : (T1 + T2).re = 2 * T1.re := by
+    rw [hT2c]; simp [Complex.add_re]; ring
+  rw [hre, hT1n]
+  have : (∑ k ∈ Λ, δ k * (starRingEnd ℂ) (nl Λ ψ k)).re
+      = (∑ k ∈ Λ, (starRingEnd ℂ) (δ k) * nl Λ ψ k).re := by
+    have h : ∑ k ∈ Λ, δ k * (starRingEnd ℂ) (nl Λ ψ k)
+        = (starRingEnd ℂ) (∑ k ∈ Λ, (starRingEnd ℂ) (δ k) * nl Λ ψ k) := by
+      rw [map_sum]; refine Finset.sum_congr rfl (fun k _ => ?_); simp [map_mul]
+    rw [h]; simp
+  rw [this]; ring
+
+/-- **Algebraic core of energy conservation.** With `G_k = ω_k ψ_k + g N_k` (real `ω`, `g`) and
+the flow direction `δ_k = -i G_k`, the first variation of `E = Σ ω|ψ|² + (g/2) Q` vanishes:
+`Σ_k 2 ω_k Re(conj(ψ_k) δ_k) + (g/2) Σ_q 2 Re(conj(A_q) dA_q[δ]) = 0`.
+Only the algebraic identity is proved here; identifying it with `dE/dt` needs the chain rule for
+the (polynomial) map `t ↦ ψ(t)`, which is not formalised. -/
+theorem energy_rate_zero (Λ : Finset G) (ψ : G → ℂ) (ω : G → ℝ) (g : ℝ) :
+    ∑ k ∈ Λ, 2 * ω k * ((starRingEnd ℂ) (ψ k) *
+        (-Complex.I * ((ω k : ℂ) * ψ k + (g : ℂ) * nl Λ ψ k))).re
+      + g / 2 * ∑ q ∈ diffs Λ, 2 * ((starRingEnd ℂ) (dens Λ ψ q) *
+          densVar Λ ψ (fun k => -Complex.I * ((ω k : ℂ) * ψ k + (g : ℂ) * nl Λ ψ k)) q).re = 0 := by
+  set Gf : G → ℂ := fun k => (ω k : ℂ) * ψ k + (g : ℂ) * nl Λ ψ k with hG
+  rw [grad_identity]
+  set δ : G → ℂ := fun k => -Complex.I * Gf k with hδ
+  -- termwise: 2 ω Re(conj ψ δ) + 2 g Re(conj δ N) = 2 Re(conj δ G)
+  have key : ∀ k, 2 * ω k * ((starRingEnd ℂ) (ψ k) * δ k).re
+      + g / 2 * (4 * ((starRingEnd ℂ) (δ k) * nl Λ ψ k).re)
+      = 2 * ((starRingEnd ℂ) (δ k) * Gf k).re := by
+    intro k
+    have h1 : ((starRingEnd ℂ) (ψ k) * δ k).re = ((starRingEnd ℂ) (δ k) * ψ k).re := by
+      rw [← Complex.conj_re ((starRingEnd ℂ) (δ k) * ψ k)]
+      congr 1; simp [mul_comm]
+    have h2 : ((starRingEnd ℂ) (δ k) * Gf k)
+        = (ω k : ℂ) * ((starRingEnd ℂ) (δ k) * ψ k) + (g : ℂ) * ((starRingEnd ℂ) (δ k) * nl Λ ψ k) := by
+      simp only [hG]; ring
+    rw [h1, h2]
+    simp [Complex.add_re]
+    ring
+  have hz : ∀ k, ((starRingEnd ℂ) (δ k) * Gf k).re = 0 := by
+    intro k
+    have : (starRingEnd ℂ) (δ k) * Gf k = Complex.I * (Complex.normSq (Gf k) : ℂ) := by
+      rw [Complex.normSq_eq_conj_mul_self]; simp [hδ, map_mul]; ring
+    rw [this]; simp
+  have hs : ∑ k ∈ Λ, 2 * ω k * ((starRingEnd ℂ) (ψ k) * δ k).re
+      + g / 2 * (4 * (∑ k ∈ Λ, (starRingEnd ℂ) (δ k) * nl Λ ψ k).re) = 0 := by
+    rw [Complex.re_sum, Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
+    refine Finset.sum_eq_zero (fun k _ => ?_)
+    rw [key k, hz k]; ring
+  exact hs
+
 end QuantumFluids.GPGalerkin
 
 #print axioms QuantumFluids.GPGalerkin.pairing_eq_sum
@@ -152,3 +287,5 @@ end QuantumFluids.GPGalerkin
 #print axioms QuantumFluids.GPGalerkin.pairing_im_zero
 #print axioms QuantumFluids.GPGalerkin.mass_rate_zero
 #print axioms QuantumFluids.GPGalerkin.kinetic_le_energy
+#print axioms QuantumFluids.GPGalerkin.grad_identity
+#print axioms QuantumFluids.GPGalerkin.energy_rate_zero

@@ -7,7 +7,9 @@
     "QuantumFluids.GPGalerkin.pairing_nonneg",
     "QuantumFluids.GPGalerkin.pairing_im_zero",
     "QuantumFluids.GPGalerkin.mass_rate_zero",
-    "QuantumFluids.GPGalerkin.kinetic_le_energy"
+    "QuantumFluids.GPGalerkin.kinetic_le_energy",
+    "QuantumFluids.GPGalerkin.grad_identity",
+    "QuantumFluids.GPGalerkin.energy_rate_zero"
   ],
   "permitted_axioms": [
     "propext",

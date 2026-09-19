@@ -85,4 +85,29 @@ theorem kinetic_le_energy (Λ : Finset G) (ψ : G → ℂ) (ω : G → ℝ) (g E
     (hE : E = ∑ k ∈ Λ, ω k * Complex.normSq (ψ k) + g / 2 * pairingRe Λ ψ) :
     ∑ k ∈ Λ, ω k * Complex.normSq (ψ k) ≤ E := by
   sorry
+/-! ## Hamiltonian gradient identity (algebraic core of energy conservation) -/
+
+/-- Polarised density transform: the first variation of `A_q` in direction `δ`. -/
+noncomputable def densVar (Λ : Finset G) (ψ δ : G → ℂ) (q : G) : ℂ :=
+  ∑ p ∈ Λ ×ˢ Λ, if p.1 - p.2 = q then δ p.1 * (starRingEnd ℂ) (ψ p.2)
+      + ψ p.1 * (starRingEnd ℂ) (δ p.2) else 0
+
+/-- **Hamiltonian gradient identity (polarised).** For every truncation `Λ`, state `ψ` and
+perturbation `δ`:  `Σ_q 2 Re(conj(A_q) · dA_q[δ]) = 4 Re Σ_k conj(δ_k) N_k`. That is
+`d Q[δ] = 4 Re⟨δ, N(ψ)⟩`, i.e. `N = ∂Q/∂conj(ψ)` up to the factor. -/
+theorem grad_identity (Λ : Finset G) (ψ δ : G → ℂ) :
+    ∑ q ∈ diffs Λ, 2 * ((starRingEnd ℂ) (dens Λ ψ q) * densVar Λ ψ δ q).re
+      = 4 * (∑ k ∈ Λ, (starRingEnd ℂ) (δ k) * nl Λ ψ k).re := by
+  sorry
+/-- **Algebraic core of energy conservation.** With `G_k = ω_k ψ_k + g N_k` (real `ω`, `g`) and
+the flow direction `δ_k = -i G_k`, the first variation of `E = Σ ω|ψ|² + (g/2) Q` vanishes:
+`Σ_k 2 ω_k Re(conj(ψ_k) δ_k) + (g/2) Σ_q 2 Re(conj(A_q) dA_q[δ]) = 0`.
+Only the algebraic identity is proved here; identifying it with `dE/dt` needs the chain rule for
+the (polynomial) map `t ↦ ψ(t)`, which is not formalised. -/
+theorem energy_rate_zero (Λ : Finset G) (ψ : G → ℂ) (ω : G → ℝ) (g : ℝ) :
+    ∑ k ∈ Λ, 2 * ω k * ((starRingEnd ℂ) (ψ k) *
+        (-Complex.I * ((ω k : ℂ) * ψ k + (g : ℂ) * nl Λ ψ k))).re
+      + g / 2 * ∑ q ∈ diffs Λ, 2 * ((starRingEnd ℂ) (dens Λ ψ q) *
+          densVar Λ ψ (fun k => -Complex.I * ((ω k : ℂ) * ψ k + (g : ℂ) * nl Λ ψ k)) q).re = 0 := by
+  sorry
 end QuantumFluids.GPGalerkin
