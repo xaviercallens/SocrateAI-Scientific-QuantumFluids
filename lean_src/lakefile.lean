@@ -3,12 +3,13 @@ open Lake DSL
 
 package quantumFluids
 
-/-- Mathlib is PINNED to the SAME revision MechanicaFluidorum's Gate-2
-environment compiles against (see that repo's lean_src/lakefile.lean),
-so a theorem proved here is checked against the same library every
-result in the sibling stream's LEDGER was verified against. -/
+/-- Mathlib is PINNED to tag v4.34.0-rc2 (2026-09-19 migration, owner decision, to
+align all streams on one toolchain and allow cross-stream integration; same
+revision as the OpenAI NavierStokesAndEuler tree). Before the migration the pin
+was 6d605ae1 (Lean 4.33.0-rc2), which matched MechanicaFluidorum's Gate 2; that
+sibling is expected to follow. -/
 require mathlib from git
-  "https://github.com/leanprover-community/mathlib4.git" @ "6d605ae1ac45de240cdb83ce104fe60b3c1d9237"
+  "https://github.com/leanprover-community/mathlib4.git" @ "85e3a25e006c35636f0e53b0e9296caca2685bc0"  -- tag v4.34.0-rc2
 
 @[default_target]
 lean_lib QuantumFluidsShell
