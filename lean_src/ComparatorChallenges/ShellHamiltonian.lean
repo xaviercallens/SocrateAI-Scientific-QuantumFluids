@@ -59,4 +59,23 @@ theorem weights_ok (k : ℕ → ℝ) (n : ℕ) :
 theorem T_real (v : ℕ → ℂ) (hv : ∀ n, (v n).im = 0) (n : ℕ) :
     ((starRingEnd ℂ) (v n) * (starRingEnd ℂ) (v n) * v (n + 1)).im = 0 := by
   sorry
+/-- **Cutoff-uniform bound on the cubic part.** With `S = Σ_{n ≤ N+1} |v_n|²` (twice the energy),
+`|Σ_{n ≤ N} c_n Im(conj(v_n)² v_{n+1})| ≤ √S · S` whenever `|c_n| ≤ 1` (e.g. `c_n = 2^(-n) k_n` for `k_n = 2ⁿ`).
+The right-hand side does not depend on `N` except through the conserved `S`. -/
+theorem cubic_bound (c : ℕ → ℝ) (v : ℕ → ℂ) (N : ℕ) (hc : ∀ n, |c n| ≤ 1) :
+    |∑ n ∈ Finset.range (N + 1), c n * ((starRingEnd ℂ) (v n) * (starRingEnd ℂ) (v n) * v (n + 1)).im|
+      ≤ Real.sqrt (∑ n ∈ Finset.range (N + 2), Complex.normSq (v n))
+        * ∑ n ∈ Finset.range (N + 2), Complex.normSq (v n) := by
+  sorry
+/-- **Uniform-in-cutoff control of the dispersive norm.** If `Hval = Σ_{n≤N+1} q_n |v_n|² + Σ_{n≤N} c_n T_n`
+with `|c_n| ≤ 1`, then `Σ q_n |v_n|² ≤ Hval + √S · S`. With `q_n = 2^(-n) ω_n`: for `ω_n = D k_n²`, `k_n = 2ⁿ` this is
+`D Σ k_n |v_n|²`; for `ω_n = D k_n³` it is `D Σ k_n² |v_n|² = 2DΩ`. `Hval` and `S` are conserved (algebraic cores:
+`hamiltonian_rate_zero`, `shellBc_energy_conservation`), so the bound is uniform in `N`. -/
+theorem dispersive_norm_le (q c : ℕ → ℝ) (v : ℕ → ℂ) (N : ℕ) (Hval : ℝ) (hc : ∀ n, |c n| ≤ 1)
+    (hH : Hval = ∑ n ∈ Finset.range (N + 2), q n * Complex.normSq (v n)
+      + ∑ n ∈ Finset.range (N + 1), c n * ((starRingEnd ℂ) (v n) * (starRingEnd ℂ) (v n) * v (n + 1)).im) :
+    ∑ n ∈ Finset.range (N + 2), q n * Complex.normSq (v n)
+      ≤ Hval + Real.sqrt (∑ n ∈ Finset.range (N + 2), Complex.normSq (v n))
+        * ∑ n ∈ Finset.range (N + 2), Complex.normSq (v n) := by
+  sorry
 end QuantumFluids.ShellComplex

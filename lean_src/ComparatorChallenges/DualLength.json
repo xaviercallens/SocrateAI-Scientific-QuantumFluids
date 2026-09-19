@@ -1,0 +1,19 @@
+{
+  "challenge_module": "ComparatorChallenges.DualLength",
+  "solution_module": "DualLength",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.DualLength.dualLength_phonon",
+    "QuantumFluids.DualLength.dualLength_free",
+    "QuantumFluids.DualLength.dualLength_bogoliubov",
+    "QuantumFluids.DualLength.ell_dual_invariant",
+    "QuantumFluids.DualLength.ell_ge",
+    "QuantumFluids.DualLength.ell_eq_iff",
+    "QuantumFluids.DualLength.not_bogoliubov_of_lt"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

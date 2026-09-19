@@ -7,7 +7,9 @@
     "QuantumFluids.ShellComplex.sum_dT",
     "QuantumFluids.ShellComplex.hamiltonian_rate_zero",
     "QuantumFluids.ShellComplex.weights_ok",
-    "QuantumFluids.ShellComplex.T_real"
+    "QuantumFluids.ShellComplex.T_real",
+    "QuantumFluids.ShellComplex.cubic_bound",
+    "QuantumFluids.ShellComplex.dispersive_norm_le"
   ],
   "permitted_axioms": [
     "propext",
