@@ -199,3 +199,57 @@ wavefunction, `L = 2π`, `c = 1`, **`ξ = 1.5 Δx`** taken from the authors' own
    must transfer is *quantized circulation with a resolvable core*; it has that, but it does **not**
    have Bogoliubov's dispersion). It therefore sits **between** the two ends of DS-QF′ by construction,
    and must not be reported as a test of the weakly interacting regime.
+
+---
+
+## §10 REAL-DATA RUN (2026-09-20) — **INCONCLUSIVE; the floor statistic is confounded**
+
+Dataset: Zenodo 5510351 as recorded in §6. `exploration/tda/run_polanco.py`, `linkradius_check.py`.
+
+### 10.1 What was extracted (this part is sound)
+
+46 581 vortex points from the 256³ field. The **raw point-cloud floor is 0.707 Δx = 0.471 ξ** — i.e. it
+measures the grid, exactly the artefact §6 predicted and `tests/test_vortex_3d.py` demonstrates. So the
+raw statistic is correctly identified as meaningless, as designed.
+
+### 10.2 The line-graph result, and why it does not stand
+
+Segmenting at `link_radius = 2 Δx` gave 67 lines with `F = 1.491 ξ`, `f_< = 0.000`, against a
+random-shift null of `F = 0.101 ξ` (p95 `0.150`), `f_< = 0.594`. Taken at face value that is a strong
+confirmation of TDA-DS.
+
+**It is not taken at face value.** Segmentation by proximity *guarantees* that distinct components are
+separated by more than `link_radius`, so the statistic has a floor built into it. At
+`link_radius = 2 Δx = 1.333 ξ` the measured `F = 1.491 ξ` sits only **12 % above its own threshold**.
+A sweep settles it:
+
+| `link_radius/Δx` | 1.0 | 1.2 | 1.5 | 1.8 | 2.0 | 2.5 | 3.0 | 4.0 |
+|---|---|---|---|---|---|---|---|---|
+| lines | 1030 | 175 | 105 | 67 | 67 | 31 | 30 | 20 |
+| `F/ξ` | 0.667 | 0.943 | 1.155 | 1.491 | 1.491 | 2.000 | 2.108 | 2.749 |
+| **`F`/threshold** | **1.00** | **1.18** | **1.15** | **1.24** | **1.12** | **1.20** | **1.05** | **1.03** |
+
+`F` ranges over 132 % as the threshold changes 4×, and never rises more than 24 % above it.
+**`F` tracks the segmentation threshold: it is an artefact, not a measured floor.** The mean-MST
+estimate is threshold-dependent for the same reason (1.75 → 5.37 ξ) and is likewise not reportable.
+
+The null comparison is *also* invalid, and would have been even had `F` been stable: the data's `F` is
+bounded below by segmentation while the shifted null's is not, because the null was not re-segmented.
+The two sides were not the same pipeline. Recorded as a design defect.
+
+### 10.3 Why this was foreseeable, and what it costs
+
+§6 recorded before the run that `ξ = 1.5 Δx` leaves the healing length barely above the discretisation.
+That caveat is what came true: any proximity-based line segmentation needs a threshold of order one to
+two cells, which on this dataset is *the same size as ξ*, so threshold and signal cannot be separated.
+**The dataset is too coarse in `ξ/Δx` for this test**, whatever the pipeline.
+
+**TDA-DS is neither confirmed nor refuted.** Nothing from §10.2 may be cited.
+
+### 10.4 Requirements for a valid future run (fixed now)
+
+1. **Either** a dataset with `ξ/Δx ≳ 5`, so a segmentation threshold of 1–2 cells sits far below `ξ`;
+2. **or** topological line tracing — walking each vortex line through the grid via its pierced faces —
+   which assigns line identity **without any proximity threshold** and removes the confound at its root.
+   This is the principled fix and is the recommended next step.
+3. Either way the null must be re-segmented by the identical pipeline before comparison.
