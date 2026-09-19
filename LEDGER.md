@@ -727,6 +727,7 @@ A design memo listed here as PENDING AUDIT may not be implemented, cited, or mea
 | Memo | Date authored | Status | Blocks |
 |---|---|---|---|
 | `docs/designs/M2_W4_DISPERSIVE_SHELL.md` | 2026-08-14 | ✅ **AUDITED 2026-08-14** (owner) | — unblocked |
+| `docs/designs/DUAL_SCALE_SECOND_INVARIANT.md` | 2026-09-19 | ✅ **AUDITED 2026-09-19** (owner: "I approve it", as written; addendum A1 registered before any run) | — unblocked |
 | W2 (bounce regulator) | not authored | — | W2 only; W4 proceeds without it |
 
 **M2 memo — auditor's rulings (owner, 2026-08-14):**

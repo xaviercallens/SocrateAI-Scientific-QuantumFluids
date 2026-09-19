@@ -57,3 +57,32 @@ Single trajectories are not used anywhere (criterion B8).
 
 ## 6. Cost
 Code: one small module plus tests (~150 lines). Compute: minutes. Lean: only if the outcome is positive.
+
+---
+
+## Addendum A1 — registered 2026-09-19 AFTER audit approval, BEFORE any code exists or runs
+
+**Audit:** approved by the owner as written, 2026-09-19.
+
+**A1.1 Correction to §2 (symmetry).** §2 called the quartic monomials "U(1)-symmetric". The uniform phase `v_n → e^{iθ}v_n` is **not** a
+symmetry of the flow (`v_{n-1}²` picks up `e^{2iθ}`). The symmetry is the **graded** phase `v_n → e^{i2ⁿθ}v_n`. The §3 span is run as
+pre-registered anyway (it is what was approved), plus all single-shell quadratics `|v_n|²` (a superset, needed by the negative control).
+
+**A1.2 Prediction, derived on paper before running (thought experiment: "ride the graded phase").**
+Rescale `w_n = 2^{-n/2} v_n`. Then the complexified model is a Hamiltonian second-harmonic-generation chain
+`i dw_n/dt = ∂H/∂conj(w_n)`, and in the original variables
+```
+H = Σ_n 2^{-n} [ D k_n² |v_n|²  +  k_n Im(conj(v_n)² v_{n+1}) ]   (+ ½ μ k_N 2^{-N} |v_N|⁴ with the seam v_{N+1} = iμ v_N²)
+```
+is conserved; `Σ|v_n|²` is the Noether charge of the graded phase (Manley–Rowe), and Liouville (CLAIM-011) is a corollary of Hamiltonian structure.
+Predictions, fixed now:
+- **P-a.** In the pre-registered span (quadratics + quartics) the nullspace is the mass only: **the §3 kill criterion fires** (no Ω-coefficient).
+- **P-b.** In extension span E1 = pre-registered span + cubics `Re/Im(conj(v_n)² v_{n+1})`, nullspace dimension is 2 at D = 0 (mass, H) for the truncation seam
+  and for the GPE seam, with the H coefficients exactly `2^{-n}k_n` on `Im`, zero on `Re`.
+- **P-c.** On real data `H ≡ 0`: the real Katz–Pavlović model sees no trace of it.
+- **P-d (consequence, to be proved not measured).** For `D > 0`, `k_n = 2ⁿ`: `D Σ 2ⁿ|v_n|² ≤ H + (2E)^{3/2}` with `E = ½Σ|v_n|²`: a bound on the
+  H^{1/2}-type norm `Σ k_n|v_n|²` that is **uniform in the cutoff N**. It does *not* bound `Ω = ½Σk_n²|v_n|²`.
+If P-b fails, the derivation above is wrong and is retracted. Novelty is **not** claimed: literature check pending (complex dyadic / SHG-chain models).
+
+**A1.3 Deviation from §3 (precision).** Full span: float64 SVD (criterion as in §3). Exactness is obtained differently and more strongly: the candidate
+invariant is checked as a **symbolic polynomial identity** (sympy, generic symbols), then in Lean.
