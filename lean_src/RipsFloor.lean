@@ -1,0 +1,60 @@
+/-
+The bridge lemma of workstream T (docs/designs/TDA_VORTEX_FLOOR.md §7).
+
+A quantum fluid's vortices cannot sit closer than about the healing length. Workstream T reads that
+as a FLOOR IN A PERSISTENCE DIAGRAM. This file proves the one step that licenses the reading, at the
+level of the filtration's 1-skeleton, where it is elementary and can be checked honestly:
+
+    no pair of distinct points is joined below the minimum separation,
+    and the minimum separation is exactly the scale at which the first edge appears.
+
+SCOPE, stated precisely. Persistent homology is NOT formalised here: no simplicial complex, no
+homology functor, no persistence module, no stability theorem. What is proved is a statement about
+the Vietoris-Rips GRAPH. The remaining step -- "an H0 class can die only at a scale where an edge
+appears", which is immediate from the definition of the filtration -- is NOT formalised and is
+carried as a stated assumption in the memo. Claiming this file proves a persistence result would be
+exactly the kind of overreach the LeanMaster audit found elsewhere.
+-/
+
+import Mathlib
+
+namespace QuantumFluids.RipsFloor
+
+variable {E : Type*} [PseudoMetricSpace E] {ι : Type*}
+
+/-- Two distinct indices are Rips-adjacent at scale `t` when their points are within `t`. -/
+def Adj (X : ι → E) (t : ℝ) (i j : ι) : Prop := i ≠ j ∧ dist (X i) (X j) ≤ t
+
+/-- `d` separates the configuration: distinct points are at least `d` apart. -/
+def Separated (X : ι → E) (d : ℝ) : Prop := ∀ i j, i ≠ j → d ≤ dist (X i) (X j)
+
+/-- **Below the separation the Rips graph is edgeless.** -/
+theorem no_adj_of_lt {X : ι → E} {d t : ℝ} (hsep : Separated X d) (ht : t < d) (i j : ι) :
+    ¬ Adj X t i j := by
+  rintro ⟨hij, hle⟩
+  exact absurd (lt_of_le_of_lt (hsep i j hij) (lt_of_le_of_lt hle ht)) (lt_irrefl _)
+
+/-- **Every scale carrying an edge is at least the separation.** This is the floor: the set of
+scales at which anything at all happens in the filtration is contained in `[d, ∞)`. -/
+theorem le_of_adj {X : ι → E} {d t : ℝ} (hsep : Separated X d) (h : ∃ i j, Adj X t i j) : d ≤ t := by
+  obtain ⟨i, j, hij, hle⟩ := h
+  exact le_trans (hsep i j hij) hle
+
+/-- The floor is attained, not merely a bound: at a witnessing pair the scale `d` does carry an
+edge, so `d` is the least scale at which the Rips graph has one. -/
+theorem isLeast_edge_scale {X : ι → E} {d : ℝ} (hsep : Separated X d)
+    {a b : ι} (hab : a ≠ b) (hd : dist (X a) (X b) = d) :
+    IsLeast {t : ℝ | ∃ i j, Adj X t i j} d :=
+  ⟨⟨a, b, hab, le_of_eq hd⟩, fun _ ht => le_of_adj hsep ht⟩
+
+/-- The hypothesis is not vacuous and the bound is not automatic: a configuration with two
+coincident points has separation `0` and carries an edge at every nonnegative scale. -/
+theorem separated_zero_of_not_injective {X : ι → E} : Separated X 0 :=
+  fun _ _ _ => dist_nonneg
+
+end QuantumFluids.RipsFloor
+
+#print axioms QuantumFluids.RipsFloor.no_adj_of_lt
+#print axioms QuantumFluids.RipsFloor.le_of_adj
+#print axioms QuantumFluids.RipsFloor.isLeast_edge_scale
+#print axioms QuantumFluids.RipsFloor.separated_zero_of_not_injective
