@@ -38,7 +38,8 @@
 We present an open Lean~4/Mathlib library of 113 machine-checked theorems on the mathematical
 structure of quantum fluids: correctness of the phase-winding algorithm by which every
 Gross--Pitaevskii code locates vortices, quantization of circulation in the discrete form in
-which it is actually computed, sign and conservation structure of the Galerkin-truncated
+which it is actually computed, the discrete divergence-free condition that makes vortex-line
+tracing well posed, sign and conservation structure of the Galerkin-truncated
 Gross--Pitaevskii nonlinearity on an arbitrary mode set, the Madelung decomposition, and a
 bridge that restates these objects inside the vocabulary of OpenAI's Lean formalization of
 the Navier--Stokes problem, imported as a real dependency. Every theorem carries a generated
@@ -177,6 +178,27 @@ between neighbouring plaquettes fails, and a spurious unit of winding can appear
 folklore criterion ``resolve the field so that no phase step reaches $\pi$'' is thereby a
 theorem with a sharp boundary. We have not found the disjunctive form stated in the
 literature; it is elementary, and we claim only that it is now checked.
+
+\subsection{Vortex lines do not end}
+\label{sec:noend}
+
+Threshold-free line tracing---the method that replaced the confounded one of
+\S\ref{sec:empirical}---walks a vortex line from grid cube to grid cube. That presupposes a line
+entering a cube also leaves it, i.e.\ that the oriented windings of the six faces sum to zero: the
+discrete form of $\nabla\!\cdot\!\omega = 0$. Our own implementation assumed it without checking.
+
+The proof is combinatorial, not homological. Model a closed surface by its oriented boundary edges,
+as a family in which every edge occurs with both orientations (a fixed-point-free involution $\sigma$
+with $u_{\sigma i} = v_i$, $v_{\sigma i} = u_i$); the raw phase differences then cancel in pairs.
+
+\begin{theorem}[\lean{balanced\_sum\_eq\_zero}]
+For a balanced family of oriented edges on which no edge sits at the branch cut,
+$\sum_i \mathrm{pd}(u_i, v_i) = 0$.
+\end{theorem}
+The hypothesis is again exactly ``no phase difference equals $\pi$''
+(\lean{cut\_free\_of\_ne\_pi}), and removing it makes the file fail to compile---as it must, since
+there the two traversals contribute $2\pi$ rather than cancelling. The same defect that breaks
+antisymmetry in \S\ref{sec:winding} is what would let a traced line terminate in mid-air.
 
 \subsection{Quantized circulation}
 
@@ -382,6 +404,16 @@ $\int_0^\infty t^3/(e^t-1)\,dt = \pi^4/15$ through to $A = 2\pi^2k_B^4V/(15c^3\h
 0.0831\,\mathrm{J/(mol\,K^4)}$, matching the printed value. Mathlib had $\zeta(4)$ and the Gamma
 integral but not the Bose integral.
 
+That coefficient is no longer an isolated case. \lean{bose\_integral\_nat} gives
+$\int_0^\infty t^n/(e^t-1)\,dt = n!\,\zeta(n+1)$ at every natural order, so all six coefficients of
+Eq.~(22) rest on one proved identity, and \lean{bose\_integral\_even} makes the even orders explicit
+through Mathlib's Bernoulli formula for $\zeta(2k)$. Doing so surfaced a structural fact about that
+series worth stating plainly: $D$ and $K$ carry $\zeta(7)$ and $\zeta(9)$, which have no known
+closed form. They are not missing from the library; they are missing from mathematics. So $A, C, E,
+L$ can be given exactly while $D$ and $K$ admit only numerical evaluation --- which means a
+disagreement between published series in those two coefficients cannot be adjudicated by exact
+algebra at all. We had not seen that noted, and it bears directly on the comparison the paper raises.
+
 We also record two apparent misprints in the preprint, demonstrated numerically against the paper's
 own tables rather than asserted, in \texttt{docs/FOR\_GODFRIN.md}. That note has not been sent; it is
 a draft for the repository owner.
@@ -413,9 +445,6 @@ group and finite mode set.
 \item the sampling theorem linking the discrete loop sum to the continuum circulation for a
   $C^1$ phase with step bound below $\pi$---this would turn resolution criteria for vortex
   detection from folklore into theorem;
-\item the oriented sum of plaquette windings over the faces of a grid cube vanishes (away
-  from the $\pi$ case)---the discrete statement that vortex lines do not end, which is what
-  threshold-free line tracing silently assumes;
 \item the chain-rule step for \lean{GPGalerkin}, upgrading algebraic rates to conservation
   along solutions of the truncated system;
 \item the Gross--Pitaevskii residual in the vocabulary of~\cite{OpenAINSE}, parallel to their
