@@ -9,7 +9,9 @@ authors:
 version: v1.2.0
 date-released: 2026-09-20
 doi: 10.5281/zenodo.22853895
-license: Apache-2.0
+license:
+  - MIT
+  - Apache-2.0
 repository-code: "https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids"
 abstract: >-
   An open Lean 4 / Mathlib library of 89 machine-checked theorems on the structure of quantum

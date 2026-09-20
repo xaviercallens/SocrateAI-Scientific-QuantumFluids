@@ -137,5 +137,5 @@ Archived on Zenodo: **[10.5281/zenodo.22853895](https://doi.org/10.5281/zenodo.2
 
 ## Licence and status
 
-Code: **Apache-2.0** (`LICENSE`). Paper and documentation: **CC BY 4.0** (`NOTICE`). Nothing here is a
+Code: **MIT OR Apache-2.0**, at your option (`LICENSE`). Paper and documentation: **CC BY 4.0** (`NOTICE`). Nothing here is a
 claim of priority; the literature check has been run and its outcome is in `RETRACTIONS.md`.

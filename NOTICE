@@ -1,7 +1,8 @@
 SocrateAI-Scientific-QuantumFluids
 Copyright 2026 Xavier Callens
 
-Code (Lean, Python, scripts): Apache License 2.0 -- see LICENSE.
+Code (Lean, Python, scripts): MIT OR Apache-2.0, at your option -- see LICENSE, LICENSE-MIT,
+LICENSE-APACHE. (v1.2.0 was Apache-2.0 only; MIT added 2026-09-20.)
 Paper and documentation (paper/, docs/, *.md): Creative Commons Attribution 4.0 (CC BY 4.0).
 
 Third-party material, NOT covered by the above and NOT redistributed in this repository:
