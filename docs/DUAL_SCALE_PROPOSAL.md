@@ -139,3 +139,75 @@ every truncation).
 2. **`σ = 3` in Lean**: `2DΩ ≤ H + (2E)^{3/2}`, the first cutoff-uniform enstrophy bound in this stream, then the O5 trap argument.
 3. **Cold-atom test of DS-QF′** — the single measurement that would convert §4 from proposal to result.
 4. **GE-5** (`docs/GEDANKEN_DUAL_SCALE.md`): echo time as a cutoff-detecting observable, ensemble-only, needs its own pre-registration.
+
+---
+
+## 8. The σ-rule instantiated (2026-09-20) — and a correction to §7's own claim about it
+
+`lean_src/SigmaRule.lean`, 6 theorems, axioms `{propext, Classical.choice, Quot.sound}`, negative
+control (claiming `σ = 2` controls enstrophy) fails to compile.
+
+### 8.1 What was proved
+
+On dyadic wavenumbers `k_n = 2ⁿ`, the graded weight `2⁻ⁿ` that makes `H` conserved eats exactly one
+dyadic power (`gw_mul_kdy_pow`). Instantiating `dispersive_norm_le`:
+
+| dispersion | controlled quantity | is it the enstrophy? |
+|---|---|---|
+| `ω_n = D k_n²` (quantum pressure) | `D Σ k_n|v_n|²` | **no** — one power short |
+| `ω_n = D k_n³` | `D Σ k_n²|v_n|² = 2DΩ` | **yes** |
+
+So `enstrophy_le_sigma_three`: **`2DΩ ≤ H + √S·S`**, with `H` and `S` conserved — the right-hand side
+does not depend on the cutoff `N` except through conserved quantities. That is a genuine
+cutoff-uniform enstrophy bound for the `σ = 3` regulator, and `halfNorm_le_sigma_two` states the
+`σ = 2` shortfall explicitly rather than by implication.
+
+### 8.2 Correction: this does **not** have the leverage on O5 that §7 claimed
+
+§7 listed the σ-rule as "the one result here that could matter to something unsolved," pointing at
+MechanicaFluidorum's O5 uniformity obstruction. **Working the bound out in full shows that overstated
+it, and the overstatement is retracted here.**
+
+Dividing through gives `Ω ≤ (H + (2E)^{3/2}) / (2D)`. The constant is **`1/D`**, so the bound
+*diverges as `D → 0`* — exactly the failure mode MechanicaFluidorum's own Q1 adjudication
+(2026-09-10) identified when it discarded the smooth Helmholtz filter: *"every bound derived would
+carry a `1/α'` constant. When we attempt the Millennium limit `α' → 0`, those bounds explode, proving
+absolutely nothing."* Their Q2 then retired that whole work package. **That verdict applies to this
+result, and is not contested.**
+
+The distinction worth keeping separate, because conflating the two is O5's whole subject:
+
+| limit | does the bound survive? |
+|---|---|
+| cutoff `N → ∞` at fixed `D` | **yes** — this is what is proved |
+| regulator removal `D → 0` | **no** — the constant is `1/D` |
+
+A Millennium-relevant statement needs both. So the honest value of §8.1 is **illustrative, not
+progressive**: it exhibits concretely what "cutoff-uniform at fixed regulator strength" looks like,
+and why that is not enough — in a model small enough that the whole thing is machine-checked. It is
+not a step toward the Millennium problem, and it should not be sent to MechanicaFluidorum as one.
+
+### 8.3 No conflict with Katz–Pavlović
+
+For `D > 0` the term `−i D k_n³ v_n` takes real data out of the reals immediately, and on real data
+the cubic part of `H` vanishes identically (`ShellHamiltonian.T_real`). Real Katz–Pavlović blow-up
+solutions are therefore not solutions of this system at all, so no contradiction with the published
+blow-up theorem is implied. This was the O5 trap flagged in `GEDANKEN_DUAL_SCALE.md` step 2; it does
+not fire.
+
+## 9. Bridge to the OpenAI Navier–Stokes formalisation
+
+`lean_src/MadelungNSE.lean` imports `NavierStokes.ProblemStatement` from
+`openai/NavierStokesAndEuler @ 8937a8f` (Apache-2.0) — possible only because the 2026-09-19 toolchain
+migration put both trees on Lean 4.34.0-rc2 and Mathlib `85e3a25`. The pinned commit is the one whose
+four headline theorems MechanicaFluidorum audited.
+
+Proved in *their* vocabulary: `divergence_pressureGradient` — the divergence of their
+`pressureGradient` is the scalar Laplacian, `∇·(∇φ) = Δφ`. They never needed it (pressure enters their
+residual only as a gradient), so it is genuinely added, and it is the identity that lets the Madelung
+continuity equation be written in their formalism. `divergence_madelungVelocity` then gives
+`∇·u = (ħ/m)ΔS` for `u = (ħ/m)∇S`.
+
+Scope: kinematics only. No dynamics, no Gross–Pitaevskii equation, no claim touching their blow-up
+theorems or Navier–Stokes regularity. Second differentiability of the phase is a genuine hypothesis
+and is exactly what fails on a vortex line.

@@ -1,0 +1,127 @@
+/-
+The sigma-rule instantiated: which dispersive order controls which norm, uniformly in the cutoff.
+
+`ShellHamiltonian.dispersive_norm_le` gives, for the complexified dyadic model with dispersion
+`omega_n` and graded weights `2^(-n)`,
+    sum_n 2^(-n) omega_n |v_n|^2  <=  H + sqrt(S) * S,       S = sum |v_n|^2 = 2E,
+with `H` and `S` conserved. This file identifies the controlled quantity for the two orders that
+matter, on dyadic wavenumbers `k_n = 2^n`:
+
+  * `sigma = 2` (quantum pressure, `omega_n = D k_n^2`): controls `D * sum k_n |v_n|^2`  -- an
+    `H^{1/2}`-type norm. NOT the enstrophy.
+  * `sigma = 3` (`omega_n = D k_n^3`): controls `D * sum k_n^2 |v_n|^2 = 2 D Omega` -- the enstrophy.
+
+READ THE SCOPE BEFORE CITING THIS. The bound is uniform in the cutoff `N` at FIXED `D > 0`, and it
+carries a factor `1/D`: dividing through gives `Omega <= (H + (2E)^{3/2}) / (2D)`, which diverges as
+`D -> 0`. It therefore says NOTHING about the `D -> 0` limit. MechanicaFluidorum's own adjudication
+(Q1/Q2, 2026-09-10) retired exactly this class of result for the Millennium question, on the grounds
+that a bound whose constant blows up in the limit "proves absolutely nothing" about it. That verdict
+applies here and is not contested: this file is a statement about what a dispersive regulator buys at
+fixed strength, not a regularity result.
+
+Nor is there any tension with Katz-Pavlovic finite-time blow-up for the inviscid REAL dyadic model:
+for `D > 0` the dispersive term `-i D k_n^3 v_n` immediately leaves the reals, and on real data the
+cubic part of `H` vanishes identically (`ShellHamiltonian.T_real`), so real blow-up solutions are not
+solutions of this system at all.
+-/
+
+import ShellHamiltonian
+
+namespace QuantumFluids.ShellComplex
+
+/-- Dyadic wavenumbers `k_n = 2^n`. -/
+noncomputable def kdy (n : ℕ) : ℝ := 2 ^ n
+
+/-- The graded weight `2^(-n)` that makes `H` conserved. -/
+noncomputable def gw (n : ℕ) : ℝ := (1 / 2 : ℝ) ^ n
+
+/-- The graded weight exactly cancels one dyadic power: `2^(-n) * 2^n = 1`. -/
+theorem gw_mul_kdy (n : ℕ) : gw n * kdy n = 1 := by
+  unfold gw kdy
+  rw [← mul_pow]
+  norm_num
+
+/-- **The exponent bookkeeping.** The graded weight eats one dyadic power: a dispersion of order
+`k^sigma` enters the conserved functional weighted as `k^(sigma-1)`. -/
+theorem gw_mul_kdy_pow (n s : ℕ) : gw n * kdy n ^ (s + 1) = kdy n ^ s := by
+  rw [pow_succ]
+  calc gw n * (kdy n ^ s * kdy n) = (gw n * kdy n) * kdy n ^ s := by ring
+    _ = 1 * kdy n ^ s := by rw [gw_mul_kdy]
+    _ = kdy n ^ s := one_mul _
+
+/-- `sigma = 2`: the controlled weight is `k_n`, one power below the enstrophy weight. -/
+theorem sigma_two_weight (D : ℝ) (n : ℕ) : gw n * (D * kdy n ^ 2) = D * kdy n := by
+  have := gw_mul_kdy_pow n 1
+  calc gw n * (D * kdy n ^ 2) = D * (gw n * kdy n ^ (1 + 1)) := by ring
+    _ = D * kdy n ^ 1 := by rw [this]
+    _ = D * kdy n := by ring
+
+/-- `sigma = 3`: the controlled weight is `k_n^2`, exactly the enstrophy weight. -/
+theorem sigma_three_weight (D : ℝ) (n : ℕ) : gw n * (D * kdy n ^ 3) = D * kdy n ^ 2 := by
+  have := gw_mul_kdy_pow n 2
+  calc gw n * (D * kdy n ^ 3) = D * (gw n * kdy n ^ (2 + 1)) := by ring
+    _ = D * kdy n ^ 2 := by rw [this]
+
+/-- Enstrophy of a truncated state, `Omega = (1/2) sum k_n^2 |v_n|^2`. -/
+noncomputable def enstrophy (v : ℕ → ℂ) (M : ℕ) : ℝ :=
+  (1 / 2 : ℝ) * ∑ n ∈ Finset.range M, kdy n ^ 2 * Complex.normSq (v n)
+
+/-- **Cutoff-uniform enstrophy bound for the `sigma = 3` regulator.**
+
+With `omega_n = D k_n^3` the conserved functional `H` controls the enstrophy:
+`2 D Omega <= H + sqrt(S) S`, where `S = sum |v_n|^2` is conserved. The right-hand side does not
+depend on the cutoff `N` except through conserved quantities, which is the sense in which the bound
+is uniform in `N`.
+
+Scope, restated because it is the whole point: at fixed `D`. Dividing by `D` puts a `1/D` in front,
+so nothing here survives `D -> 0`. -/
+theorem enstrophy_le_sigma_three (D : ℝ) (v : ℕ → ℂ) (N : ℕ) (Hval : ℝ)
+    (hH : Hval = ∑ n ∈ Finset.range (N + 2), (gw n * (D * kdy n ^ 3)) * Complex.normSq (v n)
+      + ∑ n ∈ Finset.range (N + 1), (gw n * kdy n) *
+        ((starRingEnd ℂ) (v n) * (starRingEnd ℂ) (v n) * v (n + 1)).im) :
+    2 * D * enstrophy v (N + 2)
+      ≤ Hval + Real.sqrt (∑ n ∈ Finset.range (N + 2), Complex.normSq (v n))
+        * ∑ n ∈ Finset.range (N + 2), Complex.normSq (v n) := by
+  have hc : ∀ n, |gw n * kdy n| ≤ 1 := by
+    intro n
+    rw [gw_mul_kdy n]
+    norm_num
+  have h := dispersive_norm_le (fun n => gw n * (D * kdy n ^ 3)) (fun n => gw n * kdy n) v N Hval hc hH
+  have heq : ∑ n ∈ Finset.range (N + 2), (gw n * (D * kdy n ^ 3)) * Complex.normSq (v n)
+      = 2 * D * enstrophy v (N + 2) := by
+    unfold enstrophy
+    rw [Finset.mul_sum, Finset.mul_sum]
+    refine Finset.sum_congr rfl (fun n _ => ?_)
+    rw [sigma_three_weight D n]
+    ring
+  rw [heq] at h
+  exact h
+
+/-- The same statement at `sigma = 2` (quantum pressure): the controlled quantity is
+`D * sum k_n |v_n|^2`, which is **not** the enstrophy. Stated so the gap is explicit. -/
+theorem halfNorm_le_sigma_two (D : ℝ) (v : ℕ → ℂ) (N : ℕ) (Hval : ℝ)
+    (hH : Hval = ∑ n ∈ Finset.range (N + 2), (gw n * (D * kdy n ^ 2)) * Complex.normSq (v n)
+      + ∑ n ∈ Finset.range (N + 1), (gw n * kdy n) *
+        ((starRingEnd ℂ) (v n) * (starRingEnd ℂ) (v n) * v (n + 1)).im) :
+    ∑ n ∈ Finset.range (N + 2), (D * kdy n) * Complex.normSq (v n)
+      ≤ Hval + Real.sqrt (∑ n ∈ Finset.range (N + 2), Complex.normSq (v n))
+        * ∑ n ∈ Finset.range (N + 2), Complex.normSq (v n) := by
+  have hc : ∀ n, |gw n * kdy n| ≤ 1 := by
+    intro n
+    rw [gw_mul_kdy n]
+    norm_num
+  have h := dispersive_norm_le (fun n => gw n * (D * kdy n ^ 2)) (fun n => gw n * kdy n) v N Hval hc hH
+  have heq : ∑ n ∈ Finset.range (N + 2), (gw n * (D * kdy n ^ 2)) * Complex.normSq (v n)
+      = ∑ n ∈ Finset.range (N + 2), (D * kdy n) * Complex.normSq (v n) :=
+    Finset.sum_congr rfl (fun n _ => by rw [sigma_two_weight D n])
+  rw [heq] at h
+  exact h
+
+end QuantumFluids.ShellComplex
+
+#print axioms QuantumFluids.ShellComplex.gw_mul_kdy
+#print axioms QuantumFluids.ShellComplex.gw_mul_kdy_pow
+#print axioms QuantumFluids.ShellComplex.sigma_two_weight
+#print axioms QuantumFluids.ShellComplex.sigma_three_weight
+#print axioms QuantumFluids.ShellComplex.enstrophy_le_sigma_three
+#print axioms QuantumFluids.ShellComplex.halfNorm_le_sigma_two
