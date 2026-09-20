@@ -1,40 +1,54 @@
 # SocrateAI-Scientific-QuantumFluids
 
-**A dual-scale proposal for quantum fluids — stated as a measurable quantity, proved where it is provable, and refuted where it is false**
+**A machine-checked Lean 4 library of quantum-fluid structure — with a record of what formalization caught, and what it could not**
 
-[![Tests](https://img.shields.io/badge/tests-166%20passing-brightgreen)]() [![Lean](https://img.shields.io/badge/Lean-4.34.0--rc2-blue)]() [![Theorems](https://img.shields.io/badge/theorems-57%20kernel--checked-blue)]() [![Comparator](https://img.shields.io/badge/Comparator-55%20re--verified-success)]() [![Release](https://img.shields.io/badge/release-v1.0.0-orange)](https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids/releases)
+[![Tests](https://img.shields.io/badge/tests-166%20passing-brightgreen)]() [![Lean](https://img.shields.io/badge/Lean-4.34.0--rc2-blue)]() [![Theorems](https://img.shields.io/badge/theorems-89%20kernel--checked-blue)]() [![Comparator](https://img.shields.io/badge/Comparator-two%20kernels-success)]() [![Release](https://img.shields.io/badge/release-v1.0.0-orange)](https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids/releases)
 
 ---
 
-## The result in one paragraph
+## What this is
 
-For a quantum fluid with excitation dispersion `ε(k)`, sound speed `c` and mass `m`, define the
-**dual length**
+A **Lean 4 / Mathlib library of 89 machine-checked theorems on the structure of quantum fluids**, with
+the verification tooling around it and an unusually complete record of what went wrong on the way.
 
+```lean
+import QuantumFluids   -- Lean 4.34.0-rc2, Mathlib tag v4.34.0-rc2
 ```
-    ℓ(k) := ε(k)² / (ħ²c²k³)          k* := 2mc/ħ          √2 ξ = ħ/(mc)
-```
 
-Its phonon limit is `1/k` and its free-particle limit is `k/k*²`. Because the Bogoliubov dispersion is
-Pythagorean in those two branches, `ℓ_B(k) = 1/k + k/k*²` **exactly** — the `R + α′/R` shape as an
-identity rather than an analogy, invariant under `k ↦ k*²/k` and bounded below by `√2 ξ`. All of that is
-Lean-checked. **Superfluid ⁴He violates the bound by a factor 21 at saturated vapour pressure, rising
-to 51 at 24 bar.** So the dual-scale idea is not dead; it is *localised* to the weakly interacting
-regime, and `ℓ/(√2ξ)` is a single dimensionless number measuring how far a real superfluid sits from it.
+| module | what it gives you |
+|---|---|
+| **`VortexWinding`** | correctness of phase-winding vortex detection — the loop sum is *exactly* an integer multiple of 2π — and its **exact failure case**: edge cancellation breaks at a phase step of exactly π. Bare antisymmetry of the principal phase difference, which codes routinely assume, is **false**. |
+| **`QuantizedCirculation`** | `Γ = q·κ`, `κ = h/m`; no fraction of a quantum; and the quantum is *attained* by an explicit loop, so the bound is sharp. |
+| **`GPGalerkin`** | truncated Gross–Pitaevskii on **any** finite mode set: `Q = Σ_q|A_q|² ≥ 0`, mass and energy algebra, the Hamiltonian gradient identity. |
+| `MadelungSplit`, `MadelungNSE` | the Madelung decomposition, and the same objects inside the vocabulary of OpenAI's Navier–Stokes formalization, **imported as a real dependency**. |
+| `DualLength`, `QuantumFluidsShell`, `ShellHamiltonian`, `SigmaRule`, `Duality`, `RipsFloor` | correct but withdrawn-as-contributions or auxiliary — see below. |
 
-Full statement: **[docs/DUAL_SCALE_PROPOSAL.md](docs/DUAL_SCALE_PROPOSAL.md)**.
+The first three depend only on Mathlib and are meant to be reused.
 
-## What is proved, measured, refuted, and open
+## This is not a physics-discovery repository — and that is the interesting part
 
-| | status | where |
-|---|---|---|
-| `ℓ`, its two limits, duality invariance, the `√2 ξ` floor, the `k^{3/2}` envelope, the structure-factor form `S(k) ≤ √(k/2k*)`, and two falsification lemmas | **proved** (12 theorems) | `lean_src/DualLength.lean` |
-| DS-QF for ⁴He | **refuted**, 7 pressures, controls passing | CLAIM-024 |
-| DS-QF′ — the structure belongs to the weakly interacting regime | **proposed, untested** | needs cold-atom or `S(k)` data |
-| Second invariant of the complexified shell model; Hamiltonian SHG structure; the σ-rule | **proved** (7 theorems) + exact symbolic + search | CLAIM-023 |
-| Truncated Gross–Pitaevskii: `Q = Σ_q|A_q|² ≥ 0` for every truncation | **proved** (7 theorems) | `lean_src/GPGalerkin.lean` |
-| TDA floor in a real vortex tangle (workstream T) | **partial, split verdict** — floor `F = 0.943 ξ` at 6.1× the null, but the `f_<` criterion refutes the hypothesis as written | CLAIM-T1, CLAIM-T2 |
-| Novelty of any of the physics | **not claimed**; literature check pending | blocks external claims |
+It started as one. **Two results we had regarded as findings were withdrawn after a literature check**
+([RETRACTIONS.md](RETRACTIONS.md)):
+
+- a cubic invariant of a complexified dyadic shell model is a degenerate case of published Hamiltonian
+  structure — Vladimirova–Shavit–Falkovich (PRX 2021), L'vov–Podivilov–Procaccia (EPL 1999),
+  Ditlevsen (PRE 2000) — and the dyadic case has *less* structure than theirs, not more;
+- a "dual length" bound on the Bogoliubov dispersion is **dimensionally forced** and weaker than
+  Onsager's inequality wherever it is not vacuous. Measuring that ⁴He violates it by 21–51× confirms
+  that ⁴He has a roton.
+
+What that leaves is a sharp answer to a question worth asking — **what does formal verification
+actually buy in physics?**
+
+| it caught | it could not catch |
+|---|---|
+| a **false lemma** before it was used (antisymmetry of the phase difference) | that a correct theorem was **already known** |
+| an inequality our **prose had turned into an equality** (Bijl–Feynman) — the Lean was right, the memo was wrong | that a result was **dimensionally forced** |
+| a **`1/D` constant** that made a bound useless in the limit that mattered | that a hypothesis was **physically naive** |
+| **11 theorems that had escaped the axiom audit** (found via an external review) | |
+
+The kernel is for truth. Novelty needs a library, measurement needs controls, and the build needs a
+second person. Paper: [`paper/quantumfluids_lean4.pdf`](paper/quantumfluids_lean4.pdf).
 
 ## Negative results are first-class here
 
@@ -69,7 +83,7 @@ which remains a human audit.
 # 166 tests
 uv run pytest tests/ -q
 
-# Lean (4.34.0-rc2, Mathlib v4.34.0-rc2); 57 theorems across 7 libraries
+# Lean (4.34.0-rc2, Mathlib v4.34.0-rc2); 89 theorems across 12 libraries
 cd lean_src && lake build
 
 # Comparator (needs landrun, lean4export, nanoda_bin on PATH — see docs/COMPARATOR_SETUP.md)
@@ -93,7 +107,7 @@ uv run python exploration/second_invariant/run_search.py
 
 | path | contents |
 |---|---|
-| `lean_src/` | 7 Lean libraries, 57 theorems, axiom footprint `{propext, Classical.choice, Quot.sound}` |
+| `lean_src/` | 12 Lean libraries, 89 theorems, axiom footprint `{propext, Classical.choice, Quot.sound}` |
 | `lean_src/ComparatorChallenges/` | generated challenge statements + configs (contain `sorry` **by design**) |
 | `src/quantumfluids/` | adapters, dispersion fit, shell model, invariant search, TDA (GUDHI) |
 | `docs/DUAL_SCALE_PROPOSAL.md` | the consolidated proposal |
@@ -118,6 +132,5 @@ aligned at 4.34.0-rc2 across streams for cross-integration.
 
 ## Licence and status
 
-Research code. Nothing here is a claim of priority: the physics of the ⁴He roton is textbook, and the
-contribution is the dimensionless packaging plus the Lean-checked bound. A literature check is pending
-and blocks any external novelty claim.
+Code: **Apache-2.0** (`LICENSE`). Paper and documentation: **CC BY 4.0** (`NOTICE`). Nothing here is a
+claim of priority; the literature check has been run and its outcome is in `RETRACTIONS.md`.

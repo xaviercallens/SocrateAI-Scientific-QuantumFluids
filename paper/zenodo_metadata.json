@@ -1,0 +1,21 @@
+{
+ "metadata": {
+  "title": "QuantumFluids: a machine-checked Lean 4 library of quantum-fluid structure, with a record of what formalization caught and what it could not",
+  "upload_type": "software",
+  "description": "<p>An open Lean 4 / Mathlib library of 89 machine-checked theorems on the mathematical structure of quantum fluids, with the accompanying paper.</p><p><b>Contents.</b> Correctness of the phase-winding algorithm by which Gross-Pitaevskii codes locate quantized vortices, including its exact failure case (a phase step of exactly pi); quantization of circulation in the discrete form in which it is computed, with the quantum shown to be attained; sign and conservation structure of the Galerkin-truncated Gross-Pitaevskii nonlinearity on an arbitrary finite mode set; the Madelung decomposition; and a bridge restating these objects in the vocabulary of OpenAI's Lean formalization of the Navier-Stokes problem, imported as a real dependency. Every theorem carries a generated axiom audit (footprint: propext, Classical.choice, Quot.sound) and is re-checked by Comparator against two independent kernels.</p><p><b>This is not a physics-discovery deposit.</b> Two results the project had regarded as findings were withdrawn after a literature check: a cubic invariant of a complexified dyadic shell model is a degenerate case of published Hamiltonian structure (Vladimirova, Shavit, Falkovich 2021; L'vov, Podivilov, Procaccia 1999; Ditlevsen 2000), and a 'dual length' bound on the Bogoliubov dispersion is dimensionally forced and weaker than Onsager's inequality where it is not vacuous. RETRACTIONS.md records these in full. The paper is organised around the resulting question: what formal verification does and does not buy in physics. It caught a false lemma, an inequality that prose had turned into an equality, a constant that voided a bound in the limit that mattered, and eleven theorems that had escaped audit. It could not tell that a correct theorem was already known, nor that a hypothesis was physically naive.</p><p><b>Reuse.</b> <code>import QuantumFluids</code> brings in the whole library (Lean 4.34.0-rc2, Mathlib tag v4.34.0-rc2). The modules VortexWinding, QuantizedCirculation and GPGalerkin are self-contained and depend only on Mathlib. Open formalization targets are listed in the paper.</p><p>Code: Apache-2.0. Paper and documentation: CC BY 4.0.</p>",
+  "creators": [{"name": "Callens, Xavier", "affiliation": "SocrateAI Research"}],
+  "keywords": ["Lean 4", "Mathlib", "formal verification", "quantum fluids", "superfluidity", "Bose-Einstein condensate", "Gross-Pitaevskii equation", "quantized vortices", "quantized circulation", "Madelung transform", "shell models", "reproducibility", "retraction", "negative results", "persistent homology"],
+  "license": "Apache-2.0",
+  "access_right": "open",
+  "related_identifiers": [
+   {"identifier": "https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids", "relation": "isSupplementTo", "scheme": "url"},
+   {"identifier": "https://github.com/openai/NavierStokesAndEuler", "relation": "requires", "scheme": "url"},
+   {"identifier": "10.1103/PhysRevX.11.021063", "relation": "cites", "scheme": "doi"},
+   {"identifier": "10.1103/PhysRevE.104.014129", "relation": "cites", "scheme": "doi"},
+   {"identifier": "10.1209/epl/i1999-00307-8", "relation": "cites", "scheme": "doi"},
+   {"identifier": "10.1103/PhysRevB.103.104516", "relation": "cites", "scheme": "doi"},
+   {"identifier": "10.5281/zenodo.5510350", "relation": "cites", "scheme": "doi"}
+  ],
+  "notes": "No novelty is claimed for any physical statement. See RETRACTIONS.md in the archive."
+ }
+}

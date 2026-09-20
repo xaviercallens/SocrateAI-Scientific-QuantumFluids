@@ -1,0 +1,382 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,
+            urlcolor=blue!60!black]{hyperref}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\lean}[1]{\texttt{\small #1}}
+\newtcolorbox{keybox}[1][]{colback=blue!3,colframe=blue!45!black,
+  boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+\newtcolorbox{retraction}[1][]{colback=red!3,colframe=red!45!black,
+  boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+
+\title{\textbf{Formalizing quantum-fluid structure in Lean~4:}\\
+\large a machine-checked library, what the formalization caught,\\ and what it could not}
+
+\author{Xavier Callens\\
+\small SocrateAI-Scientific-QuantumFluids\\
+\small \url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}}
+\date{September 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+We present an open Lean~4/Mathlib library of 89 machine-checked theorems on the mathematical
+structure of quantum fluids: correctness of the phase-winding algorithm by which every
+Gross--Pitaevskii code locates vortices, quantization of circulation in the discrete form in
+which it is actually computed, sign and conservation structure of the Galerkin-truncated
+Gross--Pitaevskii nonlinearity on an arbitrary mode set, the Madelung decomposition, and a
+bridge that restates these objects inside the vocabulary of OpenAI's Lean formalization of
+the Navier--Stokes problem, imported as a real dependency. Every theorem carries a generated
+axiom audit and is independently re-checked against two proof kernels.
+
+\textbf{This is not a physics-discovery paper, and we say why.} The project began as one. Two
+results we had regarded as findings were withdrawn after a literature check: a cubic
+invariant of a complexified dyadic shell model is a special case of the Hamiltonian
+structure of Vladimirova, Shavit and Falkovich and of L'vov, Podivilov and Procaccia; and a
+``dual length'' bound on the Bogoliubov dispersion is dimensionally forced and weaker than
+Onsager's inequality where it is not vacuous. We report these retractions in full, because
+they are the clearest data we have on the actual subject of the paper: \emph{what formal
+verification does and does not buy in physics}. It caught a false lemma we were about to
+state, an inequality our prose had turned into an equality, a constant that made a bound
+useless in the limit that mattered, and eleven theorems that had silently escaped audit. It
+could not tell us that a correct theorem was already known, nor that a hypothesis was
+physically naive; a literature search and a simulation did that. We give the library to the
+community as verification infrastructure, with the open formalization targets we consider
+most valuable.
+\end{abstract}
+
+\section{Introduction}
+
+Proof assistants are now used at scale on fluid equations: OpenAI's announced constructions
+for the Navier--Stokes and Euler equations ship with a Lean~4 development of several
+thousand files~\cite{OpenAINSE}. Quantum fluids---superfluid helium, atomic Bose--Einstein
+condensates---have, to our knowledge, no comparable formal footprint, although they are in
+one respect better suited to it: circulation is quantized, the healing length is fixed by
+constants, and the central algorithms of the field (vortex detection by phase winding,
+Fourier--Galerkin truncation) are exactly discrete, so their correctness statements are
+finite and provable rather than asymptotic.
+
+This paper contributes a library, and a candid account of building it. The account matters
+as much as the library. Over roughly six weeks the project produced, alongside correct
+proofs, a sequence of claims that did not survive: two that a literature check identified as
+rediscoveries or dimensionally forced (\S\ref{sec:limits}), and a topological hypothesis
+that a well-resolved simulation contradicts (\S\ref{sec:empirical}). Each failure was caught
+by a mechanism that was in place \emph{before} the claim was tested---a pre-registered
+control, an external review, a literature gate. We think the distribution of which
+mechanism caught which error is informative for anyone using proof assistants in the
+physical sciences, and \S\ref{sec:caught}--\ref{sec:limits} are organised around it.
+
+\begin{keybox}
+\textbf{Stance.} No novelty is claimed for any physical statement in this paper. The
+contribution is (i) the machine-checked library and its verification tooling, (ii) one
+correctness result for a standard algorithm that we have not found stated elsewhere with its
+failure case (\S\ref{sec:winding}), and (iii) the error taxonomy.
+\end{keybox}
+
+\section{The library}
+\label{sec:library}
+
+\paragraph{Build.} Lean~4.34.0-rc2 with Mathlib at tag \texttt{v4.34.0-rc2}. A single
+\lean{import QuantumFluids} brings in twelve modules (Table~\ref{tab:modules}); the full
+build is 8788 jobs, zero errors, zero \lean{sorry} in any default target.
+
+\begin{table}[h]
+\centering\small
+\begin{tabular}{@{}llp{8.6cm}@{}}
+\toprule
+module & thms & content \\
+\midrule
+\lean{VortexWinding} & 7 & loop quantization of the principal-branch phase sum; edge
+  cancellation and its exact failure case \\
+\lean{QuantizedCirculation} & 6 & $\Gamma = q\,\kappa$, $\kappa = h/m$; no fraction of a
+  quantum; the quantum is attained \\
+\lean{GPGalerkin} & 13 & truncated Gross--Pitaevskii on any finite mode set: positivity of the
+  interaction sum, mass and energy algebra, Hamiltonian gradient identity \\
+\lean{MadelungSplit} & 6 & $|\nabla\psi|^2 = |\nabla a|^2 + a^2|\nabla S|^2$ \\
+\lean{MadelungNSE} & 2 & the Madelung velocity in the vocabulary of~\cite{OpenAINSE};
+  $\nabla\!\cdot\!\nabla\varphi = \Delta\varphi$ in their definitions \\
+\lean{DualLength} & 13 & algebra of $\varepsilon^2/(\hbar^2c^2k^3)$ for the Bogoliubov
+  dispersion (significance withdrawn, \S\ref{sec:limits}) \\
+\lean{QuantumFluidsShell} & 12 & complexified dyadic shell model: conservation, invariant
+  real subspace, trace identities \\
+\lean{ShellHamiltonian}, \lean{SigmaRule} & 15 & its cubic invariant and cutoff-uniform
+  bounds (novelty withdrawn, \S\ref{sec:limits}) \\
+\lean{Duality}, \lean{RipsFloor} & 15 & auxiliary inequalities; the 1-skeleton lemma used by
+  the topological analysis \\
+\bottomrule
+\end{tabular}
+\caption{Modules. Axiom footprint of all 89 theorems:
+$\{\lean{propext}, \lean{Classical.choice}, \lean{Quot.sound}\}$.}
+\label{tab:modules}
+\end{table}
+
+\paragraph{Verification stack.} Three layers, each added after a specific failure.
+\begin{enumerate}[leftmargin=*,itemsep=2pt]
+\item \emph{Generated axiom audit.} A script regenerates the \lean{\#print axioms} block of
+  every file from its declarations and has a \lean{--check} mode. It replaced hand-kept
+  lists after an external review found those had drifted (\S\ref{sec:caught}, item~5).
+\item \emph{Comparator}~\cite{Comparator}. For each module a challenge file---definitions
+  verbatim, proofs replaced by \lean{sorry}---is generated from the solution, and Comparator
+  checks statement identity, an axiom whitelist, and acceptance by both the Lean kernel and
+  the independent \lean{nanoda} kernel, inside a sandbox. Because challenges are generated
+  from solutions, statement identity holds by construction; the independent content is the
+  second kernel and the whitelist. Whether a statement is the \emph{right} statement remains
+  a human audit, and \S\ref{sec:caught} shows why that caveat is not a formality.
+\item \emph{Negative controls.} For each headline theorem a perturbed statement (a wrong
+  constant, a dropped conjugate, a flipped inequality) is compiled and required to fail. A
+  checker that has never been seen to reject is not yet a checker.
+\end{enumerate}
+
+\section{Selected results}
+
+\subsection{Correctness of phase-winding vortex detection}
+\label{sec:winding}
+
+Every Gross--Pitaevskii simulation code locates quantized vortices the same way: sum the
+principal-branch phase differences of $\psi$ around a grid plaquette, divide by $2\pi$,
+round. Let $\mathrm{pd}(a,b)\in(-\pi,\pi]$ denote the principal representative of $b-a$.
+
+\begin{theorem}[\lean{loop\_sum\_eq\_mul}]
+For any phases $\theta_0,\dots,\theta_n$ with $\theta_n=\theta_0$,
+$\sum_{i<n}\mathrm{pd}(\theta_i,\theta_{i+1}) \in 2\pi\mathbb{Z}$.
+\end{theorem}
+So the computed winding number is an integer by theorem, not by numerical accident. The
+second fact codes rely on---that an edge shared by two plaquettes contributes oppositely to
+each, so windings add like a discrete Stokes theorem---is usually stated as antisymmetry,
+$\mathrm{pd}(a,b) = -\mathrm{pd}(b,a)$. \textbf{That statement is false}, and attempting to
+prove it is how we found out:
+
+\begin{theorem}[\lean{pdiff\_add\_rev}, \lean{pdiff\_add\_rev\_eq\_two\_pi\_iff}]
+$\mathrm{pd}(a,b)+\mathrm{pd}(b,a)\in\{0,\,2\pi\}$, and the value $2\pi$ occurs exactly when
+$\mathrm{pd}(a,b)=\mathrm{pd}(b,a)=\pi$.
+\end{theorem}
+At a phase step of exactly $\pi$ both traversal directions return $+\pi$, cancellation
+between neighbouring plaquettes fails, and a spurious unit of winding can appear. The
+folklore criterion ``resolve the field so that no phase step reaches $\pi$'' is thereby a
+theorem with a sharp boundary. We have not found the disjunctive form stated in the
+literature; it is elementary, and we claim only that it is now checked.
+
+\subsection{Quantized circulation}
+
+With superfluid velocity $u=(\hbar/m)\nabla S$, define the discrete circulation around a
+closed loop of sample points as $\Gamma = (\hbar/m)\sum_i \mathrm{pd}(S_i,S_{i+1})$ and
+$\kappa = 2\pi\hbar/m$.
+
+\begin{theorem}[\lean{circulation\_quantized}, \lean{abs\_circulation\_ge},
+\lean{circulation\_quantum\_attained}]
+$\Gamma = q\kappa$ for an integer $q$; if $\Gamma\neq0$ then $|\Gamma|\ge\kappa$; and an
+explicit four-point loop attains $\Gamma=\kappa$.
+\end{theorem}
+The attained case is included deliberately: a lower bound with no witness can be vacuous,
+and the witness's closing step wraps by $2\pi$, exercising exactly the branch behaviour the
+definition exists to handle. \emph{Not} proved: that the discrete sum equals the continuum
+line integral. That is a sampling statement, and by the previous subsection it fails, by
+design, when a phase step reaches $\pi$.
+
+\subsection{Truncated Gross--Pitaevskii on an arbitrary mode set}
+
+Let $G$ be an additive commutative group ($\mathbb{Z}^3$ in applications), $\Lambda\subset G$
+finite, and $N_k=\sum_{k_1+k_3=k+k_2}\psi_{k_1}\conj{\psi_{k_2}}\psi_{k_3}$ the projected cubic
+nonlinearity.
+
+\begin{theorem}[\lean{pairing\_eq\_sum}, \lean{pairing\_nonneg}, \lean{grad\_identity},
+\lean{energy\_rate\_zero}]
+For every finite $\Lambda$: $Q:=\sum_{k\in\Lambda}\conj{\psi_k}N_k=\sum_q|A_q|^2\ge0$ with
+$A_q=\sum_{a-b=q}\psi_a\conj{\psi_b}$; $\;\sum_k\mathrm{Im}(\conj{\psi_k}G_k)=0$ for
+$G_k=\omega_k\psi_k+gN_k$; the polarised gradient identity
+$\sum_q 2\mathrm{Re}(\conj{A_q}\,dA_q[\delta]) = 4\,\mathrm{Re}\sum_k\conj{\delta_k}N_k$
+holds; and the first variation of $E=\sum\omega_k|\psi_k|^2+\tfrac g2Q$ along $\delta=-iG$
+vanishes.
+\end{theorem}
+The statements are uniform in the truncation: no property of $\Lambda$ beyond finiteness is
+used, which is the form in which such identities are needed when a cutoff is to be removed.
+What is proved is the algebraic core; the chain-rule step identifying these variations with
+time derivatives along a solution is not formalised, and the module header says so.
+
+\subsection{A cross-project import}
+
+\lean{MadelungNSE} imports \lean{NavierStokes.ProblemStatement} from~\cite{OpenAINSE} as a
+Lake dependency pinned to a commit whose headline theorems had been independently audited.
+In \emph{their} definitions of divergence and pressure gradient we prove
+$\nabla\!\cdot\!\nabla\varphi=\Delta\varphi$---absent from their tree, where pressure enters
+only through its gradient---and hence $\nabla\!\cdot u=(\hbar/m)\Delta S$ for the Madelung
+velocity. The mathematics is elementary. The point is operational: the import became
+possible only when both projects were aligned on one toolchain and one Mathlib revision;
+before that, version skew, not missing theorems, was the entire obstacle to reuse. One
+convenience lemma was dropped rather than carried with a \lean{sorry} when it did not
+survive a coercion change in Mathlib; nothing depended on it.
+
+\section{What the formalization caught}
+\label{sec:caught}
+
+Each item is an error that existed in prose, code, or intent, and was surfaced by the act of
+formalizing or by the verification stack.
+
+\begin{enumerate}[leftmargin=*,itemsep=3pt]
+\item \textbf{A false lemma, before it was used.} Antisymmetry of the principal phase
+  difference (\S\ref{sec:winding}). Our own extractor's documentation asserted it.
+\item \textbf{An inequality that prose had made an equality.} A design memo described a
+  structure-factor bound as holding ``exactly'' under Feynman's relation. The Lean theorem
+  could only be stated with the Bijl--Feynman relation as an \emph{inequality} hypothesis,
+  $\varepsilon\le\hbar^2k^2/(2mS)$, which is what it is. The formal statement was right
+  while the accompanying prose was wrong; the discrepancy was found when the two were
+  compared.
+\item \textbf{A constant that voids a bound where it matters.} A cutoff-uniform enstrophy
+  bound for a third-order dispersive regulator, $2D\Omega\le H+(2E)^{3/2}$, looked relevant
+  to a uniformity question in a sibling project. Written out for the formal statement, the
+  bound on $\Omega$ carries $1/D$ and diverges as the regulator is removed---precisely the
+  class of bound that project had already ruled out. We had described the result as
+  possibly significant; the fully explicit statement is what retracted that.
+\item \textbf{Hypotheses that locate the physics.} The Madelung identities require
+  differentiability of amplitude and phase at the point. That hypothesis is not
+  bureaucratic: it fails exactly on a vortex line, which is where the hydrodynamic picture
+  itself fails. The formal statement makes the domain of validity part of the theorem.
+\item \textbf{Audit drift.} An external reviewer rebuilding the tagged release reported 13
+  theorems in a file documented as having 12. Checking every file showed 76 theorems against
+  65 audit lines: eleven theorems had never been axiom-audited, and every count we had
+  published conflated ``theorems'' with ``theorems carrying an audit line''. All eleven were
+  clean; the defect was in the reporting. The generated audit (\S\ref{sec:library}) is the fix.
+\item \textbf{A clone-breaking artefact.} The same review found the build directory
+  committed as a symlink to a local disk, because an ignore pattern with a trailing slash
+  matches directories and not symlinks. No proof assistant catches this; a second person
+  building from the tag did.
+\end{enumerate}
+
+\section{What it could not catch}
+\label{sec:limits}
+
+\begin{retraction}
+\textbf{Two results were correct, machine-checked, and not contributions.} The kernel
+certifies that a statement follows from its hypotheses. It is silent on whether the
+statement is new, and on whether it could have come out otherwise.
+\end{retraction}
+
+\paragraph{A rediscovery.} We had found that the complexified dyadic shell model
+$\dot v_n = k_{n-1}v_{n-1}^2-k_n\conj{v_n}v_{n+1}$ becomes Hamiltonian under
+$w_n=2^{-n/2}v_n$, with a cubic invariant
+$H=\sum_n2^{-n}[\omega_n|v_n|^2+k_n\,\mathrm{Im}(\conj{v_n}^2v_{n+1})]$, energy conservation
+as a Manley--Rowe relation, and volume preservation as a corollary; we proved it in Lean
+and confirmed by a nullspace search that the invariants are exactly
+$\{\text{mass},\text{mass}^2,H\}$. All of this is a degenerate case of published
+structure: the canonical Hamiltonian form of the Sabra model under the analogous rescaling
+and its cubic invariant~\cite{Lvov1999,Ditlevsen2000}; the three-wave chain with graded
+phase symmetry and Manley--Rowe families~\cite{Vladimirova2021PRX}; second-harmonic
+generation as a minimal turbulence model~\cite{Vladimirova2021PRE}, whose title is the
+framing we had taken for an insight; and the two-mode invariant itself~\cite{ABDP1962}.
+Phase-space volume preservation is a stated \emph{design criterion} for shell
+models~\cite{Biferale2003}. The dyadic case is, if anything, poorer: $2^a+2^b=2^c$ forces
+$a=b$, so its Manley--Rowe family has one member where the Fibonacci lattice has two.
+
+\paragraph{A dimensionally forced bound.} For the Bogoliubov dispersion, which is the sum of
+squares of its phonon and free-particle branches~\cite{Dalfovo1999},
+$\ell(k)=\varepsilon^2/(\hbar^2c^2k^3)$ equals $1/k+k/k_*^2$ with $k_*=2mc/\hbar$, is
+invariant under $k\mapsto k_*^2/k$, and is bounded below by $\sqrt2\,\xi$. We proved this,
+and measured that superfluid $^4$He violates the bound by factors of 21 to 51 across seven
+pressures using the published dispersion of~\cite{Godfrin2021}. But a theory with one length
+and one velocity admits no other outcome: any such length with an interior minimum has it
+near $1/\xi$ with value near $\xi$. The implied structure-factor bound
+$S(k)\le\sqrt{k/2k_*}$ is weaker than Onsager's inequality $S(k)\le\hbar k/2mc$
+\cite{Wreszinski2005,Stringari1993} for $k<k_*/2$ and vacuous beyond $2k_*$. And since
+$\ell=v_L^2/(c^2k)$ with $v_L=\varepsilon/\hbar k$, any fluid with a roton violates the
+bound: the measurement confirms that $^4$He has a roton. A proposed test on a dilute
+condensate~\cite{Steinhauer2002} was therefore not run; its outcome is forced.
+
+\paragraph{The lesson we draw.} Formal verification moved our error rate on
+\emph{internal} questions---is this statement true, are its hypotheses complete, is this
+constant where we think it is---close to zero. It did nothing for the \emph{external}
+questions: is it known, is it forced, does it matter. Both retractions above were obtained
+by a literature search we had listed as a blocking gate and then ran late. In a field where
+the mathematics is a century deep, that gate should come first; a proof assistant makes it
+cheaper to be rigorously unoriginal.
+
+\section{Empirical companion work}
+\label{sec:empirical}
+
+Alongside the library we pursued a topological test: quantized circulation with a finite
+core suggests a minimum vortex separation near $\xi$, which would appear as a floor in the
+$H_0$ persistence of the vortex configuration (computed with GUDHI~\cite{GUDHI}; the only
+formal ingredient is the 1-skeleton lemma of \lean{RipsFloor}). The sequence of outcomes is
+instructive mainly about controls.
+
+\begin{enumerate}[leftmargin=*,itemsep=3pt]
+\item On a published $256^3$ Gross--Pitaevskii snapshot~\cite{PolancoData}, proximity-based
+  line segmentation gave a floor of $1.49\,\xi$ against a null of $0.10\,\xi$. A sweep of the
+  segmentation threshold showed the floor tracking the threshold (ratio $1.00$--$1.24$ over
+  a fourfold change): the statistic measured its own parameter. Withdrawn.
+\item Threshold-free tracing by cube adjacency (no tunable parameter; zero ambiguous cubes
+  in $46\,762$) gave $0.94\,\xi$, six times the null---but a second pre-registered criterion,
+  the fraction of separations below $\xi$, was indistinguishable from the null. Reported as a
+  split verdict; that dataset resolves $\xi$ by only $1.5$ grid cells.
+\item A survey found no public dilute-condensate dataset resolving $\xi$ by five cells or
+  more (best: $2.3$), so we wrote a split-step solver, validated by energy convergence, core
+  formation at the correct size, and dipole annihilation, and ran at $\xi/\Delta x=8$.
+  Two properties of the method had to be learned and are now pinned as tests:
+  imaginary-time relaxation first forms vortex cores and then \emph{destroys} the vortices,
+  and the timestep must respect $\Delta t\,k_{\max}^2/2\ll1$ (a run fifty times over the
+  bound is detectably wrong). \CONVERGENCE
+\end{enumerate}
+We think the hypothesis was physically naive: annihilation and reconnection are processes
+that pass continuously through separations below $\xi$, so quantization constrains
+circulation, not distance.
+
+\section{Using and extending the library}
+
+\paragraph{Reuse.} The modules marked in \S\ref{sec:library} are self-contained.
+\lean{VortexWinding} and \lean{QuantizedCirculation} depend only on Mathlib and apply to any
+code using plaquette phase winding. \lean{GPGalerkin} is stated over an arbitrary additive
+group and finite mode set.
+
+\paragraph{Open targets,} in the order we consider most valuable:
+\begin{enumerate}[leftmargin=*,itemsep=2pt]
+\item the sampling theorem linking the discrete loop sum to the continuum circulation for a
+  $C^1$ phase with step bound below $\pi$---this would turn resolution criteria for vortex
+  detection from folklore into theorem;
+\item the oriented sum of plaquette windings over the faces of a grid cube vanishes (away
+  from the $\pi$ case)---the discrete statement that vortex lines do not end, which is what
+  threshold-free line tracing silently assumes;
+\item the chain-rule step for \lean{GPGalerkin}, upgrading algebraic rates to conservation
+  along solutions of the truncated system;
+\item the Gross--Pitaevskii residual in the vocabulary of~\cite{OpenAINSE}, parallel to their
+  Navier--Stokes residual, with the Madelung correspondence as a theorem between them.
+\end{enumerate}
+
+\section{Conclusion}
+
+We set out to find new structure in quantum fluids with a proof assistant and found, after
+checking, that the structure we had was known. What remains is a library whose statements
+are exactly as strong as they say, a small correctness result for a ubiquitous algorithm,
+and a record in which every error is attributed to the mechanism that caught it. The record
+suggests a division of labour: the kernel for truth, controls for measurement, a second
+person for the build, and the library for novelty. We offer the first of these, with the
+other three as its documented context.
+
+\paragraph{Availability.} Source, claim ledger with all retractions
+(\texttt{RETRACTIONS.md}), pre-registrations and run outputs:
+\url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}.
+The earlier report on the shell-model measurement programme remains in the repository at
+tag \texttt{v1.1.0}.
+
+\paragraph{Acknowledgements.} An external reviewer working from the LeanMaster project
+rebuilt the tagged release independently and reported the two defects of
+\S\ref{sec:caught}, items~5--6. The $^4$He dispersion data are those of Godfrin et
+al.~\cite{Godfrin2021}; the turbulence snapshot is that of Polanco, M\"uller and
+Krstulovic~\cite{PolancoData}.
+
+\bibliographystyle{unsrt}
+\bibliography{refs}
+\end{document}

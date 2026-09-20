@@ -7,6 +7,11 @@ inconclusive. So the resolution requirement is met by simulating instead.
 Here xi/dx = 8, so the grid artefact scale (0.707 dx = 0.088 xi) sits a factor ~11 below xi. A floor
 at ~xi is 8 cells wide and cannot be confused with the discretisation -- which is exactly what
 failed before. Predictions and controls are the pre-registered ones (T1-T4', C-NEG, C-RES).
+
+ERRATUM (found 2026-09-20 when the convergence run disagreed with this one): the stage loop below
+advances FIVE time units per stage regardless of the label, so the rows printed as t = 5, 10, 20
+are really t = 5, 10, 15. The archived results_own_gpe.json carries the wrong labels; the numbers
+are right for t = 15. Fixed here so a re-run is labelled correctly.
 """
 import json, sys, time
 import numpy as np
@@ -32,9 +37,11 @@ res = {"grid": N, "dx_over_xi": 1.0 / PER_XI, "xi_over_dx": PER_XI, "L_over_xi":
        "n_planted": N_V, "stages": []}
 
 DT = 0.01
+t_now = 0
 for t_target in (0, 5, 10, 20):
     if t_target > 0:
-        steps = int(5 / DT)
+        steps = int(round((t_target - t_now) / DT))
+        t_now = t_target
         t0 = time.time()
         psi = evolve(psi, g, dt=DT, n_steps=steps)
         el = time.time() - t0

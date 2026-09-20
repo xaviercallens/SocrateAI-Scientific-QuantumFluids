@@ -1,0 +1,14 @@
+SocrateAI-Scientific-QuantumFluids
+Copyright 2026 Xavier Callens
+
+Code (Lean, Python, scripts): Apache License 2.0 -- see LICENSE.
+Paper and documentation (paper/, docs/, *.md): Creative Commons Attribution 4.0 (CC BY 4.0).
+
+Third-party material, NOT covered by the above and NOT redistributed in this repository:
+  * lean_src/MadelungNSE.lean imports openai/NavierStokesAndEuler (Apache-2.0) as a Lake
+    dependency, pinned to commit 8937a8f. It is fetched at build time, not vendored.
+  * Mathlib (Apache-2.0), fetched at build time.
+  * Data under data/external/ belongs to its authors and is fetched, not committed; each
+    directory carries a .meta file with source, licence and retrieval date. The He-4 dispersion
+    tables are from Godfrin et al., Phys. Rev. B 103, 104516 (2021) (arXiv ancillary files).
+    The turbulence snapshot is Zenodo 10.5281/zenodo.5510350 (CC BY 4.0).
