@@ -1,8 +1,14 @@
 #!/usr/bin/env python3
 """Deposit a tagged release on Zenodo.
 
-    python3 scripts/zenodo_deposit.py --tag v1.2.0             # creates a DRAFT, prints its URL
-    python3 scripts/zenodo_deposit.py --tag v1.2.0 --publish   # publishes: mints a PERMANENT DOI
+    python3 scripts/zenodo_deposit.py --tag v1.4.0 --new-version-of 22855582   # DRAFT, same concept DOI
+    python3 scripts/zenodo_deposit.py --tag v1.4.0 --new-version-of 22855582 --publish
+
+ALWAYS pass --new-version-of <id of the latest published record> for a release that continues an
+existing line. Without it Zenodo creates a SEPARATE record with its own concept DOI, and the two
+releases are then unrelated as far as citation is concerned. That happened between v1.2.0
+(concept 10.5281/zenodo.22853895) and v1.3.0 (concept 10.5281/zenodo.22855581); they are linked
+after the fact by related identifiers, which is not the same as being versions of one record.
 
 Publishing cannot be undone, so it is never the default. The token is read from $ZENODO_TOKEN or
 ~/.zenodo_token and is never printed or logged.
@@ -27,6 +33,8 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--tag", required=True)
     ap.add_argument("--publish", action="store_true")
+    ap.add_argument("--new-version-of", dest="prev", default=None,
+                    help="record id of the latest published version; keeps the concept DOI")
     a = ap.parse_args()
     meta = json.loads((ROOT / "paper" / "zenodo_metadata.json").read_text())
     meta["metadata"]["version"] = a.tag
@@ -37,9 +45,20 @@ def main() -> None:
         subprocess.run(["git", "-C", str(ROOT), "archive", "--format=zip",
                         f"--prefix=QuantumFluids-{a.tag}/", "-o", str(arc), a.tag], check=True)
         files = [arc, ROOT / "paper" / "quantumfluids_lean4.pdf"]
-        r = requests.post(f"{API}/deposit/depositions", json={}, headers=auth, timeout=60)
-        r.raise_for_status()
-        dep = r.json(); bucket = dep["links"]["bucket"]
+        if a.prev:
+            r = requests.post(f"{API}/deposit/depositions/{a.prev}/actions/newversion",
+                              headers=auth, timeout=60)
+            r.raise_for_status()
+            draft_url = r.json()["links"]["latest_draft"]
+            dep = requests.get(draft_url, headers=auth, timeout=60).json()
+            for f in dep.get("files", []):        # drop the previous version's files
+                requests.delete(f"{API}/deposit/depositions/{dep['id']}/files/{f['id']}",
+                                headers=auth, timeout=60)
+        else:
+            r = requests.post(f"{API}/deposit/depositions", json={}, headers=auth, timeout=60)
+            r.raise_for_status()
+            dep = r.json()
+        bucket = dep["links"]["bucket"]
         for f in files:
             with open(f, "rb") as fh:
                 u = requests.put(f"{bucket}/{f.name}", data=fh, headers=auth, timeout=600)
