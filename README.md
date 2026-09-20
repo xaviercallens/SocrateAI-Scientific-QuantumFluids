@@ -2,7 +2,7 @@
 
 **A machine-checked Lean 4 library of quantum-fluid structure — with a record of what formalization caught, and what it could not**
 
-[![Tests](https://img.shields.io/badge/tests-174%20passing-brightgreen)]() [![Lean](https://img.shields.io/badge/Lean-4.34.0--rc2-blue)]() [![Theorems](https://img.shields.io/badge/theorems-113%20kernel--checked-blue)]() [![Comparator](https://img.shields.io/badge/Comparator-two%20kernels-success)]() [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22855582.svg)](https://doi.org/10.5281/zenodo.22855582) [![Release](https://img.shields.io/badge/release-v1.3.0-orange)](https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids/releases)
+[![Tests](https://img.shields.io/badge/tests-174%20passing-brightgreen)]() [![Lean](https://img.shields.io/badge/Lean-4.34.0--rc2-blue)]() [![Theorems](https://img.shields.io/badge/theorems-113%20kernel--checked-blue)]() [![Comparator](https://img.shields.io/badge/Comparator-two%20kernels-success)]() [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22864579.svg)](https://doi.org/10.5281/zenodo.22864579) [![Release](https://img.shields.io/badge/release-v1.4.0-orange)](https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids/releases)
 
 ---
 
@@ -17,7 +17,7 @@ import QuantumFluids   -- Lean 4.34.0-rc2, Mathlib tag v4.34.0-rc2
 
 | module | what it gives you |
 |---|---|
-| **`VortexWinding`** | correctness of phase-winding vortex detection — the loop sum is *exactly* an integer multiple of 2π — and its **exact failure case**: edge cancellation breaks at a phase step of exactly π. Bare antisymmetry of the principal phase difference, which codes routinely assume, is **false**. |
+| **`VortexWinding`** | correctness of phase-winding vortex detection — the loop sum is *exactly* an integer multiple of 2π — and its **exact failure case**: edge cancellation breaks at a phase step of exactly π, so bare antisymmetry of the principal phase difference, which codes routinely assume, is **false**. Also the discrete `∇·ω = 0`: **vortex lines do not end**, which line tracers presuppose. |
 | **`QuantizedCirculation`** | `Γ = q·κ`, `κ = h/m`; no fraction of a quantum; and the quantum is *attained* by an explicit loop, so the bound is sharp. |
 | **`HeliumKinematics`**, **`BoseIntegral`** | the identities a neutron-scattering analysis of superfluid ⁴He rests on — three-phonon decay open **iff** the dispersion is anomalous, two-roton momentum range, calibration-invariance of any comparison with 2Δ_R — and `∫₀^∞ t³/(eᵗ−1) = π⁴/15` with the Debye `T³` coefficient. Addressed to published work: see [`docs/FOR_GODFRIN.md`](docs/FOR_GODFRIN.md). |
 | **`GPGalerkin`** | truncated Gross–Pitaevskii on **any** finite mode set: `Q = Σ_q|A_q|² ≥ 0`, mass and energy algebra, the Hamiltonian gradient identity. |
@@ -132,8 +132,8 @@ aligned at 4.34.0-rc2 across streams for cross-integration.
 
 ## Citing
 
-Archived on Zenodo: **[10.5281/zenodo.22855582](https://doi.org/10.5281/zenodo.22855582)** (`v1.3.0`;
-concept DOI 10.5281/zenodo.22855581). See `CITATION.cff`.
+Archived on Zenodo: **[10.5281/zenodo.22864579](https://doi.org/10.5281/zenodo.22864579)** (`v1.4.0`).
+Cite the concept DOI **10.5281/zenodo.22855581** for all versions. See `CITATION.cff`.
 
 *Note on the record history.* `v1.2.0` (10.5281/zenodo.22853896) was deposited as its own Zenodo
 record rather than as an earlier version of the same one, so the two carry different concept DOIs.
