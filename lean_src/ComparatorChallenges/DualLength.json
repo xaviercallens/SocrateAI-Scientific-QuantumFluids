@@ -6,15 +6,16 @@
     "QuantumFluids.DualLength.dualLength_phonon",
     "QuantumFluids.DualLength.dualLength_free",
     "QuantumFluids.DualLength.dualLength_bogoliubov",
+    "QuantumFluids.DualLength.dual_involutive",
     "QuantumFluids.DualLength.ell_dual_invariant",
     "QuantumFluids.DualLength.ell_ge",
     "QuantumFluids.DualLength.ell_eq_iff",
     "QuantumFluids.DualLength.not_bogoliubov_of_lt",
+    "QuantumFluids.DualLength.ell_ge_iff_envelope",
+    "QuantumFluids.DualLength.bogoliubov_envelope",
     "QuantumFluids.DualLength.dualLength_feynman",
     "QuantumFluids.DualLength.feynman_ge_iff",
-    "QuantumFluids.DualLength.not_bogoliubov_of_structure_factor",
-    "QuantumFluids.DualLength.ell_ge_iff_envelope",
-    "QuantumFluids.DualLength.bogoliubov_envelope"
+    "QuantumFluids.DualLength.not_bogoliubov_of_structure_factor"
   ],
   "permitted_axioms": [
     "propext",

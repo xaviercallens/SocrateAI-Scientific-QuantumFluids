@@ -4,6 +4,8 @@
   "enable_nanoda": true,
   "theorem_names": [
     "QuantumFluids.ShellComplex.im_core",
+    "QuantumFluids.ShellComplex.dT_zero",
+    "QuantumFluids.ShellComplex.dT_succ",
     "QuantumFluids.ShellComplex.sum_dT",
     "QuantumFluids.ShellComplex.hamiltonian_rate_zero",
     "QuantumFluids.ShellComplex.weights_ok",

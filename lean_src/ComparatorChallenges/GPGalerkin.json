@@ -3,11 +3,17 @@
   "solution_module": "GPGalerkin",
   "enable_nanoda": true,
   "theorem_names": [
+    "QuantumFluids.GPGalerkin.pairing_eq_prod",
+    "QuantumFluids.GPGalerkin.dens_mul_conj",
     "QuantumFluids.GPGalerkin.pairing_eq_sum",
+    "QuantumFluids.GPGalerkin.pairing_eq_ofReal",
     "QuantumFluids.GPGalerkin.pairing_nonneg",
     "QuantumFluids.GPGalerkin.pairing_im_zero",
     "QuantumFluids.GPGalerkin.mass_rate_zero",
     "QuantumFluids.GPGalerkin.kinetic_le_energy",
+    "QuantumFluids.GPGalerkin.nl_eq_dens",
+    "QuantumFluids.GPGalerkin.dens_neg",
+    "QuantumFluids.GPGalerkin.sum_densVar",
     "QuantumFluids.GPGalerkin.grad_identity",
     "QuantumFluids.GPGalerkin.energy_rate_zero"
   ],

@@ -11,9 +11,9 @@
     "Mathesis.Duality.Reff_ge_sqrt_of_selfDual",
     "Mathesis.Duality.support_balance",
     "Mathesis.Duality.eoq_lower_bound",
-    "Mathesis.Duality.kramers_wannier_self_dual",
     "Mathesis.Duality.bogoliubov_dual_form",
-    "Mathesis.Duality.bogoliubov_selfdual_bound"
+    "Mathesis.Duality.bogoliubov_selfdual_bound",
+    "Mathesis.Duality.kramers_wannier_self_dual"
   ],
   "permitted_axioms": [
     "propext",

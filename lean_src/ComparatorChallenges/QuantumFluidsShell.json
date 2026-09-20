@@ -7,6 +7,7 @@
     "QuantumFluids.ShellComplex.sum_re_conj_mul_shellBc",
     "QuantumFluids.ShellComplex.shellBc_energy_conservation",
     "QuantumFluids.ShellComplex.shellBc_real",
+    "QuantumFluids.ShellComplex.rtrace_add",
     "QuantumFluids.ShellComplex.rtrace_mulRight",
     "QuantumFluids.ShellComplex.rtrace_mul_I",
     "QuantumFluids.ShellComplex.rtrace_conj_mul",

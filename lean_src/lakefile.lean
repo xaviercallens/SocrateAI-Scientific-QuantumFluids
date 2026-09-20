@@ -35,6 +35,9 @@ lean_lib RipsFloor
 @[default_target]
 lean_lib SigmaRule
 
+@[default_target]
+lean_lib VortexWinding
+
 /-- The OpenAI Navier-Stokes/Euler formalisation (Apache-2.0), pinned to the commit whose four
 headline theorems MechanicaFluidorum audited to footprint
 `{propext, Classical.choice, Quot.sound}`. Both trees are on Lean 4.34.0-rc2 and Mathlib

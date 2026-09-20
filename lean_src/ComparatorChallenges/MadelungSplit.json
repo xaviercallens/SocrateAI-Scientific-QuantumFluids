@@ -4,6 +4,7 @@
   "enable_nanoda": true,
   "theorem_names": [
     "QuantumFluids.Madelung.normSq_phase_mul",
+    "QuantumFluids.Madelung.hasDerivAt_line",
     "QuantumFluids.Madelung.hasDerivAt_psi_line",
     "QuantumFluids.Madelung.norm_sq_deriv_psi",
     "QuantumFluids.Madelung.madelung_gradient_split",
