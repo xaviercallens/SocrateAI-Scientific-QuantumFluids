@@ -35,7 +35,7 @@
 
 \begin{abstract}
 \noindent
-We present an open Lean~4/Mathlib library of 89 machine-checked theorems on the mathematical
+We present an open Lean~4/Mathlib library of 109 machine-checked theorems on the mathematical
 structure of quantum fluids: correctness of the phase-winding algorithm by which every
 Gross--Pitaevskii code locates vortices, quantization of circulation in the discrete form in
 which it is actually computed, sign and conservation structure of the Galerkin-truncated
@@ -93,8 +93,8 @@ failure case (\S\ref{sec:winding}), and (iii) the error taxonomy.
 \label{sec:library}
 
 \paragraph{Build.} Lean~4.34.0-rc2 with Mathlib at tag \texttt{v4.34.0-rc2}. A single
-\lean{import QuantumFluids} brings in twelve modules (Table~\ref{tab:modules}); the full
-build is 8788 jobs, zero errors, zero \lean{sorry} in any default target.
+\lean{import QuantumFluids} brings in fourteen modules (Table~\ref{tab:modules}); the full
+build is 8792 jobs, zero errors, zero \lean{sorry} in any default target.
 
 \begin{table}[h]
 \centering\small
@@ -108,6 +108,11 @@ module & thms & content \\
   quantum; the quantum is attained \\
 \lean{GPGalerkin} & 13 & truncated Gross--Pitaevskii on any finite mode set: positivity of the
   interaction sum, mass and energy algebra, Hamiltonian gradient identity \\
+\lean{HeliumKinematics} & 15 & identities a neutron-scattering analysis of $^4$He rests on:
+  three-phonon decay open \emph{iff} the dispersion is anomalous, two-roton momentum range,
+  calibration-invariance of a comparison with $2\Delta_R$, time-of-flight equivalences \\
+\lean{BoseIntegral} & 5 & $\int_0^\infty t^{s-1}/(e^t-1)\,dt = \Gamma(s)\zeta(s)$ via Mathlib's
+  Mellin machinery; $\int_0^\infty t^3/(e^t-1)\,dt = \pi^4/15$; the Debye $T^3$ coefficient \\
 \lean{MadelungSplit} & 6 & $|\nabla\psi|^2 = |\nabla a|^2 + a^2|\nabla S|^2$ \\
 \lean{MadelungNSE} & 2 & the Madelung velocity in the vocabulary of~\cite{OpenAINSE};
   $\nabla\!\cdot\!\nabla\varphi = \Delta\varphi$ in their definitions \\
@@ -121,7 +126,7 @@ module & thms & content \\
   the topological analysis \\
 \bottomrule
 \end{tabular}
-\caption{Modules. Axiom footprint of all 89 theorems:
+\caption{Modules. Axiom footprint of all 109 theorems:
 $\{\lean{propext}, \lean{Classical.choice}, \lean{Quot.sound}\}$.}
 \label{tab:modules}
 \end{table}
@@ -349,6 +354,52 @@ The hypothesis was physically naive. Opposite-sign vortices attract and annihila
 that passes continuously through separations below $\xi$; a snapshot of a live configuration
 therefore contains pairs in mid-approach. Quantization constrains circulation, not distance.
 
+\section{Applying the library to published experimental work}
+\label{sec:godfrin}
+
+The clearest use we have found for a library of this kind is not to generate physics but to check
+derivations that an experimental paper states without proof. We took as subject the two publications
+of Godfrin and co-workers in 2021--2026: the pressure-dependent dispersion of superfluid $^4$He from
+inelastic neutron scattering~\cite{Godfrin2021} and its companion review.
+
+\lean{HeliumKinematics} formalises relations that paper's analysis leans on: three-phonon decay is
+kinematically open \emph{iff} the dispersion is anomalous, with excess energy exactly
+$3ca\,k_1k_2(k_1+k_2)$; two rotons carry total momentum in $[0,2k_R]$, attained by parallel and
+anti-parallel pairs, which is the review's statement that the Pitaevskii plateau "ends at $2k_\Delta$"
+and "can in principle extend to zero wave number"; every time-of-flight energy is proportional to the
+incident energy, so \emph{any} comparison of $\varepsilon(k)$ with $2\Delta_R$ is invariant under
+recalibration of the roton gap; and Eq.~(7) of~\cite{Godfrin2021} is $dP/d\rho$ of its Eq.~(6).
+
+Two consequences are worth reporting. First, with the published low-$k$ coefficients each closing
+condition factors as $ck^n$ times a \emph{quadratic}, so the thresholds are explicit: soft emission
+closes at $0.404\,\text{\AA}^{-1}$, the symmetric split at $0.455$, the phase velocity reaches $c$ at
+$0.566$. These are three different numbers, often quoted as one $k_c$, and the symmetric split is the
+last two-phonon channel to close; the measured table alone, with no fitted series, gives $0.453$.
+Second, \lean{BoseIntegral} verifies the leading coefficient of that paper's specific-heat series ---
+the series for which it notes that earlier published versions "contain errors" --- from
+$\int_0^\infty t^3/(e^t-1)\,dt = \pi^4/15$ through to $A = 2\pi^2k_B^4V/(15c^3\hbar^3) =
+0.0831\,\mathrm{J/(mol\,K^4)}$, matching the printed value. Mathlib had $\zeta(4)$ and the Gamma
+integral but not the Bose integral.
+
+We also record two apparent misprints in the preprint, demonstrated numerically against the paper's
+own tables rather than asserted, in \texttt{docs/FOR\_GODFRIN.md}. That note has not been sent; it is
+a draft for the repository owner.
+
+\section{A proposal the literature gate stopped}
+\label{sec:gate}
+
+\S\ref{sec:limits} concluded that the search for prior art should come first. Tested on the next
+proposal, it did. We intended to apply $0$-dimensional sublevel persistent homology to the measured
+dispersion: the roton as a homology class born at $\Delta_R$ and dying at the maxon $\Delta_M$, with
+small-persistence pairs as instrumental noise. For a function on an interval this is exactly
+topographic prominence --- as the founders of the subject state themselves --- and on the published
+table the numbers agree to the digit: prominence $0.4501$~meV against $\Delta_M - \Delta_R =
+0.4501$~meV. The persistence of the roton is a difference of two numbers already tabulated at every
+pressure. Sublevel persistence of a dispersion with a noise threshold is in any case already
+published for photonic band structures, and persistent homology of a Gross--Pitaevskii gas with
+quantized vortices is published too --- which our own refuted vortex work of \S\ref{sec:empirical}
+should have cited. Nothing was built. The episode cost a literature search rather than a release.
+
 \section{Using and extending the library}
 
 \paragraph{Reuse.} The modules marked in \S\ref{sec:library} are self-contained.
@@ -367,7 +418,10 @@ group and finite mode set.
 \item the chain-rule step for \lean{GPGalerkin}, upgrading algebraic rates to conservation
   along solutions of the truncated system;
 \item the Gross--Pitaevskii residual in the vocabulary of~\cite{OpenAINSE}, parallel to their
-  Navier--Stokes residual, with the Madelung correspondence as a theorem between them.
+  Navier--Stokes residual, with the Madelung correspondence as a theorem between them;
+\item the remaining coefficients $C,D,E,K,L$ of~\cite{Godfrin2021} Eq.~(22), which need the same Bose
+  integral at $s = 6\ldots10$ together with a Lagrange inversion --- the target with the most direct
+  value to an experiment, since the paper reports a disagreement with two earlier published series.
 \end{enumerate}
 
 \section{Conclusion}
