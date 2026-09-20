@@ -109,6 +109,40 @@ Stated as questions, because the data are his and the physics is his.
   all three against the seven pressures in `DispersionAllPressures.txt` would show whether they move
   together.
 
+### 5a. First direction carried out: where the three-phonon channel closes (2026-09-20)
+
+`exploration/godfrin/three_phonon_threshold.py`; identities in `HeliumKinematics` (15 theorems now).
+
+With the series of Eq. (2), each closing condition factors as `c·kⁿ` times a **quadratic** in `k`, so
+the thresholds are explicit in the published coefficients — machine-checked:
+
+| condition | identity (Lean) | SVP, from `α₂, α₃, α₄ = 1.55, −4.04, 2.30` |
+|---|---|---|
+| soft emission, `dε/dk = c` | `group_velocity_excess`: `c k²(3α₂ + 4α₃k + 5α₄k²)` | **0.404 Å⁻¹** |
+| symmetric split, `ε(k) = 2ε(k/2)` | `symmetric_split_excess`: `c k³(¾α₂ + ⅞α₃k + (15/16)α₄k²)` | **0.455 Å⁻¹** |
+| phase velocity, `ε/k = c` | `phase_velocity_excess`: `c k²(α₂ + α₃k + α₄k²)` | **0.566 Å⁻¹** |
+
+Three remarks that may be useful to the experiment:
+
+1. **They are three different numbers, and the symmetric split is the *last* two-phonon channel to
+   close** (a scan over all splits confirms nothing is open beyond 0.455). A single quoted "`k_c`"
+   hides which process is meant: a linewidth from *two*-phonon decay should vanish near 0.455, not 0.566.
+2. **Independent agreement.** The measured SVP table, with no series at all, gives the symmetric-split
+   crossing at **0.453 Å⁻¹** — within 0.002 of the value from the fitted coefficients. The maximum
+   excess is only 14.5 µeV (at `k = 0.31`), which says how delicate the open window is.
+3. **It does not depend on `Δ_R`.** The excess is homogeneous of degree one in the energy scale, so by
+   `tofEnergy_rescale` a proportional recalibration cannot move `k_c`. It depends on the *shape* only.
+
+**Honest limit under pressure.** The 7-pressure table starts at `k = 0.15`, so the symmetric split is
+testable only for `k ≥ 0.30`, where the excess (≤ 12 µeV) is about 4× the propagated error (≈ 2.7 µeV).
+The channel is open at ≤ 2 bar, consistent with zero at 5 bar (−2.4 ± 2.9 µeV), and clearly closed at
+10 and 24 bar — but `k_c(P)` **cannot be localised** from this table. Two things would fix that:
+published `α₂, α₃, α₄` at each pressure (the paper fits them; only the SVP set is printed in the text),
+or table rows below 0.15 Å⁻¹. Note also that the P = 0 column of the 7-pressure table gives 0.414 where
+the full-range SVP file gives 0.453: the former is raw neutron data, which the paper itself says runs
+"slightly too high" below 0.2 Å⁻¹, while the latter merges in ultrasound — a visible consequence of
+that known bias, at exactly the wave vectors `k/2` that the split probes.
+
 **What we are *not* proposing**, having learned it the hard way (`RETRACTIONS.md`): any new bound or
 "dual scale" on the dispersion. Our earlier attempt produced a quantity that was dimensionally forced
 and a bound weaker than Onsager's. The value on offer here is verification of *his* derivations, not

@@ -1,0 +1,66 @@
+{
+ "series": {
+  "k_sym": 0.45530064050364755,
+  "k_group": 0.4037589790401407,
+  "k_phase": 0.5661245026817816,
+  "k_all_closed": 0.4547368421052632,
+  "validity_note": "series stated valid only for k < 0.5; thresholds above that are extrapolation"
+ },
+ "table_svp": {
+  "sym_crossings": [
+   0.45299999999999996
+  ],
+  "max_excess_meV": 0.014500000000000068
+ },
+ "pressure": [
+  {
+   "P": 0.0,
+   "k_c_sym": 0.414,
+   "max_excess_meV": 0.010100000000000053,
+   "err_meV": 0.0026832815729997475,
+   "open_at_0.30": true
+  },
+  {
+   "P": 0.51,
+   "k_c_sym": null,
+   "max_excess_meV": 0.011599999999999944,
+   "err_meV": 0.0026832815729997475,
+   "open_at_0.30": false
+  },
+  {
+   "P": 1.02,
+   "k_c_sym": null,
+   "max_excess_meV": 0.011500000000000066,
+   "err_meV": 0.0026832815729997475,
+   "open_at_0.30": false
+  },
+  {
+   "P": 2.01,
+   "k_c_sym": 0.322,
+   "max_excess_meV": 0.007000000000000006,
+   "err_meV": 0.0029068883707497268,
+   "open_at_0.30": true
+  },
+  {
+   "P": 5.01,
+   "k_c_sym": null,
+   "max_excess_meV": -0.0024000000000000687,
+   "err_meV": 0.0029068883707497268,
+   "open_at_0.30": false
+  },
+  {
+   "P": 10.01,
+   "k_c_sym": null,
+   "max_excess_meV": -0.006099999999999994,
+   "err_meV": 0.0031304951684997056,
+   "open_at_0.30": false
+  },
+  {
+   "P": 24.08,
+   "k_c_sym": null,
+   "max_excess_meV": -0.026600000000000068,
+   "err_meV": 0.003577708763999664,
+   "open_at_0.30": false
+  }
+ ]
+}

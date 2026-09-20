@@ -41,6 +41,32 @@ critical wave-vector", and why it switches off above ~20 bar where `γ` changes 
 theorem three_phonon_open_iff {c a k₁ k₂ : ℝ} (hc : 0 < c) (h₁ : 0 < k₁) (h₂ : 0 < k₂) :
     phononDisp c a k₁ + phononDisp c a k₂ ≤ phononDisp c a (k₁ + k₂) ↔ 0 ≤ a := by
   sorry
+/-! ### The full low-`k` series of [G21] Eq. (2), and its three distinct thresholds
+
+With `ε = c k (1 + α₂k² + α₃k³ + α₄k⁴)` each closing condition factors as `c kⁿ` times a QUADRATIC in
+`k`, so the thresholds are roots of explicit quadratics in the published coefficients. They are three
+different numbers and should not be conflated: at SVP (`α₂, α₃, α₄ = 1.55, -4.04, 2.30`) they are
+`0.404`, `0.455` and `0.566 Å⁻¹`. The symmetric split is the LAST two-phonon channel to close; the
+measured table gives `0.453 Å⁻¹` for it directly, without the series. -/
+
+/-- [G21] Eq. (2), truncated at `α₄` as in the paper's SVP parameter set. -/
+def seriesDisp (c α₂ α₃ α₄ k : ℝ) : ℝ := c * k * (1 + α₂ * k ^ 2 + α₃ * k ^ 3 + α₄ * k ^ 4)
+
+/-- **Symmetric split `k → k/2 + k/2`.** Open iff `¾α₂ + ⅞α₃k + (15/16)α₄k² ≥ 0`. -/
+theorem symmetric_split_excess (c α₂ α₃ α₄ k : ℝ) :
+    seriesDisp c α₂ α₃ α₄ k - 2 * seriesDisp c α₂ α₃ α₄ (k / 2)
+      = c * k ^ 3 * (3 / 4 * α₂ + 7 / 8 * α₃ * k + 15 / 16 * α₄ * k ^ 2) := by
+  sorry
+/-- **Phase velocity against the sound speed.** `ε/k - c = c k² (α₂ + α₃k + α₄k²)`. -/
+theorem phase_velocity_excess (c α₂ α₃ α₄ k : ℝ) (hk : k ≠ 0) :
+    seriesDisp c α₂ α₃ α₄ k / k - c = c * k ^ 2 * (α₂ + α₃ * k + α₄ * k ^ 2) := by
+  sorry
+/-- **Group velocity against the sound speed** (emission of a soft phonon, `q → 0`):
+`dε/dk - c = c k² (3α₂ + 4α₃k + 5α₄k²)`. -/
+theorem group_velocity_excess (c α₂ α₃ α₄ k : ℝ) :
+    HasDerivAt (seriesDisp c α₂ α₃ α₄)
+      (c + c * k ^ 2 * (3 * α₂ + 4 * α₃ * k + 5 * α₄ * k ^ 2)) k := by
+  sorry
 /-! ## 2. Two-roton decay and the Pitaevskii plateau  ([GK22], the paragraph on the plateau) -/
 
 variable {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]

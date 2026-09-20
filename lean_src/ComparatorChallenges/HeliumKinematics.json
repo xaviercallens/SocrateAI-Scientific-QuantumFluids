@@ -5,6 +5,9 @@
   "theorem_names": [
     "QuantumFluids.HeliumKinematics.three_phonon_excess",
     "QuantumFluids.HeliumKinematics.three_phonon_open_iff",
+    "QuantumFluids.HeliumKinematics.symmetric_split_excess",
+    "QuantumFluids.HeliumKinematics.phase_velocity_excess",
+    "QuantumFluids.HeliumKinematics.group_velocity_excess",
     "QuantumFluids.HeliumKinematics.two_roton_momentum_le",
     "QuantumFluids.HeliumKinematics.two_roton_parallel",
     "QuantumFluids.HeliumKinematics.two_roton_antiparallel",
