@@ -3,6 +3,10 @@ open Lake DSL
 
 package quantumFluids
 
+/-- Umbrella target: `import QuantumFluids` gives the whole library. -/
+@[default_target]
+lean_lib QuantumFluids
+
 /-- Mathlib is PINNED to tag v4.34.0-rc2 (2026-09-19 migration, owner decision, to
 align all streams on one toolchain and allow cross-stream integration; same
 revision as the OpenAI NavierStokesAndEuler tree). Before the migration the pin
@@ -37,6 +41,9 @@ lean_lib SigmaRule
 
 @[default_target]
 lean_lib VortexWinding
+
+@[default_target]
+lean_lib QuantizedCirculation
 
 /-- The OpenAI Navier-Stokes/Euler formalisation (Apache-2.0), pinned to the commit whose four
 headline theorems MechanicaFluidorum audited to footprint
