@@ -92,7 +92,10 @@ Thumbs.db
 # Lean build artifacts and fetched dependencies (multi-GB: Mathlib alone is
 # ~6.5GB of prebuilt oleans). Reproduced by `lake update && lake exe cache get`
 # against the pinned revision in lean_src/lakefile.lean.
-lean_src/.lake/
+# NOT 'lean_src/.lake/' with a trailing slash: that matches a DIRECTORY only, so the symlink we
+# use to put the build on a larger disk was committed and broke every clone (external review,
+# 2026-09-20). No trailing slash matches both.
+lean_src/.lake
 lean_src/lake-manifest.json
 
 # uv-created virtualenv (no sudo needed; reproduce with: uv venv .venv && uv pip install --python .venv/bin/python -e ".[nexus,test]")
