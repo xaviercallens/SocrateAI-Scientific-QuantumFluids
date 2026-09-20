@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this library, please cite it as below."
+title: "QuantumFluids: a machine-checked Lean 4 library of quantum-fluid structure"
+type: software
+authors:
+  - family-names: Callens
+    given-names: Xavier
+    affiliation: SocrateAI Research
+version: v1.2.0
+date-released: 2026-09-20
+doi: 10.5281/zenodo.22853895
+license: Apache-2.0
+repository-code: "https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids"
+abstract: >-
+  An open Lean 4 / Mathlib library of 89 machine-checked theorems on the structure of quantum
+  fluids: correctness of phase-winding vortex detection with its exact failure case, quantized
+  circulation, the Galerkin-truncated Gross-Pitaevskii nonlinearity on an arbitrary mode set, the
+  Madelung decomposition, and a bridge into the vocabulary of OpenAI's Navier-Stokes formalization.
+  No novelty is claimed for any physical statement; two results once regarded as findings were
+  withdrawn after a literature check, and RETRACTIONS.md records them in full.
+keywords: [Lean 4, Mathlib, formal verification, quantum fluids, superfluidity, Gross-Pitaevskii, quantized vortices]
+preferred-citation:
+  type: article
+  title: "Formalizing quantum-fluid structure in Lean 4: a machine-checked library, what the formalization caught, and what it could not"
+  authors:
+    - family-names: Callens
+      given-names: Xavier
+  year: 2026
+  doi: 10.5281/zenodo.22853896
