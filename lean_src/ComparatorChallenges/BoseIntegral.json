@@ -6,6 +6,8 @@
     "QuantumFluids.BoseIntegral.hasSum_bose",
     "QuantumFluids.BoseIntegral.hasSum_mellin_bose",
     "QuantumFluids.BoseIntegral.mellin_bose_four",
+    "QuantumFluids.BoseIntegral.bose_integral_nat",
+    "QuantumFluids.BoseIntegral.bose_integral_even",
     "QuantumFluids.BoseIntegral.debyeEnergy_eq",
     "QuantumFluids.BoseIntegral.debye_specific_heat"
   ],

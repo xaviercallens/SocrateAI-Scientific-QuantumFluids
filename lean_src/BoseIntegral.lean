@@ -85,6 +85,60 @@ theorem mellin_bose_four : mellin bose 4 = (π : ℂ) ^ 4 / 15 := by
   rw [tsum_mul_left, ← hshift, ← hz, riemannZeta_four]
   ring
 
+/-! ## The general Bose integral, and the even case in closed form
+
+[G21] Eq. (22) needs the Bose integral at `s = 4, 6, 7, 8, 9, 10` (its coefficients `A, C, D, E, K, L`).
+`bose_integral_nat` gives every one of them as `n! · ζ(n+1)`. For **even** `n+1 = 2k` Mathlib supplies
+`ζ(2k)` in closed form via Bernoulli numbers, so `A, E, L` (and `C`) are fully explicit; the
+coefficients `D` and `K` involve `ζ(7)` and `ζ(9)`, which have no known closed form and must remain
+symbolic — that is a fact about the mathematics, not a gap in this development. -/
+
+/-- **The Bose integral at natural order.** `∫₀^∞ tⁿ/(eᵗ−1) dt = n! ζ(n+1)` for `n ≥ 1`. This is
+the single identity every coefficient of the phonon specific-heat series rests on. -/
+theorem bose_integral_nat {n : ℕ} (hn : 1 ≤ n) :
+    mellin bose (n + 1) = (Nat.factorial n : ℂ) * riemannZeta (n + 1) := by
+  have hre : 1 < ((n : ℂ) + 1).re := by
+    simp only [Complex.add_re, Complex.natCast_re, Complex.one_re]
+    have : (1 : ℝ) ≤ (n : ℝ) := by exact_mod_cast hn
+    linarith
+  have h := hasSum_mellin_bose hre
+  have hG : Complex.Gamma ((n : ℂ) + 1) = (Nat.factorial n : ℂ) := by
+    rw [show ((n : ℂ) + 1) = ((n : ℕ) : ℂ) + 1 by push_cast; ring, Complex.Gamma_nat_eq_factorial]
+  have hpow : ∀ m : ℕ, (((m : ℝ) + 1 : ℝ) : ℂ) ^ ((n : ℂ) + 1) = ((m : ℂ) + 1) ^ (n + 1) := by
+    intro m
+    rw [show ((n : ℂ) + 1) = (((n + 1 : ℕ)) : ℂ) by push_cast; ring, Complex.cpow_natCast]
+    push_cast; ring
+  have hz : riemannZeta ((n : ℂ) + 1) = ∑' m : ℕ, 1 / ((m : ℂ) + 1) ^ (n + 1) := by
+    have hgt : 1 < ((n + 1 : ℕ) : ℂ).re := by push_cast; exact hre
+    have := zeta_nat_eq_tsum_of_gt_one (k := n + 1) (by omega)
+    have hsumm : Summable (fun m : ℕ => 1 / (m : ℂ) ^ (n + 1)) := by
+      have := (Complex.summable_one_div_nat_cpow (p := (n : ℂ) + 1)).mpr hre
+      refine this.congr (fun m => ?_)
+      rw [show ((n : ℂ) + 1) = (((n + 1 : ℕ)) : ℂ) by push_cast; ring, Complex.cpow_natCast]
+    rw [show ((n : ℂ) + 1) = (((n + 1 : ℕ)) : ℂ) by push_cast; ring, this,
+      hsumm.tsum_eq_zero_add]
+    simp
+  rw [← h.tsum_eq]
+  simp_rw [hG, hpow, mul_div_assoc]
+  rw [tsum_mul_left, ← hz]
+
+/-- **The even case in closed form.** For `k ≥ 1`, `∫₀^∞ t^{2k-1}/(eᵗ−1) dt` equals
+`(2k−1)! · ζ(2k)` with `ζ(2k)` given by Mathlib's Bernoulli formula. At `k = 2` this is `π⁴/15`,
+the value behind the Debye coefficient; at `k = 3, 4, 5` it supplies the `T⁵`, `T⁷` and `T⁹`
+coefficients of [G21] Eq. (22). -/
+theorem bose_integral_even {k : ℕ} (hk : k ≠ 0) :
+    mellin bose ((2 * k - 1 : ℕ) + 1) = (Nat.factorial (2 * k - 1) : ℂ) *
+      ((-1) ^ (k + 1) * (2 : ℂ) ^ (2 * k - 1) * (π : ℂ) ^ (2 * k) * bernoulli (2 * k)
+        / Nat.factorial (2 * k)) := by
+  have hn : 1 ≤ 2 * k - 1 := by omega
+  have h := bose_integral_nat hn
+  have hc : ((2 * k - 1 : ℕ) : ℂ) + 1 = 2 * (k : ℂ) := by
+    have h2 : (2 * k - 1 : ℕ) + 1 = 2 * k := by omega
+    calc ((2 * k - 1 : ℕ) : ℂ) + 1 = (((2 * k - 1 : ℕ) + 1 : ℕ) : ℂ) := by push_cast; ring
+      _ = ((2 * k : ℕ) : ℂ) := by rw [h2]
+      _ = 2 * (k : ℂ) := by push_cast; ring
+  rw [h, hc, riemannZeta_two_mul_nat hk]
+
 /-! ## From the integral to the coefficient `A` of [G21] Eq. (22)
 
 For a pure phonon branch `ε = ħck` the substitution `x = ħck/k_BT` turns the internal energy
@@ -128,5 +182,7 @@ end QuantumFluids.BoseIntegral
 #print axioms QuantumFluids.BoseIntegral.hasSum_bose
 #print axioms QuantumFluids.BoseIntegral.hasSum_mellin_bose
 #print axioms QuantumFluids.BoseIntegral.mellin_bose_four
+#print axioms QuantumFluids.BoseIntegral.bose_integral_nat
+#print axioms QuantumFluids.BoseIntegral.bose_integral_even
 #print axioms QuantumFluids.BoseIntegral.debyeEnergy_eq
 #print axioms QuantumFluids.BoseIntegral.debye_specific_heat

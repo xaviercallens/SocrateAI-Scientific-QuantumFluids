@@ -35,7 +35,7 @@
 
 \begin{abstract}
 \noindent
-We present an open Lean~4/Mathlib library of 109 machine-checked theorems on the mathematical
+We present an open Lean~4/Mathlib library of 113 machine-checked theorems on the mathematical
 structure of quantum fluids: correctness of the phase-winding algorithm by which every
 Gross--Pitaevskii code locates vortices, quantization of circulation in the discrete form in
 which it is actually computed, sign and conservation structure of the Galerkin-truncated
@@ -102,8 +102,9 @@ build is 8792 jobs, zero errors, zero \lean{sorry} in any default target.
 \toprule
 module & thms & content \\
 \midrule
-\lean{VortexWinding} & 7 & loop quantization of the principal-branch phase sum; edge
-  cancellation and its exact failure case \\
+\lean{VortexWinding} & 9 & loop quantization of the principal-branch phase sum; edge
+  cancellation and its exact failure case; the oriented sum over a closed surface vanishes, so
+  vortex lines do not end \\
 \lean{QuantizedCirculation} & 6 & $\Gamma = q\,\kappa$, $\kappa = h/m$; no fraction of a
   quantum; the quantum is attained \\
 \lean{GPGalerkin} & 13 & truncated Gross--Pitaevskii on any finite mode set: positivity of the
@@ -111,8 +112,8 @@ module & thms & content \\
 \lean{HeliumKinematics} & 15 & identities a neutron-scattering analysis of $^4$He rests on:
   three-phonon decay open \emph{iff} the dispersion is anomalous, two-roton momentum range,
   calibration-invariance of a comparison with $2\Delta_R$, time-of-flight equivalences \\
-\lean{BoseIntegral} & 5 & $\int_0^\infty t^{s-1}/(e^t-1)\,dt = \Gamma(s)\zeta(s)$ via Mathlib's
-  Mellin machinery; $\int_0^\infty t^3/(e^t-1)\,dt = \pi^4/15$; the Debye $T^3$ coefficient \\
+\lean{BoseIntegral} & 7 & $\int_0^\infty t^{n}/(e^t-1)\,dt = n!\,\zeta(n+1)$ for every $n \ge 1$,
+  with the even case explicit via Bernoulli numbers; the Debye $T^3$ coefficient \\
 \lean{MadelungSplit} & 6 & $|\nabla\psi|^2 = |\nabla a|^2 + a^2|\nabla S|^2$ \\
 \lean{MadelungNSE} & 2 & the Madelung velocity in the vocabulary of~\cite{OpenAINSE};
   $\nabla\!\cdot\!\nabla\varphi = \Delta\varphi$ in their definitions \\
@@ -126,7 +127,7 @@ module & thms & content \\
   the topological analysis \\
 \bottomrule
 \end{tabular}
-\caption{Modules. Axiom footprint of all 109 theorems:
+\caption{Modules. Axiom footprint of all 113 theorems:
 $\{\lean{propext}, \lean{Classical.choice}, \lean{Quot.sound}\}$.}
 \label{tab:modules}
 \end{table}
@@ -419,9 +420,12 @@ group and finite mode set.
   along solutions of the truncated system;
 \item the Gross--Pitaevskii residual in the vocabulary of~\cite{OpenAINSE}, parallel to their
   Navier--Stokes residual, with the Madelung correspondence as a theorem between them;
-\item the remaining coefficients $C,D,E,K,L$ of~\cite{Godfrin2021} Eq.~(22), which need the same Bose
-  integral at $s = 6\ldots10$ together with a Lagrange inversion --- the target with the most direct
-  value to an experiment, since the paper reports a disagreement with two earlier published series.
+\item the remaining coefficients $C,D,E,K,L$ of~\cite{Godfrin2021} Eq.~(22). The Bose integral is now
+  proved at every natural order, so what remains is the Lagrange inversion $k(\omega)$ and the density
+  of states --- combinatorial rather than analytic work. One structural point emerged in doing this:
+  $D$ and $K$ carry $\zeta(7)$ and $\zeta(9)$, which have no known closed form, so those two
+  coefficients can never be settled by exact algebra, only numerically. That is worth knowing before
+  anyone tries to adjudicate the disagreement with earlier published series.
 \end{enumerate}
 
 \section{Conclusion}

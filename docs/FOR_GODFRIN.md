@@ -129,13 +129,22 @@ Numerically `A = 0.0831 J/(mol·K⁴)`, reproducing the value printed in Eq. (22
 digits. Mathlib supplied `ζ(4) = π⁴/90` and the Gamma integral but **not** the Bose integral; the
 bridge is its Mellin–Dirichlet machinery, and `mellin_bose_four` is the reusable piece.
 
-**What this does not yet cover.** Only `A`. The higher coefficients `C, D, E, K, L` need the same
-Bose integral at `s = 6…10` (each is `Γ(n+1)ζ(n+1)`, so `ζ(6), ζ(8), ζ(10)` are available in Mathlib
-but `ζ(7)` and `ζ(9)` — which appear in `D` and `K` — have no closed form and must stay symbolic),
-*plus* the Lagrange inversion `k(ω)` and the density of states. `hasSum_mellin_bose` is stated for
-general `s` precisely so that this is the next increment rather than a fresh start. If it would be
-useful, the natural deliverable is a machine-checked derivation of all six coefficients from the
-`αᵢ`, which would settle the disagreement with Phillips et al. and Greywall permanently.
+**Extended 2026-09-20: the Bose integral is now general, not just the `s = 4` case.**
+
+- `bose_integral_nat`: `∫₀^∞ tⁿ/(eᵗ−1) dt = n! · ζ(n+1)` for every `n ≥ 1`. This is the single
+  identity all six coefficients of Eq. (22) rest on, so `A, C, D, E, K, L` no longer need separate
+  integral work.
+- `bose_integral_even`: for even order the value is fully explicit, via Mathlib's Bernoulli formula
+  for `ζ(2k)`.
+
+**An honest structural remark on your Eq. (22).** `D` and `K` carry `ζ(7)` and `ζ(9)`. Those have no
+known closed form — they are not missing from Mathlib, they are missing from mathematics. So `A, C,
+E, L` can be given in closed form and `D, K` can only ever be *numerically* evaluated or left
+symbolic. That is worth stating explicitly in any future comparison with Phillips et al. and
+Greywall, because a disagreement in `D` or `K` cannot be settled by exact algebra alone.
+
+**What remains for the full series:** the Lagrange inversion `k(ω)` to `ω⁷` and the density of
+states. Those are combinatorial rather than analytic, and are the natural next increment.
 
 ### 5a. First direction carried out: where the three-phonon channel closes (2026-09-20)
 

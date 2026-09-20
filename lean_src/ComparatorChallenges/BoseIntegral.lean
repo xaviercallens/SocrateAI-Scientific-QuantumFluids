@@ -38,6 +38,28 @@ theorem hasSum_mellin_bose {s : ℂ} (hs : 1 < s.re) :
 Debye `T³` law and hence behind the leading coefficient `A = 2π²k_B⁴V/(15c³ħ³)` of [G21] Eq. (22). -/
 theorem mellin_bose_four : mellin bose 4 = (π : ℂ) ^ 4 / 15 := by
   sorry
+/-! ## The general Bose integral, and the even case in closed form
+
+[G21] Eq. (22) needs the Bose integral at `s = 4, 6, 7, 8, 9, 10` (its coefficients `A, C, D, E, K, L`).
+`bose_integral_nat` gives every one of them as `n! · ζ(n+1)`. For **even** `n+1 = 2k` Mathlib supplies
+`ζ(2k)` in closed form via Bernoulli numbers, so `A, E, L` (and `C`) are fully explicit; the
+coefficients `D` and `K` involve `ζ(7)` and `ζ(9)`, which have no known closed form and must remain
+symbolic — that is a fact about the mathematics, not a gap in this development. -/
+
+/-- **The Bose integral at natural order.** `∫₀^∞ tⁿ/(eᵗ−1) dt = n! ζ(n+1)` for `n ≥ 1`. This is
+the single identity every coefficient of the phonon specific-heat series rests on. -/
+theorem bose_integral_nat {n : ℕ} (hn : 1 ≤ n) :
+    mellin bose (n + 1) = (Nat.factorial n : ℂ) * riemannZeta (n + 1) := by
+  sorry
+/-- **The even case in closed form.** For `k ≥ 1`, `∫₀^∞ t^{2k-1}/(eᵗ−1) dt` equals
+`(2k−1)! · ζ(2k)` with `ζ(2k)` given by Mathlib's Bernoulli formula. At `k = 2` this is `π⁴/15`,
+the value behind the Debye coefficient; at `k = 3, 4, 5` it supplies the `T⁵`, `T⁷` and `T⁹`
+coefficients of [G21] Eq. (22). -/
+theorem bose_integral_even {k : ℕ} (hk : k ≠ 0) :
+    mellin bose ((2 * k - 1 : ℕ) + 1) = (Nat.factorial (2 * k - 1) : ℂ) *
+      ((-1) ^ (k + 1) * (2 : ℂ) ^ (2 * k - 1) * (π : ℂ) ^ (2 * k) * bernoulli (2 * k)
+        / Nat.factorial (2 * k)) := by
+  sorry
 /-! ## From the integral to the coefficient `A` of [G21] Eq. (22)
 
 For a pure phonon branch `ε = ħck` the substitution `x = ħck/k_BT` turns the internal energy

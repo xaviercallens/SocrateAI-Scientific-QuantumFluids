@@ -9,7 +9,9 @@
     "QuantumFluids.VortexWinding.loop_sum_eq_mul",
     "QuantumFluids.VortexWinding.pdiff_add_rev_eq",
     "QuantumFluids.VortexWinding.pdiff_add_rev",
-    "QuantumFluids.VortexWinding.pdiff_add_rev_eq_two_pi_iff"
+    "QuantumFluids.VortexWinding.pdiff_add_rev_eq_two_pi_iff",
+    "QuantumFluids.VortexWinding.balanced_sum_eq_zero",
+    "QuantumFluids.VortexWinding.cut_free_of_ne_pi"
   ],
   "permitted_axioms": [
     "propext",
