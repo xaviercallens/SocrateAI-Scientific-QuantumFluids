@@ -111,3 +111,11 @@ paper/*.blg
 paper/*.fls
 paper/*.fdb_latexmk
 paper/*.synctex.gz
+
+# Godfrin papers: fetched, not vendored. Keep MANIFEST.md and the small CC-BY ancillary tables;
+# ignore the PDFs, source tarballs and extraction scratch (reproduce from MANIFEST.md).
+data/external/godfrin_papers/*.pdf
+data/external/godfrin_papers/*.tar
+data/external/godfrin_papers/src_tmp*/
+data/external/godfrin_papers/*_src/
+data/external/godfrin_papers/**/*.eps

@@ -22,7 +22,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "lean_src"
 OUT = SRC / "ComparatorChallenges"
-SOLUTIONS = ["QuantumFluidsShell", "MadelungSplit", "Duality", "GPGalerkin", "ShellHamiltonian", "DualLength", "RipsFloor", "SigmaRule", "MadelungNSE", "VortexWinding", "QuantizedCirculation"]
+SOLUTIONS = ["QuantumFluidsShell", "MadelungSplit", "Duality", "GPGalerkin", "ShellHamiltonian", "DualLength", "RipsFloor", "SigmaRule", "MadelungNSE", "VortexWinding", "QuantizedCirculation", "HeliumKinematics"]
 PERMITTED = ["propext", "Quot.sound", "Classical.choice"]
 
 DECL = re.compile(r"^(private\s+)?(noncomputable\s+)?(theorem|lemma|def|abbrev|structure|instance)\b")

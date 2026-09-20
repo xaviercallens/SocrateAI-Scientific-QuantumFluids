@@ -1,0 +1,160 @@
+/-
+Kinematic and consistency identities behind the analysis of neutron-scattering data on superfluid
+helium-4, formalised from statements made in
+
+  [G21] Godfrin, Beauvois, Sultan, Krotscheck, Dawidowski, Fak, Ollivier, Phys. Rev. B 103, 104516
+        (2021), arXiv:2012.09067   (equation numbers below are those of the arXiv version);
+  [GK22] Godfrin & Krotscheck, "The Dynamics of Quantum Fluids", arXiv:2206.06039.
+
+These are the relations an experimental analysis leans on without proving: which decays are
+kinematically open, what a recalibration can and cannot change, and the geometry and thermodynamic
+identities that turn time-of-flight channels into a dispersion curve. None is new physics. The
+point of checking them is that several are stated in prose only, two published formulas in the
+preprint are misprinted (see docs/FOR_GODFRIN.md), and the authors themselves note that earlier
+published series for the specific heat "contain errors".
+
+NOT formalised here: the specific-heat series coefficients (they need the Bose integrals
+`∫ x^n/(e^x-1) = Γ(n+1) ζ(n+1)`), the Landau roton asymptotics, and anything about S(Q,ω).
+-/
+
+import Mathlib
+
+namespace QuantumFluids.HeliumKinematics
+
+/-! ## 1. Three-phonon decay and anomalous dispersion  ([G21] Eq. (1)-(2) and the text on `k_c`) -/
+
+/-- Low-`k` dispersion `ε(k) = c k (1 + a k²)`. In [G21]'s convention `ε = ħck(1 - γk²)`, so
+`a = -γ`, and "anomalous" (upward-curving) dispersion is `γ < 0`, i.e. `a > 0`. -/
+def phononDisp (c a k : ℝ) : ℝ := c * k * (1 + a * k ^ 2)
+
+/-- **The energy excess of a collinear decay `k₁ + k₂ → k₁, k₂` is `3 c a k₁ k₂ (k₁ + k₂)`.** -/
+theorem three_phonon_excess (c a k₁ k₂ : ℝ) :
+    phononDisp c a (k₁ + k₂) - phononDisp c a k₁ - phononDisp c a k₂
+      = 3 * c * a * k₁ * k₂ * (k₁ + k₂) := by
+  unfold phononDisp; ring
+
+/-- **Three-phonon decay is kinematically open iff the dispersion is anomalous.** A phonon can
+decay into two only if `ε(k₁+k₂) ≥ ε(k₁) + ε(k₂)`; for positive `c, k₁, k₂` that holds exactly
+when `a ≥ 0`, i.e. `γ ≤ 0`. This is the statement behind "[damping] is then allowed up to a
+critical wave-vector", and why it switches off above ~20 bar where `γ` changes sign. -/
+theorem three_phonon_open_iff {c a k₁ k₂ : ℝ} (hc : 0 < c) (h₁ : 0 < k₁) (h₂ : 0 < k₂) :
+    phononDisp c a k₁ + phononDisp c a k₂ ≤ phononDisp c a (k₁ + k₂) ↔ 0 ≤ a := by
+  have hpos : 0 < 3 * c * k₁ * k₂ * (k₁ + k₂) := by positivity
+  have key := three_phonon_excess c a k₁ k₂
+  constructor
+  · intro h
+    have : 0 ≤ 3 * c * a * k₁ * k₂ * (k₁ + k₂) := by linarith
+    by_contra hneg
+    push_neg at hneg
+    nlinarith [mul_pos hpos (neg_pos.mpr hneg)]
+  · intro ha
+    have : 0 ≤ 3 * c * a * k₁ * k₂ * (k₁ + k₂) := by positivity
+    linarith
+
+/-! ## 2. Two-roton decay and the Pitaevskii plateau  ([GK22], the paragraph on the plateau) -/
+
+variable {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
+
+/-- **Two rotons of wave number `k_R` carry total momentum at most `2 k_R`.** Hence a perturbation
+of energy `2Δ` can decay into two rotons only for `|k| ≤ 2k_R`: "energy and momentum conservation
+dictate that the plateau ends at a wave number of `2k_Δ`". -/
+theorem two_roton_momentum_le {k₁ k₂ : V} {kR : ℝ} (h₁ : ‖k₁‖ = kR) (h₂ : ‖k₂‖ = kR) :
+    ‖k₁ + k₂‖ ≤ 2 * kR := by
+  calc ‖k₁ + k₂‖ ≤ ‖k₁‖ + ‖k₂‖ := norm_add_le _ _
+    _ = 2 * kR := by rw [h₁, h₂]; ring
+
+/-- The upper end is attained by **parallel** rotons … -/
+theorem two_roton_parallel (k₁ : V) : ‖k₁ + k₁‖ = 2 * ‖k₁‖ := by
+  rw [← two_smul ℝ k₁, norm_smul]; simp
+
+/-- … and the lower end, zero total momentum, by **anti-parallel** rotons: "the plateau can in
+principle extend to zero wave number". -/
+theorem two_roton_antiparallel (k₁ : V) : ‖k₁ + (-k₁)‖ = 0 := by simp
+
+/-! ## 3. What a recalibration can and cannot change  ([G21] Eq. (13) and the remark after it) -/
+
+/-- [G21] Eq. (13): `ε = E_i (1 - r²)`, `r` the ratio of elastic to inelastic flight times. -/
+def tofEnergy (Ei r : ℝ) : ℝ := Ei * (1 - r ^ 2)
+
+/-- Every measured energy is **proportional to `E_i`**: recalibrating the incident energy by a
+factor `lam` rescales the whole dispersion curve by `lam`. This is [G21]'s remark that if `Δ_R`
+is revised "energies should be corrected proportionally". -/
+theorem tofEnergy_rescale (lam Ei r : ℝ) : tofEnergy (lam * Ei) r = lam * tofEnergy Ei r := by
+  unfold tofEnergy; ring
+
+/-- **A comparison with `2Δ_R` is calibration-independent.** Since the roton gap is itself one of
+the measured energies, whether a plateau energy lies above or below twice the gap cannot be
+changed by any proportional recalibration. So the statement "the tabulated `ε(k)` exceeds `2Δ_R`
+at the top of the measured range" is not removable by revising `Δ_R`. -/
+theorem plateau_excess_calibration_invariant {lam : ℝ} (hlam : 0 < lam) (Ei r rR : ℝ) :
+    2 * tofEnergy (lam * Ei) rR < tofEnergy (lam * Ei) r ↔ 2 * tofEnergy Ei rR < tofEnergy Ei r := by
+  rw [tofEnergy_rescale, tofEnergy_rescale]
+  constructor <;> intro h <;> nlinarith
+
+/-- [G21] Eq. (12) and Eq. (13) are the same formula, given `D = v_i (t_el - t_s)` and
+`E_i = ½ m v_i²` — the sense in which "only two independent instrumental parameters" remain. -/
+theorem tof_eq12_eq_eq13 {m v tel tin ts : ℝ} (h₁ : tel - ts ≠ 0) (h₂ : tin - ts ≠ 0) :
+    (1 / 2) * m * (v * (tel - ts)) ^ 2 * (1 / (tel - ts) ^ 2 - 1 / (tin - ts) ^ 2)
+      = tofEnergy ((1 / 2) * m * v ^ 2) ((tel - ts) / (tin - ts)) := by
+  unfold tofEnergy; field_simp
+
+/-! ## 4. Landau critical velocity  ([GK22], the paragraph on the Landau criterion) -/
+
+/-- "In a Bose gas, where the dispersion relation is parabolic, the critical velocity is zero":
+for `ε = a k²` the ratio `ε/k` falls below any positive velocity. -/
+theorem landau_velocity_parabolic_zero {a : ℝ} (ha : 0 < a) {v : ℝ} (hv : 0 < v) :
+    ∃ k : ℝ, 0 < k ∧ a * k ^ 2 / k < v := by
+  refine ⟨v / (2 * a), by positivity, ?_⟩
+  have hk : v / (2 * a) ≠ 0 := by positivity
+  rw [pow_two, mul_div_assoc, mul_div_assoc, div_self hk, mul_one]
+  have : a * (v / (2 * a)) = v / 2 := by field_simp
+  rw [this]; linarith
+
+/-- "The linearity of the dispersion relation at low wave vectors is essential": a dispersion lying
+on or above the sound line `c k` has critical velocity at least `c`. -/
+theorem landau_velocity_ge_of_above_sound_line {ε : ℝ → ℝ} {c k : ℝ} (hk : 0 < k)
+    (h : c * k ≤ ε k) : c ≤ ε k / k := by
+  rw [le_div_iff₀ hk]; exact h
+
+/-! ## 5. Equation of state and mode counting  ([G21] Eqs. (6)-(7), and the Debye wave vector) -/
+
+/-- Abraham's equation of state, [G21] Eq. (6). -/
+def abrahamP (A₁ A₂ A₃ ρ₀ ρ : ℝ) : ℝ := A₁ * (ρ - ρ₀) + A₂ * (ρ - ρ₀) ^ 2 + A₃ * (ρ - ρ₀) ^ 3
+
+/-- [G21] Eq. (7) **is** `c² = dP/dρ` applied to Eq. (6): the two equations are consistent. -/
+theorem abraham_sound_speed_sq (A₁ A₂ A₃ ρ₀ ρ : ℝ) :
+    HasDerivAt (abrahamP A₁ A₂ A₃ ρ₀) (A₁ + 2 * A₂ * (ρ - ρ₀) + 3 * A₃ * (ρ - ρ₀) ^ 2) ρ := by
+  unfold abrahamP
+  have h : HasDerivAt (fun x : ℝ => x - ρ₀) 1 ρ := (hasDerivAt_id ρ).sub_const ρ₀
+  have h' : HasDerivAt (fun x : ℝ => A₁ * (x - ρ₀) + A₂ * (x - ρ₀) ^ 2 + A₃ * (x - ρ₀) ^ 3)
+      (A₁ * 1 + A₂ * (2 * (ρ - ρ₀) ^ (2 - 1) * 1) + A₃ * (3 * (ρ - ρ₀) ^ (3 - 1) * 1)) ρ :=
+    ((h.const_mul A₁).add ((h.pow 2).const_mul A₂)).add ((h.pow 3).const_mul A₃)
+  refine h'.congr_deriv ?_
+  norm_num
+  ring
+
+/-- Debye mode counting: `(1/2π²) ∫₀^{k_D} k² dk = k_D³/(6π²)`, so `n = k_D³/(6π²)` and
+`k_D = (6π² n)^{1/3}`. With `n = 0.021836 Å⁻³` this gives `k_D = 1.0895 Å⁻¹`, next to the maxon
+at `k_M = 1.103 Å⁻¹` — the coincidence [G21] points out. -/
+theorem debye_mode_count (kD : ℝ) :
+    (1 / (2 * Real.pi ^ 2)) * ∫ k in (0 : ℝ)..kD, k ^ 2 = kD ^ 3 / (6 * Real.pi ^ 2) := by
+  rw [integral_pow]
+  have : Real.pi ≠ 0 := Real.pi_ne_zero
+  field_simp
+  ring
+
+end QuantumFluids.HeliumKinematics
+
+-- BEGIN axiom audit (generated by scripts/regen_axiom_audit.py -- do not edit by hand)
+#print axioms QuantumFluids.HeliumKinematics.three_phonon_excess
+#print axioms QuantumFluids.HeliumKinematics.three_phonon_open_iff
+#print axioms QuantumFluids.HeliumKinematics.two_roton_momentum_le
+#print axioms QuantumFluids.HeliumKinematics.two_roton_parallel
+#print axioms QuantumFluids.HeliumKinematics.two_roton_antiparallel
+#print axioms QuantumFluids.HeliumKinematics.tofEnergy_rescale
+#print axioms QuantumFluids.HeliumKinematics.plateau_excess_calibration_invariant
+#print axioms QuantumFluids.HeliumKinematics.tof_eq12_eq_eq13
+#print axioms QuantumFluids.HeliumKinematics.landau_velocity_parabolic_zero
+#print axioms QuantumFluids.HeliumKinematics.landau_velocity_ge_of_above_sound_line
+#print axioms QuantumFluids.HeliumKinematics.abraham_sound_speed_sq
+#print axioms QuantumFluids.HeliumKinematics.debye_mode_count

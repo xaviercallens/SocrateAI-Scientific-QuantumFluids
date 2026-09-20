@@ -1,0 +1,24 @@
+{
+  "challenge_module": "ComparatorChallenges.HeliumKinematics",
+  "solution_module": "HeliumKinematics",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.HeliumKinematics.three_phonon_excess",
+    "QuantumFluids.HeliumKinematics.three_phonon_open_iff",
+    "QuantumFluids.HeliumKinematics.two_roton_momentum_le",
+    "QuantumFluids.HeliumKinematics.two_roton_parallel",
+    "QuantumFluids.HeliumKinematics.two_roton_antiparallel",
+    "QuantumFluids.HeliumKinematics.tofEnergy_rescale",
+    "QuantumFluids.HeliumKinematics.plateau_excess_calibration_invariant",
+    "QuantumFluids.HeliumKinematics.tof_eq12_eq_eq13",
+    "QuantumFluids.HeliumKinematics.landau_velocity_parabolic_zero",
+    "QuantumFluids.HeliumKinematics.landau_velocity_ge_of_above_sound_line",
+    "QuantumFluids.HeliumKinematics.abraham_sound_speed_sq",
+    "QuantumFluids.HeliumKinematics.debye_mode_count"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}
