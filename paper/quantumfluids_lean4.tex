@@ -53,7 +53,8 @@ Onsager's inequality where it is not vacuous. We report these retractions in ful
 they are the clearest data we have on the actual subject of the paper: \emph{what formal
 verification does and does not buy in physics}. It caught a false lemma we were about to
 state, an inequality our prose had turned into an equality, a constant that made a bound
-useless in the limit that mattered, and eleven theorems that had silently escaped audit. It
+useless in the limit that mattered, eleven theorems that had silently escaped audit, and a
+lemma whose \texttt{private} modifier had exempted it from independent checking. It
 could not tell us that a correct theorem was already known, nor that a hypothesis was
 physically naive; a literature search and a simulation did that. We give the library to the
 community as verification infrastructure, with the open formalization targets we consider
@@ -251,6 +252,11 @@ formalizing or by the verification stack.
   65 audit lines: eleven theorems had never been axiom-audited, and every count we had
   published conflated ``theorems'' with ``theorems carrying an audit line''. All eleven were
   clean; the defect was in the reporting. The generated audit (\S\ref{sec:library}) is the fix.
+\item \textbf{A lemma silently exempt from independent checking.} One helper was declared
+  \lean{private}. A private name is mangled, so it cannot be exported to the second kernel:
+  the run aborted rather than passing, and only then did we notice that the lemma had never
+  been independently checked. It is now public. A visibility modifier had been acting as an
+  unintended exemption from verification.
 \item \textbf{A clone-breaking artefact.} The same review found the build directory
   committed as a symlink to a local disk, because an ignore pattern with a trailing slash
   matches directories and not symlinks. No proof assistant catches this; a second person
@@ -328,11 +334,20 @@ instructive mainly about controls.
   Two properties of the method had to be learned and are now pinned as tests:
   imaginary-time relaxation first forms vortex cores and then \emph{destroys} the vortices,
   and the timestep must respect $\Delta t\,k_{\max}^2/2\ll1$ (a run fifty times over the
-  bound is detectably wrong). \CONVERGENCE
+  bound is detectably wrong). At $t=20$ the
+  minimum separation is $0.28\,\xi$ ($\Delta t=0.01$) and $0.38\,\xi$ ($\Delta t=0.005$),
+  inside the matched Poisson band ($0.09$--$0.78\,\xi$) and far below $\xi$; and the fraction
+  of separations below $\xi$, $0.07$--$0.08$, lies \emph{above} the null's 95th percentile
+  ($0.04$). Vortices sit \emph{closer} than random placement, not farther. Bulk statistics are
+  converged in the timestep (count $3\%$, mean separation $2\%$); the minimum, an extreme
+  statistic of a chaotic system, is not ($34\%$), and the energy drift ($2.4\%$) still
+  exceeds the solver's own strict criterion, so the refutation rests on the verdict being
+  identical at both timesteps rather than on any single number. \textbf{By the
+  pre-registered criteria the hypothesis is refuted.}
 \end{enumerate}
-We think the hypothesis was physically naive: annihilation and reconnection are processes
-that pass continuously through separations below $\xi$, so quantization constrains
-circulation, not distance.
+The hypothesis was physically naive. Opposite-sign vortices attract and annihilate, a process
+that passes continuously through separations below $\xi$; a snapshot of a live configuration
+therefore contains pairs in mid-approach. Quantization constrains circulation, not distance.
 
 \section{Using and extending the library}
 
@@ -373,7 +388,7 @@ tag \texttt{v1.1.0}.
 
 \paragraph{Acknowledgements.} An external reviewer working from the LeanMaster project
 rebuilt the tagged release independently and reported the two defects of
-\S\ref{sec:caught}, items~5--6. The $^4$He dispersion data are those of Godfrin et
+\S\ref{sec:caught}, items~5 and~7. The $^4$He dispersion data are those of Godfrin et
 al.~\cite{Godfrin2021}; the turbulence snapshot is that of Polanco, M\"uller and
 Krstulovic~\cite{PolancoData}.
 

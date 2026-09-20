@@ -301,3 +301,50 @@ allows. Real, and above both the null and the geometric minimum — but a factor
 **Net status: TDA-DS is partially supported and not established.** The floor result is reportable with
 its caveat; the hypothesis as pre-registered is not confirmed, because one of its own refutation
 criteria fired. A dataset with `ξ/Δx ≳ 5` remains required for a strong claim.
+
+---
+
+## §12 THIRD RUN — our own simulation at ξ/Δx = 8. **TDA-DS is REFUTED.**
+
+`exploration/tda/run_own_gpe.py`, `run_own_gpe_converge.py`. A dataset survey found **no public
+dilute-BEC data with ξ/Δx ≥ 5** (best: 2.26 in 2D, 1.73 in 3D — both within ~1.5× of the 1.5 that
+made §10–§11 inconclusive), so the resolution requirement was met by simulating: split-step 2D GPE,
+1024², `L = 128 ξ`, 200 planted vortices, eight solver controls (`tests/test_gpe_solver.py`). The
+grid artefact scale, 0.707 Δx = 0.088 ξ, sits ~11× below ξ.
+
+| | Δt = 0.01 | Δt = 0.005 | matched Poisson null |
+|---|---|---|---|
+| vortices at t = 20 | 248 | 240 | — |
+| floor `F` | **0.280 ξ** | **0.375 ξ** | mean 0.35–0.40, p05–p95 **0.09–0.78** |
+| `f_<` | **0.081** | **0.071** | mean 0.024, p95 **0.040–0.042** |
+| mean MST | 4.90 ξ | 4.98 ξ | — |
+| energy drift | 5.2 % | 2.4 % | — |
+
+**Verdict.** Both refutation conditions of §3 fire, at both timesteps: `F ≪ 1` systematically, and `F`
+lies *inside* the Poisson band. And the result is sharper than "no floor": `f_<` lies **above the
+null's 95th percentile**. Vortices sit **closer** than random placement, not farther.
+
+**Why, and it was foreseeable.** Opposite-sign vortices attract and annihilate; that is a *process*
+passing continuously through separations below ξ, so a snapshot of a live configuration contains
+pairs in mid-approach. §1's bridge — "below ~ξ they reconnect instead" — contained its own
+refutation: reconnecting is not the same as never being there. **Quantization constrains
+circulation, not distance.** The hypothesis was physically naive, not merely unconfirmed.
+
+**What the §11 number was.** `F = 0.943 ξ` on the Polanco snapshot is then best read as a more
+relaxed configuration with less annihilation traffic, at a resolution (ξ = 1.5 Δx) too coarse to see
+close pairs at all — not as a floor.
+
+**Caveats, stated against the result.**
+- *Convergence is partial.* Count (3 %) and mean separation (2 %) are converged in Δt. `F` moves 34 %
+  — it is the minimum of a chaotic system, an extreme statistic that is not pointwise convergent. The
+  refutation rests on the verdict being **identical at both timesteps**, not on either value.
+- *The run fails the solver's own strict energy control* (2.4 % against the 10⁻⁴ demanded at `max_dt`).
+  `max_dt` would have needed ~630 000 steps. Disclosed rather than relaxed.
+- *C-RES fails* at 29 % on 2× coarsening — consistent with `F` being an extreme statistic, and one
+  more reason not to quote it as a number.
+- **Erratum:** the first production script advanced 5 time units per stage whatever the label, so its
+  rows printed as t = 5, 10, 20 were t = 5, 10, 15. Found because this run disagreed with it.
+
+**Consequence.** `TDA_DUAL_SCALE_COMBINED.md` (the two-probe correlation, CDS) loses its real-space
+half: there is no floor for `F` to measure. With the Fourier-space half already shown dimensionally
+forced (`RETRACTIONS.md` R2), **CDS is withdrawn** rather than left pending.

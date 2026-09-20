@@ -2,7 +2,7 @@
 
 **A machine-checked Lean 4 library of quantum-fluid structure — with a record of what formalization caught, and what it could not**
 
-[![Tests](https://img.shields.io/badge/tests-166%20passing-brightgreen)]() [![Lean](https://img.shields.io/badge/Lean-4.34.0--rc2-blue)]() [![Theorems](https://img.shields.io/badge/theorems-89%20kernel--checked-blue)]() [![Comparator](https://img.shields.io/badge/Comparator-two%20kernels-success)]() [![Release](https://img.shields.io/badge/release-v1.0.0-orange)](https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids/releases)
+[![Tests](https://img.shields.io/badge/tests-174%20passing-brightgreen)]() [![Lean](https://img.shields.io/badge/Lean-4.34.0--rc2-blue)]() [![Theorems](https://img.shields.io/badge/theorems-89%20kernel--checked-blue)]() [![Comparator](https://img.shields.io/badge/Comparator-two%20kernels-success)]() [![Release](https://img.shields.io/badge/release-v1.2.0-orange)](https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids/releases)
 
 ---
 
@@ -80,7 +80,7 @@ kernels* (Lean's own and `nanoda`). A pass means the proof is sound and uses onl
 which remains a human audit.
 
 ```bash
-# 166 tests
+# 174 tests
 uv run pytest tests/ -q
 
 # Lean (4.34.0-rc2, Mathlib v4.34.0-rc2); 89 theorems across 12 libraries

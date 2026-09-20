@@ -38,8 +38,10 @@ section Calculus
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
 
-/-- The line `t ↦ x + t v` has derivative `v` at `t = 0`. -/
-private theorem hasDerivAt_line (x v : E) :
+/-- The line `t ↦ x + t v` has derivative `v` at `t = 0`.
+(Public, not `private`: a private name is mangled and cannot be exported for independent kernel
+checking, so keeping it private silently exempted it from Comparator.) -/
+theorem hasDerivAt_line (x v : E) :
     HasDerivAt (fun t : ℝ => x + t • v) v 0 := by
   sorry
 /-- **Directional derivative of an amplitude-phase wavefunction.** -/
