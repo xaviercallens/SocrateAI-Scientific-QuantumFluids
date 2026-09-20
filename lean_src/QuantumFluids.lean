@@ -17,6 +17,7 @@ useful to others in their own right are marked (*).
 | `VortexWinding` (*) | correctness of phase-winding vortex detection: the loop sum is exactly an integer multiple of `2π`, edges cancel except at a phase difference of exactly `π`, and that failure case characterised |
 | `QuantizedCirculation` (*) | circulation around a closed loop is `q · κ` with `κ = h/m`; no fraction of a quantum, and the quantum is attained |
 | `HeliumKinematics` (*) | the identities a neutron-scattering analysis of superfluid ⁴He leans on: three-phonon decay open iff dispersion anomalous, two-roton momentum range `[0, 2k_R]`, calibration-invariance of any comparison with `2Δ_R`, time-of-flight formula equivalence, Landau critical velocity, `c² = dP/dρ` for Abraham's equation of state, Debye mode counting |
+| `BoseIntegral` (*) | `∫₀^∞ t^{s-1}/(eᵗ−1) = Γ(s)ζ(s)` via Mathlib's Mellin machinery, `∫₀^∞ t³/(eᵗ−1) = π⁴/15`, and the Debye `T³` specific heat with the coefficient used in the ⁴He literature |
 | `GPGalerkin` (*) | truncated Gross–Pitaevskii on any finite mode set: `Q = Σ_q |A_q|² ≥ 0`, mass and energy algebra, the Hamiltonian gradient identity |
 | `MadelungSplit` | `|∇ψ|² = |∇a|² + a²|∇S|²` — the quantum-pressure / hydrodynamic split |
 | `MadelungNSE` | the same objects in the OpenAI Navier–Stokes vocabulary; `∇·(∇φ) = Δφ` in their formalism |
@@ -38,3 +39,4 @@ import SigmaRule
 import Duality
 import RipsFloor
 import HeliumKinematics
+import BoseIntegral

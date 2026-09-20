@@ -2,7 +2,7 @@
 
 **A machine-checked Lean 4 library of quantum-fluid structure — with a record of what formalization caught, and what it could not**
 
-[![Tests](https://img.shields.io/badge/tests-174%20passing-brightgreen)]() [![Lean](https://img.shields.io/badge/Lean-4.34.0--rc2-blue)]() [![Theorems](https://img.shields.io/badge/theorems-89%20kernel--checked-blue)]() [![Comparator](https://img.shields.io/badge/Comparator-two%20kernels-success)]() [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22853895.svg)](https://doi.org/10.5281/zenodo.22853895) [![Release](https://img.shields.io/badge/release-v1.2.0-orange)](https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids/releases)
+[![Tests](https://img.shields.io/badge/tests-174%20passing-brightgreen)]() [![Lean](https://img.shields.io/badge/Lean-4.34.0--rc2-blue)]() [![Theorems](https://img.shields.io/badge/theorems-109%20kernel--checked-blue)]() [![Comparator](https://img.shields.io/badge/Comparator-two%20kernels-success)]() [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22853895.svg)](https://doi.org/10.5281/zenodo.22853895) [![Release](https://img.shields.io/badge/release-v1.2.0-orange)](https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids/releases)
 
 ---
 
@@ -19,6 +19,7 @@ import QuantumFluids   -- Lean 4.34.0-rc2, Mathlib tag v4.34.0-rc2
 |---|---|
 | **`VortexWinding`** | correctness of phase-winding vortex detection — the loop sum is *exactly* an integer multiple of 2π — and its **exact failure case**: edge cancellation breaks at a phase step of exactly π. Bare antisymmetry of the principal phase difference, which codes routinely assume, is **false**. |
 | **`QuantizedCirculation`** | `Γ = q·κ`, `κ = h/m`; no fraction of a quantum; and the quantum is *attained* by an explicit loop, so the bound is sharp. |
+| **`HeliumKinematics`**, **`BoseIntegral`** | the identities a neutron-scattering analysis of superfluid ⁴He rests on — three-phonon decay open **iff** the dispersion is anomalous, two-roton momentum range, calibration-invariance of any comparison with 2Δ_R — and `∫₀^∞ t³/(eᵗ−1) = π⁴/15` with the Debye `T³` coefficient. Addressed to published work: see [`docs/FOR_GODFRIN.md`](docs/FOR_GODFRIN.md). |
 | **`GPGalerkin`** | truncated Gross–Pitaevskii on **any** finite mode set: `Q = Σ_q|A_q|² ≥ 0`, mass and energy algebra, the Hamiltonian gradient identity. |
 | `MadelungSplit`, `MadelungNSE` | the Madelung decomposition, and the same objects inside the vocabulary of OpenAI's Navier–Stokes formalization, **imported as a real dependency**. |
 | `DualLength`, `QuantumFluidsShell`, `ShellHamiltonian`, `SigmaRule`, `Duality`, `RipsFloor` | correct but withdrawn-as-contributions or auxiliary — see below. |
@@ -45,7 +46,6 @@ actually buy in physics?**
 | a **false lemma** before it was used (antisymmetry of the phase difference) | that a correct theorem was **already known** |
 | an inequality our **prose had turned into an equality** (Bijl–Feynman) — the Lean was right, the memo was wrong | that a result was **dimensionally forced** |
 | a **`1/D` constant** that made a bound useless in the limit that mattered | that a hypothesis was **physically naive** |
-| **11 theorems that had escaped the axiom audit** (found via an external review) | |
 
 The kernel is for truth. Novelty needs a library, measurement needs controls, and the build needs a
 second person. Paper: [`paper/quantumfluids_lean4.pdf`](paper/quantumfluids_lean4.pdf).
@@ -83,7 +83,7 @@ which remains a human audit.
 # 174 tests
 uv run pytest tests/ -q
 
-# Lean (4.34.0-rc2, Mathlib v4.34.0-rc2); 89 theorems across 12 libraries
+# Lean (4.34.0-rc2, Mathlib v4.34.0-rc2); 109 theorems across 14 libraries
 cd lean_src && lake build
 
 # Comparator (needs landrun, lean4export, nanoda_bin on PATH — see docs/COMPARATOR_SETUP.md)
@@ -107,7 +107,7 @@ uv run python exploration/second_invariant/run_search.py
 
 | path | contents |
 |---|---|
-| `lean_src/` | 12 Lean libraries, 89 theorems, axiom footprint `{propext, Classical.choice, Quot.sound}` |
+| `lean_src/` | 14 Lean libraries, 109 theorems, axiom footprint `{propext, Classical.choice, Quot.sound}` |
 | `lean_src/ComparatorChallenges/` | generated challenge statements + configs (contain `sorry` **by design**) |
 | `src/quantumfluids/` | adapters, dispersion fit, shell model, invariant search, TDA (GUDHI) |
 | `docs/DUAL_SCALE_PROPOSAL.md` | the consolidated proposal |

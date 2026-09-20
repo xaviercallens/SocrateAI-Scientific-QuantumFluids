@@ -1,0 +1,17 @@
+{
+  "challenge_module": "ComparatorChallenges.BoseIntegral",
+  "solution_module": "BoseIntegral",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.BoseIntegral.hasSum_bose",
+    "QuantumFluids.BoseIntegral.hasSum_mellin_bose",
+    "QuantumFluids.BoseIntegral.mellin_bose_four",
+    "QuantumFluids.BoseIntegral.debyeEnergy_eq",
+    "QuantumFluids.BoseIntegral.debye_specific_heat"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

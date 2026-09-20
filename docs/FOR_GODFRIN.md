@@ -109,6 +109,34 @@ Stated as questions, because the data are his and the physics is his.
   all three against the seven pressures in `DispersionAllPressures.txt` would show whether they move
   together.
 
+### 5b. Second direction carried out: the Debye coefficient `A` of Eq. (22), machine-checked end to end (2026-09-20)
+
+`lean_src/BoseIntegral.lean`, 5 theorems, axioms `{propext, Classical.choice, Quot.sound}`; two
+perturbed versions fail to compile.
+
+Ranked first in §4 because the paper states earlier published series "contain errors". The chain for
+the leading term is now verified:
+
+| step | theorem |
+|---|---|
+| `1/(eᵗ−1) = Σₙ e^{−(n+1)t}` for `t > 0` | `hasSum_bose` |
+| `∫₀^∞ t^{s−1}/(eᵗ−1) dt = Γ(s)·Σₙ (n+1)^{−s}`, `Re s > 1` | `hasSum_mellin_bose` |
+| **`∫₀^∞ t³/(eᵗ−1) dt = π⁴/15`** (= `Γ(4)ζ(4)`) | `mellin_bose_four` |
+| the Debye energy collapses to `π²V(k_BT)⁴/(30(ħc)³)` | `debyeEnergy_eq` |
+| **`C_V = dE/dT = A T³` with `A = 2π²k_B⁴V/(15c³ħ³)`** | `debye_specific_heat` |
+
+Numerically `A = 0.0831 J/(mol·K⁴)`, reproducing the value printed in Eq. (22) to the quoted four
+digits. Mathlib supplied `ζ(4) = π⁴/90` and the Gamma integral but **not** the Bose integral; the
+bridge is its Mellin–Dirichlet machinery, and `mellin_bose_four` is the reusable piece.
+
+**What this does not yet cover.** Only `A`. The higher coefficients `C, D, E, K, L` need the same
+Bose integral at `s = 6…10` (each is `Γ(n+1)ζ(n+1)`, so `ζ(6), ζ(8), ζ(10)` are available in Mathlib
+but `ζ(7)` and `ζ(9)` — which appear in `D` and `K` — have no closed form and must stay symbolic),
+*plus* the Lagrange inversion `k(ω)` and the density of states. `hasSum_mellin_bose` is stated for
+general `s` precisely so that this is the next increment rather than a fresh start. If it would be
+useful, the natural deliverable is a machine-checked derivation of all six coefficients from the
+`αᵢ`, which would settle the disagreement with Phillips et al. and Greywall permanently.
+
 ### 5a. First direction carried out: where the three-phonon channel closes (2026-09-20)
 
 `exploration/godfrin/three_phonon_threshold.py`; identities in `HeliumKinematics` (15 theorems now).
