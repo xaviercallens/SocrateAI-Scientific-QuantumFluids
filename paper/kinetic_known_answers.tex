@@ -1,0 +1,379 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,
+            urlcolor=blue!60!black]{hyperref}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\lean}[1]{\texttt{\small #1}}
+\newtcolorbox{keybox}[1][]{colback=blue!3,colframe=blue!45!black,
+  boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+\newtcolorbox{failbox}[1][]{colback=red!3,colframe=red!45!black,
+  boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+
+\title{\textbf{Known answers first:}\\
+\large a certified Landau root, a Vlasov--Poisson solver with its failure modes pinned,\\
+zero sound in Lean, and what persistent homology does and does not add}
+
+\author{Xavier Callens\\
+\small SocrateAI-Scientific-QuantumFluids\\
+\small \url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}}
+\date{September 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+We report a small, fully pre-registered validation kit for collisionless damping, spanning a plasma and
+a Fermi liquid, and we report it including the predictions that failed. (i)~The least-damped root of the
+linearised Vlasov--Poisson dispersion relation for a Maxwellian is enclosed with a computer-assisted
+certificate in ball arithmetic: at $k\lambda_D=0.5$,
+$\omega = 1.4156618886045364\ldots - 0.1533594669096048\ldots\,i$, certified to $10^{-40}$; we found no
+prior certified enclosure. (ii)~A semi-Lagrangian solver reproduces the certified rate to $0.14\%$ and
+distinguishes neighbouring wavenumbers, reproduces the free-streaming recurrence time exactly, and
+reproduces a closed-form ballistic plasma echo to $2\times10^{-9}$. (iii)~Two predictions that we
+transferred from free streaming to the self-consistent plasma---the recurrence time and the echo
+time---\emph{failed} their pre-registered tolerances, both by about $9\%$, and a resolution study shows
+the shift is physical. (iv)~In Lean~4 we prove that undamped zero sound in a Fermi liquid exists if and
+only if the Landau parameter is positive, in three dimensions and in two, the latter being the geometry
+of neutron-scattering experiments on $^3$He films; this is textbook physics, newly machine-checked.
+(v)~We use cubical persistent homology strictly as an instrument with known-answer controls. A
+duality control holds exactly on simulation data. The two instruments built on it \emph{both failed}
+their pre-registered criteria---a density-only vortex detector (precision $0.87$, recall $0.43$ against
+phase-winding ground truth) and a phase-space hole counter---and for one identifiable reason: $H_0$
+persistence is depth relative to a connecting saddle, and in both systems the objects of interest share
+a valley. Of twenty-five pre-registered criteria and predictions, fourteen were met and eleven were not; three
+of the eleven were errors in our own criteria or measurement design, and are reported as such.
+
+Nothing here is new physics. Nonlinear Landau damping has just been formalized in Lean by
+Bedrossian~\cite{Bedrossian2026}; our Lean results are elementary by comparison and one of them is
+subsumed by that work. The contribution is the discipline: every number below was preceded by a
+committed statement of what it should be, and the record of which of those statements were wrong.
+\end{abstract}
+
+\section{Introduction}
+
+Landau damping of a plasma wave and Landau damping of zero sound in liquid $^3$He are one
+phenomenon: a collective mode of a collisionless kinetic equation loses energy to particles moving at
+its phase velocity. The first is the standard acceptance test of every Vlasov code; the second decides
+whether a collective mode of a Fermi liquid is sharp or broad in a neutron-scattering
+spectrum~\cite{Godfrin2012}. This paper builds a small toolkit across that bridge, with one rule: a
+quantity is computed only after the value it should take, and the tolerance, have been written down and
+committed. The pre-registration, its three dated amendments, and every script are in the repository.
+
+\begin{keybox}
+\textbf{What is and is not claimed.} \emph{New, and small:} a certified enclosure of the Landau root
+(\S\ref{sec:k1}); a machine-checked zero-sound criterion in 2D and 3D (\S\ref{sec:lean}); a measured, and
+poor, error rate for prominence-based vortex detection from density alone, with the mechanism of its
+failure (\S\ref{sec:tda}). \emph{Not new:}
+the benchmark itself, the plasma echo~\cite{Gould1967}, phase mixing, and---emphatically---anything
+resembling a theorem about nonlinear Landau damping, which is
+Mouhot--Villani's~\cite{MouhotVillani2011} and, in Lean, Bedrossian's~\cite{Bedrossian2026}.
+\end{keybox}
+
+We began this work believing that a Lean formalization of nonlinear Landau damping was out of reach, and
+wrote as much in the project's planning document. The literature check, run before any code, found that
+it had been posted six days earlier. That planning document now carries an erratum. The episode is the
+reason \S\ref{sec:lean} is modest, and an instance of this project's recurring lesson: search first.
+
+\section{A certified Landau root}
+\label{sec:k1}
+
+In units $\omega_p=v_{\rm th}=\lambda_D=1$, for a Maxwellian background,
+\begin{equation}
+D(\omega,k) = 1+\frac{1}{k^2}\bigl[1+\zeta Z(\zeta)\bigr],\qquad \zeta=\frac{\omega}{\sqrt2\,k},\qquad
+Z(\zeta) = i\sqrt{\pi}\,e^{-\zeta^2}\operatorname{erfc}(-i\zeta).
+\end{equation}
+Written this way $Z$ is entire, so the formula is already Landau's analytic continuation to
+$\operatorname{Im}\omega<0$ with no case distinction. We evaluate $D$ and $D'$ (using
+$Z'=-2(1+\zeta Z)$) in Arb ball arithmetic~\cite{Arb} and apply the interval Newton operator
+$N(B)=m-D(m)/D'(B)$ to a square ball $B$ with midpoint $m$: if $N(B)\subset\operatorname{int}B$, then $D$
+has exactly one zero in $B$. All rounding error is inside the balls.
+
+\begin{table}[h]\centering\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+$k$ & $\omega_r$ & $\gamma$ \\
+\midrule
+0.3 & $1.159846480591913783957252858902818764736$ & $-0.01262036842111715381386333101215427213543$\\
+0.4 & $1.285056969653746093937441697179005657870$ & $-0.06612795869074925181490085255855642353114$\\
+0.5 & $1.415661888604536429791654965787201432819$ & $-0.1533594669096048340930722853059164940159$\\
+\bottomrule
+\end{tabular}
+\caption{Certified least-damped roots; every digit shown is inside a ball of radius below $3\times10^{-40}$
+proved to contain exactly one zero.}
+\label{tab:roots}
+\end{table}
+
+The standard numerical reference is Canosa~\cite{Canosa1973}, $\gamma=-0.15336$ at $k=0.5$, with which
+Table~\ref{tab:roots} agrees in every digit he gives. A search for a prior computer-assisted enclosure of
+this root found none; that is an absence of hits, not a proof of absence. The same code certifies the
+purely growing root of the two-stream background used in \S\ref{sec:tda}.
+
+\paragraph{Controls.} A ball of radius $10^{-3}$ about $1.4156-0.1433i$---the right frequency with the
+damping rate off by $0.01$---is \emph{not} certified; the same ball about the true root is.
+
+\paragraph{What is certified.} A zero of the formula above. That the formula describes the physics is
+not something ball arithmetic can know; it is tested against an independent solver in
+\S\ref{sec:k2}.
+
+\begin{failbox}
+\textbf{A failed criterion.} Our pre-registered pass condition was that the certified midpoint ``rounds
+to'' the literature's $1.4156$ and $-0.1533$. It rounds to $1.4157$ and $-0.1534$: the literature values
+are truncations. By the letter the criterion failed, through our wording. We record it rather than
+reword it.
+\end{failbox}
+
+\section{A solver validated against the certificate}
+\label{sec:k2}
+
+The solver is deliberately ordinary: Strang splitting, exact Fourier shift in $x$, cubic-spline
+semi-Lagrangian advection in $v$, FFT Poisson solve. Parameters were fixed in advance
+($N_x=64$, $N_v=256$, $v_{\max}=6$, $\Delta t=0.1$, perturbation $0.01\cos kx$, rate from a line through
+the maxima of $\ln|E_1|$ in $5\le t\le25$).
+
+\begin{table}[h]\centering\small
+\begin{tabular}{@{}llllll@{}}
+\toprule
+run & $k$ & measured $\gamma$ & error & measured $\omega$ & error \\
+\midrule
+A & 0.5 & $-0.15358$ & $0.14\%$ & $1.41521$ & $0.03\%$ \\
+B & 0.4 & $-0.06637$ & $0.36\%$ & $1.28485$ & $0.02\%$ \\
+\bottomrule
+\end{tabular}
+\caption{Against the certified roots; tolerances were $2\%$ and $1\%$. Run~B misses the $k=0.5$ root by
+$57\%$: the comparison can tell wavenumbers apart, which is what makes Run~A informative. Mass drifts by $7\times10^{-10}$ over $t=50$, which \emph{fails} our pre-registered $10^{-10}$; we believe, but have
+not verified, that this is the zero-fill beyond $\pm v_{\max}$ in the spline step. Energy drift, for which we set no
+threshold, is below $6\times10^{-7}$.}
+\end{table}
+
+\paragraph{Recurrence.} The velocity quadrature aliases the free-streaming phase $e^{-ikvt}$ at
+$T_R=2\pi/(k\Delta v)$. We pre-registered that at $N_v=32$ ($T_R=33.51$) the largest maximum of $|E_1|$
+in $25<t<45$ would fall within $5\%$ of $T_R$.
+
+\begin{failbox}
+\textbf{Failed: $36.5$, an error of $8.9\%$.} A diagnostic written \emph{after} the failure, and
+labelled as such in the repository, shows why. With the field switched off, the density mode recurs at
+$t=33.50$ with amplitude ratio $1.000$: the formula is exact for what it describes. With the field on,
+the recurring perturbation drives a Langmuir oscillation and the field's largest maximum lags by $3.0$,
+about two thirds of an oscillation period. We had applied a free-streaming formula to a self-consistent
+quantity.
+\end{failbox}
+
+\section{The plasma echo}
+\label{sec:k3}
+
+A perturbation in mode $k_1$ at $t=0$ phase-mixes away; a second in mode $k_2$ at $t=\tau$ does the
+same; at second order their product contains a term whose velocity phase unwinds at
+\begin{equation}
+t_e=\tau\,\frac{k_2}{k_2-k_1},
+\end{equation}
+producing a macroscopic response in mode $k_2-k_1$ from two disturbances that have both
+disappeared~\cite{Gould1967}. Controlling the accumulation of such echoes is the central difficulty of
+the nonlinear theory~\cite{MouhotVillani2011}. For free streaming with multiplicative pulses of amplitude
+$\alpha_1,\alpha_2$ the response is closed-form,
+\begin{equation}
+\rho_{k_2-k_1}(t) = \tfrac12\alpha_1\alpha_2\,
+  \exp\!\bigl(-\tfrac12[(k_2-k_1)t-k_2\tau]^2\bigr),
+\label{eq:echo}
+\end{equation}
+the Gaussian being the transform of the Maxwellian, which we also prove in Lean
+(\lean{maxwellian\_mode}, \S\ref{sec:lean}). With $k_1=0.5$, $k_2=1.5$, $\tau=10$, so $t_e=15$:
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+\item \textbf{Field off.} The solver matches \eqref{eq:echo}, prefactor included, to
+  $2\times10^{-9}$ of the peak (tolerance $10^{-3}$), peaking at $t=15.00$. Without the second pulse the
+  echo mode stays at $10^{-12}$ of the peak.
+\item \textbf{Field on.} We predicted a peak within $5\%$ of $15.0$.
+\end{itemize}
+
+\begin{failbox}
+\textbf{Failed: $16.40$, an error of $9.3\%$}, with amplitude $2.08$ times the ballistic value. Doubling
+the velocity resolution and halving the time step gives $16.400$ again and the same amplitude to
+$0.04\%$, so the shift is not numerical: the self-consistent field delays and amplifies the echo. The
+field-on negative control also failed its $1\%$ threshold ($1.5\%$): a single pulse generates its own
+second harmonic at order $\alpha_1^2$, which we had not allowed for. Both are known physics---the
+echo's shape depends on the dielectric response---that we did not apply when writing the prediction.
+\end{failbox}
+
+\paragraph{The pattern.} Every exact known answer was reproduced to near rounding error. Both
+predictions that failed were free-streaming formulas we had transferred to the interacting system, and
+both were off by about $9\%$ at these parameters. For a validation suite the practical conclusion is to
+test recurrence and echo timing \emph{with the field off}, where they are exact, and to treat the
+field-on values as measurements.
+
+\section{Machine-checked statements}
+\label{sec:lean}
+
+All in Lean~4.34.0-rc2 with Mathlib, standard axioms only, each with a perturbed statement that is
+required to fail, inside a library of 145 theorems described elsewhere~\cite{CallensLean}.
+
+\paragraph{Zero sound.} With a single Landau parameter $F=F_0^s$, a collective mode of phase velocity
+$s\,v_F$ satisfies $1+F\,\Omega(s)=0$; it is undamped iff $s>1$, outside the particle--hole continuum,
+and Landau-damped otherwise~\cite{BaymPethick}. In three dimensions
+$\Omega(s)=1-\tfrac s2\ln\frac{s+1}{s-1}$; in two, $\Omega(s)=1-s/\sqrt{s^2-1}$.
+\begin{verbatim}
+theorem zero_sound_iff (F : R) :
+    (exists s, 1 < s /\ s / 2 * log ((s + 1) / (s - 1)) - 1 = 1 / F) <-> 0 < F
+theorem zero_sound_2d_iff (F : R) :
+    (exists s, 1 < s /\ 1 + F * (1 - s / sqrt (s ^ 2 - 1)) = 0) <-> 0 < F
+\end{verbatim}
+(ASCII rendering.) The 3D proof brackets $g(s)=\tfrac s2\ln\frac{s+1}{s-1}-1$ between
+$\tfrac12\ln\frac{2}{s-1}-1$ and $1/(s-1)$, using Mathlib's $\frac{2x}{x+2}<\ln(1+x)$ for positivity,
+and closes with the intermediate value theorem. In 2D the root is explicit,
+$s=(1+F)/\sqrt{1+2F}$. Replacing $0<F$ by $0\le F$ fails to compile in both. The 2D case is included
+because the neutron-scattering observation of a collective mode in a Fermi liquid by Godfrin et
+al.~\cite{Godfrin2012} is on a monolayer, where the logarithmic formula does not apply. Uniqueness of the
+3D root, $F_1^s$, finite temperature and the damped branch are not treated.
+
+\paragraph{Phase mixing.} For any $g:\mathbb R\to\mathbb C$ and $k\neq0$,
+$\int g(v)e^{-ikvt}\,dv\to0$; $e^{ik(x-vt)}g(v)$ solves the transport equation; and for the unit
+Maxwellian the mode is exactly $e^{-k^2t^2/2}$. The first is a reparametrisation of Mathlib's
+Riemann--Lebesgue lemma and is subsumed by~\cite{Bedrossian2026}; it is here because
+\eqref{eq:echo} is a known answer, and a known answer should be a checked one.
+
+\section{Persistent homology as an instrument}
+\label{sec:tda}
+
+This project has previously made three topological proposals about quantum fluids; one was refuted by
+simulation, one withdrawn, and one stopped at the literature check as a renaming of topographic
+prominence~\cite{CallensLean}. We therefore framed this section as instruments with known-answer
+controls, and state at the outset what the central quantity is: the $H_0$ sublevel bar of a local
+minimum is (value at the minimum, value at the saddle where its basin joins a deeper one). Its length is
+prominence, upside down. Nothing below is new mathematics. All computations use GUDHI~\cite{GUDHI}
+cubical complexes.
+
+\subsection{A duality control, and why it matters}
+
+For a function on a closed surface, finite $H_0$ sublevel pairs $(b,d)$ of $\rho$ correspond to finite
+$H_1$ sublevel pairs $(-d,-b)$ of $-\rho$~\cite{CSEH2009}. On pixel data this holds exactly only if the
+two sides use \emph{dual} cubical constructions---pixels as top-dimensional cells on one side, as
+vertices on the other---and with periodic identification these are dual filtrations of the
+torus~\cite{Bleile2022}. We pre-registered both the agreement and its converse: with the \emph{same}
+construction on both sides the diagrams must differ, since the two sides then use different pixel
+connectivities.
+
+\begin{table}[h]\centering\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+field & dual constructions & same construction \\
+\midrule
+smooth random, $128^2$ & $81$ vs $81$ pairs, max difference $0$ & $81$ vs $116$ pairs \\
+$|\psi|^2$, Gross--Pitaevskii, $1024^2$ & $985$ vs $985$ pairs, max difference $0$ & $985$ vs $1772$ pairs \\
+\bottomrule
+\end{tabular}
+\caption{The duality control. Exact agreement, and exact disagreement where predicted.}
+\end{table}
+
+A first version of our check that GUDHI's cell indices map to the right pixels compared a value with
+itself through the same indexing and could not fail; it was replaced by the test that every reported
+birth pixel is a local minimum ($986/986$). The control is not decoration: it says that the $H_1$
+superlevel diagram carries the same numbers as the $H_0$ sublevel one, so when the instruments below
+failed, changing homological degree was already known not to be a remedy.
+
+\subsection{Vortices from density alone: refuted in compressible turbulence}
+
+Experiments on condensates image $|\psi|^2$, not the phase, so the winding number that defines a vortex
+is not available; vortices are counted by blob detection or learned detectors~\cite{Metz2021}, and
+persistent homology has been applied to condensate densities for other
+purposes~\cite{Spitz2021,Leykam2022}. We asked what a threshold-on-prominence detector achieves against
+winding-number ground truth, on our own two-dimensional Gross--Pitaevskii decaying turbulence
+($\xi/\Delta x=8$, frames at $t=5,10,20$, about $830$ vortices). Fixed in advance: a detection is a minimum
+with value below $0.1\,n_0$ and depth above $0.5\,n_0$, matched one-to-one within $\xi$; ``usable'' meant
+precision $\ge0.95$ and recall $\ge0.90$.
+
+\begin{failbox}
+\textbf{Failed: precision $0.871$, recall $0.433$.} We had predicted that recall would fail only for
+close pairs, and would be at least $0.97$ for vortices with no neighbour within $2\xi$. It is $0.51$.
+Isolation in position does not imply isolation in the sublevel-set topology.
+\end{failbox}
+
+A diagnostic written afterwards locates the cause. At $t=10$, \emph{all} $289$ vortices have a density
+minimum below $0.1\,n_0$ within $\xi$. Their depths are below $0.1$ for $62$, $0.1$--$0.3$ for $52$,
+$0.3$--$0.5$ for $46$, and above $0.5$ for only $129$. The state is strongly compressible---density
+standard deviation $0.45\,n_0$, $15.5\%$ of the area below $0.5\,n_0$---so cores are joined by low-density
+channels and lose their prominence; and $142$ of the $462$ near-zero minima belong to no vortex. No pair
+of thresholds on our sensitivity grid exceeds recall $0.58$. The negative control passed (a vortex-free
+frame with density between $0.18$ and $1.60\,n_0$: no detections among $506$ minima). Whether the detector
+works in a quiet condensate, the experimentally relevant case, we did not test and do not claim.
+
+\subsection{Phase-space holes: refuted}
+
+For the two-stream instability ($f_0=\tfrac12[M(v-2.4)+M(v+2.4)]$, $k=0.2$) the purely growing root is
+certified as in \S\ref{sec:k1}: $\gamma=0.22584425503471\ldots$
+
+\begin{failbox}
+\textbf{Failed: measured growth rate $0.18656$, an error of $17\%$} (tolerance $5\%$). Either the
+certificate or the measurement was wrong, so we tested both. Direct quadrature of $D(i\gamma)$, valid
+without continuation for $\operatorname{Im}\omega>0$, gives $8\times10^{-15}$ at the certified root and
+$-0.54$ at the measured value. The pre-registered seed of $10^{-3}$ left only two decades below
+saturation, and the local growth rate slides from $0.33$ to $0.21$ without a plateau: there was no
+linear phase to fit. With a seed of $10^{-8}$ the rate plateaus at $0.22591$, $0.22585$, and a fit gives
+$0.22594$, within $0.04\%$ of the certificate. The solver was right and our measurement design was not.
+\end{failbox}
+
+We then counted holes as $H_0$ classes born at $|v|<2.4$ with depth above $0.1\max f$ (the treatment of
+the essential class was fixed by a dated amendment before any two-stream data existed). Predicted: one
+hole at $t=60$ with one wavelength in the box; two at saturation with two.
+
+\begin{failbox}
+\textbf{Both failed.} With one wavelength the count is $1$ until saturation, then $8$, $29$, $14$, $52$
+at $t=50,\ldots,80$: the trapped region filaments, the filaments are deep, and a depth threshold does not
+tell a filament from a hole. With two wavelengths the two physically equivalent holes score depths
+$0.84$ and $0.17$ at saturation: the beams leave a trough at $v\approx0$ where $f_0$ is $11\%$ of its
+maximum, the holes are joined through it, and by the elder rule only one keeps a long bar. The negative
+control (a stable Maxwellian) correctly gave zero.
+\end{failbox}
+
+\paragraph{One mechanism.} Both instruments failed the same way. Persistence measures depth relative to
+the \emph{connecting saddle}; vortex cores in compressible turbulence and phase-space holes between two
+beams both sit in a shared valley, where that saddle is low. By the duality control the other
+homological degree reports the same numbers. For these two problems prominence is the wrong
+discriminator, and it is the geometry of the field, not a choice of threshold, that makes it so.
+
+
+\section{Discussion}
+
+\paragraph{The scorecard.} Twenty-five criteria and predictions were committed before the corresponding
+code existed. Fourteen were met: the certificate and its control; both Landau runs, with the
+discrimination test; the ballistic echo and its field-off control; the three Lean statements; both
+halves of the duality control; one sub-prediction about close vortex pairs; and both topological
+negative controls. Eleven were not. Three were our own errors of design: a rounding criterion written
+against truncated literature values, a seed too large to leave a linear phase, and a negative-control
+threshold that ignored self-generated harmonics. One, mass conservation at $7\times10^{-10}$ against a
+threshold of $10^{-10}$, we cannot yet account for. Two were free-streaming formulas misapplied to the
+interacting plasma. Five were wrong predictions about what persistence would detect.
+
+\paragraph{What we take from it.} First, the exact known answers---certified root, ballistic echo,
+free-streaming recurrence---were all reproduced at or near rounding error, and are the tests we
+recommend; the self-consistent echo and recurrence times should be treated as measurements, not
+checks. Second, a certificate earns its keep when a measurement disagrees with it: the $17\%$
+two-stream discrepancy was resolved in minutes because one side of the comparison could not be wrong in
+the way the other could, and an independent quadrature confirmed which. Third, persistent homology of a
+scalar field is prominence, and prominence fails wherever the features of interest share a valley;
+that is a statement about two specific configurations, not about topological data analysis.
+
+\paragraph{What this is for.} The kit is offered as validation infrastructure for anyone writing a
+Vlasov code or analysing collective modes in a Fermi liquid. It makes no claim on the mathematics of
+Landau damping, whose nonlinear theory~\cite{MouhotVillani2011} now has a formal
+proof~\cite{Bedrossian2026}; the dispersion relation and Penrose criterion, which that formalization
+explicitly leaves aside, are where certified numerics of the present kind might eventually meet it.
+
+\paragraph{Process note.} All predictions, analysis, code and text were produced with an AI assistant
+under the author's direction; the pre-registration discipline exists precisely because such a process
+generates plausible claims faster than they can be checked by reading.
+
+\paragraph{Availability.} Code, pre-registration with amendments, run scripts and outputs:
+\url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}
+(\texttt{src/quantumfluids/kinetic}, \texttt{src/quantumfluids/tda/cubical.py},
+\texttt{docs/designs/KINETIC\_TDA\_PREREG.md}).
+
+\bibliographystyle{unsrt}
+\bibliography{refs_kinetic}
+\end{document}

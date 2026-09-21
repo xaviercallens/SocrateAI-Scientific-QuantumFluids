@@ -8,6 +8,7 @@ dependencies = [
     "scipy>=1.10",
     "matplotlib>=3.7",
     "gudhi>=3.13.0",
+    "python-flint>=0.9.0",
 ]
 
 [project.optional-dependencies]

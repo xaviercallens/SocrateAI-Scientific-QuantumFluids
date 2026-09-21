@@ -48,6 +48,7 @@ data/external/**/*.wdat
 data/external/**/dl.log
 data/external/*.csv
 data/derived/*
+data/generated/
 !data/external/.gitkeep
 !data/derived/.gitkeep
 # M1 Tier-C digitized fallback dataset + its fit outputs: small, sourced,

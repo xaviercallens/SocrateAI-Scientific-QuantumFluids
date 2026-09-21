@@ -1,0 +1,18 @@
+{
+  "challenge_module": "ComparatorChallenges.ZeroSound",
+  "solution_module": "ZeroSound",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.ZeroSound.g3_pos",
+    "QuantumFluids.ZeroSound.g3_le",
+    "QuantumFluids.ZeroSound.g3_ge",
+    "QuantumFluids.ZeroSound.continuousOn_g3",
+    "QuantumFluids.ZeroSound.zero_sound_iff",
+    "QuantumFluids.ZeroSound.zero_sound_2d_iff"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

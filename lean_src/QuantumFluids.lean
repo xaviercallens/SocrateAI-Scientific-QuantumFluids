@@ -20,6 +20,8 @@ useful to others in their own right are marked (*).
 | `BoseIntegral` (*) | `∫₀^∞ t^{s-1}/(eᵗ−1) = Γ(s)ζ(s)` via Mathlib's Mellin machinery, `∫₀^∞ t³/(eᵗ−1) = π⁴/15`, and the Debye `T³` specific heat with the coefficient used in the ⁴He literature |
 | `PhononSeries` (*) | the inverse series printed in Godfrin et al., PRB 103, 104516 really inverts the phonon dispersion modulo `e⁸` (α₁ general), and the density of states modulo `e⁹`; stated in any commutative ring with a nilpotent element, with certificates computed by computer algebra and checked by the kernel |
 | `PhononSpecificHeat` (*) | `B₆, B₈, B₁₀`, `ζ(6), ζ(8), ζ(10)`, the thermal Bose integral at every order, and all six coefficients A, C, D, E, K, L of their Eq. (22) — confirmed, no discrepancy |
+| `ZeroSound` (*) | undamped zero sound in a Fermi liquid exists iff `F₀ˢ > 0`, in 3D (logarithmic response) and in 2D (algebraic response, explicit root `(1+F)/√(1+2F)`) — textbook physics, now checked; the 2D case is the one relevant to ³He films |
+| `PhaseMixing` | free transport: the solution, decay of every density mode (Riemann–Lebesgue), and the Maxwellian closed form `e^{-k²t²/2}` the Vlasov solver is tested against. **Subsumed by** Bedrossian, arXiv:2609.16801, which formalizes nonlinear Landau damping |
 | `GPGalerkin` (*) | truncated Gross–Pitaevskii on any finite mode set: `Q = Σ_q |A_q|² ≥ 0`, mass and energy algebra, the Hamiltonian gradient identity |
 | `MadelungSplit` | `|∇ψ|² = |∇a|² + a²|∇S|²` — the quantum-pressure / hydrodynamic split |
 | `MadelungNSE` | the same objects in the OpenAI Navier–Stokes vocabulary; `∇·(∇φ) = Δφ` in their formalism |
@@ -44,3 +46,5 @@ import HeliumKinematics
 import BoseIntegral
 import PhononSeries
 import PhononSpecificHeat
+import ZeroSound
+import PhaseMixing

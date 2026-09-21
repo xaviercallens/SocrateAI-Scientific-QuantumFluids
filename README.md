@@ -2,7 +2,7 @@
 
 **A machine-checked Lean 4 library of quantum-fluid structure — with a record of what formalization caught, and what it could not**
 
-[![Tests](https://img.shields.io/badge/tests-174%20passing-brightgreen)]() [![Lean](https://img.shields.io/badge/Lean-4.34.0--rc2-blue)]() [![Theorems](https://img.shields.io/badge/theorems-136%20kernel--checked-blue)]() [![Comparator](https://img.shields.io/badge/Comparator-two%20kernels-success)]() [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22868074.svg)](https://doi.org/10.5281/zenodo.22868074) [![Release](https://img.shields.io/badge/release-v1.5.0-orange)](https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids/releases)
+[![Tests](https://img.shields.io/badge/tests-183%20passing-brightgreen)]() [![Lean](https://img.shields.io/badge/Lean-4.34.0--rc2-blue)]() [![Theorems](https://img.shields.io/badge/theorems-145%20kernel--checked-blue)]() [![Comparator](https://img.shields.io/badge/Comparator-two%20kernels-success)]() [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22868074.svg)](https://doi.org/10.5281/zenodo.22868074) [![Release](https://img.shields.io/badge/release-v1.5.0-orange)](https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids/releases)
 
 ---
 
@@ -55,6 +55,15 @@ second person. Paper: [`paper/quantumfluids_lean4.pdf`](paper/quantumfluids_lean
 Several of the most useful outcomes in this repository are failures, and they are kept at the same
 level of detail as the successes:
 
+- **A pre-registered kinetic and TDA programme scored 14 of 25** (`docs/designs/KINETIC_TDA_RESULTS.md`).
+  What held: a computer-assisted *certified* Landau damping root (`1.41566188860… − 0.15335946691… i` at
+  `k = 0.5`), a Vlasov–Poisson solver matching it to 0.14 %, a ballistic plasma echo matching its closed form
+  to 2×10⁻⁹, and an exact persistent-homology duality control on Gross–Pitaevskii data. What did not: two
+  topological instruments — density-only vortex detection (precision 0.87, recall 0.43) and phase-space hole
+  counting — both refuted for one reason (persistence is depth to the *connecting saddle*, and the features
+  share a valley); two free-streaming formulas misapplied to the interacting plasma (both off by ≈ 9 %); and
+  three criteria that failed through my own design. A 17 % growth-rate discrepancy was resolved in minutes
+  because one side of it was certified. Draft paper: `paper/kinetic_known_answers.pdf`.
 - **A pre-registered positive control voided an entire run** by revealing that `k*` lay outside the
   7-pressure table's range — a data-scope error, not a code error.
 - **A TDA measurement did not survive its own check.** A line-graph floor of `F = 1.491 ξ` against a
@@ -83,7 +92,7 @@ which remains a human audit.
 # 174 tests
 uv run pytest tests/ -q
 
-# Lean (4.34.0-rc2, Mathlib v4.34.0-rc2); 136 theorems across 16 libraries
+# Lean (4.34.0-rc2, Mathlib v4.34.0-rc2); 145 theorems across 18 libraries
 cd lean_src && lake build
 
 # Comparator (needs landrun, lean4export, nanoda_bin on PATH — see docs/COMPARATOR_SETUP.md)
@@ -107,7 +116,7 @@ uv run python exploration/second_invariant/run_search.py
 
 | path | contents |
 |---|---|
-| `lean_src/` | 16 Lean libraries, 136 theorems, axiom footprint `{propext, Classical.choice, Quot.sound}` |
+| `lean_src/` | 18 Lean libraries, 145 theorems, axiom footprint `{propext, Classical.choice, Quot.sound}` |
 | `lean_src/ComparatorChallenges/` | generated challenge statements + configs (contain `sorry` **by design**) |
 | `src/quantumfluids/` | adapters, dispersion fit, shell model, invariant search, TDA (GUDHI) |
 | `docs/DUAL_SCALE_PROPOSAL.md` | the consolidated proposal |
