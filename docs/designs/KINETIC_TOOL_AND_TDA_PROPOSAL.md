@@ -1,7 +1,7 @@
 # Proposal: a numerical and formal tool for kinetic theory and quantum fluids, and what TDA can honestly add
 
-**Status: PROPOSAL — awaiting owner review. Nothing here is implemented, and nothing will be until it
-is approved.** Written 2026-09-21 in response to the request to review, improve and leverage
+**Status: APPROVED by the owner on 2026-09-21 ("implement") with the recommended options; superseded in
+detail by `KINETIC_TDA_PREREG.md`. One erratum below (§2.1).** Written 2026-09-21 in response to the request to review, improve and leverage
 `SocrateAI-Scientific-Agora-Physique-Cinetique` as a tool for C. Villani and H. Godfrin, and to extend
 the use of GUDHI/TDA toward identifying duality.
 
@@ -53,6 +53,11 @@ discipline** (ledger, negative controls, known-answer validation, no claim witho
 | K3 | A **real** plasma echo: pulses at (k₁, t=0) and (k₂, t=τ), response at k₃ = k₂ − k₁ | echo time t = τ·k₂/(k₂ − k₁) (Gould–O'Neil–Malmberg) | this is where exact arithmetic has genuine merit: the second-order response is a closed-form integral; derive it symbolically and compare with K2 |
 | K4 | Lean: **phase mixing for free transport** — for f₀ with integrable velocity profile, the k-th density mode is f̂₀(k, kt) and tends to 0 as t → ∞ | — (theorem) | provable *today*: it is the Riemann–Lebesgue lemma, which Mathlib has. A true statement about a function, however modest — the first in that repository |
 | K5 | Lean: *statements* (proofs open, labelled as such, in a non-default target) of the Penrose stability criterion and linear Landau damping | — | a precise formal statement is itself useful to a mathematician; an unproved one must never sit in a default target |
+
+> **ERRATUM (2026-09-21, same day).** The next paragraph is wrong. Nonlinear Landau damping *has* been
+> formalized in Lean 4: J. Bedrossian, arXiv:2609.16801, posted six days before this was written. I had
+> not searched before asserting it. See `KINETIC_TDA_PREREG.md` amendment A1 for the consequences. The
+> paragraph is left in place, struck by this note, rather than silently edited.
 
 Explicitly **out of scope**: nonlinear Landau damping (Mouhot–Villani) in Lean. It is a ~180-page
 analytic proof in Gevrey/analytic norms; no part of it is within reach, and saying otherwise to its

@@ -126,4 +126,27 @@ convention factor; P-D0b unexplained. Each is a stop-and-report, not a fix-and-r
 
 ## 9. Amendments
 
-(none)
+**A1 — 2026-09-21, after the kinetic literature gate reported, before any code was written.**
+Criteria in §§1–3, 5–7 are unchanged. Changes of *scope and description* only:
+
+1. **K4 is not a contribution.** J. Bedrossian, *Formalization of Landau damping in the Vlasov–Poisson
+   equations in Lean*, arXiv:2609.16801 (15 Sep 2026) formalizes the Mouhot–Villani nonlinear theorem on
+   T^d for Gevrey s > 1/3, small backgrounds, reportedly sorry-free (I verified the arXiv record; I have
+   **not** built the repository). Phase mixing for free transport is a corollary of what is proved
+   there, and a one-line corollary of Mathlib's Riemann–Lebesgue lemma. K4 is kept only as a
+   Mathlib-only lemma that K3a's closed form cites, and must be described as subsumed.
+2. **My proposal was wrong** to say of nonlinear Landau damping in Lean that "no part of it is within
+   reach". It was done six days before I wrote that. Erratum added to the proposal.
+3. **Where this work can still sit.** That paper treats small backgrounds and states that large
+   backgrounds "would require formalizing a great deal of complex analysis theory surrounding Laplace
+   transforms" — i.e. the dispersion relation and Penrose criterion are absent. K1 (a certified root of
+   exactly that dispersion relation) is complementary numerics, not competing formalization. K5
+   (Penrose *statements* without proofs) is dropped: an unproved statement next to a proved
+   Mouhot–Villani is not worth printing.
+4. **H5 gains a 2D case**, because the gate pointed out that Godfrin et al., Nature 483, 576 (2012) is a
+   *two-dimensional* ³He monolayer and the logarithmic formula is 3D. **H5-2D `zero_sound_2d_iff`:**
+   with Ω₂(s) = 1 − s/√(s²−1) for s > 1, the condition 1 + F·Ω₂(s) = 0 has a root s > 1 ⟺ F > 0, and
+   then s = (1+F)/√(1+2F). (Closed form derived by hand just now; if Lean disagrees, Lean wins and the
+   discrepancy is reported.) Negative control as for H5.
+5. K2 and K3 are validation and demonstration only (every Vlasov code runs them); their role in any
+   write-up is to show the solver's failure modes are pinned, not to claim a result.
