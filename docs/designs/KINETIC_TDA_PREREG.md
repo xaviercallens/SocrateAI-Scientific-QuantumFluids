@@ -150,3 +150,22 @@ Criteria in §§1–3, 5–7 are unchanged. Changes of *scope and description* o
    discrepancy is reported.) Negative control as for H5.
 5. K2 and K3 are validation and demonstration only (every Vlasov code runs them); their role in any
    write-up is to show the solver's failure modes are pinned, not to claim a result.
+
+**A2 — 2026-09-21, after K1 ran. A failed criterion, recorded, not repaired.** The K1 pass criterion
+said the certified midpoint "rounds to" 1.4156 and −0.1533. The certified root is
+ω = 1.41566188860…, γ = −0.15335946691…, which *rounds* to 1.4157 and −0.1534: the four-digit literature
+values are truncations. **By the letter, K1's pass criterion is not met.** The defect is in the criterion
+I wrote; the value agrees with Canosa (1973), γ = −0.15336, to every digit he gives. The negative control
+(reject a ball about γ = −0.1433) passed. No criterion is changed; the result is reported as
+"certified; pre-registered rounding criterion failed through my wording".
+
+**A3 — 2026-09-21, before any D3 run or two-stream data exists.** The D3 hole statistic as written is
+ill-defined: H₀ always has one essential class (the global minimum), so on the cropped strip |v| < 2.4
+a plain Maxwellian would score one "hole" and the negative control could never pass, while *excluding*
+the essential class would lose the single hole of S1 when that hole is the global minimum of the strip.
+Replacement, fixed now: compute H₀ sublevel persistence of f on the **full** velocity domain, periodic
+in x only; a **hole** is a class (finite or essential) whose birth pixel has |v| < 2.4 and whose depth
+exceeds 0.1·max f, depth of the essential class being max f − its birth value. The low-f tails are born
+at |v| ≈ v_max and are excluded by the birth filter. Predictions (S1: exactly 1 at t = 60; S2: exactly 2
+at the first saturation peak; Maxwellian control: 0) are unchanged. For D1 the essential class is
+included the same way (a vortex core can be the global density minimum); no prediction changes.
