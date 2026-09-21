@@ -1,87 +1,87 @@
 {
- "metadata": {
-  "title": "QuantumFluids: a machine-checked Lean 4 library of quantum-fluid structure, applied to published neutron-scattering work",
-  "upload_type": "software",
-  "description": "<p>An open Lean 4 / Mathlib library of <b>136 machine-checked theorems</b> on the mathematical structure of quantum fluids, with the accompanying paper.</p><p><b>Contents.</b> Correctness of the phase-winding algorithm by which Gross-Pitaevskii codes locate quantized vortices, including its exact failure case (a phase step of exactly pi, where the antisymmetry that codes routinely assume is false); quantization of circulation, with the quantum shown to be attained; the discrete divergence-free condition that makes vortex-line tracing well posed (our own tracer had assumed it without proof); the Galerkin-truncated Gross-Pitaevskii nonlinearity on an arbitrary finite mode set; the Madelung decomposition; a bridge into the vocabulary of OpenAI's Lean formalization of the Navier-Stokes problem, imported as a real dependency; and two modules addressed to published experiment.</p><p><b>Applied to published work.</b> HeliumKinematics formalises identities the neutron-scattering analysis of superfluid helium-4 by Godfrin et al. (Phys. Rev. B 103, 104516) rests on: three-phonon decay is kinematically open if and only if the dispersion is anomalous; two rotons carry total momentum in [0, 2k_R]; and any comparison of the dispersion with twice the roton gap is invariant under recalibration. From the published coefficients this yields three distinct closing thresholds (0.404, 0.455, 0.566 inverse angstrom) that are usually quoted as a single k_c. BoseIntegral verifies the leading coefficient of that paper's specific-heat series -- the series for which it reports that earlier published versions contain errors -- from the Bose integral pi^4/15 through to A = 0.0831 J/(mol K^4), matching the printed value. The Bose integral is now proved at every natural order, which surfaced a structural fact about that series: two of its six coefficients carry zeta(7) and zeta(9), which have no known closed form, so those two can never be adjudicated by exact algebra -- only numerically.</p><p><b>This is not a physics-discovery deposit.</b> Two results once regarded as findings were withdrawn after a literature check (RETRACTIONS.md), and a topological hypothesis was refuted by simulation. The paper is organised around what formal verification does and does not buy in physics: it caught a false lemma, an inequality that prose had turned into an equality, a constant voiding a bound in the limit that mattered, eleven theorems that had escaped audit, and a lemma exempted from independent checking by a visibility modifier. It could not tell that a correct theorem was already known, nor that a hypothesis was naive. Run in the other order the literature search is cheap, and it later stopped a further proposal before implementation by showing that 0-dimensional persistence of a dispersion minimum is exactly its topographic prominence.</p><p><b>Reuse.</b> <code>import QuantumFluids</code> (Lean 4.34.0-rc2, Mathlib tag v4.34.0-rc2). VortexWinding, QuantizedCirculation, GPGalerkin, HeliumKinematics and BoseIntegral depend only on Mathlib. Code: MIT OR Apache-2.0. Paper and documentation: CC BY 4.0.</p>",
-  "creators": [
-   {
-    "name": "Callens, Xavier",
-    "affiliation": "SocrateAI Research"
-   }
-  ],
-  "keywords": [
-   "Lean 4",
-   "Mathlib",
-   "formal verification",
-   "quantum fluids",
-   "superfluidity",
-   "Bose-Einstein condensate",
-   "Gross-Pitaevskii equation",
-   "quantized vortices",
-   "quantized circulation",
-   "Madelung transform",
-   "shell models",
-   "reproducibility",
-   "retraction",
-   "negative results",
-   "persistent homology",
-   "neutron scattering",
-   "superfluid helium-4",
-   "roton",
-   "Bose integral",
-   "Riemann zeta",
-   "specific heat",
-   "persistent homology"
-  ],
-  "license": "MIT",
-  "access_right": "open",
-  "related_identifiers": [
-   {
-    "identifier": "https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids",
-    "relation": "isSupplementTo",
-    "scheme": "url"
-   },
-   {
-    "identifier": "https://github.com/openai/NavierStokesAndEuler",
-    "relation": "requires",
-    "scheme": "url"
-   },
-   {
-    "identifier": "10.1103/PhysRevX.11.021063",
-    "relation": "cites",
-    "scheme": "doi"
-   },
-   {
-    "identifier": "10.1103/PhysRevE.104.014129",
-    "relation": "cites",
-    "scheme": "doi"
-   },
-   {
-    "identifier": "10.1209/epl/i1999-00307-8",
-    "relation": "cites",
-    "scheme": "doi"
-   },
-   {
-    "identifier": "10.1103/PhysRevB.103.104516",
-    "relation": "cites",
-    "scheme": "doi"
-   },
-   {
-    "identifier": "10.5281/zenodo.5510350",
-    "relation": "cites",
-    "scheme": "doi"
-   },
-   {
-    "identifier": "10.1103/PhysRevB.97.184520",
-    "relation": "cites",
-    "scheme": "doi"
-   },
-   {
-    "identifier": "10.21468/SciPostPhys.11.3.060",
-    "relation": "cites",
-    "scheme": "doi"
-   }
-  ],
-  "notes": "No novelty is claimed for any physical statement. See RETRACTIONS.md in the archive."
- }
+  "metadata": {
+    "title": "QuantumFluids: a machine-checked Lean 4 library of quantum-fluid structure, applied to published neutron-scattering work",
+    "upload_type": "software",
+    "description": "<p>An open Lean 4 / Mathlib library of <b>136 machine-checked theorems</b> on the mathematical structure of quantum fluids, with the accompanying paper.</p><p><b>Contents.</b> Correctness of the phase-winding algorithm by which Gross-Pitaevskii codes locate quantized vortices, including its exact failure case (a phase step of exactly pi, where the antisymmetry that codes routinely assume is false); quantization of circulation, with the quantum shown to be attained; the discrete divergence-free condition that makes vortex-line tracing well posed (our own tracer had assumed it without proof); the Galerkin-truncated Gross-Pitaevskii nonlinearity on an arbitrary finite mode set; the Madelung decomposition; a bridge into the vocabulary of OpenAI's Lean formalization of the Navier-Stokes problem, imported as a real dependency; and two modules addressed to published experiment.</p><p><b>Applied to published work.</b> HeliumKinematics formalises identities the neutron-scattering analysis of superfluid helium-4 by Godfrin et al. (Phys. Rev. B 103, 104516) rests on: three-phonon decay is kinematically open if and only if the dispersion is anomalous; two rotons carry total momentum in [0, 2k_R]; and any comparison of the dispersion with twice the roton gap is invariant under recalibration. From the published coefficients this yields three distinct closing thresholds (0.404, 0.455, 0.566 inverse angstrom) that are usually quoted as a single k_c. BoseIntegral verifies the leading coefficient of that paper's specific-heat series -- the series for which it reports that earlier published versions contain errors -- from the Bose integral pi^4/15 through to A = 0.0831 J/(mol K^4), matching the printed value. The Bose integral is now proved at every natural order, which surfaced a structural fact about that series: two of its six coefficients carry zeta(7) and zeta(9), which have no known closed form, so those two can never be adjudicated by exact algebra -- only numerically.</p><p><b>This is not a physics-discovery deposit.</b> Two results once regarded as findings were withdrawn after a literature check (RETRACTIONS.md), and a topological hypothesis was refuted by simulation. The paper is organised around what formal verification does and does not buy in physics: it caught a false lemma, an inequality that prose had turned into an equality, a constant voiding a bound in the limit that mattered, eleven theorems that had escaped audit, and a lemma exempted from independent checking by a visibility modifier. It could not tell that a correct theorem was already known, nor that a hypothesis was naive. Run in the other order the literature search is cheap, and it later stopped a further proposal before implementation by showing that 0-dimensional persistence of a dispersion minimum is exactly its topographic prominence.</p><p><b>Reuse.</b> <code>import QuantumFluids</code> (Lean 4.34.0-rc2, Mathlib tag v4.34.0-rc2). VortexWinding, QuantizedCirculation, GPGalerkin, HeliumKinematics and BoseIntegral depend only on Mathlib. Code: MIT OR Apache-2.0. Paper and documentation: CC BY 4.0.</p><p><b>New in v1.5.0.</b> The six-coefficient phonon specific-heat series of Godfrin et al., PRB 103, 104516 (2021), Eq. (22), and its printed inverse dispersion series, are derived independently and machine-checked end to end (<code>PhononSeries</code>, <code>PhononSpecificHeat</code>): all coefficients are <b>confirmed</b>. Truncation is stated as nilpotency in an arbitrary commutative ring, with computer-algebra certificates checked by the kernel. The paper gains a related-work section and is revised as an experience report for a formalization venue.</p>",
+    "creators": [
+      {
+        "name": "Callens, Xavier",
+        "affiliation": "SocrateAI Research"
+      }
+    ],
+    "keywords": [
+      "Lean 4",
+      "Mathlib",
+      "formal verification",
+      "quantum fluids",
+      "superfluidity",
+      "Bose-Einstein condensate",
+      "Gross-Pitaevskii equation",
+      "quantized vortices",
+      "quantized circulation",
+      "Madelung transform",
+      "shell models",
+      "reproducibility",
+      "retraction",
+      "negative results",
+      "persistent homology",
+      "neutron scattering",
+      "superfluid helium-4",
+      "roton",
+      "Bose integral",
+      "Riemann zeta",
+      "specific heat",
+      "persistent homology"
+    ],
+    "license": "MIT",
+    "access_right": "open",
+    "related_identifiers": [
+      {
+        "identifier": "https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids",
+        "relation": "isSupplementTo",
+        "scheme": "url"
+      },
+      {
+        "identifier": "https://github.com/openai/NavierStokesAndEuler",
+        "relation": "requires",
+        "scheme": "url"
+      },
+      {
+        "identifier": "10.1103/PhysRevX.11.021063",
+        "relation": "cites",
+        "scheme": "doi"
+      },
+      {
+        "identifier": "10.1103/PhysRevE.104.014129",
+        "relation": "cites",
+        "scheme": "doi"
+      },
+      {
+        "identifier": "10.1209/epl/i1999-00307-8",
+        "relation": "cites",
+        "scheme": "doi"
+      },
+      {
+        "identifier": "10.1103/PhysRevB.103.104516",
+        "relation": "cites",
+        "scheme": "doi"
+      },
+      {
+        "identifier": "10.5281/zenodo.5510350",
+        "relation": "cites",
+        "scheme": "doi"
+      },
+      {
+        "identifier": "10.1103/PhysRevB.97.184520",
+        "relation": "cites",
+        "scheme": "doi"
+      },
+      {
+        "identifier": "10.21468/SciPostPhys.11.3.060",
+        "relation": "cites",
+        "scheme": "doi"
+      }
+    ],
+    "notes": "No novelty is claimed for any physical statement. See RETRACTIONS.md in the archive."
+  }
 }
