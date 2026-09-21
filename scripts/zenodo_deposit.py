@@ -44,7 +44,7 @@ def main() -> None:
         arc = Path(td) / f"SocrateAI-Scientific-QuantumFluids-{a.tag}.zip"
         subprocess.run(["git", "-C", str(ROOT), "archive", "--format=zip",
                         f"--prefix=QuantumFluids-{a.tag}/", "-o", str(arc), a.tag], check=True)
-        files = [arc, ROOT / "paper" / "quantumfluids_lean4.pdf"]
+        files = [arc, ROOT / "paper" / "quantumfluids_lean4.pdf", ROOT / "paper" / "kinetic_known_answers.pdf"]
         if a.prev:
             r = requests.post(f"{API}/deposit/depositions/{a.prev}/actions/newversion",
                               headers=auth, timeout=60)
