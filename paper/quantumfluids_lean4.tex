@@ -35,14 +35,16 @@
 
 \begin{abstract}
 \noindent
-We present an open Lean~4/Mathlib library of 113 machine-checked theorems on the mathematical
+We present an open Lean~4/Mathlib library of 136 machine-checked theorems on the mathematical
 structure of quantum fluids: correctness of the phase-winding algorithm by which every
 Gross--Pitaevskii code locates vortices, quantization of circulation in the discrete form in
 which it is actually computed, the discrete divergence-free condition that makes vortex-line
 tracing well posed, sign and conservation structure of the Galerkin-truncated
 Gross--Pitaevskii nonlinearity on an arbitrary mode set, the Madelung decomposition, and a
 bridge that restates these objects inside the vocabulary of OpenAI's Lean formalization of
-the Navier--Stokes problem, imported as a real dependency. Every theorem carries a generated
+the Navier--Stokes problem, imported as a real dependency, and an end-to-end check of a published
+six-coefficient specific-heat series for superfluid $^4$He whose predecessors in the literature were
+wrong---it is right. Every theorem carries a generated
 axiom audit and is independently re-checked against two proof kernels.
 
 \textbf{This is not a physics-discovery paper, and we say why.} The project began as one. Two
@@ -87,15 +89,17 @@ physical sciences, and \S\ref{sec:caught}--\ref{sec:limits} are organised around
 \textbf{Stance.} No novelty is claimed for any physical statement in this paper. The
 contribution is (i) the machine-checked library and its verification tooling, (ii) one
 correctness result for a standard algorithm that we have not found stated elsewhere with its
-failure case (\S\ref{sec:winding}), and (iii) the error taxonomy.
+failure case (\S\ref{sec:winding}), (iii) a reusable pattern for checking a printed series
+expansion---truncation as nilpotency, with untrusted computer-algebra certificates checked by the
+kernel (\S\ref{sec:series})---and (iv) the error taxonomy.
 \end{keybox}
 
 \section{The library}
 \label{sec:library}
 
 \paragraph{Build.} Lean~4.34.0-rc2 with Mathlib at tag \texttt{v4.34.0-rc2}. A single
-\lean{import QuantumFluids} brings in fourteen modules (Table~\ref{tab:modules}); the full
-build is 8792 jobs, zero errors, zero \lean{sorry} in any default target.
+\lean{import QuantumFluids} brings in sixteen modules (Table~\ref{tab:modules}); the full
+build is 8796 jobs, zero errors, zero \lean{sorry} in any default target.
 
 \begin{table}[h]
 \centering\small
@@ -115,6 +119,10 @@ module & thms & content \\
   calibration-invariance of a comparison with $2\Delta_R$, time-of-flight equivalences \\
 \lean{BoseIntegral} & 7 & $\int_0^\infty t^{n}/(e^t-1)\,dt = n!\,\zeta(n+1)$ for every $n \ge 1$,
   with the even case explicit via Bernoulli numbers; the Debye $T^3$ coefficient \\
+\lean{PhononSeries} & 9 & the inverse series printed in~\cite{Godfrin2021} inverts the phonon dispersion
+  modulo $e^8$; density of states modulo $e^9$; generated certificates (\S\ref{sec:series}) \\
+\lean{PhononSpecificHeat} & 14 & $B_6,B_8,B_{10}$; $\zeta(6),\zeta(8),\zeta(10)$; the thermal Bose integral at
+  every order; all six coefficients of~\cite{Godfrin2021} Eq.~(22) \\
 \lean{MadelungSplit} & 6 & $|\nabla\psi|^2 = |\nabla a|^2 + a^2|\nabla S|^2$ \\
 \lean{MadelungNSE} & 2 & the Madelung velocity in the vocabulary of~\cite{OpenAINSE};
   $\nabla\!\cdot\!\nabla\varphi = \Delta\varphi$ in their definitions \\
@@ -128,7 +136,7 @@ module & thms & content \\
   the topological analysis \\
 \bottomrule
 \end{tabular}
-\caption{Modules. Axiom footprint of all 113 theorems:
+\caption{Modules. Axiom footprint of all 136 theorems:
 $\{\lean{propext}, \lean{Classical.choice}, \lean{Quot.sound}\}$.}
 \label{tab:modules}
 \end{table}
@@ -404,19 +412,56 @@ $\int_0^\infty t^3/(e^t-1)\,dt = \pi^4/15$ through to $A = 2\pi^2k_B^4V/(15c^3\h
 0.0831\,\mathrm{J/(mol\,K^4)}$, matching the printed value. Mathlib had $\zeta(4)$ and the Gamma
 integral but not the Bose integral.
 
-That coefficient is no longer an isolated case. \lean{bose\_integral\_nat} gives
-$\int_0^\infty t^n/(e^t-1)\,dt = n!\,\zeta(n+1)$ at every natural order, so all six coefficients of
-Eq.~(22) rest on one proved identity, and \lean{bose\_integral\_even} makes the even orders explicit
-through Mathlib's Bernoulli formula for $\zeta(2k)$. Doing so surfaced a structural fact about that
-series worth stating plainly: $D$ and $K$ carry $\zeta(7)$ and $\zeta(9)$, which have no known
-closed form. They are not missing from the library; they are missing from mathematics. So $A, C, E,
-L$ can be given exactly while $D$ and $K$ admit only numerical evaluation --- which means a
-disagreement between published series in those two coefficients cannot be adjudicated by exact
-algebra at all. We had not seen that noted, and it bears directly on the comparison the paper raises.
+\subsection{A six-coefficient series, checked end to end}
+\label{sec:series}
 
-We also record two apparent misprints in the preprint, demonstrated numerically against the paper's
-own tables rather than asserted, in \texttt{docs/FOR\_GODFRIN.md}. That note has not been sent; it is
-a draft for the repository owner.
+That paper's Eq.~(22) gives $C_V = AT^3+CT^5+DT^6+ET^7+KT^8+LT^9$ in closed form for
+$\varepsilon = ck(1+\alpha_2k^2+\dots+\alpha_6k^6)$, via an inverse series $k(\omega)$ printed through
+$(\omega/c)^7$. We had earlier reproduced the six printed \emph{numbers} from the six printed
+\emph{formulas}, which tests arithmetic and nothing else; the formulas are where an error would live.
+We therefore derived them independently (series reversion, density of states, Bose integrals) and then
+formalized the derivation. \textbf{All six coefficients and all seven printed inverse-series
+coefficients are correct.} We report this as what it is, a confirmation.
+
+The formal statement of ``equal up to $O(u^8)$'' avoids analysis entirely: it is an identity in an
+arbitrary commutative ring with a nilpotent element, which specialises to $A[[u]]/(u^8)$.
+\begin{verbatim}
+theorem dispersion_kInv {R : Type*} [CommRing R]
+    (a1 a2 a3 a4 a5 a6 e : R) (h : e ^ 8 = 0) :
+    kInv a1 a2 a3 a4 a5 a6 e *
+      (1 + a1 * kInv a1 a2 a3 a4 a5 a6 e + ... + a6 * kInv a1 a2 a3 a4 a5 a6 e ^ 6) = e
+\end{verbatim}
+Proved directly, this needs a remainder of $4918$ monomials. Instead the powers $k^2,\dots,k^7$ are
+truncated one at a time, each step closed by \lean{linear\_combination r * h} with a certificate $r$ of
+$40$--$202$ terms computed by a computer-algebra script. The script is untrusted: a wrong certificate
+is rejected by the kernel, and we checked that it is (a single altered integer in the printed $\eta$,
+and in each of $D$, $K$, $L$, fails to compile). The density of states then exhibits the brackets of the
+printed coefficients---$7(4\alpha_2^2-\alpha_4)$, $8(9\alpha_2\alpha_3-\alpha_5)$,
+$-3(55\alpha_2^3-30\alpha_2\alpha_4-15\alpha_3^2+3\alpha_6)$---and its vanishing $e^3$ term is the
+absent $BT^4$.
+
+The integrals come from \lean{bose\_integral\_nat}, $\int_0^\infty t^n/(e^t-1)\,dt = n!\,\zeta(n+1)$,
+rescaled to temperature by Mathlib's Mellin scaling lemma. Even orders need $\zeta(6),\zeta(8),\zeta(10)$,
+hence $B_6,B_8,B_{10}$; Mathlib's table of Bernoulli numbers stops at $B_4$, and unfolding the
+defining recursion under \lean{simp} loops, so they are proved one at a time, each from its
+predecessors. The odd orders give $\zeta(7)$ and $\zeta(9)$, which have no known closed form: this is
+\emph{why} the printed $D$ and $K$ carry an explicit $\zeta$ while $A,C,E,L$ carry powers of $\pi$, and
+it means a disagreement between published series in those two coefficients cannot be adjudicated by
+exact algebra, only numerically.
+
+\paragraph{What this does not establish.} Three things, stated in the module's header. The density-of-states
+brackets are passed to the final theorem by inspection, not by a coefficient-extraction lemma.
+Term-by-term integration is used, each term's integral being proved. And that the series is an
+asymptotic expansion of $C_V$ for the \emph{measured} dispersion---upper limit at infinity, roton branch
+dropped---is a statement about a measured function that no proof assistant can certify. This check was
+also not pre-registered, contrary to the project's own rule; a symbolic match admits no tuning, so we do
+not think the result is weakened, but we record the lapse.
+
+\paragraph{Apparent misprints, and a caution about them.} We also noted two apparent misprints (and one
+unit inconsistency) elsewhere in the preprint, each demonstrated against the paper's own tables. The
+arXiv record has a single version, dated before the journal's acceptance, and the version of record is
+not accessible to us; the journal page lists no erratum. These may therefore already be corrected in
+print, and we have communicated nothing to the authors until that is checked.
 
 \section{A proposal the literature gate stopped}
 \label{sec:gate}
@@ -449,13 +494,44 @@ group and finite mode set.
   along solutions of the truncated system;
 \item the Gross--Pitaevskii residual in the vocabulary of~\cite{OpenAINSE}, parallel to their
   Navier--Stokes residual, with the Madelung correspondence as a theorem between them;
-\item the remaining coefficients $C,D,E,K,L$ of~\cite{Godfrin2021} Eq.~(22). The Bose integral is now
-  proved at every natural order, so what remains is the Lagrange inversion $k(\omega)$ and the density
-  of states --- combinatorial rather than analytic work. One structural point emerged in doing this:
-  $D$ and $K$ carry $\zeta(7)$ and $\zeta(9)$, which have no known closed form, so those two
-  coefficients can never be settled by exact algebra, only numerically. That is worth knowing before
-  anyone tries to adjudicate the disagreement with earlier published series.
+\item from modes to fields: that a finite Galerkin state defines a continuous periodic field with
+  those Fourier coefficients. The $n$-torus Fourier inversion theorem needed is not in Mathlib in this
+  form; one exists, \lean{sorry}-free, inside Anthropic's Lean development of Fermat's Last
+  Theorem~\cite{AnthropicFLT}, one toolchain release behind ours, so it is a port rather than an import;
+\item the two gaps of \S\ref{sec:series}: coefficient extraction in \lean{PowerSeries}, and the
+  asymptotic statement for a dispersion agreeing with the series to $O(k^8)$.
 \end{enumerate}
+
+\noindent A fuller roadmap, with a literature gate and a kill criterion per target and an assessment of
+what three existing Lean developments can and cannot contribute, is in the repository
+(\texttt{docs/LEAN4\_QUANTUM\_FLUIDS\_ROADMAP.md}).
+
+\section{Related work}
+\label{sec:related}
+
+\paragraph{Formalized physics.} Lean~4~\cite{Lean4} and Mathlib~\cite{Mathlib} now host physics
+libraries of some size: HepLean, now PhysLean, for high-energy physics~\cite{HepLean}, and a
+formalization of chemical-physics derivations~\cite{Bobbin2024} whose motivation---derivations in the
+applied literature are stated, not proved---is the one we arrived at in \S\ref{sec:godfrin}. We know of
+no prior formal development for superfluids or condensates. Our library is small beside these, and its
+claim is narrower: statements chosen because a simulation code or an experimental analysis depends on
+them.
+
+\paragraph{Verified numerics.} The closest methodological relatives are mechanized correctness proofs of
+numerical programs: the wave-equation scheme of Boldo et al.~\cite{Boldo2013} and Immler's verified ODE
+solver~\cite{Immler2018}. Those verify an implementation down to floating point. Ours verifies only the
+\emph{mathematical} step of an algorithm (\S\ref{sec:winding}): that the winding sum is an integer and
+when neighbouring plaquettes cancel. No code is extracted and no rounding is modelled.
+
+\paragraph{Certificates from untrusted tools.} Using computer algebra as an oracle whose output the
+kernel checks is standard practice---it is how \lean{polyrith} and \lean{linear\_combination} are meant
+to be used. \S\ref{sec:series} applies it to truncated series by moving the truncation into the ring.
+
+\paragraph{Large formalizations used here.} We import one module of~\cite{OpenAINSE} and evaluated
+\cite{AnthropicFLT} as a source of general analysis. Both use the two-kernel Comparator
+check~\cite{Comparator} that we adopted. What distinguishes an experience report from those is scale
+in the other direction: at $136$ theorems every statement can be, and was, read by a person, and most of
+what we report went wrong at the level of \emph{which statement}, not which proof.
 
 \section{Conclusion}
 

@@ -13,6 +13,32 @@ sent to anyone.**
 
 ---
 
+## 0. HOLD — do not send. Gating condition and its status (updated 2026-09-21)
+
+**Gate:** the PRB version of record must be checked for Eq. (20), Eq. (25) and the units of α₂–α₄ in
+§VI *before* any contact. Status: **NOT MET.**
+
+- arXiv:2012.09067 has **one version only, v1, 16 Dec 2020** — one day after submission (received
+  15 Dec 2020), before acceptance (26 Jan 2021) and publication (29 Mar 2021). Everything below was
+  checked against the *pre-referee manuscript*. Misprints of this kind are routinely fixed at proof
+  stage; it would be embarrassing to report them if they were.
+- The APS abstract page lists no erratum or publisher's note; Crossref registers none. The full text is
+  paywalled and was not read. **Someone with institutional access must open the PDF and look at three
+  places: Eq. (20), Eq. (25), and the paragraph after Eq. (22) giving α₂, α₃, α₄ with units.**
+- If all three are already corrected in print: delete §1 entirely and send the rest.
+
+**What changed since the last draft — the note should now open with this.** Eq. (22), the phonon
+specific-heat series, has been independently derived and machine-checked end to end: the printed
+inverse series through (ω/c)⁷ including η, and all six coefficients A, C, D, E, K, L, are **correct**
+(`docs/designs/PHONON_SERIES_A_TO_L.md`; Lean: `PhononSeries`, `PhononSpecificHeat`). For a series whose
+earlier published versions the paper itself says contain errors, a confirmation is the most useful
+thing we have to offer and the right first sentence. Recommended order for a first contact:
+(1) the Eq. (22) confirmation, (2) why D and K carry ζ(7), ζ(9) and what that implies for comparing
+published series, (3) the three decay thresholds, (4) misprints — only if they survive the gate.
+The plateau observation (§2) stays out of a first contact.
+
+---
+
 ## 1. Two misprints in arXiv v1, with a numerical demonstration
 
 We could not access the PRB version of record, so these may already be corrected there.
