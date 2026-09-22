@@ -3,6 +3,11 @@
 
     python3 scripts/zenodo_deposit.py --tag v1.4.0 --new-version-of 22855582   # DRAFT, same concept DOI
     python3 scripts/zenodo_deposit.py --tag v1.4.0 --new-version-of 22855582 --publish
+    python3 scripts/zenodo_deposit.py --tag v1.8.0 --update-draft 22895282     # replace an UNPUBLISHED
+                                                                               # draft's files + metadata in place
+
+Zenodo allows one unpublished draft per record line; use --update-draft to refresh it rather than
+--new-version-of, which would be refused while the draft exists.
 
 ALWAYS pass --new-version-of <id of the latest published record> for a release that continues an
 existing line. Without it Zenodo creates a SEPARATE record with its own concept DOI, and the two
@@ -35,7 +40,11 @@ def main() -> None:
     ap.add_argument("--publish", action="store_true")
     ap.add_argument("--new-version-of", dest="prev", default=None,
                     help="record id of the latest published version; keeps the concept DOI")
+    ap.add_argument("--update-draft", dest="draft", default=None,
+                    help="deposition id of an existing UNPUBLISHED draft to refresh in place")
     a = ap.parse_args()
+    if a.prev and a.draft:
+        sys.exit("--new-version-of and --update-draft are mutually exclusive")
     meta = json.loads((ROOT / "paper" / "zenodo_metadata.json").read_text())
     meta["metadata"]["version"] = a.tag
     auth = {"Authorization": f"Bearer {token()}"}
@@ -45,8 +54,15 @@ def main() -> None:
         subprocess.run(["git", "-C", str(ROOT), "archive", "--format=zip",
                         f"--prefix=QuantumFluids-{a.tag}/", "-o", str(arc), a.tag], check=True)
         files = [arc, ROOT / "paper" / "quantumfluids_lean4.pdf", ROOT / "paper" / "kinetic_known_answers.pdf",
-                 ROOT / "paper" / "villani_tribute.pdf"]
-        if a.prev:
+                 ROOT / "paper" / "villani_tribute.pdf", ROOT / "paper" / "closed_loop.pdf"]
+        if a.draft:
+            dep = requests.get(f"{API}/deposit/depositions/{a.draft}", headers=auth, timeout=60).json()
+            if dep.get("submitted"):
+                sys.exit(f"deposition {a.draft} is already published; use --new-version-of instead")
+            for f in dep.get("files", []):        # drop the draft's current files
+                requests.delete(f"{API}/deposit/depositions/{dep['id']}/files/{f['id']}",
+                                headers=auth, timeout=60)
+        elif a.prev:
             r = requests.post(f"{API}/deposit/depositions/{a.prev}/actions/newversion",
                               headers=auth, timeout=60)
             r.raise_for_status()

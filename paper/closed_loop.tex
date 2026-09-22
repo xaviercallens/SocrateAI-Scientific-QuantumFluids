@@ -53,7 +53,11 @@ duality behind that certificate, and its instantiation on a hand-verified eight-
 proved in Lean~4 with no \lean{sorry}, and two deliberately broken variants are shown to fail to compile.
 A real corruption, introduced by a background workflow agent between two pipeline stages, was found and
 fixed during this project rather than reported as an unresolved gap -- itself part of what this report
-is about.
+is about. Three directions on duality close the report, each with the gate it must pass first: the
+$L_p$-stability theorem, whose left-hand side is the distance just certified; the
+Berezinskii--Kosterlitz--Thouless transition, the duality these vortex fields actually carry; and where
+this project's older $R\leftrightarrow\alpha'/R$ involution belongs, following external review that
+places it with the Fricke involution and K3 mirror symmetry rather than with helium.
 \end{abstract}
 
 \section{Introduction}
@@ -173,8 +177,16 @@ measured rather than inferred, that refuted this project's earlier threshold-bas
 detector~\cite{Callens2026TDA}: a stability guarantee whose margin is wider than the whole diagram
 cannot separate a real feature from noise. Only the phase-space pair, whose $\varepsilon$ is an order of
 magnitude smaller (two close physical realizations, not two numerical resolutions), leaves this regime:
-at $\theta=0.7$, $N_{>\theta-2\varepsilon}$ drops to $3$ out of $2150$ bars -- the guarantee becomes
-restrictive exactly where the perturbation is small compared to the features themselves.
+at $\theta=0.7$ (of the field's maximum, the stand-in scale used for a field that is not a density),
+$N_{>\theta-2\varepsilon}$ drops to $3$ out of $2150$ bars -- the guarantee becomes restrictive exactly
+where the perturbation is small compared to the features themselves.
+
+\emph{Why $\varepsilon$ is so large is not subtle.} It is set by vortex cores: a core pixel with density
+near zero on one grid, against its neighbour's value on the other, is a pointwise difference of order
+$n_0$ to a few $n_0$ -- the full scale of the field -- at a handful of pixels. The sup norm sees only
+those pixels. So the emptiness of the bound is a statement about the norm the stability theorem is
+written in, not about the diagrams: a norm that averages over the field would not be dominated by a few
+cores. That observation is the first of the directions in \S\ref{sec:directions}.
 \end{failbox}
 
 \begin{fixbox}
@@ -267,6 +279,95 @@ simulation data; re-verifying those specific numbers inside the Lean kernel is n
 proved is the general theorem that makes any such certificate valid in principle, checked end-to-end on
 the one instance small and exact enough to write down by hand and decide in the kernel.
 \end{keybox}
+
+\section{Where the duality points next}
+\label{sec:directions}
+
+Three directions follow from this round. None is a result; each is stated with the gate it must pass
+before any prediction is written down, in the discipline that produced the results above. They are
+ordered from the one closest to what was actually measured to the one furthest from it.
+
+\subsection{The right norm: Wasserstein stability, with the distance already certified}
+
+The stability theorem tested in \S\ref{sec:results} bounds the \emph{bottleneck} distance by the
+\emph{sup} norm, and \S\ref{sec:results} showed why that pairing is empty here: a few vortex-core pixels
+set $\varepsilon$. There is a second stability theorem, due to the same authors with
+Mileyko~\cite{CSEHM2010}, in which \emph{Wasserstein} distances between diagrams are bounded in terms of
+an $L_p$ norm of $f-g$ (under a Lipschitz hypothesis on the functions and a bounded total-persistence
+hypothesis on the space). An $L_p$ norm averages over the field; a handful of core pixels no longer
+dominates it. And the left-hand side of that theorem is exactly the quantity this round learned to
+certify: Table~\ref{tab:certificates}'s $W_1$, exhibited with a primal plan and dual potentials rather
+than trusted from a solver.
+
+\emph{Gate.} The exact statement -- the Lipschitz constant of a Gross--Pitaevskii density on a grid,
+the total-persistence bound, the exponent on $\|f-g\|_p$ -- must be read from~\cite{CSEHM2010} and
+written into a pre-registration before any number is computed; the constants are not recalled here on
+purpose. \emph{Prediction to be pre-registered.} For the three resolution pairs, the $W_1$ bound is
+informative where the bottleneck bound was not: it excludes a nonzero fraction of bars. \emph{Kill.}
+If it is also empty at $\xi/\Delta x=4$ vs.\ $8$, then no stability theorem rescues that resolution
+comparison, and the honest conclusion is that $\xi/\Delta x=4$ is simply not a resolution at which
+persistence of a vortex field means anything -- a useful number to have.
+
+\subsection{The duality these fields actually carry: vortices, and the transition they drive}
+
+The fields of Table~\ref{tab:p1} are two-dimensional superfluids full of quantized vortices. The duality
+native to that physics is not optimal transport but the particle--vortex (Coulomb-gas) duality of the
+two-dimensional XY model, whose consequence is the Berezinskii--Kosterlitz--Thouless transition:
+vortex--antivortex pairs bound below $T_{\rm BKT}$, free above it, with a universal jump of the
+superfluid density at the transition~\cite{NelsonKosterlitz1977}. This is not a conjecture about
+quantum fluids; it is measured, in helium films~\cite{BishopReppy1978} and in two-dimensional Bose
+gases~\cite{Hadzibabic2006}, and for the weakly interacting gas the critical phase-space density is a
+known answer, $n_c\lambda_T^2=\ln(\xi/\tilde g)$ with $\xi\approx380$~\cite{Prokofev2001}. It is also,
+in the compact-boson language of \S\ref{sec:otherduality}, a point on the same line as T-duality --
+though not its self-dual point.
+
+Two facts make this the natural next known-answer test of the instrument built here, and one fact makes
+it hard. First, a bound vortex--antivortex pair is exactly the configuration that refuted D1: two cores
+joined by a low-density channel, one deep basin with a short second bar. Unbinding lengthens that bar.
+So the mechanism that broke a threshold detector is, read the other way, the signature of the
+transition -- a hypothesis, stated as one. Second, $W_1$ between the diagrams at two temperatures is
+now a certified quantity. The hard fact: every Gross--Pitaevskii field in this project is a
+zero-temperature evolution of planted pairs. A transition needs a thermal ensemble -- a stochastic or
+projected Gross--Pitaevskii run -- which does not exist here yet.
+
+\emph{Gate.} A thermal-field simulation with an independently known $T_{\rm BKT}$ (the standard
+observables: superfluid fraction, winding number, pair count), pre-registered before any diagram is
+computed. \emph{Prediction to be pre-registered.} A diagram-based statistic changes across $T_{\rm BKT}$
+where the standard observables do. \emph{Kill.} If it does not while they do, the instrument is refuted
+a sixth time, by the very mechanism that refuted it the first.
+
+\subsection{The other duality in this project, and where it belongs}
+\label{sec:otherduality}
+
+This project carries a second, older duality, unrelated to optimal transport: the involution
+$R\leftrightarrow\alpha'/R$ of \lean{Duality.lean} and \lean{DualLength.lean} (a conserved product pins
+a self-dual scale $\sqrt{\alpha'}$; the Bogoliubov dispersion is an instance; so is Kramers--Wannier).
+Its physical interpretation for helium was retracted in this project's own record
+(\texttt{RETRACTIONS.md}, R2: the resulting bound is weaker than a known one), and a cosmological
+identification of $\alpha'$ made elsewhere in the wider programme has since been excluded there.
+
+External review of that programme places the involution where it does hold as a theorem. Its Fricke
+involution $W_N$ on $\Gamma_0(N)^+$ is identified with the Dolgachev--Nikulin mirror involution on the
+moduli of lattice-polarized K3 surfaces~\cite{Dolgachev1996} -- a statement about algebraic geometry,
+which keeps the duality and needs no physical identification of $\alpha'$ at all. The same review lists
+where a modular duality of this kind is exact \emph{and} its fixed point is physical: the quantum Hall
+system, where $\Gamma_0(2)$ acts on $\sigma_{xy}+i\sigma_{xx}$~\cite{LutkenRoss1992} and organizes the
+global phase diagram~\cite{KLZ1992}; the Seiberg--Witten $u$-plane, where $\Gamma(2)$ acts~\cite{SW1994};
+and the compact boson, where $R\leftrightarrow\alpha'/R$ is exact and the self-dual radius is the SU(2)
+point -- distinct, as noted above, from the BKT point on the same line.
+
+\emph{What this is and is not.} Every item in the previous paragraph is either a theorem or a measured
+duality in a system that is not a superfluid. None is a claim about helium, and the retracted claim stays
+retracted. \emph{Gate, before a single sentence is added to the Lean library.} (1) Read
+Dolgachev's theorem and check whether this repository's involution -- $k\mapsto k_s^2/k$, the inversion
+alone, with no level $N$ in sight -- is an instance of it or only its shadow; nothing in this repository
+carries a $\Gamma_0(N)$ structure, so the identification, if it holds, concerns the wider programme's
+objects, and must be gated there. (2) Establish, from the primary sources, which of the three physical
+dualities above has an exact statement small enough to formalize as the project formalized
+Kramers--Wannier -- the quantum Hall $\Gamma_0(2)$ action is the obvious candidate, and the obvious way
+to be wrong about it is to formalize the symmetry without the physics that selects the fixed points.
+\emph{Kill.} If (1) yields ``shadow'', the involution stays what \lean{Duality.lean} says it is: a
+two-term AM--GM, correct, and not a mirror.
 
 \section{Discussion}
 
