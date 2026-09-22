@@ -133,6 +133,23 @@ which is cheaper. The correct hand value is `W_2 = √(37/8)`, the bound `W_2 �
 and is **not** tight for `p = 2` (it is tight for `p = 1`). The script's expected value is corrected
 to `√(37/8)`; nothing else changes. The pipeline caught my arithmetic, which is what C2 is for.
 
+## Amendment A2 (2026-09-22, after the first attempt at the pairs, before any pair's numbers were read)
+
+The full-diagram dual LP as first written (all `(n+m)(m+n)` constraints, dense) needed more than 8 GB
+on the first pair and was stopped before producing anything. Two changes, both to the *certificate*
+only — the primal `W_p` is always computed on the full diagram:
+
+1. the dual LP is posed on a reduced constraint set (the real `n×m` block, the `n+m` diagonal slots,
+   the dummy block replaced by two auxiliary variables, the `BIG` cross-use constraints dropped). This
+   *relaxes* the dual, so the returned potentials are not trusted: the independent checker verifies
+   feasibility against the **full** matrix, and a violated dropped constraint would fail it;
+2. §3's fallback is applied by a size rule rather than to all pairs: when `n·m ≤ 10⁶` the certificate
+   is on the full diagram; otherwise (bar counts: P1 has `2150 × 1623` in `H_0` and `3489 × 1984` in
+   `H_1`; R3/T2 exceed the rule in `H_1`) on the `k = 200` longest bars of each side, scope recorded per
+   pair and degree in the results file and in the paper's certificate table. The primal value on the
+   full diagram is then confirmed by two things only: the assignment solver and, for the same pair, the
+   certified top-200 value being ≤ it, which is a consistency check, not a proof of optimality.
+
 ## 4. What is not done in this round
 
 * No Lean. The general weak-duality theorem of `WassersteinCertificate.lean` already covers every

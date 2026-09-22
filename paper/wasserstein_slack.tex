@@ -1,0 +1,307 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,
+            urlcolor=blue!60!black]{hyperref}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\lean}[1]{\texttt{\small #1}}
+\newcommand{\dB}{d_{B}}
+\newcommand{\Dgm}{\mathrm{Dgm}}
+\newtcolorbox{keybox}[1][]{colback=blue!3,colframe=blue!45!black,
+  boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+\newtcolorbox{failbox}[1][]{colback=red!3,colframe=red!45!black,
+  boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+\newtcolorbox{fixbox}[1][]{colback=orange!4,colframe=orange!60!black,
+  boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+\newtheorem*{theorem*}{Theorem}
+
+\title{\textbf{How loose is Wasserstein stability on a vortex field?}\\
+\large The Skraba--Turner cellular bound measured and certified on seven Gross--Pitaevskii pairs,\\
+and where the duality points next}
+
+\author{Xavier Callens\\
+\small SocrateAI-Scientific-QuantumFluids\\
+\small \url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}}
+\date{September 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+The previous report in this series~\cite{Callens2026Loop} found that the bottleneck stability theorem
+for persistence diagrams, $\dB\le\|f-g\|_\infty$, holds but is empty on six of seven pairs of
+two-dimensional Gross--Pitaevskii density fields: a few vortex-core pixels set the sup norm, and
+$2\varepsilon$ exceeds the entire diagram. It named, as its first direction, the stability theorem in
+which the sup norm is replaced by an $\ell_p$ norm, and set a gate: read the exact statement, fix every
+convention in advance, compute the right-hand side before looking at the left. This report passes that
+gate. The theorem is Skraba and Turner's cellular Wasserstein stability~\cite{SkrabaTurner2020}
+(Theorem~4.6): $W_p(\Dgm f,\Dgm g)\le\|f-g\|_p$ with the norm taken over \emph{all} cells of the
+complex, in the $\ell_p$ ground metric. We compute both sides exactly on the same seven pairs, for
+$p=1,2$: the right-hand side as a finite sum over the cubical complex whose cell values are verified,
+by an independent union-find, to be the ones GUDHI uses; the left-hand side as an optimal assignment on
+the full diagrams, certified on every pair by explicit dual potentials. Three controls pass exactly
+before any pair is opened, one of them an exact known answer on real data (slack exactly $9$ for $p=1$
+and $3$ for $p=2$, from the nine cells a raised minimum touches), and one of them caught an arithmetic
+error in the author's own pre-registered hand value. The pre-registered question is not whether the
+bound holds -- it is a theorem -- but whether it says anything the triangle inequality does not.
+[[FILL: one-sentence answer per pair class, and the measured slack.]] Two further directions are taken
+to their gates and stopped there, with the reasons written down: the Berezinskii--Kosterlitz--Thouless
+transition, which these fields carry but which needs a finite-temperature run this project does not
+have; and the Fricke involution of an external review, which we now compare with Dolgachev's theorem
+on the mirror moduli space of K3 surfaces read in full, and find to be the same involution without the
+group -- a shadow, not an instance.
+\end{abstract}
+
+\section{Introduction}
+
+A stability theorem for persistence diagrams is a promise: if two functions are close, their diagrams
+are close. The promise is only worth invoking if ``close'' on the right-hand side is a distance the data
+actually make small. On vortex fields the sup norm is not such a distance: a vortex core is a hole of
+depth $n_0$ a few pixels wide, and any comparison that moves a core by one pixel -- a change of
+resolution, a step in time -- pays the full depth in $\|f-g\|_\infty$. The previous report measured this
+on seven pairs: the bottleneck bound held on all seven with margins of $2$ to $16$, and excluded no bar
+at all on six of them~\cite{Callens2026Loop}.
+
+The same report ended with three directions on \emph{duality}, each behind a gate. The first was the
+obvious one: use the theorem whose right-hand side is an $\ell_p$ norm, since an $\ell_p$ norm
+averages over the field and a few core pixels no longer dominate it. The gate was to read the theorem
+before computing, and that gate did work: the draft attributed the $\ell_p$ bound to Cohen-Steiner,
+Edelsbrunner, Harer and Mileyko~\cite{CSEHM2010}, whose bound in fact keeps the sup norm on the right
+(with a fractional exponent and a total-persistence constant), and the correction was made before
+publication. The theorem that changes the norm is Skraba and Turner's~\cite{SkrabaTurner2020}, and it
+is the one tested here.
+
+The question this report pre-registers (\lean{docs/designs/WASSERSTEIN\_STABILITY\_PREREG.md}, committed
+before any code) is therefore not whether $W_p\le\|f-g\|_p$ -- it is a theorem, and a violation would
+be a bug in our pipeline -- but two measurable things about it on real vortex fields:
+\begin{enumerate}[nosep]
+\item \emph{Is it informative?} The triangle inequality alone gives
+$W_p(\Dgm f,\Dgm g)\le W_p(\Dgm f,\emptyset)+W_p(\Dgm g,\emptyset)=:Z_p$, the cost of erasing both
+diagrams. The theorem says something only where $\|f-g\|_p<Z_p$; we call $V_p=\|f-g\|_p/Z_p$ the
+\emph{vacuity ratio}.
+\item \emph{How loose is it?} The \emph{slack} $S_p=\|f-g\|_p/W_p$ measures how much closer the
+diagrams are than the fields, in the theorem's own metric. It is a property of the data class, and
+it is what one would need to know to turn the theorem into a resolution criterion.
+\end{enumerate}
+
+The second contribution is methodological and continues the previous report's own lesson. There, a
+background agent corrupted a list of points between two pipeline stages, and only an independent
+recomputation caught it. Here nothing moves between agents: one script computes, its controls read the
+arrays from disk again, and the left-hand side is certified on every pair by a primal plan and dual
+potentials checked by a function that knows nothing about how they were found.
+
+\section{The theorem, with its conventions fixed}
+\label{sec:theorem}
+
+\begin{theorem*}[Skraba--Turner, Theorem 4.6, Cellular Wasserstein Stability~\cite{SkrabaTurner2020}]
+Let $f,g:K\to\mathbb{R}$ be monotone functions on a finite CW complex $K$. Then
+\begin{enumerate}[nosep,label=(\roman*)]
+\item $W_p(\Dgm f,\Dgm g)\le\|f-g\|_p$, where $\|f-g\|_p^p=\sum_{\sigma\in K}|f(\sigma)-g(\sigma)|^p$;
+\item $W_p(\Dgm_k f,\Dgm_k g)^p\le\sum_{\dim\sigma\in\{k,k+1\}}|f(\sigma)-g(\sigma)|^p$.
+\end{enumerate}
+\end{theorem*}
+
+Three conventions travel with the statement and are adopted here as the theorem's own metric, not
+ours. Distances in the plane are $\ell_p$; a point $(a,b)$ is at perpendicular distance
+$2^{(1-p)/p}|b-a|$ from the diagonal ($|b-a|$ for $p=1$, $|b-a|/\sqrt2$ for $p=2$); essential classes
+are matched among themselves at cost $|a-b|$ and never to a finite point or the diagonal; and the
+total distance in (i) is $(\sum_k W_p(\Dgm_k f,\Dgm_k g)^p)^{1/p}$ over all degrees, each degree
+matched separately. This is \emph{not} the $\ell^\infty$ ground cost of the previous report's
+certificates; for $p=1$ the $\ell_1$ ground cost dominates it, so everything certified there is also
+bounded by the theorem, but the comparison is made in the theorem's metric and the earlier numbers
+appear only as a consistency check (prediction P7).
+
+\paragraph{The complex and the cell values.} GUDHI's periodic cubical complex on a $2$D array with
+\lean{top\_dimensional\_cells} is the $T$-construction~\cite{Bleile2021,GUDHI}: each pixel is a
+$2$-cell with its own value and every lower cell takes the \emph{minimum} over the pixels containing
+it. On an $N\times M$ torus that is $NM$ pixels, $2NM$ edges and $NM$ vertices; along a non-periodic
+axis the boundary cells take the minimum over the pixels that exist. Both functions of every pair live
+on one such complex (the resolution pairs by the restriction rule of the previous report: the fine
+field restricted to the coarse grid), so the theorem applies literally, and $\|f-g\|_p$ is an exact
+finite sum over $4NM$ numbers.
+
+\section{Method and controls}
+\label{sec:method}
+
+\paragraph{Right-hand side.} \lean{cell\_values} builds the four cell families from the padded array
+(wrap-around padding on a periodic axis, $+\infty$ padding otherwise) and \lean{cell\_norm} sums
+$|f(\sigma)-g(\sigma)|^p$ over all of them, or over vertices and edges only for part~(ii) with $k=0$.
+
+\paragraph{Left-hand side.} For each degree, the augmented $(n+m)\times(m+n)$ matrix of
+Kerber--Morozov--Nigmetov~\cite{Kerber2017} with $p$-th powers of $\ell_p$ costs (each point owning one
+diagonal slot; cross-use forbidden by a large penalty; dummy-to-dummy free) is solved as an assignment
+(\lean{scipy.optimize.linear\_sum\_assignment}); the sum is the $p$-th power of $W_p^{(k)}$. Then the
+dual LP $\max\sum u+\sum v$ s.t.\ $u_i+v_j\le C_{ij}$ is solved (HiGHS, sparse; the dummy block
+replaced by two auxiliary variables and the penalty constraints dropped, which \emph{relaxes} the dual
+and is therefore not trusted) and an independent function checks the potentials against the
+\emph{full} matrix: feasibility everywhere and tightness against the plan. A plan with feasible, tight
+potentials is optimal by finite LP weak duality -- the theorem proved in general in
+\lean{lean\_src/WassersteinCertificate.lean} of the previous report, which covers every certificate
+here. The diagrams are \emph{full}: every finite bar and every essential class, not the top-$k$
+truncation used before.
+
+\paragraph{Controls, all passed before any pair was opened.}
+\begin{itemize}[nosep]
+\item \textbf{C1} (the cell values are GUDHI's). An independent union-find over the vertices and edges
+we build, with the elder rule, must reproduce GUDHI's $\Dgm_0$ exactly. Tested on random small arrays
+under all four periodicity patterns, with and without ties, and then on all twelve arrays of the seven
+pairs. All exact.
+\item \textbf{C2} (hand-computed known answer). The eight-point cycle of the previous report,
+$f=(1,5,2,6,3,7,4,8)$ and $g$ with $v_6:=4.5$. Only one pixel changes and neither neighbouring vertex
+does (their minima are $3$ and $4$ on both sides), so $\|f-g\|_1=\|f-g\|_2=5/2$; the diagrams differ in
+one point, $(4,7)\to(4,4.5)$, so $W_1=5/2$ and the $p=1$ bound is \emph{tight}. The script also had to
+return the previous report's $\ell^\infty$-ground $W_1=7/4$ on the same example when told to use that
+metric, as the check that the two conventions are the ones we think they are. It did.
+\begin{fixbox}
+\textbf{Amendment A1, dated before any pair.} The pre-registered hand value for $W_2$ on this example
+was $5/2$. The first control run returned $2.1506\ldots$, and a second hand computation agrees: for
+$p=2$ sending both points to the diagonal costs $\big((3/\sqrt2)^2+(1/2\sqrt2)^2\big)^{1/2}
+=\sqrt{37/8}$, which is cheaper than the $5/2$ of matching them. The expected value was corrected to
+$\sqrt{37/8}$ and nothing else changed. The $p=2$ bound holds on this example and is not tight. The
+control did what a control is for: it caught the author, not the code.
+\end{fixbox}
+\item \textbf{C3} (exact known answer on real data). Take $\rho$ of pair T1's first field, the birth
+pixel of its deepest finite $H_0$ bar that is a strict local minimum in $8$-connectivity, and raise it
+by $\delta$. All nine cells that pixel touches (itself, four edges, four vertices) have it as their
+minimum and change by exactly $\delta$: $\|f-g\|_1=9\delta$, $\|f-g\|_2=3\delta$, the part-(ii) $k=0$
+sums are $8\delta$ and $\sqrt8\,\delta$, and the diagram moves one birth by $\delta$: $W_1=W_2=\delta$.
+Measured: slack exactly $9.000$ and $3.000$. The pre-registration allowed $\delta$ to be reduced if it
+exceeded the gap to the pixel's nearest neighbour; it did ($\delta=0.01\times$depth exceeded the gap
+$4.3\times10^{-3}$) and $\delta$ was set to half the gap, as written, and recorded.
+\item \textbf{C4} (negative). Pair T1's optimal plan with pair T2's potentials must be rejected by the
+certificate checker. [[FILL: result.]]
+\end{itemize}
+
+\section{Results}
+\label{sec:results}
+
+Table~\ref{tab:main} gives, for each pair and $p\in\{1,2\}$: the theorem's right-hand side
+$\|f-g\|_p$ over all cells; the part-(ii) bound for $k=0$; the total $W_p$ and its $H_0$ part
+$W_p^{(0)}$; the trivial bound $Z_p$; the slack $S_p$ and the vacuity ratio $V_p$.
+
+\begin{table}[h]\centering\small
+\input{wp_tables}
+\caption{The Skraba--Turner bound on the seven pairs, in its own metric ($\ell_p$ ground cost, full
+diagrams, all degrees). $S_p=\|f-g\|_p/W_p$; $V_p=\|f-g\|_p/Z_p$, informative iff $V_p<1$.}
+\label{tab:main}
+\end{table}
+
+\begin{table}[h]\centering\small
+\input{wp_certificates}
+\caption{Duality certificates for $W_p^{(0)}$ on the full $H_0$ diagrams: relative primal--dual gap,
+maximal violation of $u_i+v_j\le C_{ij}$ over the full augmented matrix, and LP time.}
+\label{tab:cert}
+\end{table}
+
+\paragraph{Pre-registered verdicts.} [[FILL: P1--P7 with one line each.]]
+
+[[FILL: interpretation paragraphs: why V is what it is on R pairs; the phase-space pair; what the
+slack measures; the p-dependence; part (ii) vs (i).]]
+
+\section{Where the duality points next}
+\label{sec:directions}
+
+\subsection{What this bound can and cannot become}
+
+[[FILL after results: if vacuous on R pairs -- the resolution comparison is not a perturbation in any
+$\ell_p$ sense and no stability theorem rescues it; the slack is the number to carry forward. If
+informative -- which bars it protects is the next pre-registration.]]
+
+\subsection{The transition these fields carry: BKT, and the run this project does not have}
+
+A vortex field in two dimensions is the setting of the Berezinskii--Kosterlitz--Thouless transition,
+where bound vortex--antivortex pairs unbind and the superfluid density jumps by the universal amount
+of Nelson and Kosterlitz~\cite{NelsonKosterlitz1977}, measured in helium films by Bishop and
+Reppy~\cite{BishopReppy1978} and in a trapped atomic gas by Hadzibabic et al.~\cite{Hadzibabic2006}.
+Persistence of the density field sees vortex cores as $H_0$ bars and, by the duality of
+constructions~\cite{Bleile2021} used as a control in~\cite{Callens2026TDA}, nothing else; whether the
+\emph{pairing} of cores -- the quantity that changes at the transition -- leaves a signature in
+$\Dgm_1$ of the density or in the diagram of the phase field is a question with a known answer to test
+against: the critical density $n_c\lambda_T^2=\ln(\xi/\tilde g)$ with $\xi\approx380$ of Prokof'ev,
+Ruebenacker and Svistunov~\cite{Prokofev2001}.
+
+\emph{Gate, and why it is not passed here.} The fields of this and the previous report are
+zero-temperature Gross--Pitaevskii evolutions of planted vortices. BKT is a thermal transition; the
+standard numerical route is the projected Gross--Pitaevskii (classical-field) method, used for exactly
+this question by Simula and Blakie~\cite{SimulaBlakie2006} and by Foster, Blakie and
+Davis~\cite{FosterBlakieDavis2010}, who resolve vortex-pair unbinding, the superfluid fraction and the
+first-order correlation function across the transition in a homogeneous box. This project has no
+finite-temperature solver. Writing one is a project of its own, with its own known answers (the
+superfluid jump, $n_c$), and it must be pre-registered as such; nothing in the present data can be
+reinterpreted as thermal. The direction stays open and unstarted.
+
+\subsection{The Fricke involution, read against Dolgachev}
+\label{sec:fricke}
+
+The external review quoted in~\cite{Callens2026Loop} placed this project's older involution
+$R\leftrightarrow\alpha'/R$ -- in \lean{lean\_src/DualLength.lean}, the map $k\mapsto k_s^2/k$ on
+wavenumbers, which exchanges the phonon and free-particle terms of the Bogoliubov dual length
+$\ell(k)=1/k+k/k_s^2$ and fixes $k=k_s$ -- with the Fricke involution and the Dolgachev--Nikulin mirror
+symmetry of K3 surfaces, as ``a theorem'' that ``keeps the duality''. The gate set there was: read
+Dolgachev and decide whether the inversion is an instance of his theorem or its shadow. We read
+Dolgachev's paper~\cite{Dolgachev1996} in full (arXiv:alg-geom/9502005). The relevant statements are:
+
+\begin{keybox}
+\textbf{Theorem 7.1.} For the mirror family of degree-$2n$ polarized K3 surfaces (the $M_n$-polarized
+surfaces, $M_n=U\perp\langle -2n\rangle$-orthogonal, Picard rank 19), the moduli space is
+$K_{M_n}\cong\mathbb{H}/\Gamma_0(n)^+$, where $\Gamma_0(n)^+$ is $\Gamma_0(n)$ extended by the Fricke
+involution $F=\begin{psmallmatrix}0&-1/\sqrt n\\ \sqrt n&0\end{psmallmatrix}$, $t\mapsto -1/(nt)$.
+\textbf{Theorem 7.6.} An $M_n$-polarized K3 surface with period $t$ is, up to a canonical involution,
+the Kummer surface of $E_t\times E_{-1/nt}$, a pair of $n$-isogenous elliptic curves; the Fricke
+involution acts on $\mathbb{H}/\Gamma_0(n)$ by $(E,A)\mapsto(E/A,E_n/A)$.
+\end{keybox}
+
+Now compare. Restrict $F$ to the imaginary axis, $t=iy$: $F(iy)=i/(ny)$, i.e.\ $y\mapsto 1/(ny)$, an
+inversion of the positive reals about $y=1/\sqrt n$. With $y=k$ and $n=1/k_s^2$ this is exactly
+\lean{DualLength}'s $k\mapsto k_s^2/k$ with fixed point $k_s$. So the reviewer is right that it is the
+same involution -- and so is every inversion $x\mapsto c/x$, which is the point. What makes Dolgachev's
+statement a theorem about K3 surfaces is not $F$ but the group $\Gamma_0(n)$ that $F$ normalizes: the
+translation $t\mapsto t+1$, the congruence condition $n\mid c$, the lattice-polarized family whose
+periods live in $\mathbb{H}$, and the isogeny that $F$ realizes on the elliptic curves. A wavenumber $k$
+carries none of it: there is no $t\mapsto t+1$ on the Bogoliubov dispersion, no lattice, no family
+whose monodromy is $\Gamma_0(n)$. \lean{DualLength.lean} proves, and says it proves, an AM--GM
+statement about two positive terms.
+
+\emph{Verdict at the gate: shadow, not instance.} The honest sentence is ``the same involution, without
+the group''. It is not a claim about helium, and no Lean line is written for it. What \emph{would} be
+an instance is a system whose parameter space carries the modular action -- the quantum Hall
+$\sigma$-plane under $\Gamma_0(2)$~\cite{LutkenRoss1992}, the Seiberg--Witten $u$-plane under
+$\Gamma(2)$~\cite{SW1994} -- and those are the reviewer's other examples, outside this project's data.
+Formalizing Dolgachev's Theorem~7.1 itself in Lean~4 is out of reach of Mathlib as pinned here (no
+lattice-polarized K3 surfaces, no period map); formalizing the group-theoretic core -- that $F$
+normalizes $\Gamma_0(n)$ in $\mathrm{PSL}_2(\mathbb{R})$, that $\Gamma_0(n)^+$ is a group containing
+$\Gamma_0(n)$ with index~2 -- is within reach and would be honest as \emph{group theory}, labelled as
+such, with no claim of physics attached. It is recorded as a possible next Lean file and not started.
+
+\subsection{The certificate duality itself}
+
+The one duality that has done work in two reports is the humblest: finite LP weak duality, which
+turns a solver's answer into a proof. Its next step is not new physics but a larger reach: the seven
+full-diagram certificates here are checked in Python by an independent function; the general theorem
+is in Lean; the specific $1600\times1600$ floating-point matrices are not re-verified by the kernel.
+Exact rational certificates for full diagrams, checked by \lean{norm\_num} or by a verified checker,
+would close that last gap and are the natural P6 of a future round.
+
+\section{Discussion}
+
+[[FILL: what the round established; what it did not (one seed, one solver, p=1,2 only, no Lean of
+Thm 4.6); the gate record: 3 directions, 1 passed and measured, 2 stopped with reasons; the amended
+hand value as the round's small lesson.]]
+
+\paragraph{Reproducibility.} \lean{exploration/tda/wp\_stability.py} runs the controls and the seven
+pairs and writes \lean{data/generated/kinetic\_tda/wp\_stability\_results.json};
+\lean{wp\_stability\_report.py} produces the tables above from that file and re-derives the verdicts.
+Pre-registration and amendment: \lean{docs/designs/WASSERSTEIN\_STABILITY\_PREREG.md}. The data arrays
+are the previous report's (\lean{make\_gp\_frames.py}, \lean{make\_gp\_frames\_n512.py}, seed as
+recorded there).
+
+\bibliographystyle{plain}
+\bibliography{refs_wasserstein_slack}
+\end{document}

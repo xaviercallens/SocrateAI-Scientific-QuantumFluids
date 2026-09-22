@@ -220,25 +220,57 @@ def check_certificate(C: np.ndarray, rows, cols, u: np.ndarray, v: np.ndarray, t
             "rel_gap": gap, "tight": gap <= tol}
 
 
-def dual_potentials(C: np.ndarray, time_limit=600.0):
-    """Solve the dual LP  max sum u + sum v  s.t. u_i + v_j <= C_ij  (sparse, HiGHS)."""
+def dual_potentials(C: np.ndarray, n: int | None = None, m: int | None = None, time_limit=1800.0):
+    """Solve the dual LP  max sum u + sum v  s.t. u_i + v_j <= C_ij  (sparse, HiGHS).
+
+    With the augmented structure (n, m) given, the LP is posed on a reduced constraint set: the n*m
+    real block and the n + m diagonal slots as they are; the dummy-dummy block (cost 0, m*n
+    constraints) replaced by two auxiliary variables a >= u_{n+j}, b >= v_{m+i} with a + b <= 0; the BIG
+    cross-use constraints DROPPED. Dropping constraints relaxes the dual, so the returned potentials are
+    not trusted here: `check_certificate` re-verifies feasibility against the FULL matrix afterwards,
+    and a violated dropped constraint would fail that check. (The full LP needed > 8 GB on 1600x1600.)"""
     R, K = C.shape
-    ii, jj = np.meshgrid(np.arange(R), np.arange(K), indexing="ij")
-    ii = ii.ravel(); jj = jj.ravel()
-    nz = R * K
-    A = sp.csr_matrix((np.ones(2 * nz), (np.repeat(np.arange(nz), 2),
-                                          np.column_stack([ii, R + jj]).ravel())), shape=(nz, R + K))
-    res = linprog(c=-np.ones(R + K), A_ub=A, b_ub=C.ravel(), bounds=[(None, None)] * (R + K),
-                  method="highs", options={"time_limit": time_limit})
+    if n is None or m is None or n + m != R or m + n != K:
+        ii, jj = np.meshgrid(np.arange(R), np.arange(K), indexing="ij")
+        ii = ii.ravel(); jj = jj.ravel(); b = C.ravel()
+        nvar = R + K; extra_rows = []
+    else:
+        ri, ci = np.meshgrid(np.arange(n), np.arange(m), indexing="ij")            # real block
+        ii = [ri.ravel(), np.arange(n), n + np.arange(m)]
+        jj = [ci.ravel(), m + np.arange(n), np.arange(m)]
+        b = [C[:n, :m].ravel(), C[np.arange(n), m + np.arange(n)], C[n + np.arange(m), np.arange(m)]]
+        ii = np.concatenate(ii); jj = np.concatenate(jj); b = np.concatenate(b)
+        nvar = R + K + 2                                                            # + a, b
+        extra_rows = True
+    nz = len(ii)
+    rows = np.repeat(np.arange(nz), 2); cols = np.column_stack([ii, R + jj]).ravel(); vals = np.ones(2 * nz)
+    if extra_rows:
+        # u_{n+j} - a <= 0 (m rows), v_{m+i} - b <= 0 (n rows), a + b <= 0 (1 row)
+        r0 = nz
+        ru = np.repeat(r0 + np.arange(m), 2); cu = np.column_stack([n + np.arange(m), np.full(m, R + K)]).ravel()
+        vu = np.tile([1.0, -1.0], m)
+        rv = np.repeat(r0 + m + np.arange(n), 2); cv = np.column_stack([R + m + np.arange(n), np.full(n, R + K + 1)]).ravel()
+        vv = np.tile([1.0, -1.0], n)
+        rab = np.array([r0 + m + n] * 2); cab = np.array([R + K, R + K + 1]); vab = np.array([1.0, 1.0])
+        rows = np.concatenate([rows, ru, rv, rab]); cols = np.concatenate([cols, cu, cv, cab]); vals = np.concatenate([vals, vu, vv, vab])
+        b = np.concatenate([b, np.zeros(m + n + 1)])
+        nrows = nz + m + n + 1
+    else:
+        nrows = nz
+    A = sp.csr_matrix((vals, (rows, cols)), shape=(nrows, nvar))
+    c = -np.ones(nvar); c[R + K:] = 0.0
+    res = linprog(c=c, A_ub=A, b_ub=b, bounds=[(None, None)] * nvar, method="highs", options={"time_limit": time_limit})
     if res.status != 0:
         return None, res.message
-    return res.x[:R], res.x[R:]
+    return res.x[:R], res.x[R:R + K]
 
 
-def wasserstein_degree(X, Y, essX, essY, p: float, ground="lp", certify=True, cert_topk=None):
+def wasserstein_degree(X, Y, essX, essY, p: float, ground="lp", certify=True, cert_topk=None,
+                       cert_full_max=1_000_000):
     """W_p^(k) between one degree's diagrams. Returns dict with the p-th power 'cost_p', the primal
-    value, essential contribution, and the certificate (on the full diagram, or on the cert_topk longest
-    bars of each side if the full LP is refused -- recorded in 'cert_scope')."""
+    value, essential contribution, and the certificate: on the full diagram when n*m <= cert_full_max
+    (the reduced dual LP has ~n*m constraints), otherwise on the cert_topk longest bars of each side --
+    the scope is recorded in the certificate ('full' or 'top-k'); the primal is always on the full diagram."""
     X = np.asarray(X, float).reshape(-1, 2); Y = np.asarray(Y, float).reshape(-1, 2)
     essX = np.sort(np.asarray(essX, float)); essY = np.sort(np.asarray(essY, float))
     if len(essX) != len(essY):
@@ -255,16 +287,18 @@ def wasserstein_degree(X, Y, essX, essY, p: float, ground="lp", certify=True, ce
     if certify:
         scope = "full"
         Cc, rc, cc = C, rows, cols
-        if cert_topk is not None and (len(X) > cert_topk or len(Y) > cert_topk):
+        nc, mc = len(X), len(Y)
+        if cert_topk is not None and len(X) * len(Y) > cert_full_max and (len(X) > cert_topk or len(Y) > cert_topk):
             def topk(P):
                 if len(P) <= cert_topk:
                     return P
                 return P[np.argsort(-(P[:, 1] - P[:, 0]))[:cert_topk]]
             Xk, Yk = topk(X), topk(Y)
             Cc = augmented_matrix(Xk, Yk, p, ground); rc, cc = linear_sum_assignment(Cc)
+            nc, mc = len(Xk), len(Yk)
             scope = f"top-{cert_topk}"
         t0 = time.time()
-        u, v = dual_potentials(Cc)
+        u, v = dual_potentials(Cc, nc, mc)
         if u is None:
             out["certificate"] = {"status": f"LP failed: {v}", "scope": scope}
         else:
@@ -275,11 +309,13 @@ def wasserstein_degree(X, Y, essX, essY, p: float, ground="lp", certify=True, ce
     return out
 
 
-def wasserstein_total(dgm_f: dict, dgm_g: dict, p: float, ground="lp", certify=True, cert_topk=None):
+def wasserstein_total(dgm_f: dict, dgm_g: dict, p: float, ground="lp", certify=True, cert_topk=None,
+                      cert_full_max=1_000_000):
     per_deg = {}
     tot = 0.0
     for k in sorted(dgm_f):
-        r = wasserstein_degree(dgm_f[k][0], dgm_g[k][0], dgm_f[k][1], dgm_g[k][1], p, ground, certify, cert_topk)
+        r = wasserstein_degree(dgm_f[k][0], dgm_g[k][0], dgm_f[k][1], dgm_g[k][1], p, ground, certify, cert_topk,
+                               cert_full_max)
         r["W"] = r["cost_p"] ** (1.0 / p)
         per_deg[k] = r
         tot += r["cost_p"]
@@ -414,7 +450,7 @@ def load_pairs():
     return pairs
 
 
-def run_pair(name, f, g, periodic, cert_topk=None, verbose=True):
+def run_pair(name, f, g, periodic, cert_topk=None, verbose=True, cert_full_max=1_000_000):
     t0 = time.time()
     df, dg = gudhi_diagrams(f, periodic), gudhi_diagrams(g, periodic)
     uf_f, ess_f = h0_unionfind(f, periodic); uf_g, ess_g = h0_unionfind(g, periodic)
@@ -425,7 +461,7 @@ def run_pair(name, f, g, periodic, cert_topk=None, verbose=True):
     for p in (1, 2):
         B_all = cell_norm(f, g, periodic, p)
         B_k0 = cell_norm(f, g, periodic, p, dims=("vertices", "edges0", "edges1"))
-        W, per = wasserstein_total(df, dg, p, "lp", certify=True, cert_topk=cert_topk)
+        W, per = wasserstein_total(df, dg, p, "lp", certify=True, cert_topk=cert_topk, cert_full_max=cert_full_max)
         Z = trivial_bound(df, dg, p, "lp")
         out[f"p{p}"] = {"B_all": B_all, "B_k0": B_k0, "W_total": W, "W0": per[0]["W"],
                         "W_by_degree": {k: per[k]["W"] for k in per},
@@ -450,7 +486,9 @@ def run_pair(name, f, g, periodic, cert_topk=None, verbose=True):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--controls-only", action="store_true")
-    ap.add_argument("--cert-topk", type=int, default=None, help="certify on the k longest bars only (recorded)")
+    ap.add_argument("--cert-topk", type=int, default=None,
+                    help="when n*m exceeds --cert-full-max, certify on the k longest bars only (scope recorded)")
+    ap.add_argument("--cert-full-max", type=int, default=1_000_000)
     ap.add_argument("--pairs", default="R1,R2,R3,T1,T2,S1,P1")
     ap.add_argument("--out", default=str(DATA / "wp_stability_results.json"))
     a = ap.parse_args()
@@ -474,7 +512,7 @@ def main():
     results["pairs"] = {}
     for name in a.pairs.split(","):
         f, g, per = pairs[name]
-        results["pairs"][name] = run_pair(name, f, g, per, cert_topk=a.cert_topk)
+        results["pairs"][name] = run_pair(name, f, g, per, cert_topk=a.cert_topk, cert_full_max=a.cert_full_max)
         Path(a.out).write_text(json.dumps(results, indent=1, default=float))
     # C4 (negative): T1's plan with T2's potentials must be rejected
     if {"T1", "T2"} <= set(results["pairs"]):
@@ -484,8 +522,9 @@ def main():
         def topk(P):
             return P if len(P) <= k else P[np.argsort(-(P[:, 1] - P[:, 0]))[:k]]
         C1m = augmented_matrix(topk(d1f[0][0]), topk(d1g[0][0]), 1, "lp"); r1, c1 = linear_sum_assignment(C1m)
-        C2m = augmented_matrix(topk(d2f[0][0]), topk(d2g[0][0]), 1, "lp")
-        u2, v2 = dual_potentials(C2m)
+        X2, Y2 = topk(d2f[0][0]), topk(d2g[0][0])
+        C2m = augmented_matrix(X2, Y2, 1, "lp")
+        u2, v2 = dual_potentials(C2m, len(X2), len(Y2))
         if C1m.shape == C2m.shape and u2 is not None:
             chk = check_certificate(C1m, r1, c1, u2, v2)
             results["controls"]["C4"] = {"PASS": not (chk["feasible"] and chk["tight"]), **chk}
