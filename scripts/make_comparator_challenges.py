@@ -22,7 +22,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "lean_src"
 OUT = SRC / "ComparatorChallenges"
-SOLUTIONS = ["QuantumFluidsShell", "MadelungSplit", "Duality", "GPGalerkin", "ShellHamiltonian", "DualLength", "RipsFloor", "SigmaRule", "MadelungNSE", "VortexWinding", "QuantizedCirculation", "HeliumKinematics", "BoseIntegral", "PhononSeries", "PhononSpecificHeat", "ZeroSound", "PhaseMixing"]
+SOLUTIONS = ["QuantumFluidsShell", "MadelungSplit", "Duality", "GPGalerkin", "ShellHamiltonian", "DualLength", "RipsFloor", "SigmaRule", "MadelungNSE", "VortexWinding", "QuantizedCirculation", "HeliumKinematics", "BoseIntegral", "PhononSeries", "PhononSpecificHeat", "ZeroSound", "PhaseMixing", "Villani"]
 PERMITTED = ["propext", "Quot.sound", "Classical.choice"]
 
 DECL = re.compile(r"^(private\s+)?(noncomputable\s+)?(theorem|lemma|def|abbrev|structure|instance)\b")
@@ -57,8 +57,15 @@ def cur_is_docstring(cur):
     return joined.startswith("/--") and joined.endswith("-/")
 
 
+def strip_block_comments(text):
+    """Strip every `/- ... -/` block comment (docstrings `/-- -/` and section headers `/-! -/`
+    alike). Anything that looks like Lean syntax -- a `theorem` keyword, a `:=` used as informal
+    math notation -- inside PROSE must not be mistaken for real code."""
+    return re.sub(r"/-.*?-/", "", text, flags=re.S)
+
+
 def decl_name(item):
-    body = re.sub(r"/--.*?-/", "", item, flags=re.S).strip()
+    body = strip_block_comments(item).strip()
     m = re.match(r"(?:private\s+)?(?:noncomputable\s+)?(?:theorem|lemma|def|abbrev|structure)\s+(\S+)", body)
     return m.group(1) if m else None
 
@@ -68,17 +75,23 @@ def sorry_proof(item):
 
     The statement ends at the first top-level `:=`, or, for theorems defined by
     pattern matching (`theorem f ... : stmt` followed by `| 0 => ...` alternatives),
-    at the first such alternative, whichever comes first.
+    at the first such alternative, whichever comes first. Both are searched for in the CODE
+    only, after any leading `/- ... -/` docstring: prose may itself contain `:=` (used as
+    informal math notation, e.g. "`r := d(a,b)`") or a line starting with `|`, and that must
+    not be mistaken for the real cut point.
     """
+    m_doc = re.match(r"\s*/-.*?-/\s*\n?", item, flags=re.S)
+    doc_end = m_doc.end() if m_doc else 0
+    code = item[doc_end:]
     cuts = []
-    m = re.search(r":=", item)
+    m = re.search(r":=", code)
     if m:
         cuts.append(m.start())
-    pm = re.search(r"\n\s*\|\s", item)
+    pm = re.search(r"\n\s*\|\s", code)
     if pm:
         cuts.append(pm.start())
     assert cuts, f"no ':=' or match alternative in item:\n{item[:200]}"
-    return item[: min(cuts)].rstrip() + " := by\n  sorry"
+    return item[:doc_end] + code[: min(cuts)].rstrip() + " := by\n  sorry"
 
 
 def main():
@@ -96,7 +109,7 @@ def main():
             if s.startswith("#print"):
                 continue
             name = decl_name(it)
-            is_thm = re.search(r"(?:^|\s)(theorem|lemma)\s", re.sub(r"/--.*?-/", "", it, flags=re.S)) is not None
+            is_thm = re.search(r"(?:^|\s)(theorem|lemma)\s", strip_block_comments(it)) is not None
             if is_thm:
                 if name in printed_short:
                     keep.append(sorry_proof(it))

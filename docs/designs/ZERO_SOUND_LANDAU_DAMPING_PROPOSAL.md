@@ -114,6 +114,23 @@ Trois codes sources, trois toolchains, trois usages différents :
 | **OpenAI NavierStokesAndEuler** | 4.34.0-rc2 (dépendance déjà en place) | vocabulaire tore/dérivées/Sobolev | inchangé (`MadelungNSE`) |
 | **Anthropic FLT** | 4.33.1 | inversion de Fourier sur le tore à n dimensions, borne sup Sobolev sur un cube | port (deux fichiers, ~500 lignes), pour passer des modes de Fourier au champ δn(x, θ) |
 
+**Mise à jour (2026-09-22).** Une revue séparée et plus large de tous les travaux de Villani 2025–2026
+et de ses cours librement accessibles (13 PDF, dont ses deux articles seuls-auteur de 2025/2026 et
+Mouhot–Villani, hypocoercivité, Lott–Villani) a été faite pour répondre à la demande explicite d'une
+formalisation-hommage. Elle a identifié `lean_src/Villani.lean` comme cible **réalisée cette session**,
+au lieu de l'item 1 ci-dessous, pour deux raisons : (a) l'item 1 exige d'abord de porter nos définitions
+dans le cadre exact de Bedrossian (fond, normes de Gevrey) — un préalable non mesuré ; (b) la revue a
+trouvé un résultat **co-écrit par Villani lui-même**, auto-contenu, sans dette envers Mathlib manquant :
+Ollivier–Villani, *A curved Brunn–Minkowski inequality on the discrete hypercube*, arXiv:1011.4779,
+Théorème 1 au cas K=0 — `#A·#B ≤ (#M)²` pour l'ensemble des points milieux M de A,B dans le cube de
+Hamming, prouvé intégralement (injection A×B ↪ M×M par codage de « crossover », sans `sorry`) — plus un
+corollaire de trois lignes de la propre inégalité de traitement des données de Mathlib
+(`klDiv_comp_right_le`), squelette discret des méthodes d'entropie que Villani passe en revue dans
+*H-theorem and beyond*. Le Théorème 1 complet (terme de courbure K=1/(2N)) reste un item ouvert : il
+exige la concentration de mesure dans le groupe symétrique (Lemme 4 et Proposition 5 de l'article),
+non tentée. Les items 1 à 4 ci-dessous restent le programme pour la suite du volet Landau damping/Fermi
+liquide proprement dit.
+
 **Cibles, par ordre de faisabilité, chacune avec ce qui manque à Bedrossian selon son propre README :**
 
 1. **Critère de Penrose et relation de dispersion, cas algébrique 2D Fermi** (V1 ci-dessus). Absent de sa

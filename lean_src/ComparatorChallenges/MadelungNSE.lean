@@ -45,6 +45,10 @@ def TwiceSpatial (p : PressureField) (t : ℝ) (x : Space) : Prop :=
   ∀ i : Fin 3, DifferentiableAt ℝ
     (fun y : Space => fderiv ℝ (fun z : Space => p (t, z)) y (coordinateVector i)) x
 
+/- OMITTED: a convenience lemma reading off one component of their `pressureGradient`.
+   It is not used below and did not survive this Mathlib's `PiLp`/`ofLp` coercion changes; rather
+   than carry a `sorry` for a lemma nothing depends on, it is dropped. -/
+
 /-- **The divergence of their pressure gradient is the scalar Laplacian.**
 `div (grad p) = Δp`, stated with their `spatialDivergence` and their `pressureGradient`. -/
 theorem divergence_pressureGradient (p : PressureField) (t : ℝ) (x : Space)
