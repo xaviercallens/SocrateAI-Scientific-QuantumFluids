@@ -13,6 +13,16 @@ sent to anyone.**
 
 ---
 
+## 0a. Update 2026-09-22 — contact proceeding via a personal channel, at the owner's decision
+
+The owner has a personal connection to H. Godfrin's family and will make contact directly; this is the
+owner's own decision and outreach, not an action I took or a determination that the gate below is met.
+A separate, shorter draft for that personal contact — which also *asks* Godfrin to confirm Eq. (20) and
+Eq. (25) directly, rather than waiting on institutional PRB access — is at
+`docs/GODFRIN_DATA_REQUEST.md`. The technical content of this file (§§1–5) is unchanged and still not
+independently verified against the version of record; treat anything from it accordingly until he
+answers.
+
 ## 0. HOLD — do not send. Gating condition and its status (updated 2026-09-21)
 
 **Gate:** the PRB version of record must be checked for Eq. (20), Eq. (25) and the units of α₂–α₄ in
