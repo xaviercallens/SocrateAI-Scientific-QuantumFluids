@@ -23,6 +23,7 @@ useful to others in their own right are marked (*).
 | `ZeroSound` (*) | undamped zero sound in a Fermi liquid exists iff `F₀ˢ > 0`, in 3D (logarithmic response) and in 2D (algebraic response, explicit root `(1+F)/√(1+2F)`) — textbook physics, now checked; the 2D case is the one relevant to ³He films |
 | `PhaseMixing` | free transport: the solution, decay of every density mode (Riemann–Lebesgue), and the Maxwellian closed form `e^{-k²t²/2}` the Vlasov solver is tested against. **Subsumed by** Bedrossian, arXiv:2609.16801, which formalizes nonlinear Landau damping |
 | `Villani` (*) | Ollivier-Villani, arXiv:1011.4779, Theorem 1 at K=0: `#A * #B ≤ (#M)^2` for the midpoint set M of nonempty A, B in the Hamming cube -- the injection A×B ↪ M×M by crossover coding; plus a 3-line corollary of Mathlib's own Markov-kernel Data Processing Inequality (discrete H-theorem) |
+| `WassersteinCertificate` (*) | finite LP weak duality for an assignment problem (any cost matrix, any finite index types): a feasible, tight dual certifies a matching optimal without searching the others. Instantiated on the closed-loop project's hand-verified toy example (`docs/designs/CLOSED_LOOP_PREREG.md` C1): the found matching is optimal at cost exactly 7/4; the broken C3 potential is shown infeasible |
 | `GPGalerkin` (*) | truncated Gross–Pitaevskii on any finite mode set: `Q = Σ_q |A_q|² ≥ 0`, mass and energy algebra, the Hamiltonian gradient identity |
 | `MadelungSplit` | `|∇ψ|² = |∇a|² + a²|∇S|²` — the quantum-pressure / hydrodynamic split |
 | `MadelungNSE` | the same objects in the OpenAI Navier–Stokes vocabulary; `∇·(∇φ) = Δφ` in their formalism |
@@ -50,3 +51,4 @@ import PhononSpecificHeat
 import ZeroSound
 import PhaseMixing
 import Villani
+import WassersteinCertificate

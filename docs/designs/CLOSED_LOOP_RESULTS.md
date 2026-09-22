@@ -43,10 +43,33 @@ honnête (première version), soit une valeur recalculée et vérifiée deux foi
 | P3 (ε ≥ 0,25 n₀, R1-R3) | R1/R2/R3 | rapporté seul | ε = 2,0919 / 2,1990 / 2,3938 n₀ | **REPORTED** (tient, ×8 à ×10 le seuil) |
 | P4 (fraction dans la bande, R1-R3, θ=0,5) | R1/R2/R3 | rapporté seul | 100,0 % / 100,0 % / 100,0 % | **REPORTED** |
 | P5 (W₁ primal = W₁ dual, 10⁻⁶ rel.) | R1,R2,R3,T1,T2,S1,P1 | tient | écart relatif ≤ 2×10⁻¹⁶ sur les 7 paires (voir §Certificats) | **PASS** (7/7) |
-| P6 (Lean accepte P5, rejette C3) | — | tient | aucun code Lean écrit pour cette boucle ce tour-ci | **NON TENTÉ** |
+| P6 (Lean accepte P5, rejette C3) | — | tient | `lean_src/WassersteinCertificate.lean`, 8 théorèmes, 0 `sorry` ; les deux contrôles négatifs rejetés | **PASS** |
 
-Sur 14 lignes pass/fail applicables (P1×7 + P2×7) plus P5 global : **13 PASS, 1 non tenté (P6)**, aucun
-échec, aucune valeur non disponible. P3 et P4 sont des mesures, rapportées telles quelles.
+Sur 15 lignes pass/fail applicables (P1×7 + P2×7 + P5 + P6, P5 compté une fois comme verdict global) :
+**14 PASS**, aucun échec, aucune valeur non disponible, aucun élément non tenté. P3 et P4 sont des
+mesures, rapportées telles quelles.
+
+## P6 : le certificat vérifié par le noyau Lean
+
+`lean_src/WassersteinCertificate.lean` (8 théorèmes, empreinte d'axiomes standard
+`{propext, Classical.choice, Quot.sound}`, 0 `sorry`) : la dualité faible de programmation linéaire
+finie (`weak_duality`) et le certificat (`certificate`) sont prouvés **en toute généralité**, pour
+n'importe quelle matrice de coûts et n'importe quels types d'indices finis — c'est le contenu
+mathématique réutilisable qui rend valide chacun des sept certificats de §"Les certificats de dualité",
+pas seulement celui instancié ici. Instanciation exacte sur l'exemple jouet de C1 : la matrice de coût
+6×6 augmentée, le couplage σ (a↔a', b↔b', c et c' vers leur propre diagonale), et les potentiels exacts
+`φ=(0, 1/2, 3/2)`, `ψ=(0, −1/2, 1/4)` (les mêmes que ceux pré-enregistrés à la main). `toy_certificate`
+prouve que σ est optimal ; `toy_cost_eq` prouve le coût exactement `7/4`. Contrôle négatif : le
+potentiel cassé de C3 (`ψ_c'=1/2`) est prouvé **infaisable** (`broken_infeasible`), donc ne peut
+certifier aucune valeur. Deux contrôles négatifs supplémentaires (coût attendu faux ; inégalité stricte
+au lieu de large dans l'énoncé du certificat) échouent à compiler, comme attendu.
+
+**Portée explicite.** Les sept paires réelles utilisent des matrices 60×60 en flottants, issues de
+données de simulation réelles ; les revérifier dans le noyau Lean n'est pas tenté — leur optimalité est
+déjà confirmée indépendamment en Python par deux solveurs différents (`linear_sum_assignment` et
+`linprog`), d'accord à la précision machine près. Ce qui est prouvé ici est le théorème général qui
+rend n'importe quel tel certificat valide, vérifié sur le seul cas assez petit et exact pour s'écrire à
+la main et se décider dans le noyau.
 
 ## Ce que ε et le sandwich P2 montrent sur la résolution atteignable
 
@@ -105,10 +128,6 @@ est effectivement démontré est noté, pas masqué.
 
 ## Ce qui a échoué ou n'a pas été tenté — sans adoucir
 
-- **Prédiction P6 : non tentée.** Aucun fichier Lean n'a été écrit ni modifié pour cette boucle ce tour-ci
-  (les fichiers `Duality.lean` / `DualLength.lean` du dépôt appartiennent au programme Mathesis
-  indépendant, sans rapport). La vérification formelle des sept certificats et le rejet formel de C3 dans
-  Lean restent à faire ; ce n'est pas un échec silencieux mais une étape non exécutée.
 - **Un bug de transmission entre étages du pipeline a été trouvé et corrigé, pas seulement signalé.** La
   paire S1 a produit une liste de points corrompue (10 points à naissance nulle côté A, 1 seul point côté
   B) transmise à l'étage de certification, alors que l'étage précédent avait calculé ε et d_B correctement
@@ -137,7 +156,10 @@ Deuxièmement, et c'est le point de ce tour : la distance de Wasserstein-1 entre
 peut être certifiée directement — couplage optimal exact contre potentiels duaux vérifiés par un
 contrôleur de faisabilité indépendant, sans faire confiance à un seul appel de bibliothèque — avec une
 violation de faisabilité duale à l'échelle de l'erreur d'arrondi flottant (≤1,1×10⁻¹⁶) sur les sept paires
-testées, y compris S1 après correction. La vérification formelle (Lean, prédiction P6) reste ouverte, et
-le bug de transmission trouvé sur S1 est un rappel que même un pipeline pré-enregistré avec des contrôles
-à réponse connue peut transmettre une donnée corrompue d'un étage à l'autre sans qu'aucun contrôle
-individuel ne le voie — seule la reconstruction indépendante l'a révélé.
+testées, y compris S1 après correction. La vérification formelle (Lean, prédiction P6) tient aussi : le
+théorème général de dualité faible et le certificat qui en découle sont prouvés sans `sorry`, pour
+n'importe quelle matrice de coûts finie — pas seulement pour l'exemple jouet qui l'instancie ici — et les
+deux contrôles négatifs échouent à compiler comme attendu. Le bug de transmission trouvé sur S1 reste le
+rappel de ce tour : même un pipeline pré-enregistré avec des contrôles à réponse connue peut transmettre
+une donnée corrompue d'un étage à l'autre sans qu'aucun contrôle individuel ne le voie — seule la
+reconstruction indépendante l'a révélé.

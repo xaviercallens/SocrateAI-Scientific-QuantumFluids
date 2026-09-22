@@ -1,0 +1,20 @@
+{
+  "challenge_module": "ComparatorChallenges.WassersteinCertificate",
+  "solution_module": "WassersteinCertificate",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.WassersteinCertificate.weak_duality",
+    "QuantumFluids.WassersteinCertificate.certificate",
+    "QuantumFluids.WassersteinCertificate.C_eq",
+    "QuantumFluids.WassersteinCertificate.feasible",
+    "QuantumFluids.WassersteinCertificate.tight",
+    "QuantumFluids.WassersteinCertificate.toy_certificate",
+    "QuantumFluids.WassersteinCertificate.toy_cost_eq",
+    "QuantumFluids.WassersteinCertificate.broken_infeasible"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

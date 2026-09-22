@@ -14,7 +14,7 @@ license:
   - Apache-2.0
 repository-code: "https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids"
 abstract: >-
-  An open Lean 4 / Mathlib library of 161 machine-checked theorems on the structure of quantum
+  An open Lean 4 / Mathlib library of 169 machine-checked theorems on the structure of quantum
   fluids: correctness of phase-winding vortex detection with its exact failure case, quantized
   circulation, the Galerkin-truncated Gross-Pitaevskii nonlinearity on an arbitrary mode set, the
   Madelung decomposition, and a bridge into the vocabulary of OpenAI's Navier-Stokes formalization.
