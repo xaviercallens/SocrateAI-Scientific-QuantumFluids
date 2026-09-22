@@ -208,3 +208,48 @@ Dépôt cible : **ce dépôt** pour Lean, Arb, Python et TDA (registre, Comparat
 **Physique-Cinétique** reçoit le solveur Rust/SUNDIALS et devient le dépôt « cinétique haute
 performance », relié à celui-ci par une dépendance déclarée — pas par copie. Première PR là-bas : ce
 plan, la CI déplacée à la racine, LICENSE laissée au propriétaire.
+
+---
+
+## 11. Résultat de la porte d'antériorité (§5) pour V1 et V2 — 2026-09-22, avant tout code
+
+Recherche faite avant d'écrire une seule ligne de Lean ou d'Arb, comme prévu au §5. Résultat : **arrêt**,
+sur les propres critères d'arrêt du §5.
+
+### V1 (« Pomeranchuk = Penrose ») — NE PAS TENTER tel que formulé
+
+Le critère de Pomeranchuk `F₀ˢ > −1` est standard et bien sourcé comme critère **thermodynamique**
+(positivité d'une susceptibilité), pas nativement comme critère **dynamique** (absence de racine à
+Im ω > 0 de l'équation cinétique linéarisée). L'équivalence entre les deux — ce que V1 devait formaliser —
+n'est PAS un théorème nommé et établi dans la littérature pour le cas visé. La référence la plus proche
+(Kolomeitsev & Voskresensky, Eur. Phys. J. A 52, 362 (2016), arXiv:1610.09748) fait bien une analyse de
+dispersion dynamique et trouve exactement le comportement attendu (mode non amorti pour f₀>0, amorti pour
+−1<f₀≤0, croissant pour f₀<−1) — mais pour un système 3D à interaction scalaire différent, jamais nommé
+« Penrose », et pas pour le cas 2D visé ici. Formaliser V1 tel qu'énoncé exigerait donc de **refaire cette
+analyse en 2D** — un travail de dérivation originale, pas une formalisation d'un résultat existant. C'est
+précisément ce que la discipline de ce projet exclut (formaliser l'existant, ne pas produire de nouvelle
+physique). **Arrêt, sur le critère « porte (1) » du §5.**
+
+Piste de repli non retenue ici : formaliser seulement le critère thermodynamique nu (`F₀ˢ > −1` comme
+définition de la stabilité via une compressibilité) — mais sans la dérivation compressibilité↔F₀ˢ à
+disposition et vérifiée, l'énoncé serait quasi définitionnel, sans contenu mathématique réel à prouver.
+
+### V2 (enclos certifiés) — exécutable seulement en partie
+
+- **³He massif (3D)** : valeurs trouvées (F₀ˢ≈9,3, F₁ˢ≈5,4 à SVP ; F₀ˢ≈88–94 près de la fusion, sourcées
+  via Greywall 1983, Phys. Rev. B 27, 2747) mais **seulement via des citations secondaires** — la table
+  primaire de Greywall est derrière un péage et n'a pas été vérifiée directement. Construire un enclos
+  Arb à 40 chiffres sur une entrée physique non vérifiée à la source serait un décalage de rigueur : la
+  certification porterait sur le mauvais nombre si la citation secondaire est fautive.
+- **Monocouche 2D** (le système mesuré par Godfrin et al., Nature 483, 576, 2012) : **aucune valeur
+  numérique de F₀ˢ en fonction de la densité surfacique n'a été trouvée** dans le budget de recherche —
+  l'article Nature est verrouillé, et les articles compagnons (Casey, Nyéki, Saunders) n'ont pas livré
+  de table exploitable. **Arrêt, sur le critère « paramètres 2D non disponibles » du §5.**
+
+### Décision
+
+Le programme V1/V2 tel que conçu s'arrête ici. Rien n'est implémenté. Pas de contact Godfrin/Villani basé
+sur ce volet (le hold en §4 du dossier Godfrin reste de toute façon en vigueur). Reprise possible
+seulement si : (a) quelqu'un avec accès institutionnel vérifie la table Greywall et les valeurs 2D de
+Casey/Nyéki/Saunders — ce qui débloquerait V2 en 3D et potentiellement en 2D ; (b) une analyse dynamique
+2D publiée est trouvée ou faite par quelqu'un d'autre — ce qui reformulerait V1 en formalisation légitime.
