@@ -40,13 +40,13 @@ contribution. The headline result is a full, \lean{sorry}-free proof of Theorem~
 Ollivier and Villani's \emph{curved Brunn--Minkowski inequality on the discrete hypercube}
 (SIAM J.\ Discrete Math.\ 2012) at zero curvature: for nonempty $A,B$ in the Hamming cube with midpoint
 set $M$, $\#A\cdot\#B\le(\#M)^2$, by the crossover-coding injection $A\times B\hookrightarrow M\times M$
-the paper describes. We also report a companion literature gate, run before any code, for a separate
-question this library's kinetic-theory side had wanted to attach a Penrose-type stability criterion to
-a Landau-liquid stability criterion of Pomeranchuk's: the two are equivalent for an
-analogous three-dimensional system in the literature, but not, so far as we found, for the
-two-dimensional case at hand, and the numerical parameters needed even to state the two-dimensional
-version are not published anywhere we could reach. We stopped rather than derive either from scratch,
-and report why.
+the paper describes. We also report a companion literature gate, run before any code, on a separate proposal from this
+library's kinetic-theory side: to identify Pomeranchuk's thermodynamic stability criterion for a Landau
+Fermi liquid with a Penrose-type dynamical one for the two-dimensional Landau kinetic equation. The
+literature establishes that correspondence for an analogous three-dimensional system, but not, so far as
+we found, for the two-dimensional case; and the numerical parameters needed even to state the
+two-dimensional version are not published anywhere we could reach. We stopped rather than derive either
+from scratch, and report why.
 \end{abstract}
 
 \section{Introduction}
@@ -85,7 +85,7 @@ Inequality for a measurable map, a sub-$\sigma$-algebra, and a Markov kernel
 (\lean{klDiv\_comp\_right\_le}), Gibbs' inequality (\lean{mul\_log\_le\_klDiv}), and the chain rule; the
 L\'evy--Prokhorov metric and Prokhorov's theorem; Gaussian measures and Brownian motion. We did
 \emph{not} find Wasserstein distance, Kantorovich--Rubinstein duality, a log-Sobolev or Talagrand
-inequality, Bakry--\'Emery theory, Otto calculus, the Boltzmann equation, Fisher information, a Poincar\'e
+inequality (the name occurs only in a bibliography entry), Bakry--\'Emery theory, Otto calculus, the Boltzmann equation, Fisher information, a Poincar\'e
 inequality, a heat kernel, the Fokker--Planck equation, or Ricci curvature via optimal transport.
 Outside Mathlib, J.~K.~Miller's Lean~4 development of mean-field Vlasov theory (arXiv:2607.08986) proves
 $W_1$, couplings, the gluing lemma and Kantorovich--Rubinstein duality for Polish spaces from Mathlib
@@ -99,7 +99,7 @@ For a Markov kernel $\kappa$ and a measure $\nu$ invariant under it, $\kappa\cir
 Processing Inequality applied to $\mu$ and $\nu$ gives
 $\mathrm{klDiv}(\kappa\circ_m\mu,\nu)=\mathrm{klDiv}(\kappa\circ_m\mu,\kappa\circ_m\nu)\le
 \mathrm{klDiv}(\mu,\nu)$: relative entropy to an invariant measure is nonincreasing along a Markov
-chain -- Boltzmann's H-theorem in the form Cover and Thomas give it, and the discrete skeleton of the
+chain -- Boltzmann's H-theorem in the form Cover and Thomas give it~\cite{CoverThomas2006}, and the discrete skeleton of the
 entropy methods Villani surveys in \emph{H-theorem and beyond}. The Lean proof is three lines,
 \lean{klDiv\_nonincreasing\_to\_invariant} in \lean{Villani.lean}; the mathematical content is entirely
 Mathlib's own \lean{klDiv\_comp\_right\_le}. We include it because it is the right first step in this
@@ -119,7 +119,7 @@ $d(a,b)/2$, for some $a\in A,b\in B$),
 \label{eq:t1}
 \end{equation}
 We formalize the $K=0$ case, $\#A\cdot\#B\le(\#M)^2$, which the paper itself isolates as \S3
-("Brunn--Minkowski inequality without curvature") before adding the curvature term. Its own proof is an
+(``Brunn--Minkowski inequality without curvature'') before adding the curvature term. Its own proof is an
 explicit injection $A\times B\hookrightarrow M\times M$, which we reproduce faithfully -- read from the
 paper, not guessed, and re-derived by hand before a line of Lean was written.
 
@@ -147,16 +147,17 @@ $\#(A\times B)\le\#(M\times M)$.
 \lean{card\_sq\_ge} & \textbf{$\#A\cdot\#B\le(\#M)^2$} \\
 \bottomrule
 \end{tabular}
-\caption{The chain of 12 lemmas from the definitions to Theorem~1 at $K=0$; 16 declarations in total
-with \lean{IsMidpoint}, \lean{midpointSet} and the entropy corollary of \S\ref{sec:kl}. Standard axiom
+\caption{The load-bearing steps from the definitions to Theorem~1 at $K=0$. The module's axiom audit
+covers 16 theorems: 15 for this chain (including unfolding and distance lemmas not shown) and the
+entropy corollary of \S\ref{sec:kl}. Standard axiom
 footprint \{\lean{propext}, \lean{Classical.choice}, \lean{Quot.sound}\}; accepted by both the Lean
 kernel and the independent \lean{nanoda} kernel~\cite{Comparator}; three negative controls (a stricter
 bound, a relaxed midpoint inequality, a strict Data Processing Inequality) all fail to compile.}
 \end{table}
 
-Only a triangle inequality, a set-difference cardinality identity, and Mathlib's canonical order
-embedding of a finite subset are used beyond first principles: nothing about Theorem~1's proof needed
-machinery this project did not already have on hand for other reasons.
+Beyond first principles the proof uses only a set-difference cardinality identity, Mathlib's canonical
+order embedding of a finite subset, and the cardinality bound for an injection between finite sets:
+nothing in it needed machinery this project did not already have on hand for other reasons.
 
 \section{Not attempted, and why}
 \label{sec:notdone}
@@ -171,9 +172,9 @@ information is nonincreasing along the spatially homogeneous Boltzmann equation.
 ($I(f\otimes f)=2I(f)$) and the Cram\'er--Rao inequality look tractable (Mathlib has the needed
 integration-by-parts machinery on $\mathbb R^d$); the full monotonicity theorem is a genuine analytic
 argument, not attempted.
-\item \textbf{A discrete H-theorem for a finite Markov chain via majorization} (Schur-concavity of
-entropy under a doubly stochastic map) was our first plan, abandoned mid-proof when \S\ref{sec:kl}'s
-three-line route through existing Mathlib content turned out to give the sharper, more general fact
+\item \textbf{A discrete H-theorem for a finite-velocity collision kernel}, by the classical four-fold
+symmetrisation of the entropy production, was our first plan, abandoned mid-proof when \S\ref{sec:kl}'s
+three-line route through existing Mathlib content turned out to give a sharper and more general fact
 directly.
 \item \textbf{Everything genuinely out of reach today}: the continuous collisional Boltzmann H-theorem
 (no entropy production functional in Mathlib), hypocoercivity in Villani's abstract Hilbert-space
@@ -202,7 +203,7 @@ Following this project's rule to search before writing code, we ran that search 
 \textbf{Stopped.} The thermodynamic Pomeranchuk criterion $F_0^s>-1$ is standard and well
 sourced~\cite{Pomeranchuk1958}. Its equivalence to the dynamical, Penrose-type statement is not an
 established theorem for the case at hand. The closest match,
-Kolomeitsev and Voskresensky~\cite{KolomeitsevVoskresensky2016}, derives exactly that equivalence by
+Kolomeitsev and Voskresensky~\cite{KolomeitsevVoskresensky2016}, obtains exactly that correspondence by
 explicit dispersion analysis -- but for a three-dimensional scalar-interaction nuclear-matter model, not
 named after Penrose, and not the two-dimensional case this project targets. Formalizing the statement as
 we had proposed it would need an \emph{original} two-dimensional dynamical derivation, which is outside
