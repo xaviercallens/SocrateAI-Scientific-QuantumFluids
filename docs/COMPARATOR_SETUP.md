@@ -51,8 +51,9 @@ Comparator (its README: that can compromise the challenge). Do not run as a priv
 | BoseIntegral | 7 | **accepted** (both kernels) |
 | ShellHamiltonian | 7 | **accepted** (both kernels) |
 | DualLength | 12 | **accepted** (both kernels) |
+| Fricke | 12 | **accepted** (both kernels), 3 min 40 s |
 
-All 169 listed theorems: accepted by the Lean kernel and by nanoda, permitted axioms only, run under `systemd-run --user` with `RestrictAddressFamilies=~AF_UNIX`.
+All 181 listed theorems: accepted by the Lean kernel and by nanoda, permitted axioms only, run under `systemd-run --user` with `RestrictAddressFamilies=~AF_UNIX`.
 
 Caveat on what a pass means: the challenge is *generated from* the solution by our script, so "same statement" is guaranteed by
 construction. The independent content of a pass is (a) two kernels accept the exported proof terms, (b) only the permitted axioms are used,

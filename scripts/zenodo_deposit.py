@@ -54,7 +54,8 @@ def main() -> None:
         subprocess.run(["git", "-C", str(ROOT), "archive", "--format=zip",
                         f"--prefix=QuantumFluids-{a.tag}/", "-o", str(arc), a.tag], check=True)
         files = [arc, ROOT / "paper" / "quantumfluids_lean4.pdf", ROOT / "paper" / "kinetic_known_answers.pdf",
-                 ROOT / "paper" / "villani_tribute.pdf", ROOT / "paper" / "closed_loop.pdf"]
+                 ROOT / "paper" / "villani_tribute.pdf", ROOT / "paper" / "closed_loop.pdf",
+                 ROOT / "paper" / "wasserstein_slack.pdf"]
         if a.draft:
             dep = requests.get(f"{API}/deposit/depositions/{a.draft}", headers=auth, timeout=60).json()
             if dep.get("submitted"):

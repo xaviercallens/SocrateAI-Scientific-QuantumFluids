@@ -70,7 +70,8 @@ to their gates and stopped there, with the reasons written down: the Berezinskii
 transition, which these fields carry but which needs a finite-temperature run this project does not
 have; and the Fricke involution of an external review, which we now compare with Dolgachev's theorem
 on the mirror moduli space of K3 surfaces read in full, and find to be the same involution without the
-group -- a shadow, not an instance.
+group -- a shadow, not an instance; the group theory behind that verdict (the Fricke matrix normalizes
+$\Gamma_0(n)$; its axis action is this project's involution) is proved in Lean~4, as group theory.
 \end{abstract}
 
 \section{Introduction}
@@ -379,10 +380,20 @@ an instance is a system whose parameter space carries the modular action -- the 
 $\sigma$-plane under $\Gamma_0(2)$~\cite{LutkenRoss1992}, the Seiberg--Witten $u$-plane under
 $\Gamma(2)$~\cite{SW1994} -- and those are the reviewer's other examples, outside this project's data.
 Formalizing Dolgachev's Theorem~7.1 itself in Lean~4 is out of reach of Mathlib as pinned here (no
-lattice-polarized K3 surfaces, no period map); formalizing the group-theoretic core -- that $F$
-normalizes $\Gamma_0(n)$ in $\mathrm{PSL}_2(\mathbb{R})$, that $\Gamma_0(n)^+$ is a group containing
-$\Gamma_0(n)$ with index~2 -- is within reach and would be honest as \emph{group theory}, labelled as
-such, with no claim of physics attached. It is recorded as a possible next Lean file and not started.
+lattice-polarized K3 surfaces, no period map). The group-theoretic core is not, and it is now in
+\lean{lean\_src/Fricke.lean} (12 theorems, axiom footprint $\{$\lean{propext},
+\lean{Classical.choice}, \lean{Quot.sound}$\}$, three deliberately broken variants fail to compile),
+labelled as group theory and nothing else: the integer Fricke matrix $W=\begin{psmallmatrix}0&-1\\
+n&0\end{psmallmatrix}$ squares to $-n\cdot1$ (\lean{W\_mul\_W}); for every $A$ in Mathlib's
+\lean{Gamma0 n} there is an explicit $B\in$ \lean{Gamma0 n} with $WA=BW$ (\lean{fricke\_normalizes}),
+and $A\mapsto B$ is itself an involution (\lean{conj\_conj}) -- which is what makes $\Gamma_0(n)^+$ a
+group containing $\Gamma_0(n)$ with index~2; the Möbius action of $W$ on the imaginary axis is
+$iy\mapsto i/(ny)$ (\lean{fricke\_on\_axis}); with $n=1/k_s^2$ that map is literally
+\lean{DualLength}'s $k\mapsto k_s^2/k$ (\lean{axis\_eq\_dual}), leaves $\ell(k)$ invariant
+(\lean{ell\_axis\_invariant}) and has the unique positive fixed point $1/\sqrt n=k_s$
+(\lean{axis\_fixed\_iff}). That is the whole content of ``the same involution'': the file proves what
+$W$ does to $\Gamma_0(n)$ and what its shadow does to a wavenumber, and contains no statement about
+K3 surfaces, mirror symmetry or helium, because there is none to prove.
 
 \subsection{The certificate duality itself}
 
@@ -407,7 +418,8 @@ What this round did not do. One seed, one solver, one data class; $p=1$ and $2$ 
 $p$-scaling inferred from two points and a count, not from a sweep; certificates on the full diagrams
 where the LP fit in memory and on the 200 longest bars where it did not, scope recorded per line of
 Table~\ref{tab:cert}; no Lean line for Theorem~4.6 itself, whose statement is about persistence
-modules on a CW complex and is beyond the pinned library. And the round's own small lesson: the
+modules on a CW complex and is beyond the pinned library (the Lean written this round,
+\lean{Fricke.lean}, is the group theory of \S\ref{sec:fricke}, not the topology of \S\ref{sec:theorem}). And the round's own small lesson: the
 author's hand value for $W_2$ on an eight-point example was wrong, and the control caught it before
 any data was opened -- the same discipline that found the previous report's five-point certificate
 after publication rather than before. Redoing independently remains the only check that has worked.

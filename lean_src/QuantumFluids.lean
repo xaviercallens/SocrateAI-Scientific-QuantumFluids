@@ -52,3 +52,4 @@ import ZeroSound
 import PhaseMixing
 import Villani
 import WassersteinCertificate
+import Fricke

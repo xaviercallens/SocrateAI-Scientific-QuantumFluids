@@ -2,13 +2,13 @@
 
 **A machine-checked Lean 4 library of quantum-fluid structure — with a record of what formalization caught, and what it could not**
 
-[![Tests](https://img.shields.io/badge/tests-183%20passing-brightgreen)]() [![Lean](https://img.shields.io/badge/Lean-4.34.0--rc2-blue)]() [![Theorems](https://img.shields.io/badge/theorems-169%20kernel--checked-blue)]() [![Comparator](https://img.shields.io/badge/Comparator-two%20kernels-success)]() [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22895282.svg)](https://doi.org/10.5281/zenodo.22895282) [![Release](https://img.shields.io/badge/release-v1.8.1-orange)](https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids/releases)
+[![Tests](https://img.shields.io/badge/tests-183%20passing-brightgreen)]() [![Lean](https://img.shields.io/badge/Lean-4.34.0--rc2-blue)]() [![Theorems](https://img.shields.io/badge/theorems-181%20kernel--checked-blue)]() [![Comparator](https://img.shields.io/badge/Comparator-two%20kernels-success)]() [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22895282.svg)](https://doi.org/10.5281/zenodo.22895282) [![Release](https://img.shields.io/badge/release-v1.8.1-orange)](https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids/releases)
 
 ---
 
 ## What this is
 
-A **Lean 4 / Mathlib library of 161 machine-checked theorems on the structure of quantum fluids**, with
+A **Lean 4 / Mathlib library of 181 machine-checked theorems on the structure of quantum fluids**, with
 the verification tooling around it and an unusually complete record of what went wrong on the way.
 
 ```lean
@@ -26,6 +26,7 @@ import QuantumFluids   -- Lean 4.34.0-rc2, Mathlib tag v4.34.0-rc2
 | `PhononSeries`, `PhononSpecificHeat` | the phonon specific-heat series of Godfrin et al., PRB 103, 104516, Eq. (22) — **confirmed**, all six coefficients and the printed inverse series, from a computer-algebra-generated `linear_combination` certificate the kernel checks. |
 | `ZeroSound`, `PhaseMixing` | undamped zero sound in a Fermi liquid iff `F₀ˢ > 0` (2D and 3D); free transport's solution and mode decay — the known answer the kinetic solver below is validated against. |
 | **`Villani`** | a foundation for formalizing Cédric Villani's work, offered as a tribute: Ollivier–Villani (arXiv:1011.4779) Theorem 1 at `K = 0` — `#A·#B ≤ (#M)²` for the midpoint set of nonempty `A, B` in the Hamming cube — **fully proved**, by the crossover-coding injection the paper describes; plus a 3-line corollary of Mathlib's own Markov-kernel Data Processing Inequality (a discrete H-theorem). |
+| `Fricke` | the group-theoretic core of the Fricke/K3 gate of `paper/wasserstein_slack.pdf` §6.3, as group theory only: the integer Fricke matrix `W = (0,-1; n,0)` squares to `-n·1`, **normalizes Mathlib's `Gamma0 n`** (explicit conjugate, itself an involution), acts on the imaginary axis by `y ↦ 1/(n y)`, which for `n = 1/ks²` is exactly `DualLength`'s `k ↦ ks²/k`, leaves `ell ks` invariant and fixes `1/√n`. Nothing about K3 surfaces, mirror symmetry or helium is claimed: the paper's verdict is "the same involution without the group". |
 | `WassersteinCertificate` | finite LP weak duality for an assignment problem: a feasible, tight dual potential certifies a matching optimal without searching the others — general over any cost matrix, any finite index types. Instantiated on a hand-verified toy persistence-diagram pair (`docs/designs/CLOSED_LOOP_PREREG.md`): the found matching is optimal at cost exactly `7/4`; the broken negative-control potential is shown infeasible. |
 
 The first three depend only on Mathlib and are meant to be reused.
@@ -96,7 +97,7 @@ which remains a human audit.
 # 174 tests
 uv run pytest tests/ -q
 
-# Lean (4.34.0-rc2, Mathlib v4.34.0-rc2); 169 theorems across 20 libraries
+# Lean (4.34.0-rc2, Mathlib v4.34.0-rc2); 181 theorems across 21 libraries
 cd lean_src && lake build
 
 # Comparator (needs landrun, lean4export, nanoda_bin on PATH — see docs/COMPARATOR_SETUP.md)
@@ -120,7 +121,7 @@ uv run python exploration/second_invariant/run_search.py
 
 | path | contents |
 |---|---|
-| `lean_src/` | 20 Lean libraries, 169 theorems, axiom footprint `{propext, Classical.choice, Quot.sound}` |
+| `lean_src/` | 21 Lean libraries, 181 theorems, axiom footprint `{propext, Classical.choice, Quot.sound}` |
 | `lean_src/ComparatorChallenges/` | generated challenge statements + configs (contain `sorry` **by design**) |
 | `src/quantumfluids/` | adapters, dispersion fit, shell model, invariant search, TDA (GUDHI) |
 | `docs/DUAL_SCALE_PROPOSAL.md` | the consolidated proposal |

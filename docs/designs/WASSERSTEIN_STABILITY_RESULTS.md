@@ -71,4 +71,4 @@ and LEDGER (CLAIM-032 erratum). The published PDF is unchanged.
 ## Not done
 
 No Lean for Thm 4.6; no `p`-sweep certification; no finite-temperature run (direction 2 stopped at its gate);
-no Lean for the Fricke/`Γ₀(n)⁺` group theory (direction 3: verdict "shadow, not instance", see the paper §6.3).
+direction 3 (verdict "shadow, not instance", paper §6.3): the group-theoretic core IS now in Lean, `lean_src/Fricke.lean` (12 theorems, standard axioms, 3 negative controls fail to compile): `W` normalizes Mathlib's `Gamma0 n`, `W² = -n`, the induced map on Γ₀(n) is an involution, the axis action is `DualLength`'s `k ↦ ks²/k` with fixed point `1/√n`. Group theory only; nothing about K3 or helium.
