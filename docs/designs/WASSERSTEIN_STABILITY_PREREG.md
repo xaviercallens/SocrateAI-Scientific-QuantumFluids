@@ -124,6 +124,15 @@ measurement of how loose the bound is (P6). If P2 FAILS (some `V_1 < 1`), the bo
 the paper's next question is which bars it protects — but that question is *not* pre-registered here
 and would need its own document.
 
+## Amendment A1 (2026-09-22, after the first control run, before any pair was opened)
+
+C2's hand value for `W_2` was wrong. The script (its first run, controls only) returned
+`W_2 = 2.1506…`, not `5/2`; checked by hand again: for `p = 2` matching `(4,7) ↔ (4,4.5)` costs
+`5/2`, but sending both to the diagonal costs `((3/√2)² + (1/(2√2))²)^{1/2} = (37/8)^{1/2} = 2.1506…`,
+which is cheaper. The correct hand value is `W_2 = √(37/8)`, the bound `W_2 ≤ ‖f − g‖_2 = 5/2` holds
+and is **not** tight for `p = 2` (it is tight for `p = 1`). The script's expected value is corrected
+to `√(37/8)`; nothing else changes. The pipeline caught my arithmetic, which is what C2 is for.
+
 ## 4. What is not done in this round
 
 * No Lean. The general weak-duality theorem of `WassersteinCertificate.lean` already covers every
