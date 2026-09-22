@@ -220,7 +220,7 @@ def check_certificate(C: np.ndarray, rows, cols, u: np.ndarray, v: np.ndarray, t
             "rel_gap": gap, "tight": gap <= tol}
 
 
-def dual_potentials(C: np.ndarray, n: int | None = None, m: int | None = None, time_limit=1800.0):
+def dual_potentials(C: np.ndarray, n: int | None = None, m: int | None = None, time_limit=1800.0, method="highs-ipm"):
     """Solve the dual LP  max sum u + sum v  s.t. u_i + v_j <= C_ij  (sparse, HiGHS).
 
     With the augmented structure (n, m) given, the LP is posed on a reduced constraint set: the n*m
@@ -260,7 +260,7 @@ def dual_potentials(C: np.ndarray, n: int | None = None, m: int | None = None, t
     A = sp.csr_matrix((vals, (rows, cols)), shape=(nrows, nvar))
     c = -np.ones(nvar); c[R + K:] = 0.0
     # interior point + crossover: 4.5x faster than dual simplex on a 500x700 test, same exact vertex
-    res = linprog(c=c, A_ub=A, b_ub=b, bounds=[(None, None)] * nvar, method="highs-ipm", options={"time_limit": time_limit})
+    res = linprog(c=c, A_ub=A, b_ub=b, bounds=[(None, None)] * nvar, method=method, options={"time_limit": time_limit})
     if res.status != 0:
         return None, res.message
     return res.x[:R], res.x[R:R + K]
@@ -300,11 +300,19 @@ def wasserstein_degree(X, Y, essX, essY, p: float, ground="lp", certify=True, ce
             scope = f"top-{cert_topk}"
         t0 = time.time()
         u, v = dual_potentials(Cc, nc, mc)
+        method = "highs-ipm"
+        if u is not None:
+            cert = check_certificate(Cc, rc, cc, u, v)
+            if not (cert["feasible"] and cert["tight"]):
+                # interior point + crossover occasionally leaves ~1e-7 violations; dual simplex is exact
+                u2, v2 = dual_potentials(Cc, nc, mc, method="highs-ds")
+                if u2 is not None:
+                    u, v, method = u2, v2, "highs-ds after ipm rejected"
         if u is None:
             out["certificate"] = {"status": f"LP failed: {v}", "scope": scope}
         else:
             cert = check_certificate(Cc, rc, cc, u, v)
-            cert.update(scope=scope, lp_seconds=round(time.time() - t0, 1),
+            cert.update(scope=scope, lp_seconds=round(time.time() - t0, 1), method=method,
                         primal_topk=float(Cc[rc, cc].sum()))
             out["certificate"] = cert
     return out
@@ -446,8 +454,10 @@ def load_pairs():
         "T2": (rho_of(P / "psi_t10.npy"), rho_of(P / "psi_t20.npy"), (True, True)),
         "S1": (rho_of(P / "psi_sound_only.npy"), rho_of(P / "psi_t5.npy"), (True, True)),
     }
+    # Phase-space pair: RAW arrays, no normalisation -- that is what reproduces the previous round's
+    # eps = 0.2878 (f/mean gives 4.61, f/max 0.914); amendment A3 of the pre-registration.
     f1, f2 = np.load(P / "f_S1_t80.npy"), np.load(P / "f_S2_t80.npy")
-    pairs["P1"] = (f1 / f1.mean(), f2 / f2.mean(), (True, False))
+    pairs["P1"] = (f1, f2, (True, False))
     return pairs
 
 

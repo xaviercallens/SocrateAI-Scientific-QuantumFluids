@@ -150,6 +150,33 @@ only — the primal `W_p` is always computed on the full diagram:
    full diagram is then confirmed by two things only: the assignment solver and, for the same pair, the
    certified top-200 value being ≤ it, which is a consistency check, not a proof of optimality.
 
+## Amendment A3 (2026-09-22, after the first complete run, before its numbers are used)
+
+Two things, one a deviation of mine, one a finding about the previous round.
+
+1. **P1 normalisation.** The first complete run normalised the phase-space arrays by their mean
+   (`f/⟨f⟩`), by analogy with `ρ = |ψ|²/⟨|ψ|²⟩`. The previous round used the **raw** arrays: only the
+   raw arrays reproduce its `ε = 0.2878` (`f/⟨f⟩` gives `4.605`, `f/max f` gives `0.914`). §3 said "same
+   normalisation", so the run is repeated with the raw arrays for P1. The six GP pairs reproduce the
+   previous round's `ε` to all printed digits (2.0919, 2.1990, 2.3938, 2.1764, 2.4303, 1.4848) and S1's
+   `ℓ^∞` top-30 `W_1 = 10.800256…` exactly, so their normalisation is confirmed identical.
+   The first run's P1 numbers (`f/⟨f⟩`: `V_1 = 139`, `V_2 = 18.4`) are kept in the results file under
+   `P1_mean_normalised` for the record; the verdict on P4 uses the raw-array run.
+2. **The previous round's P1 certificate was computed on 5 points per side.** Its certificate table
+   (`CLOSED_LOOP_RESULTS.md`, `closed_loop.pdf` Table 3) lists `n, m = 5, 5`, `W_1 = 0.0632…` for the
+   phase-space pair, whereas the full `H_0` diagrams of the raw arrays have 2150 and 1623 finite bars,
+   so a top-30 truncation should have had 30 points per side. This is the same class of defect as the
+   S1 corruption found in that round (a point list altered between workflow stages), on a pair that
+   was not independently recomputed then. The certificate *itself* (a 5×5 plan with tight feasible
+   potentials) is valid for the 5 points it was given; the number is not the `ℓ^∞` top-30 `W_1` of the
+   phase-space diagrams. This round computes that quantity on the full diagrams (P7 column) and the
+   erratum is recorded in `LEDGER.md` and in the new paper; the published PDF is not silently changed.
+3. **Certificate tolerance.** Interior-point potentials left violations of `3×10⁻⁸`–`10⁻⁷` on seven
+   of the 28 degree-level certificates (all `tight`, all `feasible` at `10⁻⁷` but not at the checker's
+   `10⁻⁹`). The script now retries those with dual simplex, which returned `≤ 3×10⁻¹⁶` on the test
+   problem; the method used is recorded per certificate. No number changes; the run is repeated so that
+   every certificate in the paper meets the pre-set tolerance or is reported as not meeting it.
+
 ## 4. What is not done in this round
 
 * No Lean. The general weak-duality theorem of `WassersteinCertificate.lean` already covers every
