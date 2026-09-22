@@ -1,0 +1,238 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,
+            urlcolor=blue!60!black]{hyperref}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\lean}[1]{\texttt{\small #1}}
+\newtcolorbox{keybox}[1][]{colback=blue!3,colframe=blue!45!black,
+  boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+\newtcolorbox{failbox}[1][]{colback=red!3,colframe=red!45!black,
+  boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+
+\title{\textbf{A Lean~4 tribute to Cédric Villani:}\\
+\large a discrete Brunn--Minkowski inequality, fully formalized,\\
+and a stability criterion that turned out not to be formalizable yet}
+
+\author{Xavier Callens\\
+\small SocrateAI-Scientific-QuantumFluids\\
+\small \url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}}
+\date{September 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+We report a small Lean~4 formalization offered as a tribute to Cédric Villani, built from a literature
+survey of his freely available 2025--2026 work and lecture notes rather than from the one result of his
+that already has a machine-checked proof (nonlinear Landau damping, formalized independently by
+Bedrossian). The survey found that Mathlib already proves the Kullback--Leibler Data Processing
+Inequality for a Markov kernel, so we state its three-line specialization to an invariant measure --
+the discrete, relative-entropy form of Boltzmann's H-theorem -- explicitly \emph{not} as a
+contribution. The headline result is a full, \lean{sorry}-free proof of Theorem~1 of
+Ollivier and Villani's \emph{curved Brunn--Minkowski inequality on the discrete hypercube}
+(SIAM J.\ Discrete Math.\ 2012) at zero curvature: for nonempty $A,B$ in the Hamming cube with midpoint
+set $M$, $\#A\cdot\#B\le(\#M)^2$, by the crossover-coding injection $A\times B\hookrightarrow M\times M$
+the paper describes. We also report a companion literature gate, run before any code, for a separate
+question this library's kinetic-theory side had wanted to attach a Penrose-type stability criterion to
+a Landau-liquid stability criterion of Pomeranchuk's: the two are equivalent for an
+analogous three-dimensional system in the literature, but not, so far as we found, for the
+two-dimensional case at hand, and the numerical parameters needed even to state the two-dimensional
+version are not published anywhere we could reach. We stopped rather than derive either from scratch,
+and report why.
+\end{abstract}
+
+\section{Introduction}
+
+This library already leans on three large machine-checked developments: OpenAI's Navier--Stokes/Euler
+formalization~\cite{OpenAINSE}, Anthropic's formalization of Fermat's Last Theorem, evaluated as a
+source of general analysis~\cite{AnthropicFLT}, and Bedrossian's Lean~4 formalization of nonlinear
+Landau damping~\cite{Bedrossian2026}, which subsumes one small lemma we had proved
+independently~\cite{CallensKinetic}. Asked to build a foundation formalizing Cédric Villani's own work
+as a tribute, the obvious first move was \emph{not} to duplicate that last result, and the second was to
+find out what, among his output, is both self-contained and not already done.
+
+\begin{keybox}
+\textbf{What is and is not claimed.} \emph{New:} a full proof of Ollivier--Villani's Theorem~1 at zero
+curvature (\S\ref{sec:ov}). \emph{Not a contribution, stated as such:} a corollary of Mathlib's own
+Data Processing Inequality (\S\ref{sec:kl}). \emph{Not attempted, named:} the curved case of the same
+theorem, and everything listed in \S\ref{sec:notdone}. \emph{Stopped at a literature gate, before any
+code:} a proposed link between the Pomeranchuk and Penrose stability criteria (\S\ref{sec:gate}).
+\end{keybox}
+
+\section{What is already there}
+\label{sec:survey}
+
+We read thirteen freely available items: Villani's two solo papers of 2025--2026, \emph{Fisher
+Information in Kinetic Theory}~\cite{Villani2025} and \emph{On the kinetic Fokker--Planck equation in
+curved geometry}~\cite{Villani2026}; Imbert--Silvestre--Villani~\cite{ISV2024}; Mouhot--Villani on
+Landau damping~\cite{MouhotVillani2011} and its short notes; \emph{Hypocoercivity}~\cite{Villani2009};
+Desvillettes--Mouhot--Villani on Cercignani's conjecture~\cite{DMV2011}; Lott--Villani on Ricci
+curvature via optimal transport~\cite{LottVillani2009,LottVillani2007}; Ollivier--Villani on a discrete
+Brunn--Minkowski inequality~\cite{OllivierVillani2012}; \emph{Optimal Transport, Old and New}; and
+\emph{H-theorem and beyond}.
+
+Against this, and against Mathlib as pinned by this project (not a different checkout, and not from
+memory), we found: \lean{InformationTheory.klDiv} together with the Kullback--Leibler Data Processing
+Inequality for a measurable map, a sub-$\sigma$-algebra, and a Markov kernel
+(\lean{klDiv\_comp\_right\_le}), Gibbs' inequality (\lean{mul\_log\_le\_klDiv}), and the chain rule; the
+L\'evy--Prokhorov metric and Prokhorov's theorem; Gaussian measures and Brownian motion. We did
+\emph{not} find Wasserstein distance, Kantorovich--Rubinstein duality, a log-Sobolev or Talagrand
+inequality, Bakry--\'Emery theory, Otto calculus, the Boltzmann equation, Fisher information, a Poincar\'e
+inequality, a heat kernel, the Fokker--Planck equation, or Ricci curvature via optimal transport.
+Outside Mathlib, J.~K.~Miller's Lean~4 development of mean-field Vlasov theory (arXiv:2607.08986) proves
+$W_1$, couplings, the gluing lemma and Kantorovich--Rubinstein duality for Polish spaces from Mathlib
+alone -- the natural next dependency for anyone formalizing optimal transport in this ecosystem, though
+we do not use it here.
+
+\section{A corollary, explicitly not a contribution}
+\label{sec:kl}
+
+For a Markov kernel $\kappa$ and a measure $\nu$ invariant under it, $\kappa\circ_m\nu=\nu$, the Data
+Processing Inequality applied to $\mu$ and $\nu$ gives
+$\mathrm{klDiv}(\kappa\circ_m\mu,\nu)=\mathrm{klDiv}(\kappa\circ_m\mu,\kappa\circ_m\nu)\le
+\mathrm{klDiv}(\mu,\nu)$: relative entropy to an invariant measure is nonincreasing along a Markov
+chain -- Boltzmann's H-theorem in the form Cover and Thomas give it, and the discrete skeleton of the
+entropy methods Villani surveys in \emph{H-theorem and beyond}. The Lean proof is three lines,
+\lean{klDiv\_nonincreasing\_to\_invariant} in \lean{Villani.lean}; the mathematical content is entirely
+Mathlib's own \lean{klDiv\_comp\_right\_le}. We include it because it is the right first step in this
+direction and because it connects this file to \lean{ZeroSound.lean}'s Fermi-liquid kinetic theory
+inside one project, not because it is ours.
+
+\section{Ollivier--Villani's Theorem~1, at zero curvature}
+\label{sec:ov}
+
+Ollivier and Villani compare two notions of discrete Ricci curvature on the hypercube
+$X=\{0,1\}^N$ with the Hamming metric~\cite{OllivierVillani2012}. Along the way they prove a discrete
+analogue of the classical Brunn--Minkowski inequality: for nonempty $A,B\subseteq X$, with $M$ the set
+of \emph{midpoints} of $A$ and $B$ (a point $m$ with $d(m,a)+d(m,b)=d(a,b)$ and $d(m,a)$ within $1$ of
+$d(a,b)/2$, for some $a\in A,b\in B$),
+\begin{equation}
+\ln\#M\ \ge\ \tfrac12\ln\#A+\tfrac12\ln\#B+\tfrac{K}{8}\,d(A,B)^2,\qquad K=\tfrac1{2N}.
+\label{eq:t1}
+\end{equation}
+We formalize the $K=0$ case, $\#A\cdot\#B\le(\#M)^2$, which the paper itself isolates as \S3
+("Brunn--Minkowski inequality without curvature") before adding the curvature term. Its own proof is an
+explicit injection $A\times B\hookrightarrow M\times M$, which we reproduce faithfully -- read from the
+paper, not guessed, and re-derived by hand before a line of Lean was written.
+
+\paragraph{The injection.} For $a,b\in X$ let $D(a,b)=\{i:a_i\ne b_i\}$, $r=\#D(a,b)$. For
+$c\subseteq D(a,b)$ define the \emph{crossover} $\varphi_c(a,b)_i=a_i$ if $i\in c$, else $b_i$; this is a
+midpoint of $a,b$ exactly when $\#c$ is within $1$ of $r/2$. For a \emph{canonical} choice --
+$c_r(a,b)$, the $\lfloor r/2\rfloor$ smallest indices of $D(a,b)$ under the order on $\mathrm{Fin}\,N$,
+a function of $D(a,b)$ alone -- the pair
+$\Phi(a,b)=(\varphi_{c_r}(a,b),\varphi_{D(a,b)\setminus c_r}(a,b))$ is recoverable: one checks directly
+that $D(\varphi_c(a,b),\varphi_{D(a,b)\setminus c}(a,b))=D(a,b)$ for \emph{any} $c\subseteq D(a,b)$, so
+$r$ is read off the two output midpoints as their own Hamming distance, which pins down $c_r$ again, and
+then each coordinate of $a,b$ is read off the two midpoints by whether it lies in $c_r$,
+$D(a,b)\setminus c_r$, or neither. This makes $\Phi$ injective, hence
+$\#(A\times B)\le\#(M\times M)$.
+
+\begin{table}[h]\centering\small
+\begin{tabular}{@{}ll@{}}
+\toprule
+\lean{crossover}, \lean{diff\_crossover\_left/right} & the crossover map and its two distances \\
+\lean{isMidpoint\_crossover} & any size-appropriate crossover is a genuine midpoint \\
+\lean{takeHalf}, \lean{card\_takeHalf} & the canonical half, via Mathlib's \lean{Finset.orderEmbOfFin} \\
+\lean{encode}, \lean{encode\_fst/snd\_isMidpoint} & $\Phi$, and that both components are midpoints \\
+\lean{diff\_crossover\_crossover\_compl} & $D(\Phi(a,b))=D(a,b)$, for any crossover split \\
+\lean{encode\_injective} & $\Phi$ is injective (the case split above) \\
+\lean{card\_sq\_ge} & \textbf{$\#A\cdot\#B\le(\#M)^2$} \\
+\bottomrule
+\end{tabular}
+\caption{The chain of 12 lemmas from the definitions to Theorem~1 at $K=0$; 16 declarations in total
+with \lean{IsMidpoint}, \lean{midpointSet} and the entropy corollary of \S\ref{sec:kl}. Standard axiom
+footprint \{\lean{propext}, \lean{Classical.choice}, \lean{Quot.sound}\}; accepted by both the Lean
+kernel and the independent \lean{nanoda} kernel~\cite{Comparator}; three negative controls (a stricter
+bound, a relaxed midpoint inequality, a strict Data Processing Inequality) all fail to compile.}
+\end{table}
+
+Only a triangle inequality, a set-difference cardinality identity, and Mathlib's canonical order
+embedding of a finite subset are used beyond first principles: nothing about Theorem~1's proof needed
+machinery this project did not already have on hand for other reasons.
+
+\section{Not attempted, and why}
+\label{sec:notdone}
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+\item \textbf{The curved case of the same theorem}, \eqref{eq:t1} with $K=1/(2N)$. The paper's own proof
+needs concentration of measure in the symmetric group $S_r$ (its Lemma~4, via a quotienting argument
+onto the space of ``crossovers'', its Proposition~5) -- machinery we did not build. Left as a named open
+target rather than silently dropped.
+\item \textbf{The Fisher-information monotonicity results of~\cite{Villani2025,ISV2024}}: Fisher
+information is nonincreasing along the spatially homogeneous Boltzmann equation. Tensorisation
+($I(f\otimes f)=2I(f)$) and the Cram\'er--Rao inequality look tractable (Mathlib has the needed
+integration-by-parts machinery on $\mathbb R^d$); the full monotonicity theorem is a genuine analytic
+argument, not attempted.
+\item \textbf{A discrete H-theorem for a finite Markov chain via majorization} (Schur-concavity of
+entropy under a doubly stochastic map) was our first plan, abandoned mid-proof when \S\ref{sec:kl}'s
+three-line route through existing Mathlib content turned out to give the sharper, more general fact
+directly.
+\item \textbf{Everything genuinely out of reach today}: the continuous collisional Boltzmann H-theorem
+(no entropy production functional in Mathlib), hypocoercivity in Villani's abstract Hilbert-space
+form~\cite{Villani2009}, log-Sobolev and Talagrand inequalities (no Wasserstein distance, no Gaussian
+concentration machinery), the Lott--Villani--Sturm curvature-dimension
+condition~\cite{LottVillani2009,LottVillani2007}, and nonlinear Landau damping, already
+done~\cite{Bedrossian2026}.
+\end{itemize}
+
+\section{A literature gate that stopped a proposal before it was code}
+\label{sec:gate}
+
+This library's kinetic-theory side had independently proved, in Lean, that undamped zero sound in a
+Fermi liquid with a single Landau parameter $F_0^s$ exists if and only if $F_0^s>0$, in both two and
+three dimensions~\cite{CallensKinetic}. A natural next step, chosen to bring the Villani side and the
+Godfrin side of this project together, was to formalize a stronger, dynamical statement: that the
+\emph{linearized} Landau kinetic equation is stable -- no root of its dispersion relation at
+$\mathrm{Im}\,\omega>0$ -- if and only if $F_0^s>-1$, the range where Pomeranchuk's thermodynamic
+stability criterion holds, and to enumerate the corresponding roots with certified interval arithmetic
+for real $^3$He at the pressures Godfrin et al.\ measured, in both bulk and the two-dimensional film
+their neutron-scattering experiment used~\cite{Godfrin2012}.
+
+Following this project's rule to search before writing code, we ran that search first.
+
+\begin{failbox}
+\textbf{Stopped.} The thermodynamic Pomeranchuk criterion $F_0^s>-1$ is standard and well
+sourced~\cite{Pomeranchuk1958}. Its equivalence to the dynamical, Penrose-type statement is not an
+established theorem for the case at hand. The closest match,
+Kolomeitsev and Voskresensky~\cite{KolomeitsevVoskresensky2016}, derives exactly that equivalence by
+explicit dispersion analysis -- but for a three-dimensional scalar-interaction nuclear-matter model, not
+named after Penrose, and not the two-dimensional case this project targets. Formalizing the statement as
+we had proposed it would need an \emph{original} two-dimensional dynamical derivation, which is outside
+what this project formalizes. Separately, the numerical parameters the proposal needed even to run --
+areal-density-dependent Landau parameters for the two-dimensional $^3$He film Godfrin et al.\ actually
+measured -- are not available to us: their Nature paper is paywalled, and no companion paper surfaced a
+usable table within the search budget. Both halves of the proposal failed their own pre-registered kill
+criteria, and neither was implemented.
+\end{failbox}
+
+We report this because a stopped proposal, with the reason recorded, is data about the method, not an
+absence of one: three prior topological proposals in this project were likewise stopped or refuted after
+being pre-registered~\cite{CallensLean}, and the discipline that catches them is the same one that let
+\S\ref{sec:ov} be checked with confidence once it was written.
+
+\section{Conclusion}
+
+A literature survey aimed at ``formalize something of Villani's'' found more value in what was already
+proved elsewhere (Bedrossian) or already in the library (Mathlib's Data Processing Inequality) than in
+inventing a target; the one genuinely new piece of formal content here is a co-authored theorem old
+enough, and self-contained enough, that its proof could be read from the paper and checked, rather than
+guessed at. The stopped proposal of \S\ref{sec:gate} is offered as the same kind of evidence this
+project's other negative results are: not a discovery, but a fact about where the discipline's cost is
+paid -- in a search, before any code, rather than in a retraction after.
+
+\paragraph{Availability.} Source, the pre-registration and literature-gate record for
+\S\ref{sec:gate}, and every claim's entry in the project ledger:
+\url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}
+(\lean{lean\_src/Villani.lean}, \texttt{docs/designs/ZERO\_SOUND\_LANDAU\_DAMPING\_PROPOSAL.md}).
+
+\bibliographystyle{unsrt}
+\bibliography{refs_villani}
+\end{document}
