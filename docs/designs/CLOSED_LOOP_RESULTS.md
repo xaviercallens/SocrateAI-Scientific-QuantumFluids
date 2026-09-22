@@ -163,3 +163,7 @@ deux contrôles négatifs échouent à compiler comme attendu. Le bug de transmi
 rappel de ce tour : même un pipeline pré-enregistré avec des contrôles à réponse connue peut transmettre
 une donnée corrompue d'un étage à l'autre sans qu'aucun contrôle individuel ne le voie — seule la
 reconstruction indépendante l'a révélé.
+
+## Erratum (2026-09-22, trouvé lors du tour suivant)
+
+Le certificat W₁ de la **paire P1 (espace des phases)** dans le tableau ci-dessus (`n, m = 5, 5`, W₁ = 0,0632…) a été calculé sur **cinq points par côté**, alors que les diagrammes H₀ complets des tableaux bruts f_S1/f_S2 ont 2150 et 1623 barres finies : la troncature top-30 pré-enregistrée aurait dû donner 30 points par côté. Même classe de défaut que la corruption de S1 (liste de points altérée entre deux étapes du workflow), sur la seule paire non recalculée indépendamment à l'époque. L'étape des diagrammes était correcte (d_B recalculé sur les diagrammes complets = 0,0325030850643, ε = 0,2878 reproduit). Le certificat 5×5 est valide pour les 5 points qu'il a reçus ; le nombre publié n'est **pas** le W₁ (ℓ^∞, top-30) des diagrammes de l'espace des phases. La valeur correcte est calculée dans `docs/designs/WASSERSTEIN_STABILITY_PREREG.md` (A3) et le fichier de résultats du tour suivant. LEDGER : CLAIM-032 (erratum).
