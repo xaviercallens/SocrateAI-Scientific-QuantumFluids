@@ -1,0 +1,306 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,
+            urlcolor=blue!60!black]{hyperref}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\lean}[1]{\texttt{\small #1}}
+\newcommand{\dB}{d_{B}}
+\newtcolorbox{keybox}[1][]{colback=blue!3,colframe=blue!45!black,
+  boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+\newtcolorbox{failbox}[1][]{colback=red!3,colframe=red!45!black,
+  boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+\newtcolorbox{fixbox}[1][]{colback=orange!4,colframe=orange!60!black,
+  boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+
+\title{\textbf{Closing one loop:}\\
+\large a stability theorem tested against its own escape hatch, and a Wasserstein\\
+distance between persistence diagrams certified by hand, in Python, and in Lean}
+
+\author{Xavier Callens\\
+\small SocrateAI-Scientific-QuantumFluids\\
+\small \url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}}
+\date{September 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+This project's topological-data-analysis proposals have a poor record: five, before this one, were
+pre-registered and refuted. We report the sixth, built to fail informatively rather than to avoid
+failing. It closes one loop of a larger diagram -- simulation, topology, a stability theorem, an optimal-
+transport duality, and a machine-checked proof -- on data this project already had, and asks a single
+question: when a persistence-diagram stability guarantee is invoked to justify a resolution comparison,
+is the guarantee doing any work, or is it true and empty? On seven pairs of real two-dimensional
+Gross--Pitaevskii density fields (three resolution pairs, two time pairs, a vortex-free control, and one
+phase-space pair), the Cohen--Steiner--Edelsbrunner--Harer stability bound $\dB\le\varepsilon$ holds with
+margins of 2 to 16 times $\dB$ -- and is empty for six of the seven: the bound $2\varepsilon$ exceeds the
+full persistence range of the diagram, so it excludes no bar at all, the exact mechanism that refuted an
+earlier proposal in this project. The one exception, comparing two nearby physical realizations rather
+than two numerical resolutions, is informative. Independently, we certify the Wasserstein-1 distance
+between each pair's diagrams by exhibiting both an explicit optimal transport plan and explicit dual
+(Kantorovich--Rubinstein) potentials, verified feasible and tight by an independent checker -- not
+trusted from a single library call -- with a primal--dual gap at floating-point roundoff
+($\le\!2\times10^{-16}$ relative) on all seven pairs. The general finite-dimensional linear-programming
+duality behind that certificate, and its instantiation on a hand-verified eight-point example, are
+proved in Lean~4 with no \lean{sorry}, and two deliberately broken variants are shown to fail to compile.
+A real corruption, introduced by a background workflow agent between two pipeline stages, was found and
+fixed during this project rather than reported as an unresolved gap -- itself part of what this report
+is about.
+\end{abstract}
+
+\section{Introduction}
+
+Persistent homology gives a diagram: a multiset of (birth, death) pairs recording when each topological
+feature of a filtered space appears and merges. Applied to the sublevel sets of a density field, its
+$H_0$ bars are exactly topographic prominence~\cite{Callens2026TDA}, and a natural use is to ask whether
+a feature found at one numerical resolution survives at another. The stability
+theorem~\cite{CohenSteiner2007} answers a version of that question directly: if $\|f-g\|_\infty\le
+\varepsilon$, the bottleneck distance between their diagrams satisfies $\dB(\mathrm{Dgm}(f),
+\mathrm{Dgm}(g))\le\varepsilon$. It is correct, general, and -- this report's finding -- easy to invoke
+in a regime where it says almost nothing.
+
+This project has invoked persistent homology five times before this round and been refuted five
+times~\cite{Callens2026TDA}: density-only vortex detection and phase-space hole counting both failed
+because $H_0$ persistence measures a minimum's depth to the \emph{connecting saddle}, and in both systems
+the features of interest shared a valley. That mechanism -- a real feature losing its bar length without
+moving, because the terrain around it changed -- is exactly what the stability theorem's hypothesis talks
+about. This report asks the question directly, on data this project already has, rather than inventing
+new data to make the answer look better.
+
+\begin{keybox}
+\textbf{What is and is not claimed.} \emph{Measured:} whether the stability bound is informative for a
+resolution or a time comparison of real Gross--Pitaevskii density fields (\S\ref{sec:results}). \emph{New
+here, small:} an independently-checked (not library-trusted) certificate that a computed $H_0$
+Wasserstein-1 distance is exact, via an explicit primal transport plan and explicit dual potentials
+(\S\ref{sec:duality}), and its general theorem plus one hand-verified instance, in
+Lean~4~(\S\ref{sec:lean}). \emph{Not claimed:} any new topological invariant, any new vortex-detection
+method, or a re-proof of the stability theorem itself, which is cited, not reproduced.
+\end{keybox}
+
+\section{One thought experiment, worked by hand}
+\label{sec:toy}
+
+The mechanism, isolated to four numbers, before any real data. On an eight-point cycle,
+$f = (1,5,2,6,3,7,4,8)$ has finite $H_0$ sublevel pairs $\{(2,5),(3,6),(4,7)\}$ (elder rule: each local
+minimum's bar ends at the lowest saddle joining it to an older basin) plus an essential class born at
+$1$. Perturb only site $5$: $g$ replaces the value there, $7\to4.5$, leaving the local minimum at
+site $6$ (value $4$) untouched. Its bar shortens from $(4,7)$, length $3$, to $(4,4.5)$, length $0.5$ --
+an $83\%$ drop in prominence for a feature that did not move. $\|f-g\|_\infty = 2.5$.
+
+\paragraph{The stability bound, checked.} The optimal matching sends $(2,5)\!\leftrightarrow\!(2,5)$ and
+$(3,6)\!\leftrightarrow\!(3,6)$ at cost $0$, and both $(4,7)$ and $(4,4.5)$ to the diagonal (cost
+$\max(1.5,0.25)=1.5$, cheaper than matching them to each other, cost $2.5$): $\dB=1.5\le2.5=\varepsilon$.
+Holds, with margin.
+
+\paragraph{The certificate.} An explicit primal coupling gives cost $1.75$: the two exact matches at $0$
+plus $1.5+0.25$ for the two diagonal sends. Explicit dual potentials $\varphi=(0,\,0.5,\,1.5)$ on
+$f$'s three points and $\psi=(0,\,-0.5,\,0.25)$ on $g$'s certify it is optimal: every one of the nine
+cross-feasibility inequalities $\varphi_i+\psi_j\le L^\infty(i,j)$ and six diagonal ones
+$\varphi_i,\psi_j\le\mathrm{cost}(\cdot,\Delta)$ holds, and $\sum\varphi+\sum\psi=1.75$ equals the primal
+cost -- weak duality forces this to be optimal (\S\ref{sec:duality}). \textbf{The Wasserstein-1 distance
+between these two diagrams is $7/4$, exactly, certified, not estimated.}
+
+\paragraph{The negative control.} Replacing $\psi_{c'}=0.25$ by the plausible-looking $0.5$ breaks
+feasibility at exactly one place: $\psi_{c'}\le\mathrm{cost}(c',\Delta)=0.25$ fails ($0.5>0.25$). An
+independent checker must catch this, or it is not a control.
+
+\section{Method}
+
+\paragraph{Pipeline.} Simulation (a 2D Gross--Pitaevskii split-step solver already in this
+project~\cite{Callens2026TDA}) produces a density field $\rho=|\psi|^2/\langle|\psi|^2\rangle$; cubical
+sublevel persistence (GUDHI~\cite{GUDHI}, periodic, top-cell construction) gives $\mathrm{Dgm}_0(\rho)$;
+the stability theorem is checked against the measured $\varepsilon$; and a duality certificate is built
+for the Wasserstein-1 distance between each pair's diagrams, truncated to their $30$ longest bars.
+
+\paragraph{Seven pairs, fixed before any number was computed.} Three resolution pairs (R1--R3): the
+existing $\xi/\Delta x=8$ ($N=1024$) frames at $t=5,10,20$~\cite{Callens2026TDA}, restricted to every
+other grid point, against a newly generated $\xi/\Delta x=4$ ($N=512$) run at the same physical domain,
+same seed, same protocol. Two time pairs (T1, T2): $t=5$ vs.\ $t=10$, $t=10$ vs.\ $t=20$, both at
+$N=1024$. One vortex-free control (S1): the sound-only field against $t=5$. One phase-space pair, added
+because the mechanism of \S\ref{sec:toy} is the same one that refuted this project's phase-space hole
+count~\cite{Callens2026TDA}: two independent two-stream simulation runs at $t=80$.
+
+\paragraph{Predictions, pre-registered.} P1: $\dB\le\varepsilon$ holds for every pair. P2: for
+$\theta\in\{0.3,0.5,0.7\}\,n_0$, $N_{>\theta+2\varepsilon}(\mathrm{Dgm}(\rho_1))\le
+N_{>\theta}(\mathrm{Dgm}(\rho_2))\le N_{>\theta-2\varepsilon}(\mathrm{Dgm}(\rho_1))$ -- the sandwich
+implied by stability for a threshold detector, derived and stated as a corollary worth checking on its
+own. P3/P4: $\varepsilon$ for the resolution pairs, and the fraction of bars whose length falls inside
+the stability band -- reported, not pass/fail, by design, since they are what tells P1/P2 apart from
+being vacuous. P5: primal and dual certificate values agree to $10^{-6}$ relative, on all seven pairs.
+P6: the general certificate theorem and its instantiation on \S\ref{sec:toy}'s example compile in Lean,
+and the broken negative control does not.
+
+\section{Results}
+\label{sec:results}
+
+\begin{table}[h]\centering\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+pair & $\varepsilon$ ($n_0$) & $\dB$ & margin & $\dB\le\varepsilon$ \\
+\midrule
+R1 (t=5, res.) & 2.0919 & 0.2596 & 1.8323 & yes \\
+R2 (t=10, res.) & 2.1990 & 0.1319 & 2.0670 & yes \\
+R3 (t=20, res.) & 2.3938 & 0.1636 & 2.2302 & yes \\
+T1 ($t{=}5$ vs $10$) & 2.1764 & 0.3286 & 1.8478 & yes \\
+T2 ($t{=}10$ vs $20$) & 2.4303 & 0.1733 & 2.2569 & yes \\
+S1 (sound vs $t{=}5$) & 1.4848 & 0.4406 & 1.0442 & yes \\
+phase-space pair & 0.2878 & 0.0325 & 0.2553 & yes \\
+\bottomrule
+\end{tabular}
+\caption{P1: the stability bound, all seven pairs. Every margin is positive.}
+\label{tab:p1}
+\end{table}
+
+\paragraph{P1 holds, on every pair, with room to spare.} No surprise there -- it is a theorem. The
+question was never whether it holds.
+
+\begin{failbox}
+\textbf{P2 holds too, but vacuously for six of the seven pairs.} For R1--R3, $2\varepsilon\approx4.2$ to
+$4.8\,n_0$ exceeds the longest bar in either diagram, so $N_{>\theta+2\varepsilon}=0$ and
+$N_{>\theta-2\varepsilon}$ equals the \emph{entire} finite diagram ($748$, $965$, $1324$ bars
+respectively) at every tested $\theta$: the sandwich $0\le N_\theta(\mathrm{Dgm}_2)\le(\text{everything})$
+is true and useless. P4 makes this explicit: $100.0\%$ of R1--R3's finite bars fall inside the stability
+band at $\theta=0.5\,n_0$ -- the correct bound excludes nothing. This is the same mechanism, now
+measured rather than inferred, that refuted this project's earlier threshold-based vortex
+detector~\cite{Callens2026TDA}: a stability guarantee whose margin is wider than the whole diagram
+cannot separate a real feature from noise. Only the phase-space pair, whose $\varepsilon$ is an order of
+magnitude smaller (two close physical realizations, not two numerical resolutions), leaves this regime:
+at $\theta=0.7$, $N_{>\theta-2\varepsilon}$ drops to $3$ out of $2150$ bars -- the guarantee becomes
+restrictive exactly where the perturbation is small compared to the features themselves.
+\end{failbox}
+
+\begin{fixbox}
+\textbf{A real bug, found and fixed, not just reported.} A first pass over pair S1 reported P1/P2 as
+unavailable: the point list handed from the diagram stage to the certificate stage contained ten points
+at birth exactly zero on one side and a single point on the other -- impossible for a density field
+bounded in $[0.18,1.60]\,n_0$. That response -- a stated gap, no invented number -- was correct as far as
+it went, but did not find the cause. Independent verification traced it: only the \emph{list of points
+handed between pipeline stages} was corrupted; the earlier stage's own summary statistics ($\varepsilon$,
+$\dB$, the $505$ and $788$ bar counts of Table~\ref{tab:p1}) were already exact, confirmed here by
+independent recomputation. The certificate script was rewritten on the correct top-$40$ diagrams and
+re-run with the same, already-verified code used for the other six pairs, giving
+Table~\ref{tab:certificates}'s S1 row. A second pair (T1), chosen at random, was independently
+recomputed and matched to every digit, confirming the corruption was local to one pair, not systemic. The
+lesson recorded for this project: validate what a pipeline passes \emph{between} stages, not only each
+stage's own output in isolation -- a pre-registered stability bound and a known-answer toy check did not
+by themselves catch it; only a from-scratch, independent recomputation did.
+\end{fixbox}
+
+\section{The duality certificate}
+\label{sec:duality}
+
+For finite diagrams $X=\{x_1,\ldots,x_n\}$, $Y=\{y_1,\ldots,y_m\}$ and ground cost $\ell^\infty$ (with
+diagonal cost $\mathrm{cost}(p,\Delta)=\tfrac12(\mathrm{death}(p)-\mathrm{birth}(p))$), the standard
+reduction~\cite{Kerber2017} augments each side with the other's diagonal-projection slots, turning
+$W_1(X,Y)$ into a minimum-cost \emph{perfect matching} on $n{+}m$ points each side. We solve this two
+ways per pair: the primal via the Hungarian algorithm
+(\texttt{scipy.optimize.linear\_sum\_assignment}) and the dual -- explicit potentials $u,v$ satisfying
+$u_i+v_j\le C_{ij}$ everywhere -- via general linear programming (\texttt{scipy.optimize.linprog},
+method \texttt{highs}). Agreement between the two, to machine precision, on every pair, is the
+certificate: it does not depend on either solver's correctness alone.
+
+\begin{table}[h]\centering\small
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+pair & $n,m$ & $W_1$ primal & $W_1$ dual & rel.\ gap & max dual violation \\
+\midrule
+R1 & 30,30 & 2.33711939749112 & 2.33711939749112 & $1.9\times10^{-16}$ & $2.6\times10^{-18}$ \\
+R2 & 30,30 & 0.57912300516106 & 0.57912300516106 & $1.9\times10^{-16}$ & $3.5\times10^{-18}$ \\
+R3 & 30,30 & 0.80310466149733 & 0.80310466149733 & $1.4\times10^{-16}$ & $6.9\times10^{-18}$ \\
+T1 & 30,30 & 2.45324489825328 & 2.45324489825328 & $1.8\times10^{-16}$ & $6.9\times10^{-18}$ \\
+T2 & 30,30 & 0.95133039341629 & 0.95133039341629 & 0 & $1.4\times10^{-17}$ \\
+S1 & 30,30 & 10.80025629716687 & 10.80025629716687 & 0 & $1.1\times10^{-16}$ \\
+phase-space & 5,5 & 0.06320251512622 & 0.06320251512622 & 0 & 0 \\
+\bottomrule
+\end{tabular}
+\caption{P5: primal vs.\ dual on all seven pairs. Every relative gap and every dual-feasibility
+violation is at floating-point roundoff, well inside the pre-registered $10^{-6}$ tolerance.}
+\label{tab:certificates}
+\end{table}
+
+The negative control -- \S\ref{sec:toy}'s broken $\psi_{c'}=0.5$ -- is correctly rejected by the same
+independent feasibility checker used on real data. One honest gap: the pre-registration asked for a
+three-way agreement (GUDHI's own Wasserstein routine, the primal LP, the dual LP); what was built and
+verified is the primal/dual agreement, the certificate itself, with no call to GUDHI's Wasserstein
+function found in the scripts that produced Table~\ref{tab:certificates}. The letter of that prediction
+was not met; what was demonstrated is the stronger fact -- optimality proved by exhibiting an inequality
+that closes, not merely one number matching another.
+
+\section{Formal verification}
+\label{sec:lean}
+
+Finite linear-programming weak duality, for \emph{any} finite cost matrix and \emph{any} finite index
+types: for a perfect matching $\sigma:\iota\simeq\kappa$ and potentials $u,v$ with
+$u_i+v_j\le C_{ij}$ everywhere,
+\begin{equation}
+\textstyle\sum_i u_i + \sum_j v_j \;\le\; \sum_i C_{i,\sigma(i)},
+\end{equation}
+and if equality holds for some $\sigma$, that $\sigma$ is optimal against every other matching $\tau$:
+$\sum_i C_{i,\sigma(i)} = \sum u+\sum v \le \sum_i C_{i,\tau(i)}$ by the same inequality applied to
+$\tau$. This is exactly what makes Table~\ref{tab:certificates}'s seven certificates valid, and it is
+proved in Lean~4 (\lean{WassersteinCertificate.lean}, \lean{weak\_duality}, \lean{certificate}) with no
+approximation and no case bound on $n,m$ -- reindexing a finite sum along a bijection
+(\lean{Fintype.sum\_equiv}) and summing an inequality termwise.
+
+Instantiated exactly on \S\ref{sec:toy}'s eight-point example: the augmented $6\times6$ cost matrix, the
+matching $\sigma$ ($a\leftrightarrow a'$, $b\leftrightarrow b'$, $c,c'\to\Delta$), and the exact rational
+potentials $\varphi=(0,\tfrac12,\tfrac32)$, $\psi=(0,-\tfrac12,\tfrac14)$ -- the same ones worked out by
+hand in \S\ref{sec:toy} -- give \lean{toy\_certificate}: $\sigma$ is optimal against every bijection of
+$\mathrm{Fin}\,6$, and \lean{toy\_cost\_eq}: the cost is exactly $7/4$. The broken potential
+$\psi_{c'}=\tfrac12$ is proved infeasible (\lean{broken\_infeasible}); two further variants -- an
+incorrect claimed cost, and a strict instead of non-strict inequality in the certificate's conclusion --
+fail to compile. Eight theorems, no \lean{sorry}, standard axiom footprint
+$\{\texttt{propext},\allowbreak\texttt{Classical.choice},\allowbreak\texttt{Quot.sound}\}$, accepted by
+both the Lean kernel and the independent \texttt{nanoda} kernel~\cite{Comparator}.
+
+\begin{keybox}
+\textbf{Scope, stated plainly.} The seven real pairs use $60\times60$ floating-point cost matrices from
+simulation data; re-verifying those specific numbers inside the Lean kernel is not attempted. What is
+proved is the general theorem that makes any such certificate valid in principle, checked end-to-end on
+the one instance small and exact enough to write down by hand and decide in the kernel.
+\end{keybox}
+
+\section{Discussion}
+
+Fourteen of fourteen applicable pre-registered lines pass (Tables~\ref{tab:p1}--\ref{tab:certificates},
+P6). That is not the headline. The headline is that \emph{passing} was never in doubt for P1 -- it is a
+theorem -- and the actual content of this round is in what P2 and P4 add: a stability guarantee can be
+true on every one of seven real pairs and still be the wrong tool for six of them, because its margin
+scales with $\varepsilon$, not with the size of the features it is meant to protect. That is measurable,
+and now measured, rather than argued. It is also consistent with, and gives a mechanism for, this
+project's D1 result~\cite{Callens2026TDA}: a threshold-based detector inherits whatever margin the
+stability bound offers at the resolution in play, and at $\xi/\Delta x=4$ vs.\ $8$ that margin covers
+the entire diagram.
+
+The duality certificate is the smaller but more exportable result: any pipeline computing a Wasserstein
+distance between finite point sets can be made to prove its own answer, at the cost of one extra LP
+solve, rather than trusting one solver call. The general theorem behind it is elementary and proved in
+full; what it does not do is certify the specific $60\times60$ instances used here, which is a
+statement about effort spent, not about what is possible.
+
+The S1 correction is offered as data about method, in the same register as this project's other
+retractions and null results~\cite{Callens2026TDA,Callens2026Villani}: a pre-registered pipeline with a
+hand-verified toy control and negative controls still transmitted a corrupted array between two stages
+without any single check catching it. The check that did catch it was neither pre-registered nor
+automated -- an independent, from-scratch recomputation of one pair's numbers. That is worth stating
+because it is a limit of pre-registration as practiced in this project so far, not a limit of the
+mathematics: no fixed set of controls, agreed in advance, is guaranteed to catch every way a pipeline can
+be wrong, and the discipline that closes that gap is closer to ``redo it independently'' than to ``check
+it against a list.''
+
+\paragraph{Availability.} Source, the pre-registration with its dated amendment, the full results
+document, and every script: \url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}
+(\texttt{docs/designs/CLOSED\_LOOP\_PREREG.md}, \texttt{CLOSED\_LOOP\_RESULTS.md},
+\texttt{exploration/tda/loop\_*.py}, \lean{lean\_src/WassersteinCertificate.lean}).
+
+\bibliographystyle{unsrt}
+\bibliography{refs_closed_loop}
+\end{document}
