@@ -117,6 +117,7 @@ feasibility at exactly one place: $\psi_{c'}\le\mathrm{cost}(c',\Delta)=0.25$ fa
 independent checker must catch this, or it is not a control.
 
 \section{Method}
+\label{sec:method}
 
 \paragraph{Pipeline.} Simulation (a 2D Gross--Pitaevskii split-step solver already in this
 project~\cite{Callens2026TDA}) produces a density field $\rho=|\psi|^2/\langle|\psi|^2\rangle$; cubical
@@ -291,18 +292,33 @@ ordered from the one closest to what was actually measured to the one furthest f
 
 The stability theorem tested in \S\ref{sec:results} bounds the \emph{bottleneck} distance by the
 \emph{sup} norm, and \S\ref{sec:results} showed why that pairing is empty here: a few vortex-core pixels
-set $\varepsilon$. There is a second stability theorem, due to the same authors with
-Mileyko~\cite{CSEHM2010}, in which \emph{Wasserstein} distances between diagrams are bounded in terms of
-an $L_p$ norm of $f-g$ (under a Lipschitz hypothesis on the functions and a bounded total-persistence
-hypothesis on the space). An $L_p$ norm averages over the field; a handful of core pixels no longer
-dominates it. And the left-hand side of that theorem is exactly the quantity this round learned to
-certify: Table~\ref{tab:certificates}'s $W_1$, exhibited with a primal plan and dual potentials rather
-than trusted from a solver.
+set $\varepsilon$. There are two stability theorems for \emph{Wasserstein} distances between diagrams.
+The older one, due to the same authors with Mileyko~\cite{CSEHM2010}, still has the sup norm on its
+right-hand side: for tame Lipschitz functions on a space with bounded degree-$k$ total persistence,
+$W_p \le C^{1/p}\,\|f-g\|_\infty^{\,1-k/p}$ for $p\ge k$, with $C$ built from the Lipschitz constants
+and a space-dependent constant~$C_X$ (statement as reproduced in~\cite{SkrabaTurner2020}, Thm.~3.2). It
+would not help here: the sup norm is the quantity the core pixels dominate, and the fractional exponent
+only weakens it. The one that changes the norm is the \emph{cellular} Wasserstein stability theorem of
+Skraba and Turner~\cite{SkrabaTurner2020} (Thm.~4.6): for two filtrations $f,g$ of the same finite cell
+complex $K$, $W_p(\mathrm{Dgm}\,f,\mathrm{Dgm}\,g)\le\|f-g\|_p$ with
+$\|f-g\|_p^p=\sum_{\sigma\in K}|f(\sigma)-g(\sigma)|^p$ over \emph{all} cells, no Lipschitz or
+total-persistence hypothesis, and (its part~(ii)) a per-degree refinement summing only over cells of
+dimensions $k$ and $k+1$. An $\ell_p$ sum over cells is dominated by a handful of core pixels only if
+those pixels carry most of the total change, which is exactly the question. And the left-hand side is
+the quantity this round learned to certify: Table~\ref{tab:certificates}'s $W_1$, exhibited with a
+primal plan and dual potentials rather than trusted from a solver.
 
-\emph{Gate.} The exact statement -- the Lipschitz constant of a Gross--Pitaevskii density on a grid,
-the total-persistence bound, the exponent on $\|f-g\|_p$ -- must be read from~\cite{CSEHM2010} and
-written into a pre-registration before any number is computed; the constants are not recalled here on
-purpose. \emph{Prediction to be pre-registered.} For the three resolution pairs, the $W_1$ bound is
+\emph{Gate.} The cubical complex GUDHI builds from a $2$D array (the $T$-construction of
+\S\ref{sec:method}: pixels are top cells, lower cells take the minimum of their cofaces) fixes the cell
+values $f(\sigma)$, so $\|f-g\|_p$ over all cells is computable exactly and must be, before any number
+on the left is looked at; part~(ii) restricted to $k=0$ gives the tighter bound for the $H_0$ diagrams
+actually compared. Both sides must be computed on \emph{full} diagrams, not the top-$k$ truncation of
+\S\ref{sec:results}, since the theorem is about the full diagram; the certified top-$k$ values are then
+a second, separate check. One convention must be fixed in advance: \cite{SkrabaTurner2020} measures
+distances in the plane with the $\ell_p$ metric (a point $(a,b)$ is at distance $2^{(1-p)/p}|b-a|$ from
+the diagonal), whereas \S\ref{sec:duality} used the $\ell^\infty$ ground cost; for $p=1$ the former
+dominates the latter, so a bound on the $\ell_1$-ground $W_1$ also bounds the certified one, but the
+comparison the theorem is about must be made in its own metric. \emph{Prediction to be pre-registered.} For the three resolution pairs, the $W_1$ bound is
 informative where the bottleneck bound was not: it excludes a nonzero fraction of bars. \emph{Kill.}
 If it is also empty at $\xi/\Delta x=4$ vs.\ $8$, then no stability theorem rescues that resolution
 comparison, and the honest conclusion is that $\xi/\Delta x=4$ is simply not a resolution at which
