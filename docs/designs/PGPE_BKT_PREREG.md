@@ -108,3 +108,29 @@ invariants K1–K3 are theorems there for the *unprojected* Galerkin truncation 
 not change them — the equality of the two is a one-line remark, not a new theorem). No SPGPE. No 3D.
 No claim about helium films: the Bishop–Reppy jump is the same universal number, but the data class
 here is a weakly interacting Bose gas.
+
+## Amendment A1 (2026-09-22, after the first control run, before any thermal run)
+
+Three of the seven known answers failed on the first run, two through my own errors, one through a
+measurement bug; none through the physics, and all three are exactly what the controls are for.
+
+1. **K3 (momentum) FAILED, drift 8.5 (1 % of `P`)** — because §0 said the cutoff `k_cut ≤ (2/3) k_max`
+   "makes the cubic term alias-free". That is the dealiasing rule for a *quadratic* nonlinearity; for the
+   cubic term `|ψ|²ψ` the alias-free condition is `k_cut ≤ k_max/2`. The aliased scheme is not
+   translation-invariant and K3 saw it. Corrected: `k_cut = k_max/2` everywhere (about 3 200 modes on the
+   `128²` sweep grid, not 5 800). K1 (norm, `4×10⁻¹⁰`) and K4 (plane wave, `7×10⁻¹⁰`) had passed
+   regardless — a reminder that norm and one exact solution do not test translation invariance.
+2. **K5 (Bogoliubov) FAILED by factors 5, 2.5, 1.2** — the measured frequency was `μ ± ω` with `μ = g n₀ = 1`:
+   the mode amplitude `c_k(t)` carries the condensate's global phase `e^{−iμt}`. Fixed by measuring
+   `c_k · c₀*/|c₀|` (the condensate frame). Criterion unchanged (`0.5 %`).
+3. **K2 (energy) FAILED only on the `dt⁴` ratio**: drift `2×10⁻⁹` at `dt = 0.005` (well inside `10⁻⁶`)
+   but ratio `23` instead of `16 ± 3`, because at that level the drift is roundoff accumulated over 4 000
+   steps, not truncation error. The scaling test is moved to `dt = 0.02` vs `0.04`, where the drift is
+   far above roundoff; the `≤ 10⁻⁶` at `dt = 0.005` criterion stays.
+
+K6 passed with the pre-registered **fallback** (`scipy` DOP853): `rusty-sundials-py` does not build on
+this machine — it is not a member of the Cargo workspace (maturin refuses), and once added it fails to
+compile against its pinned `pyo3 0.20` with the current Rust toolchain (three errors, recorded in the
+results file). Both are concrete upstream fixes to propose; K6's independent-integrator content
+(agreement `3.5×10⁻⁷` against a tolerance `2.6×10⁻⁵`, and disagreement `0.086` when the reference is run
+loose) stands with DOP853. K7 passed (`4.7 %`).
