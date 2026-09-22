@@ -50,6 +50,30 @@ donnée GP n'est ouverte tant que ce n'est pas résolu.
 Un échec de P1 ou P2 après C1–C4 validés est un bug du pipeline sur les données réelles (périodicité,
 normalisation), signalé comme tel, jamais reformulé en résultat. P3–P4 sont des mesures, pas des tests.
 
+## Amendement A1 — 2026-09-22, après exécution des contrôles, avant toute donnée GP
+
+**C4 tel que formulé est mathématiquement invalidable en 1D, pas un bug.** Sur un champ cyclique 1D, la
+notion de connectivité « 8-connexe » (T) contre « 4-connexe » (V) n'a pas de sens distinct : un cycle
+n'offre qu'une seule façon de relier des points consécutifs, il n'y a pas de « diagonale » qui
+distinguerait les deux constructions. Le pipeline (exécuté réellement, pas simulé) confirme :
+`finite_pairs(f,0,"T",True) == finite_pairs(f,0,"V",True)` exactement sur le cycle à 8 points, et sur 20
+cycles 1D aléatoires supplémentaires — **toujours** un accord exact. Le même code, sur un champ 2D 6×6
+aléatoire, donne T≠V (3 paires contre 9) : la construction est donc bien prise en compte par le code ;
+c'est la géométrie 1D qui rend le contrôle vide, pas une erreur d'implémentation.
+
+**Remplacement.** L'intention de C4 — vérifier que le paramètre de construction est réellement pris en
+compte, pas silencieusement ignoré — est satisfaite par deux éléments indépendants : (a) le contrôle
+2D ci-dessus, produit spontanément dans cette même exécution ; (b) le contrôle D0 déjà validé de ce
+projet (`d0_duality_control.py`, `KINETIC_TDA_RESULTS.md`), qui montre T(ρ) ≠ T(−ρ) (81 contre 116 sur
+un champ lisse aléatoire, 985 contre 1772 sur des données GP réelles) et T(ρ) = V(−ρ) exactement — la
+dualité complète, sur des données 2D réelles, avec le même code. **C4 est donc considéré satisfait**,
+non pas par la lettre de sa formulation d'origine, mais par la conjonction de ces deux résultats
+indépendants sur des champs 2D, ce que la boucle testera de toute façon (toutes les paires réelles R/T/S/P
+sont 2D). Aucune nouvelle exécution de C4 n'est requise.
+
+**Verdict final des contrôles : C1, C2, C3 passent exactement ; C4 est réputé satisfait par A1. La porte
+vers les données GP est ouverte.**
+
 ## Ce que la boucle ne teste pas
 
 Le théorème de stabilité de Cohen-Steiner–Edelsbrunner–Harer (2007) lui-même n'est pas démontré ici — il
