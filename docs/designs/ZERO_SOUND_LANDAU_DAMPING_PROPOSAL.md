@@ -253,3 +253,57 @@ sur ce volet (le hold en §4 du dossier Godfrin reste de toute façon en vigueur
 seulement si : (a) quelqu'un avec accès institutionnel vérifie la table Greywall et les valeurs 2D de
 Casey/Nyéki/Saunders — ce qui débloquerait V2 en 3D et potentiellement en 2D ; (b) une analyse dynamique
 2D publiée est trouvée ou faite par quelqu'un d'autre — ce qui reformulerait V1 en formalisation légitime.
+
+---
+
+## 12. Recherche de données élargie — 2026-09-22, second passage, toujours pas de code
+
+Sur demande explicite (« look for more data »), une recherche plus large que la porte du §11 a été
+faite. Elle **confirme** le résultat du §11 (V2, branche 2D) plutôt que de le débloquer, et trouve des
+pistes concrètes pour la suite.
+
+### He-3 2D — toujours pas de table numérique en accès libre, mais trois pistes nommées
+
+- `arXiv:2206.06039` (Godfrin & Krotscheck, revue) lu directement : confirmé, **aucune table F₀ˢ/F₀ᵃ**,
+  juste une phrase qualitative renvoyant à une référence non reproduite.
+- Boronat, Casulleras, Grau, Krotscheck, Springer, arXiv:cond-mat/0307493 : donne **m\*/m** en fonction
+  de la densité surfacique par QMC (singularité ≈0,048 Å⁻², gel 0,052–0,063 Å⁻²) — utile mais **pas de
+  F₀ˢ/F₀ᵃ**.
+- Plusieurs articles Casey/Nyéki/Saunders/Hallock donnant F₀ᵃ, F₁ˢ (Ho & Hallock PRL 87, 135301, 2001 ;
+  PRB 73, 012507, 2006 ; Casey et al. PRL 90, 115301, 2003) : **payants, aucun miroir arXiv/HAL trouvé**.
+- **Piste la plus prometteuse, non exploitée** : Godfrin, Meschke, Lauter, Böhm, Krotscheck, Panholzer,
+  *Observation of Zero-Sound at Atomic Wave-Vectors in a Monolayer of Liquid ³He*, J. Low Temp. Phys.
+  158, 147 (2010) — même équipe, même substrat (graphite prépollué ⁴He) que l'article Nature 2012 visé
+  par ce projet. Vraisemblablement la source réelle du F₀ˢ utilisé pour prédire le son zéro dans CE
+  système. Payant chez Springer, pas de PDF ouvert trouvé.
+- Deux thèses (Dann 2000, Casey 2001, sur OSTI) dont le résumé mentionne explicitement l'inférence de
+  paramètres de Landau — accès OSTI en échec technique cette session, valeurs **non vérifiées**.
+- **Mise en garde structurelle, si ces pistes aboutissent** : le système de Casey/Nyéki/Saunders
+  (Royal Holloway, substrat bicouche HD) et celui de Godfrin (Grenoble, substrat monocouche ⁴He) sont
+  **différents**. Transférer un F₀ᵃ(n) de l'un à l'autre exigerait une justification explicite, pas une
+  substitution gratuite.
+
+**Verdict : deuxième résultat nul indépendant — renforce la confiance que le manque est réel, pas un
+artefact de budget de recherche.**
+
+### Jeux de données quantiques — HuggingFace essentiellement inutile, Zenodo sans changement
+
+- **HuggingFace : taux de faux positifs proche de 100 %.** « vortex » → 30 résultats, 29 sont des noms de
+  modèles/LLM ; le seul jeu de données physique réel est de la CFD classique (cylindre, Re=100), pas
+  quantique. « BEC », « helium », « condensate », « superfluid » → collisions d'acronymes/noms, aucun
+  résultat pertinent. « quantum fluid », « Gross-Pitaevskii », « cold atom », « Bose-Einstein condensate »,
+  « neutron scattering » → **zéro résultat**. HuggingFace n'a rien pour ce domaine.
+- **Zenodo** : `PolancoData` (256³, déjà utilisé par ce projet) confirmé toujours seul de son genre.
+  **Un nouveau jeu trouvé** : Kwon & Shin (Seoul National University), données et scripts pour
+  *Dynamic similarity of vortex shedding in a superfluid flowing past a penetrable obstacle*, Zenodo, mai
+  2026, CC-BY-4.0, DOI 10.5281/zenodo.20068724 — observables traités et paramètres de simulation, **pas**
+  les champs bruts (explicitement exclus pour l'espace disque). Utile en validation croisée d'observables,
+  pas comme nouveau jeu de champs à haute résolution.
+- **Deux questions restées sans réponse** (budget de recherche web de la session épuisé, 200/200, avant
+  et après une nouvelle tentative) : un jeu de données S(Q,ω) de ⁴He superfluide lisible par machine
+  existe-t-il ailleurs que dans les tables ancillaires de Godfrin et al. PRB 103, 104516 (déjà en main) ?
+  Une donnée BEC diluée dépassant ξ/Δx = 2,26 est-elle apparue depuis le relevé du 2026-09-20 ? **Non
+  vérifié, pas faux — juste pas atteint.**
+
+**Verdict : rien de mieux que ce que le projet a déjà.** `PolancoData` reste la référence ; le nouveau
+jeu Kwon & Shin est noté pour une validation future d'observables, pas comme remplacement.
