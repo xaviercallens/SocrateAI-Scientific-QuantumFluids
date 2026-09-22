@@ -1,7 +1,7 @@
 \documentclass[11pt,a4paper]{article}
 \usepackage[T1]{fontenc}
 \usepackage[margin=1in]{geometry}
-\usepackage{amsmath,amssymb,amsthm}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
 \usepackage{booktabs}
 \usepackage{xcolor}
 \usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,
@@ -20,6 +20,7 @@
 \newtcolorbox{fixbox}[1][]{colback=orange!4,colframe=orange!60!black,
   boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
 \newtheorem*{theorem*}{Theorem}
+\newcommand{\phaseprev}{0.6490}
 
 \title{\textbf{How loose is Wasserstein stability on a vortex field?}\\
 \large The Skraba--Turner cellular bound measured and certified on seven Gross--Pitaevskii pairs,\\
@@ -46,12 +47,25 @@ gate. The theorem is Skraba and Turner's cellular Wasserstein stability~\cite{Sk
 complex, in the $\ell_p$ ground metric. We compute both sides exactly on the same seven pairs, for
 $p=1,2$: the right-hand side as a finite sum over the cubical complex whose cell values are verified,
 by an independent union-find, to be the ones GUDHI uses; the left-hand side as an optimal assignment on
-the full diagrams, certified on every pair by explicit dual potentials. Three controls pass exactly
+the full diagrams, certified on every pair by explicit dual potentials (rigorous relative gap
+$\le1.5\times10^{-4}$ on six certificates, $\le10^{-14}$ on the other twenty-two). Three controls pass exactly
 before any pair is opened, one of them an exact known answer on real data (slack exactly $9$ for $p=1$
 and $3$ for $p=2$, from the nine cells a raised minimum touches), and one of them caught an arithmetic
 error in the author's own pre-registered hand value. The pre-registered question is not whether the
 bound holds -- it is a theorem -- but whether it says anything the triangle inequality does not.
-[[FILL: one-sentence answer per pair class, and the measured slack.]] Two further directions are taken
+The answer is no, on every pair: the $\ell_1$ bound exceeds the trivial one by a factor $V_1$ of
+$139$ (phase space) to $3200$ (the vortex-free control), the $\ell_2$ bound by $18$ to $65$, and the
+measured slack $S_1=\|f-g\|_1/W_1$ runs from $490$ to $19{,}000$: in the theorem's own metric the
+diagrams are three to four orders of magnitude closer than the fields. The pre-registered prediction
+that the phase-space pair -- the one pair on which the bottleneck bound had been informative -- would
+be informative here too, \emph{failed}. The reason is structural and is measured, not argued: the
+$\ell_p$ norm is extensive in the number of cells, the diagram in the number of critical values, and
+a resolution or time comparison changes every cell; the ratio of the two bounds scales as (cells per
+bar)$^{1/p}$, which is why $V_2\approx\sqrt{V_1}$ on all seven pairs and why no $p$ helps -- small
+$p$ pays the cell count, large $p$ returns to the vortex cores. The theorem is sharp exactly where the
+control shows it: a perturbation that touches nine cells per critical value it moves. A second
+finding was not looked for: the previous report's phase-space certificate had been computed on five
+points per side, the same class of defect as the corruption it reported; it is corrected here. Two further directions are taken
 to their gates and stopped there, with the reasons written down: the Berezinskii--Kosterlitz--Thouless
 transition, which these fields carry but which needs a finite-temperature run this project does not
 have; and the Fricke involution of an external review, which we now compare with Dolgachev's theorem
@@ -176,7 +190,8 @@ Measured: slack exactly $9.000$ and $3.000$. The pre-registration allowed $\delt
 exceeded the gap to the pixel's nearest neighbour; it did ($\delta=0.01\times$depth exceeded the gap
 $4.3\times10^{-3}$) and $\delta$ was set to half the gap, as written, and recorded.
 \item \textbf{C4} (negative). Pair T1's optimal plan with pair T2's potentials must be rejected by the
-certificate checker. [[FILL: result.]]
+certificate checker. It was: maximal violation $0.898$, primal $10.56$ against dual $21.60$, not
+feasible, not tight.
 \end{itemize}
 
 \section{Results}
@@ -195,24 +210,113 @@ diagrams, all degrees). $S_p=\|f-g\|_p/W_p$; $V_p=\|f-g\|_p/Z_p$, informative if
 
 \begin{table}[h]\centering\small
 \input{wp_certificates}
-\caption{Duality certificates for $W_p^{(0)}$ on the full $H_0$ diagrams: relative primal--dual gap,
-maximal violation of $u_i+v_j\le C_{ij}$ over the full augmented matrix, and LP time.}
+\caption{Duality certificates for $W_p^{(0)}$: relative primal--dual gap as returned, maximal
+violation $\delta$ of $u_i+v_j\le C_{ij}$ over the full augmented matrix, the rigorous certified
+relative gap after the $-R\delta$ shift, the scope (full diagram, or the 200 longest bars per side
+where the full LP exceeded the size rule of amendment A2), and LP time.}
 \label{tab:cert}
 \end{table}
 
-\paragraph{Pre-registered verdicts.} [[FILL: P1--P7 with one line each.]]
+\paragraph{Pre-registered verdicts.}
+\begin{itemize}[nosep]
+\item \textbf{P1} (the bound holds, parts (i) and (ii)): holds on all seven pairs for $p=1,2$, by
+factors of $S_p$. As pre-registered, this line tests the pipeline, not the theorem.
+\item \textbf{P2} (resolution pairs vacuous at $p=1$): \textbf{PASS} -- $V_1=374,\ 427,\ 376$.
+\item \textbf{P3} (resolution pairs vacuous at $p=2$ as well): \textbf{PASS} -- $V_2=18.1,\ 21.7,\
+22.3$. With P2, the kill of the previous report's \S7.1 applies: no Wasserstein stability theorem
+makes the $\xi/\Delta x=4$ vs.\ $8$ comparison informative.
+\item \textbf{P4} (phase-space pair informative at $p=1$): \textbf{FAIL} -- $V_1=139$, $V_2=18.4$.
+The pair on which the bottleneck bound was informative ($2\varepsilon=0.58$ against a persistence
+range of about $0.2$ was the previous report's finding; here $\varepsilon=0.2878$ is reproduced) is
+not informative under the $\ell_p$ bound. See the mechanism below.
+\item \textbf{P5} (time pairs and the control, reported): $V_1=2500,\ 1900,\ 3200$ for T1, T2, S1;
+these are the largest, because the fields differ everywhere.
+\item \textbf{P6} (slack $S_1\ge10$ on every GP pair): \textbf{PASS}, by a wide margin --
+$S_1$ from $5720$ (R1) to $19{,}300$ (T1); $S_2$ from $125$ to $452$.
+\item \textbf{P7} (consistency with the previous report's $\ell^\infty$ top-30 $W_1$): \textbf{PASS}
+on all seven; the six GP values are reproduced to all printed digits ($2.3371$, $0.5791$, $0.8031$,
+$2.4532$, $0.9513$, $10.8003$), and $\varepsilon$ likewise. The phase-space value is discussed in
+\S\ref{sec:erratum}.
+\end{itemize}
 
-[[FILL: interpretation paragraphs: why V is what it is on R pairs; the phase-space pair; what the
-slack measures; the p-dependence; part (ii) vs (i).]]
+\paragraph{Why every pair is vacuous, measured.} Write $\bar\Delta$ for the mean of
+$|f(\sigma)-g(\sigma)|$ over the $4NM$ cells and $\bar\pi$ for the mean persistence of the
+$n+m$ finite bars. Then $\|f-g\|_1=4NM\,\bar\Delta$ and $Z_1=(n+m)\,\bar\pi$, so
+$V_1=\big(4NM/(n+m)\big)\cdot\big(\bar\Delta/\bar\pi\big)$: the number of cells per bar times
+the ratio of mean cell change to mean bar length. On R1, $4NM/(n+m)=1.05\times10^6/1495=701$ and the
+measured $\bar\Delta=0.249\,n_0$ -- the two resolutions are two different turbulent trajectories,
+not one field sampled twice, and they differ by a quarter of the mean density on the \emph{average}
+cell. On T1 the mean cell change is $0.47\,n_0$; on the vortex-free control S1, $0.40\,n_0$. Nothing
+about vortex cores enters: the $\ell_1$ bound is empty because the perturbation is dense, and a
+dense perturbation of a field with $10^3$ cells per feature is charged $10^3$ times per feature.
+
+For general $p$ the same count gives $V_p\sim\big(4NM/(n+m)\big)^{1/p}\,\bar\Delta_p/\bar\pi_p$,
+and the data follow it: $V_2/\sqrt{V_1}=0.94,\ 1.05,\ 1.15,\ 1.13,\ 1.18,\ 1.15,\ 1.56$ across the
+seven pairs. The limit $p\to\infty$ is the bottleneck case of the previous report, vacuous for the
+other reason (a few core pixels set the norm, and $2\varepsilon$ exceeds the diagram). There is no
+$p$ at which a dense perturbation of a vortex field is small in $\ell_p$ and large in persistence:
+small $p$ pays the cell count, large $p$ pays the core depth.
+
+\paragraph{Exploratory: is there a $p$ that helps?} Not pre-registered, computed after the verdicts
+above and labelled accordingly: the $H_0$ vacuity ratio $V_p=\|f-g\|_p/Z^{(0)}_p$ (all cells over the
+$H_0$ diagrams alone, primal only, no certificate) for $p\in\{1,2,4,8\}$ and, at $p=\infty$, the
+bottleneck case $\varepsilon/(\max\text{persistence}/2)$ of the previous report.
+
+\begin{center}\small
+\input{wp_psweep}
+\end{center}
+
+$V_p$ falls with $p$ as the cell count is taken to the power $1/p$, reaches $2.4$--$4.0$ at $p=8$,
+and is $2.1$--$3.7$ at $p=\infty$. Its minimum over $p$ is above $2$ on every pair. The two vacuity
+mechanisms -- the cell count at small $p$, the core depth at large $p$ -- meet in the middle without
+ever crossing $1$. This is the measured form of the sentence in the abstract: on a dense perturbation
+of a vortex field, no $\ell_p$ stability bound says anything the triangle inequality does not.
+
+\paragraph{What the slack measures.} $S_1$ is between $5\times10^3$ and $2\times10^4$ on the GP
+pairs and $493$ on the phase-space pair. The diagrams are not far apart: $W_1/Z_1$, the actual
+distance as a fraction of the cost of erasing both diagrams, is $0.065$ (R1), $0.064$ (R2), $0.062$
+(R3), $0.13$ (T1), $0.22$ (T2), $0.54$ (S1), $0.28$ (P1). The resolution pairs' diagrams are within
+$7\%$ of erasure of each other -- close, by the standard the theorem uses -- while their fields are
+not close at all. That is a statement about persistence as a summary, and it is the quantitative
+content of this round: on this data class the $H_0$ diagram is stable to dense perturbations to a
+degree the stability theorem cannot see, because the theorem is sharp only for sparse ones. The
+control C3 shows the sharp case exactly: slack $9$ at $p=1$ and $3$ at $p=2$, the coordination number
+of a pixel and its square root.
+
+\paragraph{Part (ii) against part (i).} Restricting to vertices and edges removes the pixel term
+and nothing else; on every pair $B^{(ii,0)}_1/B^{(i)}_1$ lies between $0.74$ and $0.75$ ($3/4$ would
+be exact if the three cell families changed equally), and $B^{(ii,0)}_2/B^{(i)}_2$ between $0.85$ and $0.87$. The
+per-degree refinement is real and small; it does not change any verdict.
 
 \section{Where the duality points next}
 \label{sec:directions}
 
 \subsection{What this bound can and cannot become}
 
-[[FILL after results: if vacuous on R pairs -- the resolution comparison is not a perturbation in any
-$\ell_p$ sense and no stability theorem rescues it; the slack is the number to carry forward. If
-informative -- which bars it protects is the next pre-registration.]]
+The kill written into the previous report is now executed: the resolution comparison
+$\xi/\Delta x=4$ vs.\ $8$ is not a perturbation in any $\ell_p$ sense, and no stability theorem of
+this family rescues it. The honest use of persistence at $\xi/\Delta x=4$ is therefore not ``the
+diagram is guaranteed close to the converged one'' but ``the diagram is measured to be within $7\%$
+of erasure of the converged one, with no guarantee''. Where the theorem \emph{is} sharp -- sparse
+perturbations, C3 -- it is a tool for something else: certifying that a localized edit to a field
+(a planted vortex moved, a core filled in) changes the diagram by at most nine cells' worth, which is
+a statement one could use in a control experiment. That is the direction the bound can become, and it
+is small. The number to carry forward is the slack: on vortex fields, $10^3$--$10^4$ at $p=1$.
+
+\subsection{Erratum to the previous report}
+\label{sec:erratum}
+
+The previous report's Table~3 lists the phase-space pair's certificate as $n,m=5,5$ with
+$W_1=0.0632\ldots$. The full $H_0$ diagrams of the raw phase-space arrays have $2150$ and $1623$
+finite bars, so the pre-registered top-30 truncation should have had 30 points per side. The
+diagrams stage of that round was correct -- the bottleneck distance recomputed here on the full
+diagrams is $0.0325030\ldots$, the published $\dB=0.0325$, and $\varepsilon=0.2878$ is reproduced --
+and the $5\times5$ certificate is valid for the five points it was given; but the number is not the
+$\ell^\infty$ top-30 $W_1$ of the phase-space diagrams. It is the same class of defect as the S1
+corruption that report found and fixed, on the one pair it did not independently recompute. The
+correct value, computed on the full diagrams in this round with the previous convention, is
+$W_1^{\ell^\infty,\,\mathrm{top}\text{-}30}=\phaseprev$. The published PDF is not changed; the
+erratum is recorded in the project ledger and here.
 
 \subsection{The transition these fields carry: BKT, and the run this project does not have}
 
@@ -291,9 +395,22 @@ would close that last gap and are the natural P6 of a future round.
 
 \section{Discussion}
 
-[[FILL: what the round established; what it did not (one seed, one solver, p=1,2 only, no Lean of
-Thm 4.6); the gate record: 3 directions, 1 passed and measured, 2 stopped with reasons; the amended
-hand value as the round's small lesson.]]
+Three directions were named behind gates; this report is the record of taking each to its gate.
+The first passed and was measured: the cellular Wasserstein bound holds, as it must, and is empty on
+every pair, with the mechanism quantified (cells per bar) and a control showing where it is sharp.
+The pre-registered prediction that the phase-space pair would be informative was wrong, and is
+reported as wrong. The second and third stopped at their gates -- one for want of a finite-temperature
+solver, one because the theorem it was compared with turned out to be about a group the data does not
+carry -- and the reasons are written down, which is what a gate is for.
+
+What this round did not do. One seed, one solver, one data class; $p=1$ and $2$ only, with the
+$p$-scaling inferred from two points and a count, not from a sweep; certificates on the full diagrams
+where the LP fit in memory and on the 200 longest bars where it did not, scope recorded per line of
+Table~\ref{tab:cert}; no Lean line for Theorem~4.6 itself, whose statement is about persistence
+modules on a CW complex and is beyond the pinned library. And the round's own small lesson: the
+author's hand value for $W_2$ on an eight-point example was wrong, and the control caught it before
+any data was opened -- the same discipline that found the previous report's five-point certificate
+after publication rather than before. Redoing independently remains the only check that has worked.
 
 \paragraph{Reproducibility.} \lean{exploration/tda/wp\_stability.py} runs the controls and the seven
 pairs and writes \lean{data/generated/kinetic\_tda/wp\_stability\_results.json};

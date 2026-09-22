@@ -32,15 +32,26 @@ for n, p, B, Bk, W, W0, Z, S, V, ok in rows:
 tex += ["\\bottomrule", "\\end{tabular}"]
 
 # certificates table (degree 0, p = 1 and 2)
-ctex = ["\\begin{tabular}{llrrlr}", "\\toprule", "pair & $p$ & rel.\\ gap & max viol. & scope & LP s \\\\", "\\midrule"]
+# Rigorous certified gap: potentials with maximal violation d become exactly feasible after shifting
+# every u_i by -d, so  W^p >= sum u + sum v - R d  unconditionally (R = number of rows); the certified
+# relative gap is (primal - (dual - R d)) / primal, whatever tolerance the LP solver used.
+ctex = ["\\begin{tabular}{llrrrlr}", "\\toprule",
+        "pair & $p$ & rel.\\ gap & max viol.\\ $\\delta$ & certified gap & scope & LP s \\\\", "\\midrule"]
+worst = 0.0
 for n in order:
     for p in (1, 2):
         c = pairs[n][f"p{p}"]["certificates"].get("0") or pairs[n][f"p{p}"]["certificates"].get(0)
         if c and "rel_gap" in c:
-            ctex.append(f"{n} & {p} & {c['rel_gap']:.1e} & {c['max_violation']:.1e} & {c['scope']} & {c['lp_seconds']} \\\\")
+            R = 2 * 200 if c["scope"].startswith("top") else pairs[n]["bars"]["0"][0] + pairs[n]["bars"]["0"][1]
+            R = min(R, pairs[n]["bars"]["0"][0] + pairs[n]["bars"]["0"][1])
+            d = max(c["max_violation"], 0.0)
+            cg = max(c["rel_gap"], (c["primal"] - (c["dual"] - R * d)) / max(c["primal"], 1e-300))
+            worst = max(worst, cg)
+            ctex.append(f"{n} & {p} & {c['rel_gap']:.1e} & {d:.1e} & {cg:.1e} & {c['scope']} & {c['lp_seconds']} \\\\")
         else:
             ctex.append(f"{n} & {p} & \\multicolumn{{4}}{{l}}{{{(c or {}).get('status','none')}}} \\\\")
 ctex += ["\\bottomrule", "\\end{tabular}"]
+print("worst certified relative gap over H0 certificates:", f"{worst:.2e}")
 
 # verdicts
 V1R = [pairs[n]["p1"]["vacuity_V"] for n in ("R1", "R2", "R3") if n in pairs]
