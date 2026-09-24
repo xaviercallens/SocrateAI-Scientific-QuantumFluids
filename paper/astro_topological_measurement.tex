@@ -1,0 +1,237 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,
+            urlcolor=blue!60!black]{hyperref}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\lean}[1]{\texttt{\small #1}}
+\newtcolorbox{keybox}[1][]{colback=blue!3,colframe=blue!45!black,
+  boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+\newtcolorbox{failbox}[1][]{colback=red!3,colframe=red!45!black,
+  boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+\newtheorem{principle}{Principle}
+
+\title{\textbf{Topological charge as a measurement principle for astrophysical $U(1)$ phase fields}\\
+\large A machine-checked chain -- integrality, conservation by continuity, barrier, scale additivity,
+continuum limit -- as the foundation of a measurement protocol, and a pre-registration template for
+its causal use}
+
+\author{Xavier Callens\\
+\small SocrateAI-Scientific-QuantumFluids\\
+\small \url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}}
+\date{September 2026 -- proposal, no astrophysical result claimed}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+Twenty-eight theorems, proved in Lean~4 against Mathlib and accepted by two independent kernels, form
+a chain about a $U(1)$-valued phase read at the sample points of a closed loop: the loop sum of
+principal differences is an integer multiple of $2\pi$; it is conserved by every continuous evolution
+in which no sampled step reaches the branch point; a change of it forces such a step (a phase slip),
+which on an XY ring costs a positive energy barrier; the winding seen on the boundary of a region is
+the net charge of the plaquettes inside; and, for every fine enough sampling, the discrete winding
+equals the topological degree of the continuum phase along the loop. None of these statements
+mentions a superfluid. Their only structural input is $\pi_1(U(1))=\mathbb Z$, so they hold for any
+$U(1)$ phase field: the phase of a complex scalar in a cosmic-string simulation, the axion field
+around a Peccei--Quinn string, the order parameter of a neutron-star superfluid. This report turns
+the chain into a measurement protocol with five principles, each carrying the exact hypothesis under
+which its theorem holds and the exact diagnostic that fires when the hypothesis fails; identifies
+three astrophysical settings where the hypotheses can be met; and supplies a pre-registration
+template for the one thing the chain does \emph{not} give -- the coupling of the integer to the
+observables -- which must be measured, in each astrophysical model, by an energy-matched
+intervention with an equally arbitrary control arm. No astrophysical number is claimed here. The
+quantum-fluid work that produced the chain is used as the laboratory of the method, not as a source
+of values.
+\end{abstract}
+
+\section{Scope and the rule that governs it}
+
+Everything below rests on a distinction that an earlier round of this project learned at some
+cost~\cite{Callens2026Wasserstein}: a mathematical structure shared by two systems is not a physical
+identification of the systems. The chain of theorems in Section~\ref{sec:chain} is shared by every
+$U(1)$ phase field because it is a theorem about $U(1)$; that is exactly why it transfers, and exactly
+why it says nothing, by itself, about what any particular field \emph{does}. So:
+\begin{keybox}
+\textbf{Transfers.} The proved chain, at the level of description where it is proved; and the method
+-- a causal claim about a topological label needs a control arm that is equally arbitrary (the same
+surplus of the conserved quantities, in a different form).
+
+\textbf{Does not transfer.} The coupling of the integer to the observables. It is empirical, it is
+being measured in one two-dimensional Bose gas with three base states~\cite{Callens2026Causal}, and
+it must be measured again inside each astrophysical model by that model's own matched
+intervention.
+\end{keybox}
+
+\section{The chain, as five measurement principles}\label{sec:chain}
+
+Let a closed loop be sampled at points $0,\dots,n$ with phases $\theta_i\in\mathbb R$ read from the
+field ($\theta_n=\theta_0$), and $\mathrm{pd}(a,b)\in(-\pi,\pi]$ the principal difference. The
+\emph{discrete winding} is $w=\frac1{2\pi}\sum_{i<n}\mathrm{pd}(\theta_i,\theta_{i+1})$. The Lean
+modules are those of~\cite{Callens2026Causal,Callens2026Lean}; footprints are
+$\{\mathrm{propext},\mathrm{Classical.choice},\mathrm{Quot.sound}\}$ throughout, and every module
+carries negative controls.
+
+\begin{principle}[integrality; \lean{VortexWinding.loop\_sum\_eq\_mul}]
+$w\in\mathbb Z$ for any closed loop of real phases, whatever the field. \emph{Hypothesis:} none.
+\emph{Use:} a non-integer output is a bug in the reader, never a property of the field.
+\end{principle}
+
+\begin{principle}[conservation by continuity; \lean{TopologicalProtection}]
+If the sampled phases depend continuously on the evolution parameter (time, conformal time, a
+sequence of simulation snapshots interpolated continuously) and no sampled step reaches $\pi$ during
+the interval, then $w$ is constant on the interval. Contrapositive: a change of $w$ between two
+snapshots certifies that some step reached $\pi$ in between -- a phase slip on that loop.
+\emph{Hypothesis:} continuity, and the no-slip condition. \emph{Diagnostic:} a step whose forward and
+backward principal differences do not cancel (\lean{pdiff\_add\_rev\_eq\_two\_pi\_iff}) is exactly a
+step at $\pi$; it flags either a slip or an unresolved loop.
+\end{principle}
+
+\begin{principle}[barrier; \lean{TopologicalProtection.mountain\_pass}, \lean{barrier\_pos}]
+On a ring with nearest-neighbour cosine coupling $J$, any continuous evolution that changes $w$
+passes through a state of energy at least $-(n-2)J$; from the uniformly twisted $w=1$ state the
+barrier is at least $2J-2\pi^2J/n>0$ for $n\ge10$, and the bound is false at $n=9$.
+\emph{Hypothesis:} the XY form of the gradient energy on the loop. \emph{Use:} a lower bound on the
+energy an event must supply to change $w$; events below it are not topological.
+\end{principle}
+
+\begin{principle}[scale additivity; \lean{ScaleResolvedWinding.stokes}]
+For a region of plaquettes whose interior edges are paired by reversal, if no interior edge sits at
+$\pi$, the oriented boundary sum equals $2\pi$ times the net charge of the plaquettes inside. A
+neutral set of charges is invisible from every enclosing loop; a single charge is visible from every
+enclosing loop. \emph{Hypothesis:} the no-cut condition on interior edges. \emph{Use:} the net charge
+of a region is measurable \emph{from its boundary alone}, and the scale-resolved quantity $W(R)$
+(net charge inside $R$) is the variable that carries the physics, not the count of defects.
+\end{principle}
+
+\begin{principle}[continuum limit; \lean{ContinuumWinding.discrete\_eq\_degree}, \lean{detector\_correct}]
+For a continuous closed loop of angles there is an integer $w$ (the degree of a continuous lift) and
+a threshold $n_0$ such that every uniform sampling with $n\ge n_0$ points, with any choice of
+representatives of the sampled angles, returns exactly $w$. For a nowhere-vanishing closed loop of
+complex field values, the reader applied to $\arg$ returns the degree for all $n\ge n_0$.
+\emph{Hypothesis:} the field does not vanish on the loop; the sampling is fine enough.
+\emph{Use:} refinement is a test -- if $w$ changes under refinement the loop was unresolved; and a
+zero of the field on the loop is where the degree ceases to exist, which is what a slip is in the
+continuum.
+\end{principle}
+
+\subsection{What the chain does not contain}
+The argument principle (that the degree counts zeros inside the loop) is not proved; Principle~4 is
+its discrete substitute. The threshold $n_0$ is existential; a quantitative one needs a bound on
+$|\nabla\theta|$ away from cores. Principle~3 is proved for a global phase with XY energy; it is not
+proved for a \emph{gauged} $U(1)$, where the physical winding is that of the covariant phase and
+needs the connection -- see Section~\ref{sec:limits}.
+
+\section{Three astrophysical settings where the hypotheses can be met}\label{sec:settings}
+
+\paragraph{S1. Global and axion strings in lattice simulations.} A complex scalar $\phi$ evolved on a
+grid after a Kibble--Zurek transition~\cite{Kibble1976} forms a network of strings located, in
+practice, by exactly the plaquette winding reader of Principle~1~\cite{VachaspatiVilenkin1984,
+HindmarshKibble1995}; axion-string simulations~\cite{Gorghetto2018} do the same for the
+Peccei--Quinn phase. Here every hypothesis of Principles~1, 2, 4 and 5 is met by construction: the
+field is a continuous function of conformal time, it is sampled on a grid, and its zeros are the
+string cores. What the chain adds to current practice is (i) a correctness theorem for the reader
+(Principle~5), with refinement as its test; (ii) the slip diagnostic of Principle~2, which certifies
+reconnection and loop-collapse events on a loop from two snapshots; (iii) boundary-only measurement
+of the string charge threading a region (Principle~4), which is what a flux-through-a-surface
+estimate needs; and (iv) the scale-resolved $W(R)$ as the natural variable for the scaling regime,
+in place of string length per volume.
+
+\paragraph{S2. Neutron-star superfluids and glitches.} The interior superfluid of a neutron star
+carries its rotation as an array of quantised vortices, $N_v=2\Omega/\kappa$, and pulsar glitches
+are read as the catastrophic unpinning of many of them~\cite{AndersonItoh1975}. The persistent
+current of Principle~2 and the barrier of Principle~3 are the one-dimensional model of pinning: a
+vortex crossing a loop changes that loop's $w$ by one, and cannot do so without the energy of the
+slip. The chain gives the \emph{measurement} side -- what a glitch is on a loop, and what it costs
+-- not the microphysics of pinning, which is where the observable numbers live and where a matched
+intervention would have to be designed inside a crust model.
+
+\paragraph{S3. Superfluid and Bose--Einstein-condensate dark matter.} If the halo is a condensate,
+its rotation is carried by vortices~\cite{RindlerDallerShapiro2012}. Principle~4 states what an
+observation of the halo's outer velocity field can and cannot determine: the net charge inside, and
+nothing about the arrangement of bound pairs within. The measurement design here is the same as in
+S1, on the simulated halo field.
+
+\section{The protocol}
+
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Read} $w$ on every loop of interest by the principal-branch sum (Principle~1).
+\item \textbf{Check resolution} by refinement: read again at twice the sampling; a change disqualifies
+  the loop (Principle~5). Independently, flag every step whose forward and backward differences do
+  not cancel (Principle~2's diagnostic).
+\item \textbf{Localise charge from boundaries}: tile the region, read plaquette charges, and verify
+  that the boundary sum equals the interior total (Principle~4). A mismatch is an interior edge at
+  $\pi$ -- an unresolved core -- and is reported as such, not averaged away.
+\item \textbf{Track} $w$ across snapshots; every change is a certified slip on that loop
+  (Principle~2), to be matched against an energy budget (Principle~3).
+\item \textbf{Report} $W(R)$ as a function of scale, not defect counts.
+\end{enumerate}
+Each step's failure mode is a theorem's hypothesis failing, and is reported by name.
+
+\section{The pre-registration template for the causal step}\label{sec:prereg}
+
+The chain establishes that $w$ is a stable, scale-resolved, correctly readable label. Whether it is a
+\emph{difference-maker} for an astrophysical observable is a separate, empirical question, and it is
+answered only by an intervention with a matched control. The template, to be filled and committed
+before any run of the astrophysical model:
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Base states.} Equilibrated (or scaling-regime) states of the model, saved.
+\item \textbf{Arm V.} Impose a topological label -- a string loop, a vortex array, a winding on a
+  ring -- by an exact construction whose correctness is checked by Principle~1 (the reader finds
+  exactly what was imposed) and by a periodicity or boundary check, before any evolution.
+\item \textbf{Arm P.} Add the \emph{same} surplus of every conserved quantity the model has (energy,
+  particle number, momentum, angular momentum), in a non-topological form, with the surplus
+  matched by bisection to machine precision.
+\item \textbf{Arm 0.} The base continued untouched.
+\item \textbf{Predictions}, with thresholds fixed now, on the observables the astrophysical question
+  cares about, over a window fixed now; and the pre-declared reading of any thermometer-like
+  quantity that the P arm is expected to shift by construction.
+\item \textbf{Effect size.} The effect per unit of surplus: the same surplus in V and P, compared on
+  the observables. A large effect in V and a small one in P for the same surplus is the signature of
+  a non-energetic difference-maker.
+\item \textbf{Kill rule.} If V and P cannot be matched, or if Principle~1's check fails on the
+  imposed configuration, no causal claim is made.
+\end{enumerate}
+The two-dimensional Bose gas of~\cite{Callens2026Causal} is where this template was first executed;
+its numbers do not carry over, and its role here is to show that every step is executable.
+
+\section{Limits, stated before anyone asks}\label{sec:limits}
+
+\begin{failbox}
+\begin{itemize}[leftmargin=*]
+\item \textbf{Gauged $U(1)$.} For local strings (Abelian--Higgs, Nielsen--Olesen) the physical winding
+  is that of the gauge-covariant phase and involves the gauge connection. The chain is proved for a
+  global phase. It applies to global and axion strings, and to a gauged theory only in a fixed gauge
+  where the reader is applied to the gauge-fixed phase -- which must be said.
+\item \textbf{Three dimensions.} The scale-additivity theorem is proved for plaquette regions
+  (surfaces). Its use in three dimensions is on loops and on the surfaces they bound; that vortex
+  lines do not end (\lean{VortexWinding.balanced\_sum\_eq\_zero}) is proved, the full
+  three-dimensional flux accounting is not.
+\item \textbf{Continuity in time.} Principle~2 needs the sampled phases to be continuous in the
+  evolution parameter. Simulations provide this; observations of a single epoch do not, and the
+  chain then gives Principles~1, 4 and 5 only.
+\item \textbf{No numbers.} Nothing here predicts a string tension, a glitch size, or a halo
+  rotation curve. Those are link~4, and link~4 is measured, not derived.
+\end{itemize}
+\end{failbox}
+
+\section{Literature status}
+The reader of Principle~1 is the standard string locator~\cite{VachaspatiVilenkin1984}; phase slips
+and persistent currents are Anderson's~\cite{Anderson1966}; the glitch model is Anderson and
+Itoh's~\cite{AndersonItoh1975}; the string-network programme is
+reviewed in~\cite{HindmarshKibble1995} and its axion version in~\cite{Gorghetto2018}; the
+interventionist notion of cause is Woodward's~\cite{Woodward2003}. What is new here is the
+machine-checked status of each principle, the named diagnostic attached to each hypothesis, and the
+insistence that the causal step be pre-registered with a matched control inside the astrophysical
+model itself.
+
+\bibliographystyle{unsrt}
+\bibliography{refs_astro_topological}
+\end{document}
