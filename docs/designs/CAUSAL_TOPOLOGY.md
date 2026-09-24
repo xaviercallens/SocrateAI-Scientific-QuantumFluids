@@ -84,7 +84,22 @@ Comparator: all three modules accepted by both kernels (2026-09-25).
   energy in its sector is not proved.
 * **Link 4.** The coupling of the integer to condensate and coherence is physics, tested in round 2.
 
-## 5. Literature status
+## 5. Transfer to astrophysics (owner's rule, 2026-09-25)
+
+**Transferable, at the level where it is proved:** the chain integrality → conservation by continuity →
+barrier → scale additivity (W(R) = net charge) → continuum limit. It holds for ANY U(1) phase field
+(axion, Peccei–Quinn, U(1) cosmic strings), because conservation comes from π₁(U(1)) = ℤ, not from the
+Hamiltonian. And the method: a causal measurement needs an equally arbitrary control arm (same energy
+surplus, different form); without a matched pair, "topology influences" is a descriptor again.
+
+**Not transferable:** link 4. The coupling integer → observables is empirical, measured here with three
+bases; a V/P result in the Bose gas says nothing about the coupling in cosmology. An astrophysical
+claim needs a matched intervention inside the astrophysical model itself.
+
+**Recommendation:** quantum fluids as the laboratory of the *method* (matched pair, effect per unit
+energy, proved chain) — justified; exporting the physical coupling — not.
+
+## 6. Literature status
 
 None of the physics is new: Anderson (1966) for phase slips; Langer–Fisher (1967) for the ring barrier;
 Kosterlitz–Thouless for the scale-resolved picture; Laughlin (1981); Tonomura (1986). What is new to
