@@ -53,3 +53,4 @@ import PhaseMixing
 import Villani
 import WassersteinCertificate
 import Fricke
+import QHFricke

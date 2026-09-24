@@ -52,8 +52,9 @@ Comparator (its README: that can compromise the challenge). Do not run as a priv
 | ShellHamiltonian | 7 | **accepted** (both kernels) |
 | DualLength | 12 | **accepted** (both kernels) |
 | Fricke | 12 | **accepted** (both kernels), 3 min 40 s |
+| QHFricke | 6 | **accepted** (both kernels), 10 min 4 s wall (8 cores busy with the PGPE sweep); 3 negative controls fail (M fixing (1+2i)/2; the plateau statement with q even; Fricke fixing crit pointwise) |
 
-All 181 listed theorems: accepted by the Lean kernel and by nanoda, permitted axioms only, run under `systemd-run --user` with `RestrictAddressFamilies=~AF_UNIX`.
+All 187 listed theorems: accepted by the Lean kernel and by nanoda, permitted axioms only, run under `systemd-run --user` with `RestrictAddressFamilies=~AF_UNIX`.
 
 Caveat on what a pass means: the challenge is *generated from* the solution by our script, so "same statement" is guaranteed by
 construction. The independent content of a pass is (a) two kernels accept the exported proof terms, (b) only the permitted axioms are used,
