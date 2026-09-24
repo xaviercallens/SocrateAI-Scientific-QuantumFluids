@@ -55,3 +55,4 @@ import WassersteinCertificate
 import Fricke
 import QHFricke
 import TopologicalProtection
+import ScaleResolvedWinding

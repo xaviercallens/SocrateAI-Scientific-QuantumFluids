@@ -1,0 +1,18 @@
+{
+  "challenge_module": "ComparatorChallenges.ScaleResolvedWinding",
+  "solution_module": "ScaleResolvedWinding",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.ScaleResolvedWinding.winding_int",
+    "QuantumFluids.ScaleResolvedWinding.interior_sum_eq_zero",
+    "QuantumFluids.ScaleResolvedWinding.stokes",
+    "QuantumFluids.ScaleResolvedWinding.boundary_eq_charge",
+    "QuantumFluids.ScaleResolvedWinding.dipole_invisible",
+    "QuantumFluids.ScaleResolvedWinding.single_core_visible"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}
