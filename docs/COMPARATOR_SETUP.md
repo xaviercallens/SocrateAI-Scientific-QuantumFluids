@@ -54,8 +54,9 @@ Comparator (its README: that can compromise the challenge). Do not run as a priv
 | Fricke | 12 | **accepted** (both kernels), 3 min 40 s |
 | QHFricke | 6 | **accepted** (both kernels), 10 min 4 s wall (8 cores busy with the PGPE sweep); 3 negative controls fail (M fixing (1+2i)/2; the plateau statement with q even; Fricke fixing crit pointwise) |
 | TopologicalProtection | 13 | **accepted** (Lean default kernel shown in the retained tail; run with `enable_nanoda: true`, overall result success), 16 min wall (sweep running); 5 negative controls fail (stability without no-slip; window widened to (-π, 2π]; continuous protection without no-slip; barrier at n = 9, which is false; slip bound -(n-3)J) |
+| ScaleResolvedWinding | 6 | **accepted** (nanoda and Lean default kernel), ~25 min wall (sweep running); 3 negative controls fail (no-cut hypothesis dropped; total charge 1 instead of 0; two cores counted as one) |
 
-All 200 listed theorems: accepted by the Lean kernel and by nanoda, permitted axioms only, run under `systemd-run --user` with `RestrictAddressFamilies=~AF_UNIX`.
+All 206 listed theorems: accepted by the Lean kernel and by nanoda, permitted axioms only, run under `systemd-run --user` with `RestrictAddressFamilies=~AF_UNIX`.
 
 Caveat on what a pass means: the challenge is *generated from* the solution by our script, so "same statement" is guaranteed by
 construction. The independent content of a pass is (a) two kernels accept the exported proof terms, (b) only the permitted axioms are used,
