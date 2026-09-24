@@ -15,14 +15,33 @@ SW = ROOT / "data" / "generated" / "pgpe" / "sweep"
 LN380 = float(np.log(380.0))
 
 
+def sum_rules(d):
+    """Amendment A3: R_L = <|J_L|^2>/(nTA) and R_T = <|J_T|^2>/(nTA) over the three smallest shells (n = 1)."""
+    nTA = d["T"] * d["L"] ** 2
+    return float(np.mean(list(d["JL"].values())) / nTA), float(np.mean(list(d["JT"].values())) / nTA)
+
+
+def admitted(d):
+    RL, RT = sum_rules(d)
+    return 0.8 <= RL <= 1.25 and RT <= 1.1
+
+
 def load():
-    by_e = defaultdict(list)
+    """One record per (e, seed): the longest run available (A3 extensions supersede the t=1500 run)."""
+    best = {}
     for f in sorted(SW.glob("e*_s*.json")):
         if "quick" in f.name:
             continue
-        d = json.loads(f.read_text())
-        by_e[d["e"]].append(d)
-    return dict(sorted(by_e.items()))
+        d = json.loads(f.read_text()); d.setdefault("t_end", 1500.0)
+        d["R_L"], d["R_T"] = sum_rules(d); d["admitted"] = admitted(d); d["file"] = f.name
+        k = (d["e"], d["seed"])
+        if k not in best or d["t_end"] > best[k]["t_end"]:
+            best[k] = d
+    by_e, excluded = defaultdict(list), []
+    for (e, sd), d in sorted(best.items()):
+        (by_e[e] if d["admitted"] else excluded).append(d if d["admitted"] else
+                                                        {"e": e, "seed": sd, "t_end": d["t_end"], "R_L": d["R_L"], "R_T": d["R_T"]})
+    return dict(sorted(by_e.items())), excluded
 
 
 def row(runs):
@@ -47,11 +66,11 @@ def crossing(x, y, level):
 
 
 def main():
-    by_e = load()
+    by_e, excluded = load()
     R = [row(v) for v in by_e.values()]
     E = [r["e"] for r in R]; T = np.array([r["T"] for r in R]); K = np.array([r["ns_lam2"] for r in R])
     eta = np.array([r["eta"] for r in R]); alg = [2 * r["alg_wins"] > r["n_seeds"] for r in R]
-    out = {"rows": R, "verdicts": {}}
+    out = {"rows": R, "excluded_by_A3": excluded, "verdicts": {}}
     v = out["verdicts"]
     # K7 health over the sweep
     v["thermometer_stationary_all"] = all(r["stationary"] for r in R)
@@ -101,6 +120,7 @@ def main():
     for r in R:
         print(f"{r['e']:5.2f} {r['T']:6.3f} {r['ns_over_n']:6.3f} {r['ns_lam2']:6.2f} {r['eta']:6.3f} {r['alg_wins']:3d} {r['ell']:6.1f} "
               f"{r['f_free']:6.2f} {r['Q']:5.2f} {r['n_v']:7.1f} {r['cond']:6.3f} {int(r['stationary'])}  {int(r['thermo10'])}")
+    print("excluded by A3 (not equilibrated):", json.dumps(excluded, default=float))
     print(json.dumps(v, indent=1, default=float))
 
 

@@ -21,8 +21,10 @@ RPAIR = 3.0          # pre-set: 3 xi_T with xi_T = 1/sqrt(g n) = 1
 
 
 def trajectory(args):
-    e, seed, quick = args
+    e, seed, quick, t_end_arg = args
     N, L, t_end, t_tr = (64, 32.0, 600.0, 200.0) if quick else (128, 64.0, 1500.0, 500.0)
+    if t_end_arg:                      # amendment A3: extension runs, same seed, transient = t_end - 1000
+        t_end, t_tr = t_end_arg, t_end_arg - 1000.0
     s = PGPE(N=N, L=L, g=1.0, dt=0.01)
     c = s.random_state(1.0, e, np.random.default_rng(seed))
     E0, N0 = s.energy(c), s.norm(c)
@@ -69,7 +71,10 @@ def trajectory(args):
            "l_d": float(np.nanmean(smp["l_d"])) if np.any(np.isfinite(smp["l_d"])) else float("nan"),
            "Q_samples": smp["Q"], "nv_samples": smp["n_v"], "JL": JL, "JT": JT, "ns_over_n": 1.0 - ratio, "n_samples": n_s, "seconds": round(time.time() - t0, 1)}
     OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / f"e{e:.2f}_s{seed}{'_quick' if quick else ''}.json").write_text(json.dumps(res, indent=1, default=float))
+    tag = ('_quick' if quick else '') + (f'_t{int(t_end)}' if t_end_arg else '')
+    res["t_end"] = t_end
+    np.save(OUT / f"e{e:.2f}_s{seed}{tag}_final.npy", c)
+    (OUT / f"e{e:.2f}_s{seed}{tag}.json").write_text(json.dumps(res, indent=1, default=float))
     print(f"e={e:.2f} seed={seed} T={T_hi:.3f} (lo {T_lo:.3f}; halves {T_h1:.3f}/{T_h2:.3f}) cond={res['cond_frac']:.3f} "
           f"eta={fit['eta']:.3f} ell={fit['ell']:.1f} n_v={res['n_v']:.1f} f_free={res['f_free']:.2f} Q={res['Q']:.2f} ns/n={res['ns_over_n']:.3f} "
           f"dE={res['drift_E']:.1e} {res['seconds']}s", flush=True)
@@ -78,10 +83,10 @@ def trajectory(args):
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(); ap.add_argument("--procs", type=int, default=8); ap.add_argument("--quick", action="store_true")
-    ap.add_argument("--energies", default=None); ap.add_argument("--seeds", default=None)
+    ap.add_argument("--energies", default=None); ap.add_argument("--t-end", type=float, default=0.0); ap.add_argument("--seeds", default=None)
     a = ap.parse_args()
     E = [float(x) for x in a.energies.split(",")] if a.energies else ENERGIES
     S = [int(x) for x in a.seeds.split(",")] if a.seeds else SEEDS
-    jobs = [(e, sd, a.quick) for e in E for sd in S]
+    jobs = [(e, sd, a.quick, a.t_end) for e in E for sd in S]
     with Pool(a.procs) as pool:
         pool.map(trajectory, jobs, chunksize=1)
