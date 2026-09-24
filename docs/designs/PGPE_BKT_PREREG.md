@@ -193,3 +193,32 @@ pre-set (unlike B2's 3 ξ). With `η` from B1's algebraic fit, `n_s` from B3's e
 
 D1 fails for finite-size or cutoff reasons as readily as for physical ones; a D1 failure is reported with
 the B5 finite-size run, not explained away.
+
+## Amendment A3 (2026-09-24, DATA-TRIGGERED: written after reading the first 6 of 36 full-sweep trajectories)
+
+This amendment is not blind: it was written after seeing `e = 0.60` (seed 11), `e = 0.90` (seeds 11–13) and
+`e = 1.20` (seeds 11–12). It changes no B/D/T threshold. It adds an admission criterion, because those six
+trajectories show that K7's thermometer is not a sufficient equilibrium test.
+
+**What was seen.** (i) At `e = 0.90` two seeds give `n_s/n = −3.0` and `−3.2` with condensate fraction
+0.18–0.23, while the third seed at the same energy gives `n_s/n = 0.57`, condensate 0.62. The transverse
+current correlator at the smallest shell is `⟨|J_T|²⟩ ≈ 7 n T A`, i.e. `n_n ≈ 7 n` — impossible in
+equilibrium. Those two runs carry ≈ 10–12 vortices with `Q = 0.67` (largely unbound) at `T = 0.44`, while
+`e = 1.20` (`T = 0.77`) carries ≈ 90 vortices with `Q = 0.22` (bound): a non-monotonic `Q(T)`. Reading:
+free vortices left by the random initial state have not annihilated by `t = 1500` (the Hamiltonian PGPE
+has no damping beyond its own thermal cloud, which is thin at low energy); the third seed is visibly still
+losing them (`⟨N_v⟩` 9.4 → 6.3 between the two halves of its window). (ii) At `e = 0.60`, `⟨|J_L|²⟩` at the
+smallest shells is `2.1 n T A`: the lowest-k phonons are not at the temperature of the high-k modes.
+(iii) K7 passed on all six (halves within 5 %): it fits `[0.4, 1.0] k_cut` and is blind to both.
+
+**Admission criterion (the classical longitudinal sum rule).** In classical equilibrium the f-sum rule
+`χ_L = n/m` and the classical fluctuation–dissipation relation give `⟨|J_L(k)|²⟩ = n T A` for every `k`
+(`A = L²`); and `0 ≤ n_n ≤ n` bounds `⟨|J_T(k)|²⟩ ≤ n T A`. A trajectory is admitted to the B/D/T
+analysis only if, averaged over the three smallest shells,
+`R_L = ⟨|J_L|²⟩/(nTA) ∈ [0.8, 1.25]` **and** `R_T = ⟨|J_T|²⟩/(nTA) ≤ 1.1`.
+Non-admitted trajectories are reported (they are the finding that the thermometer can pass while the
+topology has not relaxed) and are re-run for longer (`t_end = 4000`, same seed, final state saved),
+up to one extension; an energy with no admitted seed after the extension is reported as "not equilibrated"
+and excluded, and the B/D/T criteria are evaluated on the admitted energies only, with the exclusions
+listed. The prereg's compute estimate (6 min per trajectory) was wrong by a factor ≈ 15 (measured
+14.6 ms per step at 128² single-process; ≈ 95 min per trajectory with 8 in parallel on a shared desktop).
