@@ -21,9 +21,14 @@ def sum_rules(d):
     return float(np.mean(list(d["JL"].values())) / nTA), float(np.mean(list(d["JT"].values())) / nTA)
 
 
+MODE = "A4"          # "A3" = admission as written in amendment A3; "A4" = the post-hoc correction
+
+
 def admitted(d):
     RL, RT = sum_rules(d)
-    return 0.8 <= RL <= 1.25 and RT <= 1.1
+    if MODE == "A3":
+        return 0.8 <= RL <= 1.25 and RT <= 1.1
+    return RL <= 1.25 and RT <= 1.1 * RL
 
 
 def load():
@@ -115,7 +120,7 @@ def main():
                "part1_Qlow_le_0.5": bool(i_lo is not None and Q[i_lo] <= 0.5),
                "part2_Qhigh_ge_0.8": bool(Q[-1] >= 0.8),
                "part3_rise_at_T_BKT": bool(j is not None and i_c is not None and abs(j - i_c) <= 1)}
-    (ROOT / "data" / "generated" / "pgpe" / "sweep_verdicts.json").write_text(json.dumps(out, indent=1, default=float))
+    (ROOT / "data" / "generated" / "pgpe" / f"sweep_verdicts_{MODE}.json").write_text(json.dumps(out, indent=1, default=float))
     print(f"{'e':>5} {'T':>6} {'ns/n':>6} {'nsl2':>6} {'eta':>6} {'alg':>3} {'ell':>6} {'f_free':>6} {'Q':>5} {'n_v':>7} {'cond':>6} st th")
     for r in R:
         print(f"{r['e']:5.2f} {r['T']:6.3f} {r['ns_over_n']:6.3f} {r['ns_lam2']:6.2f} {r['eta']:6.3f} {r['alg_wins']:3d} {r['ell']:6.1f} "
@@ -125,4 +130,7 @@ def main():
 
 
 if __name__ == "__main__":
+    import sys
+    if len(sys.argv) > 1:
+        MODE = sys.argv[1]
     main()

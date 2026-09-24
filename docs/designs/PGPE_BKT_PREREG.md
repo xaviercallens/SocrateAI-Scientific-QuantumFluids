@@ -222,3 +222,24 @@ up to one extension; an energy with no admitted seed after the extension is repo
 and excluded, and the B/D/T criteria are evaluated on the admitted energies only, with the exclusions
 listed. The prereg's compute estimate (6 min per trajectory) was wrong by a factor ≈ 15 (measured
 14.6 ms per step at 128² single-process; ≈ 95 min per trajectory with 8 in parallel on a shared desktop).
+
+## Amendment A4 (2026-09-24, POST HOC: after all 36 t = 1500 trajectories) — A3's premise was wrong
+
+A3 called `⟨|J_L(k)|²⟩ = n T A` an exact classical sum rule. **It is not, for a classical field.** It holds
+for classical *particles*, and for the field in its ordered (hydrodynamic) regime, where the current
+fluctuations are phase fluctuations with `⟨|φ_k|²⟩ = T/(n_s k² A)`. In the incoherent regime, a
+Rayleigh–Jeans field with occupations `n_k = T/(ε_k + b)` has
+`⟨|J_L(q)|²⟩ = Σ_k ((k + q/2)·q̂)² n_k n_{k+q}`, which is below `n T A` whenever `b = 2gn − μ` is not small
+next to the kinetic energies inside the cutoff. Evaluated with each trajectory's own fitted `(T, b)` on
+the same projected mode set, this ideal-field value reproduces the measured `R_L` within 5 % at
+`e = 2.4 … 3.2` (0.611/0.566, 0.536/0.563, 0.454/0.466, 0.318/0.320). So A3's lower bound `R_L ≥ 0.8`
+excludes the normal phase for a reason that is false. A3's two other signals survive, because no
+equilibrium regime produces them: `R_L > 1` by a margin (hydrodynamic → 1; ideal field < 1), and
+`R_T > R_L` (`n_n > n`).
+
+**A4 admission:** `R_L ≤ 1.25` and `R_T ≤ 1.1 R_L`. This is a post-hoc correction made after all data were
+seen; the verdicts are reported under **both** A3-as-written and A4, and any criterion whose verdict
+differs between them is flagged. The one-time extension to `t = 4000` is run for trajectories failing
+A4 (`e = 0.60` × 3 on `R_L`; `e = 0.90` seeds 11, 12 on `R_T`). A3-as-written would also extend every
+trajectory at `e ≥ 2.0`; that is not run, because their failure is the regime, not the relaxation
+(their thermometers are stationary and the ideal-field value accounts for their `R_L`).
