@@ -35,9 +35,13 @@ roles to keep apart.
 so an integer number of electrons has been pumped: `σ_xy ∈ ℤ · e²/h`. Topology fixes an integer that
 disorder cannot move -- the same `σ`-plane as `QHFricke.lean`.
 
-**E. The two boxes (round 2, Part I, running).** Same `E, N, P`; one box gets four free vortex pairs,
-the other the same energy as phonons. Pre-registered: the thermometer reads the same; the condensate is
-lower by ≥ 0.15 in the vortex box.
+**E. The two boxes (round 2, Part I, DONE — `PGPE_R2_RESULTS.md`).** Same `E, N, P`; one box gets four
+free vortex pairs, the other the same energy as phonons. Result on all three bases: condensate lower in
+the vortex box by 0.49–0.73 (pre-registered ≥ 0.15), η larger by 9–44× (≥ 1.5), Q separates the arms
+where evaluable; but the thermometer reads the vortex box *colder* by 5–16 % — the pre-registered
+composite claim (which required equal T) is NOT made; the post-hoc reading is that the topology cools
+the bath, which has the wrong sign to explain the effect. Same ΔE: 15–60× the condensate effect when
+delivered as topology.
 
 ## 2. The physical argument: four links
 

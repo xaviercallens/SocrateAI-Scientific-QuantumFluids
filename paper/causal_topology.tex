@@ -8,6 +8,7 @@
             urlcolor=blue!60!black]{hyperref}
 \usepackage{microtype}
 \usepackage{enumitem}
+\usepackage{graphicx}
 \usepackage[most]{tcolorbox}
 
 \newcommand{\lean}[1]{\texttt{\small #1}}
@@ -238,8 +239,69 @@ heats the bath the thermometer reads, so $T_V<T_P$ by up to the surplus fraction
 $e=0.90$, $3.3\%$ at $e=0.60$) is bookkeeping, not refutation. The causal effect size to be reported
 is the effect per unit energy: the same $\Delta E$ in the two arms, compared on condensate and $\eta$.
 
-\subsection{Results}
-\NUMPENDING
+\subsection{Results of the intervention}\label{sec:results}
+
+\begin{table}[h]\centering\small
+\begin{tabular}{lcccc}
+\toprule
+base & I1: $c_P-c_V\ge0.15$ & I2: $|T_V-T_P|/T_P\le0.05$ & I3: $Q_V-Q_P\ge0.2$ & I4: $\eta_V/\eta_P\ge1.5$\\
+\midrule
+$e=0.60$ & \textbf{0.734} pass & 0.161 fail ($T_V<T_P$) & not evaluable$^\dagger$ & \textbf{43.7} pass\\
+$e=0.90$, s11 & \textbf{0.565} pass & 0.055 fail ($T_V<T_P$) & \textbf{0.656} pass & \textbf{10.7} pass\\
+$e=0.90$, s12 & \textbf{0.488} pass & 0.092 fail ($T_V<T_P$) & \textbf{0.553} pass & \textbf{8.6} pass\\
+\bottomrule
+\end{tabular}
+\caption{Pre-registered verdicts over $t\in[100,300)$. $^\dagger$Arm P carries no vortices at
+$e=0.60$, so $Q_P$ is undefined. Window means, V/P: condensate $0.168/0.902$, $0.073/0.638$,
+$0.139/0.627$; $\eta$: $0.98/0.022$, $1.08/0.10$, $0.94/0.11$ (V exponential, P algebraic on every
+base). Arm 0: $T=0.462, 0.463$; condensate $0.647, 0.662$.}
+\end{table}
+
+\begin{figure}[h]\centering
+\includegraphics[width=\textwidth]{figures/causal_intervention.pdf}
+\caption{Block observables of the three arms on the three bases. The condensate collapses in V and
+is untouched in P; the thermometer reads V \emph{below} P; the dipole statistic separates the arms; at
+$e=0.60$ the eight imprinted vortices survive the entire run without one annihilation.}
+\end{figure}
+
+The pre-registered composite claim -- ``at fixed $E,N,P$ \emph{and measured $T$}, the topology sets
+condensate and coherence'', requiring I1, I2 and I4 on all three bases -- is \textbf{not made}: I2
+fails on all three. It fails, moreover, in none of the three ways the pre-data amendment had
+anticipated: $T_V<T_P$ by $5.5\%$, $9.2\%$ and $16\%$, more than the energy surplus of $1.5$--$3.3\%$.
+
+\begin{fixbox}
+\textbf{Post hoc.} Two explanations were tested and one survives. The coherent spectrum of the
+vortex cores does not reach the thermometer window (its occupation there is $500$--$2000\times$ below
+the thermal one): refuted. Doppler smearing by the vortex flow: the two thermometer windows disagree
+alike in V and P: inconclusive. Against the untouched arm, P is warmer by $+1.5$ to $+3.5\%$, as the
+amendment predicted, and V is \emph{colder} by $-4\%$. With the total energy conserved to
+$2\times10^{-7}$, the bath's lost heat went into the vortex system: V carries $14$--$16$ vortices
+against $8$ imprinted plus $\approx5$ thermal, and its condensate is scrambled into low-$k$
+quasi-condensate structure. The topological configuration cools the bath.
+\end{fixbox}
+
+That cooling has the wrong sign to explain the effect. A colder gas carries more condensate; V
+carries $5$--$10\times$ less. The difference between the arms is therefore not a temperature effect,
+and the conclusion that survives is stronger than the one pre-registered, though it is post hoc: at
+fixed $E$, $N$ and $P$, and against the temperature gradient, the topological label sets the
+condensate and the coherence.
+
+\paragraph{Effect per unit energy.} The same $\Delta E$ in both arms. Relative to arm 0 at $e=0.90$,
+the condensate changes by $-0.574$ and $-0.523$ in V and by $-0.009$ and $-0.035$ in P; $\eta$ by
+$\times10.9$ and $\times10.4$ in V and $\times0.99$ and $\times1.2$ in P. Delivered as topology, the
+same energy has a $15$--$60\times$ larger effect on the condensate and a $9$--$11\times$ larger effect
+on coherence.
+
+\paragraph{What was reported, not predicted (I5).} No base relaxes within $t=1500$: late-window
+condensates V/P are $0.29/0.89$, $0.085/0.64$, $0.061/0.66$. At $e=0.60$ the eight imprinted vortices
+survive the entire run with zero annihilations, $\langle N_v\rangle=8.0$ in every block: at $T=0.1$,
+pairs of separation $L/4$ are protected for at least $1500$ time units, Theorem~\ref{thm:conservation}
+seen directly. In the last three blocks the condensate recovers ($0.29\to0.45$) while $N_v$ stays $8$
+and $Q$ falls ($0.88\to0.67$): the dipoles contract, the large-scale winding changes and the count
+does not -- thought experiment B in the data. The block-by-block correlation of $\Delta c$ with
+$\Delta N_v$ is $-0.26$ and $+0.58$ on the two $e=0.90$ bases: the condensate follows the
+arrangement, not the number. The transverse-current stiffness estimator is invalid in V
+($n_n>n$), as it was in round~1 whenever free vortices were present.
 
 \subsection{The jump and finite size}
 \NUMPENDING

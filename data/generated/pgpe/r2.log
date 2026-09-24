@@ -1,0 +1,8 @@
+I_e0.60_s11_t4000_V: T=0.112 cond=0.214 n_v=8.0 Q=0.85 ns/n=-28.417 eta=0.869 (exponential) R_L=1.28 R_T=37.67 dE=5.9e-08 5967.6s
+I_e0.90_s11_t4000_0: T=0.462 cond=0.647 n_v=4.8 Q=0.22 ns/n=0.871 eta=0.099 (algebraic) R_L=1.04 R_T=0.13 dE=2.1e-07 6002.5s
+I_e0.90_s12_t4000_0: T=0.463 cond=0.662 n_v=4.2 Q=0.20 ns/n=0.854 eta=0.090 (algebraic) R_L=0.91 R_T=0.13 dE=2.1e-07 6003.8s
+I_e0.90_s11_t4000_P: T=0.478 cond=0.642 n_v=5.6 Q=0.18 ns/n=0.875 eta=0.098 (algebraic) R_L=1.05 R_T=0.13 dE=2.2e-07 6006.6s
+I_e0.60_s11_t4000_P: T=0.138 cond=0.898 n_v=0.0 Q=nan ns/n=0.963 eta=0.023 (algebraic) R_L=0.97 R_T=0.04 dE=8.7e-08 6042.0s
+I_e0.90_s12_t4000_V: T=0.444 cond=0.098 n_v=14.3 Q=0.70 ns/n=-4.451 eta=0.768 (exponential) R_L=1.02 R_T=5.54 dE=1.9e-07 6080.2s
+I_e0.90_s12_t4000_P: T=0.470 cond=0.644 n_v=5.5 Q=0.12 ns/n=0.859 eta=0.097 (algebraic) R_L=1.00 R_T=0.14 dE=2.1e-07 6080.6s
+I_e0.90_s11_t4000_V: T=0.445 cond=0.059 n_v=15.5 Q=0.75 ns/n=-4.349 eta=0.826 (exponential) R_L=1.06 R_T=5.68 dE=1.9e-07 6291.2s
