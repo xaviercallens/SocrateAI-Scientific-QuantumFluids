@@ -96,3 +96,14 @@ original verdicts stay on record.
 * Any claim about helium, astrophysics or the Fricke involution. Round 1 settled that the physical BKT point is not the self-dual point.
 
 Compute: about 8 + 10 runs at 128², plus 15 at 64² (t = 4000), ≈ 6–7 h on this machine.
+
+## Amendment R2-A1 (2026-09-25, after the controls, before any arm was run)
+
+The negative control I added to C1 (one vortex displaced by 3 in x, so `Σ q_j x_j ≠ 0`) was expected to
+produce spurious vortices. It did not: the detector found exactly 8. The violation produces a phase jump
+`2π D/L = 0.2945` rad along the y-boundary, which is not a winding, so a vortex count cannot see it.
+**C1b** replaces it with a direct periodicity measurement. The boundary jump must be:
+* `0` for the imprinted configuration — measured 0.0 on both boundaries;
+* `2π·3/L` for the displaced one — measured 0.294524 against the predicted 0.294524.
+
+C1b passes. C2 and C3 pass on all three bases (`|ΔE|/E ≤ 2e-16`; `|P|/N ≤ 0.025·2π/L`). The e = 0.90 bases carry 6–8 thermal (bound) vortices before imprinting.
