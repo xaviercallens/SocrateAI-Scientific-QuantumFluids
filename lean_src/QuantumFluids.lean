@@ -56,3 +56,4 @@ import Fricke
 import QHFricke
 import TopologicalProtection
 import ScaleResolvedWinding
+import ContinuumWinding

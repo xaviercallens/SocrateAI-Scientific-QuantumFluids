@@ -1,0 +1,21 @@
+{
+  "challenge_module": "ComparatorChallenges.ContinuumWinding",
+  "solution_module": "ContinuumWinding",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.ContinuumWinding.pdiff_congr",
+    "QuantumFluids.ContinuumWinding.sum_pdiff_telescope",
+    "QuantumFluids.ContinuumWinding.degree_int",
+    "QuantumFluids.ContinuumWinding.sample_zero",
+    "QuantumFluids.ContinuumWinding.sample_self",
+    "QuantumFluids.ContinuumWinding.sample_val",
+    "QuantumFluids.ContinuumWinding.dist_sample",
+    "QuantumFluids.ContinuumWinding.discrete_eq_degree",
+    "QuantumFluids.ContinuumWinding.detector_correct"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}
