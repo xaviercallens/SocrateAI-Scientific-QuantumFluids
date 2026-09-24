@@ -1,0 +1,73 @@
+/home/xavkal/xdev/SocrateAI-Scientific-QuantumFluids/exploration/pgpe/analyze_sweep.py:53: RuntimeWarning: Mean of empty slice
+  m = lambda k: float(np.nanmean([r[k] for r in runs]))
+    e      T   ns/n   nsl2    eta alg    ell f_free     Q     n_v   cond st th
+ 0.60  0.116  0.971  52.51  0.020   3  390.1    nan   nan     0.0  0.912 0  0
+ 0.90  0.449  0.661   9.25  0.116   3   67.2   0.14  0.23     7.0  0.626 1  1
+ 1.20  0.767  0.371   3.04  0.349   3   21.7   0.04  0.22    93.3  0.299 0  1
+ 1.40  0.958  0.014   0.09  0.863   1    8.6   0.06  0.33   211.2  0.067 1  1
+ 1.60  1.160  0.028   0.15  1.803   0    4.1   0.07  0.40   341.8  0.018 1  1
+ 1.80  1.400  0.054   0.24  2.403   1    3.1   0.07  0.43   473.3  0.009 1  1
+ 2.00  1.690  0.022   0.08  2.978   2    2.6   0.08  0.46   603.4  0.004 1  1
+ 2.20  2.075  0.024   0.07  3.120   3    2.4   0.08  0.48   736.8  0.002 1  1
+ 2.40  2.554 -0.020  -0.05  2.351   3    3.3   0.09  0.50   865.5  0.002 1  1
+ 2.60  3.259  0.050   0.10  1.875   3    4.0   0.10  0.51   996.3  0.001 1  1
+ 2.80  4.349  0.033   0.05  1.885   3    4.3   0.11  0.52  1124.0  0.001 1  1
+ 3.20  7.354 -0.012  -0.01  1.838   3    4.3   0.13  0.53  1287.0  0.000 1  1
+excluded by A3 (not equilibrated): []
+{
+ "thermometer_stationary_all": false,
+ "thermometer_10pct_all": false,
+ "B1": {
+  "low_T_algebraic_eta_lt_quarter": true,
+  "high_T_exponential_ell_lt_L4": false,
+  "T_cross_index": 3,
+  "T_cross": 0.9578400532249858,
+  "both_regimes": false
+ },
+ "B2": {
+  "f_free_low": NaN,
+  "first_index_gt_half": null,
+  "PASS": false
+ },
+ "B3": {
+  "crossing_between_indices": 1,
+  "T_BKT": 0.7176667473088383,
+  "PASS": true
+ },
+ "B4": {
+  "n_lam2_at_T_BKT": 8.7550180229762,
+  "ln380": 5.940171252720432,
+  "rel_dev": 0.47386626588697217,
+  "PASS": false
+ },
+ "D1": {
+  "products": [
+   [
+    0.6,
+    1.0469545615756217
+   ],
+   [
+    0.9,
+    1.071650440908454
+   ]
+  ],
+  "PASS": true
+ },
+ "D2": {
+  "eta_at_T_BKT": 0.31304573376662953,
+  "PASS": true
+ },
+ "D3": {
+  "last_alg_index": 11,
+  "eta_there": 1.8376313263743171,
+  "PASS": false
+ },
+ "T1": {
+  "Q_low": 0.2256224488315306,
+  "Q_high": 0.5269617633548819,
+  "max_rise_step": 2,
+  "part1_Qlow_le_0.5": true,
+  "part2_Qhigh_ge_0.8": false,
+  "part3_rise_at_T_BKT": true
+ }
+}

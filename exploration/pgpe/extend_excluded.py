@@ -5,6 +5,7 @@ from multiprocessing import Pool
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import analyze_sweep
+analyze_sweep.MODE = "A4"          # amendment A4: extensions follow the corrected admission
 from sweep import trajectory
 
 if __name__ == "__main__":
