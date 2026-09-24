@@ -107,3 +107,11 @@ produce spurious vortices. It did not: the detector found exactly 8. The violati
 * `2π·3/L` for the displaced one — measured 0.294524 against the predicted 0.294524.
 
 C1b passes. C2 and C3 pass on all three bases (`|ΔE|/E ≤ 2e-16`; `|P|/N ≤ 0.025·2π/L`). The e = 0.90 bases carry 6–8 thermal (bound) vortices before imprinting.
+
+## Amendment R2-A2 (2026-09-25, runs launched, no output read)
+
+`run_blocks` stores block aggregates over 100 time units, so Part I's window `t ∈ [50, 250]` cannot be formed.
+It is replaced by blocks 2–3, i.e. `t ∈ [100, 300)`, which overlaps the pre-registered window over 150 of its 200 units.
+* Condensate, T, Q: sample means over the two blocks.
+* η: the mean of the two block fits.
+* If either block has no measurable decay law (fewer than 6 points), I4 is reported as not evaluable for that base.
