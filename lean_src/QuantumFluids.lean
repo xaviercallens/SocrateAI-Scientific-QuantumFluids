@@ -54,3 +54,4 @@ import Villani
 import WassersteinCertificate
 import Fricke
 import QHFricke
+import TopologicalProtection
