@@ -1,5 +1,13 @@
 # Papers
 
+**Newest (September 2026):**
+- `causal_topology.tex` — *Does topology causally influence physics? Winding numbers as difference-makers in a
+  two-dimensional Bose gas* (thought experiments, the 28-theorem chain, the energy-matched intervention).
+  Figures: `.venv/bin/python make_figures_causal.py`. Build: `latexmk -pdf causal_topology.tex`.
+- `astro_topological_measurement.tex` — *Topological charge as a measurement principle for astrophysical U(1)
+  phase fields* (methods paper: five principles with their diagnostics, three settings, protocol,
+  pre-registration template; no astrophysical number claimed). Build: `latexmk -pdf astro_topological_measurement.tex`.
+
 **Current:** `quantumfluids_lean4.tex` — *Formalizing quantum-fluid structure in Lean 4: a machine-checked
 library, what the formalization caught, and what it could not* (September 2026). Build: `latexmk -pdf quantumfluids_lean4.tex`.
 
