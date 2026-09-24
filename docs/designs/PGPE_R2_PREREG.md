@@ -131,3 +131,14 @@ therefore a real test. Reading fixed now:
 The quantity the paper will report as the causal effect size is the **effect per unit energy**: the same
 `ΔE` in the two arms, compared on condensate and `η`. A large effect from a small `ΔE` in V and a small
 effect from the same `ΔE` in P is the signature of a non-energetic (topological) difference-maker.
+
+## Amendment R2-A4 (2026-09-25, after the 33 runs finished; before any Part II/III verdict was computed)
+
+Read from the run log alone: on the heating ladder the stiffness at e = 1.20 is still n_s/n ≈ 0.61–0.68
+at T ≈ 0.775, i.e. n_s λ² ≈ 5.3 > 4. The n_s λ² = 4 crossing lies above the pre-registered ladder, so L1
+would fail for narrowness and F1/F2 would be not evaluable. Per the round-1 rule (widen before reading a
+transition value), the ladder is extended to e ∈ {1.25, 1.30, 1.35, 1.40}, same two bases, same
+construction (8 runs). L1–L3, F1–F2 are then evaluated on the widened ladder; thresholds unchanged.
+Also noted before analysis: the ladder's e = 1.20 point (ordered start) differs strongly from round 1's
+quench e = 1.20 (n_s/n 0.61–0.68 vs 0.37 at a similar vortex count ≈ 90), so C5 is expected to FAIL and
+round 1's T_BKT ≈ 0.72 is expected to be biased low by residual quench vortices.

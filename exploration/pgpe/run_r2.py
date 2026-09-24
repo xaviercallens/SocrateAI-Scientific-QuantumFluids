@@ -61,7 +61,9 @@ def specs(parts):
 
 
 if __name__ == "__main__":
-    ap = argparse.ArgumentParser(); ap.add_argument("--parts", default="I,II,III"); ap.add_argument("--procs", type=int, default=8)
+    ap = argparse.ArgumentParser(); ap.add_argument("--parts", default="I,II,III"); ap.add_argument("--procs", type=int, default=8); ap.add_argument("--ladder", default=None, help="override LADDER energies, comma-separated (amendment R2-A4)")
     a = ap.parse_args()
+    if a.ladder:
+        LADDER[:] = [float(x) for x in a.ladder.split(',')]
     with Pool(a.procs) as pool:
         pool.map(job, specs(a.parts.split(",")), chunksize=1)
