@@ -72,8 +72,7 @@ connect continuously. The conserved label then is a cause in the interventionist
 | 4 coupling | **empirical** -- round 2 Part I | `PGPE_R2_PREREG.md` |
 
 Counts: 13 + 6 + 9 = 28 theorems in the three new modules; 12 negative controls fail as required.
-Comparator: `TopologicalProtection` accepted; `ScaleResolvedWinding` accepted; `ContinuumWinding`
-pending at the time of writing.
+Comparator: all three modules accepted by both kernels (2026-09-25).
 
 ## 4. What is not proved, said plainly
 
