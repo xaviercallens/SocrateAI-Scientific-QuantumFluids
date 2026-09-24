@@ -115,3 +115,19 @@ It is replaced by blocks 2–3, i.e. `t ∈ [100, 300)`, which overlaps the pre-
 * Condensate, T, Q: sample means over the two blocks.
 * η: the mean of the two block fits.
 * If either block has no measurable decay law (fewer than 6 points), I4 is reported as not evaluable for that base.
+
+## Amendment R2-A3 (2026-09-25, runs at ≈ 70 min, log still empty — written before any output)
+
+A refinement of the reading of I2, not of its threshold. Arm V carries its energy surplus as vortex flow
+(low-k, coherent); arm P carries the same surplus as random phonons, which thermalise and heat the bath
+the thermometer reads. So at equal `E` one expects `T_V < T_P` at early times, by an amount of order the
+surplus fraction (`ΔE/E ≈ 1.5 %` on the e = 0.90 bases, `3.3 %` on e = 0.60). I2's 5 % threshold is
+therefore a real test. Reading fixed now:
+* I2 PASS: the thermometer does not see the topological difference (its blindness is not an artefact of
+  the small surplus alone);
+* I2 FAIL with `T_V < T_P` by less than the surplus fraction: energy bookkeeping, reported as such;
+* I2 FAIL with `T_V > T_P`: unexplained, reported as such.
+
+The quantity the paper will report as the causal effect size is the **effect per unit energy**: the same
+`ΔE` in the two arms, compared on condensate and `η`. A large effect from a small `ΔE` in V and a small
+effect from the same `ΔE` in P is the signature of a non-energetic (topological) difference-maker.
