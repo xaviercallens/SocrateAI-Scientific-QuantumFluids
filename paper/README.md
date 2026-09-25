@@ -8,7 +8,7 @@
   phase fields* (methods paper: five principles with their diagnostics, three settings, protocol,
   pre-registration template; no astrophysical number claimed). Build: `latexmk -pdf astro_topological_measurement.tex`.
 
-**Current:** `quantumfluids_lean4.tex` — *Formalizing quantum-fluid structure in Lean 4: a machine-checked
+**Library paper:** `quantumfluids_lean4.tex` — *Formalizing quantum-fluid structure in Lean 4: a machine-checked
 library, what the formalization caught, and what it could not* (September 2026). Build: `latexmk -pdf quantumfluids_lean4.tex`.
 
 **Superseded:** `quantumfluids_tdual.tex` — the earlier report. Its shell-model measurement-programme
