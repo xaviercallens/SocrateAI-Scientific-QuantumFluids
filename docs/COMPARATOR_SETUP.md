@@ -57,8 +57,9 @@ Comparator (its README: that can compromise the challenge). Do not run as a priv
 | ScaleResolvedWinding | 6 | **accepted** (nanoda and Lean default kernel), ~25 min wall (sweep running); 3 negative controls fail (no-cut hypothesis dropped; total charge 1 instead of 0; two cores counted as one) |
 | ContinuumWinding | 9 | **accepted** (nanoda and Lean default kernel); 4 negative controls fail (one angle unmatched; steps up to 2π; loop not closed; field allowed to vanish) |
 | SectorTemperature | 8 | **accepted** (nanoda and Lean default kernel); 3 negative controls fail (mediant without positivity; global ratio equal to an arbitrary sector's; entropy inequality reversed) |
+| CompactBoson | 12 | **accepted** (nanoda and Lean default kernel); 3 negative controls fail (product 1/2; BKT at the self-dual radius; duality with R ↦ 1/R) |
 
-All 223 listed theorems: accepted by the Lean kernel and by nanoda, permitted axioms only, run under `systemd-run --user` with `RestrictAddressFamilies=~AF_UNIX`.
+All 235 listed theorems: accepted by the Lean kernel and by nanoda, permitted axioms only, run under `systemd-run --user` with `RestrictAddressFamilies=~AF_UNIX`.
 
 Caveat on what a pass means: the challenge is *generated from* the solution by our script, so "same statement" is guaranteed by
 construction. The independent content of a pass is (a) two kernels accept the exported proof terms, (b) only the permitted axioms are used,
