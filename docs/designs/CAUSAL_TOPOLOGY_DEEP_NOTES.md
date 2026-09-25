@@ -123,3 +123,35 @@ units with a β_bath ≈ 10 phonon bath. The *numerical* T_v from the slope of l
 the mean the random-sampling histogram is empty or noisy (the routine returned nan or unstable values there). A
 canonical Monte Carlo calibration at set β (Groszek's method, on the torus) is required before any T_v is quoted —
 this is the kill rule of §9, and it fired on the first try, as it should.
+
+## 12. Energy budget of the intervention (2026-09-25, post hoc, `exploration/pgpe/energy_budget_r2.py`)
+
+Where did the energy the high-k bath lost in arm V go? Field decomposition (kinetic energy per k-band; Nore–Abid–Brachet
+incompressible / compressible / quantum-pressure split; interaction energy), final states t = 1500:
+
+| base | ref | bath (k ≥ 0.4 k_cut) | low-k kinetic (k < 0.4 k_cut) | interaction | incompressible | compressible |
+|---|---|---|---|---|---|---|
+| e0.60 | P | **−50** | **+61** | −10 | **+63** | −41 |
+| e0.90 s11 | 0 | −8 (P: +62) | +42 | +21 | **+39** | −16 (P: +36) |
+| e0.90 s12 | 0 | −9 (P: +31) | +53 | −4 | **+41** | +13 (P: +34) |
+
+Reading: the bath's loss (and the injected surplus) sits in **low-k incompressible flow energy** — the imprinted pairs
+plus the pairs they nucleated — and, at e = 0.90, in interaction energy (more depleted cores); not in sound. Arm P put
+its surplus into compressible energy (sound) and high-k modes, as expected. At e = 0.60 the bath loss (−50) and the
+incompressible gain (+63) agree within 26 %: kill rule K3 as intended would PASS there; at e = 0.90 the block-resolved
+run is needed because the surplus dominates the difference to arm 0.
+
+**Correction of §11's point-vortex budget.** The Weiss–McWilliams Hamiltonian carries an additive constant per pair
+(the −Σ ln cosh 2πm normalisation), so energy differences between configurations with different N are not
+meaningful; the earlier "E_v(final) − E_v(imprint) = −26" compared N = 14 and N = 12 and is void. Placement in the
+density of states at fixed N (§11) stands; cross-N budgets must use the field functional. The proposal paper's K3 is
+reworded accordingly.
+
+**Literature that frames this.** Mehdi, Hope, Szigeti, Bradley (arXiv:2205.04065): energy damping (number-conserving
+scattering) is the dominant vortex–bath coupling, two orders above number damping; the noise term is dissipative and
+fluctuation–dissipation does not hold for the vortex equation because the bath's equilibrium contains no vortices —
+the two-temperature state is intrinsically transient, T_v relaxes towards "no vortices". Groszek & Billam
+(arXiv:2601.02687, 2026): conservative PGPE coarsening of a uniform 2D gas after a quench — exactly the V-arm
+relaxation problem — with L_c ~ t^{1/z}, z ≈ 1.5 near BKT to 1.9 at low T, thermal dipoles forming a late-time plateau
+in N_v (our round-1 A3/A4 lesson), data CC-BY. Prediction for a larger round-3 box: the V arm's free-vortex density
+decays as t^{−2/z} with z in that range.
