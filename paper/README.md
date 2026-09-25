@@ -1,6 +1,8 @@
 # Papers
 
 **Newest (September 2026):**
+- `sector_temperature.tex` — *Topological sectors carry their own temperature* (proposal: hypothesis F, the mediant
+  theorem, the torus vortex thermometer, external tests on Gauthier 2019 and Christodoulou 2021 data). Build: `latexmk -pdf sector_temperature.tex`.
 - `causal_topology.tex` — *Does topology causally influence physics? Winding numbers as difference-makers in a
   two-dimensional Bose gas* (thought experiments, the 28-theorem chain, the energy-matched intervention).
   Figures: `.venv/bin/python make_figures_causal.py`. Build: `latexmk -pdf causal_topology.tex`.
