@@ -1,6 +1,8 @@
 # Papers
 
 **Newest (September 2026):**
+- `duality_sector.tex` — *Duality is a structure; the sector is the cause* (T-duality on the compact-boson sectors,
+  machine-checked; the measured invariant; when a self-dual point is physical). Build: `latexmk -pdf duality_sector.tex`.
 - `sector_temperature.tex` — *Topological sectors carry their own temperature* (proposal: hypothesis F, the mediant
   theorem, the torus vortex thermometer, external tests on Gauthier 2019 and Christodoulou 2021 data). Build: `latexmk -pdf sector_temperature.tex`.
 - `causal_topology.tex` — *Does topology causally influence physics? Winding numbers as difference-makers in a

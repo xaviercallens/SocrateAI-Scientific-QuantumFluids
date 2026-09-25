@@ -1,0 +1,174 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,
+            urlcolor=blue!60!black]{hyperref}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\lean}[1]{\texttt{\small #1}}
+\newtcolorbox{keybox}[1][]{colback=blue!3,colframe=blue!45!black,
+  boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+\newtcolorbox{failbox}[1][]{colback=red!3,colframe=red!45!black,
+  boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+\newtheorem{theorem}{Theorem}
+
+\title{\textbf{Duality is a structure; the sector is the cause}\\
+\large T-duality of the compact boson stated on its sectors and checked by two kernels,\\
+the measured invariant it predicts, and a criterion for when a self-dual point is physical}
+
+\author{Xavier Callens\\
+\small SocrateAI-Scientific-QuantumFluids\\
+\small \url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}}
+\date{September 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+An involution $R\leftrightarrow\alpha'/R$ on a length scale was, in earlier work of this programme, offered a
+physical home in T-duality, in K3 mirror symmetry, and in the modular symmetry of the quantum Hall system. Three
+rounds of pre-registered numerics and twenty-eight machine-checked theorems later, we can say where such a
+duality lives and what it does. We state T-duality on the sectors $(n,w)\in\mathbb Z^2$ of the compact boson and
+prove, in Lean~4 against Mathlib with two independent kernels, that (i) it is a reindexing of the sector lattice
+that leaves the sector sum invariant with no convergence hypothesis, (ii) the product of the electric and magnetic
+scaling dimensions is radius-independent, $\Delta_e\Delta_m=\tfrac14$, which in the superfluid dictionary is
+$\eta\,n_s\lambda_T^2=1$ -- the relation this programme measured to $12$--$27\%$ on eleven energies in two boxes --
+and (iii) the self-dual radius $\sqrt2$ and the radius $2\sqrt2$ at which the vortex becomes marginal are
+different points: the Berezinskii--Kosterlitz--Thouless transition is the threshold of one sector, not the fixed
+point of the exchange. From these three facts and the literature on Ising, string-gas and superconductor--insulator
+dualities we extract a criterion: a self-dual point pins a transition only when the dual sectors are simultaneously
+critical on a discrete set of fixed points; on a line of fixed points it is a point like any other; when both
+sectors are populated it can be a preferred equilibrium. In every case what acts is a sector -- a conserved label
+that crosses a threshold, proliferates, annihilates, or is imposed -- and the duality relabels it. The duality is
+exact, verified, and not a cause. No physics here is new; the mathematics is elementary; what is new is that the
+distinction is stated so that a kernel can check it and an experiment can test it.
+\end{abstract}
+
+\section{Three questions one involution raised}
+
+The dual-length involution $k\mapsto k_s^2/k$ of~\cite{Callens2026Lean} has the form of T-duality. It was pointed
+out that the same involution is the Fricke element of $\Gamma_0(N)^+$, the mirror involution of degree-$2N$
+lattice-polarised K3 surfaces~\cite{Dolgachev1996}, and that $\Gamma_0(2)$ acts on the quantum Hall conductivity
+plane~\cite{LutkenRoss1992}. Each identification was taken to its gate~\cite{Callens2026Wasserstein,
+Callens2026Causal}: the Fricke matrix normalises Mathlib's $\Gamma_0(n)$ and its axis action is the dual-length map,
+but no $\Gamma_0(n)$ acts on a wavenumber (\lean{Fricke.lean}); the Fricke element fixes the Hall critical point's
+orbit but sends every plateau off the odd-denominator class (\lean{QHFricke.lean}); and the physical BKT point is not
+the self-dual radius. The residue of these three verdicts is one question: if a duality is exact and verified, and
+yet is not where the physics happens, what is it, and what is?
+
+\section{T-duality on the sector lattice, machine-checked}
+
+Let the compact boson have radius $R$ in the normalisation where the self-dual radius is $\sqrt2$. The primary of
+momentum $n$ and winding $w$ has $h=\tfrac12(n/R+wR/2)^2$, $\bar h=\tfrac12(n/R-wR/2)^2$, hence
+\[
+\Delta(n,w;R)=n^2/R^2+w^2R^2/4,\qquad s=h-\bar h=nw .
+\]
+The electric (spin-wave, $e^{i\theta}$) operator is $(1,0)$; the magnetic (vortex) operator is $(0,1)$. The
+following are theorems of \lean{CompactBoson.lean} (twelve statements, axiom footprint $\{\mathrm{propext},
+\mathrm{Classical.choice},\mathrm{Quot.sound}\}$, accepted by the Lean kernel and by \lean{nanoda} through
+Comparator; three negative controls -- product $\tfrac12$, BKT at $\sqrt2$, duality with $R\mapsto1/R$ -- fail).
+
+\begin{theorem}[duality as reindexing]
+$\Delta(n,w;R)=\Delta(w,n;2/R)$ and $s(n,w)=s(w,n)$. Consequently, for every weight $F$,
+$\sum_{(n,w)\in\mathbb Z^2}F(\Delta(n,w;R),s)=\sum_{(n,w)\in\mathbb Z^2}F(\Delta(n,w;2/R),s)$.
+\end{theorem}
+The second statement is \lean{Equiv.tsum\_eq} applied to the swap of $\mathbb Z^2$: reindexing a sum by a
+bijection is an identity of \lean{tsum} whether or not the series converges. This is what the duality is -- a
+bijection of the sector lattice that preserves the spectrum. Savit's review~\cite{Savit1980} gives the general
+form: a duality is a Fourier transform on the group of sectors, electric charges in $G$ against magnetic charges
+in $\hat G$, with the Lagrangian sum over one family turned into the Hamiltonian sum over the dual family by Poisson
+summation.
+
+\begin{theorem}[the invariant]
+$\Delta(1,0;R)\,\Delta(0,1;R)=\tfrac14$ for every $R\neq0$.
+\end{theorem}
+In the XY / two-dimensional-superfluid dictionary $\Delta(1,0)=\eta/2$ and $\Delta(0,1)=n_s\lambda_T^2/2$, so the
+invariant reads $\eta\,n_s\lambda_T^2=1$. That is the relation measured in~\cite{Callens2026Causal}: $1.047$ and
+$1.072$ on two equilibrated energies in round~2, $1.12$--$1.22$ on the six energies of the heating ladder,
+$1.14$--$1.27$ on the five energies of the $L=32$ box -- with the finite-size excess predicted by
+Hasenbusch's logarithmic corrections~\cite{Hasenbusch2005}. \emph{The numerical verification of the duality in
+this programme is the measurement of this product.}
+
+\begin{theorem}[self-dual is not marginal]
+For $R>0$: $\Delta(1,0)=\Delta(0,1)$ iff $R=\sqrt2$, where both equal $\tfrac12$; $\Delta(0,1)=2$ iff
+$R=2\sqrt2$, where $\Delta(1,0)=\tfrac18$, i.e.\ $\eta=\tfrac14$; and $2\sqrt2\neq\sqrt2$.
+\end{theorem}
+The transition is where the vortex operator becomes marginal -- Nelson and Kosterlitz's universal jump
+$n_s\lambda_T^2=4$~\cite{NelsonKosterlitz1977}, located in our own runs at $T_{\rm BKT}=0.821$ with
+$\eta=0.31$ there -- and that is a condition on one sector. The exchange symmetry has its fixed point elsewhere,
+and nothing happens there.
+
+\section{When is a self-dual point physical?}
+
+The compact boson is the case with a \emph{line} of fixed points, one for each $R$. Three other cases complete the
+criterion.
+
+\paragraph{Ising: yes.} Kramers--Wannier self-duality~\cite{KramersWannier1941} fixes $T_c$ at $\sinh2K=1$ because
+the order and disorder operators~\cite{FradkinSusskind1978} exchange under the duality and $\mathbb Z_2$ has a single
+symmetric point: the dual sectors are simultaneously critical and the fixed-point structure is discrete.
+
+\paragraph{String gas cosmology: a preferred equilibrium.} In the Brandenberger--Vafa
+scenario~\cite{BrandenbergerVafa1989,Brandenberger2008} ``the symmetry we make use of is T-duality, and the new
+degrees of freedom are the string oscillatory modes and the string winding modes''. Momentum modes, with energy
+$n/R$, resist contraction; winding modes, with energy $wR$, resist expansion; when both are populated the radion is
+stabilised at the self-dual radius as the minimum of an effective potential. The self-dual point is physical there
+because both dual sectors are present and compete. And the exit from the Hagedorn phase -- the event that makes
+three dimensions large -- is the \emph{annihilation of winding modes}: a sector event, with T-duality as the
+symmetry of the spectrum in which it is described.
+
+\paragraph{Superconductor--insulator transition: a constraint.} Boson--vortex duality~\cite{DasguptaHalperin1981,
+FisherLee1989} predicts, if the transition is self-dual, a universal resistance $h/4e^2$~\cite{Fisher1990,
+ChaFisherGirvin1991}; measured values scatter around it. The cause of the transition is the proliferation of
+vortices on one side and of charges on the other; self-duality constrains the critical point only if the fixed
+point happens to be self-dual, which is a property of the fixed point, not of the duality.
+
+\paragraph{Quantum Hall: organisation, not cause.} $\Gamma_0(2)$ organises the plateau diagram and the position
+of the critical points~\cite{LutkenRoss1992}; the cause of the quantisation is Laughlin's gauge
+argument~\cite{Laughlin1981} on the Chern sector; and the Fricke element, which fixes the critical orbit, is not a
+symmetry of the plateaux (\lean{QHFricke.lean}).
+
+\begin{keybox}
+\textbf{Criterion.} A self-dual point pins a transition iff the two dual sectors are simultaneously critical and
+the fixed-point set is discrete. On a line of fixed points the self-dual point is a point like any other and the
+transition sits where one sector crosses its own threshold. When both dual sectors are populated and compete
+energetically, the self-dual point is a preferred equilibrium. In each case the duality relabels the sectors and
+the sector acts.
+\end{keybox}
+
+\section{What acts: the sector}
+
+The same triad recurs in every case above: a group of sectors ($\mathbb Z$ for $U(1)$ windings, $\mathbb Z_2$ for
+Ising, Chern numbers, string windings); a duality that is a Fourier or reindexing map between $G$-sectors and
+$\hat G$-sectors preserving the spectrum; and physics that happens when a sector crosses a threshold, proliferates,
+annihilates, or is imposed. The causal role of the sector is what the rest of this programme
+established~\cite{Callens2026Causal}: it is conserved by every continuous evolution without a phase slip
+(\lean{TopologicalProtection}), additive in scale so that a bound pair is invisible from outside
+(\lean{ScaleResolvedWinding}), read correctly by the sampled loop sum as the continuum degree
+(\lean{ContinuumWinding}), it carries its own temperature (\lean{SectorTemperature}), and in an energy-matched
+intervention it is a difference-maker: the same energy delivered as topology lowered the condensate by
+$0.49$--$0.73$ where phonons lowered it by at most $0.035$, with the injected sector reading five to eight times
+the bath's temperature on our own calibrated thermometer. That is why one involution appears in helium, Hall bars,
+K3 moduli and string gases, and why it explains none of them.
+
+\section{What this paper does not claim}
+\begin{failbox}
+\begin{itemize}[leftmargin=*]
+\item Novelty in the mathematics: the three theorems are elementary; their value is that the distinction between
+  the duality and the sector is stated so that a kernel checks it.
+\item Novelty in the physics: Kramers--Wannier, Nelson--Kosterlitz, Brandenberger--Vafa, Fisher and Lütken--Ross
+  are cited, not extended.
+\item Any identification of a superfluid with a K3 surface or a string background. The K3 mirror involution is the
+  same map on a different space; the criterion above is what the shared map does and does not license.
+\item That every duality in physics fits the triad: the cases examined do; the general statement is a reading.
+\end{itemize}
+\end{failbox}
+
+\bibliographystyle{unsrt}
+\bibliography{refs_duality_sector}
+\end{document}
