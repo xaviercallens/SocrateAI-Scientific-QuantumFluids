@@ -1,0 +1,22 @@
+N = 6
+/home/xavkal/xdev/SocrateAI-Scientific-QuantumFluids/exploration/pgpe/vortex_thermometer.py:23: RuntimeWarning: divide by zero encountered in log
+  s += np.log((np.cosh(x - TWO_PI * m) - np.cos(y)) / np.cosh(TWO_PI * m))
+  beta=+0.800  <E>=  -7.004  Var= 12.206  (46.7s)
+  beta=+1.000  <E>=  -9.199  Var=  8.026  (45.6s)
+  beta=+1.100  <E>=  -9.980  Var=  7.293  (45.1s)
+  beta=+1.300  <E>= -10.852  Var=  4.782  (43.1s)
+  beta=+1.400  <E>= -11.157  Var=  3.538  (43.5s)
+  beta=+1.600  <E>= -12.023  Var=  1.908  (42.9s)
+  closure rep 0: set 1.2 read 1.222
+  closure rep 1: set 1.2 read 1.200
+  closure rep 2: set 1.2 read 1.175
+N = 8
+  beta=+0.800  <E>=  -8.149  Var= 15.503  (59.4s)
+  beta=+1.000  <E>= -10.659  Var= 13.569  (58.3s)
+  beta=+1.100  <E>= -12.300  Var= 11.794  (57.0s)
+  beta=+1.300  <E>= -14.408  Var=  6.086  (56.3s)
+  beta=+1.400  <E>= -14.349  Var=  6.584  (57.2s)
+  beta=+1.600  <E>= -15.599  Var=  3.653  (56.6s)
+  closure rep 0: set 1.2 read 1.241
+  closure rep 1: set 1.2 read 1.260
+  closure rep 2: set 1.2 read 1.305

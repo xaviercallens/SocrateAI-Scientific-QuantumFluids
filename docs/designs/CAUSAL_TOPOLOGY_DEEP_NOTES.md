@@ -155,3 +155,7 @@ the two-temperature state is intrinsically transient, T_v relaxes towards "no vo
 relaxation problem — with L_c ~ t^{1/z}, z ≈ 1.5 near BKT to 1.9 at low T, thermal dipoles forming a late-time plateau
 in N_v (our round-1 A3/A4 lesson), data CC-BY. Prediction for a larger round-3 box: the V arm's free-vortex density
 decays as t^{−2/z} with z in that range.
+
+## 13. Dense calibration (2026-09-25, `vortex_thermometer_cal_dense.py`, 6000 sweeps, β grid 0.8–1.6)
+
+Closure at β₀ = 1.2, three repetitions: N = 6 → 1.222, 1.200, 1.175 (mean 1.199); N = 8 → 1.241, 1.260, 1.305 (mean 1.269). The fast run's N = 6, 8 failures were precision; the instrument closes at the per-mille level with long chains on a dense grid. Restriction to β ≥ 0.3 (negative-T branch) stands.
