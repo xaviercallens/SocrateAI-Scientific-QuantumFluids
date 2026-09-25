@@ -1,0 +1,234 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,
+            urlcolor=blue!60!black]{hyperref}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\lean}[1]{\texttt{\small #1}}
+\newtcolorbox{keybox}[1][]{colback=blue!3,colframe=blue!45!black,
+  boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+\newtcolorbox{failbox}[1][]{colback=red!3,colframe=red!45!black,
+  boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+\newtcolorbox{rulebox}[1][]{colback=yellow!6,colframe=orange!60!black,
+  boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+\newtheorem{theorem}{Theorem}
+
+\title{\textbf{Sectors in the sky}\\
+\large What ``the sector is the cause'' says about dark matter, dark energy and K3 --\\
+three machine-checked lattice identities, two discriminating questions, and the routes it closes}
+
+\author{Xavier Callens\\
+\small SocrateAI-Scientific-QuantumFluids\\
+\small \url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}}
+\date{September 2026 -- proposal; no cosmological number is claimed}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+A programme on two-dimensional quantum fluids ended with a reading it could defend: a duality is a reindexing
+of a lattice of topological sectors that preserves a spectrum, and the physics happens when a sector crosses a
+threshold, proliferates, annihilates, or is imposed~\cite{Callens2026Duality}. This note asks what the reading
+says when the U(1) phase field is a dark-matter halo, when the integer sector is a four-form flux, and when the
+lattice is $H^2(\mathrm{K3},\mathbb Z)$. It is written under a transfer rule stated on the first page: the chain
+\emph{integrality $\to$ conservation $\to$ barrier $\to$ scale additivity $\to$ continuum limit} transfers to any
+U(1) field and so does the method of the matched control arm; the coupling between the integer and the
+observables does not, so no number crosses from the torus to the sky. Within that rule we prove in Lean~4,
+against Mathlib and under two independent kernels, fifteen elementary statements
+(\lean{ChargeLattice.lean}): Moore's dyon discriminant on the K3$\times T^2$ charge lattice is
+$\mathrm{SL}(2,\mathbb Z)$-invariant, $D(ap+bq,cp+dq)=(ad-bc)^2D(p,q)$, so the horizon area reads a level set the
+duality merely permutes; on the Bousso--Polchinski flux lattice one nucleation changes $\Lambda$ by exactly
+$-(n_i-\tfrac12)q_i^2$ and lowers it iff $n_i\ge1$; Kaloper's discretely evanescent dark energy vanishes iff its
+top-form sector is the CP-invariant one and the discharge from $N\le1$ ends after exactly $1-N$ steps. From these
+and the literature we draw two discriminating questions -- for wave dark matter, whether a claimed vortex
+signature survives setting the halo's net circulation to zero at fixed energy (sector versus interference
+pairs); for dark energy, whether a $w(z)\neq-1$, if it survives, is a continuous roll or a discrete cascade -- and
+we record what the reading closes: the attractor mechanism makes the K3 an \emph{output} of the charges, so the
+fluid$\leftrightarrow$K3 identification this programme excluded could never have been an input; and
+topological-defect dark energy is excluded by data as the dominant component. Nothing here is new physics; the
+mathematics is bilinearity and a square; what is new is that the distinction between the lattice and the event
+on it is stated so that a kernel can check it and a survey can test it.
+\end{abstract}
+
+\begin{rulebox}
+\textbf{Transfer rule (in force throughout).} From the quantum-fluid laboratory~\cite{Callens2026Causal,
+Callens2026Astro} the following transfers to any U(1) phase field: the integer sector, its conservation by every
+continuous evolution without a phase slip, the barrier a slip must cross, the scale additivity
+$W(R)=\text{net enclosed charge}$, and the sampled-to-continuum reading of the loop sum. The \emph{method}
+transfers: a causal claim about a label needs a control arm that is equally arbitrary, and the label must be
+read at a stated scale. What does \emph{not} transfer is the coupling between the integer and the observables
+-- in the fluid, $\eta$, $n_s\lambda_T^2$, the condensate drop, $T_v/T_b$ -- which is empirical and specific. This
+note therefore carries structure and method, never a number.
+\end{rulebox}
+
+\section{The reading, in one paragraph}
+
+In every case examined in~\cite{Callens2026Duality} -- compact boson, Ising, string gas, superconductor--insulator,
+quantum Hall -- the same triad appeared: a group of sectors $G$ ($\mathbb Z$ windings, $\mathbb Z_2$ order,
+Chern numbers, string windings); a duality that is a Fourier or reindexing map between $G$-sectors and
+$\hat G$-sectors preserving the spectrum~\cite{Savit1980}; and physics that happens at an \emph{event on the
+lattice}. For cosmology the questions are then fixed in advance: what is the sector group, what function of the
+sector does the observable read, what is the event, and what is the duality doing besides relabelling?
+
+\section{Dark matter as a U(1) phase field: sector versus pairs}
+
+\paragraph{The sector.} Bosonic dark matter lighter than $\sim30$~eV is wave-like in a Milky-Way
+halo~\cite{HuBarkanaGruzinov2000,HuiOstrikerTremaineWitten2017}: a field $\psi=\sqrt\rho\,e^{iS}$ whose U(1) is
+particle number; the winding of $S$ around a loop is an integer and the circulation is quantised in units of
+$2\pi/m$. This is the \lean{VortexWinding} setting with another $m$ and no box.
+
+\paragraph{What is established.} Hui, Joyce, Landry and Li~\cite{HuiJoyceLandryLi2020} show that interference
+inside a virialised halo \emph{inevitably} produces vortices: rings in three dimensions, about one per de Broglie
+volume, of winding $\pm1$ only, with $\rho\propto r_\perp^2$ and $v\propto1/r_\perp$ near the line, moving at
+$\sim1/(m\ell)$, reconnecting rather than frustrating, and present even in a halo of zero net angular momentum;
+their lensing imprint is a $5$--$10\%$ flux anomaly in strongly lensed systems. Zhou, Leung, Poon and
+Chu~\cite{ZhouLeungPoonChu2025} show that a \emph{rotating} condensate halo forms a vortex lattice of
+under-density columns whose lensing signature is a regularly spaced brightness anomaly, visible at
+$\lesssim10$~mas resolution when the rotation axis is along the line of sight. Berezhiani and
+Khoury~\cite{BerezhianiKhoury2015} estimate $\sim10^{23}$ vortices of millimetre core in a superfluid halo,
+individually invisible.
+
+\paragraph{What the sector reading adds.} Three statements, one prediction, no number.
+\begin{enumerate}[leftmargin=*]
+\item \emph{Rings are pairs.} By scale additivity (\lean{ScaleResolvedWinding}: $W(R)=$ net enclosed charge), a
+  vortex ring pierces any plane at two points of opposite winding and is invisible to every sector observable
+  read at $R\gg\lambda_{\rm dB}$. Hui et al.'s rings are the halo's thermal pairs -- they carry energy, scatter
+  and heat, exactly as the pairs of our round~2 cooled the bath and their annihilation reheated it -- and they
+  are not the halo's sector.
+\item \emph{The only sector-level observable of a halo is its net circulation.} The sum of the windings of all
+  lines threading a large loop is the quantised circulation, i.e.\ the angular momentum in units of $\hbar$ per
+  particle. Zhou et al.'s lattice \emph{is} the sector (its vortex count is set by $\Omega$); Hui et al.'s rings
+  are the pairs. One measurement separates them: $W$ at large $R$. This is the distinction between our
+  persistent current (winding $-3$, intact after $1500$ time units, $29.5\%$ of the atoms at $k=(-3,0)$) and our
+  coarsening arm ($W=0$).
+\item \emph{The barrier is low.} A halo's winding changes when a line crosses the boundary or nucleates at a
+  density zero (\lean{TopologicalProtection}); a halo has no wall, its ``boundary'' is where $\rho\to0$, and
+  lines leave freely. The sector is real, but it is not protected the way a ring current is.
+\end{enumerate}
+
+\begin{keybox}
+\textbf{Prediction (falsifiable, unfitted).} In a rotating wave-dark-matter halo simulation, the lattice
+vortices' lensing signature scales with the imposed net circulation $W$ at fixed total energy; the ring
+vortices' signature does not change when $W$ is set to zero at the same energy. A ``vortex lensing anomaly'' that
+survives $W=0$ is interference substructure, not a sector effect, and a claim of ``condensate dark matter seen
+through its vortices'' resting on it is a claim about pairs. This is the round-2 protocol (topology arm against
+an energy-matched control arm) written for a halo; the instrument is $W(R)$ read from the phase.
+\end{keybox}
+
+\section{Dark energy as a sector lattice: one algebra, four models, the honest limit}
+
+\paragraph{Bousso--Polchinski.} With $J$ four-form fluxes of charges $q_i$ and integer quanta
+$n_i$~\cite{BoussoPolchinski2000}, $\Lambda(n)=\Lambda_{\rm bare}+\tfrac12\sum_i n_i^2q_i^2$ is a function on
+$\mathbb Z^J$; membrane nucleation (the Brown--Teitelboim process~\cite{BrownTeitelboim1987}) moves one step and
+lowers $\Lambda$; with $J\sim100$ the discretuum near zero is dense enough. What selects the observed value is
+anthropic in the weakest sense.
+
+\begin{theorem}[\lean{bp\_step}, \lean{bp\_step\_neg\_iff}, \lean{bp\_ge\_bare}, \lean{bp\_min\_at\_zero}]
+$\Lambda(n-e_i)-\Lambda(n)=-(n_i-\tfrac12)q_i^2$; the step lowers $\Lambda$ iff $n_i\ge1$; $\Lambda(n)\ge
+\Lambda(0)$ with equality iff $n=0$ when every $q_i\neq0$.
+\end{theorem}
+
+\paragraph{Kaloper.} A hidden SU($N$) confining at $\Lambda_{\rm dark}\sim10^{-3}$~eV~\cite{Kaloper2025}: the
+top-form flux is quantised, $\theta_{\rm dark}=(1-N)\hat\theta$, $V=\tfrac12X\theta_{\rm dark}^2$; millimetre
+bubbles nucleate at $\Gamma\sim H_0^4$ and lower $V$ in discrete random steps to exactly zero at the CP-invariant
+sector; $w\neq-1$ transiently; acceleration may cease within $\sim1/H_0$; $\Omega_{\rm GW}<10^{-9}$ at
+$f\lesssim10^{-12}$~Hz.
+
+\begin{theorem}[\lean{kaloper\_step}, \lean{kaloper\_min}, \lean{kaloper\_terminates}]
+$V(N)-V(N+1)=X\hat\theta^2\big((1-N)-\tfrac12\big)$; $V\ge0$ with $V=0$ iff $N=1$; from $N\le1$ the discharge
+reaches $V=0$ after exactly $1-N$ nucleations.
+\end{theorem}
+This is the phase-slip cascade of our $e=0.60$ arm -- winding $2\to0$ by slips, the current's energy going to
+the bath -- written for the vacuum. The model's content is the \emph{rate}; the algebra is the sector's.
+
+\paragraph{QCD sectors.} Van Waerbeke and Zhitnitsky~\cite{VanWaerbekeZhitnitsky2025} derive dark energy from
+tunnelling between QCD $\theta$-sectors in an expanding background, $\rho_{\rm DE}\approx c_H\Lambda_{\rm
+QCD}^3H$, with no new field and a $w(z)$ that may cross $-1$. The linear-in-$H$ leftover is proved on
+$H^3\times S^1$ and conjectured for de Sitter.
+
+\paragraph{Topological-defect dark energy: excluded as dominant.} Frustrated non-Abelian string networks give
+$w=-1/3$, domain-wall networks $w=-2/3$, stabilised by a shear modulus~\cite{BucherSpergel1999,Vilenkin1984,
+Kibble1976}; here the sector is literal ($\pi_1(G/H)$). Current data exclude them as the dominant component:
+$\Omega_s<0.007$--$0.009$ at $95\%$ from CMB+DESI(+SN), and the Bayesian evidence favours $\Lambda$CDM in every
+variant~\cite{ChengDiValentinoVisinelli2025}.
+
+\begin{keybox}
+\textbf{Discriminating question (recorded, not started).} In all four models the vacuum energy is a function of
+an integer sector, the dynamics a walk on the lattice by slips, the end point a distinguished sector. The data
+constrain $w(z)$, not the lattice. What the reading contributes is the question that separates the lattice from
+no lattice: is a $w(z)\neq-1$, if it survives, a \emph{continuous roll} (quintessence: no integer) or a
+\emph{discrete cascade} (steps in $w(z)$, percolating bubbles, ultra-low-frequency gravitational waves)? The
+integer's signature is the step, as the ring current's signature was the integer $W$ in the momentum
+distribution. A pre-registered fit of a step family against a CPL family at equal parameter count is a
+cosmology-data project outside this repository and is left as such.
+\end{keybox}
+
+\section{K3 as a charge lattice: the attractor mechanism is the reading}
+
+For type~II on K3$\times T^2$ a dyon is a charge vector $\gamma=(p,q)$ with $p,q\in H^2(\mathrm{K3},\mathbb
+Z)=\mathrm{II}_{3,19}$ after U-duality~\cite{Moore1998,FerraraKalloshStrominger1995}. The attractor equations fix
+the horizon moduli \emph{from the charges}: $\Omega\propto q-\bar\tau p$ with $\tau=(p\cdot q+\sqrt{D})/p^2$, so
+the attractor K3 has $\mathrm{NS}(S)=\langle p,q\rangle^\perp$ of rank~20 -- an attractive K3 whose
+transcendental lattice is $\langle p,q\rangle$ with Gram matrix $2Q_{p,q}$. The horizon area and the BPS
+asymptotics read one integer,
+\[
+D(p,q)=(p\cdot q)^2-p^2q^2,\qquad A/4\pi=\sqrt{-D},\qquad \log\dim\mathcal H_{\rm BPS}=\pi\sqrt{-D}+\cdots
+\]
+\cite{DVV1997}. The U-duality group acts on charges and preserves $D$; but the number of U-inequivalent charges
+with the same $D$ is the class number $h(D)$~\cite{Moore1998}: \emph{many sectors, one entropy, and no symmetry of
+string theory permuting them}.
+
+\begin{theorem}[\lean{disc\_sl2}, \lean{disc\_sl2\_invariant}, \lean{disc\_electric\_magnetic\_swap},
+\lean{disc\_scale}, \lean{disc\_zero\_of\_parallel}, \lean{area\_sl2\_invariant}]
+For any additive group with a symmetric $\mathbb Z$-bilinear form $B$ and $D(p,q)=B(p,q)^2-B(p,p)B(q,q)$:
+$D(ap+bq,cp+dq)=(ad-bc)^2D(p,q)$; hence $D$ is $\mathrm{SL}(2,\mathbb Z)$-invariant, invariant under
+$(p,q)\mapsto(q,-p)$, scales as $t^4$ under $(p,q)\mapsto(tp,tq)$, vanishes on $(p,kp)$, and
+$\sqrt{-D}$ is constant on orbits.
+\end{theorem}
+Elementary -- bilinearity and \lean{ring} -- and that is the point: the part of ``K3 duality'' that carries
+physics is a polynomial identity on the charge lattice. Three consequences for this programme:
+\begin{itemize}[leftmargin=*]
+\item The K3 that appears is an \emph{output of the sector}. The identification excluded in earlier
+  versions (a superfluid's dual-length involution as K3$\times T^2$ mirror symmetry) tried to transfer an
+  \emph{input} geometry; the attractor theorem shows the geometry is determined by charges $(p,q)$, and a
+  superfluid has no such charges, only $W\in\mathbb Z$.
+\item The Fricke / Dolgachev--Nikulin mirror involution on $\Gamma_0(N)+N$~\cite{Dolgachev1996} exchanges
+  lattice polarisations $M\leftrightarrow M^\perp$ inside $\mathrm{II}_{3,19}$: a reindexing of the kind of
+  \lean{CompactBoson.partition\_dual}, preserving the structure and moving no dyon's entropy -- consistent with
+  \lean{QHFricke}, where the Fricke element fixes an orbit and is not a symmetry of the sectors.
+\item The cross-domain criterion of~\cite{Callens2026Duality} gains a clean fourth case: a large duality group,
+  a single integer invariant, physics that reads the invariant -- organisation, not cause -- with the twist that
+  the level set of the invariant is strictly larger than the orbit. (The Mathieu moonshine of the K3 elliptic
+  genus~\cite{EguchiOoguriTachikawa2011} is a structure on the same lattice; it is not touched here.)
+\end{itemize}
+
+\section{What this note does not claim}
+\begin{failbox}
+\begin{itemize}[leftmargin=*]
+\item Any cosmological number: no boson mass, no $\Omega$, no $w(z)$, no lensing amplitude, no string tension.
+\item That dark matter is a U(1) field, that $\Lambda$ sits on a flux lattice, or that dark energy is a top-form
+  flux: these are the hypotheses of the cited papers; the theorems state what follows if they hold.
+\item Anything about real black holes or about K3 beyond $H^2(\mathrm{K3},\mathbb Z)$ as a lattice with a form.
+\item Novelty in the mathematics (bilinearity; a square) or in the physics (Moore; Bousso--Polchinski; Kaloper;
+  Hui et al.; Zhou et al.; Bucher--Spergel are cited, not extended).
+\item A revival of $\alpha'=\ell_Pc/H_0$ or of a fluid$\leftrightarrow$K3 identification; both remain excluded.
+\end{itemize}
+\end{failbox}
+
+\section*{Reproducibility}
+\lean{lean\_src/ChargeLattice.lean} (15 theorems; axioms \{\lean{propext}, \lean{Classical.choice},
+\lean{Quot.sound}\}; accepted by the Lean kernel and by \lean{nanoda} through Comparator; three negative controls
+-- a determinant-2 map, the nucleation step with the wrong sign, Kaloper's minimum at $N=0$ -- fail);
+\lean{docs/designs/COSMOLOGY\_SECTORS\_PROPOSAL.md}; LEDGER CLAIM-047. Every DOI was resolved through Crossref
+before citation.
+
+\bibliographystyle{unsrt}
+\bibliography{refs_cosmology_sectors}
+\end{document}

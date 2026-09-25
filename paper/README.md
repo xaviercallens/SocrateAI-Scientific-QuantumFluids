@@ -1,6 +1,8 @@
 # Papers
 
 **Newest (September 2026):**
+- `cosmology_sectors.tex` — *Sectors in the sky* (proposal: what 'the sector is the cause' says about wave dark matter, flux-lattice
+  dark energy and the K3 charge lattice; three Lean identities; transfer rule printed; no cosmological number). Build: `latexmk -pdf cosmology_sectors.tex`.
 - `duality_sector.tex` — *Duality is a structure; the sector is the cause* (T-duality on the compact-boson sectors,
   machine-checked; the measured invariant; when a self-dual point is physical). Build: `latexmk -pdf duality_sector.tex`.
 - `sector_temperature.tex` — *Topological sectors carry their own temperature* (proposal: hypothesis F, the mediant
