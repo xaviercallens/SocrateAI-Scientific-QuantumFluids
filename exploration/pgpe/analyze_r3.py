@@ -101,12 +101,70 @@ def part_D():
     return out
 
 
+# ---- Part C: L = 128 ladder (blocks over t in [3000, 4000]; admission A4 as in analyze_sweep/analyze_r2) ----------
+L64_OFFSETS = {1.00: 0.12, 1.10: 0.12, 1.20: 0.20}       # eta*K - 1 at L = 64, round-2 ladder (prereg C1)
+T_BKT_64 = 0.821
+
+
+def whole_from_blocks(d):
+    """The round-2 'whole' record rebuilt from the per-block means (T from the block mean, not the pooled occupation)."""
+    B = d["blocks"]; T = float(np.mean([b["T"] for b in B])); JL = float(np.mean([b["JL"] for b in B])); JT = float(np.mean([b["JT"] for b in B]))
+    et = [b["eta"] for b in B if np.isfinite(b["eta"])]
+    return {"T": T, "JL": JL, "JT": JT, "ns_over_n": 1 - JT / JL, "R_L": JL / (T * d["L"] ** 2), "R_T": JT / (T * d["L"] ** 2),
+            "eta": float(np.mean(et)) if et else float("nan"), "Q": float(np.nanmean([b["Q"] for b in B])), "cond": float(np.mean([b["cond"] for b in B])),
+            "n_v": float(np.mean([b["n_v"] for b in B])), "laws": [b["law"] for b in B], "drift_E": d["drift_E"]}
+
+
+def ladder_rows_C(runs):
+    from collections import defaultdict
+    by = defaultdict(list); excluded = []
+    for d in runs:
+        w = whole_from_blocks(d)
+        if d["drift_E"] > 1e-5:
+            excluded.append({"name": d["name"], "why": "drift", "drift_E": d["drift_E"]}); continue
+        if not (w["R_L"] <= 1.25 and w["R_T"] <= 1.1 * w["R_L"]):
+            excluded.append({"name": d["name"], "why": "A4", "R_L": w["R_L"], "R_T": w["R_T"]}); continue
+        by[round(d["e"], 3)].append(w)
+    rows = []
+    for e in sorted(by):
+        ws = by[e]; T = float(np.mean([w["T"] for w in ws])); ns = float(np.mean([w["ns_over_n"] for w in ws]))
+        et = [w["eta"] for w in ws if np.isfinite(w["eta"])]; eta = float(np.mean(et)) if et else float("nan")
+        rows.append({"e": e, "n": len(ws), "T": T, "ns_over_n": ns, "K": ns * 2 * np.pi / T, "eta": eta, "eta_K_minus_1": eta * ns * 2 * np.pi / T - 1,
+                     "Q": float(np.mean([w["Q"] for w in ws])), "cond": float(np.mean([w["cond"] for w in ws])), "n_v": float(np.mean([w["n_v"] for w in ws]))})
+    return rows, excluded
+
+
+def crossing_C(rows):
+    for a, b in zip(rows, rows[1:]):
+        if a["K"] >= 4 > b["K"]:
+            t = (a["K"] - 4) / (a["K"] - b["K"])
+            return {"between": (a["e"], b["e"]), "T_BKT": a["T"] + t * (b["T"] - a["T"]),
+                    "eta": a["eta"] + t * (b["eta"] - a["eta"]) if np.isfinite(a["eta"]) and np.isfinite(b["eta"]) else float("nan")}
+    return None
+
+
+def part_C(runs=None):
+    runs = runs if runs is not None else [json.loads(f.read_text()) for f in sorted(R3.glob("C_L128_*.json"))]
+    rows, excluded = ladder_rows_C(runs); cr = crossing_C(rows)
+    off128 = [(r["e"], r["eta_K_minus_1"]) for r in rows if r["K"] > 4 and np.isfinite(r["eta"]) and r["e"] in L64_OFFSETS]
+    off64 = [(e, L64_OFFSETS[e]) for e, _ in off128]
+    ratio = float(np.mean([o for _, o in off128]) / np.mean([o for _, o in off64])) if off128 else float("nan")
+    c1 = bool(off128) and 0.6 <= ratio <= 1.0
+    c2 = ("not bracketed" if cr is None else bool(cr["T_BKT"] <= T_BKT_64))
+    return {"rows": rows, "excluded": excluded, "n_runs": len(runs), "crossing_L128": cr, "T_BKT_64": T_BKT_64,
+            "C1_offsets_L128": off128, "C1_offsets_L64": off64, "C1_ratio": ratio, "C1": c1, "C2": c2,
+            "note": "T per run is the mean of the block thermometer readings (round 2 used the pooled occupation); offsets use K > 4 rows only, as in round 2 L3"}
+
+
 if __name__ == "__main__":
     v = {}
     if (R3 / "A_e0.60_s11_t4000_V.json").exists(): v["A"] = part_A()
     if (R3 / "D_e0.60_s11_t4000_16pairs.json").exists(): v["D"] = part_D()
+    if list(R3.glob("C_L128_*.json")): v["C"] = part_C()
     (ROOT / "data/generated/pgpe/r3_verdicts.json").write_text(json.dumps(v, indent=1, default=float))
-    for part in v:
+    if "C" in v:
+        print("C", json.dumps({k: x for k, x in v["C"].items() if k != "rows"}, default=float)); [print("C row", r) for r in v["C"]["rows"]]
+    for part in [p for p in v if p != "C"]:
         for base in BASES:
             r = v[part][base]; print(part, base, {k: (round(x, 3) if isinstance(x, float) else x) for k, x in r.items() if k not in ("T_v_blocks", "T_b_blocks", "n_v_blocks", "nv_t", "fit")}, r.get("fit"))
         print(part, {k: x for k, x in v[part].items() if k not in BASES})
