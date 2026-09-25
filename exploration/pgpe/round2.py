@@ -125,3 +125,65 @@ def run_blocks(s: PGPE, c: np.ndarray, t_end: float, t_tr: float = 0.0, block: f
              "JL": JL, "JT": JT, "ns_over_n": 1 - JT / JL, "R_L": JL / (T * s.L ** 2), "R_T": JT / (T * s.L ** 2),
              "eta": fit["eta"], "ell": fit["ell"], "law": fit["law"], "g1_npts": fit["npts"], "g1_rmax": fit["r_max"]}
     return c, out, whole
+
+
+def many_pair_config(L: float, n_pairs: int = 16, d: float = 8.0, rng=None):
+    """Round 3 Part D: n_pairs dipoles of separation d at random centres, dipole vectors in cancelling groups of two
+    (orientation phi and phi + pi), so that sum q = 0 and sum q r = 0 exactly (single-valued theta-function phase)."""
+    rng = rng or np.random.default_rng(0)
+    assert n_pairs % 2 == 0
+    pos, q = [], []
+    for k in range(n_pairs // 2):
+        phi = rng.random() * 2 * np.pi
+        for sgn in (1, -1):
+            cx, cy = rng.random(2) * L
+            ux, uy = sgn * np.cos(phi), sgn * np.sin(phi)
+            pos += [((cx - d / 2 * ux) % L, (cy - d / 2 * uy) % L), ((cx + d / 2 * ux) % L, (cy + d / 2 * uy) % L)]
+            q += [1, -1]
+    return np.array(pos), np.array(q)
+
+
+def run_blocks_positions(s: PGPE, c: np.ndarray, t_end: float, t_tr: float = 0.0, block: float = 100.0, every_t: float = 10.0, seed: int = 0):
+    """As run_blocks, but also returns the vortex positions/charges and the energy budget at every sample."""
+    from vortex_thermometer import energy as pv_energy
+    c = s.run(c, t_tr) if t_tr > 0 else c
+    rng = np.random.default_rng(10_000 + seed)
+    nb = int(round((t_end - t_tr) / block)); per = int(round(block / every_t)); every = int(round(every_t / s.dt))
+    blocks = [dict(occ=np.zeros_like(s.k2), g1=None, cond=[], nv=[], Q=[], JL=[], JT=[], E_pv=[], budget=[]) for _ in range(nb)]
+    samples = []; k = {"i": 0}
+    kk = np.sqrt(s.k2); w = s.dx ** 2 / s.N ** 2
+
+    def budget(cc):
+        psi = s.psi(cc); rho = np.abs(psi) ** 2; kin_k = 0.5 * s.k2 * np.abs(cc) ** 2 * w
+        gx = np.fft.ifft2(1j * s.kx * cc); gy = np.fft.ifft2(1j * s.ky * cc); jx = (np.conj(psi) * gx).imag; jy = (np.conj(psi) * gy).imag
+        sr = np.sqrt(rho + 1e-30); Ux, Uy = np.fft.fft2(jx / sr), np.fft.fft2(jy / sr); k2 = np.where(s.k2 == 0, 1, s.k2)
+        div = (s.kx * Ux + s.ky * Uy) / k2; Ic = 0.5 * np.sum(np.abs(s.kx * div) ** 2 + np.abs(s.ky * div) ** 2) * w
+        It = 0.5 * np.sum(np.abs(Ux) ** 2 + np.abs(Uy) ** 2) * w
+        return {"kin_bath": float(kin_k[(kk >= 0.4 * s.kcut) & s.P].sum()), "kin_lowk": float(kin_k[(kk < 0.4 * s.kcut)].sum()),
+                "E_inc": float(It - Ic), "E_comp": float(Ic), "interaction": float(0.5 * s.g * np.sum(rho ** 2) * s.dx ** 2)}
+
+    def cb(t, cc):
+        b = blocks[min(k["i"] // per, nb - 1)]; k["i"] += 1
+        b["occ"] += np.abs(cc) ** 2 * w
+        r, g = g1_radial(s, cc); b["g1"] = g if b["g1"] is None else b["g1"] + g; b["r"] = r
+        b["cond"].append(condensate_fraction(s, cc))
+        pos, q = vortices(s, cc); b["nv"].append(len(q)); b["Q"].append(dipole_matching(s, pos, q, rng)[2])
+        neutral = len(q) >= 4 and (q > 0).sum() == (q < 0).sum()
+        b["E_pv"].append(pv_energy(pos, q, s.L) if neutral else float("nan"))
+        cr = current_correlators(s, cc); b["JL"].append(np.mean([v[0] for v in cr.values()])); b["JT"].append(np.mean([v[1] for v in cr.values()]))
+        bud = budget(cc); b["budget"].append(bud)
+        samples.append({"t": t_tr + t, "pos": pos.tolist(), "q": q.tolist(), "E_pv": b["E_pv"][-1], **bud})
+    c = s.run(c, t_end - t_tr, callback=cb, every=every)
+    out = []
+    for i, b in enumerate(blocks):
+        n = len(b["cond"]); occ = b["occ"] / n; g = b["g1"] / n
+        T = thermometer(s, occ, 0.6, 1.0)[0]; fit = fit_g1_window(b["r"], g, s.L)
+        Epv = np.array(b["E_pv"]); nv = np.array(b["nv"])
+        keys = b["budget"][0].keys()
+        out.append({"t0": t_tr + i * block, "T": T, "cond": float(np.mean(b["cond"])), "n_v": float(nv.mean()),
+                    "Q": float(np.nanmean(b["Q"])) if np.any(np.isfinite(b["Q"])) else float("nan"),
+                    "JL": float(np.mean(b["JL"])), "JT": float(np.mean(b["JT"])), "eta": fit["eta"], "law": fit["law"],
+                    "E_pv_mean": float(np.nanmean(Epv)) if np.any(np.isfinite(Epv)) else float("nan"),
+                    "N_mode": int(np.round(np.median(nv[np.isfinite(Epv)]))) if np.any(np.isfinite(Epv)) else 0,
+                    **{k2: float(np.mean([bb[k2] for bb in b["budget"]])) for k2 in keys}})
+    return c, out, samples
