@@ -25,9 +25,9 @@ def tv_per_block(name, t_tr=0.0, block=100.0):
     """Per block: T_v (phys) from readable samples, or a status string."""
     z = np.load(R3 / f"{name}_samples.npz", allow_pickle=True)
     t, q, E = z["t"], z["q"], z["E_pv"]
-    nb = int(np.ceil((t.max() - t_tr + 1e-9) / block)); out = []
+    nb = int(round((t.max() - t_tr) / block)); out = []
     for i in range(nb):
-        m = (t >= t_tr + i * block) & (t < t_tr + (i + 1) * block)
+        m = (t > t_tr + i * block) & (t <= t_tr + (i + 1) * block)      # blocks (i*100, (i+1)*100], as in the runner
         betas, status = [], {"hot": 0, "cold": 0, "uncal": 0, "ok": 0}
         for qq, e in zip(q[m], E[m]):
             n = len(qq)
