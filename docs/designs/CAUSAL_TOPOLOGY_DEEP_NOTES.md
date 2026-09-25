@@ -159,3 +159,57 @@ decays as t^{−2/z} with z in that range.
 ## 13. Dense calibration (2026-09-25, `vortex_thermometer_cal_dense.py`, 6000 sweeps, β grid 0.8–1.6)
 
 Closure at β₀ = 1.2, three repetitions: N = 6 → 1.222, 1.200, 1.175 (mean 1.199); N = 8 → 1.241, 1.260, 1.305 (mean 1.269). The fast run's N = 6, 8 failures were precision; the instrument closes at the per-mille level with long chains on a dense grid. Restriction to β ≥ 0.3 (negative-T branch) stands.
+
+## 14. Duality is a structure; the sector is the cause — the general principle (2026-09-25)
+
+**Thesis.** A duality is a bijection of the *description* — of the sector lattice and its parameters — that preserves
+the spectrum. It is exact where it is exact, and it is verified numerically in this programme (η·n_sλ² = 1 to
+12–27 % on eleven energies in two boxes). It is not a cause: intervening on a description is not an intervention.
+The cause is the topological sector — a conserved label the dynamics cannot change continuously (`TopologicalProtection`),
+additive in scale (`ScaleResolvedWinding`), readable as the continuum degree (`ContinuumWinding`), carrying its own
+temperature (`SectorTemperature`), and shown to be a difference-maker under an energy-matched intervention (rounds 2–3).
+And the duality is not a bridge to K3 × T²: the Fricke involution is the same map without the group (`Fricke.lean`,
+v1.9.0), and it is not even a symmetry of the Hall plateau set (`QHFricke.lean`).
+
+**The mathematical anchor (`CompactBoson.lean`).** For the compact boson, sectors are (n, w) ∈ ℤ² with
+Δ(n, w; R) = n²/R² + w²R²/4. Kernel-checked: (i) Δ(n, w; R) = Δ(w, n; 2/R) and the sector sum Σ_{ℤ²} is invariant
+under R ↦ 2/R because it is a *reindexing* (`Equiv.tsum_eq`, no convergence assumption) — that is what the duality is;
+(ii) Δ(1,0)·Δ(0,1) = 1/4 for every R — the duality-invariant product, which in the superfluid dictionary is
+η·n_sλ² = 1, i.e. *our numerical test of the duality was the measurement of this product*; (iii) the self-dual radius
+√2 (Δ = 1/2 each) and the vortex-marginality radius 2√2 (Δ(0,1) = 2, η = 1/4) differ: the transition is the
+threshold of one sector, not the fixed point of the exchange. Savit's review (RMP 52, 453, 1980) gives the general
+form: a duality is a Fourier (Pontryagin) transform on the group of sectors, electric charges in G ↔ magnetic charges
+in Ĝ; the Lagrangian sum over one sector family becomes the Hamiltonian sum over the dual family by Poisson
+summation. The partition function is invariant; no sector is special except at the self-dual point.
+
+**When is a self-dual point physical? The refined criterion.**
+* It pins a transition when the two dual sectors are simultaneously critical and the fixed-point structure is
+  *discrete*: Kramers–Wannier (Phys. Rev. 60, 252, 1941) fixes the Ising T_c at sinh 2K = 1 because order and
+  disorder operators (Fradkin–Susskind, PRD 17, 2637, 1978) exchange and Z₂ has one symmetric point.
+* It does **not** pin the transition when the fixed points form a *line* and the transition is the marginality of one
+  sector: the compact boson / XY / 2D superfluid — BKT at 2√2, self-dual at √2.
+* It is a *preferred equilibrium* when both sectors are populated with symmetric weights and compete energetically:
+  string gas cosmology (Brandenberger–Vafa, Nucl. Phys. B 316, 391, 1989; Brandenberger's review arXiv:0808.0746):
+  momentum modes prevent contraction, winding modes prevent expansion, the radion is stabilised at the self-dual
+  radius; but the *transition* out of the Hagedorn phase is, again, the **annihilation of winding modes** — a sector
+  event — and T-duality is "the symmetry we make use of" of the spectrum.
+* The superconductor–insulator transition (Fisher, PRL 65, 923, 1990; Cha–Fisher–Girvin, PRB 44, 6883, 1991):
+  boson–vortex duality (Fisher–Lee, PRB 39, 2756, 1989; Dasgupta–Halperin, PRL 47, 1556, 1981) predicts a universal
+  resistance at a self-dual critical point; experiments scatter around it. Here the cause is again the sector — the
+  proliferation of vortices (or of charges on the dual side) — and self-duality is a *constraint on the critical
+  point*, exact only if the transition happens to be self-dual, which is a property of the fixed point, not of the
+  duality.
+* Quantum Hall (Lütken–Ross): Γ₀(2) organises the plateau diagram; the cause of quantisation is Laughlin's gauge
+  argument on the Chern sector; the Fricke element is not a symmetry of the plateaux.
+
+**The generalised statement.** Across these domains the same triad recurs: (1) a group of sectors G (ℤ for U(1)
+windings; Z₂ for Ising; Chern numbers; string windings), (2) a duality = a Fourier/reindexing map between G-sectors
+and Ĝ-sectors that preserves the spectrum, (3) physics that happens when a *sector* crosses a threshold (marginality,
+proliferation, annihilation) or is imposed by an intervention. Causes live in (3); (2) constrains where (3) can
+happen only when the dual sectors are symmetric at the transition. This is why "the same involution" appears in
+helium, Hall bars, K3 moduli and string gases — and why it explains none of them.
+
+**Literature (DOIs verified 2026-09-25):** Savit 10.1103/RevModPhys.52.453 · Kramers–Wannier 10.1103/PhysRev.60.252 ·
+Fradkin–Susskind 10.1103/PhysRevD.17.2637 · Dasgupta–Halperin 10.1103/PhysRevLett.47.1556 · Fisher–Lee
+10.1103/PhysRevB.39.2756 · Fisher 1990 10.1103/PhysRevLett.65.923 · Cha–Fisher–Girvin 10.1103/PhysRevB.44.6883 ·
+Brandenberger–Vafa 10.1016/0550-3213(89)90037-0 · Brandenberger review arXiv:0808.0746.
