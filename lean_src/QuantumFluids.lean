@@ -58,3 +58,4 @@ import TopologicalProtection
 import ScaleResolvedWinding
 import ContinuumWinding
 import SectorTemperature
+import CompactBoson
