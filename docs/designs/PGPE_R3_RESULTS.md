@@ -2,11 +2,11 @@
 
 Pre-registration `PGPE_R3_PREREG.md`. Data `data/generated/pgpe/r3/`, log `r3.log`, analysis `exploration/pgpe/analyze_r3.py`,
 calibration `vortex_thermometer_cal.json` (N = 4–24) and `vortex_thermometer_cal_large.json` (N = 26–40).
-Status at first writing (2026-09-25 21:45): Part A complete (6 runs); Part D: 2 of 3 runs complete; Part C not started.
+Status (2026-09-25 21:55): Parts A and D complete (9 runs); Part C running (launched 21:41, ≈ 7 h).
 
 ## Calibration extension (kill rule: closure within 10 % at every size used)
 
-N = 18: 1.193, 20: 1.197, 22: 1.206, 26: 1.199, 28: 1.190, 36: 1.207 (set 1.2) — all PASS; N = 24, 32, 40: pending/see log.
+N = 18: 1.193, 20: 1.197, 22: 1.206, 26: 1.199, 28: 1.190, 36: 1.207 (set 1.2) — all PASS; N = 24, 32, 40: see `cal_extend*.log`.
 
 ## Part A — two thermometers on the V and P arms (complete)
 
@@ -37,6 +37,38 @@ its E_inc runs 31.1 → 25.3 (block 1 → 6), a 19 % excursion against the 15 % 
 "no injected flow", which holds in the sense that E_inc(P) stays at the 25–30 level against 55–85 for V; the
 relative threshold was too tight for a small, fluctuating baseline. Reported as FAIL as written.
 
-## Part D — pending (2 of 3 runs complete)
+## Part D — 16-pair intervention (complete; see amendment R3-A1)
 
-## Part C — not started
+Imprint check: 32 imprinted, 32/40/36 detected (thermal pairs included), neutral on all three. Energy drift ≤ 2.2×10⁻⁷.
+
+| base | torus winding sector (imprint → final) | D1: power law, z ∈ [1.5, 2.0] | D2: bath cools then recovers |
+|---|---|---|---|
+| e = 0.60 | **(2, 0) → (0, 0)**: a winding-2 current that decayed by phase slips | not evaluable as pre-registered (non-zero sector); post hoc on [50, 1500]: power law z = 4.6 (R² = 0.77), exponential τ ≈ 1100 (R² = 0.95) | **PASS**: T_b 0.092 (base 0.115) → 0.149 |
+| e = 0.90 s11 | (0, 0) → (0, 0) | **FAIL**: no decade-long window with R² ≥ 0.95; post hoc z = 3.4 (R² = 0.43) | **PASS**: 0.432 (base 0.443) → 0.480 |
+| e = 0.90 s12 | **(1, −3) → (−3, 0) measured**: a winding-3 current, intact after 1500 | not evaluable as pre-registered | **PASS**: 0.390 (base 0.458) → 0.458 |
+
+D1 (two of three): **FAIL**. D2 (all): **PASS**.
+
+### What the two accidental sectors show (post hoc)
+
+* **s12 — the persistent current (thought experiment A).** Final state: mean winding around the x-cycle −3.21,
+  momentum P/N = −2.99 × 2π/L, and 29.5 % of the atoms in the mode k = (−3, 0)·2π/L while the k = 0 population is
+  0.003 throughout: the "condensate fraction" of the earlier rounds reads zero because the whole condensate flows.
+  E_inc plateaus at 248 ≈ 178 (the energy of a winding-3 superflow, ½ n (2π·3/L)² L²) + ≈ 70 (the vortex flow, the
+  level s11 relaxes to). Sixteen vortices remain; the current does not decay. T_v reads 2.3 → 1.3 against T_b ≈ 0.42.
+* **e = 0.60 — the current that decayed.** Winding 2 at the imprint, 0 at t = 1500: vortices crossing the torus
+  changed the winding (the discrete `slip_of_winding_change`, seen). The current's energy, ≈ 79, plus the pair
+  annihilations went to the bath: T_b rose from 0.092 to 0.149, ≈ 85 units over ≈ 1500 modes. E_inc 199 → 66.
+  T_v stayed 4–10 against T_b ≈ 0.1 (ratio 40–100) for the whole run.
+* **s11 — the clean coarsening arm.** N_v 54 → 16 with a plateau near the thermal count; no power law over a decade;
+  the condensate recovers 0.11 → 0.57 as E_inc falls 178 → 56 and T_b rises 0.432 → 0.480: the annihilation energy
+  returns to the bath (Kanai–Guo's sound), closing the cycle that Part A opened.
+
+**Reading.** The 16-pair arms did not test coarsening cleanly (one arm, and it failed D1), but they produced, by a
+design error, the two branches of the ring thought experiment on our own torus: a protected winding-3 current that
+outlives 1500 time units with its condensate displaced to k ≠ 0, and a winding-2 current that decays by phase
+slips and heats the bath by the amount its energy predicts. Both are single runs; neither is a pre-registered
+result; both are direct observations of the sector physics `TopologicalProtection.lean` is about.
+
+## Part C — running
+

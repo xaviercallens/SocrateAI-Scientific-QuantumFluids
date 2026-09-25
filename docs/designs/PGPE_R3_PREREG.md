@@ -69,3 +69,12 @@ runs, ≈ 7 h wall. Launched after A and D.
 The canonical two boxes (SPGPE reservoir) — it needs a new solver with its own known answers; recorded as round 4.
 The negative-temperature branch of the thermometer (cluster moves). The Sunami 2023 Kibble–Zurek data. Any Lean.
 Any claim of novelty: D1 tests a published exponent; P1–P3 test an established picture with our own instrument.
+
+## Amendment R3-A1 (2026-09-25 21:50, after the Part D runs, before their verdicts were written up)
+
+`many_pair_config` enforced `Σ q r ∈ L·ℤ²` (enough for a single-valued θ-function phase) but not `Σ q r = 0`.
+`Σ q r = L·(m, n)` imprints, in addition to the pairs, a **net phase winding (n, m) around the torus cycles** — a
+persistent current. Recorded from the generator with the run seeds: e0.60 → (2, 0); e0.90 s11 → (0, 0);
+e0.90 s12 → (1, −3). D1 is therefore evaluated as pre-registered only on the zero-winding arm (s11); the other two
+arms are reported as what they are — accidental interventions on the torus winding sector — with their final
+windings measured by the loop sum along the cycles. Future generators must subtract the net dipole exactly.
