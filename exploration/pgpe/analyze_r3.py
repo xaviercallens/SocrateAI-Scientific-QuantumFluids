@@ -14,6 +14,9 @@ from vortex_thermometer_canonical import read_beta
 
 ROOT = Path(__file__).resolve().parents[2]; R3 = ROOT / "data/generated/pgpe/r3"
 CAL = json.loads((ROOT / "data/generated/pgpe/vortex_thermometer_cal.json").read_text())
+_large = ROOT / "data/generated/pgpe/vortex_thermometer_cal_large.json"
+if _large.exists():
+    CAL.update(json.loads(_large.read_text()))          # N = 26..40 (2000 sweeps), same closure criterion
 BASES = ["e0.60_s11_t4000", "e0.90_s11_t4000", "e0.90_s12_t4000"]
 BETA_MIN = 0.3
 
