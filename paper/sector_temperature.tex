@@ -221,6 +221,53 @@ both branches, observed by mistake on our own torus; single runs, not pre-regist
 
 \paragraph{Part C ($L=128$).} \PENDING
 
+
+\section{Duality is a structure; the sector is the cause}\label{sec:duality}
+
+This programme began with an involution, $R\leftrightarrow\alpha'/R$ on a length, and was told that its
+physical home was T-duality, K3 mirror symmetry, the quantum Hall modular group. What the rounds since have
+established is where such a duality lives and what it can and cannot do. We state it on the compact boson, whose
+sectors are the pairs $(n,w)\in\mathbb Z^2$ of momentum (spin-wave) and winding (vortex) charge, with
+$\Delta(n,w;R)=n^2/R^2+w^2R^2/4$ in the normalisation where the self-dual radius is $\sqrt2$
+(\lean{CompactBoson.lean}, twelve theorems, three negative controls):
+\begin{enumerate}[leftmargin=*]
+\item \textbf{The duality is a reindexing of the sector lattice.} $\Delta(n,w;R)=\Delta(w,n;2/R)$, and the sector
+  sum $\sum_{\mathbb Z^2}F(\Delta,s)$ is invariant under $R\mapsto2/R$ because the map $(n,w)\mapsto(w,n)$ is a
+  bijection -- \lean{Equiv.tsum\_eq}, with no convergence hypothesis. Savit's review~\cite{Savit1980} gives the general form: a
+  duality is a Fourier transform on the group of sectors, electric charges in $G$ against magnetic charges in
+  $\hat G$; the partition function is invariant and no sector is distinguished except at the self-dual point.
+\item \textbf{The product of the electric and magnetic dimensions does not depend on the radius:}
+  $\Delta(1,0)\,\Delta(0,1)=\tfrac14$. In the superfluid dictionary $\Delta(1,0)=\eta/2$ and
+  $\Delta(0,1)=n_s\lambda_T^2/2$, so this is $\eta\,n_s\lambda_T^2=1$: the relation measured to $12$--$27\%$ on
+  eleven energies in two boxes (Section~\ref{sec:round3} and~\cite{Callens2026Causal}). \emph{Our numerical test
+  of the duality was the measurement of this product.}
+\item \textbf{The self-dual point is not the transition.} $\Delta(1,0)=\Delta(0,1)=\tfrac12$ at $R=\sqrt2$; the
+  vortex becomes marginal, $\Delta(0,1)=2$, at $R=2\sqrt2$, where $\eta=\tfrac14$ (Nelson--Kosterlitz). The
+  transition is the threshold of one sector, not the fixed point of the exchange.
+\end{enumerate}
+
+The same triad -- a group of sectors, a duality that reindexes them, physics that happens when a sector crosses a
+threshold or is imposed by an intervention -- recurs across domains, and the criterion for when a self-dual point
+is physical follows from it. Kramers--Wannier self-duality~\cite{KramersWannier1941} pins the Ising $T_c$ because order and disorder
+operators exchange and $\mathbb Z_2$ has a single symmetric point: the dual sectors are simultaneously critical and
+the fixed-point structure is discrete. The compact boson has a line of fixed points, and BKT is the marginality of
+the vortex sector alone: the self-dual point is one point on the line and nothing happens there. In string gas
+cosmology~\cite{BrandenbergerVafa1989,Brandenberger2008} ``the symmetry we make use of is T-duality, and the new
+degrees of freedom are the winding modes'': momentum modes prevent contraction, winding modes prevent expansion, the
+radion is stabilised at the self-dual radius as the minimum of a potential in which both sectors are populated --
+and the exit from the Hagedorn phase is the \emph{annihilation of winding modes}, a sector event. For the
+superconductor--insulator transition, boson--vortex duality~\cite{FisherLee1989,Fisher1990} predicts a universal
+resistance at a self-dual critical point; the cause is vortex (or charge) proliferation, and self-duality
+constrains the critical point only if the fixed point happens to be self-dual. In the quantum Hall system
+$\Gamma_0(2)$ organises the plateau diagram, Laughlin's gauge argument on the Chern sector causes the
+quantisation, and the Fricke element is not a symmetry of the plateaux (\lean{QHFricke.lean}).
+
+That is why one involution appears in helium, Hall bars, K3 moduli and string gases, and why it explains none of
+them. What acts is the sector: conserved by continuity (\lean{TopologicalProtection}), additive in scale
+(\lean{ScaleResolvedWinding}), read as the continuum degree (\lean{ContinuumWinding}), carrying its own
+temperature (\lean{SectorTemperature}), and -- in the energy-matched intervention of rounds~2 and~3 -- a
+difference-maker. The duality is exact, verified, and not a cause.
+
 \section{What this proposal does not claim}
 \begin{failbox}
 \begin{itemize}[leftmargin=*]
