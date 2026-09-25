@@ -94,3 +94,18 @@ mean at R = L/2 = −0.124 with pooled s.e.m. 0.032 (fail as written) and indepe
 
 **R4-A2 (2026-09-25 23:08).** Rerun with 100 realisations (`NREAL=100`, output `random_phase_halo_n100.json`),
 same criteria, to test whether the 2.3 σ offset is a fluctuation of 20 samples. The 20-realisation file is kept.
+
+## Amendment R4-A3 (2026-09-26, literature review; no criterion changed)
+
+The density π/λ_dB² and the screening behind A3 are not specific to dark matter: they are Berry & Dennis's
+1998–2003 theorems for any isotropic random wave field (Berry & Dennis 2000, Proc. R. Soc. A 456, 2059, DOI
+10.1098/rspa.2000.0602; Dennis 2003, J. Phys. A 36, 6611, DOI 10.1088/0305-4470/36/24/301; Foltin 2003, DOI
+10.1088/0305-4470/36/6/316) — cited now as the primary source alongside Hui et al.'s numerical confirmation of
+them in the wave-dark-matter context. One precision correction: the screening is **power-law, not exponential**
+(Houston, Gradhand & Dennis, arXiv:1612.01839, show the naive "screening-length" second moment diverges for the
+isotropic random-wave model); our A3 criterion (a fitted power α, not a fitted length scale) already matches
+this, no change to the criterion. On our doubly-periodic torus, the boundary-leak exception found in ring-BEC
+experiments (Eckel et al. 2014, Nature, DOI 10.1038/nature12958 — a pair with one member crossing a physical
+boundary is the microscopic mechanism for a discrete change in net winding) does not apply: there is no boundary
+for a member to cross, so "pairs are invisible to W(R)" is expected to hold without qualification here; the
+caveat is recorded for any future non-periodic (halo) extension of this protocol.

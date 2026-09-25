@@ -93,7 +93,21 @@ Chu~\cite{ZhouLeungPoonChu2025} show that a \emph{rotating} condensate halo form
 under-density columns whose lensing signature is a regularly spaced brightness anomaly, visible at
 $\lesssim10$~mas resolution when the rotation axis is along the line of sight. Berezhiani and
 Khoury~\cite{BerezhianiKhoury2015} estimate $\sim10^{23}$ vortices of millimetre core in a superfluid halo,
-individually invisible.
+individually invisible. Zhou et al.\ pose our exact question themselves, unanswered: ``it will be important for
+a future study to identify ways to distinguish if the magnification anomalies are caused by underdensity `holes'
+(due to vortices) or overdensity subhalos''; every one of their simulated haloes has $\Omega>0$ built into the
+initial condition, none is run at $\Omega=0$ with a compensated vortex population at matched energy. Brax and
+Valageas~\cite{BraxValageas2025}, in independent 3D simulations of a rotating self-interacting halo, find the
+same two populations we do -- a regular lattice aligned with the total angular momentum inside the relaxed core
+(the sector) and ``a tangle of intertwining and curved vortex lines of any direction'' with random $\pm1$
+windings in the envelope (the pairs) -- and flag the same open problem: distinguishing the two is ``a difficulty
+for numerical computations.'' Rindler-Daller and Shapiro~\cite{RindlerDallerShapiro2012} add a second, independent
+condition: \emph{a sector vortex additionally requires strong-enough self-interaction} (their threshold is
+$\lambda_{\rm dB}\lesssim R$); in the pure-quantum-pressure regime Hui et al.\ and Zhou et al.'s interference
+vortices study, nonzero angular momentum is not sufficient by itself. The vortex density itself,
+$\pi/\lambda_{\rm dB}^2$, is not special to dark matter: it is Berry and Dennis's 25-year-old result for any
+isotropic random wave field~\cite{BerryDennis2000}, and the perimeter-law screening of its net charge is
+Dennis's~\cite{Dennis2003}.
 
 \paragraph{What the sector reading adds.} Three statements, one prediction, no number.
 \begin{enumerate}[leftmargin=*]
@@ -119,7 +133,11 @@ vortices' lensing signature scales with the imposed net circulation $W$ at fixed
 vortices' signature does not change when $W$ is set to zero at the same energy. A ``vortex lensing anomaly'' that
 survives $W=0$ is interference substructure, not a sector effect, and a claim of ``condensate dark matter seen
 through its vortices'' resting on it is a claim about pairs. This is the round-2 protocol (topology arm against
-an energy-matched control arm) written for a halo; the instrument is $W(R)$ read from the phase.
+an energy-matched control arm) written for a halo; the instrument is $W(R)$ read from the phase. On our own
+periodic torus this holds without qualification; on a bounded ring or a real halo boundary, a pair with one
+member crossing the boundary is the literal microscopic mechanism by which net winding changes by one
+unit~\cite{EckelEtAl2014} -- the ``pairs are invisible'' claim needs that boundary-leak caveat off the torus.
+No published simulation has yet run the $\Omega=0$ control this prediction calls for~\cite{BraxValageas2025}.
 \end{keybox}
 
 \section{Dark energy as a sector lattice: one algebra, four models, the honest limit}
@@ -153,21 +171,32 @@ tunnelling between QCD $\theta$-sectors in an expanding background, $\rho_{\rm D
 QCD}^3H$, with no new field and a $w(z)$ that may cross $-1$. The linear-in-$H$ leftover is proved on
 $H^3\times S^1$ and conjectured for de Sitter.
 
-\paragraph{Topological-defect dark energy: excluded as dominant.} Frustrated non-Abelian string networks give
-$w=-1/3$, domain-wall networks $w=-2/3$, stabilised by a shear modulus~\cite{BucherSpergel1999,Vilenkin1984,
-Kibble1976}; here the sector is literal ($\pi_1(G/H)$). Current data exclude them as the dominant component:
-$\Omega_s<0.007$--$0.009$ at $95\%$ from CMB+DESI(+SN), and the Bayesian evidence favours $\Lambda$CDM in every
-variant~\cite{ChengDiValentinoVisinelli2025}.
+\paragraph{Topological-defect dark energy: excluded as the dominant component.} Frustrated non-Abelian string
+networks give $w=-1/3$, domain-wall networks $w=-2/3$, stabilised by a shear
+modulus~\cite{BucherSpergel1999,Vilenkin1984,Kibble1976}; here the sector is literal ($\pi_1(G/H)$). Current data
+exclude a string-network component above $\Omega_s\gtrsim1\%$: $\Omega_s<0.0082$ at $95\%$ from CMB+DESI, with
+the Bayesian evidence favouring $\Lambda$CDM in every variant~\cite{ChengDiValentinoVisinelli2025}. A few-percent
+domain-wall component ($\Omega_{\rm dw}\approx5\%$) is not excluded the same way -- it is mildly preferred with
+one supernova sample (DESY5) and disfavoured with the others~\cite{AnHanZhang2026} -- so the honest statement is
+narrower than ``excluded'': subdominant, dataset-dependent, and not established.
 
 \begin{keybox}
-\textbf{Discriminating question (recorded, not started).} In all four models the vacuum energy is a function of
-an integer sector, the dynamics a walk on the lattice by slips, the end point a distinguished sector. The data
-constrain $w(z)$, not the lattice. What the reading contributes is the question that separates the lattice from
-no lattice: is a $w(z)\neq-1$, if it survives, a \emph{continuous roll} (quintessence: no integer) or a
-\emph{discrete cascade} (steps in $w(z)$, percolating bubbles, ultra-low-frequency gravitational waves)? The
-integer's signature is the step, as the ring current's signature was the integer $W$ in the momentum
-distribution. A pre-registered fit of a step family against a CPL family at equal parameter count is a
-cosmology-data project outside this repository and is left as such.
+\textbf{Discriminating question, now with an available test.} In all four models the vacuum energy is a function
+of an integer sector, the dynamics a walk on the lattice by slips, the end point a distinguished sector. The
+question that separates the lattice from no lattice: is a $w(z)\neq-1$, if it survives, a \emph{continuous roll}
+(quintessence: no integer) or a \emph{discrete cascade} (steps in $\rho_{\rm DE}$, a finite number of nucleated
+bubbles per Hubble volume)? DESI DR2's own binned and Gaussian-process reconstructions of $w(z)$ are consistent
+with the smooth $w_0w_a$CPL fit, with no preference for extra freedom~\cite{DESI2025DR2,Lodha2025}; the
+background expansion history alone cannot separate a roll from a cascade at current precision. It can be
+separated: a completed first-order transition releasing a fraction $r$ of the dark energy leaves a
+CMB-anisotropy signature -- fluctuations from the spatially random local completion time, with no analogue in a
+homogeneous roll -- bounded by $r\lesssim10^{-5}(\beta/H_\star)^2$~\cite{KorenTsaiWang2025}, four to five orders
+of magnitude tighter than the background-level bound ($r\lesssim0.65$ from BAO alone). A genuinely discrete
+cascade model already fits DESI DR2 comparably to CPL with $O(1$--$10)$ bubbles per Hubble
+patch~\cite{BaiLuOrlofsky2026}, while the single-bubble fit to the DESI Alcock--Paczynski anomaly is independently
+excluded at $2\sigma$ by CMB-dipole and kSZ data~\cite{FriedmanShawJohnsonMack2026}. The integer's signature is
+the step -- fluctuation-level, not background-level -- as the ring current's signature was the integer $W$ in the
+momentum distribution, not the bath temperature.
 \end{keybox}
 
 \section{K3 as a charge lattice: the attractor mechanism is the reading}
@@ -183,7 +212,12 @@ D(p,q)=(p\cdot q)^2-p^2q^2,\qquad A/4\pi=\sqrt{-D},\qquad \log\dim\mathcal H_{\r
 \]
 \cite{DVV1997}. The U-duality group acts on charges and preserves $D$; but the number of U-inequivalent charges
 with the same $D$ is the class number $h(D)$~\cite{Moore1998}: \emph{many sectors, one entropy, and no symmetry of
-string theory permuting them}.
+string theory permuting them}.\footnote{This is Moore's own theorem, $N(D)=h(D)$, in the 1/8-BPS K3$\times T^2$
+setting stated here; it does not generalise unqualified. For 1/4-BPS dyons on heterotic/$T^6$ (a different
+setting), Dabholkar, Gaiotto and Nampuri show the three continuous-duality invariants ``do not uniquely specify
+the state,'' and an extra discrete invariant plus the moduli-space chamber (walls of marginal
+stability~\cite{Sen2007dyon}) are needed. ``Entropy is a function of the sector'' is correct as stated here; it
+is not, unqualified, a claim about every dyon-counting problem in string theory.}
 
 \begin{theorem}[\lean{disc\_sl2}, \lean{disc\_sl2\_invariant}, \lean{disc\_electric\_magnetic\_swap},
 \lean{disc\_scale}, \lean{disc\_zero\_of\_parallel}, \lean{area\_sl2\_invariant}]
