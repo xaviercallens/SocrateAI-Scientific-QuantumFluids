@@ -1,0 +1,20 @@
+{
+  "challenge_module": "ComparatorChallenges.SectorTemperature",
+  "solution_module": "SectorTemperature",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.SectorTemperature.count_sum",
+    "QuantumFluids.SectorTemperature.sectorCount_le",
+    "QuantumFluids.SectorTemperature.entropy_ge_sector",
+    "QuantumFluids.SectorTemperature.mediant_le",
+    "QuantumFluids.SectorTemperature.le_mediant",
+    "QuantumFluids.SectorTemperature.globalRatio_mem",
+    "QuantumFluids.SectorTemperature.global_eq_sector_of_single",
+    "QuantumFluids.SectorTemperature.sector_invariant"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

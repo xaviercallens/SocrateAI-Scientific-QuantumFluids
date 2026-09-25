@@ -57,3 +57,4 @@ import QHFricke
 import TopologicalProtection
 import ScaleResolvedWinding
 import ContinuumWinding
+import SectorTemperature
