@@ -35,3 +35,21 @@ fig.suptitle("Round 2, Part I: the same energy as vortices (V) or phonons (P); s
 fig.tight_layout()
 fig.savefig(OUT / "causal_intervention.pdf")
 print("wrote", OUT / "causal_intervention.pdf")
+
+
+# ---- ladder and finite size (Parts II/III) ----
+import numpy as np
+V = json.loads((ROOT / "data/generated/pgpe/r2_verdicts.json").read_text())
+fig, ax = plt.subplots(1, 2, figsize=(10, 3.8))
+for part, lab, mk, col in (("II", "$L=64$, heating ladder", "o", "#b2182b"), ("III", "$L=32$, quench $t=4000$", "s", "#2166ac")):
+    rows = V[part]["rows"]; T = [r["T"] for r in rows]
+    ax[0].plot(T, [r["K"] for r in rows], "-" + mk, color=col, label=lab)
+    ax[1].plot(T, [r["eta"] * r["K"] for r in rows], "-" + mk, color=col, label=lab)
+cr64 = V["II"]["crossing"]; cr32 = V["III"]["crossing_L32"]
+ax[0].axhline(4, color="0.5", ls="--", lw=0.8); ax[0].set_ylabel(r"$n_s\lambda_T^2$"); ax[0].set_xlabel("$T$")
+ax[0].axvline(cr64["T_BKT"], color="#b2182b", ls=":", lw=0.8); ax[0].axvline(cr32["T_BKT"], color="#2166ac", ls=":", lw=0.8)
+ax[0].text(cr64["T_BKT"], 10, f" $T_{{BKT}}(64)={cr64['T_BKT']:.3f}$", fontsize=8, color="#b2182b")
+ax[0].text(cr32["T_BKT"], 8.5, f" $T_{{BKT}}(32)={cr32['T_BKT']:.3f}$", fontsize=8, color="#2166ac")
+ax[1].axhline(1, color="0.5", ls="--", lw=0.8); ax[1].set_ylim(0.6, 1.6); ax[1].set_ylabel(r"$\eta\, n_s\lambda_T^2$"); ax[1].set_xlabel("$T$")
+ax[0].legend(frameon=False, fontsize=8)
+fig.tight_layout(); fig.savefig(OUT / "causal_ladder.pdf"); print("wrote", OUT / "causal_ladder.pdf")

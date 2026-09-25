@@ -60,7 +60,10 @@ claim is nevertheless not made, because its thermometer clause fails: the vortex
 \emph{colder}, by $5$--$16\%$, than the phonon arm and than the untouched base, which we read, post
 hoc, as the topological configuration drawing heat from the bath -- a difference with the wrong sign
 to explain the effect. At the lowest temperature the eight imprinted vortices survive the whole run
-without one annihilation. \NUMPENDING\ None of the physics is
+without one annihilation. Heating the equilibrated states step by step locates the stiffness jump at
+$T_{\rm BKT}=0.821$ with $\eta=0.31$ there, confirms the spin-wave duality $\eta\,n_s\lambda_T^2=1$ to
+$12$--$27\%$ on eleven energies in two box sizes, and shows that a quench state with the same number
+of vortices as an equilibrated one can have half its stiffness. None of the physics is
 new; what is new is the chain, each link either proved or measured under a pre-registered criterion,
 and the explicit list of what the chain does not establish.
 \end{abstract}
@@ -312,10 +315,88 @@ arrangement, not the number. The transverse-current stiffness estimator is inval
 ($n_n>n$), as it was in round~1 whenever free vortices were present.
 
 \subsection{The jump and finite size}
-\NUMPENDING
+
+Round~1 of this programme located the stiffness jump between two quench-started energies one grid
+step apart, and its equilibrium filter had let through states that a later check showed were not
+relaxed. Round~2 therefore approaches the jump from the ordered side: the two $e=0.90$ bases are
+heated by the phonon construction to $e=1.00,\dots,1.20$ in steps of $0.05$ (pre-registered) and,
+after the run log showed the crossing still above $e=1.20$, to $1.25,\dots,1.40$ (amendment, made
+before any verdict was computed). All eighteen runs pass the equilibrium admission. A second box,
+$L=32$, is run from quench starts to $t=4000$ at five energies, three seeds each, all admitted.
+
+\begin{figure}[h]\centering
+\includegraphics[width=\textwidth]{figures/causal_ladder.pdf}
+\caption{Left: $n_s\lambda_T^2$ against the measured $T$ on the $L=64$ heating ladder and in the
+$L=32$ box, with the Nelson--Kosterlitz level $4$ and the two interpolated crossings. Right: the
+spin-wave duality product $\eta\,n_s\lambda_T^2$, predicted $1$, on the same runs.}
+\end{figure}
+
+\begin{table}[h]\centering\small
+\begin{tabular}{llc}
+\toprule
+& statement & result\\
+\midrule
+C5 & ladder $e=1.20$ agrees with round~1's quench $e=1.20$ & \textbf{fail}: $n_s\lambda^2$ $5.24$ vs $3.04$ at equal $N_v\approx90$\\
+L1 & $n_s\lambda^2=4$ crossing inside the ladder & \textbf{pass}: $T_{\rm BKT}(L{=}64)=0.821$, between $e=1.25$ and $1.30$\\
+L2 & $\eta=0.25\pm0.08$ at the crossing & \textbf{pass}: $0.307$\\
+L3 & $\eta\,n_s\lambda^2\in[0.75,1.33]$ wherever $n_s\lambda^2>4$ & \textbf{pass}: $1.12$--$1.22$ on six energies\\
+F1 & $T_{\rm BKT}(32)\ge T_{\rm BKT}(64)$ & \textbf{pass}: $0.893\ge0.821$\\
+F2 & the drop is sharper in the larger box & \textbf{pass}: $|d(n_s\lambda^2)/dT|=32$ vs $13$\\
+\bottomrule
+\end{tabular}
+\caption{Pre-registered verdicts of the ladder and the finite-size box.}
+\end{table}
+
+The C5 failure is itself a result of the kind this paper is about. The quench state and the ladder
+state at $e=1.20$ carry the same number of vortices, about ninety, and the quench state has half the
+stiffness: the arrangement, not the count, sets $n_s$. Round~1's transition temperature, $0.72$,
+was read off a quench state and is withdrawn in favour of $0.821$. With that correction the
+Prokof'ev--Ruebenacker--Svistunov number $n\lambda_T^2$ at the transition is $7.65$ against
+$\ln380=5.94$, a $29\%$ excess (round~1 had $47\%$); the cutoff dependence that would explain it is
+still not measured. The duality product sits $12$--$27\%$ above one on all eleven admitted energies
+of the two boxes, a systematic offset we report and do not explain.
 
 \section{What this establishes, and what it does not}
-\NUMPENDING
+
+\begin{keybox}
+\textbf{Established.}
+\begin{itemize}[leftmargin=*]
+\item The winding number of a sampled phase loop is an integer, is conserved by every continuous
+  evolution without a phase slip, costs a positive barrier to change on an XY ring, is additive over
+  scale so that a bound pair is invisible from outside, and equals the continuum degree for every fine
+  enough sampling. These are theorems.
+\item At fixed $E$, $N$ and $P$, on three equilibrated bases, four injected vortex pairs lower the
+  condensate by $0.49$--$0.73$ and raise $\eta$ by a factor $9$--$44$; the same energy as phonons does
+  neither. The vortex arm is colder, not warmer, so the difference is not a temperature effect.
+\item Eight imprinted vortices at $T=0.1$ survive $1500$ time units without one annihilation.
+\item In the ordered phase, $\eta\,n_s\lambda_T^2=1$ holds to $12$--$27\%$ on eleven energies in two
+  boxes; the jump sits at $T_{\rm BKT}=0.821$ ($L=64$) with $\eta=0.31$ there, and moves up and
+  broadens in the smaller box.
+\end{itemize}
+\end{keybox}
+
+\begin{failbox}
+\textbf{Not established.}
+\begin{itemize}[leftmargin=*]
+\item The pre-registered composite claim, because its thermometer clause failed on every base. The
+  reading that replaces it -- the topological configuration cools the bath, and the difference-making
+  survives against the temperature gradient -- is post hoc.
+\item Why the bath cools. Two mechanisms were tested; one is refuted, one inconclusive; the third is
+  an energy-conservation inference, not a measurement.
+\item Any transfer of the coupling (link~4) outside this system; the argument principle; a
+  quantitative sampling threshold; the cutoff dependence of the Prokof'ev number; the $12$--$27\%$
+  offset of the duality product.
+\item Statistics. Three bases for the intervention, two seeds per ladder energy. Verdicts are per
+  base; nothing here is a $p$-value.
+\end{itemize}
+\end{failbox}
+
+\paragraph{Process record.} Four amendments: a control redesigned after it proved insensitive (the
+vortex count cannot see a periodicity defect; a boundary phase jump can, and gave $0.294524$ against
+the predicted $0.294524$); a window regranulated before any output; the I2 reading fixed before the
+data; the ladder widened after the log and before the verdicts. One pre-registered criterion failed
+in a way none of the fixed readings anticipated, and one criterion showed that the previous round's
+transition temperature was biased. Both are reported as what they are.
 
 \section{What transfers beyond the Bose gas, and what does not}\label{sec:transfer}
 

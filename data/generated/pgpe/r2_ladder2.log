@@ -1,0 +1,8 @@
+II_e0.90_s12_t4000_e1.35: T=0.911 cond=0.189 n_v=179.6 Q=0.28 ns/n=0.287 eta=0.519 (algebraic) R_L=0.90 R_T=0.64 dE=4.4e-07 4655.2s
+II_e0.90_s12_t4000_e1.25: T=0.819 cond=0.319 n_v=118.5 Q=0.21 ns/n=0.464 eta=0.316 (algebraic) R_L=0.93 R_T=0.50 dE=3.9e-07 4664.0s
+II_e0.90_s12_t4000_e1.30: T=0.872 cond=0.182 n_v=144.5 Q=0.26 ns/n=0.273 eta=0.488 (algebraic) R_L=0.86 R_T=0.63 dE=4.1e-07 4672.7s
+II_e0.90_s11_t4000_e1.25: T=0.817 cond=0.339 n_v=116.1 Q=0.20 ns/n=0.602 eta=0.279 (algebraic) R_L=0.95 R_T=0.38 dE=3.9e-07 4686.5s
+II_e0.90_s11_t4000_e1.35: T=0.901 cond=0.168 n_v=178.4 Q=0.29 ns/n=0.427 eta=0.562 (algebraic) R_L=0.99 R_T=0.57 dE=4.5e-07 4688.9s
+II_e0.90_s11_t4000_e1.30: T=0.852 cond=0.243 n_v=150.3 Q=0.24 ns/n=0.468 eta=0.406 (algebraic) R_L=1.04 R_T=0.55 dE=4.1e-07 4716.1s
+II_e0.90_s12_t4000_e1.40: T=0.977 cond=0.125 n_v=212.0 Q=0.31 ns/n=0.285 eta=0.686 (algebraic) R_L=0.96 R_T=0.69 dE=4.7e-07 4727.0s
+II_e0.90_s11_t4000_e1.40: T=0.955 cond=0.142 n_v=212.7 Q=0.31 ns/n=0.225 eta=0.633 (algebraic) R_L=0.92 R_T=0.71 dE=4.7e-07 4733.5s

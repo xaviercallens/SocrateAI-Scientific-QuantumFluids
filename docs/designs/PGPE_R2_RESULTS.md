@@ -3,7 +3,7 @@
 Pre-registration `PGPE_R2_PREREG.md` (f8e9773) with amendments R2-A1 (after controls, before arms),
 R2-A2 (before output), R2-A3 (pre-data, at 70 min). Data `data/generated/pgpe/r2/*.json`, log
 `data/generated/pgpe/r2.log`, analysis `exploration/pgpe/analyze_r2.py`, figure
-`paper/figures/causal_intervention.pdf`. Parts II and III: **pending** (runs in progress).
+`paper/figures/causal_intervention.pdf`. Parts II (18 runs after amendment R2-A4) and III (15 runs): complete.
 
 ## Part I — intervention: four free vortex pairs vs the same energy as phonons
 
@@ -73,9 +73,60 @@ larger condensate effect and a 9–11× larger coherence effect when delivered a
 * The transverse-current estimator is invalid in V (R_T = 5.5–38, "n_n > n"), as in round 1 when free
   vortices are present; reported, not used.
 
-## Part II — heating ladder: pending
+## Part II — heating ladder from the ordered state (L = 64)
 
-## Part III — finite size L = 32: pending
+Ten pre-registered runs (e = 1.00–1.20) plus eight from amendment R2-A4 (e = 1.25–1.40), two bases each,
+all admitted by A4. Seed means (window t ∈ [500, 1500]):
+
+| e | T | n_s/n | n_s λ² | η | η·n_s λ² | Q | condensate |
+|---|---|---|---|---|---|---|---|
+| 1.00 | 0.571 | 0.809 | 8.90 | 0.126 | 1.12 | 0.09 | 0.571 |
+| 1.05 | 0.622 | 0.767 | 7.75 | 0.145 | 1.12 | 0.11 | 0.534 |
+| 1.10 | 0.668 | 0.725 | 6.82 | 0.164 | 1.12 | 0.13 | 0.494 |
+| 1.15 | 0.722 | 0.703 | 6.11 | 0.192 | 1.18 | 0.15 | 0.444 |
+| 1.20 | 0.775 | 0.647 | 5.24 | 0.230 | 1.20 | 0.17 | 0.396 |
+| 1.25 | 0.818 | 0.533 | 4.09 | 0.297 | 1.22 | 0.20 | 0.329 |
+| 1.30 | 0.862 | 0.370 | 2.70 | 0.447 | 1.21 | 0.25 | 0.213 |
+| 1.35 | 0.906 | 0.357 | 2.48 | 0.540 | 1.34 | 0.28 | 0.178 |
+| 1.40 | 0.966 | 0.255 | 1.66 | 0.660 | 1.09 | 0.31 | 0.133 |
+
+Seed spread is largest at the transition: at e = 1.25, n_s/n = 0.602 (s11) vs 0.464 (s12); at 1.30,
+0.468 vs 0.273. Two seeds only; the crossing is quoted from the means.
+
+| # | Statement | Result |
+|---|---|---|
+| C5 | ladder e = 1.20 agrees with round 1's quench e = 1.20 | **FAIL** (anticipated in R2-A4): n_s λ² 5.24 vs 3.04, η 0.230 vs 0.349, at the same vortex count (≈ 90). The quench state at e = 1.20 was not equilibrated: same number of vortices, different arrangement, half the stiffness. Round 1's T_BKT ≈ 0.72 is withdrawn in favour of the ladder value. |
+| L1 | crossing inside the ladder | **PASS**: between e = 1.25 and 1.30, **T_BKT(L = 64) = 0.821** |
+| L2 | η at the crossing = 0.25 ± 0.08 | **PASS**: 0.307 |
+| L3 | η·n_s λ² ∈ [0.75, 1.33] wherever n_s λ² > 4 | **PASS** on all six energies: 1.12, 1.12, 1.12, 1.18, 1.20, 1.22 — a systematic +12–22 % |
+
+Reported, not pre-registered: n λ² at T_BKT(64) is 2π/0.821 = 7.65 against ln 380 = 5.94 (+29 %; round
+1 had +47 % from a biased T_BKT). The cutoff dependence remains unquantified.
+
+## Part III — finite size, L = 32 (quench starts, t = 4000, three seeds)
+
+| e | T | n_s/n | n_s λ² | η | η·n_s λ² | Q | condensate |
+|---|---|---|---|---|---|---|---|
+| 0.90 | 0.456 | 0.876 | 12.07 | 0.095 | 1.14 | 0.44 | 0.697 |
+| 1.00 | 0.568 | 0.822 | 9.09 | 0.126 | 1.15 | 0.28 | 0.628 |
+| 1.10 | 0.669 | 0.764 | 7.18 | 0.165 | 1.19 | 0.21 | 0.552 |
+| 1.20 | 0.792 | 0.675 | 5.36 | 0.236 | 1.27 | 0.23 | 0.459 |
+| 1.40 | 0.997 | 0.415 | 2.62 | 0.442 | 1.16 | 0.32 | 0.280 |
+
+| # | Statement | Result |
+|---|---|---|
+| F1 | T_BKT(32) ≥ T_BKT(64) | **PASS**: 0.893 ≥ 0.821 (η at the L = 32 crossing 0.34) |
+| F2 | the drop is sharper at L = 64 | **PASS**: \|d(n_s λ²)/dT\| = 32 at L = 64 vs 13 at L = 32 |
+
+The duality relation holds at L = 32 as well (1.14–1.27 on five energies), with the same sign of bias.
+
+## Summary of round 2
+
+Of the pre-registered criteria: I1 ×3, I3 ×2, I4 ×3, C4 ×2, L1, L2, L3, F1, F2 **pass**; I2 ×3 and C5
+**fail**; I3 at e = 0.60 is not evaluable. The composite causal claim as worded (equal thermometer) is
+not made; the post-hoc reading (topology cools the bath, wrong sign to explain the effect) is stated as
+post hoc. The amendments are R2-A1 (control redesign), R2-A2 (window granularity), R2-A3 (pre-data
+reading of I2), R2-A4 (ladder widened after the log, before verdicts).
 
 ## Part IV — post-hoc re-analysis of round 1 with the noise-aware g₁ window
 

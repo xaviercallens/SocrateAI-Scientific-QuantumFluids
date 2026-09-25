@@ -1,5 +1,11 @@
 # Results: PGPE classical-field BKT gate, the duality checks and the topology closed loop
 
+> **Erratum (2026-09-25, round 2, `PGPE_R2_RESULTS.md` C5).** The transition temperature quoted below,
+> T_BKT ≈ 0.72, was interpolated between quench-started states; the round-2 heating ladder shows the
+> quench e = 1.20 state had half the stiffness of the equilibrated one at the same vortex count. The value
+> is **withdrawn** in favour of T_BKT(L = 64) = 0.821 (η = 0.31 there). D1/D2 verdicts below stand on the
+> e = 0.6/0.9 points, which were re-equilibrated to t = 4000; B4's +47 % becomes +29 % with the corrected T.
+
 Pre-registration: `docs/designs/PGPE_BKT_PREREG.md` (7de1f11) with amendments A1 (f4e1c10, before any
 thermal run), A2 (58aa0e2, before any thermal run), **A3 (573f83d, data-triggered after 6 of 36
 trajectories)** and **A4 (bcc0f56, post hoc after all 36)**. Data: `data/generated/pgpe/sweep/*.json`
