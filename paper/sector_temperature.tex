@@ -112,13 +112,29 @@ temperature cannot see.
 \paragraph{Canonical calibration.} Metropolis sampling at set $\beta$ with pair moves that conserve the
 vortex momentum, for $N=4$ to $16$ vortices, giving $\langle E\rangle(\beta)$ and the dipole and cluster
 fractions of Groszek et al.~\cite{Groszek2018}. Two internal checks: $d\langle E\rangle/d\beta=-{\rm Var}(E)$
-at every interior grid point, and closure (K1). Results: \PENDING.
+at every interior grid point, and closure (K1). \textbf{Results} (`vortex\_thermometer\_canonical.py`, 4000 sweeps per
+$\beta$, nine $\beta$ values from $-0.6$ to $3$): closure passes at all six sizes -- set $1.2$, read $1.223$, $1.313$,
+$1.256$, $1.270$, $1.281$, $1.142$ for $N=4,6,8,10,12,16$ (largest deviation $9.4\%$). A lighter run ($1500$
+sweeps) had failed closure at $N=6$ and $8$ ($1.385$, $1.334$): the failure was precision, not the instrument, and
+both runs are kept on record. The fluctuation identity holds to $10$--$30\%$ at $\beta\ge0.3$ (coarse finite
+differences), but \textbf{fails for $\beta\le0$}: $\langle E\rangle$ is flat from $\beta=-0.6$ to $0$ where
+$-{\rm Var}(E)$ predicts a slope of $-5$ to $-70$. The pair-move Metropolis does not equilibrate the clustered,
+negative-temperature branch in these chains (cluster moves are known to be needed there). Consequence, fixed now:
+the thermometer is valid for $\beta\ge0.3$ only; no negative temperature is read from it.
+
+\paragraph{First calibrated reading (post hoc, one snapshot at $t=1500$).} Arm V at $e=0.90$: $T_v=2.15$ ($N=12$)
+and $3.21$ ($N=10$) against bath readings $0.39$ and $0.38$ in the same block -- $T_v/T_b=5.5$ and $8.4$. Arm V at
+$e=0.60$: the imprinted configuration sits at $\beta_{\rm WM}\approx-0.1$, inside the unvalidated branch; we report
+$|\beta_v|\lesssim0.1$, i.e.\ $T_v\gg T_b=0.08$, and no sign. The untouched and phonon arms carry $4$--$6$ tightly
+bound thermal pairs whose energy lies below the coldest calibrated point (separations at the core scale, outside the
+point-vortex model): no reading. These are the numbers P1 will test block by block; they are consistent with it and
+do not establish it.
 
 \paragraph{First placement (post hoc, from the round-2 final states).} The imprinted configuration at
 $e=0.60$, untouched for $1500$ time units, sits $0.27\sigma$ below the mean energy of random neutral
 configurations: $\beta_v\approx0$, next to a bath at $\beta_b\approx10$. The thermal arms sit $4.5$--$6\sigma$
 below (bound pairs). This placement is robust; the numerical $T_v$ from the slope of the density of states
-is not, and is not quoted.
+is not, and is not quoted there; the calibrated reading above supersedes this placement.
 
 \section{Data that can test the hypothesis}\label{sec:data}
 
