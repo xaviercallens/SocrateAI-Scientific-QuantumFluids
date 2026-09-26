@@ -64,6 +64,19 @@ D1 (two of three): **FAIL**. D2 (all): **PASS**.
   the condensate recovers 0.11 → 0.57 as E_inc falls 178 → 56 and T_b rises 0.432 → 0.480: the annihilation energy
   returns to the bath (Kanai–Guo's sound), closing the cycle that Part A opened.
 
+**Post hoc, 2026-09-26: a second, real-space diagnostic on the same three runs.** Gauthier et al.'s 2019
+Onsager-cluster order parameter (Science 364, 1264; the distance between the +1 and −1 vortex sub-populations'
+own centroids, adapted for a periodic box — `observables.onsager_dipole`, `onsager_dipole_analysis.py`), applied
+to the vortex positions already on disk, no new run: on **s12 (the persistent current)** it *rises* over the run,
+block by block, 0.02 → 0.14 → 0.26 → 0.14–0.23 (noisy, but a clear upward trend from the first third to the rest);
+on **s11 (clean coarsening)** it *falls*, 0.17–0.19 in the first third down to 0.02–0.08 by the end; on **e = 0.60
+(the decaying current)** it stays high and noisy throughout (0.1–0.42), consistent with a small, fluctuating
+vortex number rather than a clean trend. Reported, not predicted: the persistent-current arm's vortices become
+*more* clustered by sign as the run proceeds, opposite to the coarsening arm's vortices becoming *less* so — a
+plausible geometric signature of the sector organising the surviving sixteen vortices into the array a winding-3
+superflow would carry, distinct from the mixing a decaying, sector-free population shows. Not pre-registered;
+one run per case; not to be read as more than what it is.
+
 **Reading.** The 16-pair arms did not test coarsening cleanly (one arm, and it failed D1), but they produced, by a
 design error, the two branches of the ring thought experiment on our own torus: a protected winding-3 current that
 outlives 1500 time units with its condensate displaced to k ≠ 0, and a winding-2 current that decays by phase

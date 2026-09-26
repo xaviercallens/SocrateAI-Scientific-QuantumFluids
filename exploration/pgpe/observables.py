@@ -117,3 +117,23 @@ def dipole_matching(s: PGPE, pos: np.ndarray, q: np.ndarray, rng: np.random.Gene
     ld = mean_len(q)
     ln = float(np.mean([mean_len(rng.permutation(q)) for _ in range(n_null)]))
     return ld, ln, ld / ln
+
+
+def onsager_dipole(s: PGPE, pos: np.ndarray, q: np.ndarray) -> float:
+    """Periodic analogue of Gauthier et al. 2019's Onsager-cluster order parameter D = |mean_j sgn(Gamma_j) r_j|
+    (Science 364, 1264, DOI 10.1126/science.aat5718): on their bounded trap D measures the vortex gas's offset
+    from the trap centre. A periodic torus has no such centre, so the periodic-invariant analogue used here is
+    the distance between the +1 and -1 sub-populations' own centroids (each a circular mean per axis, since a
+    periodic domain has no absolute origin), normalised by L: D ~ 0 for a well-mixed (paired) gas; D grows as
+    the two signs separate into distinct clusters. NOT claimed identical to Gauthier's D -- the geometry
+    (bounded trap vs. periodic torus) differs; this is the natural adaptation, stated as such."""
+    if len(pos) < 2 or np.sum(q > 0) == 0 or np.sum(q < 0) == 0:
+        return float("nan")
+
+    def centroid(p):
+        ang = 2 * np.pi * p / s.L
+        return (s.L / (2 * np.pi)) * np.angle(np.mean(np.exp(1j * ang), axis=0)) % s.L
+    cp, cm = centroid(pos[q > 0]), centroid(pos[q < 0])
+    d = cp - cm
+    d = d - s.L * np.round(d / s.L)
+    return float(np.sqrt((d ** 2).sum()) / s.L)

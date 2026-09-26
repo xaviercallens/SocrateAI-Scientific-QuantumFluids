@@ -96,6 +96,25 @@ e = 0.90 s11: +0.051 (P16) vs +0.089 (V3P16), larger with the sector; e = 0.90 s
 pair annihilation and bath heating differs by base and by seed, with a single seed per arm. Not resolvable at
 this statistics; a genuine effect, if any, needs several seeds per arm to separate from run-to-run noise.
 
+**Post hoc, 2026-09-26: Gauthier et al.'s Onsager-cluster order parameter** (Science 364, 1264; the periodic
+adaptation of `observables.onsager_dipole`, applied to the same `*_samples.npz` already on disk — no new run;
+cosmology brief Tier 1 item 2), mean over the run:
+
+| base | arm 0 | arm V3 | arm P16 | arm V3P16 |
+|---|---|---|---|---|
+| e = 0.60 | n/a (0 vortices) | n/a (0 vortices) | 0.203 | 0.220 |
+| e = 0.90 s11 | 0.015 | 0.015 | 0.149 | 0.054 |
+| e = 0.90 s12 | 0.010 | 0.013 | 0.057 | 0.060 |
+
+**Confirms B1 by a second, independent instrument**: arm 0 and arm V3 (sector alone, no injected pairs) are
+statistically indistinguishable (0.015 vs 0.015; 0.010 vs 0.013) — the imposed current changes the real-space
+clustering geometry of the (essentially absent, at e = 0.90, thermal) vortex population no more than it changes
+its density spectrum. For P16 vs V3P16 (pairs, with and without the sector): matched at e = 0.60 (0.203 vs
+0.220, consistent with B4) and at e = 0.90 s12 (0.057 vs 0.060), but a factor of 2.8 lower with the sector
+present at e = 0.90 s11 (0.149 → 0.054) — the same base/seed where the sector also *sped up* pair decay and
+*increased* bath heating (above). **No consistent sign across bases/seeds**, same conclusion as the other B5
+items: a real secondary effect at s11, if it is one, needs more seeds to separate from noise; not claimed here.
+
 ## Composite reading
 
 | # | Verdict |
