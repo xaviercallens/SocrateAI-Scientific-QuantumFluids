@@ -53,9 +53,12 @@ equilibrated bases, injecting the same energy as topological defects lowers the 
 by $0.49$--$0.73$ where injecting it as phonons lowers it by at most $0.035$ -- the same energy, as
 topology, is $15$--$60\times$ more effective. Third, the criterion is carried into cosmology (dark
 matter halos, dark energy, the K3 charge lattice of a black hole's dyonic charges) and against one
-real, present-day dataset: an independent reproduction of a published CMB bound on a discrete
-dark-energy phase transition, built from the published equations and Planck's own data, matches the
-original to within $4$--$60\%$ in its best-resolved regime. Eleven of these fifteen candidates receive
+real, present-day dataset: an independent, exact reproduction of a published CMB bound on a discrete
+dark-energy phase transition, built from the published equations and Planck's own data, agrees with the
+original to within a factor of $3.16$ across the parameter grid we tested, and a forecast built on that
+same reproduction shows that no future CMB temperature experiment can meaningfully tighten this
+particular bound, since Planck's own measurement is already within about $15\%$ of the cosmic-variance
+floor at the relevant multipoles. Eleven of these fifteen candidates receive
 one of the criterion's four verdicts; three are, on inspection, not instances of the criterion at all
 -- a classification (topological superconductors), a duality between different theories with no
 self-map (three-dimensional Ising duality, AdS/CFT) -- and one, Calabi--Yau mirror symmetry, is left an
@@ -309,14 +312,27 @@ projection onto the CMB temperature power spectrum, checked against Planck's own
 by a three-bin $\chi^2$ test, with no Boltzmann code and no Markov-chain Monte Carlo anywhere in the
 published pipeline -- we independently re-implemented the entire calculation in plain numerical code
 against the real Planck~2018 temperature power spectrum, downloaded directly from the Planck Legacy
-Archive. In the transition-rate regime the original authors resolve best ($\beta/H_\star\geq100$), our
-independent bound on the released dark-energy fraction $r$ agrees with their own published
-approximation to within $4$--$60\%$; at lower transition rates our bound is weaker, by up to a factor
-of sixteen, for a reason stated plainly in the original paper itself -- the signal's peak shifts below
-the multipole range either calculation resolves -- and not a discrepancy this paper is hiding. This
-reproduction needed no specialised hardware: the full calculation runs in CPU-minutes on a single core,
-confirming directly that a rented GPU would add nothing to this specific test, since the published
-bound is a closed-form calculation, not a machine-learning or large-scale-simulation workload.
+Archive, first with an interpolated approximation to the underlying bubble-statistics spectrum and then,
+after locating the exact closed form in a companion paper's supplementary material, with that exact
+spectrum in place of the approximation. The exact calculation closes most of the gap the first pass
+flagged as its weakest point -- across the full grid of transition rates and completion redshifts we
+tested, the worst-case disagreement with the original authors' own analytic approximation falls from a
+factor of sixteen to a factor of $3.16$ -- but not uniformly: at low transition rates the exact result
+tracks the approximation closely, while at the highest rates we tested it now sits $30$--$45\%$
+\emph{below} it, a real trade-off we report rather than reconcile, since the original approximation is
+itself described by its own authors as an order-of-magnitude estimate. We then asked whether any future
+CMB temperature experiment could improve on this bound at all, using the fact that this signal's own
+statistic scales the bound exactly as the square root of the multipole error bar, with no linearisation
+needed: comparing Planck's own measured errors against the pure cosmic-variance floor at the multipoles
+this signal occupies ($\ell\approx5$--$50$) shows Planck is already within about $15\%$ of that floor.
+No temperature-only successor to Planck -- a bigger mirror, a colder detector -- can meaningfully
+tighten this particular bound; what little room remains, at the very lowest multipoles, is capped by
+foreground and sky-masking systematics, not by instrument sensitivity, matching the original authors'
+own pointer toward CMB spectral distortions and pulsar timing arrays as the more promising channels for
+further progress. Every step of this reproduction and forecast needed no specialised hardware: the full
+calculation runs in CPU-minutes to CPU-hours on a single core, confirming directly that a rented GPU
+would add nothing to this line of work, since every bound here is a closed-form or exact-scaling
+calculation, not a machine-learning or large-scale-simulation workload.
 
 \paragraph{K3 as a charge lattice: the attractor mechanism, and where it does and does not generalise.}
 A type~II dyon on K3$\times T^2$ has an entropy that is a function only of an
@@ -373,17 +389,20 @@ self-map, a definite and checkable answer, or an honestly stated absence of one.
 always is. An interventional experiment in a real physical system supports the presupposition the
 whole criterion needs: that a sector, once identified, is not merely a label but a lever. And where the
 criterion reaches all the way to cosmology, it makes contact with real, present-day data, not only with
-toy models -- an independent reproduction of a published CMB bound, agreeing to within a few tens of
-percent in its best-resolved regime, on a machine anyone can rent for an afternoon.
+toy models -- an independent, exact reproduction of a published CMB bound, agreeing with it to within a
+factor of a few, and a forecast showing that no future CMB temperature mission would meaningfully
+improve it, both computed on a machine anyone can rent for an afternoon.
 
 What remains open is stated as plainly as what is closed: whether a physically distinguished
-self-mirror Calabi--Yau threefold exists anywhere in the string landscape; whether a genuinely new
-full confrontation of the discrete dark-energy cascade against present-day CMB likelihoods, rather
-than a reproduction of one published bound, would sharpen or weaken the discriminating test in
-\S5 (a multi-week undertaking, by our own estimate, not a multi-day one, regardless of computing
-hardware); and whether further cross-domain cases -- of fifteen candidates investigated so far, three
-were found not to be instances of the criterion at all, and eleven received a definite verdict -- exist
-that fit the criterion as cleanly as Ising or as informatively as Calabi--Yau's open question. None of these is claimed here. What is
+self-mirror Calabi--Yau threefold exists anywhere in the string landscape; whether a genuinely new full
+confrontation of the discrete dark-energy cascade against present-day CMB \emph{likelihoods} (not the
+three-bin toy statistic reproduced here), or against the channels the original authors themselves point
+to -- CMB spectral distortions, pulsar timing arrays -- rather than more CMB-temperature data, would
+sharpen or weaken the discriminating test in \S5 (a multi-week undertaking for the likelihood route, by
+our own estimate, not a multi-day one, regardless of computing hardware); and whether further
+cross-domain cases -- of fifteen candidates investigated so far, three were found not to be instances of
+the criterion at all, and eleven received a definite verdict -- exist that fit the criterion as cleanly
+as Ising or as informatively as Calabi--Yau's open question. None of these is claimed here. What is
 claimed is narrower and, we think, more durable: a criterion, stated once, checked eleven times, and
 not falsified yet.
 
