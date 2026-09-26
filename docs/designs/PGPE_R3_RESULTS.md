@@ -72,3 +72,14 @@ result; both are direct observations of the sector physics `TopologicalProtectio
 
 ## Part C — running
 
+**Timing correction (2026-09-26, disclosure).** The prereg's "≈ 7 h wall" estimate for Part C was wrong: at
+06:12 on 2026-09-26 (8.5 h after launch) all six workers were still on their first sample, 0/6 runs written.
+`dx` is held fixed (L doubles with N, per the prereg), so the per-step FFT cost scales as
+$(256^2\log_2256)/(128^2\log_2128)\approx4.6\times$ and the run length as $4000/1500\approx2.7\times$ round 3's
+runs — a combined factor $\approx12$, against a round-3 single-run baseline of $\approx6400\,$s (median of the
+nine round-3 A/D timings). Re-estimated single-run wall time $\approx78{,}000\,$s $\approx22\,$h; since the six
+runs share six workers on an eight-core machine, batch wall time $\approx$ that same $\approx22\,$h, i.e. finish
+$\approx19$:00–$20$:00 on 2026-09-26, not the small hours as first stated. This is a scaling re-estimate, not a
+measurement (the run emits no interim progress); recorded honestly per the "compute estimate off" convention of
+round 3's own A1 amendment.
+
