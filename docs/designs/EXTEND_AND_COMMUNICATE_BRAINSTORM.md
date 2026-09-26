@@ -97,10 +97,17 @@ verification pass as A1, with a real, honest outcome for each:
 8. **AdS/CFT weak-strong duality** (as "sector = coupling regime") — checked against Maldacena 1998,
    **excluded**: a strong-weak equivalence holding at every coupling, with no conjectured involution and no
    fixed locus of enhanced symmetry; the self-dual-point question doesn't apply.
-9. **Calabi-Yau mirror symmetry beyond K3** (genuine CY3 Kähler/complex-structure exchange, e.g. the quintic) —
-   explicitly **not researched** this round. The likely outcome (another "continuous modulus, point like any
-   other" verdict) was guessed, not verified, and is flagged here as an open item for a future pass rather than
-   claimed either way. Do not cite this as a settled exclusion.
+9. **Calabi-Yau mirror symmetry beyond K3** — **status update (2026-09-26, later)**: researched properly, and
+   the guess above turned out to be the wrong shape of question, not merely unverified. Verified against
+   Strominger-Yau-Zaslow 1996 (mirror symmetry IS T-duality on a special Lagrangian $T^3$ fibration — the
+   furthest extension of this programme's own T-duality thread) and Candelas-Derrick-Parkes 1993. Mirror
+   symmetry generically relates *two different* manifolds, not a self-map of one moduli space, so the
+   self-dual-point question only becomes literal for a genuine self-mirror CY3 ($X\cong Y$) — a direct
+   arXiv/INSPIRE search found **no established example** of one playing a role like BKT's $R=\sqrt2$ or
+   $S$-duality's $\tau=i$. Recorded honestly as an open question, not a fourth "not forced" verdict and not an
+   exclusion. What IS established: a rigid Calabi-Yau ($h^{2,1}=0$) has no smooth mirror at all — mirror
+   symmetry can fail outright rather than close on a point. Mathlib has zero relevant content. Case-study
+   paragraph in `paper/duality_sector.tex`'s fifth addendum. CLAIM-060.
 
 ### A3. Flagged, not recommended without a much stronger case first
 
