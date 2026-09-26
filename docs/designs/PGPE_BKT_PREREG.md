@@ -243,3 +243,23 @@ differs between them is flagged. The one-time extension to `t = 4000` is run for
 A4 (`e = 0.60` × 3 on `R_L`; `e = 0.90` seeds 11, 12 on `R_T`). A3-as-written would also extend every
 trajectory at `e ≥ 2.0`; that is not run, because their failure is the regime, not the relaxation
 (their thermometers are stationary and the ideal-field value accounts for their `R_L`).
+
+## Amendment A2 (2026-09-26): the rusty-sundials-py build is fixed, upstream
+
+Both concrete fixes §3 proposed for `rusty-sundials-py` are made, on the upstream repository, not here:
+added to `[workspace] members` (so `cargo build --workspace` and CI cover it), and — the actual root cause,
+simpler than guessed — its three `E0603` errors were a stale import path (`cvode::solver::Cvode`,
+`cvode::constants::{Method, Task}`, private modules) instead of the crate-root re-export
+(`cvode::{Cvode, Method, Task}`); **not** a `pyo3 0.20`-versus-current-Rust-toolchain incompatibility as
+§3 conjectured. `pyo3 0.20.3` compiles cleanly against the current toolchain once the import path is right.
+Built with `maturin develop --release` into this project's own `.venv` and verified numerically correct
+(a scalar decay ODE through the real CVODE Adams integrator from Python, `err ≈ 2.4×10⁻⁶` against the
+closed form) — not merely "imports without error". PR:
+[rusty-SUNDIALS#55](https://github.com/xaviercallens/rusty-SUNDIALS/pull/55) (open, not yet merged).
+
+**Not fixed, and not attempted here**: the numpy-array RHS path. The `.solve()` callback still round-trips
+every internal CVODE step through the GIL and a Python-list conversion; re-running K6's own 16×16-grid
+comparison end to end with the now-working binding was started and killed after several CPU-minutes with
+no result, to avoid contending with a concurrent `L=128` PGPE run for the machine's 8 cores — this is the
+same "prohibitive above a few thousand unknowns" limitation §3 already named, now observed directly rather
+than only inferred. K6's own pass (scipy fallback, `3.5×10⁻⁷` agreement) is unaffected and is not re-run.
