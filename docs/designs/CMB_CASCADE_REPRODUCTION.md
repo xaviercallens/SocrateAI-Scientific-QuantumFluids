@@ -141,10 +141,89 @@ physics.
   full paper reads — confirming the earlier feasibility pass's finding that a rented T4 GPU would add
   nothing to this specific calculation.
 
+## Addendum (2026-09-26, later): closing the P_delta-t approximation gap
+
+The section above flagged the interpolated `P_delta-t(xi)` shape as the main source of the
+remaining mismatch, and named Elor et al.'s Supplementary Material as the place to look for an
+exact form. It has one: their Eqs. (S1)-(S16) give the full bubble-time correlator
+`beta^2<delta_tc(x)delta_tc(y)>(r)` in closed form, as a sum of a "single-bubble" and a
+"double-bubble" contribution, each a finite one-dimensional integral ("these are one-dimensional
+integrals and easy to evaluate" -- their own words). No code or data release was found for either
+paper (checked again, including a search for a companion GitHub/Zenodo repository under the
+authors' names and the paper's title; none exists publicly), so this is implemented directly from
+their equations, in `exploration/cmb/pdt_exact.py`.
+
+**What was implemented.** `_single_integrand`/`_double_integrand` are Eqs. (S9)-(S11) and
+(S12)-(S16) exactly; `_correlator(r)` integrates each over `t_xy in [-r,r]` with `scipy.integrate.quad`
+and sums them (Eq. S3); a 250-point table of `correlator(r)` over `r in [0,45]` (in units of
+`1/beta`) is built once and cached (`pdt_exact_table.npz`); `P_beta_dtc_exact(k)` Fourier-sine-
+transforms that table (Eq. S2, `int 4 pi r^2 dr sinc(kr) correlator(r)`); `P_exact_k_elor(k)` applies
+the dimensionless prefactor (Eq. S1). `cmb_cascade.py` gained `Pdt_hatk_exact`, a drop-in
+replacement for the original `Pdt_hatk` interpolation, converting `hat_k` to Elor's own `k/beta`
+variable (`k_elor = (1+zpt)*hat_k/beta_over_H`, the correspondence verified against Koren-Tsai-
+Wang's own Eq. (2) definition, which carries an explicit `(H_star/beta)^2` prefactor that Elor's own
+dimensionless spectrum does not).
+
+**Validation before trusting it.** `correlator(r->0) = pi^2/6 = 1.6449...` exactly (a closed-form
+value the single-bubble integral reduces to, matching the paper's Fig. S3's blue curve's starting
+value; the double-bubble contribution correctly vanishes at `r=0`, matching the red curve). The
+resulting `P_exact_k_elor(k)` peaks at `k=0.493` with value `1.077`, matching Fig. S4's peak (`~1`
+near `k/beta~0.5`) and its two labelled asymptotes at the sampled endpoints. One known numerical
+limitation, stated explicitly: the fixed-grid Fourier transform under-resolves the oscillatory
+integrand for `k_elor` beyond about 5-10 (a rapidly-oscillating `sin(kr)` against a 250-point grid),
+occasionally returning small negative numerical noise there, which we clip to zero; this region is
+never reached by the CMB bound calculation below (whose scan stays within a factor of 10 of the
+peak, `k_elor` up to about 5).
+
+**Result: does the exact spectrum improve the match?** Re-running `cmb_bound.py`'s full
+`(beta/H_star, z_pt)` grid with `Pdt_hatk_exact` in place of the interpolation:
+
+| β/H⋆ | z̄_pt | r (interpolated) | ratio to Eq. 15 | r (exact) | ratio to Eq. 15 |
+|---:|---:|---:|---:|---:|---:|
+| 10  | 0.1 | 0.01648 | 16.48× | 0.003156 | 3.16× |
+| 20  | 0.1 | 0.02227 | 5.57×  | 0.005724 | 1.43× |
+| 50  | 0.1 | 0.05073 | 2.03×  | 0.02322  | 0.93× |
+| 100 | 0.1 | 0.1611  | 1.61×  | 0.08405  | 0.84× |
+| 200 | 0.1 | 0.507   | 1.27×  | 0.2543   | 0.64× |
+| 500 | 0.1 | 2.606   | 1.04×  | 1.425    | 0.57× |
+| 10  | 0.2 | 0.007535| 7.54×  | 0.001845 | 1.84× |
+| 20  | 0.2 | 0.01271 | 3.18×  | 0.004651 | 1.16× |
+| 50  | 0.2 | 0.04731 | 1.89×  | 0.02494  | 1.00× |
+| 100 | 0.2 | 0.1685  | 1.69×  | 0.08014  | 0.80× |
+| 200 | 0.2 | 0.5058  | 1.26×  | 0.2744   | 0.69× |
+| 500 | 0.2 | 3.161   | 1.26×  | 2.203    | 0.88× |
+
+**Honest verdict.** The exact spectrum closes most of the gap the design doc flagged as the weakest
+part of the first pass: at `β/H⋆<=50`, where the interpolation was off by up to 16.5×, the exact
+spectrum is now off by at most 3.16× -- a genuine, large improvement, and consistent with the
+diagnosis that the interpolation's wrong peak location (`xi=0.833` vs the exact `xi=1.468`) mattered
+most exactly in the regime where the signal's own peak sits close to the resolved-`ell` boundary.
+It is not a uniform win: at `β/H⋆>=200`, where the interpolation actually agreed reasonably well
+(within 27%), the exact spectrum now UNDERshoots the analytic approximation by 30-45%. This is not
+hidden or reconciled away -- it is a real, reported trade-off: the worst-case mismatch across the
+whole 12-point grid shrank from 16.5× (interpolated) to 3.16× (exact), a genuine improvement, but
+the two versions do not bracket the truth from the same side, and Eq. (15) is itself only ever
+described by its own authors as "a useful analytic order-of-magnitude approximation" derived from
+the spectrum's peak value alone -- neither reproduction should be read as more than a same-order-of-
+magnitude-to-tens-of-percent check on a deliberately approximate published formula, not on the
+paper's own full numerical Fig. 3 (which was not independently re-extracted here; doing so would
+need to either digitise Fig. 3 directly or re-derive the full χ² pipeline exactly as the paper's own
+code, which does not exist publicly, would have done).
+
+## Addendum (2026-09-26, later still): a Fisher-matrix forecast, prepared and run
+
+See `docs/designs/CMB_FISHER_FORECAST.md` for a new, separate line of work: not a reproduction
+check, but a forecast of how much a next-generation CMB dataset could improve on Koren-Tsai-Wang's
+own bound, using the exact spectrum above. That document also records the two things this
+forecast does NOT establish, matching the standard set above.
+
 ## Reproducibility
 
 - `exploration/cmb/cmb_cascade.py` — implements Eqs. (1), (4)-(5), (9)-(13) of arXiv:2509.07076.
-- `exploration/cmb/cmb_bound.py` — implements Eq. (14), the χ² 2σ bound, against real Planck data.
+- `exploration/cmb/pdt_exact.py` — the exact `P_delta-t(k)` from Elor et al.'s Eqs. (S1)-(S16)
+  (2026-09-26 addendum below), an alternative to `cmb_cascade.py`'s original interpolation.
+- `exploration/cmb/cmb_bound.py` — implements Eq. (14), the χ² 2σ bound, against real Planck data;
+  now runs both the interpolated and exact spectra and prints both tables.
 - `data/external/planck2018_tt_full/COM_PowerSpect_CMB-TT-full_R3.01.txt` — the real Planck 2018 TT
   power spectrum (ℓ, D_ℓ, -dD_ℓ, +dD_ℓ, μK²), downloaded from the Planck Legacy Archive.
 - Run: `uv run python exploration/cmb/cmb_cascade.py` (Fig. 2 sanity check) then

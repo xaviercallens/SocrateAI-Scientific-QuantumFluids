@@ -120,3 +120,7 @@ data/external/godfrin_papers/*.tar
 data/external/godfrin_papers/src_tmp*/
 data/external/godfrin_papers/*_src/
 data/external/godfrin_papers/**/*.eps
+
+# exploration/cmb/pdt_exact.py's correlator table: cheap (~5s) to rebuild from its documented
+# closed-form equations; not committed to avoid silently serving a stale cache if the formulas change
+exploration/cmb/pdt_exact_table.npz
