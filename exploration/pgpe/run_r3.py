@@ -28,9 +28,12 @@ def job(spec):
             c = imprint(s, c0, pos, q)
             det = vortices(s, c)[1]; spec["imprint_check"] = {"imprinted": 32, "detected": int(len(det)), "neutral": bool((det > 0).sum() == (det < 0).sum())}
         E0 = s.energy(c); c, blocks, samples = run_blocks_positions(s, c, 1500.0, 0.0, seed=spec["idx"])
-    else:
+    elif kind == "C":
         s = PGPE(N=256, L=128.0); c = s.random_state(1.0, spec["e"], np.random.default_rng(spec["seed"]))
         E0 = s.energy(c); c, blocks, samples = run_blocks_positions(s, c, 4000.0, 3000.0, seed=spec["seed"])
+    else:  # C2: amendment R3-A2 -- t_tr doubled (3000 -> 6000) after Part C's admission failure at L = 128
+        s = PGPE(N=256, L=128.0); c = s.random_state(1.0, spec["e"], np.random.default_rng(spec["seed"]))
+        E0 = s.energy(c); c, blocks, samples = run_blocks_positions(s, c, 7000.0, 6000.0, seed=spec["seed"])
     res = {**spec, "E_per_particle": E0 / s.norm(c), "drift_E": abs(s.energy(c) - E0) / E0, "L": s.L, "blocks": blocks, "seconds": round(time.time() - t0, 1)}
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / f"{spec['name']}.json").write_text(json.dumps(res, indent=1, default=float))
@@ -57,6 +60,10 @@ def specs(parts):
         for e in (1.00, 1.10, 1.20):
             for sd in (11, 12):
                 out.append({"kind": "C", "e": e, "seed": sd, "name": f"C_L128_e{e:.2f}_s{sd}"})
+    if "C2" in parts:
+        for e in (1.00, 1.10, 1.20):
+            for sd in (11, 12):
+                out.append({"kind": "C2", "e": e, "seed": sd, "name": f"C2_L128_e{e:.2f}_s{sd}"})
     return out
 
 

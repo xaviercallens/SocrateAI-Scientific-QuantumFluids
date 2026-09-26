@@ -78,3 +78,20 @@ persistent current. Recorded from the generator with the run seeds: e0.60 → (2
 e0.90 s12 → (1, −3). D1 is therefore evaluated as pre-registered only on the zero-winding arm (s11); the other two
 arms are reported as what they are — accidental interventions on the torus winding sector — with their final
 windings measured by the loop sum along the cycles. Future generators must subtract the net dipole exactly.
+
+## Amendment R3-A2 (2026-09-26, after Part C's admission failure — `PGPE_R3_RESULTS.md`)
+
+Part C (as first run, `t_tr = 3000`) failed the `L ≤ 64` isotropy admission on 4 of 6 runs (`R_T` two to four
+times `R_L`, unphysical negative `K`), with block-by-block `T_b`/`cond`/`n_v` flat across the sampled window in
+every run — a standing feature of the state reached at `t_tr = 3000`, not a transient the window missed. The
+warm-up window was carried over unchanged from `L ≤ 64`; the number of long-wavelength modes that set the
+transverse/longitudinal current split grows with box area, so their equipartition time may scale with `L`.
+
+**C2 (this amendment): re-run Part C with `t_tr` doubled to `6000`** (`t_end = 7000`, same 1000-unit sampling
+window, same six `(e, seed)` pairs, same admission rule `R_L ≤ 1.25`, `R_T ≤ 1.1 R_L`), to test directly whether
+a longer warm-up cures the admission failure. Pre-registered before the run (committed with the code change):
+**C2 is a diagnostic of the equilibration hypothesis, not a new physics claim** — if admission improves, C1/C2
+are re-evaluated on the C2 data in place of C; if it does not, the admission failure is not an equilibration
+artifact and a different cause must be sought (recorded, not guessed, at that point). Estimated cost:
+`t_end` scales `7000/4000 = 1.75×` Part C's own runtime (≈ 49{,}000–49{,}600 s each) ⇒ ≈ 24 h per run, six runs on
+six workers ⇒ ≈ 24 h wall, run alongside no other PGPE load. Kill rule unchanged (drift `> 10⁻⁵`).
