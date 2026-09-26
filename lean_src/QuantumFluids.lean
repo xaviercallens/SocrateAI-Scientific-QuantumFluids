@@ -60,3 +60,4 @@ import ContinuumWinding
 import SectorTemperature
 import CompactBoson
 import ChargeLattice
+import SectorDuality

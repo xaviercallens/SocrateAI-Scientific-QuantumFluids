@@ -5,6 +5,14 @@
   distinction as `CompactBoson.lean`: the duality is a relabelling of the sectors; what the physics depends
   on is a function of the sector alone.
 
+  Boundary note (added after a 2026-09-26 literature review): Moore's theorem N(D) = h(D) below is exact in the
+  1/8-BPS K3 × T² setting this file states. It does NOT generalise unqualified to 1/4-BPS dyons on heterotic/T^6
+  (a different setting): there, Dabholkar-Gaiotto-Nampuri (arXiv:hep-th/0702150) show the continuous-duality
+  invariants alone "do not uniquely specify the state," an extra discrete invariant (gcd of the charges) is
+  needed, and Sen (arXiv:0705.3874) shows the degeneracy further jumps across walls of marginal stability in
+  moduli space. "Entropy is a function of the sector" is correct exactly as stated here (K3 × T², Moore's
+  charges); it is not a general claim about every dyon-counting problem in string theory.
+
   Part 1 -- the dyon charge lattice of type II on K3 × T² (Moore, "Arithmetic and attractors", 1998).
   A dyon is a pair (p, q) of vectors in an integral lattice Λ with a symmetric ℤ-bilinear form B
   (for K3 × T², Λ = II_{3,19} ⊕ ... ; we keep Λ abstract). The S-duality SL(2, ℤ) acts on the pair by
