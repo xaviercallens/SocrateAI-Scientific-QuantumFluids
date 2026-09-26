@@ -37,12 +37,17 @@ not extended); C2, a longer-equilibration rerun, is in flight to test whether th
 
 ### Tier 1 — inside this repository's competence, well-scoped, do next
 
-1. **Formalise the anomaly-matching criterion (from the addendum) as a Lean statement**, at the level the
-   literature review already scoped it: a finite abelian group of sectors, a duality as a bijection (as
-   `CompactBoson.partition_dual` already is), and a criterion function on whether the two sectors it exchanges
-   are equal — a discrete, checkable statement, not the full physics of anomaly inflow. This turns the
-   addendum's prose into the same kind of machine-checked object as the rest of the programme, closing the gap
-   between "cited" and "proved" that the addendum itself flags.
+1. ~~Formalise the algebraic backbone of the criterion as a Lean statement~~ **Done 2026-09-26**
+   (`lean_src/SectorDuality.lean`, 3 theorems, Comparator-accepted): built on Mathlib's own `ZMod.dft`/
+   `ZMod.dft_dft` (David Loeffler's, not re-derived) — the duality is a bijection of Z_N-sector data
+   (`sectorDuality_bijective`); it is *not* an order-two symmetry in general (`sectorDuality_sq_ne_id`,
+   N ≥ 2); and the N = 2 case spells out Kramers–Wannier exactly: gauging a Z₂ sector twice returns *twice*
+   the original weighting (`kramersWannier_gauging_sq`), matching Choi–Córdova–Hsin–Lam–Shao and GKSW word for
+   word. **Explicitly not done**: the anomaly-inflow/SPT-obstruction argument itself (needs cohomology Mathlib
+   doesn't expose in a directly usable form here) — the criterion for *which* fixed points are forced
+   transitions remains prose in `duality_sector.tex`'s addendum, not reduced to algebra. A real bug was found
+   and fixed along the way in `scripts/make_comparator_challenges.py` (named-argument `:=` mistaken for the
+   proof-start marker; see LEDGER CLAIM-052).
 2. **Add the Gauthier et al. dipole-moment order parameter to our own vortex analysis pipeline**
    (`D = N^{-1}|Σ sgn(Γ_j) x_j|`, `observables.py`), and recompute it on round 2/3/4's existing vortex-position
    data (`*_samples.npz`, already on disk — no new runs needed). This gives a second, independently-motivated
