@@ -70,16 +70,51 @@ outlives 1500 time units with its condensate displaced to k ≠ 0, and a winding
 slips and heats the bath by the amount its energy predicts. Both are single runs; neither is a pre-registered
 result; both are direct observations of the sector physics `TopologicalProtection.lean` is about.
 
-## Part C — running
+## Part C — complete; admission failure at L = 128, C1/C2 void
 
-**Timing correction (2026-09-26, disclosure).** The prereg's "≈ 7 h wall" estimate for Part C was wrong: at
-06:12 on 2026-09-26 (8.5 h after launch) all six workers were still on their first sample, 0/6 runs written.
-`dx` is held fixed (L doubles with N, per the prereg), so the per-step FFT cost scales as
-$(256^2\log_2256)/(128^2\log_2128)\approx4.6\times$ and the run length as $4000/1500\approx2.7\times$ round 3's
-runs — a combined factor $\approx12$, against a round-3 single-run baseline of $\approx6400\,$s (median of the
-nine round-3 A/D timings). Re-estimated single-run wall time $\approx78{,}000\,$s $\approx22\,$h; since the six
-runs share six workers on an eight-core machine, batch wall time $\approx$ that same $\approx22\,$h, i.e. finish
-$\approx19$:00–$20$:00 on 2026-09-26, not the small hours as first stated. This is a scaling re-estimate, not a
-measurement (the run emits no interim progress); recorded honestly per the "compute estimate off" convention of
-round 3's own A1 amendment.
+**Timing (disclosure).** The prereg's "≈ 7 h wall" estimate was wrong in both directions: a same-evening scaling
+re-estimate (grid ×4.6, duration ×2.7 vs. round 3 ⇒ ×12) predicted ≈ 22 h; the six runs actually finished after
+≈ 13.6–13.8 h each (49069–49614 s), launched 2026-09-25 21:41, done 2026-09-26 ≈ 11:20–11:28. Energy drift
+≤ 1.1×10⁻⁶ on all six — the integration itself is fine.
+
+**Admission (A4: `R_L ≤ 1.25`, `R_T ≤ 1.1·R_L`): 2 of 6 pass.**
+
+| e | seed | R_L | R_T | admitted | K | η | ηK−1 |
+|---|---|---|---|---|---|---|---|
+| 1.00 | 11 | 1.12 | 2.42 | **no** | −14.5 | 0.409 | −6.93 |
+| 1.00 | 12 | 0.89 | 1.56 | **no** | −9.3 | 0.296 | −3.75 |
+| 1.10 | 11 | 1.14 | 1.87 | **no** | −6.7 | 0.471 | −4.15 |
+| 1.10 | 12 | 1.12 | **0.32** | yes | 7.51 | 0.171 | 0.284 |
+| 1.20 | 11 | 0.98 | 1.23 | **no** | −2.3 | 0.535 | −2.23 |
+| 1.20 | 12 | 1.10 | **0.38** | yes | 5.91 | 0.245 | 0.449 |
+
+Four of six runs have `R_T` two to four times `R_L` — the transverse current fluctuations exceed the
+longitudinal ones, giving a **negative** `K = n_s·2π/T` (unphysical for a superfluid, where `J_T` should not
+exceed `J_L`). Block-by-block `T_b`, `cond` and `n_v` are flat over the sampled window in every run, admitted or
+not (e.g. e = 1.00, s = 11: `T_b` 0.496→0.496, `n_v` 85.2→80.2) — **the runs are not still relaxing on the
+timescale sampled; the anisotropy is a standing feature of the state reached, not a transient the window missed.**
+The most likely explanation, not tested here: `t_tr = 3000` was carried over unchanged from the `L = 32/64`
+rounds; the number of long-wavelength modes that set the transverse/longitudinal current split grows with the
+box area, and their equipartition time may scale with `L`, so the same warm-up window that sufficed at `L ≤ 64`
+may be too short at `L = 128`. This was not anticipated in the pre-registration and is recorded as a gap, not
+patched here.
+
+**C1 (duality-offset ratio).** Computed on the 2 admitted points only (`e = 1.10`: ηK−1 = 0.284; `e = 1.20`:
+ηK−1 = 0.449), against the round-2 `L = 64` values (0.12, 0.20): ratio = 2.29. **FAIL as pre-registered**
+(criterion: ratio ∈ [0.6, 1.0], a *shrinking* offset with `L`, per Hasenbusch). The offset *grew* instead of
+shrinking. Given the admission failure just described and that each energy has only one surviving seed (no
+within-energy averaging, unlike round 2's `n = 3` per point), **this result is reported, not trusted**: it is
+equally consistent with a real finite-size surprise and with a biased subsample (whichever seed happened to
+reach a more isotropic state at each energy is exactly the one admission keeps, which need not track the
+finite-size trend the criterion was designed to see).
+**C2 (T_BKT(128) ≤ T_BKT(64)).** No crossing of `K = 4` in the admitted range (`e = 1.10`: K = 7.5;
+`e = 1.20`: K = 5.9, both above 4; `e = 1.00`'s two runs, which might have bracketed the crossing, are both
+excluded). **Not bracketed — inconclusive**, not a pass or fail.
+
+**Reading.** Part C does not, as run, extend the round-2 finite-size ladder to `L = 128`: the admission criterion
+built for smaller boxes rejects two-thirds of the sample, and the two survivors give a same-direction offset
+that goes the wrong way for the wrong reason (a subsample selected by isotropy, not by physics). The honest
+verdict is **C1: FAIL as written; C2: not bracketed; both void pending a rerun with a longer equilibration
+window at this box size** — recorded as a recommendation for a future round, not executed in this one (each
+`L = 128` run costs ≈ 13.7 h; a rerun is a deliberate compute decision, not a default next step).
 
