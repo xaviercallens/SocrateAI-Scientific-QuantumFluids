@@ -82,6 +82,26 @@ verification pass as A1, with a real, honest outcome for each:
    (Kitaev chain = Ising via Jordan-Wigner) is the *same* case already claimed, not a new one — recorded as a
    footnote in the paper's third addendum, not a ninth case.
 
+### A2-continued. A second new-cases round (2026-09-26, owner: "continue the generalization")
+
+6. **Montonen-Olive/Kapustin-Witten $S$-duality** (4D $\mathcal N=4$ super Yang-Mills, $\tau \mapsto -1/\tau$):
+   verified against Montonen-Olive 1977 and Kapustin-Witten 2007 (read directly). Integrated — and unusually
+   cheaply: Mathlib's own `Mathlib.NumberTheory.Modular` already proves `ModularGroup.S_mul_S_eq`,
+   `ModularGroup.stabilizer_I`, and `ModularGroup.stabilizer_rho` exactly as this case needs, so no new Lean
+   file was written at all. Same verdict as BKT/RCFT/Seiberg: a continuous modulus, $\tau=i$/$\rho$ points of
+   enhanced discrete symmetry, no forced transition. Case-study paragraph in `paper/duality_sector.tex`'s
+   fourth addendum.
+7. **3D Ising/Wegner duality** — checked against Wegner 1971, **excluded**: in $d=3$ this maps Ising spins to a
+   *different* theory (a $\mathbb Z_2$ lattice gauge theory), not a self-map, so there is no fixed point to ask
+   a self-dual-point question about. A structural mismatch, not a negative answer to an applicable question.
+8. **AdS/CFT weak-strong duality** (as "sector = coupling regime") — checked against Maldacena 1998,
+   **excluded**: a strong-weak equivalence holding at every coupling, with no conjectured involution and no
+   fixed locus of enhanced symmetry; the self-dual-point question doesn't apply.
+9. **Calabi-Yau mirror symmetry beyond K3** (genuine CY3 Kähler/complex-structure exchange, e.g. the quintic) —
+   explicitly **not researched** this round. The likely outcome (another "continuous modulus, point like any
+   other" verdict) was guessed, not verified, and is flagged here as an open item for a future pass rather than
+   claimed either way. Do not cite this as a settled exclusion.
+
 ### A3. Flagged, not recommended without a much stronger case first
 
 6. Any "duality" framing of neural-network weight-space symmetries, or of biological/neural "topological

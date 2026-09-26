@@ -277,6 +277,41 @@ related by the Jordan--Wigner transform to the transverse-field Ising model, so 
 transition is, in fermionic language, the same Kramers--Wannier self-duality already the Ising case above --
 not a ninth instance, a relabelling of the first one.
 
+\section*{Addendum (2026-09-26, part 4): a tenth case, checked almost entirely by Mathlib itself}
+\addcontentsline{toc}{section}{Addendum 4}
+A further round of literature review, looking specifically for new cases beyond every one already covered here,
+found one strong addition and two candidates that, on reading, do not fit the criterion's shape at all.
+
+\paragraph{Montonen--Olive $S$-duality: order-4 and order-6 points on a continuous coupling, not a cause.}
+$\mathcal N=4$ super Yang--Mills has an exactly marginal complexified coupling $\tau=\theta/2\pi+4\pi i/g^2$
+ranging over the upper half-plane; $S$-duality~\cite{MontonenOlive1977} conjectures a quantum symmetry
+$S:\tau\mapsto-1/\tau$, exchanging the gauge group with its Langlands dual and electric with magnetic charges,
+which together with the classical shift $T:\tau\mapsto\tau+1$ generates $\mathrm{SL}(2,\mathbb
+Z)$~\cite{KapustinWitten2007}. Mathlib already proves the two facts this needs, with no new theorem from this
+project: \lean{ModularGroup.S\_mul\_S\_eq} ($S^2=-1$, so $S$ has order four) and
+\lean{ModularGroup.stabilizer\_I} (the stabiliser of $\tau=i$ in $\mathrm{SL}(2,\mathbb Z)$ is exactly
+$\{\pm1,\pm S\}$) -- the literal statement that $\tau=i$ has enhanced discrete symmetry, and, by
+\lean{ModularGroup.stabilizer\_rho}, so does $\rho=e^{i\pi/3}$ (order six). As with every continuous modulus in
+this programme, this changes nothing about the physics: $\mathcal N=4$ SYM is superconformal for every $\tau$,
+there is no phase transition anywhere on the upper half-plane, and $\tau=i$ is a point like any other except for
+the extra unbroken $\mathbb Z_4\subset\mathrm{SL}(2,\mathbb Z)$ -- the BKT/RCFT/Seiberg verdict, not the Ising
+one. What this does NOT resolve: at $\tau=i$, $S$ maps the theory to itself only after also exchanging discrete
+global variants of the gauge group (e.g.\ $SU(N)$ with $PSU(N)$, physically distinct theories with different
+line-operator spectra); whether that additional exchange sharpens the verdict is a further question this round
+does not settle.
+
+\paragraph{Two candidates excluded as structural mismatches, not merely deferred.} Three-dimensional Ising/Wegner
+duality~\cite{Wegner1971} maps the Ising spin model to a $\mathbb Z_2$ \emph{lattice gauge theory} on the dual
+lattice -- a genuinely different theory with local gauge symmetry and link degrees of freedom, not a self-map;
+self-duality closing on the same model is a two-dimensional coincidence, already this programme's Ising case.
+There is no fixed point to ask a self-dual-point question about in $d=3$: the criterion does not apply
+structurally, not merely give a negative answer. AdS/CFT~\cite{Maldacena1998} is a strong--weak
+\emph{equivalence} between two descriptions of one theory, holding at every 't~Hooft coupling; there is no
+conjectured involution on the coupling with a fixed locus of enhanced symmetry the way $S$-duality has one at
+$\tau=i$ -- it relates two variables describing a single moduli-free correspondence, not a relabelling of
+sectors on a moduli space with a distinguished point, so the self-dual-point question this programme asks does
+not apply to it either.
+
 \bibliographystyle{unsrt}
 \bibliography{refs_duality_sector}
 \end{document}
