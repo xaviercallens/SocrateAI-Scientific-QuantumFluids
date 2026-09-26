@@ -245,6 +245,38 @@ in both cases the module certifies a decidable combinatorial or linear-algebraic
 with the named physical duality is supplied as literature-sourced prose, exactly as \lean{SectorDuality.lean} and
 \lean{QHFricke.lean} already do.
 
+\section*{Addendum (2026-09-26, part 3): a ninth case, and one explicitly declined}
+\addcontentsline{toc}{section}{Addendum 3}
+A further literature pass, following the same criterion, adds one more continuous-window case and explicitly
+excludes a candidate that turned out, on reading, not to be a duality at all.
+
+\paragraph{Seiberg duality: a third continuous window, same verdict.} Electric SU($N_c$) SQCD with $N_f$ flavors
+and its magnetic dual SU($N_f-N_c$)~\cite{Seiberg1994} flow to the same interacting fixed point throughout the
+conformal window $\tfrac32 N_c<N_f<3N_c$~\cite{IntriligatorSeiberg1996} -- ``completely equivalent at long
+distance,'' not two phases exchanged by the duality. The sector here is the integer $N_c$ itself, relabelled by
+$N_c\mapsto N_f-N_c$; the point $N_c=N_f/2$, where the two gauge groups coincide, is a direct algebraic fact
+about this map, not a distinguished physical locus -- no transition occurs there, the whole window being one
+phase. Same verdict as the compact boson and the RCFT self-dual radius: a point on a continuum, not a cause. No
+Lean statement is proposed: the only formalisable content of the map $N_c\mapsto N_f-N_c$ is a one-line integer
+involution, and the actual physical duality (holomorphy, anomaly matching, RG-flow equivalence) has no
+combinatorial skeleton analogous to \lean{YoungDiagram.transpose} or \lean{ZMod.dft}; unlike Kramers--Wannier or
+T-duality, the two Lagrangians are not even operator images of each other (the magnetic side carries an extra
+gauge-singlet meson with its own superpotential).
+
+\paragraph{Topological superconductors: not a duality.} Reading Kitaev's classification of unpaired Majorana
+modes~\cite{Kitaev2001}, the Altland--Zirnbauer symmetry classes~\cite{AltlandZirnbauer1997}, and
+Ryu--Schnyder--Furusaki--Ludwig's tenfold-way classification~\cite{RyuSchnyderFurusakiLudwig2010} directly finds
+no duality organising this material: it is a classification of gapped free-fermion phases by Clifford-algebra
+K-theory and Bott periodicity, related by dimensional reduction, not an equivalence between two theories. It has
+a sector (a $\mathbb Z$ or $\mathbb Z_2$ topological invariant) but no map that relabels it against a dual
+description -- the word ``duality'' organises none of these three sources. This is therefore \emph{excluded},
+not merely deferred: forcing this programme's duality/sector vocabulary onto a classification would be the
+formalising-an-analogy failure this programme's own discipline exists to catch. One legitimate but
+pre-existing link is worth recording as a footnote rather than a new case: the 1D Kitaev chain (class BDI) is
+related by the Jordan--Wigner transform to the transverse-field Ising model, so its topological/trivial
+transition is, in fermionic language, the same Kramers--Wannier self-duality already the Ising case above --
+not a ninth instance, a relabelling of the first one.
+
 \bibliographystyle{unsrt}
 \bibliography{refs_duality_sector}
 \end{document}

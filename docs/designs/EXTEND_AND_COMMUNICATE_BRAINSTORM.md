@@ -66,6 +66,22 @@ Library now 257 theorems / 30 modules. All citations Crossref/arXiv-verified bef
    symmetry) — would need to check whether a genuine duality (not just a symmetry classification) is the right
    frame before forcing it into this programme's vocabulary.
 
+**Status update (2026-09-26, later).** Both A2 items were sent through the same literature-review-and-
+verification pass as A1, with a real, honest outcome for each:
+4. **Seiberg duality**: verified against Seiberg hep-th/9411149 and Intriligator-Seiberg hep-th/9509066, read
+   directly through the relevant sections. Integrated as prose only (no Lean — the only formalisable content of
+   $N_c \mapsto N_f - N_c$ is a one-line integer involution, and the real duality content is dynamical field
+   theory with no combinatorial skeleton to check). The conformal window $\tfrac32 N_c < N_f < 3N_c$ is a single
+   continuous phase; $N_c = N_f/2$ is not a forced transition, same verdict as BKT/RCFT. Case-study paragraph
+   added to `paper/duality_sector.tex`'s third addendum.
+5. **Topological superconductors/tenfold way**: verified against Kitaev cond-mat/0010440, Altland-Zirnbauer
+   cond-mat/9602137, Ryu-Schnyder-Furusaki-Ludwig arXiv:0912.2157, read directly. Confirmed, not assumed: this
+   is a K-theory/Bott-periodicity **classification**, not a duality — none of the three sources organise the
+   material around a duality map. **Explicitly excluded**, not deferred: forcing this programme's vocabulary
+   onto it would be the LL-15 "formalizing an analogy" failure mode. One legitimate but pre-existing link
+   (Kitaev chain = Ising via Jordan-Wigner) is the *same* case already claimed, not a new one — recorded as a
+   footnote in the paper's third addendum, not a ninth case.
+
 ### A3. Flagged, not recommended without a much stronger case first
 
 6. Any "duality" framing of neural-network weight-space symmetries, or of biological/neural "topological
