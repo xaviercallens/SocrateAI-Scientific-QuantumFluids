@@ -11,6 +11,21 @@
   moduli space. "Entropy is a function of the sector" is correct exactly as stated here (K3 × T², Moore's
   charges); it is not a general claim about every dyon-counting problem in string theory.
 
+  Second boundary note (2026-09-26, same review): `disc_sl2_invariant` applies verbatim, with no new theorem,
+  to a second physical setting -- the exact quarter-BPS D1-D5-P dyon lifted to 4D by an extra Kaluza-Klein-
+  monopole charge. Sen's precision-counting review (arXiv:0708.1270, eq. 5.3.5-5.3.6) shows the exact
+  microscopic degeneracy of that system is a function only of the T-duality invariants Q², P², Q·P of two
+  charge vectors (Q, P) -- i.e. of Δ = Q²P² − (Q·P)², algebraically identical to D(p, q) above, with B taken
+  to be the Narain bilinear form. `disc_sl2_invariant B hB hdet Q P` (this file, unchanged) already states
+  Δ's SL(2, ℤ)-invariance for that instantiation; nothing further needed formalizing. What does NOT transfer:
+  the class-number statement N(D) = h(D) above, since (per the first boundary note, Dabholkar-Gaiotto-Nampuri
+  and Sen arXiv:0705.3874) Δ alone under-determines the state in this 4-charge setting -- no second Moore-style
+  theorem is claimed. The historically prior Strominger-Vafa two-charge (hep-th/9601029) and Callan-Maldacena
+  three-charge (hep-th/9602043) entropy formulas are explicitly OUT OF SCOPE for `disc`: their charge data
+  (Q_H, Q_F, or Q1, Q5, n) is not a pair of vectors under one bilinear form, so no relabelling of `disc` covers
+  them, and both formulas are leading-order Cardy approximations, not exact identities, by their own authors'
+  statement.
+
   Part 1 -- the dyon charge lattice of type II on K3 × T² (Moore, "Arithmetic and attractors", 1998).
   A dyon is a pair (p, q) of vectors in an integral lattice Λ with a symmetric ℤ-bilinear form B
   (for K3 × T², Λ = II_{3,19} ⊕ ... ; we keep Λ abstract). The S-duality SL(2, ℤ) acts on the pair by

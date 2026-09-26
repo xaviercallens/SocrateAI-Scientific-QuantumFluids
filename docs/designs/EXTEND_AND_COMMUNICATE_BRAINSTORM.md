@@ -31,6 +31,31 @@ These sit right next to what is already proven and would slot into the same crit
    physical claim, just the next worked instance of the same lattice statement — plausibly extendable with the
    *existing* Lean file (the discriminant theorems are already stated for a generic bilinear form).
 
+**Status update (2026-09-26, later the same day).** All three A1 items were sent through a literature-review-
+and-verification workflow (independent researcher per topic, independent adversarial verifier per claim). All
+three verified and integrated:
+1. **RCFT/Verlinde**: verified against Verlinde 1988, Moore-Seiberg 1988/1989, Fuchs hep-th/9306162,
+   Pace-Chatterjee-Shao arXiv:2412.18606. Formalized as `lean_src/RCFTDuality.lean` (3 theorems: the su(2)
+   level-1 unnormalised S-matrix squares to $2\cdot\mathbb 1$, is symmetric, has determinant $-2$), Comparator-
+   accepted (nanoda + Lean kernel). Case-study paragraph added to `paper/duality_sector.tex`'s second addendum.
+   Verdict: same as BKT (continuous line of fixed points, not a forced transition).
+2. **QH particle-vortex/level-rank**: verified against Son 2015, Seiberg-Senthil-Wang-Witten 2016, Hsin-Seiberg
+   2016, Naculich-Schnitzer 2007. Formalized as `lean_src/LevelRankDuality.lean` (the finite Young-diagram
+   box-transpose bijection only, built on Mathlib's `YoungDiagram.transposeOrderIso` — explicitly NOT the
+   S,T-matrix/Verlinde-formula content, which needs representation theory Mathlib does not have), Comparator-
+   accepted. Case-study paragraph added to `paper/duality_sector.tex`. Verdict: $\nu=1/2$ sits in the
+   *constraint* slot (forces an exact number, $\sigma^{CF}_{xy}=-\tfrac12$), not the *organisation* slot;
+   level-rank duality itself is organisation-not-cause.
+3. **AdS$_3$/CFT$_2$ (Strominger-Vafa)**: verified against Strominger-Vafa hep-th/9601029, Callan-Maldacena
+   hep-th/9602043, Sen arXiv:0708.1270. No new Lean theorem: `disc_sl2_invariant` (already in
+   `ChargeLattice.lean`) applies verbatim to the 4D-lifted quarter-BPS D1-D5-P-KK dyon's T-duality invariants,
+   recorded as a docstring note. The class-number statement does NOT transfer (Δ under-determines the state
+   there, per the file's own existing DGN/Sen boundary note); the original 2/3-charge Strominger-Vafa formula
+   is explicitly out of scope (a scalar Cardy approximation, not a lattice discriminant). Case-study paragraph
+   added to `paper/cosmology_sectors.tex`'s K3 section.
+
+Library now 257 theorems / 30 modules. All citations Crossref/arXiv-verified before writing.
+
 ### A2. Medium confidence: real literature work needed, worth scoping carefully before starting
 
 4. **Seiberg duality in 4D $\mathcal N=1$ gauge theories** (electric–magnetic duality of a different flavour

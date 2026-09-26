@@ -61,3 +61,5 @@ import SectorTemperature
 import CompactBoson
 import ChargeLattice
 import SectorDuality
+import RCFTDuality
+import LevelRankDuality

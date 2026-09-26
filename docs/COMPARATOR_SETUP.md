@@ -60,8 +60,10 @@ Comparator (its README: that can compromise the challenge). Do not run as a priv
 | CompactBoson | 12 | **accepted** (nanoda and Lean default kernel); 3 negative controls fail (product 1/2; BKT at the self-dual radius; duality with R ↦ 1/R) |
 | SectorDuality | 3 | **accepted** (nanoda and Lean default kernel); 3 negative controls fail (duality squared = identity at N=3; Z2 gauging factor claimed as 1 instead of 2; bijectivity at N=0, fails to even typecheck without NeZero) |
 | ChargeLattice | 15 | **accepted** (nanoda and Lean default kernel); 3 negative controls fail (discriminant under a det-2 map; nucleation step with the wrong sign; Kaloper minimum at N = 0) |
+| RCFTDuality | 3 | **accepted** (nanoda and Lean default kernel); 3 negative controls fail (S² = 1 instead of 2·1; det = 1 instead of −2; a genuinely non-symmetric 2×2 matrix claimed equal to its own transpose) |
+| LevelRankDuality | 1 | **accepted** (nanoda and Lean default kernel); 1 negative control fails to even typecheck (the box-transpose statement with `a, b` left unswapped on the transposed side — `and_comm` does not close it) |
 
-All 253 listed theorems: accepted by the Lean kernel and by nanoda, permitted axioms only, run under `systemd-run --user` with `RestrictAddressFamilies=~AF_UNIX`.
+All 257 listed theorems: accepted by the Lean kernel and by nanoda, permitted axioms only, run under `systemd-run --user` with `RestrictAddressFamilies=~AF_UNIX`.
 
 Caveat on what a pass means: the challenge is *generated from* the solution by our script, so "same statement" is guaranteed by
 construction. The independent content of a pass is (a) two kernels accept the exported proof terms, (b) only the permitted axioms are used,

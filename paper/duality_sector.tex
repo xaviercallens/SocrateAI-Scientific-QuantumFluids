@@ -196,6 +196,55 @@ is again forced non-trivial by a separate mixed gravitational anomaly, not by th
 transition; a continuous moduli space with enhanced symmetry $\Rightarrow$ no transition) that a future module
 could formalise as a finite-group gauging statement.
 
+\section*{Addendum (2026-09-26, part 2): two more cases, same criterion}
+\addcontentsline{toc}{section}{Addendum 2}
+Two further cross-domain instances, found by literature review and independently verified, apply the criterion of
+\S3 without changing it.
+
+\paragraph{RCFT/Verlinde: the sharp case, and the same verdict as BKT.} The Verlinde formula~\cite{Verlinde1988},
+proved from Moore--Seiberg's polynomial equations~\cite{MooreSeiberg1988,MooreSeiberg1989}, makes the modular
+$S$-matrix acting on the primaries (the sectors) of a rational conformal field theory a duality satisfying
+$S^2=C=(ST)^3$ exactly, for $S$ unitary and symmetric~\cite{Fuchs1993} -- sharper than this programme's own
+$\mathbb Z_N$ case, where Mathlib's unnormalised \lean{ZMod.dft} gives $\mathrm{dft}\circ\mathrm{dft}=N\cdot
+\Phi(-\cdot)$, not the identity (\lean{SectorDuality.lean}). $S$ is a literal finite-abelian-group Fourier
+transform only for simple-current (pointed) fusion rings -- e.g.\ $\widehat{su}(2)_1$, whose two primaries fuse as
+$\mathbb Z_2$ and whose $S$ is exactly the (unnormalised) Hadamard matrix
+$\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$ -- and here $S^2=C=\mathbb 1$ with no extra factor
+once the missing $1/\sqrt2$ is restored (\lean{RCFTDuality.su2Level1\_S\_sq}), the clean identity the unnormalised
+$\mathbb Z_N$ statement only approximates up to the decoupled factor $|G|=2$. For a generic (non-abelian) fusion
+category $S$ is instead the Kac--Peterson matrix and no group Fourier transform underlies it at all; this module
+proves only the $2\times2$ integer-matrix identity, not that it is the Kac--Peterson matrix, which is affine-Lie-
+algebra representation theory supplied here as physics input. The natural self-dual point of the worked example --
+the free-boson radius $R=1$ where $\hat u(1)$ enhances to $\widehat{su}(2)_1$ under T-duality $R\leftrightarrow1/R$
+-- sits on a \emph{continuous} line of RCFT fixed points, $1\le R\le\sqrt2$, separating three gapped
+phases~\cite{PaceChatterjeeShao2024}, not on a discrete pair of inequivalent sectors: by this programme's own
+criterion it is a point like any other, not a forced transition -- the Ising verdict does not transfer, the BKT
+verdict does.
+
+\paragraph{Particle-vortex/level-rank in the fractional quantum Hall effect: a second, orthogonal duality.} At
+$\nu=\tfrac12$ the Halperin--Lee--Read composite fermion is conjectured to be a massless Dirac fermion, exactly
+self-conjugate under the particle-hole (CT) involution that exchanges the Jain-sequence pair
+$n/(2n+1)\leftrightarrow(n+1)/(2n+1)$~\cite{Son2015}; Seiberg--Senthil--Wang--Witten embed this in a fermionic
+particle-vortex duality web~\cite{SeibergSenthilWangWitten2016} whose rigorously-established topological limit is
+level-rank duality, $U(N)_K\leftrightarrow U(K)_N$~\cite{HsinSeiberg2016,NaculichSchnitzer2007}. This is a
+different duality from $\Gamma_0(2)$ on the conductivity plane, acting on a different sector: the finite set of
+Chern--Simons/WZW primaries, labelled by Young diagrams in an $N\times K$ box, relabelled by transpose to a
+$K\times N$ box -- an operation Mathlib already formalises on \lean{YoungDiagram} as an order isomorphism
+(\lean{transposeOrderIso}), restricted here to two finite boxes (\lean{LevelRankDuality.levelRankRelabeling}).
+Filling $\nu=\tfrac12$ is not itself a transition between two gapped, inequivalent sectors -- that role belongs to
+the Jain pairs on either side of it -- but the unique fixed point of the particle-hole involution on the
+continuous filling $\nu$, in the same slot as the compact boson's self-dual radius: an enhanced-symmetry point,
+not a cause. What self-duality there fixes is a number, not a phase boundary -- the composite fermion's Berry
+phase is forced to be exactly $\pi$ and $\sigma^{CF}_{xy}=-\tfrac12$ exactly~\cite{Son2015} -- so this instance
+sits with the superconductor--insulator transition in the \emph{constraint} slot, not with $\Gamma_0(2)$'s
+\emph{organisation} slot. Level-rank duality itself, wherever it appears in the non-Abelian FQH hierarchy, is
+unambiguously organisation-not-cause: a proved relabelling of a finite anyon label set that decides no physics
+and causes no transition. Neither Lean module proves the physical content of its own duality (S,T-matrix or
+Verlinde-formula preservation for level-rank; that the Hadamard matrix is the Kac--Peterson matrix for RCFT) --
+in both cases the module certifies a decidable combinatorial or linear-algebraic skeleton, and the identification
+with the named physical duality is supplied as literature-sourced prose, exactly as \lean{SectorDuality.lean} and
+\lean{QHFricke.lean} already do.
+
 \bibliographystyle{unsrt}
 \bibliography{refs_duality_sector}
 \end{document}

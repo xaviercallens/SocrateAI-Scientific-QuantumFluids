@@ -2,13 +2,13 @@
 
 **A machine-checked Lean 4 library of quantum-fluid structure — with a record of what formalization caught, and what it could not**
 
-[![Tests](https://img.shields.io/badge/tests-183%20passing-brightgreen)]() [![Lean](https://img.shields.io/badge/Lean-4.34.0--rc2-blue)]() [![Theorems](https://img.shields.io/badge/theorems-253%20kernel--checked-blue)]() [![Comparator](https://img.shields.io/badge/Comparator-two%20kernels-success)]() [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22976724.svg)](https://doi.org/10.5281/zenodo.22976724) [![Release](https://img.shields.io/badge/release-v1.13.0-orange)](https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids/releases)
+[![Tests](https://img.shields.io/badge/tests-183%20passing-brightgreen)]() [![Lean](https://img.shields.io/badge/Lean-4.34.0--rc2-blue)]() [![Theorems](https://img.shields.io/badge/theorems-257%20kernel--checked-blue)]() [![Comparator](https://img.shields.io/badge/Comparator-two%20kernels-success)]() [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22976724.svg)](https://doi.org/10.5281/zenodo.22976724) [![Release](https://img.shields.io/badge/release-v1.13.0-orange)](https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids/releases)
 
 ---
 
 ## What this is
 
-A **Lean 4 / Mathlib library of 181 machine-checked theorems on the structure of quantum fluids**, with
+A **Lean 4 / Mathlib library of 257 machine-checked theorems on the structure of quantum fluids**, with
 the verification tooling around it and an unusually complete record of what went wrong on the way.
 
 ```lean
@@ -97,7 +97,7 @@ which remains a human audit.
 # 174 tests
 uv run pytest tests/ -q
 
-# Lean (4.34.0-rc2, Mathlib v4.34.0-rc2); 181 theorems across 21 libraries
+# Lean (4.34.0-rc2, Mathlib v4.34.0-rc2); 257 theorems across 30 libraries
 cd lean_src && lake build
 
 # Comparator (needs landrun, lean4export, nanoda_bin on PATH — see docs/COMPARATOR_SETUP.md)
@@ -121,7 +121,7 @@ uv run python exploration/second_invariant/run_search.py
 
 | path | contents |
 |---|---|
-| `lean_src/` | 21 Lean libraries, 181 theorems, axiom footprint `{propext, Classical.choice, Quot.sound}` |
+| `lean_src/` | 30 Lean libraries, 257 theorems, axiom footprint `{propext, Classical.choice, Quot.sound}` |
 | `lean_src/ComparatorChallenges/` | generated challenge statements + configs (contain `sorry` **by design**) |
 | `src/quantumfluids/` | adapters, dispersion fit, shell model, invariant search, TDA (GUDHI) |
 | `docs/DUAL_SCALE_PROPOSAL.md` | the consolidated proposal |

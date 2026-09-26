@@ -248,6 +248,19 @@ physics is a polynomial identity on the charge lattice. Three consequences for t
   lattice polarisations $M\leftrightarrow M^\perp$ inside $\mathrm{II}_{3,19}$: a reindexing of the kind of
   \lean{CompactBoson.partition\_dual}, preserving the structure and moving no dyon's entropy -- consistent with
   \lean{QHFricke}, where the Fricke element fixes an orbit and is not a symmetry of the sectors.
+\item The same discriminant reappears, unmodified, in a second physical setting: the exact quarter-BPS
+  D1-D5-P dyon, lifted to 4D by an extra Kaluza-Klein-monopole charge, has a microscopic degeneracy that is a
+  function only of the T-duality invariants $Q^2,P^2,Q\cdot P$ of two charge vectors~\cite{Sen2008review} -- i.e.\
+  of $\Delta=Q^2P^2-(Q\cdot P)^2$, algebraically identical to $D(p,q)$ above, so \lean{disc\_sl2\_invariant}
+  applies verbatim with $B$ the Narain bilinear form; no new theorem is needed
+  (\lean{lean\_src/ChargeLattice.lean}'s docstring records the instantiation). What does \emph{not} transfer is
+  the class-number statement: as the footnote above already notes from Dabholkar--Gaiotto--Nampuri and
+  Sen~\cite{Sen2007dyon}, $\Delta$ alone under-determines the state here, so no second Moore-style
+  ``entropy is a function of the sector alone'' theorem is claimed. The historically prior two/three-charge
+  Strominger--Vafa/Callan--Maldacena formula $S\sim2\pi\sqrt{Q_1Q_5n}$~\cite{StromingerVafa1996,
+  CallanMaldacena1996} is explicitly excluded from this discriminant framework: $Q_1Q_5n$ is a product of three
+  independent integers, not a quadratic-form discriminant, and the formula itself is a leading-order Cardy
+  approximation, not exact.
 \item The cross-domain criterion of~\cite{Callens2026Duality} gains a clean fourth case: a large duality group,
   a single integer invariant, physics that reads the invariant -- organisation, not cause -- with the twist that
   the level set of the invariant is strictly larger than the orbit. (The Mathieu moonshine of the K3 elliptic
