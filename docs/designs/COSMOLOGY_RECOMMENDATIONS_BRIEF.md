@@ -66,12 +66,28 @@ not extended); C2, a longer-equilibration rerun, is in flight to test whether th
    explicitly not ours to run (no gravity solver, no 3D code here); the honest next step is a **collaboration
    proposal**, not a repo task: write to one of the two groups (or replicate their published method
    independently) rather than attempt a 3D gravitational GPE solver from scratch.
+   **Checked 2026-09-26 (Zenodo, GitHub, Hugging Face; "download if needed"):** neither paper carries a code or
+   data availability statement, and neither is findable as a dataset on Zenodo or Hugging Face under any search
+   phrasing tried. Zhou et al. build on **BEC2HPC** (Gaidamour, Tang & Antoine, Comput. Phys. Commun. 265,
+   108007), a published parallel spectral solver; one GitHub repository named `BEC2HPC-FFT` was found
+   (0 stars, no description, unclear authorship link to the paper) — **not verified as the genuine release and
+   not used**; treat any future use of it as needing independent verification first, per this project's own
+   literature-gate rule. No usable download materialised; the recommendation stands as written (collaboration,
+   not a repo task).
 6. **The dark-energy roll-vs-cascade test** (Koren, Tsai & Wang's CMB-fluctuation bound,
    `r ≲ 10⁻⁵(β/H⋆)²`) needs real CMB data and a likelihood pipeline (CAMB/CLASS + a sampler) this repository
    does not have and should not attempt to rebuild. The correct next step, if this direction is pursued, is to
    **read that paper's own pipeline** and ask whether its published bound already constrains Kaloper's or the
    QCD-sector model's own parameter space (a literature-only task, no new numerics) before any attempt at an
    independent reanalysis.
+   **Checked 2026-09-26:** one GitHub repository (`bao-x-reconstruction`, "BAO-only reconstruction of
+   dark-energy density X(z) from DESI DR1/DR2... reproducing all published figures") was found and is **not
+   used**: zero stars, no verifiable authorship, created within the last year, and its repository contents
+   could not even be listed cleanly. A single unverified, anonymous repository claiming to reproduce a
+   published analysis is not a citable source; using it would violate the same literature-gate rule that has
+   protected every other claim in this programme. If this direction is pursued, the correct source remains the
+   published papers' own supplementary data (DESI DR2's own public chains, when read through a real pipeline),
+   not an unverified third-party reproduction.
 
 ### Tier 3 — open, interesting, and explicitly not recommended to start now
 
