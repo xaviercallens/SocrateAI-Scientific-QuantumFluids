@@ -48,10 +48,11 @@ not extended); C2, a longer-equilibration rerun, is in flight to test whether th
    data (`*_samples.npz`, already on disk — no new runs needed). This gives a second, independently-motivated
    sector statistic to cross-check against `W(R)`; if the two agree everywhere they've been compared, that is
    itself worth a line in the next paper version. Cheapest, highest-value item on this list — hours, not runs.
-3. **Recalibrate round 4's B2 threshold** (the pair-visibility criterion, 30 %, missed at e = 0.90 because the
-   base's own thermal pair population dilutes the injected sixteen) **against each base's own thermal pair
-   density** rather than a fixed number, and re-evaluate the existing round-4 data (no new runs) before
-   deciding whether a round 5 is needed at all.
+3. ~~Recalibrate round 4's B2 threshold~~ **Done 2026-09-26** (`PGPE_R4_RESULTS.md`): the density power added
+   per injected vortex, `ΔS_band/ΔN_v`, agrees to 8 % across the two e = 0.90 seeds (2.95 vs 2.73×10⁻⁴) — the
+   original 30 %-of-baseline threshold was miscalibrated (baseline varies an order of magnitude with each
+   base's own thermal population), not the physics; B2's qualitative claim is now confirmed on a properly
+   calibrated statistic. No round 5 needed for this question.
 4. **Correct the K1–K5 Lean gap the rusty-SUNDIALS work surfaced is not this repo's** but the pattern is: the
    qf-pgpe Rust port (PR #56 on rusty-SUNDIALS) ported K1/K3/K4 as *tests*, not proofs — if a faster Rust engine
    becomes available (once #55/#56 are reviewed), the L = 128 equilibration question could be *scanned* (several

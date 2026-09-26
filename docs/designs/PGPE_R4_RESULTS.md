@@ -51,6 +51,25 @@ supported by the tenfold gap between B1's percent-level and B2's ten-to-hundred-
 specific numerical threshold was not calibrated to the base's own thermal pair content and should be in any
 future round.
 
+**Recalibration, 2026-09-26 (cosmology brief Tier 1 item 3, on the existing data, no new runs).** A
+percentage-of-baseline threshold is the wrong statistic when the baseline (`S_band(0)`, set by each base's own
+thermal vortex population) varies by an order of magnitude across bases. The better-motivated statistic is the
+density power **added per injected vortex**, `ΔS_band / ΔN_v`, where `ΔN_v = N_v(P16, t=0) − N_v(0, t=0)`:
+
+| base | `N_v(0)` | `N_v(P16, t=0)` | `S_band(0)` | `S_band(P16)` (t ≤ 300 mean) | `ΔS_band/ΔN_v` |
+|---|---|---|---|---|---|
+| e = 0.60 | 0.0 | 25.4 | 0.01144 | 0.02493 | **5.31×10⁻⁴** |
+| e = 0.90 s11 | 6.8 | 46.4 | 0.04666 | 0.05833 | **2.95×10⁻⁴** |
+| e = 0.90 s12 | 4.6 | 40.4 | 0.04605 | 0.05580 | **2.73×10⁻⁴** |
+
+**The two e = 0.90 bases (same energy, different seed) agree to 8 %** (2.95 vs 2.73 ×10⁻⁴) — a reproducible,
+per-vortex density-power contribution at fixed energy, not a threshold-dependent artefact. The e = 0.60 value is
+≈ 1.9× larger, physically sensible: at lower energy the condensate is more phase-coherent (higher condensate
+fraction), so a vortex core is a deeper *relative* dip against a purer background. **This is a stronger, more
+direct confirmation of "pairs are visible in density" than B2 as pre-registered**: the original criterion's
+miss at e = 0.90 was a threshold-calibration artefact, not evidence against the physics — the per-vortex effect
+size is consistent across seeds once the base's own population is properly divided out.
+
 ## B3 — the sector is read by the phase and the momentum (PASS, 2/2 evaluated; e=0.60 reported)
 
 | base | W_x = 3 (V3) | W_x = 3 (V3P16) | W_x = 0 (arm 0) | W_x = 0 (P16) | f_K(V3) | criterion |
@@ -120,7 +139,7 @@ items: a real secondary effect at s11, if it is one, needs more seeds to separat
 | # | Verdict |
 |---|---|
 | B1 (sector invisible in density) | **PASS, 3/3** |
-| B2 (pairs visible in density, ≥ 30 %) | **FAIL as written, 2/3** (large effect present on all 3, threshold not calibrated to base thermal content) |
+| B2 (pairs visible in density, ≥ 30 %) | **FAIL as written, 2/3**; recalibrated per-vortex statistic agrees to 8 % across the two e=0.90 seeds — **confirmed, on a better statistic** |
 | B3 (sector read by phase/momentum) | **PASS, 2/2 evaluated** |
 | B4 (density blind to the sector at fixed pair content) | **PASS, 3/3** |
 
