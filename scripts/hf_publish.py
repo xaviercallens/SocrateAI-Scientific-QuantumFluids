@@ -13,7 +13,7 @@ from huggingface_hub import HfApi, create_repo
 
 ROOT = Path(__file__).resolve().parent.parent
 PAPERS = ["causal_topology.pdf", "astro_topological_measurement.pdf", "sector_temperature.pdf", "duality_sector.pdf", "cosmology_sectors.pdf"]
-LEAN = ["ChargeLattice.lean", "CompactBoson.lean", "TopologicalProtection.lean", "ScaleResolvedWinding.lean", "ContinuumWinding.lean", "SectorTemperature.lean", "QHFricke.lean", "VortexWinding.lean", "QuantizedCirculation.lean"]
+LEAN = ["ChargeLattice.lean", "CompactBoson.lean", "SectorDuality.lean", "RCFTDuality.lean", "LevelRankDuality.lean", "TopologicalProtection.lean", "ScaleResolvedWinding.lean", "ContinuumWinding.lean", "SectorTemperature.lean", "QHFricke.lean", "VortexWinding.lean", "QuantizedCirculation.lean"]
 DOCS = ["CAUSAL_TOPOLOGY.md", "CAUSAL_TOPOLOGY_DEEP_NOTES.md", "PGPE_BKT_PREREG.md", "PGPE_BKT_RESULTS.md", "PGPE_R2_PREREG.md", "PGPE_R2_RESULTS.md", "PGPE_R3_PREREG.md", "PGPE_R3_RESULTS.md"]
 GEN = ["pgpe/r2_verdicts.json", "pgpe/r3_verdicts.json", "pgpe/r2_energy_budget.json", "pgpe/vortex_thermometer_cal.json", "pgpe/vortex_thermometer_cal_large.json",
        "pgpe/r2_vortex_temperature_posthoc.json", "external_gauthier2019_lifetime.json", "external_christodoulou2021_overlay.json", "pgpe/sweep_verdicts_A4.json"]
