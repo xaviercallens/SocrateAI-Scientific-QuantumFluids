@@ -75,15 +75,18 @@ neither ξ nor the quantum-pressure scale can go below √α'. -/
 theorem Reff_ge_sqrt_of_selfDual {α R : ℝ} (hα : 0 < α) (hR : 0 < R) :
     Real.sqrt α ≤ max R (α / R) := by
   sorry
-/-- **B.2 (Finite support balance — the Donoho–Stark consequence).**
-Whenever two support sizes obey a product lower bound `N ≤ a·b` (as the
-Donoho–Stark uncertainty principle asserts for a nonzero vector and its
-finite Fourier transform), the larger support is at least `√N`.
-The product hypothesis is a parameter here; discharging it is TARGET T-DS.
+/-- **B.2 (Support balance).** A.1 cast to naturals: whenever two support
+sizes obey a product lower bound `N ≤ a·b`, the larger is at least `√N`.
+
+**This file contains no Fourier analysis.** The Donoho–Stark uncertainty
+principle IS the hypothesis `N ≤ a·b`, not the conclusion — naming this theorem
+after it would name it after the part that is assumed. Stream 0 has since
+PROVED that hypothesis (`MX-A-0014`, `Duality/Uncertainty.lean`), so it may
+now be supplied rather than assumed.
 
 **Physics comment:** This is the mechanism underlying the dual-scale bound:
 a product constraint in Fourier space forces a minimum scale. -/
-theorem support_balance {a b N : ℕ} (h : N ≤ a * b) :
+theorem sqrt_le_max_of_le_mul_nat {a b N : ℕ} (h : N ≤ a * b) :
     Real.sqrt (N : ℝ) ≤ max (a : ℝ) (b : ℝ) := by
   sorry
 /-- **B.3 (Operations research: the EOQ bound).** Ordering cost `DK/Q` and
@@ -108,9 +111,16 @@ theorem bogoliubov_dual_form {c ks k : ℝ} (hks : 0 < ks) (hk : 0 < k) :
 theorem bogoliubov_selfdual_bound {c ks k : ℝ} (hks : 0 < ks) (hk : 0 < k) :
     2 * c ^ 2 * k ^ 3 / ks ≤ c ^ 2 * k ^ 2 + c ^ 2 * k ^ 4 / ks ^ 2 := by
   sorry
-/-! ## Part C — Rung 1: the Kramers–Wannier self-dual point (Tier A) -/
+/-! ## Part C — Rung 1: the self-dual coupling (Tier A)
 
-/-- **C.1 (Kramers–Wannier critical coupling).** The 2D Ising duality pairs
+NOTE: there is NO Ising model in this file — no lattice, no partition
+function, no duality map. The theorem proves `sinh(2K)² = 1 ∧ K > 0 →
+K = log(1+√2)/2`. That value IS Onsager's critical coupling, but going from
+*self-dual point* to *critical point* needs the transition to be unique,
+which Kramers–Wannier (1941) assumed and Onsager (1944) proved, and which
+appears nowhere here. The physics reading is Stream 0's `MX-C-0009`. -/
+
+/-- **C.1 (The self-dual coupling).** The 2D Ising duality pairs
 couplings by `sinh(2K)·sinh(2K*) = 1`. At the self-dual point the fixed-point
 equation `sinh(2K)² = 1` (with `K > 0`) forces
 `K = log(1 + √2)/2` — the exact critical coupling, located purely by
@@ -120,7 +130,7 @@ self-duality. The statistical-mechanics twin of A.5.
 to the macro–micro duality in quantum fluids: both systems have a
 self-dual critical point where the two "faces" (low-T and high-T spins;
 hydrodynamic and excitation pictures) coincide. -/
-theorem kramers_wannier_self_dual {K : ℝ} (hK : 0 < K)
+theorem sinh_selfDual_coupling {K : ℝ} (hK : 0 < K)
     (hfix : Real.sinh (2 * K) * Real.sinh (2 * K) = 1) :
     K = Real.log (1 + Real.sqrt 2) / 2 := by
   sorry
@@ -151,7 +161,6 @@ TARGET T-QF1 (QuantumFluids instantiation): Import this Duality module and
 /-! ## Audit certificates
 Expected on every line: [propext, Classical.choice, Quot.sound] and nothing
 else. -/
-
 
 end Mathesis.Duality
 

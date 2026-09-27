@@ -9,11 +9,11 @@
     "Mathesis.Duality.two_sqrt_mul_le_add",
     "Mathesis.Duality.self_dual_fixed_point",
     "Mathesis.Duality.Reff_ge_sqrt_of_selfDual",
-    "Mathesis.Duality.support_balance",
+    "Mathesis.Duality.sqrt_le_max_of_le_mul_nat",
     "Mathesis.Duality.eoq_lower_bound",
     "Mathesis.Duality.bogoliubov_dual_form",
     "Mathesis.Duality.bogoliubov_selfdual_bound",
-    "Mathesis.Duality.kramers_wannier_self_dual"
+    "Mathesis.Duality.sinh_selfDual_coupling"
   ],
   "permitted_axioms": [
     "propext",
