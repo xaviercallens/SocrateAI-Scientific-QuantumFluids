@@ -83,7 +83,7 @@ outlives 1500 time units with its condensate displaced to k ≠ 0, and a winding
 slips and heats the bath by the amount its energy predicts. Both are single runs; neither is a pre-registered
 result; both are direct observations of the sector physics `TopologicalProtection.lean` is about.
 
-## Part C — complete; admission failure at L = 128, C1/C2 void
+## Part C — complete; admission failure at L = 128, C1/C2 void (resolved by Part C2 below)
 
 **Timing (disclosure).** The prereg's "≈ 7 h wall" estimate was wrong in both directions: a same-evening scaling
 re-estimate (grid ×4.6, duration ×2.7 vs. round 3 ⇒ ×12) predicted ≈ 22 h; the six runs actually finished after
@@ -130,4 +130,60 @@ that goes the wrong way for the wrong reason (a subsample selected by isotropy, 
 verdict is **C1: FAIL as written; C2: not bracketed; both void pending a rerun with a longer equilibration
 window at this box size** — recorded as a recommendation for a future round, not executed in this one (each
 `L = 128` run costs ≈ 13.7 h; a rerun is a deliberate compute decision, not a default next step).
+
+## Part C2 — rerun with doubled equilibration (amendment R3-A2): admission cured, C1 still fails
+
+Pre-registered in amendment R3-A2 as **a diagnostic of the equilibration hypothesis, not a new physics claim**:
+same six `(e, seed)` pairs, same admission rule, `t_tr` doubled `3000 → 6000` (`t_end = 7000`, same 1000-unit
+sampling window); "if admission improves, C1/C2 are re-evaluated on the C2 data in place of C."
+
+**Timing (disclosure).** Launched 2026-09-26 14:49; the prereg estimated ≈ 24 h per run; the six runs took
+96041–97085 s (26.7–27.0 h), finishing 2026-09-27 ≈ 17:30–17:47 — a ≈ 11 % underestimate. Energy drift
+1.2–1.8 × 10⁻⁶ on all six (kill rule `10⁻⁵` not triggered).
+
+**Admission: 2 of 6 → 5 of 6.**
+
+| e | seed | Part C: R_L / R_T / n_s/n / admitted | **C2**: R_L / R_T / n_s/n / admitted | C2: T | K | η | ηK−1 |
+|---|---|---|---|---|---|---|---|
+| 1.00 | 11 | 1.12 / 2.42 / −1.16 / no | 0.98 / 1.28 / −0.30 / **no** | 0.507 | −3.75 | 0.292 | — |
+| 1.00 | 12 | 0.89 / 1.56 / −0.75 / no | 1.17 / 0.20 / +0.83 / **yes** | 0.504 | 10.29 | 0.136 | +0.404 |
+| 1.10 | 11 | 1.14 / 1.87 / −0.64 / no | 1.13 / 0.23 / +0.80 / **yes** | 0.602 | 8.35 | 0.170 | +0.423 |
+| 1.10 | 12 | 1.12 / 0.32 / +0.72 / yes | 1.03 / 0.29 / +0.72 / **yes** | 0.602 | 7.47 | 0.174 | +0.297 |
+| 1.20 | 11 | 0.98 / 1.23 / −0.25 / no | 1.03 / 0.33 / +0.67 / **yes** | 0.688 | 6.15 | 0.227 | +0.396 |
+| 1.20 | 12 | 1.10 / 0.38 / +0.65 / yes | 1.03 / 0.37 / +0.64 / **yes** | 0.694 | 5.80 | 0.220 | +0.274 |
+
+**The equilibration hypothesis is confirmed for the admission failure.** Three of the four rejected runs
+become physical and admitted (negative `n_s/n` → +0.67 to +0.83); the two runs admitted in Part C stay
+admitted with essentially unchanged superfluid fraction (0.716 → 0.716, 0.654 → 0.640), a built-in control
+that the longer warm-up changed what was unequilibrated and nothing else. **One run still fails** (e = 1.00,
+s = 11): improved (`R_T` 2.42 → 1.28, `n_s/n` −1.16 → −0.30) but unphysical, with **exponential** correlation
+decay in every block and condensate fraction 0.33 against 0.51 for the other seed at the same energy — a
+different state, not merely a slower approach. Checked, not assumed: its final field carries **no net torus
+winding** (`(W_x, W_y) = (0, 0)`, as do all twelve Part C and C2 final fields), so it is not a trapped
+winding sector like Part D's. Its cause is **not diagnosed** here (candidates, untested: a longer
+equilibration still, the lowest energy being the slowest to equilibrate; a metastable vortex-cluster state).
+
+**C1 (re-evaluated on C2, per R3-A2): FAIL, now robustly.** Offsets `ηK−1` at `L = 128`: 0.404 (e = 1.00,
+n = 1), 0.360 (e = 1.10, n = 2), 0.334 (e = 1.20, n = 2), against `L = 64`: 0.12, 0.12, 0.20. Ratio **2.50**
+(criterion: ∈ [0.6, 1.0], a shrinking offset). The offset **grows** with `L` at every energy.
+
+This **resolves the question Part C left open.** Part C's failure rested on two admitted runs and was "equally
+consistent with a real finite-size surprise and with a biased subsample." C2 rules out the subsample
+explanation: the seeds that *failed* admission in Part C and pass now give 0.40–0.42, the seeds that always
+passed give 0.27–0.30, and *both* groups lie above the `L = 64` values. The growth is real in this model and
+this estimator. Its *magnitude* is not well determined — the seed-to-seed spread within an energy (≈ 0.12) is
+comparable to the `L = 64` offsets themselves — so "grows" is the finding, not "grows by 2.5×". What it means
+is **not settled here**: the criterion encoded the expectation (Hasenbusch) that finite-size corrections to
+`η·K = 1` shrink with `L`; a growing offset could instead reflect a systematic of the `η` extraction whose
+fit window does not scale with `L`, or genuine logarithmic corrections near BKT at these vortex densities
+(`n_v` 77–362). Separating these needs an `L`-scaled `η` fit and a third box size — recorded as open work,
+not attempted in this round.
+
+**C2 criterion (T_BKT(128) ≤ T_BKT(64)): not bracketed.** `K > 4` at all three energies (10.3, 7.9, 6.0); the
+ladder's highest temperature (0.69) is below `T_BKT(64) = 0.821`. Inconclusive, as in Part C — reaching the
+crossing needs higher `e`, not longer runs.
+
+**Verdict.** Admission failure: **an equilibration artefact, now cured (5/6)**. C1: **FAIL, robust** — the
+finite-size offset grows with `L`, and this is no longer attributable to selection. C2: **not bracketed**.
+LEDGER CLAIM-065.
 
