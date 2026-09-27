@@ -1,0 +1,25 @@
+{
+  "challenge_module": "ComparatorChallenges.TopologicalProtection",
+  "solution_module": "TopologicalProtection",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.TopologicalProtection.pdiff_shift",
+    "QuantumFluids.TopologicalProtection.loop_sum_stable",
+    "QuantumFluids.TopologicalProtection.loop_sum_stable_of_small",
+    "QuantumFluids.TopologicalProtection.circulation_conserved",
+    "QuantumFluids.TopologicalProtection.continuousAt_pdiff",
+    "QuantumFluids.TopologicalProtection.loop_sum_const_of_no_slip",
+    "QuantumFluids.TopologicalProtection.slip_of_winding_change",
+    "QuantumFluids.TopologicalProtection.cos_pdiff",
+    "QuantumFluids.TopologicalProtection.slip_energy_ge",
+    "QuantumFluids.TopologicalProtection.mountain_pass",
+    "QuantumFluids.TopologicalProtection.twisted_loopSum",
+    "QuantumFluids.TopologicalProtection.twisted_energy",
+    "QuantumFluids.TopologicalProtection.barrier_pos"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "challenge_module": "ComparatorChallenges.QHFricke",
+  "solution_module": "QHFricke",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.QHFricke.M_mem_Gamma0",
+    "QuantumFluids.QHFricke.M_mul_M",
+    "QuantumFluids.QHFricke.M_fixes_crit",
+    "QuantumFluids.QHFricke.gamma0_two_odd_den",
+    "QuantumFluids.QHFricke.fricke_crit",
+    "QuantumFluids.QHFricke.fricke_plateau_not_plateau"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

@@ -1,0 +1,8 @@
+extending: [(0.6, 11, False, 4000.0), (0.6, 12, False, 4000.0), (0.6, 13, False, 4000.0), (0.9, 11, False, 4000.0), (0.9, 12, False, 4000.0), (1.6, 11, False, 4000.0), (1.8, 12, False, 4000.0)]
+e=1.80 seed=12 T=1.396 (lo 1.372; halves 1.376/1.391) cond=0.008 eta=2.693 ell=2.7 n_v=472.2 f_free=0.07 Q=0.44 ns/n=-0.029 dE=2.0e-06 12222.8s
+e=1.60 seed=11 T=1.166 (lo 1.105; halves 1.146/1.164) cond=0.014 eta=1.658 ell=4.4 n_v=339.3 f_free=0.07 Q=0.40 ns/n=0.044 dE=1.7e-06 12253.9s
+e=0.90 seed=12 T=0.458 (lo 0.441; halves 0.453/0.450) cond=0.643 eta=0.102 ell=76.1 n_v=5.8 f_free=0.09 Q=0.21 ns/n=0.825 dE=5.6e-07 12905.2s
+e=0.90 seed=11 T=0.443 (lo 0.419; halves 0.430/0.441) cond=0.616 eta=0.123 ell=62.6 n_v=7.5 f_free=0.17 Q=0.22 ns/n=0.587 dE=5.9e-07 12921.2s
+e=0.60 seed=11 T=0.115 (lo 0.111; halves 0.106/0.113) cond=0.913 eta=0.019 ell=415.3 n_v=0.0 f_free=nan Q=nan ns/n=0.973 dE=1.9e-07 12929.7s
+e=0.60 seed=12 T=0.118 (lo 0.097; halves 0.113/0.113) cond=0.911 eta=0.020 ell=381.6 n_v=0.0 f_free=nan Q=nan ns/n=0.970 dE=1.8e-07 12956.3s
+e=0.60 seed=13 T=0.116 (lo 0.102; halves 0.106/0.115) cond=0.911 eta=0.021 ell=373.5 n_v=0.0 f_free=nan Q=nan ns/n=0.970 dE=1.9e-07 12957.8s

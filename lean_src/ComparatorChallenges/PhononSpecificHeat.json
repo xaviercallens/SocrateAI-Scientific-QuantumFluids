@@ -1,0 +1,26 @@
+{
+  "challenge_module": "ComparatorChallenges.PhononSpecificHeat",
+  "solution_module": "PhononSpecificHeat",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.PhononSpecificHeat.bernoulli'_five",
+    "QuantumFluids.PhononSpecificHeat.bernoulli'_six",
+    "QuantumFluids.PhononSpecificHeat.bernoulli'_seven",
+    "QuantumFluids.PhononSpecificHeat.bernoulli'_eight",
+    "QuantumFluids.PhononSpecificHeat.bernoulli'_nine",
+    "QuantumFluids.PhononSpecificHeat.bernoulli'_ten",
+    "QuantumFluids.PhononSpecificHeat.riemannZeta_six",
+    "QuantumFluids.PhononSpecificHeat.riemannZeta_eight",
+    "QuantumFluids.PhononSpecificHeat.riemannZeta_ten",
+    "QuantumFluids.PhononSpecificHeat.thermal_bose_integral",
+    "QuantumFluids.PhononSpecificHeat.bose_integral_values",
+    "QuantumFluids.PhononSpecificHeat.energyTerm_two",
+    "QuantumFluids.PhononSpecificHeat.energyTerm_hasDerivAt",
+    "QuantumFluids.PhononSpecificHeat.phonon_specific_heat"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

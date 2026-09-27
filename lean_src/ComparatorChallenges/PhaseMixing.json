@@ -1,0 +1,15 @@
+{
+  "challenge_module": "ComparatorChallenges.PhaseMixing",
+  "solution_module": "PhaseMixing",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.PhaseMixing.transport_solution",
+    "QuantumFluids.PhaseMixing.phase_mixing",
+    "QuantumFluids.PhaseMixing.maxwellian_mode"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

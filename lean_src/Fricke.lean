@@ -1,0 +1,144 @@
+/-
+  Fricke.lean -- the group-theoretic core of the "Fricke / K3" gate of `paper/wasserstein_slack.tex` §6.3,
+  and NOTHING more.
+
+  Background (Dolgachev, alg-geom/9502005, Thm 7.1): the mirror moduli space of degree-2n polarized K3
+  surfaces is `H/Γ₀(n)⁺`, where `Γ₀(n)⁺` is `Γ₀(n)` extended by the Fricke involution
+  `F = (0, -1/√n; √n, 0)`, `t ↦ -1/(n t)`. An external review placed this project's dual-length
+  involution `k ↦ ks²/k` (`DualLength.lean`) with that involution. The gate's verdict, argued in the
+  paper: it is the SAME involution (restrict `F` to the imaginary axis) WITHOUT the group `Γ₀(n)` -- a
+  shadow, not an instance. This file proves the group-theoretic facts that verdict rests on, as
+  group theory, with no physics attached:
+
+  * `W_mul_W`        : the integer Fricke matrix `W = (0, -1; n, 0)` squares to the scalar `-n`, so it
+                       acts projectively as an involution;
+  * `fricke_normalizes` : for every `A ∈ Γ₀(n)` (Mathlib's `Gamma0 n ≤ SL(2,ℤ)`) there is `B ∈ Γ₀(n)`
+                       with `W * A = B * W` -- `W` normalizes `Γ₀(n)`, which is what makes `Γ₀(n)⁺`
+                       a group in which `Γ₀(n)` has index 2 (the explicit `B` is `conj`);
+  * `conj_conj`      : the induced map on `Γ₀(n)` is itself an involution;
+  * `fricke_on_axis` : the Möbius action of `W` sends `i·y` to `i·(1/(n y))`;
+  * `axis_eq_dual`, `ell_axis_invariant` : with `n = 1/ks²` the axis map is exactly `DualLength`'s
+                       `k ↦ ks²/k`, and the dual length `ell ks` is invariant under it;
+  * `axis_fixed_iff` : its unique positive fixed point is `1/√n` (`= ks`).
+
+  NOT proved, NOT claimed: anything about K3 surfaces, lattice polarisations, period maps or mirror
+  symmetry (Dolgachev's theorem is far beyond the pinned Mathlib); anything about helium. That the
+  wavenumber line of a Bose gas carries no `Γ₀(n)` action is the paper's point, and it is not a
+  theorem -- it is the absence of a structure.
+-/
+import Mathlib
+import DualLength
+
+open Matrix MatrixGroups CongruenceSubgroup
+
+namespace QuantumFluids.Fricke
+
+/-- The Fricke matrix of level `n` as an INTEGER matrix (the `1/√n` normalisation that makes it an
+element of `PSL(2,ℝ)` is invisible projectively and is dropped). -/
+def W (n : ℤ) : Matrix (Fin 2) (Fin 2) ℤ := !![0, -1; n, 0]
+
+/-- `W² = -n · 1`: projectively an involution. -/
+theorem W_mul_W (n : ℤ) : W n * W n = (-n) • (1 : Matrix (Fin 2) (Fin 2) ℤ) := by
+  ext i j; fin_cases i <;> fin_cases j <;> simp [W, Matrix.mul_apply, Fin.sum_univ_two]
+
+/-- For `g = (a, b; c, d)` with `c = n c'`, the conjugate `(d, -c'; -n b, a)`: this is `W g W⁻¹`
+computed without inverses. -/
+def conj (n : ℤ) (g : Matrix (Fin 2) (Fin 2) ℤ) (c' : ℤ) : Matrix (Fin 2) (Fin 2) ℤ :=
+  !![g 1 1, -c'; -n * g 0 1, g 0 0]
+
+theorem W_mul_eq (n : ℤ) (g : Matrix (Fin 2) (Fin 2) ℤ) (c' : ℤ) (hc : g 1 0 = n * c') :
+    W n * g = conj n g c' * W n := by
+  ext i j; fin_cases i <;> fin_cases j <;> simp [W, conj, Matrix.mul_apply, Fin.sum_univ_two, hc] <;> ring
+
+theorem det_conj (n : ℤ) (g : Matrix (Fin 2) (Fin 2) ℤ) (c' : ℤ) (hc : g 1 0 = n * c') :
+    (conj n g c').det = g.det := by
+  simp [Matrix.det_fin_two, conj, hc]; ring
+
+/-- The lower-left entry of the conjugate is again divisible by `n`. -/
+theorem conj_apply_one_zero (n : ℤ) (g : Matrix (Fin 2) (Fin 2) ℤ) (c' : ℤ) :
+    conj n g c' 1 0 = n * (-(g 0 1)) := by
+  simp [conj]
+
+/-- Conjugating twice gives back `g`: the map `W` induces on `Γ₀(n)` is an involution. -/
+theorem conj_conj (n : ℤ) (g : Matrix (Fin 2) (Fin 2) ℤ) (c' : ℤ) (hc : g 1 0 = n * c') :
+    conj n (conj n g c') (-(g 0 1)) = g := by
+  ext i j; fin_cases i <;> fin_cases j <;> simp [conj, hc]
+
+/-- Mathlib's `Gamma0 n` membership, unfolded from `ZMod n` to integer divisibility. -/
+theorem mem_Gamma0_iff_dvd (n : ℕ) [NeZero n] (A : SL(2, ℤ)) :
+    A ∈ Gamma0 n ↔ (n : ℤ) ∣ A 1 0 := by
+  rw [Gamma0_mem, ZMod.intCast_zmod_eq_zero_iff_dvd]
+
+/-- **`W` normalizes `Γ₀(n)`.** For every `A ∈ Γ₀(n)` there is `B ∈ Γ₀(n)` with `W A = B W`
+(and `B` is `conj`, so by `conj_conj` the correspondence is an involution). This is the fact that
+makes `Γ₀(n)⁺ = ⟨Γ₀(n), W⟩` a group in which `Γ₀(n)` has index 2. -/
+theorem fricke_normalizes (n : ℕ) [NeZero n] (A : SL(2, ℤ)) (hA : A ∈ Gamma0 n) :
+    ∃ B : SL(2, ℤ), B ∈ Gamma0 n ∧
+      W n * (A : Matrix (Fin 2) (Fin 2) ℤ) = (B : Matrix (Fin 2) (Fin 2) ℤ) * W n := by
+  obtain ⟨c', hc⟩ := (mem_Gamma0_iff_dvd n A).1 hA
+  refine ⟨⟨conj n A c', ?_⟩, ?_, W_mul_eq n A c' hc⟩
+  · rw [det_conj n A c' hc]; exact A.2
+  · exact (mem_Gamma0_iff_dvd n _).2 ⟨-(A 0 1), conj_apply_one_zero n A c'⟩
+
+/-! ### The action on the imaginary axis, and `DualLength` -/
+
+/-- The Möbius action of `W` restricted to the imaginary axis `t = i y`: `-1/(n t) = i /(n y)`. -/
+theorem fricke_on_axis (n y : ℝ) (hn : n ≠ 0) (hy : y ≠ 0) :
+    ((0 : ℂ) * (Complex.I * y) + (-1)) / ((n : ℂ) * (Complex.I * y) + 0) = Complex.I * (1 / (n * y)) := by
+  have hn' : (n : ℂ) ≠ 0 := by exact_mod_cast hn
+  have hy' : (y : ℂ) ≠ 0 := by exact_mod_cast hy
+  rw [zero_mul, zero_add, add_zero,
+    div_eq_iff (mul_ne_zero hn' (mul_ne_zero Complex.I_ne_zero hy'))]
+  have h : Complex.I * (1 / ((n : ℂ) * y)) * ((n : ℂ) * (Complex.I * y))
+      = Complex.I ^ 2 * (((n : ℂ) * y) / ((n : ℂ) * y)) := by ring
+  rw [h, div_self (mul_ne_zero hn' hy'), Complex.I_sq, mul_one]
+
+/-- The axis map itself, on positive reals: `y ↦ 1/(n y)`. -/
+noncomputable def axis (n y : ℝ) : ℝ := 1 / (n * y)
+
+theorem axis_involutive {n y : ℝ} (hn : n ≠ 0) (hy : y ≠ 0) : axis n (axis n y) = y := by
+  unfold axis; field_simp
+
+/-- **With `n = 1/ks²`, the Fricke axis map is exactly `DualLength`'s involution `k ↦ ks²/k`.** -/
+theorem axis_eq_dual {ks : ℝ} (hks : ks ≠ 0) (k : ℝ) : axis (1 / ks ^ 2) k = ks ^ 2 / k := by
+  unfold axis; field_simp
+
+/-- The dual length `ell ks k = 1/k + k/ks²` of `DualLength.lean` is invariant under the Fricke axis
+map of level `1/ks²` -- restating `DualLength.ell_dual_invariant` in these terms. -/
+theorem ell_axis_invariant {ks k : ℝ} (hk : k ≠ 0) (hks : ks ≠ 0) :
+    QuantumFluids.DualLength.ell ks (axis (1 / ks ^ 2) k) = QuantumFluids.DualLength.ell ks k := by
+  rw [axis_eq_dual hks]
+  exact QuantumFluids.DualLength.ell_dual_invariant hk hks
+
+/-- The unique positive fixed point of the axis map is `1/√n` (`= ks` when `n = 1/ks²`): the
+self-dual point, the same point `DualLength.ell_eq_iff` singles out. -/
+theorem axis_fixed_iff {n y : ℝ} (hn : 0 < n) (hy : 0 < y) :
+    axis n y = y ↔ y = 1 / Real.sqrt n := by
+  unfold axis
+  have hs : 0 < Real.sqrt n := Real.sqrt_pos.2 hn
+  have hsq : Real.sqrt n ^ 2 = n := Real.sq_sqrt hn.le
+  constructor
+  · intro h
+    have h2 : y ^ 2 = 1 / n := by field_simp at h ⊢; nlinarith [h]
+    have : y = Real.sqrt (1 / n) := by
+      rw [← h2, Real.sqrt_sq hy.le]
+    rw [this, Real.sqrt_div' _ hn.le, Real.sqrt_one]
+  · rintro rfl
+    field_simp
+    rw [hsq]
+
+end QuantumFluids.Fricke
+
+-- BEGIN axiom audit (generated by scripts/regen_axiom_audit.py -- do not edit by hand)
+#print axioms QuantumFluids.Fricke.W_mul_W
+#print axioms QuantumFluids.Fricke.W_mul_eq
+#print axioms QuantumFluids.Fricke.det_conj
+#print axioms QuantumFluids.Fricke.conj_apply_one_zero
+#print axioms QuantumFluids.Fricke.conj_conj
+#print axioms QuantumFluids.Fricke.mem_Gamma0_iff_dvd
+#print axioms QuantumFluids.Fricke.fricke_normalizes
+#print axioms QuantumFluids.Fricke.fricke_on_axis
+#print axioms QuantumFluids.Fricke.axis_involutive
+#print axioms QuantumFluids.Fricke.axis_eq_dual
+#print axioms QuantumFluids.Fricke.ell_axis_invariant
+#print axioms QuantumFluids.Fricke.axis_fixed_iff

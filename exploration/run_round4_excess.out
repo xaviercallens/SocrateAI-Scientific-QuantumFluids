@@ -1,0 +1,40 @@
+ROUND 4: excess delay Delta-tau = tau(D) - tau_0
+  (post-hoc motivated, pre-run specified -- see the battery doc's honesty label)
+
+  N=4 [sum] f=0.125: n=4 alpha=+6.0667 r2=0.9885 windows[+5.861,+5.966] B2=ok tau_0=0.9932
+       excl D=0.2: censored (never attained)
+       excl D=0.035: Delta-tau = -0.0215 <= 0 (dispersion ACCELERATES here)
+       excl D=0.025: Delta-tau = -0.0297 <= 0 (dispersion ACCELERATES here)
+       excl D=0.018: Delta-tau = -0.0291 <= 0 (dispersion ACCELERATES here)
+  N=4 [sum] f=0.25: n=4 alpha=+3.3917 r2=0.7968 windows[+5.080,+0.549] B2=ok tau_0=1.4985
+       excl D=0.2: censored (never attained)
+       excl D=0.15: censored (never attained)
+       excl D=0.025: Delta-tau = -0.3295 <= 0 (dispersion ACCELERATES here)
+       excl D=0.018: Delta-tau = -0.3482 <= 0 (dispersion ACCELERATES here)
+  N=4 [max] f=0.125: n=3 alpha=+1.1905 r2=0.9756 windows[+0.877,+1.530] B2=ok tau_0=1.1070
+       excl D=0.2: censored (never attained)
+       excl D=0.15: censored (never attained)
+       excl D=0.035: Delta-tau = -0.0217 <= 0 (dispersion ACCELERATES here)
+       excl D=0.025: Delta-tau = -0.0644 <= 0 (dispersion ACCELERATES here)
+       excl D=0.018: Delta-tau = -0.0695 <= 0 (dispersion ACCELERATES here)
+  N=4 [max] f=0.25: n=3 alpha=+1.8863 r2=0.8435 windows[+3.350,+0.532] B2=ok tau_0=1.6286
+       excl D=0.2: censored (never attained)
+       excl D=0.15: censored (never attained)
+       excl D=0.1: censored (never attained)
+       excl D=0.025: Delta-tau = -0.3438 <= 0 (dispersion ACCELERATES here)
+       excl D=0.018: Delta-tau = -0.4202 <= 0 (dispersion ACCELERATES here)
+
+======================================================================
+KILL CRITERION (fixed in advance): alpha must be stable across BOTH f
+AND both conventions, |d-alpha| <= 0.05 (absolute floor).
+======================================================================
+    N=4 [max] f=0.125: alpha=+1.1905
+    N=4 [max] f=0.25: alpha=+1.8863
+    N=4 [sum] f=0.125: alpha=+6.0667
+    N=4 [sum] f=0.25: alpha=+3.3917
+
+  spread = 4.8762  ->  FAIL
+
+  => PER THE KILL CRITERION: the delay has NO exponent in this model.
+     M3 closes on CLAIM-013's ordinal finding plus Option C's
+     triangulation. No fifth observable is attempted.

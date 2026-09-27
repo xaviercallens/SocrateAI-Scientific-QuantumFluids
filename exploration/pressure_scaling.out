@@ -1,0 +1,29 @@
+Loaded 1050 Q points x 7 pressures: [0.0, 0.51, 1.02, 2.01, 5.01, 10.01, 24.08] bar
+
+ P (bar)    Delta (meV)     Q_m (A^-1)  A (meV A^2)    n
+----------------------------------------------------------
+     0.0   0.7438+/-0.0001   1.9085+/-0.0001        3.220  186
+    0.51   0.7413+/-0.0001   1.9131+/-0.0001        3.214  189
+    1.02   0.7386+/-0.0001   1.9177+/-0.0001        3.236  185
+    2.01   0.7338+/-0.0001   1.9267+/-0.0001        3.241  185
+    5.01   0.7199+/-0.0001   1.9517+/-0.0002        3.218  191
+   10.01   0.6963+/-0.0001   1.9909+/-0.0003        3.137  184
+   24.08   0.6185+/-0.0003   2.1147+/-0.0007        2.360  190
+
+P=0 cross-check vs M1 (Delta=0.7442, Q_m=1.9074): Delta=0.7438, Q_m=1.9085  -> consistent
+
+Power-law fits over the FINITE pressures (P=0 excluded as log(0)):
+  Delta(P) ~ P^beta :  beta = -0.0414  r^2 = 0.7483  windows[-0.0128, -0.0984]
+  Q_m(P) ~ P^beta :  beta = +0.0235  r^2 = 0.7926  windows[+0.0087, +0.0519]
+
+Relative sensitivities (finite-difference from P=0, low-P regime):
+  Delta: P= 0.51 bar -> -0.332%  (-0.6507% per bar)
+  Delta: P= 1.02 bar -> -0.693%  (-0.6789% per bar)
+  Delta: P= 2.01 bar -> -1.342%  (-0.6679% per bar)
+  Q_m: P= 0.51 bar -> +0.243%  (+0.4762% per bar)
+  Q_m: P= 1.02 bar -> +0.483%  (+0.4734% per bar)
+  Q_m: P= 2.01 bar -> +0.955%  (+0.4753% per bar)
+
+CAVEAT: fits are against P (bar), the variable the file provides. Density
+rho(P) is the physical variable and is NOT in this file; converting requires
+a separately-sourced equation of state and is not done here.

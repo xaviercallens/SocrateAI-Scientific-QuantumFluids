@@ -1,0 +1,15 @@
+{
+  "challenge_module": "ComparatorChallenges.SectorDuality",
+  "solution_module": "SectorDuality",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.SectorDuality.sectorDuality_bijective",
+    "QuantumFluids.SectorDuality.sectorDuality_sq_ne_id",
+    "QuantumFluids.SectorDuality.kramersWannier_gauging_sq"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

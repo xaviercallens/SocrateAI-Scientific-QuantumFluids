@@ -1,0 +1,153 @@
+#!/usr/bin/env python3
+"""Generate Comparator challenge files from the Lean solution files.
+
+For each solution module M in SOLUTIONS, writes
+  lean_src/ComparatorChallenges/M.lean   (definitions verbatim; every theorem listed by a
+                                          `#print axioms` line kept with its proof replaced by `sorry`;
+                                          unlisted helper theorems dropped)
+  lean_src/ComparatorChallenges/M.json   (Comparator config)
+
+Why generated: the challenge must contain the SAME definitions and theorem statements as the
+solution, and hand-copying invites exactly the statement drift Comparator exists to catch.
+The generator is the trusted step; review its output once, then treat it as controlled.
+
+Usage:  python3 scripts/make_comparator_challenges.py
+Then (needs landrun, lean4export, optionally nanoda_bin; see docs/COMPARATOR_SETUP.md):
+  lake exe comparator lean_src/ComparatorChallenges/QuantumFluidsShell.json
+"""
+import json
+import re
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+SRC = ROOT / "lean_src"
+OUT = SRC / "ComparatorChallenges"
+SOLUTIONS = ["QuantumFluidsShell", "MadelungSplit", "Duality", "GPGalerkin", "ShellHamiltonian", "DualLength", "RipsFloor", "SigmaRule", "MadelungNSE", "VortexWinding", "QuantizedCirculation", "HeliumKinematics", "BoseIntegral", "PhononSeries", "PhononSpecificHeat", "ZeroSound", "PhaseMixing", "Villani", "WassersteinCertificate", "Fricke", "QHFricke", "TopologicalProtection", "ScaleResolvedWinding", "ContinuumWinding", "SectorTemperature", "CompactBoson", "ChargeLattice", "SectorDuality", "RCFTDuality", "LevelRankDuality"]
+PERMITTED = ["propext", "Quot.sound", "Classical.choice"]
+
+DECL = re.compile(r"^(private\s+)?(noncomputable\s+)?(theorem|lemma|def|abbrev|structure|instance)\b")
+
+
+def split_items(text):
+    """Split into top-level items. A docstring is glued to the declaration that follows it."""
+    items, cur, in_comment = [], [], False
+    for line in text.split("\n"):
+        starts_item = (not in_comment) and line and not line[0].isspace() and not cur_is_docstring(cur)
+        if starts_item and cur:
+            items.append("\n".join(cur))
+            cur = []
+        cur.append(line)
+        # comment state (block comments only; `--` line comments never span lines)
+        opens = len(re.findall(r"/-", line))
+        closes = len(re.findall(r"-/", line))
+        if opens > closes:
+            in_comment = True
+        elif closes > opens and in_comment:
+            in_comment = False
+    if cur:
+        items.append("\n".join(cur))
+    return items
+
+
+def cur_is_docstring(cur):
+    """True while the pending item is only a (closed) docstring waiting for its declaration."""
+    if not cur:
+        return False
+    joined = "\n".join(cur).strip()
+    return joined.startswith("/--") and joined.endswith("-/")
+
+
+def strip_block_comments(text):
+    """Strip every `/- ... -/` block comment (docstrings `/-- -/` and section headers `/-! -/`
+    alike). Anything that looks like Lean syntax -- a `theorem` keyword, a `:=` used as informal
+    math notation -- inside PROSE must not be mistaken for real code."""
+    return re.sub(r"/-.*?-/", "", text, flags=re.S)
+
+
+def decl_name(item):
+    body = strip_block_comments(item).strip()
+    m = re.match(r"(?:private\s+)?(?:noncomputable\s+)?(?:theorem|lemma|def|abbrev|structure)\s+(\S+)", body)
+    return m.group(1) if m else None
+
+
+def find_toplevel_walrus(code):
+    """Index of the first `:=` at bracket depth 0 (tracking `()[]{}`), or None. A named argument
+    inside the signature, e.g. `ZMod.dft (N := N)`, puts its own `:=` at depth >= 1 and must not be
+    mistaken for the real proof-starting `:=` at depth 0."""
+    depth = 0
+    i, n = 0, len(code)
+    while i < n - 1:
+        c = code[i]
+        if c in "([{":
+            depth += 1
+        elif c in ")]}":
+            depth -= 1
+        elif c == ":" and code[i + 1] == "=" and depth == 0:
+            return i
+        i += 1
+    return None
+
+
+def sorry_proof(item):
+    """Replace the proof of a theorem by `sorry`.
+
+    The statement ends at the first top-level (bracket-depth-0) `:=`, or, for theorems defined by
+    pattern matching (`theorem f ... : stmt` followed by `| 0 => ...` alternatives),
+    at the first such alternative, whichever comes first. Both are searched for in the CODE
+    only, after any leading `/- ... -/` docstring: prose may itself contain `:=` (used as
+    informal math notation, e.g. "`r := d(a,b)`") or a line starting with `|`, and that must
+    not be mistaken for the real cut point. A named argument in the signature itself, e.g.
+    `ZMod.dft (N := N)`, has its `:=` at depth >= 1 and is skipped by the depth tracking.
+    """
+    m_doc = re.match(r"\s*/-.*?-/\s*\n?", item, flags=re.S)
+    doc_end = m_doc.end() if m_doc else 0
+    code = item[doc_end:]
+    cuts = []
+    i = find_toplevel_walrus(code)
+    if i is not None:
+        cuts.append(i)
+    pm = re.search(r"\n\s*\|\s", code)
+    if pm:
+        cuts.append(pm.start())
+    assert cuts, f"no ':=' or match alternative in item:\n{item[:200]}"
+    return item[:doc_end] + code[: min(cuts)].rstrip() + " := by\n  sorry"
+
+
+def main():
+    OUT.mkdir(exist_ok=True)
+    for mod in SOLUTIONS:
+        text = (SRC / f"{mod}.lean").read_text()
+        ns = re.search(r"^namespace\s+(\S+)", text, flags=re.M).group(1)
+        printed_raw = re.findall(r"^#print axioms\s+(\S+)", text, flags=re.M)
+        # `#print axioms` lines may be written qualified or relative to the namespace
+        printed = [n if n.startswith(ns + ".") else f"{ns}.{n}" for n in printed_raw]
+        printed_short = {n[len(ns) + 1:] for n in printed}
+        keep = []
+        for it in split_items(text):
+            s = it.strip()
+            if s.startswith("#print"):
+                continue
+            name = decl_name(it)
+            is_thm = re.search(r"(?:^|\s)(theorem|lemma)\s", strip_block_comments(it)) is not None
+            if is_thm:
+                if name in printed_short:
+                    keep.append(sorry_proof(it))
+                # unlisted helper theorems are dropped from the challenge
+            else:
+                keep.append(it)
+        header = (f"/- GENERATED by scripts/make_comparator_challenges.py from lean_src/{mod}.lean.\n"
+                  f"   Do not edit by hand. Definitions are verbatim; proofs of listed theorems are `sorry`. -/\n")
+        (OUT / f"{mod}.lean").write_text(header + "\n".join(keep).rstrip("\n") + "\n")
+        cfg = {
+            "challenge_module": f"ComparatorChallenges.{mod}",
+            "solution_module": mod,
+            "enable_nanoda": True,
+            "theorem_names": printed,
+            "permitted_axioms": PERMITTED,
+        }
+        (OUT / f"{mod}.json").write_text(json.dumps(cfg, indent=2) + "\n")
+        print(f"{mod}: {len(printed)} theorems -> {OUT / (mod + '.lean')}")
+
+
+if __name__ == "__main__":
+    main()

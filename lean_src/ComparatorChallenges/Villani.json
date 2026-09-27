@@ -1,0 +1,28 @@
+{
+  "challenge_module": "ComparatorChallenges.Villani",
+  "solution_module": "Villani",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.Villani.mem_diff_iff",
+    "QuantumFluids.Villani.diff_crossover_left",
+    "QuantumFluids.Villani.diff_crossover_right",
+    "QuantumFluids.Villani.dist_crossover_left",
+    "QuantumFluids.Villani.dist_crossover_right",
+    "QuantumFluids.Villani.isMidpoint_crossover",
+    "QuantumFluids.Villani.takeHalf_subset",
+    "QuantumFluids.Villani.card_takeHalf",
+    "QuantumFluids.Villani.takeHalf_card_bounds",
+    "QuantumFluids.Villani.encode_fst_isMidpoint",
+    "QuantumFluids.Villani.encode_snd_isMidpoint",
+    "QuantumFluids.Villani.encode_mem_midpointSet",
+    "QuantumFluids.Villani.diff_crossover_crossover_compl",
+    "QuantumFluids.Villani.encode_injective",
+    "QuantumFluids.Villani.card_sq_ge",
+    "QuantumFluids.Villani.klDiv_nonincreasing_to_invariant"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

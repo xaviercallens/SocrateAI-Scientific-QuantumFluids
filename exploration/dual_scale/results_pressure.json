@@ -1,0 +1,160 @@
+{
+ "control_C2_pass": true,
+ "c_bias_factor": 0.9567307692307693,
+ "rows": [
+  {
+   "P_bar": 0.0,
+   "c_variant": "raw",
+   "c_ms": 249.46323565820833,
+   "k_star": 3.144500275135947,
+   "sqrt2_xi_A": 0.636031109875967,
+   "roton_k": 1.92,
+   "roton_eps": 0.7413,
+   "ratio": 0.045275298136946,
+   "bogoliubov_ratio_at_roton": 1.1241752127237836
+  },
+  {
+   "P_bar": 0.0,
+   "c_variant": "bias_corrected",
+   "c_ms": 238.66915334607432,
+   "k_star": 3.0084401670771803,
+   "sqrt2_xi_A": 0.6647963359507595,
+   "roton_k": 1.92,
+   "roton_eps": 0.7413,
+   "ratio": 0.0473229246858531,
+   "bogoliubov_ratio_at_roton": 1.1025502014327135
+  },
+  {
+   "P_bar": 0.51,
+   "c_variant": "raw",
+   "c_ms": 252.9325048159105,
+   "k_star": 3.188230638017401,
+   "sqrt2_xi_A": 0.6273071891824297,
+   "roton_k": 1.924,
+   "roton_eps": 0.7381,
+   "ratio": 0.043994067659048224,
+   "bogoliubov_ratio_at_roton": 1.1302770235937862
+  },
+  {
+   "P_bar": 0.51,
+   "c_variant": "bias_corrected",
+   "c_ms": 241.9883098959913,
+   "k_star": 3.050278350795494,
+   "sqrt2_xi_A": 0.6556778660801273,
+   "roton_k": 1.924,
+   "roton_eps": 0.7381,
+   "ratio": 0.045983749110965,
+   "bogoliubov_ratio_at_roton": 1.1080729326893997
+  },
+  {
+   "P_bar": 1.02,
+   "c_variant": "raw",
+   "c_ms": 256.5453165793572,
+   "k_star": 3.2337703647598923,
+   "sqrt2_xi_A": 0.61847310551023,
+   "roton_k": 1.92,
+   "roton_eps": 0.7357,
+   "ratio": 0.04336279735760843,
+   "bogoliubov_ratio_at_roton": 1.1389947898011326
+  },
+  {
+   "P_bar": 1.02,
+   "c_variant": "bias_corrected",
+   "c_ms": 245.44479807351962,
+   "k_star": 3.093847608592397,
+   "sqrt2_xi_A": 0.6464442509855672,
+   "roton_k": 1.92,
+   "roton_eps": 0.7357,
+   "ratio": 0.04532392889639474,
+   "bogoliubov_ratio_at_roton": 1.115982721877342
+  },
+  {
+   "P_bar": 2.01,
+   "c_variant": "raw",
+   "c_ms": 262.85331593776,
+   "k_star": 3.313283106049081,
+   "sqrt2_xi_A": 0.603630880907396,
+   "roton_k": 1.932,
+   "roton_eps": 0.7301,
+   "ratio": 0.04090848783604861,
+   "bogoliubov_ratio_at_roton": 1.149028639404018
+  },
+  {
+   "P_bar": 2.01,
+   "c_variant": "bias_corrected",
+   "c_ms": 251.47985515199153,
+   "k_star": 3.169919894729649,
+   "sqrt2_xi_A": 0.6309307699936603,
+   "roton_k": 1.932,
+   "roton_eps": 0.7301,
+   "ratio": 0.04275862045174929,
+   "bogoliubov_ratio_at_roton": 1.1251122054705118
+  },
+  {
+   "P_bar": 5.01,
+   "c_variant": "raw",
+   "c_ms": 279.66303753912433,
+   "k_star": 3.5251707377515342,
+   "sqrt2_xi_A": 0.5673484063003608,
+   "roton_k": 1.966,
+   "roton_eps": 0.7138,
+   "ratio": 0.03487795653231618,
+   "bogoliubov_ratio_at_roton": 1.1753855000261122
+  },
+  {
+   "P_bar": 5.01,
+   "c_variant": "bias_corrected",
+   "c_ms": 267.56223303021994,
+   "k_star": 3.3726393115988245,
+   "sqrt2_xi_A": 0.5930073794496231,
+   "roton_k": 1.966,
+   "roton_eps": 0.7138,
+   "ratio": 0.036455351551365665,
+   "bogoliubov_ratio_at_roton": 1.149204559247411
+  },
+  {
+   "P_bar": 10.01,
+   "c_variant": "raw",
+   "c_ms": 303.9690647216629,
+   "k_star": 3.8315497877999034,
+   "sqrt2_xi_A": 0.5219819944316607,
+   "roton_k": 1.982,
+   "roton_eps": 0.6882,
+   "ratio": 0.029112034325319433,
+   "bogoliubov_ratio_at_roton": 1.2252288057383407
+  },
+  {
+   "P_bar": 10.01,
+   "c_variant": "bias_corrected",
+   "c_ms": 290.816557113514,
+   "k_star": 3.6657615758277924,
+   "sqrt2_xi_A": 0.5455892203104795,
+   "roton_k": 1.982,
+   "roton_eps": 0.6882,
+   "ratio": 0.030428658993298708,
+   "bogoliubov_ratio_at_roton": 1.1951027219907329
+  },
+  {
+   "P_bar": 24.08,
+   "c_variant": "raw",
+   "c_ms": 351.04642231828973,
+   "k_star": 4.42496293553158,
+   "sqrt2_xi_A": 0.45198118699263995,
+   "roton_k": 2.048,
+   "roton_eps": 0.6256,
+   "ratio": 0.018880897198981773,
+   "bogoliubov_ratio_at_roton": 1.3117275844227463
+  },
+  {
+   "P_bar": 24.08,
+   "c_variant": "bias_corrected",
+   "c_ms": 335.8569136602868,
+   "k_star": 4.233498193128772,
+   "sqrt2_xi_A": 0.47242254720838744,
+   "roton_k": 2.048,
+   "roton_eps": 0.6256,
+   "ratio": 0.01973480712255381,
+   "bogoliubov_ratio_at_roton": 1.2754492389775234
+  }
+ ]
+}

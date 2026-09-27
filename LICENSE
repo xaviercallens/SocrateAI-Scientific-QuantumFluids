@@ -1,0 +1,12 @@
+This project's code is dual-licensed. You may use it under EITHER of:
+
+  * the MIT License            -- see LICENSE-MIT
+  * the Apache License 2.0     -- see LICENSE-APACHE
+
+at your option.  SPDX-License-Identifier: MIT OR Apache-2.0
+
+The paper and documentation (paper/, docs/, *.md) are under CC BY 4.0. See NOTICE.
+
+History: v1.2.0 (Zenodo 10.5281/zenodo.22853896) was released under Apache-2.0 only, and that
+record is permanent. MIT was added on 2026-09-20 for all later versions; the dual form keeps the
+later licence compatible with the published one.

@@ -1,0 +1,24 @@
+{
+  "challenge_module": "ComparatorChallenges.CompactBoson",
+  "solution_module": "CompactBoson",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.CompactBoson.dim_dual",
+    "QuantumFluids.CompactBoson.spin_dual",
+    "QuantumFluids.CompactBoson.partition_dual",
+    "QuantumFluids.CompactBoson.dim_electric",
+    "QuantumFluids.CompactBoson.dim_magnetic",
+    "QuantumFluids.CompactBoson.electric_mul_magnetic",
+    "QuantumFluids.CompactBoson.eq_of_sq_eq_sq_pos",
+    "QuantumFluids.CompactBoson.selfDual_radius",
+    "QuantumFluids.CompactBoson.selfDual_value",
+    "QuantumFluids.CompactBoson.vortex_marginal_radius",
+    "QuantumFluids.CompactBoson.bkt_not_selfDual",
+    "QuantumFluids.CompactBoson.eta_at_bkt"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

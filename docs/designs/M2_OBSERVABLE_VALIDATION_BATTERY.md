@@ -231,3 +231,130 @@ for every conservative arm (each trajectory climbs toward the ceiling).
   negative). β > 0 stable across f, N, windows ⇒ dispersion delays thermalization with a
   measurable exponent — the first well-posed quantitative signature distinguishing the
   dispersive cutoff from bare truncation.
+
+
+---
+
+## Round 3 — execution notes and a CONSTRAINT on the pre-registration (2026-08-15)
+
+**v1 timed out (my error, not the physics.)** The first script re-integrated the model
+once per `(f, convention)` pair rather than once per `(N, D, dt-level)` — a 12× waste
+that exhausted a ~58-minute budget with no output. Fixed by caching one trace per
+configuration and reading every `f` and both conventions off it. **No results were
+produced by v1**; nothing is being reported from it.
+
+**CONSTRAINT DISCOVERED, recorded before any β is fitted.** A smoke test (N=4, D=0.1,
+T=64) shows the pre-registered level **f = 1/2 is not attained**: the trace never reaches
+`0.5·k_N²E = 80` within the horizon. `f = 1/8` (τ = 2.66) and `f = 1/4` (τ = 17.58) are
+attained comfortably.
+
+This is a *factual attainability constraint*, not a threshold being tuned to get a
+result — the distinction matters and is why it is recorded here, in the pre-registration,
+rather than silently dropped. **No β was computed at f = 1/2 and none will be reported.**
+
+### ⚠ A SELECTION-BIAS HAZARD this exposes, which needs an owner ruling
+
+f = 1/2 is *not* uniformly unreachable — earlier measurement (CLAIM-005 era) reached
+sup Ω ≈ 105.8 > 80 at N = 4, **D = 0.02**, T = 64, while D = 0.1 fails to reach it. So
+attainability itself depends on D, in the direction the hypothesis predicts (more
+dispersion ⇒ slower thermalization ⇒ level reached later or not at all).
+
+That is simultaneously **signal and hazard**:
+
+- as *signal*, it is the coarsest possible confirmation that dispersion delays
+  thermalization — the [LIT-016] bottleneck;
+- as *hazard*, it means the exclusion rule ("configuration excluded if the level is not
+  reached") **preferentially removes the slowest — i.e. most strongly affected —
+  configurations**. Fitting β on the survivors would systematically understate the
+  effect, and would do so invisibly.
+
+This is a *different* failure mode from the six the battery already covers: not a broken
+observable, but an **informative-censoring** problem in the inclusion criterion itself.
+Options for the ruling are recorded in the session summary; nothing is fitted until it is
+settled.
+
+### Round 3 — AMENDED SCOPE AND CENSORING RULE (owner rulings, 2026-08-15, pre-run)
+
+Both amendments are recorded **before** the run; no β has been fitted.
+
+**Scope (ruling 1):** N = 4 only; f ∈ {1/8, 1/4} (f = 1/2 dropped as unattainable);
+T = 32; the eight pre-registered D values; baseline D = 0. Checks retained: dt-refinement
+(B4), two-phase sampling adequacy (B4), monotonicity (B2), and B3′ across the two
+attainable f. **B5′ grid-independence is DEFERRED**, not waived — N = 5 is run only if
+N = 4 shows an effect worth confirming, and any result stands as single-grid until then.
+
+**Censoring rule (ruling 2):** configurations whose level is never attained are
+**reported as a result in their own right** — a censoring table giving which (D, f) failed
+and at what horizon — and *not* treated as a footnote to the fit. Because non-attainment
+correlates with the hypothesised effect (slower thermalization ⇒ level reached later or
+not at all), **any β fitted on the attained subset is labelled a LOWER BOUND on the
+magnitude of the effect**, never a point estimate. If censoring is absent, that is stated
+explicitly too, since it makes the fit unbiased.
+
+---
+
+## Round 4 — excess delay Δτ = τ(D) − τ₀ (specified 2026-08-15, BEFORE the run)
+
+### Honesty label, stated first
+
+**This is post-hoc MOTIVATED but pre-run SPECIFIED.** It is written knowing round 3's
+outcome, which is precisely the situation pre-registration exists to guard against. Three
+things make it defensible, and they are the only things that do:
+
+1. **The functional form was derived, not fitted.** τ(D=0) = 0.993 (f=1/8) and 1.499
+   (f=1/4) are nonzero, so τ(D) → τ₀ ≠ 0 as D → 0, so log τ vs log D must flatten to
+   slope zero at small D *as arithmetic*, independent of any physics. A pure power law
+   forces τ(0) = 0 and is therefore the wrong model. `τ = τ₀ + c·D^α` follows from that
+   observation alone — no exponent was fitted to motivate it.
+2. **The criteria are inherited unchanged** from the existing battery (B2, B3′, windowed
+   stability, B4, sampling adequacy, censoring rule). Nothing is loosened for this round.
+3. **The kill criterion is fixed here, in advance**, and it is genuinely reachable.
+
+Anyone reading this later should weight it accordingly: it is one degree weaker than
+rounds 1–3's pre-registrations, and that is recorded rather than concealed.
+
+### Specification
+
+- **Observable:** `Δτ_f(D) = τ_f(D) − τ_f(0)`, the *excess* thermalization delay over the
+  pure-truncation baseline at the same level.
+- **Fit:** α from `Δτ ∝ D^α`, per f ∈ {1/8, 1/4}, per convention.
+- **Data:** unchanged from round 3 — N=4, T=32, the eight D values, common complexified
+  initial data. Re-used via a dumped CSV so no configuration is re-tuned.
+- **New exclusion, needed because Δτ may be non-positive:** if `τ(D) ≤ τ₀` the point is
+  excluded with its reason. Such a point would mean dispersion *accelerates* thermalization
+  at that D, which would itself be a finding and is to be reported, not hidden.
+- **Censoring:** unchanged — reported first-class; α on the attained subset is a LOWER
+  BOUND, since censoring removes the most-delayed configurations.
+
+### Kill criterion, fixed in advance
+
+**If α is not stable across both f AND both conventions (B3′ metric: |Δα| ≤ 0.05, or
+absolute floor if |α| < 0.1), then the delay has no exponent in this model.** In that case
+M3 closes on CLAIM-013's ordinal finding, no quantitative claim is made, and no fifth
+observable is attempted — the ordinal result plus Option C's triangulation is the final
+answer. This is a real stopping rule, not a formality.
+
+---
+
+## B8 — Ensemble reproducibility (added 2026-08-15, after it invalidated four rounds)
+
+**The battery was missing its binding criterion.** B1–B7 all test *deterministic*
+reproducibility: the same trajectory at finer discretisation, or a neighbouring parameter
+on the same trajectory family. None tests whether a **different trajectory from the same
+physical ensemble** gives the same answer. In a chaotic system that is the constraint that
+actually binds, and its absence invalidated rounds 3, 4 and Option C.
+
+**B8.** Before any fit, measure the observable at **fixed parameters** across ≥ 6
+realisations that differ only in a physically irrelevant way (here: initial phases at
+identical |aₙ| and identical energy). Report the coefficient of variation. Then either
+
+- size the ensemble so the standard error of the mean is below the effect being claimed
+  (n ≈ (CV/target)²), and fit ensemble means; or
+- if that ensemble is unaffordable, **make no quantitative or ordinal claim** — state the
+  CV and stop.
+
+**Measured for τ in this model:** CV 23–49%, requiring n ≈ 22–97 per point for 5%
+precision. Rounds 3–4 used n = 1.
+
+**Ordering note:** B8 should run *first*, not last. It is cheap relative to a full sweep
+and it determines whether the sweep is worth running at all.

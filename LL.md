@@ -209,6 +209,44 @@ evidence about the specific limit it takes.
 
 ---
 
+### LL-14: In a chaotic system, convergence checks are not reproducibility checks
+
+**Lesson:** The validation battery grew to six criteria, each added after a
+real failure, and it still missed the thing that invalidated four rounds of
+measurement. Every criterion tested **deterministic** reproducibility — the
+same trajectory at a finer timestep, a finer trace sampling, a neighbouring
+parameter on the same trajectory family. **None tested statistical
+reproducibility**: a different trajectory drawn from the same physical
+ensemble.
+
+The model is chaotic. Measured at fixed D with identical |aₙ| and identical
+energy, varying only initial phases, the thermalization time τ scatters by
+**72–105% of its mean** (CV 23–49%). At D = 0.05, three of six realisations
+were censored while three attained the level. Every τ in rounds 3 and 4, and
+every sup_t Ω in Option C, came from **one** trajectory. All of those results
+were noise-dominated, and dt-refinement passing at 0.00% said nothing about it
+— it is the wrong limit.
+
+**Impact:** two claims retracted (CLAIM-R3's exponents, CLAIM-013's ordinal
+censoring result), and a "signal" that looked consistent across all four
+(f, convention) combinations — dispersion *accelerating* thermalization at
+small D, 2–20% of τ₀ — turned out to be noise swamped by a 5–40× larger
+spread. Consistency across sub-analyses is not evidence when they share a
+trajectory.
+
+**Recommendation:** before fitting anything to a trajectory-derived observable
+in a chaotic or mixing system, **measure the fixed-parameter ensemble spread
+first** and size the required ensemble from it (here: n ≈ 22–97 per point for
+5% precision — 1–2 orders more compute than was being spent). Add ensemble
+reproducibility as an explicit criterion alongside the discretisation ones;
+they answer different questions and passing one is silent about the other.
+The tell that should have prompted this earlier: repeated, *inconsistent*
+failures across observables that were individually well-motivated. Seven
+observables failing for six different reasons was the signature of one shared
+cause, not six independent ones.
+
+---
+
 ### LL-12: A stand-in you introduce yourself can mask the finding
 
 **Lesson:** M2 compared a *dispersive* against a *viscous* regulator, and the viscous arm
@@ -296,6 +334,57 @@ against as a positive example — Mathesis's Duality.lean theorems were
 independently confirmed to exist and be kernel-checked before QuantumFluids
 built on them.
 
+### LL-15: Transfer a result with its hypotheses, not just its conclusion
+
+**What happened.** Two conclusions from this stream were carried into a cross-stream note
+to SOCRATES/Mensura: (a) a conservative truncated cascade thermalizes, so their nu=0
+exponent -0.672 must drift to -1 on longer horizons; (b) single-trajectory exponents in
+this model class are noise-dominated (CV 23-49%). Both are true HERE. Both are false
+THERE. Tested in their code: beta = -0.6721 at t_max = 6, 12, 24, 48 (drift -0.0001) and
+seed spread 0.0006.
+
+**Why.** Both conclusions depend on properties their model does not have, and *this
+stream had already proven the discriminating property in both cases*:
+  - Thermalization needs a LIOUVILLE flow. CLAIM-011: the real Katz-Pavlovic flow is
+    volume-CONTRACTING; only the complexified model is Liouville. beta -> -1 was measured
+    in the complexified model.
+  - Phase-randomisation scatter needs PHASES. The M2 obstruction proposition: a real
+    amplitude has no phase. Their state vector is real by construction.
+
+**The failure mode** is not ignorance -- the hypotheses were available and proven
+in-house. It is that a conclusion travels more easily than its preconditions: "the model
+thermalizes" is memorable, "the model thermalizes IF the flow is volume-preserving" is
+the actual result.
+
+**Rule.** Before exporting a finding to another stream, write down the hypotheses it
+rests on and check each one against the target model explicitly. If a hypothesis is one
+this stream itself proved discriminating, that check is mandatory, not optional.
+
+**Silver lining, and the reason this is worth the cost.** Testing the prediction in their
+code before shipping it (a) caught it in the same turn rather than after it had
+propagated, and (b) found a real defect in their measurement instrument as a by-product
+(CLAIM-018). The prediction was wrong; running it was right.
+
+**Applied prospectively the same turn (CLAIM-019), with a two-sided result.** The
+MechanicaFluidorum note carried the SAME two conclusions and MF is also real-amplitude,
+so both were tested in MF's code before sending. They SPLIT:
+  - thermalization degeneracy **transfers** (sup Omega reaches 99.90% of the ceiling by
+    T=64) -- so that item was upgraded from analogy to measurement;
+  - single-trajectory noise **does not** (CV 0.15% vs 23-49%) -- retracted before sending.
+
+The discriminating features are now identified, which is what makes the rule usable
+rather than merely cautionary:
+  - degeneracy needs an UNBOUNDED k profile. MF's k_n = 2^n has one; Mensura's dual cap
+    k_eff = min(k, 1/(alpha' k)) does not, which is why the claim held for MF and failed
+    for Mensura. (Corollary worth stating: the T-dual cap PROTECTS against the sup-Omega
+    degeneracy of plain truncation.)
+  - scatter needs PHASE FREEDOM, absent in both real models.
+
+**Sharpened rule.** Do not ask "does this result transfer?" Ask "what property does this
+result depend on, and does the target model have that property?" The first question has
+no method; the second is a checklist, and the checklist is cheap -- one script per
+neighbour, versus a retraction after the claim has propagated.
+
 ---
 
 ## Decision log
@@ -311,3 +400,4 @@ built on them.
 - **MechanicaFluidorum:** This stream does NOT resolve MF obstruction O5 (GPE–NS well-posedness). LL-3 requires version pinning of dyadic-lab imports.
 - **Mathesis:** This stream imports Tier-A Duality and Scale.Reff frameworks. No new foundational theorems proposed unless audited.
 - **Poly-Algebraic-Calculus:** Naming separation (RES-1) is maintained. No re-use of that name.
+- **SOCRATES / Mensura (`/home/xavkal/socrates-project`):** retrofit delivered — Lean port (11 theorems, rebuilt on their v4.32.2 pin) + `docs/QUANTUMFLUIDS_RETROFIT.md`. One exported prediction (CLAIM-017) was tested in their code and RETRACTED; a real instrument defect (CLAIM-018) was found in the process. See LL-15.

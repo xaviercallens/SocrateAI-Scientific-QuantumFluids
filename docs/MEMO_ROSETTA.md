@@ -30,7 +30,7 @@ The dual-scale hypothesis, atomized into four testable principles:
 
 | Field | Established result | Principle(s) | Status | What expression gains | Action |
 |---|---|---|---|---|---|
-| **Finite Fourier analysis** | Donoho–Stark: `∣supp x∣ · ∣supp x̂∣ ≥ N`; Tao (2005, N prime): `∣supp x∣ + ∣supp x̂∣ ≥ N+1` | P1; P1+P3 (prime hardening) | Consequence proved (`support_balance`, lean_src/Duality.lean); full DS = TARGET T-DS; Tao row `[LL-6 pending]` | First dual-scale theorem outside fluids; the prime refinement is the thesis "arithmetic hardens duality" already in print | Library check for `ZMod.dft`+Plancherel; discharge T-DS |
+| **Finite Fourier analysis** | Donoho–Stark: `∣supp x∣ · ∣supp x̂∣ ≥ N`; Tao (2005, N prime): `∣supp x∣ + ∣supp x̂∣ ≥ N+1` | P1; P1+P3 (prime hardening) | Consequence proved (`sqrt_le_max_of_le_mul_nat`, lean_src/Duality.lean; renamed from `support_balance` 2026-08-15); full DS = TARGET T-DS; Tao row `[LL-6 pending]` | First dual-scale theorem outside fluids; the prime refinement is the thesis "arithmetic hardens duality" already in print | Library check for `ZMod.dft`+Plancherel; discharge T-DS |
 
 **Notes:**
 - Donoho–Stark is Tier A (Donoho & Stark, 1989, *SIAM Review*).

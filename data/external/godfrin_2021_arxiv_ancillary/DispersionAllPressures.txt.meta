@@ -1,0 +1,9 @@
+Source: Godfrin et al. (2021), Phys. Rev. B 103, 104516 -- LITERATURE_LEDGER [LIT-002]
+Preprint ancillary: https://arxiv.org/src/2012.09067v1/anc/DispersionAllPressures.txt
+Retrieved: 2026-08-15 (re-fetched; had been discarded 2026-08-14 as unused)
+Format: UTF-16 LE, CRLF, tab-separated. 3 header rows (names / units / pressures),
+        then idx, Q [A^-1], and (E, errE) [meV] pairs for 7 pressures:
+        P = 0, 0.51, 1.02, 2.01, 5.01, 10.01, 24.08 bar. NAN where not measured.
+Tier: B (author-published, exact, with per-point uncertainties)
+Used for: exploration/pressure_scaling.py -- Delta(P), Q_m(P) extraction (CLAIM-015)
+Not in file: density rho(P). Any density-based analysis needs a separately sourced EOS.

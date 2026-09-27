@@ -1,0 +1,444 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,
+            urlcolor=blue!60!black]{hyperref}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\lean}[1]{\texttt{\small #1}}
+\newtcolorbox{keybox}[1][]{colback=blue!3,colframe=blue!45!black,
+  boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+\newtcolorbox{failbox}[1][]{colback=red!3,colframe=red!45!black,
+  boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+\newtheorem{theorem}{Theorem}
+\newtheorem{criterion}{Criterion}
+
+\title{\textbf{When does self-duality cause physics?}\\
+\large A machine-checked criterion, tested across sixteen candidate physical systems, an interventional
+experiment, and real cosmological data}
+
+\author{Xavier Callens\\
+\small SocrateAI Research\\
+\small \url{https://github.com/xaviercallens/SocrateAI-Scientific-SectorCausalityTheory}}
+\date{September 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+Physics is full of self-dual points: places where a symmetry exchanges two descriptions of the same
+system and maps it to itself. Some of these points are physically decisive -- the Kramers--Wannier
+point fixes the Ising critical temperature exactly -- and some are not: the free boson's self-dual
+radius is an ordinary point on a line of conformal field theories, not a phase boundary. This paper
+states, proves in Lean~4 against Mathlib with two independent kernels, and tests experimentally, a
+single criterion that predicts which is which: a self-dual point is forced to be physically
+distinguished if and only if it exchanges two \emph{inequivalent} sectors on a \emph{discrete}
+fixed-point set; on a continuous moduli space with enhanced symmetry, or when self-duality only
+constrains a fixed point without producing one, it is not. The duality is always exact; what does
+causal work, when anything does, is the \emph{sector} it relabels -- a conserved or topological label
+crossing a threshold, proliferating, annihilating, or being imposed. We test this criterion, not just
+state it, in three independent ways. First, a machine-checked formalization of 116 theorems across 14 Lean
+modules states the mathematical skeleton of sixteen candidate cross-domain cases -- from the Ising
+model to Calabi--Yau mirror symmetry -- and every module is re-checked by a second, independent kernel
+(nanoda) so that a statement's acceptance does not rest on one implementation of type theory. Second,
+a pre-registered, energy-matched intervention in a real classical field (a projected
+Gross--Pitaevskii superfluid) asks whether a sector is a \emph{cause}, not merely a correlate: on three
+equilibrated bases, injecting the same energy as topological defects lowers the condensate fraction
+by $0.49$--$0.73$ where injecting it as phonons lowers it by at most $0.035$ -- the same energy, as
+topology, is $15$--$60\times$ more effective. Third, the criterion is carried into cosmology (dark
+matter halos, dark energy, the K3 charge lattice of a black hole's dyonic charges) and against one
+real, present-day dataset: an independent, exact reproduction of a published CMB bound on a discrete
+dark-energy phase transition, built from the published equations and Planck's own data, agrees with the
+original to within a factor of $3.16$ across the parameter grid we tested, and a forecast built on that
+same reproduction shows that no future CMB temperature experiment can meaningfully tighten this
+particular bound: Planck's own error bars sit within about $13\%$ of the cosmic-variance floor where the
+signal peaks for most transition rates ($5\le\ell<30$) and within a factor of two at every multipole up to
+$\ell=50$, so, since the bound scales as the square root of the error bar, even a perfect temperature
+measurement could tighten it by at most about $1.4\times$. Twelve of these sixteen candidates receive
+one of the criterion's four verdicts; three are, on inspection, not instances of the criterion at all
+-- a classification (topological superconductors), a duality between different theories with no
+self-map (three-dimensional Ising duality, AdS/CFT) -- and one, Calabi--Yau mirror symmetry, is left an
+open question rather than forced into a verdict the literature does not support. Reporting these honestly is part of the theory's
+claim to be checked, not merely asserted.
+\end{abstract}
+
+\section{The puzzle}
+
+A self-dual point is a place in a theory's parameter space where an exact symmetry exchanges two
+descriptions of the same physics and maps the theory to itself. The symmetry is called a
+\emph{duality}: strong coupling for weak, high temperature for low, one radius for its inverse, one
+gauge group for another. Dualities of this kind recur across essentially every part of theoretical
+physics, and a self-dual point -- the fixed locus of the exchange -- is often treated, informally, as
+if it must be special: a natural place to look for a phase transition, a natural place to expect new
+physics.
+
+It is not always special. The Kramers--Wannier point of the two-dimensional Ising
+model~\cite{KramersWannier1941} is exactly the critical temperature: the order and disorder
+operators~\cite{FradkinSusskind1978} are exchanged by the duality, and $\mathbb Z_2$ has exactly one
+symmetric point, so the two phases the duality exchanges are forced to meet there. But the free
+boson's self-dual radius $R=\sqrt2$ under T-duality $R\leftrightarrow2/R$ is not a phase boundary at
+all -- it sits on a continuous line of conformal fixed points, one for every $R$, and the point where
+a vortex operator actually becomes relevant (the Berezinskii--Kosterlitz--Thouless
+transition~\cite{NelsonKosterlitz1977}) is a different radius entirely, forced by a threshold
+condition on one sector, not by the duality's fixed point. The same pattern -- sometimes decisive,
+sometimes not -- recurs in string-gas cosmology, the superconductor--insulator transition, and the
+quantum Hall effect, and, as this paper documents, in supersymmetric gauge theory, $\mathcal N=4$
+super Yang--Mills, rational conformal field theory, the fractional quantum Hall effect, and (with an
+answer this paper declines to give, on purpose) Calabi--Yau mirror symmetry.
+
+The question this paper answers is not ``is this duality real'' -- in every case examined, it is,
+exactly, and none of the underlying mathematics is new. The question is: \emph{when is a self-dual
+point a cause of anything, and when is it merely a coincidence of bookkeeping?} We answer it with a
+single criterion, state the criterion's content as machine-checked mathematics wherever the checkable
+content exists, and test the criterion's most basic presupposition -- that the sector, not the
+duality, is where the causal weight lies -- with a real experiment.
+
+\begin{keybox}
+\textbf{The criterion.} A self-dual point pins a physical transition if and only if the two sectors it
+exchanges are simultaneously critical and the fixed-point set is discrete. On a continuous moduli
+space with enhanced symmetry, the self-dual point is a point like any other, and any transition present
+sits where one sector crosses its own threshold -- not at the duality's fixed locus. When both dual
+sectors are populated and compete energetically, the self-dual point can be a preferred equilibrium
+rather than a transition. In every case, the duality relabels the sectors; the sector acts.
+\end{keybox}
+
+\section{Sector, duality, self-dual point: the formal skeleton}
+
+Every case in this paper has the same shape. There is a \emph{sector}: a discrete or continuous label
+-- a winding number, a Landau-level filling, a coupling constant, a gauge group rank, a point in a
+moduli space -- that indexes physically distinguishable configurations or theories. There is a
+\emph{duality}: an involution or a Fourier-type reindexing map on the sector, that is exact,
+invertible (or, in the non-invertible cases the modern literature has clarified, at least an honest
+map between two descriptions), and preserves the physical content -- the spectrum, the partition
+function, the correlators -- while relabelling which sector produces it. And there is, sometimes, a
+\emph{self-dual point or locus}: a fixed point of the duality map.
+
+The mathematics of the reindexing step is, in every clean case, literal Fourier analysis on a group of
+sectors~\cite{Savit1980}: the compact boson's $(n,w)\mapsto(w,n)$ under $R\mapsto2/R$; the Ising
+model's Kramers--Wannier map, itself a Fourier transform on $\mathbb Z_2$; the discrete Fourier
+transform on $\mathbb Z_N$ underlying a cyclic gauging; the modular $S$-matrix of a rational conformal
+field theory, a Fourier transform on the fusion ring exactly when that ring is abelian. Where this
+project's own Lean library builds directly on Mathlib's finite-group Fourier machinery
+(\lean{ZMod.dft}, \lean{ZMod.dft\_dft}) rather than re-deriving discrete Fourier inversion, and where
+Mathlib's own number-theory library already proves the modular-group stabilizer facts a Montonen--Olive
+S-duality case needs, the point is the same each time: the reindexing is elementary, checkable
+mathematics, and its elementariness is exactly what makes the distinction from physical causation
+possible to state precisely.
+
+\subsection*{What decides the verdict}
+
+Four structurally distinct outcomes recur across the twelve cases examined in this paper, and
+distinguishing them precisely is the paper's central technical content:
+
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Forced.} The self-dual point sits on a \emph{discrete} fixed-point set and exchanges two
+  \emph{physically inequivalent, gapped} sectors. The two phases the duality connects cannot both be
+  continuously deformed into each other away from that point, so they are forced to meet there. Ising
+  is the paradigm case; $SO(3)$ Yang--Mills at $\theta=\pi$, where the self-dual point separates a
+  $\mathbb Z_2$ topological phase from the trivial phase, is a second, established in the modern
+  non-invertible-symmetry literature~\cite{KaidiOhmoriZheng2022}; the $q$-state Potts model's random-
+  cluster self-dual point is a third, proved rigorously for every $q\geq1$ regardless of whether the
+  transition it locates is continuous or discontinuous~\cite{BeffaraDuminilCopin2012}.
+\item \textbf{Not forced.} The self-dual point sits on a \emph{continuous} moduli space of equivalent
+  theories, at a point of \emph{enhanced} (but not qualitatively different) symmetry. Nothing is caused
+  there; the enhancement is a fact about the point's stabilizer, not a transition. This is the modal
+  outcome in this paper: the compact boson's self-dual radius, the free-boson-to-$\widehat{su}(2)_1$
+  point of rational conformal field theory, the point $N_c=N_f/2$ of Seiberg duality where the electric
+  and magnetic gauge groups coincide, and the point $\tau=i$ (and $\tau=\rho$) of Montonen--Olive
+  $S$-duality in $\mathcal N=4$ super Yang--Mills, all receive this verdict, each independently
+  verified against its own primary literature.
+\item \textbf{Constraint, not cause.} Self-duality, \emph{if} the critical point happens to be
+  self-dual, forces an exact numerical relation -- a universal resistance, an exact transport
+  coefficient -- without itself causing the transition. The superconductor--insulator
+  transition~\cite{Fisher1990} and the particle-hole self-conjugate point $\nu=\tfrac12$ of the
+  fractional quantum Hall effect~\cite{Son2015} both receive this verdict: the duality pins a number,
+  the dynamics (vortex or charge proliferation; Fermi-liquid screening) causes the transition or the
+  compressible phase.
+\item \textbf{Organisation, not cause.} A duality can organise a diagram -- the plateau structure of
+  the quantum Hall effect under $\Gamma_0(2)$~\cite{LutkenRoss1992}, the class-number structure of
+  black hole microstate counting under $\mathrm{SL}(2,\mathbb Z)$ on a K3$\times T^2$ charge
+  lattice~\cite{Moore1998} -- while a completely different mechanism (Laughlin's gauge
+  argument~\cite{Laughlin1981}; the attractor mechanism fixing horizon moduli from charges) does the
+  causing.
+\end{enumerate}
+
+Three further outcomes are not verdicts of the criterion at all, and distinguishing them from a
+negative verdict is itself part of this paper's discipline: a candidate can turn out, on reading the
+primary literature, not to be a duality (topological superconductors are a K-theory classification);
+a candidate can turn out to have no self-map to ask the question of (three-dimensional Ising duality
+relates a spin model to a \emph{different} theory, a lattice gauge theory; AdS/CFT is a coupling-space
+equivalence with no conjectured involution); and a candidate can turn out to pose a question the
+literature genuinely does not answer (no citable self-mirror Calabi--Yau threefold exists to ask the
+question of, though the duality itself -- mirror symmetry as T-duality on a torus
+fibration~\cite{StromingerYauZaslow1996} -- is real and verified). Reporting these three outcomes as
+what they are, rather than forcing them into the four-item taxonomy above, is not a limitation of the
+theory; it is a condition the theory imposes on itself.
+
+\section{Is the sector really a cause? An interventional test}
+
+Everything so far establishes a mathematical criterion for when self-duality is or is not
+\emph{correlated} with a physical transition. It does not, by itself, establish that the sector is a
+\emph{cause} in the sense that matters to an experimentalist: that intervening on the sector, holding
+everything else fixed, changes the outcome. This is a distinct question, and this programme answers it
+directly, in the interventionist sense of Woodward and Pearl~\cite{Callens2026Causal}, with a
+pre-registered experiment in a real physical system rather than with a Lean theorem.
+
+The system is a projected Gross--Pitaevskii classical field, a standard model of a two-dimensional
+Bose gas, prepared in three independent equilibrated base states. A machine-checked chain first
+establishes that the sector -- the winding number of the phase around a loop -- can carry an
+intervention at all: it is conserved by every continuous evolution that avoids a phase slip, a change
+of winding forces a slip, the slip on an XY ring costs a positive energy barrier for rings of at least
+ten sites (and the bound fails at exactly nine, the boundary case checked explicitly), the winding
+read at an enclosing scale $R$ equals the net charge inside $R$ so that a bound vortex--antivortex pair
+is invisible from outside, and the sampled, principal-branch loop sum used by every numerical vortex
+detector equals the topological degree of the continuum phase field for every sufficiently fine
+sampling.
+
+The intervention itself is energy-matched: from each equilibrated base, four free vortex--antivortex
+pairs are injected at fixed particle number, momentum, and total energy, against a control arm that
+receives the identical energy as phonons instead. On all three bases, the condensate fraction falls by
+$0.49$--$0.73$ in the vortex arm and by at most $0.035$ in the phonon arm; the coherence exponent
+$\eta$ grows by a factor of $9$--$44$ in the vortex arm against at most $1.2$ in the control. The same
+energy, delivered as topology rather than as thermal phonons, is fifteen to sixty times more
+effective at moving the same observables. The pre-registered composite claim is nevertheless
+\emph{not} made in full: the vortex arm's thermometer reads $5$--$16\%$ \emph{colder} than the phonon
+arm, the wrong sign to explain the effect by ordinary heating, and this is reported as a failure of
+the pre-registered criterion rather than reinterpreted after the fact. The honest reading, developed
+in a companion analysis and consistent with the point-vortex literature since
+Onsager~\cite{Callens2026Causal}, is that the injected vortex configuration is a subsystem with its
+own effective temperature, weakly coupled to the phonon bath -- machine-checked at its combinatorial
+core (the inverse temperature of a state mixing two sectors is the \emph{mediant} of the sector inverse
+temperatures, not their average, so equal energy does not imply equal temperature once a conserved
+label exists) and read together with two independent, calibrated thermometers on our own runs, giving
+the injected sector a temperature five to eight times the bath's on three independent bases.
+
+This is the paper's load-bearing empirical claim: not that a duality relabels a sector (that part is
+elementary and machine-checked), but that the sector itself, independent of any duality relabelling
+it, is where an energy-matched intervention finds its effect.
+
+\begin{failbox}
+What this experiment does not establish: that the thermometer discrepancy is fully explained (it is
+reported, not resolved); that this specific mechanism generalises beyond a two-dimensional classical
+field; or any claim about which of this paper's cross-domain duality cases the intervention bears on
+directly -- the interventional test establishes that \emph{a} sector can be causally efficacious in
+\emph{a} system, which is the presupposition the rest of this paper's criterion needs, not a
+case-by-case proof that every sector discussed below is causally efficacious in its own system.
+\end{failbox}
+
+\section{Sixteen candidates, twelve verdicts}
+
+Table~\ref{tab:cases} lists every cross-domain case examined under the criterion, with its verdict and
+the primary literature each verdict rests on. Full case-by-case argument, including the machine-checked
+Lean statement where one exists and an explicit account of what each Lean module does \emph{not} prove,
+appears in the companion technical report~\cite{Callens2026Duality} and its six dated addenda; this
+section summarises the verdicts and states what is genuinely new in the synthesis, namely the pattern
+across all twelve together.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{@{}p{3.6cm}p{2.6cm}p{5.7cm}@{}}
+\toprule
+\textbf{Case} & \textbf{Verdict} & \textbf{Why} \\
+\midrule
+Ising (Kramers--Wannier) & Forced & Discrete fixed point; order/disorder sectors inequivalent and gapped \\
+$SO(3)$ Yang--Mills, $\theta=\pi$ & Forced & Self-dual point separates a $\mathbb Z_2$ TQFT from the trivial phase; anomaly-forced~\cite{KaidiOhmoriZheng2022} \\
+Potts / random-cluster ($q\geq1$) & Forced & Self-dual point IS the critical point, proved for every $q$, continuous or not~\cite{BeffaraDuminilCopin2012} \\
+String-gas cosmology & Preferred equilibrium & Both winding and momentum sectors populated and compete~\cite{BrandenbergerVafa1989} \\
+Compact boson / BKT & Not forced & Continuous line of fixed points; $R=\sqrt2$ (self-dual) $\neq2\sqrt2$ (vortex threshold) \\
+Superconductor--insulator & Constraint & Duality pins a resistance \emph{if} self-dual; vortex/charge proliferation causes the transition~\cite{Fisher1990} \\
+Quantum Hall, $\Gamma_0(2)$/Fricke & Organisation & Organises the plateau diagram; Laughlin's argument causes quantisation~\cite{LutkenRoss1992,Laughlin1981} \\
+RCFT / Verlinde ($\widehat{su}(2)_1$) & Not forced & Self-dual radius on a continuous line of RCFT fixed points~\cite{PaceChatterjeeShao2024} \\
+Particle-vortex / level-rank (FQHE, $\nu=\tfrac12$) & Constraint & Forces an exact Berry phase and Hall conductance; not itself a transition~\cite{Son2015} \\
+K3$\times T^2$ dyon lattice; D1-D5-P-KK sequel & Organisation & Class number counts sectors at fixed entropy; attractor mechanism causes moduli~\cite{Moore1998,Sen2008review} \\
+Seiberg duality (4D $\mathcal N=1$) & Not forced & Conformal window is one continuous phase; $N_c=N_f/2$ not distinguished~\cite{Seiberg1994} \\
+Montonen--Olive $S$-duality ($\mathcal N=4$ SYM) & Not forced & $\tau=i,\rho$ enhanced-symmetry points on a continuous coupling~\cite{MontonenOlive1977,KapustinWitten2007} \\
+Calabi--Yau mirror symmetry & Open question & No citable self-mirror threefold exists; duality itself verified as T-duality~\cite{StromingerYauZaslow1996} \\
+\midrule
+Topological superconductors & Not a duality & K-theory classification, not an exchange~\cite{RyuSchnyderFurusakiLudwig2010} \\
+3D Ising / Wegner duality & No self-map & Maps to a \emph{different} theory (a $\mathbb Z_2$ gauge theory)~\cite{Wegner1971} \\
+AdS/CFT & No self-map & Coupling-space equivalence; no conjectured involution~\cite{Maldacena1998} \\
+\bottomrule
+\end{tabular}
+\caption{Every case examined under the criterion, and why. The last three rows are not verdicts of the
+criterion; they are cases where the criterion's question does not apply, distinguished explicitly from
+a negative answer.}
+\label{tab:cases}
+\end{table}
+
+Two features of this table are worth stating plainly, because they are easy to read past. First, of
+the sixteen candidates examined, only three -- Ising, $SO(3)$ Yang--Mills, and Potts/random-cluster
+duality -- return the ``forced'' verdict; the other nine cases that receive one of the criterion's four
+verdicts return something else, and the remaining four rows fall outside the twelve-case verdict count
+for two different reasons: three because the criterion's question does not apply to them at all (no
+duality, or no self-map), and one, Calabi--Yau mirror symmetry, because the literature does not resolve
+it. The modal outcome of applying this criterion honestly, across an intentionally wide sample of
+physics, is that a self-dual point is \emph{not} a cause. Second, the criterion's four positive
+categories were not fitted to the twelve verdicted cases after the fact: the compact boson, Ising,
+string-gas, and superconductor--insulator cases fixed the taxonomy in earlier work of this programme,
+and every case added since -- quantum Hall organisation, RCFT, level-rank duality, Seiberg duality,
+Montonen--Olive $S$-duality, Potts/random-cluster duality, and the three exclusions -- was classified
+by applying that fixed taxonomy to new primary literature, not by inventing a new category to fit. The
+one genuine addition to the taxonomy, forced by Calabi--Yau mirror symmetry, was not a new verdict but
+a new admission: that the literature can leave the question open, and that this is a legitimate outcome
+distinct from either a positive or a negative verdict. A second small addition, forced by examining
+level-rank duality's own self-dual point $N=K$, is a reminder rather than a new category: a
+combinatorial label set can close up on itself (Young diagrams in an $N\times N$ box are trivially
+fixed by transpose) while the physics it labels does not (Hsin-Seiberg's own $N=K$ computation relates
+$SU(N)_N$ to its level-reversal, not to itself) -- the same discipline that excluded topological
+superconductors, applied one level deeper, inside a case already integrated.
+
+\section{Sectors in the sky: a cosmological extension, tested against real data}
+
+The criterion transfers, without new machinery, to three cosmological questions, developed at length
+in a companion paper~\cite{Callens2026Sky} and summarised here for completeness.
+
+\paragraph{Wave dark matter: the sector, not the duality, is what a density map can see.} If dark
+matter is an ultralight scalar field, its condensate carries a topological winding sector exactly as a
+superfluid does. The question this programme's own energy-matched intervention (\S3) transplants to a
+cosmological halo is whether a density observable -- the only one available to most surveys -- can
+read a halo's net circulation, or only its local vortex content. On our own torus, across twelve runs,
+a density-power observable is blind to an imposed sector at the $1$--$4\%$ level while the same
+injected vortex pairs move it by $21$--$118\%$, an order of magnitude more -- the torus transplant of
+an open question posed and left open by Zhou et al.\ (2025) and Brax \& Valageas (2025) in real
+three-dimensional halos.
+
+\paragraph{Dark energy: a walk on a sector lattice, and a test that separates a roll from a cascade.}
+If the cosmological constant is a flux quantised on a lattice~\cite{BoussoPolchinski2000} or a
+discretely discharging scalar~\cite{Kaloper2025}, its late-time evolution is a walk on an integer
+sector, not a continuous roll. The background expansion history alone cannot distinguish the two at
+current precision~\cite{DESI2025DR2,Lodha2025}; a completed discrete transition, however, leaves a
+CMB-anisotropy signature with no analogue in a smooth roll, from the spatially random local completion
+time of a first-order phase transition~\cite{KorenTsaiWang2025,BaiLuOrlofsky2026}.
+
+We did not stop at citing this test: we built it. Reading the published derivation directly -- a
+bubble-nucleation power spectrum, a closed-form redshift-perturbation formula, and a Bessel-function
+projection onto the CMB temperature power spectrum, checked against Planck's own published error bars
+by a three-bin $\chi^2$ test, with no Boltzmann code and no Markov-chain Monte Carlo anywhere in the
+published pipeline -- we independently re-implemented the entire calculation in plain numerical code
+against the real Planck~2018 temperature power spectrum, downloaded directly from the Planck Legacy
+Archive, first with an interpolated approximation to the underlying bubble-statistics spectrum and then,
+after locating the exact closed form in a companion paper's supplementary material, with that exact
+spectrum in place of the approximation. The exact calculation closes most of the gap the first pass
+flagged as its weakest point -- across the full grid of transition rates and completion redshifts we
+tested, the worst-case disagreement with the original authors' own analytic approximation falls from a
+factor of sixteen to a factor of $3.16$ -- but not uniformly: at low transition rates the exact result
+tracks the approximation closely, while at the highest rates we tested it now sits $30$--$45\%$
+\emph{below} it, a real trade-off we report rather than reconcile, since the original approximation is
+itself described by its own authors as an order-of-magnitude estimate. We then asked whether any future
+CMB temperature experiment could improve on this bound at all, using the fact that this signal's own
+statistic scales the bound exactly as the square root of the multipole error bar, with no linearisation
+needed: comparing Planck's own measured errors against the pure cosmic-variance floor multipole by
+multipole shows Planck within about $13\%$ of that floor for $5\le\ell<30$, where the signal peaks for
+most transition rates; the ratio rises to $1.2$--$2.0$ at $\ell=2$--$4$ and scatters between $0.8$ and
+$1.8$ for $30\le\ell\le50$ (the floor there is estimated from the measured, noisy spectrum). Since the
+bound scales as the square root of the error bar, even a perfect temperature-only measurement could
+tighten it by at most about $1.4\times$.\footnote{Erratum. The version of this paper archived as
+10.5281/zenodo.22985879 said Planck is ``within about 15\%'' of the floor for $\ell\approx5$--$50$. That
+figure came from nine sampled multipoles; a scan of every multipole, made while building this
+programme's reproduction notebook, gives the ranges stated here. The conclusion -- no meaningful
+tightening from a temperature-only successor -- is unchanged; its quantitative basis is now stated
+correctly.} No temperature-only successor to Planck -- a bigger mirror, a colder detector -- can
+meaningfully tighten this particular bound; the modest room that remains, at the lowest multipoles and
+in the scatter above $\ell=30$, is set by cosmic variance, foregrounds and masking, not by instrument
+sensitivity, matching the original authors'
+own pointer toward CMB spectral distortions and pulsar timing arrays as the more promising channels for
+further progress. Every step of this reproduction and forecast needed no specialised hardware: the full
+calculation runs in CPU-minutes to CPU-hours on a single core, confirming directly that a rented GPU
+would add nothing to this line of work, since every bound here is a closed-form or exact-scaling
+calculation, not a machine-learning or large-scale-simulation workload.
+
+\paragraph{K3 as a charge lattice: the attractor mechanism, and where it does and does not generalise.}
+A type~II dyon on K3$\times T^2$ has an entropy that is a function only of an
+$\mathrm{SL}(2,\mathbb Z)$-invariant discriminant on its charge lattice~\cite{Moore1998}; the same
+discriminant, unmodified, governs the exact quarter-BPS degeneracy of a 4D-lifted D1-D5-P black hole
+once a fourth charge is added~\cite{Sen2008review} -- the SL(2,Z)-invariance theorem transfers verbatim
+to a second physical setting. What does \emph{not} transfer is the clean statement that entropy is a
+function of the sector alone: in the 4D-lifted setting an extra discrete invariant and wall-crossing
+are required~\cite{Sen2007dyon}, and the original Strominger--Vafa/Callan--Maldacena entropy formulas
+sit entirely outside this discriminant framework, being a different algebraic object (a product of
+three independent charges, not a quadratic-form discriminant) governed by a Cardy-limit approximation,
+not an exact identity. In every reading, the K3 geometry that appears is an \emph{output} of the
+charges, via the attractor mechanism, never an input a physical system could dial to select a
+cosmological parameter -- the boundary this project has stated explicitly for other researchers working
+on K3-based vacuum selection to check before publishing a stronger claim.
+
+\begin{failbox}
+\textbf{What the cosmological extension does not claim.} No cosmological number is derived anywhere in
+this programme: no boson mass, no $\Omega$, no $w(z)$, no lensing amplitude, no string tension. That
+dark matter is a scalar condensate, that $\Lambda$ sits on a flux lattice, or that dark energy is a
+discrete cascade are the hypotheses of the cited literature, not claims of this paper; what is shown is
+what follows, and what is testable, if they hold. No mapping exists, or is proposed, from this
+programme's own toy superfluid simulations to a real cosmological transition rate or Hubble scale --
+building one by analogy, rather than by a real physical dependency, is exactly the failure mode this
+programme's own discipline (check dependencies, not analogy) exists to prevent.
+\end{failbox}
+
+\section{Reproducibility and the standard of evidence}
+
+Every mathematical claim in \S2 and Table~\ref{tab:cases} that admits a checkable skeleton is stated as
+a Lean~4 theorem against a pinned Mathlib (tag v4.34.0-rc2) and re-verified by a second, independent
+kernel (nanoda) via Comparator, so that acceptance does not rest on trusting one implementation of
+type theory; every module lists, and negative controls exercise, its exact axiom footprint (never more
+than propositional extensionality, choice, and quotient soundness). As of this writing the theory's formalization comprises 116 theorems across 14 modules (extracted, unchanged, from the
+origin programme's 257-theorem, 30-module library). Two disciplines run throughout: a literature gate, meaning
+every citation above was verified against Crossref or by reading the cited source directly before being
+written down, and an explicit account, in every case, of what the corresponding Lean statement does
+\emph{not} prove -- the su(2)$_1$ modular S-matrix module does not prove it is the Kac--Peterson matrix
+of affine Lie algebra representation theory; the level-rank duality module does not prove S,T-matrix or
+Verlinde-formula preservation; the Montonen--Olive case needed no new Lean file at all, since
+Mathlib's own modular-group library already proves the needed stabilizer facts. Where a candidate case
+was investigated and found not to fit -- topological superconductors, three-dimensional Ising duality,
+AdS/CFT, and the still-open Calabi--Yau self-mirror question -- that finding is reported with the same
+weight as a positive result, following the same convention this programme has used since its first
+retraction: a failure or an exclusion, honestly reported, is not a defect in the record.
+
+\section{Conclusion}
+
+A self-dual point is exactly what it says: a fixed point of an exact, checkable, mathematical
+symmetry. Whether it is also a cause of anything depends entirely on what it is a fixed point
+\emph{of} -- a discrete set of inequivalent, gapped sectors, or a continuous family of equivalent
+ones -- and that question has, in every one of the thirteen cases examined here that turn on a genuine
+self-map, a definite and checkable answer, or an honestly stated absence of one. The duality is never in question; the sector
+always is. An interventional experiment in a real physical system supports the presupposition the
+whole criterion needs: that a sector, once identified, is not merely a label but a lever. And where the
+criterion reaches all the way to cosmology, it makes contact with real, present-day data, not only with
+toy models -- an independent, exact reproduction of a published CMB bound, agreeing with it to within a
+factor of a few, and a forecast showing that no future CMB temperature mission would meaningfully
+improve it, both computed on a machine anyone can rent for an afternoon.
+
+What remains open is stated as plainly as what is closed: whether a physically distinguished
+self-mirror Calabi--Yau threefold exists anywhere in the string landscape; whether a genuinely new full
+confrontation of the discrete dark-energy cascade against present-day CMB \emph{likelihoods} (not the
+three-bin toy statistic reproduced here), or against the channels the original authors themselves point
+to -- CMB spectral distortions, pulsar timing arrays -- rather than more CMB-temperature data, would
+sharpen or weaken the discriminating test in \S5 (a multi-week undertaking for the likelihood route, by
+our own estimate, not a multi-day one, regardless of computing hardware); and whether further
+cross-domain cases -- of sixteen candidates investigated so far, three were found not to be instances of
+the criterion at all, and twelve received a definite verdict -- exist that fit the criterion as cleanly
+as Ising or as informatively as Calabi--Yau's open question. None of these is claimed here. What is
+claimed is narrower and, we think, more durable: a criterion, stated once, checked twelve times, and
+not falsified yet.
+
+\section*{Data and code availability}
+\addcontentsline{toc}{section}{Data and code availability}
+The theory's dedicated repository, \url{https://github.com/xaviercallens/SocrateAI-Scientific-SectorCausalityTheory},
+holds this paper and its two companions, the self-contained Lean~4 formalization (116 theorems, 14
+modules), reproduction notebooks, a training guide, and an MCP server for scientists and AI agents. The
+origin programme -- the full 257-theorem library, the interventional experiment's pre-registrations and
+raw results, and every other companion paper -- is at
+\url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids} and on Zenodo at the concept
+DOI \href{https://doi.org/10.5281/zenodo.22855581}{10.5281/zenodo.22855581}. This paper is archived
+separately, on its own dedicated concept DOI, as the standalone foundational statement of the theory:
+\href{https://doi.org/10.5281/zenodo.22985863}{10.5281/zenodo.22985863} (resolves to the latest
+version). Code: MIT (the theory repository) and MIT OR Apache-2.0 (the origin programme). This paper: CC~BY~4.0.
+
+\bibliographystyle{unsrt}
+\bibliography{refs_sector_thesis}
+\end{document}

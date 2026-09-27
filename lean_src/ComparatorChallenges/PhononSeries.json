@@ -1,0 +1,21 @@
+{
+  "challenge_module": "ComparatorChallenges.PhononSeries",
+  "solution_module": "PhononSeries",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.PhononSeries.kPow2_eq",
+    "QuantumFluids.PhononSeries.kPow3_eq",
+    "QuantumFluids.PhononSeries.kPow4_eq",
+    "QuantumFluids.PhononSeries.kPow5_eq",
+    "QuantumFluids.PhononSeries.kPow6_eq",
+    "QuantumFluids.PhononSeries.kPow7_eq",
+    "QuantumFluids.PhononSeries.dispersion_kInv",
+    "QuantumFluids.PhononSeries.kSq0_eq",
+    "QuantumFluids.PhononSeries.density_of_states"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

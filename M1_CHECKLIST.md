@@ -70,8 +70,10 @@
 - **Caveat:** Layout templates NOT yet validated against a real Godfrin
   et al. 2021 file — populated from general Mantid/LAMP convention.
   Extend `_KNOWN_LAYOUTS` once a real sample is available.
-- **Tests:** tests/test_nexus_reader.py (skipped — h5py not installed,
-  blocked on python3.12-venv/sudo; see decision point below)
+- **Tests:** tests/test_nexus_reader.py — ✅ now EXECUTING (10 tests). h5py was
+  installed 2026-08-15 without sudo: `python3-venv` is absent on this host and
+  `sudo` cannot prompt in-session, but `uv` creates a venv without `ensurepip`,
+  sidestepping both. Full suite: 143 passed, 0 skipped.
   - ✅ Happy path: valid .nxs → correct extraction
   - ✅ Negative control: unknown layout → error
   - ✅ Negative control: axis swap (shape mismatch) → error

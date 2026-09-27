@@ -1,0 +1,24 @@
+{
+  "challenge_module": "ComparatorChallenges.Fricke",
+  "solution_module": "Fricke",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.Fricke.W_mul_W",
+    "QuantumFluids.Fricke.W_mul_eq",
+    "QuantumFluids.Fricke.det_conj",
+    "QuantumFluids.Fricke.conj_apply_one_zero",
+    "QuantumFluids.Fricke.conj_conj",
+    "QuantumFluids.Fricke.mem_Gamma0_iff_dvd",
+    "QuantumFluids.Fricke.fricke_normalizes",
+    "QuantumFluids.Fricke.fricke_on_axis",
+    "QuantumFluids.Fricke.axis_involutive",
+    "QuantumFluids.Fricke.axis_eq_dual",
+    "QuantumFluids.Fricke.ell_axis_invariant",
+    "QuantumFluids.Fricke.axis_fixed_iff"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

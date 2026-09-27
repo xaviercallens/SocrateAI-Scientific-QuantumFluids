@@ -1,0 +1,27 @@
+{
+  "challenge_module": "ComparatorChallenges.ChargeLattice",
+  "solution_module": "ChargeLattice",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.ChargeLattice.gram_pp",
+    "QuantumFluids.ChargeLattice.gram_pq",
+    "QuantumFluids.ChargeLattice.disc_sl2",
+    "QuantumFluids.ChargeLattice.disc_sl2_invariant",
+    "QuantumFluids.ChargeLattice.disc_electric_magnetic_swap",
+    "QuantumFluids.ChargeLattice.disc_scale",
+    "QuantumFluids.ChargeLattice.disc_zero_of_parallel",
+    "QuantumFluids.ChargeLattice.area_sl2_invariant",
+    "QuantumFluids.ChargeLattice.bp_step",
+    "QuantumFluids.ChargeLattice.bp_step_neg_iff",
+    "QuantumFluids.ChargeLattice.bp_ge_bare",
+    "QuantumFluids.ChargeLattice.bp_min_at_zero",
+    "QuantumFluids.ChargeLattice.kaloper_step",
+    "QuantumFluids.ChargeLattice.kaloper_min",
+    "QuantumFluids.ChargeLattice.kaloper_terminates"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

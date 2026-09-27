@@ -1,0 +1,16 @@
+{
+  "challenge_module": "ComparatorChallenges.RipsFloor",
+  "solution_module": "RipsFloor",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.RipsFloor.no_adj_of_lt",
+    "QuantumFluids.RipsFloor.le_of_adj",
+    "QuantumFluids.RipsFloor.isLeast_edge_scale",
+    "QuantumFluids.RipsFloor.separated_zero_of_not_injective"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

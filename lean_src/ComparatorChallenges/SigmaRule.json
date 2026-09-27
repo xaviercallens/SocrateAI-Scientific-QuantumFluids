@@ -1,0 +1,18 @@
+{
+  "challenge_module": "ComparatorChallenges.SigmaRule",
+  "solution_module": "SigmaRule",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.ShellComplex.gw_mul_kdy",
+    "QuantumFluids.ShellComplex.gw_mul_kdy_pow",
+    "QuantumFluids.ShellComplex.sigma_two_weight",
+    "QuantumFluids.ShellComplex.sigma_three_weight",
+    "QuantumFluids.ShellComplex.enstrophy_le_sigma_three",
+    "QuantumFluids.ShellComplex.halfNorm_le_sigma_two"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

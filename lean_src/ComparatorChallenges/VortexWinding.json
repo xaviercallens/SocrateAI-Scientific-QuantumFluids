@@ -1,0 +1,21 @@
+{
+  "challenge_module": "ComparatorChallenges.VortexWinding",
+  "solution_module": "VortexWinding",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.VortexWinding.two_pi_pos",
+    "QuantumFluids.VortexWinding.pdiff_mem",
+    "QuantumFluids.VortexWinding.pdiff_eq",
+    "QuantumFluids.VortexWinding.loop_sum_eq_mul",
+    "QuantumFluids.VortexWinding.pdiff_add_rev_eq",
+    "QuantumFluids.VortexWinding.pdiff_add_rev",
+    "QuantumFluids.VortexWinding.pdiff_add_rev_eq_two_pi_iff",
+    "QuantumFluids.VortexWinding.balanced_sum_eq_zero",
+    "QuantumFluids.VortexWinding.cut_free_of_ne_pi"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

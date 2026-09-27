@@ -1,0 +1,13 @@
+{
+  "challenge_module": "ComparatorChallenges.LevelRankDuality",
+  "solution_module": "LevelRankDuality",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.LevelRankDuality.inBox_transpose_iff"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

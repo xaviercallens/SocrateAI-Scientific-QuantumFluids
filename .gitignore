@@ -43,8 +43,12 @@ lake-packages/
 data/external/*.nxs
 data/external/*.numor
 data/external/*.dat
+data/external/**/*.dat
+data/external/**/*.wdat
+data/external/**/dl.log
 data/external/*.csv
 data/derived/*
+data/generated/
 !data/external/.gitkeep
 !data/derived/.gitkeep
 # M1 Tier-C digitized fallback dataset + its fit outputs: small, sourced,
@@ -89,5 +93,34 @@ Thumbs.db
 # Lean build artifacts and fetched dependencies (multi-GB: Mathlib alone is
 # ~6.5GB of prebuilt oleans). Reproduced by `lake update && lake exe cache get`
 # against the pinned revision in lean_src/lakefile.lean.
-lean_src/.lake/
+# NOT 'lean_src/.lake/' with a trailing slash: that matches a DIRECTORY only, so the symlink we
+# use to put the build on a larger disk was committed and broke every clone (external review,
+# 2026-09-20). No trailing slash matches both.
+lean_src/.lake
 lean_src/lake-manifest.json
+
+# uv-created virtualenv (no sudo needed; reproduce with: uv venv .venv && uv pip install --python .venv/bin/python -e ".[nexus,test]")
+.venv/
+
+# LaTeX build artifacts (the PDF itself IS committed -- it is the deliverable)
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.toc
+paper/*.bbl
+paper/*.blg
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.synctex.gz
+
+# Godfrin papers: fetched, not vendored. Keep MANIFEST.md and the small CC-BY ancillary tables;
+# ignore the PDFs, source tarballs and extraction scratch (reproduce from MANIFEST.md).
+data/external/godfrin_papers/*.pdf
+data/external/godfrin_papers/*.tar
+data/external/godfrin_papers/src_tmp*/
+data/external/godfrin_papers/*_src/
+data/external/godfrin_papers/**/*.eps
+
+# exploration/cmb/pdt_exact.py's correlator table: cheap (~5s) to rebuild from its documented
+# closed-form equations; not committed to avoid silently serving a stale cache if the formulas change
+exploration/cmb/pdt_exact_table.npz

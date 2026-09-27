@@ -1,0 +1,68 @@
+N = 4
+/home/xavkal/xdev/SocrateAI-Scientific-QuantumFluids/exploration/pgpe/vortex_thermometer.py:23: RuntimeWarning: divide by zero encountered in log
+  s += np.log((np.cosh(x - TWO_PI * m) - np.cos(y)) / np.cosh(TWO_PI * m))
+  beta=-0.600  <E>=   0.879  Var=  5.089  (8.0s)
+  beta=-0.300  <E>=   0.981  Var=  5.450  (8.6s)
+  beta=+0.000  <E>=   0.890  Var=  4.323  (8.5s)
+  beta=+0.300  <E>=  -1.503  Var=  9.379  (8.6s)
+  beta=+0.600  <E>=  -4.902  Var= 11.518  (8.5s)
+  beta=+1.000  <E>=  -8.058  Var=  2.788  (8.2s)
+  beta=+1.500  <E>=  -8.766  Var=  1.081  (7.8s)
+  beta=+2.000  <E>=  -8.823  Var=  0.455  (8.1s)
+  beta=+3.000  <E>=  -9.293  Var=  0.140  (8.5s)
+  closure: set 1.2 read 1.157 -> PASS
+N = 6
+  beta=-0.600  <E>=   1.048  Var=  7.545  (13.4s)
+  beta=-0.300  <E>=   1.345  Var=  8.132  (14.5s)
+  beta=+0.000  <E>=   0.970  Var=  8.065  (14.8s)
+  beta=+0.300  <E>=  -1.065  Var=  8.002  (11.6s)
+  beta=+0.600  <E>=  -4.438  Var= 12.276  (11.7s)
+  beta=+1.000  <E>=  -9.348  Var=  6.321  (11.0s)
+  beta=+1.500  <E>= -11.384  Var=  2.154  (10.8s)
+  beta=+2.000  <E>= -12.665  Var=  1.065  (10.8s)
+  beta=+3.000  <E>= -12.956  Var=  0.532  (11.1s)
+  closure: set 1.2 read 1.385 -> FAIL
+N = 8
+  beta=-0.600  <E>=   1.374  Var= 15.170  (14.7s)
+  beta=-0.300  <E>=   1.627  Var= 16.687  (14.9s)
+  beta=+0.000  <E>=   1.516  Var= 13.858  (15.1s)
+  beta=+0.300  <E>=  -2.235  Var=  8.289  (15.0s)
+  beta=+0.600  <E>=  -5.141  Var= 13.952  (14.6s)
+  beta=+1.000  <E>= -10.582  Var= 12.938  (14.6s)
+  beta=+1.500  <E>= -15.217  Var=  3.478  (14.5s)
+  beta=+2.000  <E>= -16.989  Var=  1.480  (14.8s)
+  beta=+3.000  <E>= -17.989  Var=  0.275  (14.5s)
+  closure: set 1.2 read 1.334 -> FAIL
+N = 10
+  beta=-0.600  <E>=   1.511  Var= 23.461  (20.4s)
+  beta=-0.300  <E>=   1.785  Var= 25.935  (19.4s)
+  beta=+0.000  <E>=   1.863  Var= 23.584  (18.8s)
+  beta=+0.300  <E>=  -3.402  Var= 11.427  (19.5s)
+  beta=+0.600  <E>=  -7.113  Var= 10.466  (19.6s)
+  beta=+1.000  <E>= -12.737  Var= 14.611  (20.4s)
+  beta=+1.500  <E>= -18.567  Var=  5.023  (20.0s)
+  beta=+2.000  <E>= -20.972  Var=  3.005  (20.9s)
+  beta=+3.000  <E>= -21.783  Var=  1.368  (19.5s)
+  closure: set 1.2 read 1.217 -> PASS
+N = 12
+  beta=-0.600  <E>=   1.614  Var= 27.588  (23.6s)
+  beta=-0.300  <E>=   2.175  Var= 35.123  (23.3s)
+  beta=+0.000  <E>=   1.586  Var= 36.967  (23.8s)
+  beta=+0.300  <E>=  -4.888  Var= 17.368  (22.3s)
+  beta=+0.600  <E>=  -9.196  Var= 11.503  (22.3s)
+  beta=+1.000  <E>= -15.609  Var= 18.287  (22.8s)
+  beta=+1.500  <E>= -22.042  Var=  7.130  (22.9s)
+  beta=+2.000  <E>= -24.043  Var=  4.069  (22.6s)
+  beta=+3.000  <E>= -26.171  Var=  1.064  (22.5s)
+  closure: set 1.2 read 1.156 -> PASS
+N = 16
+  beta=-0.600  <E>=   2.858  Var= 65.804  (31.2s)
+  beta=-0.300  <E>=   3.311  Var= 69.971  (30.5s)
+  beta=+0.000  <E>=   3.826  Var= 70.230  (32.8s)
+  beta=+0.300  <E>=  -7.754  Var= 19.253  (30.0s)
+  beta=+0.600  <E>= -13.252  Var= 16.052  (29.4s)
+  beta=+1.000  <E>= -19.491  Var= 16.888  (28.9s)
+  beta=+1.500  <E>= -27.951  Var= 13.217  (30.2s)
+  beta=+2.000  <E>= -32.677  Var=  5.814  (29.0s)
+  beta=+3.000  <E>= -34.492  Var=  0.944  (28.9s)
+  closure: set 1.2 read 1.217 -> PASS

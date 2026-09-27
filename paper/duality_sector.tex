@@ -1,0 +1,372 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,
+            urlcolor=blue!60!black]{hyperref}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\lean}[1]{\texttt{\small #1}}
+\newtcolorbox{keybox}[1][]{colback=blue!3,colframe=blue!45!black,
+  boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+\newtcolorbox{failbox}[1][]{colback=red!3,colframe=red!45!black,
+  boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+\newtheorem{theorem}{Theorem}
+
+\title{\textbf{Duality is a structure; the sector is the cause}\\
+\large T-duality of the compact boson stated on its sectors and checked by two kernels,\\
+the measured invariant it predicts, and a criterion for when a self-dual point is physical}
+
+\author{Xavier Callens\\
+\small SocrateAI-Scientific-QuantumFluids\\
+\small \url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}}
+\date{September 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+An involution $R\leftrightarrow\alpha'/R$ on a length scale was, in earlier work of this programme, offered a
+physical home in T-duality, in K3 mirror symmetry, and in the modular symmetry of the quantum Hall system. Three
+rounds of pre-registered numerics and twenty-eight machine-checked theorems later, we can say where such a
+duality lives and what it does. We state T-duality on the sectors $(n,w)\in\mathbb Z^2$ of the compact boson and
+prove, in Lean~4 against Mathlib with two independent kernels, that (i) it is a reindexing of the sector lattice
+that leaves the sector sum invariant with no convergence hypothesis, (ii) the product of the electric and magnetic
+scaling dimensions is radius-independent, $\Delta_e\Delta_m=\tfrac14$, which in the superfluid dictionary is
+$\eta\,n_s\lambda_T^2=1$ -- the relation this programme measured to $12$--$27\%$ on eleven energies in two boxes --
+and (iii) the self-dual radius $\sqrt2$ and the radius $2\sqrt2$ at which the vortex becomes marginal are
+different points: the Berezinskii--Kosterlitz--Thouless transition is the threshold of one sector, not the fixed
+point of the exchange. From these three facts and the literature on Ising, string-gas and superconductor--insulator
+dualities we extract a criterion: a self-dual point pins a transition only when the dual sectors are simultaneously
+critical on a discrete set of fixed points; on a line of fixed points it is a point like any other; when both
+sectors are populated it can be a preferred equilibrium. In every case what acts is a sector -- a conserved label
+that crosses a threshold, proliferates, annihilates, or is imposed -- and the duality relabels it. The duality is
+exact, verified, and not a cause. No physics here is new; the mathematics is elementary; what is new is that the
+distinction is stated so that a kernel can check it and an experiment can test it.
+\end{abstract}
+
+\section{Three questions one involution raised}
+
+The dual-length involution $k\mapsto k_s^2/k$ of~\cite{Callens2026Lean} has the form of T-duality. It was pointed
+out that the same involution is the Fricke element of $\Gamma_0(N)^+$, the mirror involution of degree-$2N$
+lattice-polarised K3 surfaces~\cite{Dolgachev1996}, and that $\Gamma_0(2)$ acts on the quantum Hall conductivity
+plane~\cite{LutkenRoss1992}. Each identification was taken to its gate~\cite{Callens2026Wasserstein,
+Callens2026Causal}: the Fricke matrix normalises Mathlib's $\Gamma_0(n)$ and its axis action is the dual-length map,
+but no $\Gamma_0(n)$ acts on a wavenumber (\lean{Fricke.lean}); the Fricke element fixes the Hall critical point's
+orbit but sends every plateau off the odd-denominator class (\lean{QHFricke.lean}); and the physical BKT point is not
+the self-dual radius. The residue of these three verdicts is one question: if a duality is exact and verified, and
+yet is not where the physics happens, what is it, and what is?
+
+\section{T-duality on the sector lattice, machine-checked}
+
+Let the compact boson have radius $R$ in the normalisation where the self-dual radius is $\sqrt2$. The primary of
+momentum $n$ and winding $w$ has $h=\tfrac12(n/R+wR/2)^2$, $\bar h=\tfrac12(n/R-wR/2)^2$, hence
+\[
+\Delta(n,w;R)=n^2/R^2+w^2R^2/4,\qquad s=h-\bar h=nw .
+\]
+The electric (spin-wave, $e^{i\theta}$) operator is $(1,0)$; the magnetic (vortex) operator is $(0,1)$. The
+following are theorems of \lean{CompactBoson.lean} (twelve statements, axiom footprint $\{\mathrm{propext},
+\mathrm{Classical.choice},\mathrm{Quot.sound}\}$, accepted by the Lean kernel and by \lean{nanoda} through
+Comparator; three negative controls -- product $\tfrac12$, BKT at $\sqrt2$, duality with $R\mapsto1/R$ -- fail).
+
+\begin{theorem}[duality as reindexing]
+$\Delta(n,w;R)=\Delta(w,n;2/R)$ and $s(n,w)=s(w,n)$. Consequently, for every weight $F$,
+$\sum_{(n,w)\in\mathbb Z^2}F(\Delta(n,w;R),s)=\sum_{(n,w)\in\mathbb Z^2}F(\Delta(n,w;2/R),s)$.
+\end{theorem}
+The second statement is \lean{Equiv.tsum\_eq} applied to the swap of $\mathbb Z^2$: reindexing a sum by a
+bijection is an identity of \lean{tsum} whether or not the series converges. This is what the duality is -- a
+bijection of the sector lattice that preserves the spectrum. Savit's review~\cite{Savit1980} gives the general
+form: a duality is a Fourier transform on the group of sectors, electric charges in $G$ against magnetic charges
+in $\hat G$, with the Lagrangian sum over one family turned into the Hamiltonian sum over the dual family by Poisson
+summation.
+
+\begin{theorem}[the invariant]
+$\Delta(1,0;R)\,\Delta(0,1;R)=\tfrac14$ for every $R\neq0$.
+\end{theorem}
+In the XY / two-dimensional-superfluid dictionary $\Delta(1,0)=\eta/2$ and $\Delta(0,1)=n_s\lambda_T^2/2$, so the
+invariant reads $\eta\,n_s\lambda_T^2=1$. That is the relation measured in~\cite{Callens2026Causal}: $1.047$ and
+$1.072$ on two equilibrated energies in round~2, $1.12$--$1.22$ on the six energies of the heating ladder,
+$1.14$--$1.27$ on the five energies of the $L=32$ box -- with the finite-size excess predicted by
+Hasenbusch's logarithmic corrections~\cite{Hasenbusch2005}. \emph{The numerical verification of the duality in
+this programme is the measurement of this product.}
+
+\begin{theorem}[self-dual is not marginal]
+For $R>0$: $\Delta(1,0)=\Delta(0,1)$ iff $R=\sqrt2$, where both equal $\tfrac12$; $\Delta(0,1)=2$ iff
+$R=2\sqrt2$, where $\Delta(1,0)=\tfrac18$, i.e.\ $\eta=\tfrac14$; and $2\sqrt2\neq\sqrt2$.
+\end{theorem}
+The transition is where the vortex operator becomes marginal -- Nelson and Kosterlitz's universal jump
+$n_s\lambda_T^2=4$~\cite{NelsonKosterlitz1977}, located in our own runs at $T_{\rm BKT}=0.821$ with
+$\eta=0.31$ there -- and that is a condition on one sector. The exchange symmetry has its fixed point elsewhere,
+and nothing happens there.
+
+\section{When is a self-dual point physical?}
+
+The compact boson is the case with a \emph{line} of fixed points, one for each $R$. Three other cases complete the
+criterion.
+
+\paragraph{Ising: yes.} Kramers--Wannier self-duality~\cite{KramersWannier1941} fixes $T_c$ at $\sinh2K=1$ because
+the order and disorder operators~\cite{FradkinSusskind1978} exchange under the duality and $\mathbb Z_2$ has a single
+symmetric point: the dual sectors are simultaneously critical and the fixed-point structure is discrete.
+
+\paragraph{String gas cosmology: a preferred equilibrium.} In the Brandenberger--Vafa
+scenario~\cite{BrandenbergerVafa1989,Brandenberger2008} ``the symmetry we make use of is T-duality, and the new
+degrees of freedom are the string oscillatory modes and the string winding modes''. Momentum modes, with energy
+$n/R$, resist contraction; winding modes, with energy $wR$, resist expansion; when both are populated the radion is
+stabilised at the self-dual radius as the minimum of an effective potential. The self-dual point is physical there
+because both dual sectors are present and compete. And the exit from the Hagedorn phase -- the event that makes
+three dimensions large -- is the \emph{annihilation of winding modes}: a sector event, with T-duality as the
+symmetry of the spectrum in which it is described.
+
+\paragraph{Superconductor--insulator transition: a constraint.} Boson--vortex duality~\cite{DasguptaHalperin1981,
+FisherLee1989} predicts, if the transition is self-dual, a universal resistance $h/4e^2$~\cite{Fisher1990,
+ChaFisherGirvin1991}; measured values scatter around it. The cause of the transition is the proliferation of
+vortices on one side and of charges on the other; self-duality constrains the critical point only if the fixed
+point happens to be self-dual, which is a property of the fixed point, not of the duality.
+
+\paragraph{Quantum Hall: organisation, not cause.} $\Gamma_0(2)$ organises the plateau diagram and the position
+of the critical points~\cite{LutkenRoss1992}; the cause of the quantisation is Laughlin's gauge
+argument~\cite{Laughlin1981} on the Chern sector; and the Fricke element, which fixes the critical orbit, is not a
+symmetry of the plateaux (\lean{QHFricke.lean}).
+
+\begin{keybox}
+\textbf{Criterion.} A self-dual point pins a transition iff the two dual sectors are simultaneously critical and
+the fixed-point set is discrete. On a line of fixed points the self-dual point is a point like any other and the
+transition sits where one sector crosses its own threshold. When both dual sectors are populated and compete
+energetically, the self-dual point is a preferred equilibrium. In each case the duality relabels the sectors and
+the sector acts.
+\end{keybox}
+
+\section{What acts: the sector}
+
+The same triad recurs in every case above: a group of sectors ($\mathbb Z$ for $U(1)$ windings, $\mathbb Z_2$ for
+Ising, Chern numbers, string windings); a duality that is a Fourier or reindexing map between $G$-sectors and
+$\hat G$-sectors preserving the spectrum; and physics that happens when a sector crosses a threshold, proliferates,
+annihilates, or is imposed. The causal role of the sector is what the rest of this programme
+established~\cite{Callens2026Causal}: it is conserved by every continuous evolution without a phase slip
+(\lean{TopologicalProtection}), additive in scale so that a bound pair is invisible from outside
+(\lean{ScaleResolvedWinding}), read correctly by the sampled loop sum as the continuum degree
+(\lean{ContinuumWinding}), it carries its own temperature (\lean{SectorTemperature}), and in an energy-matched
+intervention it is a difference-maker: the same energy delivered as topology lowered the condensate by
+$0.49$--$0.73$ where phonons lowered it by at most $0.035$, with the injected sector reading five to eight times
+the bath's temperature on our own calibrated thermometer. That is why one involution appears in helium, Hall bars,
+K3 moduli and string gases, and why it explains none of them.
+
+\section{What this paper does not claim}
+\begin{failbox}
+\begin{itemize}[leftmargin=*]
+\item Novelty in the mathematics: the three theorems are elementary; their value is that the distinction between
+  the duality and the sector is stated so that a kernel checks it.
+\item Novelty in the physics: Kramers--Wannier, Nelson--Kosterlitz, Brandenberger--Vafa, Fisher and Lütken--Ross
+  are cited, not extended.
+\item Any identification of a superfluid with a K3 surface or a string background. The K3 mirror involution is the
+  same map on a different space; the criterion above is what the shared map does and does not license.
+\item That every duality in physics fits the triad: the cases examined do; the general statement is a reading.
+\end{itemize}
+\end{failbox}
+
+\section*{Addendum (2026-09-26): the criterion sharpened by the non-invertible-symmetry literature}
+\addcontentsline{toc}{section}{Addendum}
+A literature review after publication located the modern machinery that makes \S3's criterion precise rather
+than descriptive. Aasen, Mong and Fendley state the core distinction directly: a self-duality is implemented by
+an operator that ``is not a symmetry in the traditional sense... not unitary or even invertible''
+\cite{AasenMongFendley2016}. Choi, C\'ordova, Hsin, Lam and Shao exhibit the Poisson resummation that turns this
+into an explicit lattice statement, and prove that at some self-dual points a mixed 't~Hooft-like anomaly
+\emph{forbids} a trivially gapped phase -- an anomaly argument, not the duality map, is what does the forbidding
+\cite{ChoiCordovaHsinLamShao2022}. Kaidi, Ohmori and Zheng give the clean mechanism for our own already-published
+observation: at $SO(3)$ Yang--Mills $\theta=\pm\pi$, the self-dual point sits \emph{between two physically
+inequivalent gapped phases} (a $\mathbb Z_2$ TQFT and the trivial phase), which is why it is forced to be a
+transition \cite{KaidiOhmoriZheng2022}. Shao's lecture notes give the general rule, in one sentence: away from a
+critical point Kramers--Wannier duality ``is not a duality relating two equivalent descriptions of a single
+system... it is a map from the high-temperature phase to the low-temperature phase,'' and at the compact boson's
+self-dual radius $\tau=i$ ``the duality defect reduces to an invertible $\mathbb Z_4$ symmetry'' \cite{Shao2023} --
+exactly why $R=\sqrt2$ (a point on a continuous moduli space with enhanced symmetry) is structurally unlike the
+Ising or $SO(3)$-Yang--Mills self-dual points (between two gapped, inequivalent phases), and why neither is like
+the vortex-marginality radius $2\sqrt2$, which is a threshold on one sector alone. One further correction:
+Hayashi and Tanizaki show that the Cardy--Rabinovici $SL(2,\mathbb Z)$ ``self-duality'' of the 2D Coulomb
+gas/$\mathbb Z_N$ clock model is not naive -- it holds only after gauging the electric one-form symmetry with a
+discrete $\theta$-term -- and that the resulting self-dual point, where three first-order transition lines meet,
+is again forced non-trivial by a separate mixed gravitational anomaly, not by the duality symmetry itself
+\cite{HayashiTanizaki2022}. None of this changes a theorem of this paper; it replaces the numerical observation
+``$\sqrt2\neq2\sqrt2$'' with an explicit criterion (inequivalent sectors on the two sides $\Rightarrow$ forced
+transition; a continuous moduli space with enhanced symmetry $\Rightarrow$ no transition) that a future module
+could formalise as a finite-group gauging statement.
+
+\section*{Addendum (2026-09-26, part 2): two more cases, same criterion}
+\addcontentsline{toc}{section}{Addendum 2}
+Two further cross-domain instances, found by literature review and independently verified, apply the criterion of
+\S3 without changing it.
+
+\paragraph{RCFT/Verlinde: the sharp case, and the same verdict as BKT.} The Verlinde formula~\cite{Verlinde1988},
+proved from Moore--Seiberg's polynomial equations~\cite{MooreSeiberg1988,MooreSeiberg1989}, makes the modular
+$S$-matrix acting on the primaries (the sectors) of a rational conformal field theory a duality satisfying
+$S^2=C=(ST)^3$ exactly, for $S$ unitary and symmetric~\cite{Fuchs1993} -- sharper than this programme's own
+$\mathbb Z_N$ case, where Mathlib's unnormalised \lean{ZMod.dft} gives $\mathrm{dft}\circ\mathrm{dft}=N\cdot
+\Phi(-\cdot)$, not the identity (\lean{SectorDuality.lean}). $S$ is a literal finite-abelian-group Fourier
+transform only for simple-current (pointed) fusion rings -- e.g.\ $\widehat{su}(2)_1$, whose two primaries fuse as
+$\mathbb Z_2$ and whose $S$ is exactly the (unnormalised) Hadamard matrix
+$\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$ -- and here $S^2=C=\mathbb 1$ with no extra factor
+once the missing $1/\sqrt2$ is restored (\lean{RCFTDuality.su2Level1\_S\_sq}), the clean identity the unnormalised
+$\mathbb Z_N$ statement only approximates up to the decoupled factor $|G|=2$. For a generic (non-abelian) fusion
+category $S$ is instead the Kac--Peterson matrix and no group Fourier transform underlies it at all; this module
+proves only the $2\times2$ integer-matrix identity, not that it is the Kac--Peterson matrix, which is affine-Lie-
+algebra representation theory supplied here as physics input. The natural self-dual point of the worked example --
+the free-boson radius $R=1$ where $\hat u(1)$ enhances to $\widehat{su}(2)_1$ under T-duality $R\leftrightarrow1/R$
+-- sits on a \emph{continuous} line of RCFT fixed points, $1\le R\le\sqrt2$, separating three gapped
+phases~\cite{PaceChatterjeeShao2024}, not on a discrete pair of inequivalent sectors: by this programme's own
+criterion it is a point like any other, not a forced transition -- the Ising verdict does not transfer, the BKT
+verdict does.
+
+\paragraph{Particle-vortex/level-rank in the fractional quantum Hall effect: a second, orthogonal duality.} At
+$\nu=\tfrac12$ the Halperin--Lee--Read composite fermion is conjectured to be a massless Dirac fermion, exactly
+self-conjugate under the particle-hole (CT) involution that exchanges the Jain-sequence pair
+$n/(2n+1)\leftrightarrow(n+1)/(2n+1)$~\cite{Son2015}; Seiberg--Senthil--Wang--Witten embed this in a fermionic
+particle-vortex duality web~\cite{SeibergSenthilWangWitten2016} whose rigorously-established topological limit is
+level-rank duality, $U(N)_K\leftrightarrow U(K)_N$~\cite{HsinSeiberg2016,NaculichSchnitzer2007}. This is a
+different duality from $\Gamma_0(2)$ on the conductivity plane, acting on a different sector: the finite set of
+Chern--Simons/WZW primaries, labelled by Young diagrams in an $N\times K$ box, relabelled by transpose to a
+$K\times N$ box -- an operation Mathlib already formalises on \lean{YoungDiagram} as an order isomorphism
+(\lean{transposeOrderIso}), restricted here to two finite boxes (\lean{LevelRankDuality.levelRankRelabeling}).
+Filling $\nu=\tfrac12$ is not itself a transition between two gapped, inequivalent sectors -- that role belongs to
+the Jain pairs on either side of it -- but the unique fixed point of the particle-hole involution on the
+continuous filling $\nu$, in the same slot as the compact boson's self-dual radius: an enhanced-symmetry point,
+not a cause. What self-duality there fixes is a number, not a phase boundary -- the composite fermion's Berry
+phase is forced to be exactly $\pi$ and $\sigma^{CF}_{xy}=-\tfrac12$ exactly~\cite{Son2015} -- so this instance
+sits with the superconductor--insulator transition in the \emph{constraint} slot, not with $\Gamma_0(2)$'s
+\emph{organisation} slot. Level-rank duality itself, wherever it appears in the non-Abelian FQH hierarchy, is
+unambiguously organisation-not-cause: a proved relabelling of a finite anyon label set that decides no physics
+and causes no transition. Neither Lean module proves the physical content of its own duality (S,T-matrix or
+Verlinde-formula preservation for level-rank; that the Hadamard matrix is the Kac--Peterson matrix for RCFT) --
+in both cases the module certifies a decidable combinatorial or linear-algebraic skeleton, and the identification
+with the named physical duality is supplied as literature-sourced prose, exactly as \lean{SectorDuality.lean} and
+\lean{QHFricke.lean} already do.
+
+\section*{Addendum (2026-09-26, part 3): a ninth case, and one explicitly declined}
+\addcontentsline{toc}{section}{Addendum 3}
+A further literature pass, following the same criterion, adds one more continuous-window case and explicitly
+excludes a candidate that turned out, on reading, not to be a duality at all.
+
+\paragraph{Seiberg duality: a third continuous window, same verdict.} Electric SU($N_c$) SQCD with $N_f$ flavors
+and its magnetic dual SU($N_f-N_c$)~\cite{Seiberg1994} flow to the same interacting fixed point throughout the
+conformal window $\tfrac32 N_c<N_f<3N_c$~\cite{IntriligatorSeiberg1996} -- ``completely equivalent at long
+distance,'' not two phases exchanged by the duality. The sector here is the integer $N_c$ itself, relabelled by
+$N_c\mapsto N_f-N_c$; the point $N_c=N_f/2$, where the two gauge groups coincide, is a direct algebraic fact
+about this map, not a distinguished physical locus -- no transition occurs there, the whole window being one
+phase. Same verdict as the compact boson and the RCFT self-dual radius: a point on a continuum, not a cause. No
+Lean statement is proposed: the only formalisable content of the map $N_c\mapsto N_f-N_c$ is a one-line integer
+involution, and the actual physical duality (holomorphy, anomaly matching, RG-flow equivalence) has no
+combinatorial skeleton analogous to \lean{YoungDiagram.transpose} or \lean{ZMod.dft}; unlike Kramers--Wannier or
+T-duality, the two Lagrangians are not even operator images of each other (the magnetic side carries an extra
+gauge-singlet meson with its own superpotential).
+
+\paragraph{Topological superconductors: not a duality.} Reading Kitaev's classification of unpaired Majorana
+modes~\cite{Kitaev2001}, the Altland--Zirnbauer symmetry classes~\cite{AltlandZirnbauer1997}, and
+Ryu--Schnyder--Furusaki--Ludwig's tenfold-way classification~\cite{RyuSchnyderFurusakiLudwig2010} directly finds
+no duality organising this material: it is a classification of gapped free-fermion phases by Clifford-algebra
+K-theory and Bott periodicity, related by dimensional reduction, not an equivalence between two theories. It has
+a sector (a $\mathbb Z$ or $\mathbb Z_2$ topological invariant) but no map that relabels it against a dual
+description -- the word ``duality'' organises none of these three sources. This is therefore \emph{excluded},
+not merely deferred: forcing this programme's duality/sector vocabulary onto a classification would be the
+formalising-an-analogy failure this programme's own discipline exists to catch. One legitimate but
+pre-existing link is worth recording as a footnote rather than a new case: the 1D Kitaev chain (class BDI) is
+related by the Jordan--Wigner transform to the transverse-field Ising model, so its topological/trivial
+transition is, in fermionic language, the same Kramers--Wannier self-duality already the Ising case above --
+not a ninth instance, a relabelling of the first one.
+
+\section*{Addendum (2026-09-26, part 4): a tenth case, checked almost entirely by Mathlib itself}
+\addcontentsline{toc}{section}{Addendum 4}
+A further round of literature review, looking specifically for new cases beyond every one already covered here,
+found one strong addition and two candidates that, on reading, do not fit the criterion's shape at all.
+
+\paragraph{Montonen--Olive $S$-duality: order-4 and order-6 points on a continuous coupling, not a cause.}
+$\mathcal N=4$ super Yang--Mills has an exactly marginal complexified coupling $\tau=\theta/2\pi+4\pi i/g^2$
+ranging over the upper half-plane; $S$-duality~\cite{MontonenOlive1977} conjectures a quantum symmetry
+$S:\tau\mapsto-1/\tau$, exchanging the gauge group with its Langlands dual and electric with magnetic charges,
+which together with the classical shift $T:\tau\mapsto\tau+1$ generates $\mathrm{SL}(2,\mathbb
+Z)$~\cite{KapustinWitten2007}. Mathlib already proves the two facts this needs, with no new theorem from this
+project: \lean{ModularGroup.S\_mul\_S\_eq} ($S^2=-1$, so $S$ has order four) and
+\lean{ModularGroup.stabilizer\_I} (the stabiliser of $\tau=i$ in $\mathrm{SL}(2,\mathbb Z)$ is exactly
+$\{\pm1,\pm S\}$) -- the literal statement that $\tau=i$ has enhanced discrete symmetry, and, by
+\lean{ModularGroup.stabilizer\_rho}, so does $\rho=e^{i\pi/3}$ (order six). As with every continuous modulus in
+this programme, this changes nothing about the physics: $\mathcal N=4$ SYM is superconformal for every $\tau$,
+there is no phase transition anywhere on the upper half-plane, and $\tau=i$ is a point like any other except for
+the extra unbroken $\mathbb Z_4\subset\mathrm{SL}(2,\mathbb Z)$ -- the BKT/RCFT/Seiberg verdict, not the Ising
+one. What this does NOT resolve: at $\tau=i$, $S$ maps the theory to itself only after also exchanging discrete
+global variants of the gauge group (e.g.\ $SU(N)$ with $PSU(N)$, physically distinct theories with different
+line-operator spectra); whether that additional exchange sharpens the verdict is a further question this round
+does not settle.
+
+\paragraph{Two candidates excluded as structural mismatches, not merely deferred.} Three-dimensional Ising/Wegner
+duality~\cite{Wegner1971} maps the Ising spin model to a $\mathbb Z_2$ \emph{lattice gauge theory} on the dual
+lattice -- a genuinely different theory with local gauge symmetry and link degrees of freedom, not a self-map;
+self-duality closing on the same model is a two-dimensional coincidence, already this programme's Ising case.
+There is no fixed point to ask a self-dual-point question about in $d=3$: the criterion does not apply
+structurally, not merely give a negative answer. AdS/CFT~\cite{Maldacena1998} is a strong--weak
+\emph{equivalence} between two descriptions of one theory, holding at every 't~Hooft coupling; there is no
+conjectured involution on the coupling with a fixed locus of enhanced symmetry the way $S$-duality has one at
+$\tau=i$ -- it relates two variables describing a single moduli-free correspondence, not a relabelling of
+sectors on a moduli space with a distinguished point, so the self-dual-point question this programme asks does
+not apply to it either.
+
+\section*{Addendum (2026-09-26, part 5): the T-duality thread's furthest extension, and one question left
+open on purpose}
+\addcontentsline{toc}{section}{Addendum 5}
+The previous round flagged Calabi--Yau mirror symmetry beyond K3$\times T^2$ as researched not at all, only
+guessed at. This round replaces the guess with a real search, and reports a genuinely new kind of outcome: not
+a fourth ``continuous modulus, not forced'' verdict, and not an exclusion, but an open question stated as such.
+
+\paragraph{Calabi--Yau mirror symmetry: the T-duality thread's furthest extension, and one question left open on
+purpose.} Strominger, Yau and Zaslow show that mirror symmetry between a Calabi--Yau threefold $X$ and its
+mirror $Y$ is literally T-duality on the three circles of a special Lagrangian $T^3$ fibration of
+$X$~\cite{StromingerYauZaslow1996} -- the sector is the pair of continuous moduli spaces (K\"ahler moduli of
+$X$, complex-structure moduli of $Y$), and this is the furthest geometric extension of this programme's own
+T-duality thread: one circle for the compact boson, the Fricke involution on K3$\times T^2$, now a full $T^3$.
+Unlike every case above, this is not manifestly a self-map of one moduli space -- mirror symmetry generically
+relates \emph{two different} manifolds -- so the question this programme otherwise asks (is a self-dual point
+forced) only becomes literal in the special case $X\cong Y$. We did not find, and do not assert, an established
+example of a physically-distinguished self-mirror threefold playing a role analogous to $\tau=i$ or $R=\sqrt2$;
+asserting one without a citable source would be exactly the unverified claim this programme's discipline exists
+to prevent. What is established, and worth recording instead, is that mirror symmetry can fail outright rather
+than close on a point: a rigid Calabi--Yau ($h^{2,1}=0$) has no ordinary smooth mirror, since the mirror would
+need $h^{1,1}=0$, impossible for any compact K\"ahler manifold~\cite{CandelasDerrickParkes1993}. No Lean
+statement is proposed: Mathlib has no Calabi--Yau, special-Lagrangian, or mirror-symmetry content to build on
+(confirmed by direct search of the pinned checkout).
+
+\section*{Addendum (2026-09-27): a third forced case, and one existing case's own self-dual point examined}
+\addcontentsline{toc}{section}{Addendum 6}
+The ``forced'' verdict has so far been thin -- Ising and $SO(3)$ Yang--Mills the only two instances
+among nine other cases. This round adds a third, rigorously, and examines whether an already-integrated
+case has a genuine self-dual point of its own.
+
+\paragraph{Potts/random-cluster self-duality: Ising's family, made rigorous for every $q$.} The
+$q$-state Potts model's random-cluster (Fortuin--Kasteleyn) representation has a duality, generalising
+Kramers--Wannier, relating edge-weight $p$ on a planar graph to $p^\star(p;q)$ on its dual, with a
+unique self-dual point $p_{\rm sd}(q)=\sqrt q/(1+\sqrt q)$. Beffara and Duminil-Copin prove, for every
+$q\ge1$, that this point \emph{is} the critical point~\cite{BeffaraDuminilCopin2012} -- a rigorous,
+all-$q$ generalisation of Ising's own $q=2$ case, not a physicist's heuristic. What self-duality does
+not determine is the transition's character: it is continuous for $1\le q\le4$~\cite{DuminilCopinSidoraviciusTassion2017}
+and discontinuous for $q>4$~\cite{DuminilCopinGagnebinHarelManolescuTassion2021} -- two sectors that
+meet smoothly in one regime and jump in the other, at the exact same self-dual point either way. By
+this programme's criterion every $q\ge1$ case is \emph{forced}: self-duality pins the transition's
+location exactly regardless of its order, a fact now proved rather than assumed. As with Ising itself,
+no Lean module is proposed: the checkable content is an elementary algebraic fixed point, and this
+programme has never formalised Ising's own duality as a project module either.
+
+\paragraph{Level-rank duality at $N=K$: the labels close up; the physics does not.} The Young-diagram
+box-transpose bijection already proved in this programme (\lean{LevelRankDuality.levelRankRelabeling})
+holds for every $a,b$ including $a=b$, so $N{\times}N$-box diagrams are trivially permuted by
+transpose -- no new theorem is needed to say so. This combinatorial closure does not correspond to a
+physical self-duality: Hsin-Seiberg's own $N=K$ computation shows $SU(N)_N$ relates not to itself but
+to its level-reversal $SU(N)_{-N}$ tensored with an extra decoupled factor~\cite{HsinSeiberg2016}, and
+neither primary source treats $N=K$ as a distinguished locus in this programme's sense. As with
+AdS/CFT and three-dimensional Ising duality, $N=K$ poses no genuine self-dual-point question the
+literature answers: asserting one from the label combinatorics alone, when the physics does not
+support it, would be exactly the failure mode of formalising an analogy rather than a dependency.
+
+\bibliographystyle{unsrt}
+\bibliography{refs_duality_sector}
+\end{document}

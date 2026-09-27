@@ -1,0 +1,24 @@
+Their section-4 protocol, varying ONLY n_samples (a public parameter).
+N=30, nu=0, cfl=0.05, t_max=12.0
+
+     alpha       peak @2k     peak @200k   rel. miss
+     1e-02        19.2597        19.2597     0.000%
+     1e-03        103.163        103.163     0.000%
+     1e-04        463.139        463.139     0.000%
+     1e-05        2295.79        2296.68     0.039%
+     1e-06        11425.5        11431.3     0.051%
+     1e-07        47643.1        47643.1     0.000%
+     1e-08         223314         223332     0.008%
+     1e-09    1.09183e+06    1.09184e+06     0.001%
+     1e-10    4.74839e+06    4.74857e+06     0.004%
+
+  beta @ n_samples=2000   (their default): -0.6721
+  beta @ n_samples=200000 (100x finer):    -0.6721
+  |delta beta| = 0.0000   worst peak miss = 0.051%
+
+  => PUBLISHED -0.672 IS SOUND. At t_max=12 the sampling is adequate:
+     the enstrophy peak is broad on that horizon. The defect is a LATENT
+     FRAGILITY -- it bites whenever t_max grows (or the peak sharpens),
+     because the sampling interval t_max/n_samples is not tied to the
+     feature being measured. Fix: track a running max of the per-step
+     `current_enstrophy` already computed for the ceiling test.

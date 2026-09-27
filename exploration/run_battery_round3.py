@@ -16,19 +16,33 @@ from quantumfluids.w4_shell_model.integrate import integrate, make_profile, step
 from quantumfluids.w4_shell_model.observable import crossing_time
 
 D_VALUES = [0.2, 0.15, 0.1, 0.07, 0.05, 0.035, 0.025, 0.018]
-FRACTIONS = [0.125, 0.25, 0.5]
-T_MAX = 64.0
+FRACTIONS = [0.125, 0.25]        # f=1/2 dropped: unattainable (pre-registration amendment)
+T_MAX = 32.0                      # amended scope, owner ruling 2026-08-15
+N_VALUES = [4]                    # N=5 deferred, not waived
 
 def a0_for(N):
     a = make_profile("P3", N).astype(complex)
     return a * np.exp(1j * 0.7 * np.arange(N + 1))
 
-def tau(N, D, f, which="sum", dt=None, T=T_MAX):
-    r = integrate(N=N, nu=0.0, D=D, t_horizon=T, dt=dt, trace_every=1, a0=a0_for(N))
-    ceiling = (2.0**N) ** 2 * r.energy_initial
+_RUN_CACHE = {}
+
+def get_run(N, D, fine=False, T=T_MAX):
+    """ONE integration per (N, D, dt-level); every f and convention reads the
+    same trace. (v1 re-integrated per (f, which) -- a 12x waste that timed the
+    whole job out.)"""
+    key = (N, D, fine, T)
+    if key not in _RUN_CACHE:
+        dt = step_size(N, 0.0, D) / (2.0 if fine else 1.0)
+        _RUN_CACHE[key] = integrate(N=N, nu=0.0, D=D, t_horizon=T, dt=dt,
+                                    trace_every=1, a0=a0_for(N))
+        print(f"    [integrated N={N} D={D} fine={fine}: {_RUN_CACHE[key].steps} steps]",
+              flush=True)
+    return _RUN_CACHE[key]
+
+def tau_from(r, f, which="sum"):
+    ceiling = (2.0**r.N) ** 2 * r.energy_initial
     y = r.trace_omega_sum if which == "sum" else r.trace_omega_max
-    res = crossing_time(r.trace_t, y, f * ceiling)
-    return res
+    return crossing_time(r.trace_t, y, f * ceiling)
 
 def slope(xs, ys):
     r = stats.linregress(np.log(xs), np.log(ys))
@@ -41,18 +55,29 @@ def windowed(xs, ys):
     b_hi, _ = slope(xs[:h+1], ys[:h+1]) if h + 1 >= 3 else (float("nan"), 0)
     return b_full, r2, b_hi, b_lo   # hi = large-D half (list is descending)
 
+CENSORED = []
+TAU_ROWS = []   # (N, which, f, D, tau, attained)
+
 def main():
     print("ROUND 3: tau_f (thermalization time), all-conservative, common complex data")
     results = {}
-    for N in (4, 5):
+    for N in N_VALUES:
         print(f"\n=== N={N}  (ceiling = {(2.0**N)**2*0.625:.1f}) ===")
         base = {}
+        rb = get_run(N, 0.0)
         for f in FRACTIONS:
             try:
-                base[f] = tau(N, 0.0, f).time
+                base[f] = tau_from(rb, f).time
             except ValueError as e:
                 base[f] = None
                 print(f"  baseline f={f}: EXCLUDED  {str(e)[:70]}")
+        for f in FRACTIONS:
+            if base[f] is not None:
+                for which in ("sum", "max"):
+                    try:
+                        TAU_ROWS.append((N, which, f, 0.0, tau_from(rb, f, which).time, 1))
+                    except ValueError:
+                        pass
         print("  baseline tau_f (truncation, D=0): " +
               "  ".join(f"f={f}:{(base[f] if base[f] is None else round(base[f],4))}" for f in FRACTIONS))
         for which in ("sum", "max"):
@@ -60,17 +85,22 @@ def main():
                 xs, ys, excl = [], [], []
                 for D in D_VALUES:
                     try:
-                        res = tau(N, D, f, which)
+                        res = tau_from(get_run(N, D), f, which)
                         if not res.sampling_ok:
                             excl.append((D, f"sampling: {res.reason[:50]}")); continue
-                        # B4: dt refinement
-                        fine = tau(N, D, f, which, dt=step_size(N, 0.0, D)/2.0)
+                        # B4: dt refinement (same fine trace reused across f, which)
+                        fine = tau_from(get_run(N, D, fine=True), f, which)
                         rel = abs(fine.time - res.time)/res.time
                         if rel > 0.01:
                             excl.append((D, f"dt-refine {rel:.2%}")); continue
                         xs.append(D); ys.append(res.time)
+                        TAU_ROWS.append((N, which, f, D, res.time, 1))
                     except ValueError as e:
-                        excl.append((D, str(e)[:55]))
+                        msg = str(e)
+                        excl.append((D, msg[:55]))
+                        if "never reaches" in msg:
+                            CENSORED.append((N, which, f, D))
+                            TAU_ROWS.append((N, which, f, D, float("nan"), 0))
                 mono_inc = all(ys[i] >= ys[i+1] for i in range(len(ys)-1))
                 mono_dec = all(ys[i] <= ys[i+1] for i in range(len(ys)-1))
                 tag = f"[{which}] f={f}"
@@ -85,7 +115,7 @@ def main():
                     print(f"      excluded D={D}: {why}")
     # B3': stability across f (absolute floor)
     print("\nB3' across f (per N, [sum]):")
-    for N in (4, 5):
+    for N in N_VALUES:
         bs = [results.get((N, "sum", f), (None,))[0] for f in FRACTIONS]
         bs = [b for b in bs if b is not None]
         if len(bs) >= 2:
@@ -95,12 +125,31 @@ def main():
                   f"{'PASS' if d <= max(0.05, 0.05*abs(np.mean(bs))) else 'FAIL'}")
     # B5': delay-ratio stability across N
     print("\nB5' delay ratio tau(D)/tau(0) beta across N (f=0.25, [sum]):")
-    for N in (4, 5):
+    for N in N_VALUES:
         if (N, "sum", 0.25) in results and results[(N,"sum",0.25)][3]:
             b, xs, ys, b0 = results[(N, "sum", 0.25)]
             ratios = [y/b0 for y in ys]
             br, r2 = slope(xs, ratios)
             print(f"  N={N}: beta_ratio={br:+.4f} (r2={r2:.4f})")
+    print("\n" + "="*70)
+    print("CENSORING TABLE (owner ruling 2026-08-15: reported as a result, not a footnote)")
+    print("="*70)
+    if CENSORED:
+        for N, which, f, D in CENSORED:
+            print(f"  N={N} [{which}] f={f}: D={D} NEVER ATTAINED within T={T_MAX}")
+        print("\n  Non-attainment correlates with the hypothesised effect (slower")
+        print("  thermalization), so every beta above is a LOWER BOUND on the effect,")
+        print("  not a point estimate.")
+    else:
+        print("  No configuration was censored: every D attained every f within the")
+        print("  horizon. The fits are therefore UNBIASED by censoring -- betas may be")
+        print("  read as point estimates rather than lower bounds.")
+    import csv, os
+    out = os.path.join(os.path.dirname(__file__), "round3_tau.csv")
+    with open(out, "w", newline="") as fh:
+        w = csv.writer(fh); w.writerow(["N","convention","f","D","tau","attained"])
+        w.writerows(TAU_ROWS)
+    print(f"\ntau values dumped to {out} ({len(TAU_ROWS)} rows) for round-4 reuse.")
     print("\nExploratory. A PASS licenses the comparison; nothing here is a claim.")
     return 0
 

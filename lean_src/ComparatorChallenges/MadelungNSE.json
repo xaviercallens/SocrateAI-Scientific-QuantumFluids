@@ -1,0 +1,14 @@
+{
+  "challenge_module": "ComparatorChallenges.MadelungNSE",
+  "solution_module": "MadelungNSE",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.MadelungNSE.divergence_pressureGradient",
+    "QuantumFluids.MadelungNSE.divergence_madelungVelocity"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

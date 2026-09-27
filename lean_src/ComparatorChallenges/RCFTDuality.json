@@ -1,0 +1,15 @@
+{
+  "challenge_module": "ComparatorChallenges.RCFTDuality",
+  "solution_module": "RCFTDuality",
+  "enable_nanoda": true,
+  "theorem_names": [
+    "QuantumFluids.RCFTDuality.su2Level1_S_sq",
+    "QuantumFluids.RCFTDuality.su2Level1_S_symm",
+    "QuantumFluids.RCFTDuality.su2Level1_S_det"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}
