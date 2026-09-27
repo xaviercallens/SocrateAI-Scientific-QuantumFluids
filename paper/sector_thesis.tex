@@ -19,7 +19,7 @@
 \newtheorem{criterion}{Criterion}
 
 \title{\textbf{When does self-duality cause physics?}\\
-\large A machine-checked criterion, tested across fifteen candidate physical systems, an interventional
+\large A machine-checked criterion, tested across sixteen candidate physical systems, an interventional
 experiment, and real cosmological data}
 
 \author{Xavier Callens\\
@@ -44,7 +44,7 @@ constrains a fixed point without producing one, it is not. The duality is always
 causal work, when anything does, is the \emph{sector} it relabels -- a conserved or topological label
 crossing a threshold, proliferating, annihilating, or being imposed. We test this criterion, not just
 state it, in three independent ways. First, a machine-checked library of 257 theorems across 30 Lean
-modules states the mathematical skeleton of fifteen candidate cross-domain cases -- from the Ising
+modules states the mathematical skeleton of sixteen candidate cross-domain cases -- from the Ising
 model to Calabi--Yau mirror symmetry -- and every module is re-checked by a second, independent kernel
 (nanoda) so that a statement's acceptance does not rest on one implementation of type theory. Second,
 a pre-registered, energy-matched intervention in a real classical field (a projected
@@ -58,7 +58,7 @@ dark-energy phase transition, built from the published equations and Planck's ow
 original to within a factor of $3.16$ across the parameter grid we tested, and a forecast built on that
 same reproduction shows that no future CMB temperature experiment can meaningfully tighten this
 particular bound, since Planck's own measurement is already within about $15\%$ of the cosmic-variance
-floor at the relevant multipoles. Eleven of these fifteen candidates receive
+floor at the relevant multipoles. Twelve of these sixteen candidates receive
 one of the criterion's four verdicts; three are, on inspection, not instances of the criterion at all
 -- a classification (topological superconductors), a duality between different theories with no
 self-map (three-dimensional Ising duality, AdS/CFT) -- and one, Calabi--Yau mirror symmetry, is left an
@@ -131,7 +131,7 @@ possible to state precisely.
 
 \subsection*{What decides the verdict}
 
-Four structurally distinct outcomes recur across the eleven cases examined in this paper, and
+Four structurally distinct outcomes recur across the twelve cases examined in this paper, and
 distinguishing them precisely is the paper's central technical content:
 
 \begin{enumerate}[leftmargin=*]
@@ -140,7 +140,9 @@ distinguishing them precisely is the paper's central technical content:
   continuously deformed into each other away from that point, so they are forced to meet there. Ising
   is the paradigm case; $SO(3)$ Yang--Mills at $\theta=\pi$, where the self-dual point separates a
   $\mathbb Z_2$ topological phase from the trivial phase, is a second, established in the modern
-  non-invertible-symmetry literature~\cite{KaidiOhmoriZheng2022}.
+  non-invertible-symmetry literature~\cite{KaidiOhmoriZheng2022}; the $q$-state Potts model's random-
+  cluster self-dual point is a third, proved rigorously for every $q\geq1$ regardless of whether the
+  transition it locates is continuous or discontinuous~\cite{BeffaraDuminilCopin2012}.
 \item \textbf{Not forced.} The self-dual point sits on a \emph{continuous} moduli space of equivalent
   theories, at a point of \emph{enhanced} (but not qualitatively different) symmetry. Nothing is caused
   there; the enhancement is a fact about the point's stabilizer, not a transition. This is the modal
@@ -227,14 +229,14 @@ directly -- the interventional test establishes that \emph{a} sector can be caus
 case-by-case proof that every sector discussed below is causally efficacious in its own system.
 \end{failbox}
 
-\section{Fifteen candidates, eleven verdicts}
+\section{Sixteen candidates, twelve verdicts}
 
 Table~\ref{tab:cases} lists every cross-domain case examined under the criterion, with its verdict and
 the primary literature each verdict rests on. Full case-by-case argument, including the machine-checked
 Lean statement where one exists and an explicit account of what each Lean module does \emph{not} prove,
-appears in the companion technical report~\cite{Callens2026Duality} and its four dated addenda; this
+appears in the companion technical report~\cite{Callens2026Duality} and its six dated addenda; this
 section summarises the verdicts and states what is genuinely new in the synthesis, namely the pattern
-across all eleven together.
+across all twelve together.
 
 \begin{table}[h]
 \centering
@@ -245,6 +247,7 @@ across all eleven together.
 \midrule
 Ising (Kramers--Wannier) & Forced & Discrete fixed point; order/disorder sectors inequivalent and gapped \\
 $SO(3)$ Yang--Mills, $\theta=\pi$ & Forced & Self-dual point separates a $\mathbb Z_2$ TQFT from the trivial phase; anomaly-forced~\cite{KaidiOhmoriZheng2022} \\
+Potts / random-cluster ($q\geq1$) & Forced & Self-dual point IS the critical point, proved for every $q$, continuous or not~\cite{BeffaraDuminilCopin2012} \\
 String-gas cosmology & Preferred equilibrium & Both winding and momentum sectors populated and compete~\cite{BrandenbergerVafa1989} \\
 Compact boson / BKT & Not forced & Continuous line of fixed points; $R=\sqrt2$ (self-dual) $\neq2\sqrt2$ (vortex threshold) \\
 Superconductor--insulator & Constraint & Duality pins a resistance \emph{if} self-dual; vortex/charge proliferation causes the transition~\cite{Fisher1990} \\
@@ -268,20 +271,26 @@ a negative answer.}
 \end{table}
 
 Two features of this table are worth stating plainly, because they are easy to read past. First, of
-the fifteen candidates examined, only two -- Ising and $SO(3)$ Yang--Mills -- return the ``forced''
-verdict; the other nine cases that receive one of the criterion's four verdicts return something else,
-and the remaining four rows fall outside the eleven-case verdict count for two different reasons: three
-because the criterion's question does not apply to them at all (no duality, or no self-map), and one,
-Calabi--Yau mirror symmetry, because the literature does not resolve it. The modal outcome of applying
-this criterion honestly, across an intentionally wide sample of physics, is that a self-dual point is
-\emph{not} a cause. Second, the criterion's four positive categories were not fitted to the eleven
-verdicted cases after the fact: the compact boson, Ising, string-gas, and superconductor--insulator cases fixed the taxonomy in
-earlier work of this programme, and every case added since -- quantum Hall organisation, RCFT,
-level-rank duality, Seiberg duality, Montonen--Olive $S$-duality, and the three exclusions -- was
-classified by applying that fixed taxonomy to new primary literature, not by inventing a new category
-to fit. The one genuine addition to the taxonomy, forced by Calabi--Yau mirror symmetry, was not a new
-verdict but a new admission: that the literature can leave the question open, and that this is a
-legitimate outcome distinct from either a positive or a negative verdict.
+the sixteen candidates examined, only three -- Ising, $SO(3)$ Yang--Mills, and Potts/random-cluster
+duality -- return the ``forced'' verdict; the other nine cases that receive one of the criterion's four
+verdicts return something else, and the remaining four rows fall outside the twelve-case verdict count
+for two different reasons: three because the criterion's question does not apply to them at all (no
+duality, or no self-map), and one, Calabi--Yau mirror symmetry, because the literature does not resolve
+it. The modal outcome of applying this criterion honestly, across an intentionally wide sample of
+physics, is that a self-dual point is \emph{not} a cause. Second, the criterion's four positive
+categories were not fitted to the twelve verdicted cases after the fact: the compact boson, Ising,
+string-gas, and superconductor--insulator cases fixed the taxonomy in earlier work of this programme,
+and every case added since -- quantum Hall organisation, RCFT, level-rank duality, Seiberg duality,
+Montonen--Olive $S$-duality, Potts/random-cluster duality, and the three exclusions -- was classified
+by applying that fixed taxonomy to new primary literature, not by inventing a new category to fit. The
+one genuine addition to the taxonomy, forced by Calabi--Yau mirror symmetry, was not a new verdict but
+a new admission: that the literature can leave the question open, and that this is a legitimate outcome
+distinct from either a positive or a negative verdict. A second small addition, forced by examining
+level-rank duality's own self-dual point $N=K$, is a reminder rather than a new category: a
+combinatorial label set can close up on itself (Young diagrams in an $N\times N$ box are trivially
+fixed by transpose) while the physics it labels does not (Hsin-Seiberg's own $N=K$ computation relates
+$SU(N)_N$ to its level-reversal, not to itself) -- the same discipline that excluded topological
+superconductors, applied one level deeper, inside a case already integrated.
 
 \section{Sectors in the sky: a cosmological extension, tested against real data}
 
@@ -384,7 +393,7 @@ retraction: a failure or an exclusion, honestly reported, is not a defect in the
 A self-dual point is exactly what it says: a fixed point of an exact, checkable, mathematical
 symmetry. Whether it is also a cause of anything depends entirely on what it is a fixed point
 \emph{of} -- a discrete set of inequivalent, gapped sectors, or a continuous family of equivalent
-ones -- and that question has, in every one of the twelve cases examined here that turn on a genuine
+ones -- and that question has, in every one of the thirteen cases examined here that turn on a genuine
 self-map, a definite and checkable answer, or an honestly stated absence of one. The duality is never in question; the sector
 always is. An interventional experiment in a real physical system supports the presupposition the
 whole criterion needs: that a sector, once identified, is not merely a label but a lever. And where the
@@ -400,11 +409,22 @@ three-bin toy statistic reproduced here), or against the channels the original a
 to -- CMB spectral distortions, pulsar timing arrays -- rather than more CMB-temperature data, would
 sharpen or weaken the discriminating test in \S5 (a multi-week undertaking for the likelihood route, by
 our own estimate, not a multi-day one, regardless of computing hardware); and whether further
-cross-domain cases -- of fifteen candidates investigated so far, three were found not to be instances of
-the criterion at all, and eleven received a definite verdict -- exist that fit the criterion as cleanly
+cross-domain cases -- of sixteen candidates investigated so far, three were found not to be instances of
+the criterion at all, and twelve received a definite verdict -- exist that fit the criterion as cleanly
 as Ising or as informatively as Calabi--Yau's open question. None of these is claimed here. What is
-claimed is narrower and, we think, more durable: a criterion, stated once, checked eleven times, and
+claimed is narrower and, we think, more durable: a criterion, stated once, checked twelve times, and
 not falsified yet.
+
+\section*{Data and code availability}
+\addcontentsline{toc}{section}{Data and code availability}
+The Lean~4 library (257 theorems, 30 modules), the Comparator verification setup, the interventional
+experiment's pre-registrations and results, the CMB reproduction and forecast scripts, and every
+companion paper cited here are archived as open-source software at
+\url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids} and on Zenodo at the concept
+DOI \href{https://doi.org/10.5281/zenodo.22855581}{10.5281/zenodo.22855581}. This paper is archived
+separately, on its own dedicated concept DOI, as the standalone foundational statement of the theory:
+\href{https://doi.org/10.5281/zenodo.22985863}{10.5281/zenodo.22985863} (resolves to the latest
+version). Code: MIT OR Apache-2.0. This paper: CC~BY~4.0.
 
 \bibliographystyle{unsrt}
 \bibliography{refs_sector_thesis}

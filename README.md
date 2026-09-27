@@ -146,8 +146,15 @@ aligned at 4.34.0-rc2 across streams for cross-integration.
 
 ## Citing
 
-Archived on Zenodo: **[10.5281/zenodo.22980872](https://doi.org/10.5281/zenodo.22980872)** (`v1.14.0`).
-Cite the concept DOI **10.5281/zenodo.22855581** for all versions. See `CITATION.cff`.
+The software (this library, its numerical experiments, and every companion paper) is archived on
+Zenodo: **[10.5281/zenodo.22980872](https://doi.org/10.5281/zenodo.22980872)** (`v1.14.0`). Cite the
+concept DOI **10.5281/zenodo.22855581** for all versions.
+
+The theory itself has a standalone foundational paper, `paper/sector_thesis.tex`
+("*When does self-duality cause physics?*"), archived separately on its **own dedicated DOI**:
+**[10.5281/zenodo.22985863](https://doi.org/10.5281/zenodo.22985863)** (concept DOI, resolves to the
+latest version). This is the preferred citation for the theory (`CITATION.cff`); cite the software DOI
+above in addition when referring to the Lean library or the numerical experiments specifically.
 
 *Note on the record history.* `v1.2.0` (10.5281/zenodo.22853896) was deposited as its own Zenodo
 record rather than as an earlier version of the same one, so the two carry different concept DOIs.

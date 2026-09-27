@@ -23,9 +23,9 @@ abstract: >-
 keywords: [Lean 4, Mathlib, formal verification, quantum fluids, superfluidity, Gross-Pitaevskii, quantized vortices]
 preferred-citation:
   type: article
-  title: "Formalizing quantum-fluid structure in Lean 4: a machine-checked library, what the formalization caught, and what it could not"
+  title: "When does self-duality cause physics? A machine-checked criterion, tested across sixteen candidate physical systems, an interventional experiment, and real cosmological data"
   authors:
     - family-names: Callens
       given-names: Xavier
   year: 2026
-  doi: 10.5281/zenodo.22980872
+  doi: 10.5281/zenodo.22985863

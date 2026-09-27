@@ -336,6 +336,37 @@ need $h^{1,1}=0$, impossible for any compact K\"ahler manifold~\cite{CandelasDer
 statement is proposed: Mathlib has no Calabi--Yau, special-Lagrangian, or mirror-symmetry content to build on
 (confirmed by direct search of the pinned checkout).
 
+\section*{Addendum (2026-09-27): a third forced case, and one existing case's own self-dual point examined}
+\addcontentsline{toc}{section}{Addendum 6}
+The ``forced'' verdict has so far been thin -- Ising and $SO(3)$ Yang--Mills the only two instances
+among nine other cases. This round adds a third, rigorously, and examines whether an already-integrated
+case has a genuine self-dual point of its own.
+
+\paragraph{Potts/random-cluster self-duality: Ising's family, made rigorous for every $q$.} The
+$q$-state Potts model's random-cluster (Fortuin--Kasteleyn) representation has a duality, generalising
+Kramers--Wannier, relating edge-weight $p$ on a planar graph to $p^\star(p;q)$ on its dual, with a
+unique self-dual point $p_{\rm sd}(q)=\sqrt q/(1+\sqrt q)$. Beffara and Duminil-Copin prove, for every
+$q\ge1$, that this point \emph{is} the critical point~\cite{BeffaraDuminilCopin2012} -- a rigorous,
+all-$q$ generalisation of Ising's own $q=2$ case, not a physicist's heuristic. What self-duality does
+not determine is the transition's character: it is continuous for $1\le q\le4$~\cite{DuminilCopinSidoraviciusTassion2017}
+and discontinuous for $q>4$~\cite{DuminilCopinGagnebinHarelManolescuTassion2021} -- two sectors that
+meet smoothly in one regime and jump in the other, at the exact same self-dual point either way. By
+this programme's criterion every $q\ge1$ case is \emph{forced}: self-duality pins the transition's
+location exactly regardless of its order, a fact now proved rather than assumed. As with Ising itself,
+no Lean module is proposed: the checkable content is an elementary algebraic fixed point, and this
+programme has never formalised Ising's own duality as a project module either.
+
+\paragraph{Level-rank duality at $N=K$: the labels close up; the physics does not.} The Young-diagram
+box-transpose bijection already proved in this programme (\lean{LevelRankDuality.levelRankRelabeling})
+holds for every $a,b$ including $a=b$, so $N{\times}N$-box diagrams are trivially permuted by
+transpose -- no new theorem is needed to say so. This combinatorial closure does not correspond to a
+physical self-duality: Hsin-Seiberg's own $N=K$ computation shows $SU(N)_N$ relates not to itself but
+to its level-reversal $SU(N)_{-N}$ tensored with an extra decoupled factor~\cite{HsinSeiberg2016}, and
+neither primary source treats $N=K$ as a distinguished locus in this programme's sense. As with
+AdS/CFT and three-dimensional Ising duality, $N=K$ poses no genuine self-dual-point question the
+literature answers: asserting one from the label combinatorics alone, when the physics does not
+support it, would be exactly the failure mode of formalising an analogy rather than a dependency.
+
 \bibliographystyle{unsrt}
 \bibliography{refs_duality_sector}
 \end{document}
