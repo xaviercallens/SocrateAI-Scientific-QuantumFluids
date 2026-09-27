@@ -1,6 +1,6 @@
 # SPECIFICATION: SocrateAI-Scientific-QuantumFluids
 
-**Stream:** QuantumFluids (Stream 1)  
+**Stream:** QuantumFluids (Stream QF)  
 **Depends on:** SocrateAI-Scientific-Mathesis (Stream 0 — verification/formalization/notation, per contract)  
 **Date pinned:** 2026-08-14
 
