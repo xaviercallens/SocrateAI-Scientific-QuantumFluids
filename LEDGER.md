@@ -486,7 +486,7 @@ Notes: LIMITS, stated in advance of any use: five shells, single trajectories,
 ```
 
 ```
-[CLAIM-013] [TIER-B] [VERIFIED]
+[CLAIM-013] [QF-TESTED] [VERIFIED]
 Statement: "In the conservative complexified dyadic model at N=4, stronger dispersion
            delays thermalization, ORDINALLY and without exception: the time tau_f to
            reach a ceiling-relative enstrophy level f*k_N^2*E increases with D, and at
@@ -557,7 +557,7 @@ Filed: 2026-08-15 (as a retraction; never promoted to a claim)
 ```
 
 ```
-[CLAIM-014] [TIER-B] [VERIFIED]
+[CLAIM-014] [QF-TESTED] [VERIFIED]
 Statement: "Single-trajectory measurement of tau in this chaotic model carries a
            fixed-D ensemble spread of 72-105% of the mean (CV 23-49%), measured
            across phase realisations with identical |a_n| and identical energy at
@@ -596,7 +596,7 @@ Notes: THIS IS THE METHODOLOGICAL FINDING OF THE M3 RELAUNCH, and it retracts
 ```
 
 ```
-[CLAIM-015] [TIER-B] [VERIFIED]
+[CLAIM-015] [QF-TESTED] [VERIFIED]
 Statement: "From Godfrin et al. 2021's all-pressure dispersion table (7 pressures,
            per-point uncertainties), weighted parabolic fits over |Q-1.9|<=0.2 give
            Delta(P) = 0.7438, 0.7413, 0.7386, 0.7338, 0.7199, 0.6963, 0.6185 meV
@@ -621,7 +621,7 @@ Notes: DETERMINISTIC (weighted least squares on published data) -- immune to the
 ```
 
 ```
-[CLAIM-016] [TIER-A] [VERIFIED]
+[CLAIM-016] [QF-VERIFIED] [VERIFIED]
 Statement: "In the complexified dyadic model with k_N != 0, the energy pairing
            over shells 0..N vanishes IFF Re(conj(v_N)^2 * v_{N+1}) = 0 -- i.e. a
            boundary seam conserves energy iff its value is orthogonal to v_N^2 under
@@ -649,7 +649,7 @@ Notes: This is the theorem that says what a T-dual "bounce" CAN be. Upgrades
 ```
 
 ```
-[CLAIM-017] [TIER-B] [RETRACTED -- R4]
+[CLAIM-017] [QF-TESTED] [RETRACTED -- R4]
 Statement (WITHDRAWN): "SOCRATES/Mensura's FINDINGS section 4 exponent -0.672
            (nu=0, t_max=12) is a fixed-horizon transient; re-running at longer
            horizons will drive beta monotonically toward -1, because a
@@ -681,7 +681,7 @@ next door, and this stream had already proven the discriminating property.
 ```
 
 ```
-[CLAIM-018] [TIER-B] [VERIFIED]
+[CLAIM-018] [QF-TESTED] [VERIFIED]
 Statement: "SOCRATES/Mensura's sup-enstrophy readout is sampling-limited, not a
            supremum: ShellResult.max_enstrophy maxes over RECORDED SAMPLES while
            sample_times = linspace(0, t_max, n_samples) with n_samples fixed at
@@ -707,7 +707,7 @@ Notes: Found as a by-product of testing CLAIM-017, which refuted itself. Same
 ```
 
 ```
-[CLAIM-019] [TIER-B] [VERIFIED]
+[CLAIM-019] [QF-TESTED] [VERIFIED]
 Statement: "Applying the LL-15 rule to the MechanicaFluidorum note BEFORE sending it,
            both exported conclusions were tested in MF's own code (nu=0, N=12, P3,
            exploration/mf_transfer_check.py). They SPLIT:
