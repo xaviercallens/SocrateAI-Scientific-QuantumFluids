@@ -122,3 +122,19 @@ more CMB-temperature data at the temperatures this specific bound covers.
   arXiv:2311.16222 [hep-ph].
 - Planck Collaboration, N. Aghanim et al., Astron. Astrophys. 641, A6 (2020), arXiv:1807.06209
   [astro-ph.CO] (also the source of the standard cosmic-variance formula used here).
+
+## Erratum (2026-09-27): the "within 15%" statement, checked at every multipole
+
+The table above samples nine multipoles, and the text generalised it to "within 15% for ℓ=5–50." A scan
+of every multipole (same data, same f_sky=0.7), made while building the SectorCausalityTheory
+repository's reproduction notebook and re-checked independently, gives:
+
+| ℓ range | Planck σ / cosmic-variance σ |
+|---|---|
+| 2–4 | 1.23–1.95 |
+| 5–29 | 0.96–1.13 |
+| 30–50 | 0.83–1.84 (floor estimated from the measured, noisy spectrum; 1.03–1.42 against a smoothed spectrum) |
+
+So "within ~13%" holds for 5 ≤ ℓ < 30 only. The conclusion is unchanged: because r_bound ∝ √σ, the
+worst ratio (1.95 at ℓ=2) still permits at most ~1.4× tightening, so no temperature-only successor can
+meaningfully improve this bound. The quantitative basis is now stated correctly. LEDGER CLAIM-064.

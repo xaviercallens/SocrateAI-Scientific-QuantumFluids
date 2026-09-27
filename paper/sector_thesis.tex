@@ -24,7 +24,7 @@ experiment, and real cosmological data}
 
 \author{Xavier Callens\\
 \small SocrateAI Research\\
-\small \url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}}
+\small \url{https://github.com/xaviercallens/SocrateAI-Scientific-SectorCausalityTheory}}
 \date{September 2026}
 
 \begin{document}
@@ -43,7 +43,7 @@ fixed-point set; on a continuous moduli space with enhanced symmetry, or when se
 constrains a fixed point without producing one, it is not. The duality is always exact; what does
 causal work, when anything does, is the \emph{sector} it relabels -- a conserved or topological label
 crossing a threshold, proliferating, annihilating, or being imposed. We test this criterion, not just
-state it, in three independent ways. First, a machine-checked library of 257 theorems across 30 Lean
+state it, in three independent ways. First, a machine-checked formalization of 116 theorems across 14 Lean
 modules states the mathematical skeleton of sixteen candidate cross-domain cases -- from the Ising
 model to Calabi--Yau mirror symmetry -- and every module is re-checked by a second, independent kernel
 (nanoda) so that a statement's acceptance does not rest on one implementation of type theory. Second,
@@ -57,8 +57,10 @@ real, present-day dataset: an independent, exact reproduction of a published CMB
 dark-energy phase transition, built from the published equations and Planck's own data, agrees with the
 original to within a factor of $3.16$ across the parameter grid we tested, and a forecast built on that
 same reproduction shows that no future CMB temperature experiment can meaningfully tighten this
-particular bound, since Planck's own measurement is already within about $15\%$ of the cosmic-variance
-floor at the relevant multipoles. Twelve of these sixteen candidates receive
+particular bound: Planck's own error bars sit within about $13\%$ of the cosmic-variance floor where the
+signal peaks for most transition rates ($5\le\ell<30$) and within a factor of two at every multipole up to
+$\ell=50$, so, since the bound scales as the square root of the error bar, even a perfect temperature
+measurement could tighten it by at most about $1.4\times$. Twelve of these sixteen candidates receive
 one of the criterion's four verdicts; three are, on inspection, not instances of the criterion at all
 -- a classification (topological superconductors), a duality between different theories with no
 self-map (three-dimensional Ising duality, AdS/CFT) -- and one, Calabi--Yau mirror symmetry, is left an
@@ -332,11 +334,20 @@ tracks the approximation closely, while at the highest rates we tested it now si
 itself described by its own authors as an order-of-magnitude estimate. We then asked whether any future
 CMB temperature experiment could improve on this bound at all, using the fact that this signal's own
 statistic scales the bound exactly as the square root of the multipole error bar, with no linearisation
-needed: comparing Planck's own measured errors against the pure cosmic-variance floor at the multipoles
-this signal occupies ($\ell\approx5$--$50$) shows Planck is already within about $15\%$ of that floor.
-No temperature-only successor to Planck -- a bigger mirror, a colder detector -- can meaningfully
-tighten this particular bound; what little room remains, at the very lowest multipoles, is capped by
-foreground and sky-masking systematics, not by instrument sensitivity, matching the original authors'
+needed: comparing Planck's own measured errors against the pure cosmic-variance floor multipole by
+multipole shows Planck within about $13\%$ of that floor for $5\le\ell<30$, where the signal peaks for
+most transition rates; the ratio rises to $1.2$--$2.0$ at $\ell=2$--$4$ and scatters between $0.8$ and
+$1.8$ for $30\le\ell\le50$ (the floor there is estimated from the measured, noisy spectrum). Since the
+bound scales as the square root of the error bar, even a perfect temperature-only measurement could
+tighten it by at most about $1.4\times$.\footnote{Erratum. The version of this paper archived as
+10.5281/zenodo.22985879 said Planck is ``within about 15\%'' of the floor for $\ell\approx5$--$50$. That
+figure came from nine sampled multipoles; a scan of every multipole, made while building this
+programme's reproduction notebook, gives the ranges stated here. The conclusion -- no meaningful
+tightening from a temperature-only successor -- is unchanged; its quantitative basis is now stated
+correctly.} No temperature-only successor to Planck -- a bigger mirror, a colder detector -- can
+meaningfully tighten this particular bound; the modest room that remains, at the lowest multipoles and
+in the scatter above $\ell=30$, is set by cosmic variance, foregrounds and masking, not by instrument
+sensitivity, matching the original authors'
 own pointer toward CMB spectral distortions and pulsar timing arrays as the more promising channels for
 further progress. Every step of this reproduction and forecast needed no specialised hardware: the full
 calculation runs in CPU-minutes to CPU-hours on a single core, confirming directly that a rented GPU
@@ -375,8 +386,8 @@ Every mathematical claim in \S2 and Table~\ref{tab:cases} that admits a checkabl
 a Lean~4 theorem against a pinned Mathlib (tag v4.34.0-rc2) and re-verified by a second, independent
 kernel (nanoda) via Comparator, so that acceptance does not rest on trusting one implementation of
 type theory; every module lists, and negative controls exercise, its exact axiom footprint (never more
-than propositional extensionality, choice, and quotient soundness). As of this writing the library
-comprises 257 theorems across 30 modules. Two disciplines run throughout: a literature gate, meaning
+than propositional extensionality, choice, and quotient soundness). As of this writing the theory's formalization comprises 116 theorems across 14 modules (extracted, unchanged, from the
+origin programme's 257-theorem, 30-module library). Two disciplines run throughout: a literature gate, meaning
 every citation above was verified against Crossref or by reading the cited source directly before being
 written down, and an explicit account, in every case, of what the corresponding Lean statement does
 \emph{not} prove -- the su(2)$_1$ modular S-matrix module does not prove it is the Kac--Peterson matrix
@@ -417,14 +428,16 @@ not falsified yet.
 
 \section*{Data and code availability}
 \addcontentsline{toc}{section}{Data and code availability}
-The Lean~4 library (257 theorems, 30 modules), the Comparator verification setup, the interventional
-experiment's pre-registrations and results, the CMB reproduction and forecast scripts, and every
-companion paper cited here are archived as open-source software at
+The theory's dedicated repository, \url{https://github.com/xaviercallens/SocrateAI-Scientific-SectorCausalityTheory},
+holds this paper and its two companions, the self-contained Lean~4 formalization (116 theorems, 14
+modules), reproduction notebooks, a training guide, and an MCP server for scientists and AI agents. The
+origin programme -- the full 257-theorem library, the interventional experiment's pre-registrations and
+raw results, and every other companion paper -- is at
 \url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids} and on Zenodo at the concept
 DOI \href{https://doi.org/10.5281/zenodo.22855581}{10.5281/zenodo.22855581}. This paper is archived
 separately, on its own dedicated concept DOI, as the standalone foundational statement of the theory:
 \href{https://doi.org/10.5281/zenodo.22985863}{10.5281/zenodo.22985863} (resolves to the latest
-version). Code: MIT OR Apache-2.0. This paper: CC~BY~4.0.
+version). Code: MIT (the theory repository) and MIT OR Apache-2.0 (the origin programme). This paper: CC~BY~4.0.
 
 \bibliographystyle{unsrt}
 \bibliography{refs_sector_thesis}

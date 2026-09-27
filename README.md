@@ -4,6 +4,14 @@
 
 [![Tests](https://img.shields.io/badge/tests-183%20passing-brightgreen)]() [![Lean](https://img.shields.io/badge/Lean-4.34.0--rc2-blue)]() [![Theorems](https://img.shields.io/badge/theorems-257%20kernel--checked-blue)]() [![Comparator](https://img.shields.io/badge/Comparator-two%20kernels-success)]() [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22980872.svg)](https://doi.org/10.5281/zenodo.22980872) [![Release](https://img.shields.io/badge/release-v1.14.0-orange)](https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids/releases)
 
+> **The Sector Causality Theory has moved to its own repository:**
+> **[SocrateAI-Scientific-SectorCausalityTheory](https://github.com/xaviercallens/SocrateAI-Scientific-SectorCausalityTheory)**
+> — the foundation paper (DOI [10.5281/zenodo.22985863](https://doi.org/10.5281/zenodo.22985863)), a
+> self-contained Lean formalization, reproduction notebooks, a training guide, and an MCP server for
+> scientists and AI agents. The theory grew out of this programme and its original record stays here
+> (`LEDGER.md`, `RETRACTIONS.md`, the full 257-theorem library, the raw experiment results); new work on
+> the theory happens there.
+
 ---
 
 ## What this is
