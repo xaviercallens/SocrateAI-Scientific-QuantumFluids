@@ -95,3 +95,40 @@ are re-evaluated on the C2 data in place of C; if it does not, the admission fai
 artifact and a different cause must be sought (recorded, not guessed, at that point). Estimated cost:
 `t_end` scales `7000/4000 = 1.75×` Part C's own runtime (≈ 49{,}000–49{,}600 s each) ⇒ ≈ 24 h per run, six runs on
 six workers ⇒ ≈ 24 h wall, run alongside no other PGPE load. Kill rule unchanged (drift `> 10⁻⁵`).
+
+
+## Amendment R3-A3 (2026-09-28, after Part C2 — `PGPE_R3_RESULTS.md`, CLAIM-065; before any L = 192 run exists)
+
+C2 cured admission (2/6 → 5/6) but left the finite-size offset `ηK − 1` **growing** with `L` at every energy
+(0.404 / 0.360 / 0.334 at `L = 128` against 0.12 / 0.12 / 0.20 at `L = 64`), contrary to the pre-registered
+expectation, and not attributable to selection. Two candidate explanations remain: an estimator systematic
+(the `g1` fit window `r_max = min(L/4, first r with g1 < 0.05)` differs between sizes) or a genuine slow
+(logarithmic) finite-size correction near BKT. Two pieces of work, both fixed here before their outcomes are known.
+
+**C3 (new runs).** The C2 protocol **unchanged in every respect except the box**: `L = 192` (`N = 384`, same
+`dx = 0.5`), `t_tr = 6000`, `t_end = 7000`, same three energies `e ∈ {1.00, 1.10, 1.20}`, same seeds `{11, 12}`,
+same admission rule (`R_L ≤ 1.25`, `R_T ≤ 1.1 R_L`), same kill rule (drift `> 10⁻⁵`). Sizes with data then:
+`L = 64` (round-2 ladder), `128` (C2), `192` (C3).
+
+**C3-b (analysis only, no new runs; may be done on the saved C2 fields and the round-2 data before C3 ends).**
+Refit `η` on one **fixed physical window** `r ∈ [2, 16]` (the widest window valid at `L = 64`, where `L/4 = 16`),
+identical at every size, and compare with the `L/4`-scaled window used so far. If the fixed-window offsets no
+longer grow with `L`, the growth was an estimator artefact.
+
+**Decision rules (frozen now).** For each energy with at least one admitted run at all three sizes:
+- **Growth survives** if `ηK − 1` is strictly increasing across `L = 64, 128, 192` at ≥ 2 of the 3 energies *and*
+  the same holds under the fixed window (C3-b). Then, per the roadmap's kill criterion, record it as a real finite-size
+  effect of this model and restrict the statement "`η·n_s·λ² = 1` to 12–27 %" to `L ≤ 64`.
+- **Estimator artefact** if the growth holds under the `L/4` window but not under the fixed window.
+- **Saturation / non-monotone** if `ηK − 1(192) ≤ ηK − 1(128)` at ≥ 2 energies: the growth does not continue;
+  recorded as unresolved, with no extrapolation claimed. Fewer than two energies with an admitted run at `L = 192`
+  is reported as **inconclusive**, not as any of the above.
+No fit of the *form* of the growth (log L versus power) is pre-registered: three sizes cannot discriminate them,
+and none is claimed.
+
+**Cost estimate (stated in advance, corrected by a pre-launch smoke test).** A 5-time-unit timing at `N = 256`
+and `N = 384` (same code, same machine, both energy- and norm-conserving to `≤ 2×10⁻⁷`) measured a cost ratio of
+**2.06×**, below the `(384/256)² × 1.07 ≈ 2.4×` first guessed. Applied to the `L = 128` runs (26.7–27.0 h) ⇒
+**≈ 55 h per run** (C2's own estimate was 11 % low; allow ±15 %). Six runs on six workers, `nice -n 10` (the
+machine is shared with another project's nightly job) ⇒ **≈ 2.3 days wall**. No result is
+inspected before all six finish, except drift and process health.
