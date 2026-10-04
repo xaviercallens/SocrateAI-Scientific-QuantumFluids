@@ -26,7 +26,7 @@ the data that can test the hypothesis, and what would kill it}
 \author{Xavier Callens\\
 \small SocrateAI-Scientific-QuantumFluids\\
 \small \url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}}
-\date{September 2026 -- proposal; predictions fixed before the runs}
+\date{September 2026 -- proposal; predictions fixed before the runs. Round-3 finite-size results (Parts C2, C3) added October 2026}
 
 \begin{document}
 \maketitle
@@ -232,8 +232,33 @@ $\eta K-1=0.284$; $e=1.20$: $\eta K-1=0.449$) the duality offset is \emph{larger
 with one surviving seed per energy and no admitted point at $e=1.00$, this is reported, not trusted: it is as
 consistent with a biased subsample (admission keeps whichever seed happened to isotropise) as with a real
 finite-size surprise. No crossing of $K=4$ is bracketed in the admitted range. \textbf{C1: fails as
-pre-registered; C2: not bracketed; both void pending a longer equilibration window at this box size in a
-future round} -- not executed here, since each run already costs $\approx14$~h.
+pre-registered; C2: not bracketed; both void pending a longer equilibration window at this box size.}
+
+\paragraph{Part C2 ($L=128$, warm-up doubled): admission cured, the offset still grows.} The same six runs with
+$t_{\rm tr}=6000$ (amendment R3-A2, a diagnostic of the equilibration hypothesis) admit five of six; three of the
+four rejected runs become physical ($n_s/n$ from negative to $0.67$--$0.83$) and the two runs admitted before keep
+their superfluid fraction, a built-in control. The offsets $\eta K-1=0.404,\ 0.360,\ 0.334$ ($e=1.00,1.10,1.20$)
+now lie above the $L=64$ values at every energy, in seeds that failed admission before and in seeds that always
+passed: the growth from $L=64$ to $L=128$ is no longer attributable to selection (C1 fails, robustly).
+
+\paragraph{Part C3 ($L=192$): the growth does not continue.} Amendment R3-A3 froze, before any $L=192$ run
+existed, three outcomes: \emph{growth survives} (offset strictly increasing over $L=64,128,192$ at two of three
+energies, under both the $L/4$-scaled fit window and a fixed window $r\in[2,16]$), \emph{estimator artefact}
+(growth under the scaled window only), or \emph{saturation / non-monotone} (offset at $192$ not above $128$ at two
+energies). Six runs, C2's protocol with only the box changed ($N=384$, $t_{\rm tr}=6000$, $t_{\rm end}=7000$),
+integrated by a Rust port of the same projected Gross--Pitaevskii scheme after the first, Python, attempt died
+silently; energy drift $\le1.9\times10^{-6}$. Admission: \textbf{three of six}, one seed per energy. The admitted
+offsets are $\eta K-1=0.046,\ -0.050,\ 0.206$, below the $L=128$ values at all three energies, and the same holds
+under the fixed window on single final fields at every size. \textbf{Verdict, as pre-registered: saturation /
+non-monotone -- the growth does not continue; recorded as unresolved, no extrapolation.} Two cautions, both
+stated before the claim is read. Admission fell from $5/6$ at $L=128$ to $3/6$ at $L=192$ with the same warm-up, the
+pattern Part C showed at $L=128$ with half of it, and the admitted runs have lower superfluid fractions ($0.41$--$0.56$
+against $0.64$--$0.83$) and larger transverse fluctuations; the $L=192$ states may be under-equilibrated in exactly
+the way C2 cured at $L=128$. And with one seed per energy against a seed-to-seed spread of $\approx0.1$--$0.4$ in the
+offset, the drop is as uncertain as the growth before it. What the three sizes support is negative: the offset does
+not grow monotonically with $L$, so the finite-size surprise of Part C2 is not established as a trend, and the
+statement $\eta\,n_s\lambda_T^2=1$ to $12$--$27\%$ stands as measured at $L\le64$ only. No crossing of $K=4$ is
+bracketed at $L=192$ either ($K=4.3$--$6.1$).
 
 
 \section{Duality is a structure; the sector is the cause}\label{sec:duality}

@@ -1,0 +1,1 @@
+{"name": "C3_L192_e1.00_s11", "e_target": 1, "seed": 11, "N": 384, "L": 192, "g": 1, "dt": 0.01, "t_tr": 6000, "t_end": 7000, "snapshot_every_t": 10, "energy_initial": 36863.95314838225, "energy_final": 36863.95066138516, "drift_E": 0.00000006746419944529026, "steps": 700000, "wall_seconds": 3671.0}

@@ -6,8 +6,8 @@ authors:
   - family-names: Callens
     given-names: Xavier
     affiliation: SocrateAI Research
-version: v1.15.0
-date-released: 2026-09-28
+version: v1.16.0
+date-released: 2026-10-04
 doi: 10.5281/zenodo.22855581
 license:
   - MIT

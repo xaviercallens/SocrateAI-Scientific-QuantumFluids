@@ -1,0 +1,13 @@
+C3_L192_e1.00_s12: no checkpoint, building random_state(n0=1.0, e_target=1)
+C3_L192_e1.00_s11: resuming from checkpoint at step 660000 (t=6600.0)
+C3_L192_e1.10_s12: resuming from checkpoint at step 660000 (t=6600.0)
+C3_L192_e1.00_s11: done. steps=700000 E 36863.953->36863.951 drift=6.7e-8 wall=3671.0s
+C3_L192_e1.20_s11: resuming from checkpoint at step 660000 (t=6600.0)
+C3_L192_e1.10_s12: done. steps=700000 E 40550.333->40550.330 drift=8.1e-8 wall=3691.1s
+C3_L192_e1.20_s12: no checkpoint, building random_state(n0=1.0, e_target=1.2)
+C3_L192_e1.20_s11: done. steps=700000 E 44236.723->44236.719 drift=9.6e-8 wall=3615.2s
+C3_L192_e1.10_s11: no checkpoint, building random_state(n0=1.0, e_target=1.1)
+C3_L192_e1.00_s12: done. steps=700000 E 36864.000->36863.943 drift=1.5e-6 wall=91911.7s
+C3_L192_e1.20_s12: done. steps=700000 E 44236.800->44236.717 drift=1.9e-6 wall=90588.9s
+C3_L192_e1.10_s11: done. steps=700000 E 40550.400->40550.336 drift=1.6e-6 wall=89557.7s
+all configurations complete

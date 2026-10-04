@@ -187,3 +187,72 @@ crossing needs higher `e`, not longer runs.
 finite-size offset grows with `L`, and this is no longer attributable to selection. C2: **not bracketed**.
 LEDGER CLAIM-065.
 
+
+## Part C3 — L = 192 (amendment R3-A3): the growth does not continue
+
+Pre-registered in amendment R3-A3 (2026-09-28, before any `L = 192` run existed), with the decision rule frozen
+there. C2's protocol with only the box changed: `L = 192` (`N = 384`, `dx = 0.5`), `t_tr = 6000`, `t_end = 7000`,
+`e ∈ {1.00, 1.10, 1.20}`, seeds `{11, 12}`, same admission and kill rules.
+
+**Execution (disclosure).** The first attempt (`run_r3.py`, Python, six workers) died silently after ≈ 55 h with
+nothing in its log and no output files; the cause could not be diagnosed (no reboot; kernel log not readable on this
+machine; out-of-memory kill is the leading, unconfirmed hypothesis). The runs were redone with a Rust port of the
+same projected-GPE integrator (rusty-SUNDIALS `crates/qf-pgpe/examples/round3_finite_size.rs`, PR #67), three
+workers, checkpoint every 20 000 steps, raw field snapshots every 10 time units; the observables are computed by
+`exploration/pgpe/analyze_r3_c3_rust.py`, which reuses `round2.py`/`observables.py` unchanged. Its random initial
+state is not bit-identical to numpy's (same target energy and norm, different draw), as documented in the driver.
+The Rust run also stopped once (2026-10-01 ≈ 13:00, t ≈ 6690, again with no error) and was resumed from the
+t = 6600 checkpoints; logs `r3_C3_rust.log.run1` and `r3_C3_rust.log`. Wall time ≈ 25 h per run for the
+three runs that ran end-to-end under contention (89 558–91 912 s), against the prereg's ≈ 55 h estimate
+for the Python code. Energy drift 6.7×10⁻⁸–1.9×10⁻⁶ (kill rule `10⁻⁵` not triggered). No observable was
+inspected before all six runs finished.
+
+**Admission: 3 of 6** (one seed per energy).
+
+| e | seed | R_L | R_T | n_s/n | admitted | T | K | η | ηK−1 | cond | n_v |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1.00 | 11 | 1.00 | 1.38 | −0.38 | no | 0.507 | — | 0.278 | — | 0.313 | 179 |
+| 1.00 | 12 | 1.17 | 0.59 | +0.49 | **yes** | 0.505 | 6.13 | 0.171 | **+0.046** | 0.445 | 172 |
+| 1.10 | 11 | 1.07 | 2.09 | −0.96 | no | 0.599 | — | 0.458 | — | 0.059 | 439 |
+| 1.10 | 12 | 1.03 | 0.61 | +0.41 | **yes** | 0.604 | 4.31 | 0.221 | **−0.050** | 0.356 | 433 |
+| 1.20 | 11 | 1.07 | 0.47 | +0.56 | **yes** | 0.699 | 5.03 | 0.240 | **+0.206** | 0.290 | 817 |
+| 1.20 | 12 | 1.27 | 0.34 | +0.73 | no (R_L) | 0.700 | — | 0.261 | — | 0.274 | 823 |
+
+**Offsets `ηK − 1` across the three sizes** (ladder estimator, `L/4`-scaled `g1` window, admitted runs):
+
+| e | L = 64 | L = 128 (C2) | L = 192 (C3) | strictly increasing? | 192 ≤ 128? |
+|---|---|---|---|---|---|
+| 1.00 | 0.12 | 0.404 | 0.046 | no | yes |
+| 1.10 | 0.12 | 0.360 | −0.050 | no | yes |
+| 1.20 | 0.20 | 0.334 | 0.206 | no | yes |
+
+**C3-b (fixed window `r ∈ [2, 16]`, `analyze_r3_c3b.py` → `r3_c3b.json`).** Done on the final field of every run
+at all three sizes, both windows fitted to the same `g1`, so that the comparison is like for like (a single field
+is noisier than the block average: seed-to-seed spread of the offset up to ≈ 0.4 at `L = 64`). Per-energy means,
+scaled / fixed window: `e = 1.00`: 0.00/0.00 → 0.70/0.54 → 0.27/0.07; `e = 1.10`: 0.24/0.24 → 0.09/0.28 →
+0.01/−0.14; `e = 1.20`: 0.42/0.42 → 0.41/0.49 → 0.18/0.10 (`L = 64 → 128 → 192`). Strictly increasing at **no**
+energy under either window; the `L = 192` value is the lowest of the three under the fixed window at every energy.
+
+**Verdict, by the rule frozen in R3-A3: saturation / non-monotone.** `ηK−1(192) ≤ ηK−1(128)` at all three
+energies (≥ 2 required), each with an admitted run at all three sizes. The growth seen from `L = 64` to `L = 128`
+does not continue to `L = 192`; recorded as **unresolved, with no extrapolation**. "Growth survives" is not
+triggered, so the roadmap's restriction of "`η·n_s·λ² = 1` to 12–27 %" to `L ≤ 64` is not invoked by the rule —
+but that statement was only ever measured at `L ≤ 64`, and is quoted as such.
+
+**Cautions, stated with the verdict, not after it.**
+1. *Equilibration again.* Admission fell from 5/6 at `L = 128` to 3/6 at `L = 192` with the same warm-up, the
+   pattern Part C showed at `L = 128` with half of it. Two of the rejected runs have negative `n_s/n` (`R_T > R_L`),
+   one (`e = 1.10, s = 11`) has condensate fraction 0.06 against 0.36 for its partner and exponential `g1` in every
+   block — a different state, like C2's `e = 1.00, s = 11`. The admitted runs have lower `n_s/n` (0.41–0.56
+   against 0.64–0.83 at `L = 128`) and larger transverse fluctuations (`R_T` 0.47–0.61 against 0.20–0.37).
+   The `L = 192` states may be under-equilibrated in exactly the way C2 cured at `L = 128`; the drop in the offset
+   comes mostly from the drop in `K`, which an incomplete equilibration would also produce.
+2. *Statistics.* One admitted seed per energy, against a seed-to-seed spread of 0.1–0.4 in the offset. The drop is
+   as uncertain as the growth before it.
+
+What the three sizes support is negative: **the offset does not grow monotonically with `L`**, so the finite-size
+surprise of Part C2 is not established as a trend. Separating a genuine finite-size correction from incomplete
+equilibration at `L = 192` would need `t_tr` scaled with `L` (≈ 9000 by the C2 analogy) and more seeds — not
+pre-registered here, not run.
+
+**C2 criterion at `L = 192`:** `K = 4.3–6.1 > 4` at all three energies; no crossing bracketed. LEDGER CLAIM-067.

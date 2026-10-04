@@ -156,6 +156,37 @@ def part_C(runs=None):
             "note": "T per run is the mean of the block thermometer readings (round 2 used the pooled occupation); offsets use K > 4 rows only, as in round 2 L3"}
 
 
+def part_C3():
+    """Amendment R3-A3's frozen decision rule over L = 64 (round-2 ladder), 128 (C2), 192 (C3, Rust driver).
+    The fixed-window side (C3-b) comes from analyze_r3_c3b.py -> r3_c3b.json."""
+    load = lambda tag: [json.loads(f.read_text()) for f in sorted(R3.glob(f"{tag}_e*_s??.json"))]
+    rows128, _ = ladder_rows_C(load("C2_L128")); rows192, exc192 = ladder_rows_C(load("C3_L192"))
+    off = {64: dict(L64_OFFSETS), 128: {r["e"]: r["eta_K_minus_1"] for r in rows128}, 192: {r["e"]: r["eta_K_minus_1"] for r in rows192}}
+    energies = [e for e in L64_OFFSETS if e in off[128] and e in off[192]]
+    grows = {e: bool(off[64][e] < off[128][e] < off[192][e]) for e in energies}
+    drops = {e: bool(off[192][e] <= off[128][e]) for e in energies}
+    c3b = json.loads((ROOT / "data/generated/pgpe/r3_c3b.json").read_text())
+    grows_fixed = {float(e): v for e, v in c3b["increasing_fixed"].items()}
+    if len(energies) < 2:
+        verdict = "inconclusive"
+    elif sum(grows.values()) >= 2 and sum(grows_fixed.get(e, False) for e in energies) >= 2:
+        verdict = "growth survives"
+    elif sum(grows.values()) >= 2:
+        verdict = "estimator artefact"
+    elif sum(drops.values()) >= 2:
+        verdict = "saturation / non-monotone"
+    else:
+        verdict = "none of the pre-registered outcomes"
+    return {"rows_L192": rows192, "excluded_L192": exc192, "admitted_L192": f"{6 - len(exc192)}/6", "offsets": off,
+            "strictly_increasing_scaled": grows, "strictly_increasing_fixed": grows_fixed, "L192_not_above_L128": drops,
+            "crossing_L192": crossing_C(rows192), "verdict": verdict}
+
+
+if __name__ == "__main__" and "C3" in sys.argv[1:]:
+    v3 = part_C3()
+    (ROOT / "data/generated/pgpe/r3_C3_verdicts.json").write_text(json.dumps(v3, indent=1, default=float))
+    print(json.dumps({k: x for k, x in v3.items() if k != "rows_L192"}, default=float)); sys.exit(0)
+
 if __name__ == "__main__":
     v = {}
     if (R3 / "A_e0.60_s11_t4000_V.json").exists(): v["A"] = part_A()
