@@ -155,7 +155,7 @@ aligned at 4.34.0-rc2 across streams for cross-integration.
 ## Citing
 
 The software (this library, its numerical experiments, and every companion paper) is archived on
-Zenodo: **[10.5281/zenodo.23022547](https://doi.org/10.5281/zenodo.23022547)** (`v1.15.0`). Cite the
+Zenodo: **[10.5281/zenodo.23144587](https://doi.org/10.5281/zenodo.23144587)** (`v1.16.0`). Cite the
 concept DOI **10.5281/zenodo.22855581** for all versions.
 
 The theory itself has a standalone foundational paper, `paper/sector_thesis.tex`
