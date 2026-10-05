@@ -76,6 +76,15 @@ lean_lib MatchingScreening
 lean_lib KTFlow
 
 @[default_target]
+lean_lib DissipativeVortexDynamics
+
+@[default_target]
+lean_lib EinsteinRelation
+
+@[default_target]
+lean_lib PairPolarisation
+
+@[default_target]
 lean_lib Fricke
 
 @[default_target]

@@ -57,3 +57,103 @@ designed; the failure is reported.
 - **Stated limits:** classical-field α depends on the cutoff through the thermal-mode population (one cutoff
   here, `k_cut = k_max/2`); 2D only; imprint transients (sound) are part of the measured dynamics; above
   ≈ 0.8 T_BKT, thermal pairs can swap with the tracked vortices (jumps > 3 are counted and reported).
+
+
+## Amendment A1 (2026-10-05, after the KA gate — `PGPE_FRICTION_RESULTS.md`, CLAIM-075 — and the literature review; before any production run)
+
+This amendment replaces the "Method" and "Production design" sections above. It also defines the shared
+simulation campaign used by `PGPE_ALPHAPRIME_PREREG.md` (H03) and `PGPE_EINSTEIN_PREREG.md` (H02).
+Lean companion: `lean_src/DissipativeVortexDynamics.lean` (kernel-checked, standard axioms).
+
+### What was looked at before writing this (disclosure)
+
+1. **Detection bias of the first tracker.** A 40-time-unit control at T = 0 (uniform condensate, one dipole,
+   `d₀ = 8, 12`), run to choose the detector: with raw phase-winding detection the separation stays constant
+   (7.5 and 11.5 on the half-integer grid) — no shrinking at T = 0, as Lucas & Surówka (2014) predict; with the
+   Gaussian coarse-graining used for the KA gate (σ = 1.5) the detected separation is **biased low by ≈ 1 and the
+   bias changes in time** (σ = 3: by 4, with a spurious shrink 10.5 → 7.5 in 40 units). The KA numbers of
+   CLAIM-075 therefore carry a detector bias (they underestimate α by roughly the ratio `d_true/d_meas ≈ 1.2`;
+   the gate verdict is not affected in direction), and the pilot value α ≈ 0.3–0.4 at T ≈ 0.45 (σ = 1.5 and 3) is
+   not a measurement.
+2. **An independent α already on disk.** The round-3 Part A vortex arm at T = 0.115 (eight imprinted vortices,
+   zero net dipole moment, raw detection, 150 samples over 1500 time units): the torus point-vortex energy falls
+   linearly, and the energy estimator below gives **α = 0.0056**.
+3. **A stall.** One KA run (`d₀ = 12`, placement 2) shrinks from 10.1 to ≈ 7 (detected) in 2000 time units and
+   then stays at 6.7–7.4 for the next 2000. The `d₀ = 8` runs do not stall.
+
+### Hypothesis W (phonon wind of a closed box) — the proposed reading of (3) and of the size dependence
+
+A pair of separation `d` carries the impulse `2πρ_s d`. In a closed periodic box that momentum has nowhere to go
+but the phonons: as the pair shrinks from `d₀` to `d`, the normal component acquires the drift
+`u = 2πρ_s (d₀ − d)/(ρ_n L²)` along the pair's motion, and the friction, which acts on the *relative* velocity,
+drives the separation as `d' = −2α(1/d − u)`. When `π ρ_s d₀² > 2 ρ_n L²` the right-hand side vanishes at
+`b = [d₀ + (d₀² − 2ρ_nL²/(πρ_s))^{1/2}]/2` and the pair stalls there for ever (`wind_stall`, machine-checked).
+At T = 0.115, L = 64 (`ρ_n/ρ = 0.027`): `ρ_nL²/(2πρ_s) = 18.1`, so `d₀ = 12` stalls (`d₀²/4 = 36`) and
+`d₀ = 8` does not (16) — as observed. Quantitatively the observed plateau (≈ 8–8.5 after bias correction) is below
+the predicted 10.2: the model is not confirmed at that level, and W is registered as a hypothesis, not a result.
+If W holds, every closed-box friction measurement on a single pair at low temperature is contaminated unless
+`ρ_n L² ≫ π ρ_s d₀²/2` — including, possibly, part of the literature's.
+
+### Instrument (v2)
+
+`exploration/pgpe/vortex_transport.py`: **raw** phase-winding detection (no coarse-graining) with **sub-grid
+refinement** (zero of the least-squares plane through the four corner values of ψ on the winding plaquette);
+tracking of the imprinted vortices by continuity (same sign, displacement ≤ 1.5 per sample, `dt_sample = 1`);
+all tracked positions saved, with the number of detected vortices, the total field momentum and the momentum in
+the band `|k| > 1`. Detector bias is measured, not assumed: gate G1.
+
+Estimators (`exploration/pgpe/transport_estimators.py`), all from the saved positions `r_i(t)`, charges `q_i` and
+the torus point-vortex velocities `v_s,i` (Weiss–McWilliams Green function, hbar = m = 1, circulation 2π):
+- **two-coefficient regression** (primary for α′, secondary for α): displacements over a lag regressed on the two
+  orthogonal predictors, `Δr_i = (1 − α′) ∫v_s,i dt − α q_i ∫ẑ×v_s,i dt + noise`;
+- **energy estimator** (primary for α): `α = −ΔH / (2 ∫Σ_i |v_s,i|² dt)`, `H` the torus point-vortex energy of
+  the tracked vortices — valid for any configuration and independent of α′ (`energy_dissipation`);
+- **diffusion**: mean-square of the regression residuals against lag (see the Einstein pre-registration).
+A settling time of 100 time units after the imprint is excluded from every fit (imprint radiation: Rorai,
+Sreenivasan & Fisher 2013).
+
+### Geometry
+
+**Zero net impulse** is the default: two antiparallel dipoles (`+−` at `x = L/4`, `−+` at `x = 3L/4`, same `d₀`),
+so that the momenta they shed cancel and no wind builds up. Single-dipole runs are kept only to test W.
+
+### Gates (run in this order; production runs do not start until all three pass)
+
+- **G0, synthetic.** Langevin integration of the dissipative point-vortex model on the L = 64 torus, antiparallel
+  geometry `d₀ = 10`, with known `(α, α′, η) = (0.02, 0.10, 2×10⁻³)`, detection noise 0.2 per coordinate, 8 runs
+  of 2000 time units. Pass: α recovered within 15 %, `1 − α′` within 0.02, η within 25 %.
+- **G1, T = 0 control** (uniform condensate, antiparallel `d₀ = 10`, 400 time units, fit on 100–400), known
+  answers: (i) no friction, `|α̂| ≤ 10⁻³`; (ii) point-vortex translation, `1 − α̂′ ∈ [0.96, 1.04]`; (iii) no
+  diffusion, apparent `η̂ ≤ 2×10⁻⁵`; (iv) momentum bookkeeping on a single dipole: field momentum equal to
+  `2π n d` within 5 % and constant. If only (iii) fails, the campaign proceeds with the measured floor `η_floor`
+  and the Einstein test is restricted to temperatures where the Einstein value exceeds `5 η_floor`.
+- **G2, thermal known answer** (T = 0.115, antiparallel `d₀ = 10`, 2 runs × 2000 time units): `α̂` (energy
+  estimator) within a factor 2 of the independent value 0.0056 of disclosure (2), i.e. in **[0.0028, 0.0112]**,
+  which lies inside the Shukla–Brachet–Pandit window of the original gate.
+
+### Bases and production
+
+Temperatures: `e = 0.60` (T = 0.115, on disk), `e = 0.70` and `0.80` (made from the `e = 0.60` state by the
+phonon-heating construction of round 2 and 1000 time units of equilibration; their T, `n_s/n` and raw vortex count
+are measured before use), and `e = 0.90, s12` (T = 0.458) as a **report-only** point because thermal pairs are
+present. A base enters the pre-registered tests only if its mean raw vortex count is below 0.5.
+Per temperature: antiparallel geometry, `d₀ ∈ {8, 12}`, 3 runs each of 2000 time units (two pairs per run).
+
+Criteria (replace F1–F3):
+- **F1′ (no intrinsic size dependence).** In the zero-impulse geometry the energy-estimator α at `d₀ = 8` and
+  `d₀ = 12` agree within 30 % at each temperature (≥ 2 of the 3 tested). A ratio outside [0.7, 1.43] at ≥ 2
+  temperatures is recorded as a real size dependence of the friction.
+- **F2 (monotone).** α increases with T over the tested bases.
+- **F3 (cross-estimator).** Energy and regression estimates of α agree within 25 % at each temperature.
+- **W1 (stall).** Single dipole, `d₀ = 12`, T = 0.115, L = 64, 4000 time units, 2 runs: the slope of `d²` over
+  `t ∈ [2000, 4000]` is below 25 % of its value over `t ∈ [100, 600]` in both.
+- **W2 (no stall in the larger box).** Same pair at L = 96 (`ρ_nL²/(2πρ_s) = 40.7 > d₀²/4`): no stall — the late
+  slope is at least 50 % of the early one, or the pair annihilates.
+- **W3 (the wind seen directly).** In the W1 runs the momentum of the modes with `|k| > 1`, projected on the
+  initial impulse direction, grows with the impulse lost by the pair, with regression slope in [0.5, 1.2].
+- W is **refuted** if W1 holds and W2 fails (a stall that does not depend on the box), or if W3's slope is
+  below 0.2; it is **supported** if W1, W2 and W3 hold. Anything else is reported as unresolved.
+
+Report only: α(T) against Shukla et al. (2014), Moon et al. (2015) and Kwon et al. (2021); the L = 96 value of α.
+Stated limits as before (one cutoff, two dimensions, classical field); in addition, the torus motion law is used
+throughout (Zhu 2023), and the plane `d²` law only in the Lean companion and as the small-`d/L` limit.

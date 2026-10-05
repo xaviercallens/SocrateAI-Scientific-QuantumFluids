@@ -26,6 +26,9 @@ useful to others in their own right are marked (*).
 | `WassersteinCertificate` (*) | finite LP weak duality for an assignment problem (any cost matrix, any finite index types): a feasible, tight dual certifies a matching optimal without searching the others. Instantiated on the closed-loop project's hand-verified toy example (`docs/designs/CLOSED_LOOP_PREREG.md` C1): the found matching is optimal at cost exactly 7/4; the broken C3 potential is shown infeasible |
 | `MatchingScreening` | the vortex charge density at wavevector `k` bounds every vortex-antivortex pairing: `‖ρ_q(k)‖ ≤ ‖k‖ Σ ‖p_i − m_σi‖` (plane and torus, minimum image), so `‖ρ_q‖/‖k‖` is a certified lower bound on the optimal matching cost (with `WassersteinCertificate`, a two-sided bracket) and some pair is ≥ `‖ρ_q‖/(N‖k‖)` long; the point-vortex Fourier velocity is transverse with `‖v̂‖² = (2π)²‖ρ‖²/‖k‖²`. Certifies the PGPE_ONSAGER_RESULTS diagnostic as geometry. Concrete one-pair instance and negative control |
 | `KTFlow` | Kosterlitz RG flow `u' = 4π³y²`, `y' = (2 − π/u)y` (`u = 1/K`): `H = 2u − π log u − 2π³y²` is EXACTLY conserved; a flow starting at `K > 2/π` with `H > f(π/2)` never reaches `K = 2/π` (trapping, by the invariant + intermediate value theorem, no linearisation), `K` only decreases, and the fugacity never grows on that side; units lemma `K > 2/π ⇔ 2πK > 4` (this programme's `n_s λ² = 4`). Fixed point shown to be a solution (the strict hypothesis is necessary) |
+| `DissipativeVortexDynamics` | dissipative point-vortex model `v = (1−α')v_s − α q ẑ×v_s`: for any skew + gradient flow `d/dt H = −γ‖∇H‖²` whatever the skew part (energy estimator of α for any vortex configuration, plane or torus, independent of `α'`); plane dipole: `|d|² = |d₀|² − 4αt`, lifetime bound, centre speed `(1−α')/|d|` (estimator of `α'`); closed-box phonon wind: `d' = −c(d−a)(d−b)/d` never falls below `b` (stall instead of annihilation). Companion of PGPE_FRICTION_PREREG A1 and PGPE_ALPHAPRIME_PREREG |
+| `EinsteinRelation` | stochastic dissipative pair: the KT pair distribution `|d|^{−K}` carries zero probability current iff `D K = 2α`; in vortex units `η = αT/(2πρ)`; one-dimensional Gibbs-flux identity. Companion of PGPE_EINSTEIN_PREREG |
+| `PairPolarisation` | vortex charge density of pairs: `‖ρ(k)‖ ≤ ‖k‖Σ‖d_i‖`; polarisation form `ρ(k) = i k·P(k)` with remainder `≤ ‖k‖²Σ‖d_i‖²` when `|k·d_i| ≤ 1`; k-independent ceiling of the bound-pair transverse response. Companion of PGPE_DIELECTRIC_PREREG |
 | `GPGalerkin` (*) | truncated Gross–Pitaevskii on any finite mode set: `Q = Σ_q |A_q|² ≥ 0`, mass and energy algebra, the Hamiltonian gradient identity |
 | `MadelungSplit` | `|∇ψ|² = |∇a|² + a²|∇S|²` — the quantum-pressure / hydrodynamic split |
 | `MadelungNSE` | the same objects in the OpenAI Navier–Stokes vocabulary; `∇·(∇φ) = Δφ` in their formalism |
@@ -56,6 +59,9 @@ import Villani
 import WassersteinCertificate
 import MatchingScreening
 import KTFlow
+import DissipativeVortexDynamics
+import EinsteinRelation
+import PairPolarisation
 import Fricke
 import QHFricke
 import TopologicalProtection
