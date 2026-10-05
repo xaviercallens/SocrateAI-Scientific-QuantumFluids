@@ -79,3 +79,31 @@ current-correlator `K`.
 not be fully equilibrated (that is the question of `PGPE_ONSAGER_RESULTS.md`'s registered prediction, evaluated
 on the same runs) — the relation tested here is kinematic and should hold in or out of equilibrium, which is
 itself part of the claim.
+
+
+## Gate D-G1, first run: FAIL as written — and amendment D-A1 (2026-10-05, before the primary data exist)
+
+Result (`data/generated/pgpe/dielectric/DG1.json`, 20 configurations of 12 pairs at T = 0, L = 64):
+
+| | shells `|m|² ≤ 2`: `n_eff` | coherence γ² | `Im n_eff` |
+|---|---|---|---|
+| right after the imprint (20 configurations) | **0.90–0.91** | 0.98–0.99 | ≤ 0.011 |
+| after 20 time units (3 configurations) | 0.96 | 0.996–0.999 | ≤ 0.04 |
+
+The coherence criterion passes at both times and on every shell up to `|m|² = 16` (γ² ≥ 0.977): at T = 0 the
+transverse current **is** the point-vortex term, mode by mode, with the sign convention of the method section.
+The amplitude criterion (`n_eff = 1 ± 0.05`) **fails right after the imprint** and holds after 20 time units.
+The gate as written required both. It is recorded as failed.
+
+Cause, checked on the imprint itself: `round2.imprint` multiplies the field by `[r²/(r² + 2)]^{1/2}` per vortex.
+That factor has a `1/r²` tail, so 24 vortices remove ≈ 23 % of the density of a 64² box before the uniform
+renormalisation restores the norm: the field right after the imprint is a large correlated density disturbance,
+not a point-vortex state. It relaxes by radiating sound; the amplitude relation is restored as it does.
+
+**Amendment D-A1.** The "right after the imprint" clause is dropped — it tested the imprint, not the relation.
+Replacement gate **D-G1′**, on new configurations not yet generated: six configurations of 12 pairs at T = 0
+evolved for 60 time units; pass if `n_eff = 1 ± 0.05` and `γ² ≥ 0.95` on the shells `|m|² ≤ 2`. The values already
+seen at 20 time units (0.96) make a pass likely; that is stated. D-G2 is changed in the same way (pairs imprinted
+into the T = 0.115 state, evolved 60 time units, six configurations), with the same thresholds as before.
+The core form factor used for the primary analysis is the D-G1′ `n_eff(k)`.
+Nothing else in the pre-registration changes; the primary snapshots still do not exist.
