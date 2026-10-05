@@ -75,7 +75,7 @@ def main():
     ap.add_argument("--geom", default="antiparallel", choices=["antiparallel", "dipole"])
     ap.add_argument("--d0", type=float, default=10.0); ap.add_argument("--t-max", type=float, default=400.0)
     ap.add_argument("--N", type=int, default=128); ap.add_argument("--L", type=float, default=64.0)
-    ap.add_argument("--dt-sample", type=float, default=1.0); ap.add_argument("--r-track", type=float, default=1.5)
+    ap.add_argument("--dt-sample", type=float, default=1.0); ap.add_argument("--r-track", type=float, default=3.0)   # 1.5 until amendment A1.2
     ap.add_argument("--d-stop", type=float, default=1.5); ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--imprint", default="v2", choices=["v1", "v2"], help="v1 = round2.imprint (first G1 run); v2 = periodic phase + Bernoulli density")
     a = ap.parse_args(); t0 = time.time()
@@ -110,7 +110,7 @@ def main():
         c = s.run(c, a.dt_sample); t += a.dt_sample
     meta = {"base": a.base, "geom": a.geom, "d0": a.d0, "seed": a.seed, "L": a.L, "N": a.N, "ended": ended, "t_end": t,
             "n_raw_base": n_raw_base, "P_base": P_base.tolist(), "E_imprinted": E0, "drift_E": abs(s.energy(c) - E0) / abs(E0),
-            "pos0": pos.tolist(), "q": q.tolist(), "imprint": a.imprint, "seconds": round(time.time() - t0, 1)}
+            "pos0": pos.tolist(), "q": q.tolist(), "imprint": a.imprint, "r_track": a.r_track, "seconds": round(time.time() - t0, 1)}
     np.savez(a.out, t=np.array(T), R=np.array(R), q=q, n_det=np.array(ND), P=np.array(P), P_hi=np.array(PH), meta=json.dumps(meta))
     print(a.out, {k: meta[k] for k in ("ended", "t_end", "n_raw_base", "drift_E", "seconds")}, flush=True)
 

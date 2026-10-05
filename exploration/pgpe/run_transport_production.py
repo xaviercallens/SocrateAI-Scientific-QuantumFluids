@@ -13,6 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]; T = ROOT / "data/generated/pgpe/transport"
 BASES = {"e0.60": ROOT / "data/generated/pgpe/sweep/e0.60_s11_t4000_final.npy", "e0.70": T / "base_e0.70_final.npy",
          "e0.80": T / "base_e0.80_final.npy", "e0.90s12": ROOT / "data/generated/pgpe/sweep/e0.90_s12_t4000_final.npy"}
+RERUN_WARM = True      # amendment A1.2 (2026-10-05): the T >= 0.22 runs are repeated as prodB_* with r_track = 3.0
 jobs = []
 for sd in (1, 2, 3):
     for d in (8, 12):
@@ -24,6 +25,8 @@ for sd in (1, 2):
 
 def run(job):
     name, args = job; out = T / f"{name}.npz"
+    if RERUN_WARM and not name.startswith(("prod_e0.60", "W1_")):
+        name = name.replace("prod_", "prodB_"); out = T / f"{name}.npz"       # amendment A1.2: tracking radius 3.0
     if out.exists():
         return f"{name}: already done"
     cmd = [sys.executable, str(ROOT / "exploration/pgpe/vortex_transport.py"), args[0], str(out)] + args[1:] + ["--imprint", "v2"]

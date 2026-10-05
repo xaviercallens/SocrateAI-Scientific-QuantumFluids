@@ -200,3 +200,23 @@ momentum 60.2 against `2πnd = 62.8` (4 % below; was 49.8), peak density 1.007 (
 G1 is re-run with `imprint_v2`, **thresholds unchanged**. If it fails again on (i), the measured T = 0 value of
 `|α̂|` becomes the stated floor of the campaign, and a temperature enters the friction and Einstein tests only if
 its `α̂` exceeds five times that floor.
+
+
+## Amendment A1.2 (2026-10-05, 22:30): tracking radius — the warm production runs produced no data and are repeated
+
+All 26 production runs finished. At T = 0.115 they ran as designed (5 of 6 to 1500–2000 time units, both W1 runs
+to 4000). **At the three warmer bases every run ended with `track_lost` within 2–395 time units** (T = 0.220:
+35–395; T = 0.353: 2–47; T = 0.458: 2–10), i.e. mostly inside the 100-time-unit settling window: no estimate
+exists, and none was computed, at those temperatures.
+
+Cause (reproduced on one run): the continuity rule "displacement ≤ 1.5 per sample" is too tight when the
+thermal jitter of the detected core position grows. Per-sample displacements: median 0.28 / 95th percentile 0.60 at
+T = 0.115, but 0.42 / 0.98 at T = 0.220 and 0.45 / 1.01 at T = 0.353, with the largest steps just below 1.5; the
+"lost" vortex was the only same-sign detection nearby, 1.6 away, with four detections in the box. The gates
+validated the tracker at T = 0 and T = 0.115 only; this was not anticipated.
+
+**Change:** tracking radius 3.0 (nearest same-sign detection). Nothing else changes: same bases, seeds,
+geometry, imprint, estimators, criteria. The 18 warm runs are repeated as `prodB_*`; the T = 0.115 runs and W1
+are kept (the radius only matters at a loss). The risk that comes with a larger radius — capturing a thermal
+vortex of the same sign — is monitored by the number of detections per sample, which is saved; a run in which more
+than 4 vortices are detected in over 5 % of the samples is flagged in the results.
