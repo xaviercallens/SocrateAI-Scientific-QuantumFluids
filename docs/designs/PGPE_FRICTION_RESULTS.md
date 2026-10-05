@@ -1,4 +1,4 @@
-# Results: friction known-answer gate (KA) — PASS, narrowly, with a size dependence the design did not expect
+# Results: friction known-answer gate (KA) — **VOID (verdict withdrawn 2026-10-05, see the note at the end)**; originally reported as: PASS, narrowly, with a size dependence the design did not expect
 
 Pre-registration `PGPE_FRICTION_PREREG.md` (c9cc4c1, disclosure b17c887). Base `sweep/e0.60_s11_t4000`
 (T = 0.115, `T/T_BKT ≈ 0.14`, no thermal vortices), tracker `exploration/pgpe/dipole_decay.py`, coarse-graining
@@ -31,3 +31,13 @@ Rorai, Sreenivasan & Fisher 2013) or a size-dependent effective friction would p
 4. Save vortex positions (not only the separation), so that the same runs give α′ (pair translation speed) and
    the diffusion needed for the Einstein-relation test — hypotheses H03 and H02 of
    `AUTORESEARCH_SELECTION_2026-10.md`.
+
+
+## Withdrawal (2026-10-05, CLAIM-078)
+
+The T = 0 control of amendment A1 (gate G1) showed that the instrument used for this gate cannot support its
+verdict: single dipoles were imprinted with a theta-function phase that is not periodic (a phase step of `2πd/L`
+along a whole line of the box), the amplitude factor of the imprint launches sound that changes pair separations
+at T = 0 by as much as the thermal effect reported here, and the coarse-grained detector is biased. The numbers in
+the table above are kept as a record; **the 'PASS', the size dependence and the stall are not results.** The
+replacement is gate G2 of amendment A1 with the corrected imprint (A1.1).

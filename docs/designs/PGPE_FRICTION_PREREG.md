@@ -157,3 +157,46 @@ Criteria (replace F1–F3):
 Report only: α(T) against Shukla et al. (2014), Moon et al. (2015) and Kwon et al. (2021); the L = 96 value of α.
 Stated limits as before (one cutoff, two dimensions, classical field); in addition, the torus motion law is used
 throughout (Zhu 2023), and the plane `d²` law only in the Lean companion and as the small-`d/L` limit.
+
+
+## Gate G1, first run: FAIL — and amendment A1.1 (2026-10-05; instrument fix, thresholds unchanged)
+
+Gate G0 passed on its second attempt (the first failed on a defect of the synthetic generator, recorded in
+`data/generated/pgpe/transport/G0_synthetic_attempt1_FAIL.json`; the analysis now keeps a track only while every
+vortex and antivortex are at least 4 apart). Gate G1 (`G1_result_attempt1_FAIL.json`, T = 0, 400 time units):
+
+| clause | result |
+|---|---|
+| (i) no friction, `|α̂| ≤ 10⁻³` | **FAIL**: energy estimator 1.02×10⁻³; the two pair separations drift 9.67 → 10.23 |
+| (ii) point-vortex translation, `1 − α̂′ ∈ [0.96, 1.04]` | **PASS: 1.0021** |
+| (iii) no diffusion, `η̂ ≤ 2×10⁻⁵` | PASS (the residual mean square is bounded, ≈ 0.1, not growing) |
+| (iv) single dipole: field momentum `2πnd` within 5 %, constant | **FAIL**: constant to 2×10⁻⁵, but 0.71–0.91 of `2πnd`; the separation shrinks 9.57 → 8.74 at T = 0 |
+
+**Cause: the imprint, in two ways.**
+1. *Density.* `round2.imprint`'s amplitude factor `[r²/(r²+2)]^{1/2}` per vortex has a `1/r²` tail four times the
+   quasi-static (Bernoulli) depletion; the surplus is a sound wave that stays in the periodic box and moves the
+   vortices. At T = 0 it changes pair separations by 0.6–0.8 in 400 time units — an apparent `|α|` of 0.007–0.010
+   on the `d²` law, **as large as the thermal friction reported at T = 0.115**.
+2. *Phase, single dipoles only.* The theta-function product is periodic only when `Σ q r ∈ L Z²`. For a single
+   dipole of moment `d x̂` it jumps by the constant `2πd/L` across one boundary of the box (≈ 1 rad for `d = 10`,
+   L = 64): a phase step along a whole line, which decays into sound. Round 3 guarded against this (its
+   configurations have zero moment); **the single-dipole tracker of the original design did not.**
+
+**Consequences for what was already reported.**
+- The KA gate of the original design (CLAIM-075: "PASS, narrowly") used single dipoles imprinted with a phase seam,
+  a biased detector, and a density disturbance whose effect at T = 0 is as large as the signal. **Its verdict is
+  withdrawn: void.** Gate G2 of amendment A1 (zero-moment geometry, raw detection) replaces it.
+- The stall of one of those runs, which motivated hypothesis W, comes from the same flawed imprint. W stays a
+  registered hypothesis (its argument does not rest on that run) but has **no supporting observation**.
+- The α = 0.0056 of the round-3 arm (zero moment, raw detection, old amplitude factor) is subject to the density
+  effect only: the T = 0 control with that factor gives an energy-estimator floor of 1.0×10⁻³. G2's window
+  [0.0028, 0.0112] is kept.
+
+**Amendment A1.1 (instrument).** `vortex_transport.imprint_v2`: (a) the jump of the theta-function phase across
+each boundary is measured and removed by a uniform phase gradient (the torus counterflow), so that any
+configuration is periodic; (b) amplitude `[1/(1 + |v|²/2)]^{1/2}`, `v` the velocity of the imprinted phase —
+zero at the cores, Bernoulli far from them. Checked statically before filing: single dipole `d = 10`, field
+momentum 60.2 against `2πnd = 62.8` (4 % below; was 49.8), peak density 1.007 (was 1.087).
+G1 is re-run with `imprint_v2`, **thresholds unchanged**. If it fails again on (i), the measured T = 0 value of
+`|α̂|` becomes the stated floor of the campaign, and a temperature enters the friction and Einstein tests only if
+its `α̂` exceeds five times that floor.

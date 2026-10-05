@@ -35,6 +35,33 @@ def detect(s: PGPE, c: np.ndarray):
     return np.column_stack([(ii + u) * s.dx, (jj + v) * s.dx]) % s.L, qg[ii, jj]
 
 
+def imprint_v2(s: PGPE, c: np.ndarray, pos: np.ndarray, q: np.ndarray) -> np.ndarray:
+    """Imprint with (a) a periodic phase for ANY dipole moment and (b) the quasi-static (Bernoulli) density.
+
+    (a) The theta-function product of round2.imprint is periodic only when sum q r lies in L Z^2; otherwise it
+        jumps by a constant across a box boundary (2 pi D_x / L across Y for tau = i). The jump across each
+        boundary is measured on the phase factor itself and removed by a uniform phase gradient (the uniform
+        counterflow of the torus), minimal sector.
+    (b) Amplitude sqrt(1/(1 + |v|^2/2)) with v the velocity of the imprinted phase: zero at the cores, and
+        1 - v^2/2 (Bernoulli, c = 1) far from them, so that a neutral configuration removes little density
+        (round2.imprint's per-vortex factor r^2/(r^2+2) has a 1/r^2 tail: 21 % of the box for 24 vortices)."""
+    from round2 import theta1
+    x = np.arange(s.N) * s.dx; X, Y = np.meshgrid(x, x, indexing="ij")
+
+    def factor(Zs):
+        ph = np.ones(Zs.shape, complex)
+        for (xj, yj), qj in zip(pos, q):
+            t = theta1(np.pi * (Zs - (xj + 1j * yj)) / s.L); u = t / (np.abs(t) + 1e-300); ph = ph * (u if qj > 0 else np.conj(u))
+        return ph
+    Z = X + 1j * Y; ph = factor(Z)
+    jx = np.angle(np.mean(factor(Z + s.L) * np.conj(ph))); jy = np.angle(np.mean(factor(Z + 1j * s.L) * np.conj(ph)))
+    ph = ph * np.exp(-1j * (jx * X + jy * Y) / s.L)
+    vx = np.angle(np.roll(ph, -1, 0) * np.conj(np.roll(ph, 1, 0))) / (2 * s.dx); vy = np.angle(np.roll(ph, -1, 1) * np.conj(np.roll(ph, 1, 1))) / (2 * s.dx)
+    amp = np.sqrt(1.0 / (1.0 + 0.5 * (vx ** 2 + vy ** 2)))
+    c2 = s.modes(s.psi(c) * ph * amp)
+    return c2 * np.sqrt(s.norm(c) / s.norm(c2))
+
+
 def momentum(s: PGPE, c: np.ndarray, kmin: float = 0.0) -> np.ndarray:
     w = np.abs(c) ** 2 * s.dx ** 2 / s.N ** 2
     if kmin > 0:
@@ -50,6 +77,7 @@ def main():
     ap.add_argument("--N", type=int, default=128); ap.add_argument("--L", type=float, default=64.0)
     ap.add_argument("--dt-sample", type=float, default=1.0); ap.add_argument("--r-track", type=float, default=1.5)
     ap.add_argument("--d-stop", type=float, default=1.5); ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--imprint", default="v2", choices=["v1", "v2"], help="v1 = round2.imprint (first G1 run); v2 = periodic phase + Bernoulli density")
     a = ap.parse_args(); t0 = time.time()
     s = PGPE(N=a.N, L=a.L); rng = np.random.default_rng(a.seed)
     if a.base == "T0":
@@ -62,7 +90,7 @@ def main():
     else:
         x0, y0 = rng.uniform(0, a.L, 2)
         pos = np.mod(np.array([[x0 + a.d0 / 2, y0], [x0 - a.d0 / 2, y0]]), a.L); q = np.array([1, -1])
-    P_base = momentum(s, c0); c = imprint(s, c0, pos, q); E0 = s.energy(c)
+    P_base = momentum(s, c0); c = (imprint if a.imprint == 'v1' else imprint_v2)(s, c0, pos, q); E0 = s.energy(c)
     T, R, ND, P, PH = [], [], [], [], []; last = pos.copy(); t = 0.0; ended = "t_max"
     while True:
         dp, dq = detect(s, c); cur = np.full_like(last, np.nan)
@@ -82,7 +110,7 @@ def main():
         c = s.run(c, a.dt_sample); t += a.dt_sample
     meta = {"base": a.base, "geom": a.geom, "d0": a.d0, "seed": a.seed, "L": a.L, "N": a.N, "ended": ended, "t_end": t,
             "n_raw_base": n_raw_base, "P_base": P_base.tolist(), "E_imprinted": E0, "drift_E": abs(s.energy(c) - E0) / abs(E0),
-            "pos0": pos.tolist(), "q": q.tolist(), "seconds": round(time.time() - t0, 1)}
+            "pos0": pos.tolist(), "q": q.tolist(), "imprint": a.imprint, "seconds": round(time.time() - t0, 1)}
     np.savez(a.out, t=np.array(T), R=np.array(R), q=q, n_det=np.array(ND), P=np.array(P), P_hi=np.array(PH), meta=json.dumps(meta))
     print(a.out, {k: meta[k] for k in ("ended", "t_end", "n_raw_base", "drift_E", "seconds")}, flush=True)
 
