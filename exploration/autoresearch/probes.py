@@ -116,7 +116,7 @@ def slope_arm(name, L=64.0, t_max=600.0):
     for i in range(len(t) - 1):
         if t[i + 1] > t_max:
             break
-        p0, q0, p1, q1 = POS[i], Q[i], POS[i + 1], Q[i + 1]
+        p0, q0, p1, q1 = np.asarray(POS[i], float), np.asarray(Q[i], int), np.asarray(POS[i + 1], float), np.asarray(Q[i + 1], int)   # npz object arrays
         if len(q0) < 2 or len(q1) < 2:
             continue
         v0, v1 = pv_velocity(p0, q0, L), pv_velocity(p1, q1, L)
