@@ -1,8 +1,12 @@
 # Pre-registration: thermal mutual friction α(T) of a single vortex dipole in the microcanonical 2D PGPE
 
 Filed 2026-10-05. The known-answer (KA) runs below were launched as pilots of the tracker a few hours before this
-file; **none of them has finished and no KA number has been read** at the time of filing. Production runs do not
-exist yet.
+file. **Disclosure (corrected in the same day, before any further KA result):** one KA run had already ended when
+this file was first committed (c9cc4c1) and its output was seen: `d₀ = 12`, placement 1, track lost at `t = 92`
+(a thermal pair appeared and the 3-unit tracking radius dropped the track), fitted slope of the wrong sign
+(α = −0.06, `d` drifting 10 → 12 under imprint sound). It is excluded from the gate as a tracking failure of the
+first protocol, and rerun with tracking radius 8 (`_r8`), which counts. The other three KA runs had not finished.
+Production runs do not exist yet.
 
 ## Why (literature gate, done first)
 
