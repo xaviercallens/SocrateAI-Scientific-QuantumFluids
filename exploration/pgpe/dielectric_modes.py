@@ -100,6 +100,37 @@ def gate(kind: str):
     print("checks", chk, "->", kind, "PASS" if res["PASS"] else "FAIL")
 
 
+def gate_relaxed(kind: str, t_relax: float = 60.0, n_cfg: int = 6):
+    """Amendment D-A1: the relation is tested on configurations evolved for t_relax after the imprint
+    (new random configurations: a different seed stream from the first D-G1 run)."""
+    OUT.mkdir(parents=True, exist_ok=True); s = PGPE(N=128, L=64.0); rng = np.random.default_rng(2026100560)
+    if kind == "DG1p":
+        c0 = np.zeros((128, 128), complex); c0[0, 0] = 128 ** 2; T, f_known = 1.0, 0.0
+    else:
+        c0 = np.load(ROOT / "data/generated/pgpe/sweep/e0.60_s11_t4000_final.npy")
+        b = json.loads((ROOT / "data/generated/pgpe/sweep/e0.60_s11_t4000.json").read_text()); T, f_known = b["T"], 1 - b["ns_over_n"]
+    norm = T * s.L ** 2; acc = {m2: ([], []) for m2 in SHELLS}; ndet = []
+    for i in range(n_cfg):
+        pos, q = neutral_pairs(s.L, 6, rng); c = s.run(imprint(s, c0, pos, q), t_relax); dp, dq = detect(s, c); ndet.append(len(dq))
+        for m2, (JT, X) in mode_amplitudes(s, c, dp, dq).items():
+            acc[m2][0].append(JT); acc[m2][1].append(X)
+        print("configuration", i, "detected", len(dq), flush=True)
+    r = fit(acc, norm); low = [1, 2]
+    ne = float(np.mean([r[m]["n_eff_re"] for m in low])); co = float(np.min([r[m]["coherence"] for m in low])); fres = float(np.mean([r[m]["R_res"] for m in low]))
+    if kind == "DG1p":
+        chk = {"n_eff_1_pm_0.05": abs(ne - 1) <= 0.05, "coherence_ge_0.95": co >= 0.95}
+    else:
+        chk = {"n_eff_1_minus_f_pm_0.07": abs(ne - (1 - f_known)) <= 0.07, "residual_equals_phonon_fraction_30pct": abs(fres / f_known - 1) <= 0.30}
+    res = {"kind": kind, "t_relax": t_relax, "T": T, "f_known": f_known, "shells": r, "n_detected": ndet, "n_eff_low_shells": ne,
+           "min_coherence_low_shells": co, "residual_low_shells": fres, "checks": chk, "PASS": bool(all(chk.values()))}
+    (OUT / f"{kind}.json").write_text(json.dumps(res, indent=1, default=float))
+    print({m: (round(r[m]["n_eff_re"], 3), round(r[m]["n_eff_im"], 3), round(r[m]["coherence"], 3), round(r[m]["R_res"], 4)) for m in r})
+    print("n_eff(low shells)", round(ne, 3), "coherence", round(co, 3), "residual", round(fres, 4), "f_known", round(f_known, 4))
+    print("checks", chk, "->", kind, "PASS" if res["PASS"] else "FAIL")
+
+
 if __name__ == "__main__":
     if sys.argv[1] in ("DG1", "DG2"):
         gate(sys.argv[1])
+    elif sys.argv[1] in ("DG1p", "DG2p"):
+        gate_relaxed(sys.argv[1])

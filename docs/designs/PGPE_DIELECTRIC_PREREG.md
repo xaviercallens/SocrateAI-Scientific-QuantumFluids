@@ -96,7 +96,7 @@ The amplitude criterion (`n_eff = 1 ± 0.05`) **fails right after the imprint** 
 The gate as written required both. It is recorded as failed.
 
 Cause, checked on the imprint itself: `round2.imprint` multiplies the field by `[r²/(r² + 2)]^{1/2}` per vortex.
-That factor has a `1/r²` tail, so 24 vortices remove ≈ 23 % of the density of a 64² box before the uniform
+That factor has a `1/r²` tail, so 24 vortices remove 21 % of the density of a 64² box (computed on five configurations) before the uniform
 renormalisation restores the norm: the field right after the imprint is a large correlated density disturbance,
 not a point-vortex state. It relaxes by radiating sound; the amplitude relation is restored as it does.
 
