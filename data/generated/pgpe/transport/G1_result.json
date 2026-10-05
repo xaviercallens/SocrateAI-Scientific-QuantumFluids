@@ -1,0 +1,78 @@
+{
+ "estimates": {
+  "one_minus_alpha_prime": 0.9986077105248896,
+  "alpha_regression": 0.00019622575817287663,
+  "alpha_energy": 0.00041279484425519805,
+  "eta": -5.819483040038917e-07,
+  "msd_exponent": 0.21186943299285763,
+  "msd_offset": 0.005276444348582166,
+  "one_minus_alpha_prime_se": NaN,
+  "alpha_regression_se": NaN,
+  "alpha_energy_se": NaN,
+  "eta_se": NaN,
+  "msd_exponent_se": NaN,
+  "msd_offset_se": NaN,
+  "n_blocks": 2,
+  "lag": 10,
+  "lags_eta": [
+   5,
+   10,
+   20,
+   40,
+   80,
+   120,
+   160,
+   240,
+   320,
+   400
+  ],
+  "msd": [
+   0.0027141092664762032,
+   0.00414480388477214,
+   0.0054773475631314395,
+   0.005331205262946037,
+   0.004175827908117984,
+   0.005516170423969163,
+   NaN,
+   NaN,
+   NaN,
+   NaN
+  ]
+ },
+ "tracks": [
+  {
+   "file": "G1_T0_antiparallel_d10.npz",
+   "ended": "t_max",
+   "t_end": 400.0,
+   "drift_E": 5.543276554284786e-10,
+   "n_raw_base": 0,
+   "n_det_mean": 4.0,
+   "d_first": [
+    9.793,
+    9.798
+   ],
+   "d_last": [
+    10.33,
+    10.332
+   ]
+  }
+ ],
+ "dipole": {
+  "d_first": 9.815149649035202,
+  "d_last": 9.820889684106017,
+  "P_first": 60.18338295935506,
+  "P_last": 60.18338297555057,
+  "P_over_2pi_n_d_min_max": [
+   0.9617591939041958,
+   0.9903495553711442
+  ],
+  "P_ptp_rel": 2.691027566804026e-10
+ },
+ "checks": {
+  "i_no_friction_|alpha|<=1e-3": true,
+  "ii_point_vortex_translation_0.96-1.04": true,
+  "iii_no_diffusion_eta<=2e-5": true,
+  "iv_momentum_2pi_n_d_within_5pct_and_constant": true
+ },
+ "PASS": true
+}
