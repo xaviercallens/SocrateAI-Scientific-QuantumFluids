@@ -107,3 +107,46 @@ seen at 20 time units (0.96) make a pass likely; that is stated. D-G2 is changed
 into the T = 0.115 state, evolved 60 time units, six configurations), with the same thresholds as before.
 The core form factor used for the primary analysis is the D-G1′ `n_eff(k)`.
 Nothing else in the pre-registration changes; the primary snapshots still do not exist.
+
+
+## Gates D-G1′ and D-G2′: both FAIL — and amendment D-A2 (2026-10-05, before the primary snapshots exist)
+
+| gate | result | verdict |
+|---|---|---|
+| D-G1′ (T = 0, 6 configurations, 60 time units) | `n_eff = 0.94` on `|m|² ≤ 2` (0.96, 0.92), γ² = 0.989 | **FAIL** (`1 ± 0.05` required) |
+| D-G2′ (T = 0.115, same) | `n_eff = 0.917` against `1 − f = 0.973` (within 0.07); residual power 0.18 against the state's own 0.027 | **FAIL** (residual) |
+
+Three gate runs have now failed on the amplitude or the residual while the coherence passed every time
+(γ² ≥ 0.977 on all shells, all runs). Two causes, one of which is a mistake in the known answer itself.
+
+1. **The known answer `n_eff = 1` was wrong for pairs of finite size.** The current is `ρ v`, and the density is
+   depleted where the flow is fast (Bernoulli, `δρ/ρ = −v²/2`): a pair of size `d` carries less current than
+   two point vortices. A static calculation (single pair, Bernoulli-imprinted, T = 0, no dynamics; field momentum
+   over `2πnd`) gives the form factor
+   `μ_B(d)` = 0.69, 0.74, 0.81, 0.86, 0.89, 0.91, 0.94, 0.96, 0.97, 0.98 for
+   `d` = 1.5, 2, 3, 4, 5, 6, 8, 10, 12, 16. For the pair sizes of the gates (4–10) its `d²`-weighted mean is
+   ≈ 0.94 — the value measured. The dynamic T = 0 control of the transport campaign (gate G1, single pair,
+   `d ≈ 9.8`) independently gives momentum/(2πnd) = 0.96–0.99.
+2. **The residual of D-G2′ is imprint sound**: those runs still used `round2.imprint` (21 % density disturbance).
+
+**Amendment D-A2.**
+- *Gates, new configurations, `vortex_transport.imprint_v2`, 30 time units of evolution, coherence ≥ 0.95 on
+  `|m|² ≤ 2` throughout:*
+  - **D-G1″ (T = 0):** three sets with a single imprinted pair size each, `d = 5, 8, 14` (4 pairs = 2 twins, 4
+    configurations per size). Known answer, parameter-free: `n_eff = M ≡ Σ μ_B(d_i) d_i² / Σ d_i²` with `d_i` the
+    pair sizes found by minimum-cost matching of the detected vortices at the time of measurement. Pass if
+    `|n_eff − M| ≤ 0.03` for each of the three sets.
+  - **D-G2″ (T = 0.115):** `d = 10`, 4 pairs, 4 configurations: `n_eff = (1 − f) M ± 0.05`, and the residual
+    power on `|m|² ≤ 2` within [0.7, 2.0] of the base state's own transverse power on the same shells.
+- *Primary prediction D3, changed before the data exist.* The candidates become four: `n_eff = 1`; `1 − f`;
+  `n_s/n`; and **`(1 − f) M`**, with `M` computed from the matched pair sizes of each run's snapshots and the
+  static `μ_B(d)`. The registered prediction is now **`(1 − f) M`**, within 0.1, in at least 5 of 6 runs. The
+  earlier registered prediction (`1 − f`) is kept as a rival; its replacement is motivated by gate data at T = 0,
+  not by any look at the primary data.
+- D1, D2 and D4 are unchanged, except that D4's polarisability uses `μ_B(d)² d²` in place of `d²`.
+- If D-G1″ fails, the form-factor reading is wrong, D3 reverts to the three original candidates with no
+  registered favourite, and that is reported.
+
+Stated plainly: this is the third amendment of this pre-registration's gates in one day. Each followed a failed
+gate, each failure is on file with its data, and the coherence criterion — the claim that the relation exists
+mode by mode — has not been touched and has passed every time. What moved is the amplitude's known answer.

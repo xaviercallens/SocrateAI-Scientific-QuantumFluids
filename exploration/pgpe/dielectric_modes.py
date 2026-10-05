@@ -129,7 +129,94 @@ def gate_relaxed(kind: str, t_relax: float = 60.0, n_cfg: int = 6):
     print("checks", chk, "->", kind, "PASS" if res["PASS"] else "FAIL")
 
 
+# ---- amendment D-A2: Bernoulli form factor of a pair, matched pair sizes, gates D-G1'' and D-G2'' ----------------
+MU_B_D = np.array([1.5, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 1e9])
+MU_B = np.array([0.688, 0.737, 0.810, 0.858, 0.891, 0.913, 0.942, 0.958, 0.968, 0.980, 0.986, 1.0])
+#   static calculation (single Bernoulli-imprinted pair at T = 0, field momentum / (2 pi n d)), reproduced by mu_B_table()
+
+
+def mu_B(d):
+    return np.interp(d, MU_B_D[:-1], MU_B[:-1], left=MU_B[0], right=MU_B[-2])
+
+
+def mu_B_table():
+    from vortex_transport import imprint_v2, momentum
+    s = PGPE(N=128, L=64.0); c0 = np.zeros((128, 128), complex); c0[0, 0] = 128 ** 2; out = {}
+    for d in MU_B_D[:-1]:
+        pos = np.array([[30.13 + d / 2, 20.31], [30.13 - d / 2, 20.31]]); c = imprint_v2(s, c0, pos, np.array([1, -1]))
+        out[float(d)] = float(np.hypot(*momentum(s, c)) / (2 * np.pi * d))
+    return out
+
+
+def matched_sizes(pos, q, L):
+    """Pair sizes from the minimum-cost matching of + to - vortices (minimum-image distances)."""
+    from scipy.optimize import linear_sum_assignment
+    a, b = pos[q > 0], pos[q < 0]
+    if len(a) == 0 or len(b) == 0:
+        return np.zeros(0)
+    d = a[:, None, :] - b[None, :, :]; d -= L * np.round(d / L); C = np.sqrt((d ** 2).sum(-1))
+    ri, ci = linear_sum_assignment(C)
+    return C[ri, ci]
+
+
+def fixed_size_pairs(L, n_half, d, rng, min_sep=None):
+    """2 n_half pairs of the same size d (twins of opposite moment), every vortex at least min_sep from every
+    vortex of another pair."""
+    min_sep = d if min_sep is None else min_sep
+    for _ in range(10000):
+        pos, q = [], []
+        for _h in range(n_half):
+            ang = rng.uniform(0, 2 * np.pi); dv = 0.5 * d * np.array([np.cos(ang), np.sin(ang)])
+            for sgn in (1, -1):
+                c0 = rng.uniform(0, L, 2); pos += [c0 + sgn * dv, c0 - sgn * dv]; q += [1, -1]
+        pos = np.mod(np.array(pos), L); ok = True
+        for i in range(len(pos)):
+            for j in range(i + 1, len(pos)):
+                if j == i + 1 and i % 2 == 0:
+                    continue
+                dd = pos[i] - pos[j]; dd -= L * np.round(dd / L)
+                if np.hypot(*dd) < min_sep:
+                    ok = False
+        if ok:
+            return pos, np.array(q)
+    raise RuntimeError("could not place the pairs")
+
+
+def gate_formfactor(kind: str, t_relax: float = 30.0, n_cfg: int = 4):
+    from vortex_transport import imprint_v2
+    OUT.mkdir(parents=True, exist_ok=True); s = PGPE(N=128, L=64.0); rng = np.random.default_rng(202610052)
+    if kind == "DG1pp":
+        c0 = np.zeros((128, 128), complex); c0[0, 0] = 128 ** 2; T, f_known, sizes, tol = 1.0, 0.0, (5.0, 8.0, 14.0), 0.03
+    else:
+        c0 = np.load(ROOT / "data/generated/pgpe/sweep/e0.60_s11_t4000_final.npy")
+        b = json.loads((ROOT / "data/generated/pgpe/sweep/e0.60_s11_t4000.json").read_text()); T, f_known, sizes, tol = b["T"], 1 - b["ns_over_n"], (10.0,), 0.05
+    norm = T * s.L ** 2; out = {}; ok_all = True
+    base = fit({m2: ([mode_amplitudes(s, c0, np.zeros((0, 2)), np.zeros(0))[m2][0]], [np.zeros(len(SHELLS[m2]))]) for m2 in SHELLS}, norm)
+    for d in sizes:
+        acc = {m2: ([], []) for m2 in SHELLS}; num = den = 0.0; ndet = []
+        for i in range(n_cfg):
+            pos, q = fixed_size_pairs(s.L, 2, d, rng, min_sep=max(d, 8.0)); c = s.run(imprint_v2(s, c0, pos, q), t_relax)
+            dp, dq = detect(s, c); ndet.append(len(dq)); ds = matched_sizes(dp, dq, s.L); num += float((mu_B(ds) * ds ** 2).sum()); den += float((ds ** 2).sum())
+            for m2, (JT, X) in mode_amplitudes(s, c, dp, dq).items():
+                acc[m2][0].append(JT); acc[m2][1].append(X)
+        r = fit(acc, norm); low = [1, 2]
+        ne = float(np.mean([r[m]["n_eff_re"] for m in low])); co = float(np.min([r[m]["coherence"] for m in low])); fres = float(np.mean([r[m]["R_res"] for m in low]))
+        M = num / den; pred = (1 - f_known) * M; chk = {"n_eff_matches_prediction": abs(ne - pred) <= tol, "coherence_ge_0.95": co >= 0.95}
+        if kind == "DG2pp":
+            fb = float(np.mean([base[m]["R_T"] for m in low])); chk["residual_within_[0.7,2.0]_of_base"] = 0.7 <= fres / fb <= 2.0
+            out[str(d)] = {"base_R_T_low": fb}
+        out.setdefault(str(d), {}).update({"n_eff": ne, "M": M, "predicted": pred, "coherence": co, "residual": fres, "n_detected": ndet, "shells": r, "checks": chk})
+        ok_all = ok_all and all(chk.values())
+        print(f"d = {d}: n_eff = {ne:.3f}, predicted (1-f) M = {pred:.3f} (M = {M:.3f}), coherence {co:.3f}, residual {fres:.4f}, detected {ndet}, checks {chk}", flush=True)
+    res = {"kind": kind, "T": T, "f_known": f_known, "sets": out, "PASS": bool(ok_all)}
+    (OUT / f"{kind}.json").write_text(json.dumps(res, indent=1, default=float)); print("->", kind, "PASS" if ok_all else "FAIL")
+
+
 if __name__ == "__main__":
+    if sys.argv[1] in ("DG1pp", "DG2pp"):
+        gate_formfactor(sys.argv[1]); sys.exit(0)
+    if sys.argv[1] == "MU_B":
+        print(mu_B_table()); sys.exit(0)
     if sys.argv[1] in ("DG1", "DG2"):
         gate(sys.argv[1])
     elif sys.argv[1] in ("DG1p", "DG2p"):
