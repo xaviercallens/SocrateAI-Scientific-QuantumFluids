@@ -150,3 +150,44 @@ Three gate runs have now failed on the amplitude or the residual while the coher
 Stated plainly: this is the third amendment of this pre-registration's gates in one day. Each followed a failed
 gate, each failure is on file with its data, and the coherence criterion — the claim that the relation exists
 mode by mode — has not been touched and has passed every time. What moved is the amplitude's known answer.
+
+
+## Gates D-G1″ and D-G2″: results, and the state of the pre-registration going into the primary data (2026-10-05)
+
+`data/generated/pgpe/dielectric/DG1pp.json`, `DG2pp.json` (corrected imprint, 30 time units, 4 configurations each;
+all imprinted vortices detected in every configuration).
+
+| gate | pair size | coherence γ² | `n_eff` measured | predicted `(1 − f) M` | verdict |
+|---|---|---|---|---|---|
+| D-G1″, T = 0 | 5 | 1.000 | 0.922 | 0.882 | **FAIL** (off by 0.040; tolerance 0.03) |
+| | 8 | 1.000 | 0.971 | 0.942 | pass (0.029) |
+| | 14 | 1.000 | 0.991 | 0.974 | pass (0.017) |
+| D-G2″, T = 0.115 | 10 | 0.994 | 0.934 | 0.932 | amplitude passes; **residual FAILS** (2.5 × the base state's transverse power; ≤ 2.0 required) |
+
+Both gates fail as written. What they establish and what they do not:
+
+- **Established at T = 0, with a clean imprint:** the transverse current is the point-vortex term mode by mode —
+  coherence 1.000 and residual power 10⁻⁴ on the shells `|m|² ≤ 2`, real coefficient. The first-run failures of this
+  criterion's companions were imprint artefacts.
+- **Established:** the coefficient depends on pair size and tends to 1 for large pairs (0.922, 0.971, 0.991 at
+  `d` = 5, 8, 14), and falls slowly with `k` (by ≈ 0.06 from `|m|² = 1` to 16).
+- **Not established:** the static Bernoulli form factor `μ_B(d)` as a quantitative model — it is low by 0.02–0.04
+  at every size.
+- **The residual criterion was mis-specified.** In D-G2″ the vortex term is 500 times the phonon term
+  (`R_T^v ≈ 16.8` against 0.034), so a coherence of 0.994 leaves a residual of 0.08 by itself; requiring the
+  residual to equal the phonon background within a factor 2 was not a test the configuration could pass.
+  Whether that 0.6 % is position jitter of the detected vortices in the thermal field or a genuine
+  density–vorticity cross term is not decided here.
+
+**Consequences, by the rules already written (no further amendment):**
+- By the fallback clause of D-A2, **D3 reverts to the three original candidates (`1`, `1 − f`, `n_s/n`) with no
+  registered favourite.** `(1 − f) M` is computed and reported, with `μ_B` and with the dynamic values measured
+  here, as exploratory.
+- **D4 reverts to its original form** (`Σ d²/2`); the form-factor-weighted version is report-only.
+- **D1 and D2 are unchanged** and are the pre-registered claims that the primary data will test: the relation
+  exists mode by mode (γ² ≥ 0.4 on every shell in ≥ 5 of 6 runs) with one real coefficient (k-dependence within
+  a factor 1.25, after division by the T = 0 `k`-dependence measured in D-G1″ at `d = 8`).
+- The primary snapshots did not exist when this section was written (first batch at t = 12 800 of 13 500).
+
+Gate record of this pre-registration: D-G1 fail, D-G1′ fail, D-G2′ fail, D-G1″ fail (one of three sizes), D-G2″
+fail (residual). The coherence criterion passed in all five.
