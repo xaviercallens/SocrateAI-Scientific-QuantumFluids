@@ -73,6 +73,9 @@ lean_lib WassersteinCertificate
 lean_lib MatchingScreening
 
 @[default_target]
+lean_lib KTFlow
+
+@[default_target]
 lean_lib Fricke
 
 @[default_target]
