@@ -68,8 +68,9 @@ same defect, in milder form, that admission removes in its strong form.
   the box-scale vortex charge (P4).
 - Post hoc: the transverse current anomaly is the flow of O(1) unscreened vortex charge at the box scale
   (r = 0.996, parameter-free); the admission filter is in effect a detector of box-scale vortex pairs.
-- Interpretation, not established: the `∝ L²` mutual-friction lifetime as the cause of the size-dependent
-  equilibration time. Tested by the prediction below.
+- Interpretation, not established: slow decay of box-scale charge (a mutual-friction lifetime growing as `L^z`,
+  `z ≈ 1.5–2`; the `L²` form is the AHNS/Bray dissipative one, see the literature gate below) as the cause of the
+  size-dependent equilibration time. Tested by the prediction below.
 
 Nothing here is new physics in itself (Kosterlitz–Thouless 1973; Ambegaokar–Halperin–Nelson–Siggia 1980 for
 dissipative vortex-pair dynamics; the transverse-current definition of `n_s`). What is new is the diagnosis of a
@@ -89,3 +90,33 @@ to `t_end = 14 500`, sampling `[13 500, 14 500]` (`13 500 = 6000 × (192/128)²`
   a long-lived metastable state, not slow annihilation).
 - **Report only (no direction predicted):** R3-A3's offsets `ηK − 1` re-evaluated on the new window, alongside the
   `[6000, 7000]` ones; the R3-A3 verdict already recorded is not overwritten.
+
+## Literature gate (2026-10-05, after the results above; changes their framing, not their numbers)
+
+A prior-art search (full texts via alphaXiv) places each statement:
+
+- **The vortex-only transverse current is a known quantity.** In the Coulomb-gas picture the helicity modulus is
+  reduced by the variance of the vortex *polarisation* `P = Σ q_j r_j / N` and of the topological sector:
+  Vallat & Beck, PRB 50, 4015 (1994); Faulkner, Bramwell & Holdsworth, JPCM 29, 085402 (2017), arXiv:1610.06692,
+  Eq. 13; Faulkner's review arXiv:2412.12186. `|ρ_q(k)|²/k²` is the finite-`k` form of that polarisation term.
+  The point-vortex spectrum built from `Σ κ_pκ_q J₀(k r_pq)` is in Bradley & Anderson, PRX 2, 041001 (2012).
+  The transverse/longitudinal estimator `f_s = 1 − χ_T/χ_L` in PGPE, and **negative values of it**, are in
+  Foster, Blakie & Davis, PRA 81, 023623 (2010), arXiv:0912.1675 (App. D, Fig. 2), where they are attributed to
+  statistical noise in the `k → 0` extrapolation. **Not found in the literature:** attributing the negative or
+  corrupted values to one residual, non-equilibrium box-scale pair, and using the vortex-only transverse current
+  as a quantitative diagnostic of it. That is the part claimed here — phrased as: *the transverse-current anomaly
+  is the finite-`k` Vallat–Beck/Faulkner polarisation term, carried by one non-equilibrium pair.*
+- **The `L²` equilibration law is borrowed, not ours, and is probably not the right exponent for this dynamics.**
+  Dissipative (model-A) XY: `t_eq ~ L² ln L` (Bray, Briant & Jervis, PRL 84, 1503 (2000), pair friction
+  `∝ ln(R/a)` after Yurke et al. 1993; Jelić & Cugliandolo, J. Stat. Mech. P02032 (2011)). Conservative
+  (Hamiltonian) XY: `t_eq ~ L²/ln L` (Nam, Baek, Kim & Lee, J. Stat. Mech. P11023 (2012)). Conservative PGPE —
+  our dynamics: dynamic exponent `z ≈ 1.7–1.8` (≈ 1.5 near BKT), equilibrium once the coarsening length reaches
+  `L` (Groszek & Billam, arXiv:2601.02687 (2026); Groszek, Comaron, Proukakis & Billam, PRR 3, 013212 (2021)).
+  Scaled from `t = 6000` at `L = 128`, these give `t(192) ≈ 11 000–12 500` (conservative forms) or `≈ 14 600`
+  (`L² ln L`). The registered window `[13 500, 14 500]` lies after all conservative-dynamics estimates, so the
+  E1–E3 test checks **the mechanism (slow decay of box-scale charge), not the exponent**; a pass does not measure
+  `z = 2`, and the text above should be read as "a time of order `L^z`, `z ≈ 1.5–2`".
+- **The non-monotone offset is not an equilibrium effect.** Equilibrium KT theory makes the finite-size stiffness
+  monotone in `L` (Prokof'ev & Svistunov, PRA 66, 043608 (2002), Eq. 32, `df_L/d ln L = −y² f_L² ≤ 0`;
+  Hasenbusch, J. Phys. A 38, 5869 (2005), Eq. 31 and Table 1). No such non-monotone offset is reported in the
+  equilibrium literature — consistent with reading the `L = 192` point as an equilibration artefact.

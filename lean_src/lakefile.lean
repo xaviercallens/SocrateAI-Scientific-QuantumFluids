@@ -70,6 +70,9 @@ lean_lib Villani
 lean_lib WassersteinCertificate
 
 @[default_target]
+lean_lib MatchingScreening
+
+@[default_target]
 lean_lib Fricke
 
 @[default_target]
