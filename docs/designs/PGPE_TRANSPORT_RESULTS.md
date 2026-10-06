@@ -107,3 +107,32 @@ taking the momentum. Not established: the Einstein relation either way (inconclu
 Next (not started): the T = 0 pair-speed sweep in `d` (systematic for α′); an L = 96 base state (W2); longer tracks
 at T = 0.220 and a cleaner T ≈ 0.3 base (the Einstein rule needs a second admitted temperature); the round-3 arm
 re-analysed with the v2 estimators (T3).
+
+## Post-analysis of α′ (2026-10-06, after the verdict above; exploratory, estimator unchanged in the verdict)
+
+Two controls were run after the registered analysis:
+1. **Mean-flow frame.** A single pair in a periodic box carries net momentum, so the fluid has a mean velocity
+   `u = P/(nL²)` that the point-vortex prediction does not contain. In a T = 0 sweep of single pairs
+   (`JR_T0_dipole_d*.npz`, `pair_speed_T0.json`) the apparent `1 − α′` in the box frame rises from 1.06 at `d = 6` to
+   1.49 at `d = 16` — entirely the mean flow: in the fluid frame (`v − u`) the pair moves at the torus
+   point-vortex speed to **+1.0 % (d = 6), +0.4 % (d = 8–16)**, and +3–4 % at `d = 3–4` (the compressible
+   Jones–Roberts correction). The production runs have `|u| ≤ 2×10⁻³`, and the two antiparallel pairs move in
+   opposite directions, so the frame correction changes their `1 − α̂′` by ≤ 0.0002 — the registered values stand.
+2. **T = 0 baseline at the pair sizes the thermal fits actually use** (mean matched size 8.7–9.3 → baseline
+   `1 − α′_T=0 ≈ 1.004`): thermal `α′ = −0.0060 ± 0.0015` (T = 0.115), `−0.0112 ± 0.0031` (0.220),
+   `−0.0055 ± 0.0106` (0.353). The regression weights small pairs more than the mean size does, and the baseline
+   rises steeply below `d = 6`, so a residual of −0.5 to −1 % is within the uncertainty of this mapping.
+
+Reading: **α′ is consistent with zero to within about 1 %, and the Iordanskii values (+2.7 %, +5.3 %, +9.4 % at
+the three temperatures) are excluded**; the registered rule's label "no transverse force" survives both controls,
+and the "vortices move faster" statement of the first analysis is, at least mostly, the T = 0 compressibility of
+pairs of size 6–9, not a thermal effect. The round-3 arm (`d = 16`, T = 0.115) gives `1 − α̂′ = 1.0012` and
+`α = 0.0048–0.0057`, consistent with this (T3).
+
+## Exploratory, from the first three equilibrated L = 192 runs (window [13 500, 14 500]; not pre-registered)
+
+The duality offset with the torus Green function on `r ∈ [8, 32]`: `ηK − 1 = +0.26, +0.14, +0.53` (K = 10.0, 9.6,
+8.3); naive window gives the same to 0.03 (`josephson_l192.json`). The 12–27 % excess of L ≤ 64 is **not** a
+window or geometry effect and is larger at L = 192 in equilibrated states. The suspects left are the estimator
+pair itself (η from `g1` against K from current correlators on a fixed-momentum microcanonical field) and
+amplitude fluctuations renormalising the bare stiffness. A pre-registration of its own is warranted.
