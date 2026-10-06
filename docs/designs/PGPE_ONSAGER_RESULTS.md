@@ -120,3 +120,32 @@ A prior-art search (full texts via alphaXiv) places each statement:
   monotone in `L` (Prokof'ev & Svistunov, PRA 66, 043608 (2002), Eq. 32, `df_L/d ln L = −y² f_L² ≤ 0`;
   Hasenbusch, J. Phys. A 38, 5869 (2005), Eq. 31 and Table 1). No such non-monotone offset is reported in the
   equilibrium literature — consistent with reading the `L = 192` point as an equilibration artefact.
+
+## The registered prediction, evaluated (2026-10-06): E1 PASS, E2 FAIL (one run), E3 PASS — mechanism supported, equilibration not complete
+
+Six L = 192 trajectories continued from t = 7000 to 14 500 (`data/generated/pgpe/r3_C4/`, sampling [13 500, 14 500]).
+
+| run | admitted (A4) | `n_s/n` [6000, 7000] → [13 500, 14 500] | `R_T^vortex` [6000, 7000] → [13 500, 14 500] |
+|---|---|---|---|
+| e1.00_s11 (anomalous) | yes | −0.38 → **+0.81** | 1.98 → **0.07** (÷27) |
+| e1.00_s12 | yes | +0.49 → +0.77 | 0.65 → 0.08 |
+| e1.10_s11 (anomalous) | yes | −0.96 → **+0.34** | 3.38 → **0.80** (÷4.2) |
+| e1.10_s12 | yes | +0.41 → +0.80 | 0.74 → 0.19 |
+| e1.20_s11 | yes | +0.56 → +0.61 | 0.55 → 0.38 |
+| e1.20_s12 | yes | +0.73 → +0.74 | 0.44 → 0.41 |
+
+- **E1 (admission ≥ 5/6): PASS, 6/6** (3/6 at the earlier window).
+- **E2 (`R_T^vortex ≤ 0.45` in every admitted run): FAIL** — e1.10_s11 is at 0.80, still carrying box-scale charge
+  (its K = 3.5 is below the Nelson–Kosterlitz 4 that its partner, K = 8.3, is well above).
+- **E3 (≥ 2× drop in both anomalous runs): PASS** — 27× and 4.2×.
+- **Kill not triggered.** Verdict: the box-scale charge decays as the mechanism says, in every run; at t = 14 500
+  one trajectory has not finished. The equilibration time of an L = 192 box at this temperature is therefore
+  **longer than 13 500 for some trajectories** — above the `L²` estimate from L = 128 (13 500) and the
+  conservative-dynamics estimates (11 000–12 500), as the literature gate's `t_eq ~ L² ln L` form (14 600) would
+  have it; one trajectory is one trajectory.
+- **Report only — the R3-A3 offsets on the equilibrated window:** `ηK − 1 = +0.195, +0.164, +0.302` at
+  `e = 1.00, 1.10, 1.20` (n = 2 each; e1.10 pulled down by the unfinished run, whose partner alone gives +0.51),
+  against +0.40, +0.36, +0.33 at L = 128 and +0.12, +0.12, +0.20 at L = 64. The offset is **positive at every
+  size and energy** once equilibrated — the "saturation / non-monotone" verdict of CLAIM-067 rested on
+  under-equilibrated states, as cautioned there — and its dependence on L (64 < 192 < 128?) is not monotone
+  either, which now puts the L = 128 states themselves under the same suspicion. No extrapolation claimed.

@@ -212,7 +212,50 @@ def gate_formfactor(kind: str, t_relax: float = 30.0, n_cfg: int = 4):
     (OUT / f"{kind}.json").write_text(json.dumps(res, indent=1, default=float)); print("->", kind, "PASS" if ok_all else "FAIL")
 
 
+def analyse_runs(rust_dir: Path, analysis_dir: Path, tag: str, N: int = 384, L: float = 192.0, every: int = 1):
+    """Primary analysis of PGPE_DIELECTRIC_PREREG.md (D1, D2; D3 and D4 reported) on saved snapshots + vortex positions."""
+    import re
+    from analyze_r3 import whole_from_blocks
+    s = PGPE(N=N, L=L); ff = json.loads((OUT / "DG1pp.json").read_text())["sets"]["8.0"]["shells"]
+    form = {int(m): ff[m]["n_eff_re"] / ff["1"]["n_eff_re"] for m in ff}                   # T = 0 k-dependence, d = 8
+    names = sorted(f.stem for f in analysis_dir.glob("C3_L192_e*_s??.json")); runs = {}
+    for name in names:
+        j = json.loads((analysis_dir / f"{name}.json").read_text()); w = whole_from_blocks(j); T = w["T"]; norm = T * L ** 2
+        z = np.load(analysis_dir / f"{name}_samples.npz", allow_pickle=True); ts = z["t"]
+        acc = {m2: ([], []) for m2 in SHELLS}; num = den = 0.0
+        for i in range(0, len(ts), every):
+            t = float(ts[i]); psi = np.fromfile(rust_dir / f"{name}_sample_t{t:07.1f}.raw", dtype=np.complex128).reshape(N, N)
+            c = np.fft.fft2(psi) * s.P; pos = np.asarray(z["pos"][i], float); q = np.asarray(z["q"][i], int)
+            for m2, (JT, X) in mode_amplitudes(s, c, pos, q).items():
+                acc[m2][0].append(JT); acc[m2][1].append(X)
+            ds = matched_sizes(pos, q, L); num += float((ds ** 2).sum()) / 2; den += 1
+        r = fit(acc, norm)
+        ne = np.array([r[m]["n_eff_re"] for m in SHELLS]); ni = np.array([r[m]["n_eff_im"] for m in SHELLS]); co = np.array([r[m]["coherence"] for m in SHELLS])
+        nek = ne / np.array([form[m] for m in SHELLS])
+        f_res = float(np.mean([r[m]["R_res"] for m in (1, 2)])); n_eff_mean = float(np.mean(nek))
+        cands = {"1": 1.0, "1-f": 1 - f_res, "ns/n": w["ns_over_n"]}
+        closest = min(cands, key=lambda k: abs(cands[k] - n_eff_mean))
+        RTv1 = r[1]["R_Tv"]; plateau = float(np.mean([r[m]["R_Tv"] for m in (4, 5, 8, 9, 10, 13, 16)]))   # (2pi)^2 <|rho|^2>/(k^2 T L^2): the polarisability plateau of a bound-pair gas
+        # (first version multiplied by k^2 by mistake and gave ratios ~0.01; corrected 2026-10-06 23:20, see PGPE_DIELECTRIC_RESULTS.md)
+        pol_pred = (2 * np.pi) ** 2 * (num / den) / norm
+        runs[name] = {"T": T, "ns_over_n": w["ns_over_n"], "K": 2 * np.pi * w["ns_over_n"] / T, "shells": r,
+                      "D1_min_coherence": float(co.min()), "D1_pass": bool(co.min() >= 0.4),
+                      "D2_im_ratio": float(np.max(np.abs(ni) / np.abs(ne))), "D2_k_ratio": float(nek.max() / nek.min()), "D2_pass": bool(np.max(np.abs(ni) / np.abs(ne)) <= 0.1 and nek.max() / nek.min() <= 1.25),
+                      "n_eff_formfactor_corrected": n_eff_mean, "n_eff_raw_shells": ne.tolist(), "f_res_low": f_res, "D3_candidates": cands, "D3_closest": closest,
+                      "R_Tv_k1": RTv1, "box_scale_pair": bool(RTv1 > 0.45), "D4_plateau_measured": plateau, "D4_pred_from_matching": pol_pred, "D4_ratio": plateau / pol_pred if pol_pred else float("nan")}
+        print(f"{name}: T={T:.3f} K={runs[name]['K']:.2f} | D1 min coherence {co.min():.3f} | n_eff raw {ne.round(3).tolist()} | Im/Re max {runs[name]['D2_im_ratio']:.3f}, k-ratio {runs[name]['D2_k_ratio']:.3f} | n_eff(ff-corr) {n_eff_mean:.3f} f_res {f_res:.3f} ns/n {w['ns_over_n']:.3f} -> closest {closest} | R_Tv(k1) {RTv1:.2f} D4 ratio {runs[name]['D4_ratio']:.2f}", flush=True)
+    d1 = sum(v["D1_pass"] for v in runs.values()); d2 = sum(v["D2_pass"] for v in runs.values())
+    d3 = {k: sum(v["D3_closest"] == k for v in runs.values()) for k in ("1", "1-f", "ns/n")}
+    d4 = [v["D4_ratio"] for v in runs.values() if not v["box_scale_pair"]]
+    verdict = {"D1_pass_runs": d1, "D1": d1 >= 5, "D2_pass_runs": d2, "D2": d2 >= 5, "D3_closest_counts": d3, "D4_ratios_no_box_pair": d4,
+               "D4": bool(d4) and all(0.7 <= x <= 1.3 for x in d4)}
+    (OUT / f"primary_{tag}.json").write_text(json.dumps({"runs": runs, "verdict": verdict}, indent=1, default=float))
+    print("VERDICT", json.dumps(verdict, default=float))
+
+
 if __name__ == "__main__":
+    if sys.argv[1] == "RUNS":
+        analyse_runs(ROOT / "data/generated/pgpe" / sys.argv[2], ROOT / "data/generated/pgpe" / sys.argv[3], sys.argv[4]); sys.exit(0)
     if sys.argv[1] in ("DG1pp", "DG2pp"):
         gate_formfactor(sys.argv[1]); sys.exit(0)
     if sys.argv[1] == "MU_B":
