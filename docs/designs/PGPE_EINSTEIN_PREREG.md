@@ -82,3 +82,10 @@ island) would show as sub-diffusion, not as Brownian motion. At T/T_BKT = 0.14 t
 - **I2.** W1 pairs, separation power spectrum on t ∈ [2000, 4000]: island if the three largest lines carry > 50 %
   of the variance; random walk otherwise.
 No threshold of the Einstein test changes.
+
+**Record correction (main session, 2026-10-06 23:40).** E-A1 was committed at 23:20 (`0fe70fb`). The warm-temperature
+analysis it says it precedes was run and committed at 06:45 the same day (`f5ed53b`, CLAIM-081), with
+`γ = 0.71, 0.82, 1.28` at `T/T_BKT = 0.14, 0.27, 0.43`. I1 is therefore a **retrodiction**: its "mixed-phase-space
+reading" (γ rising with T) matches numbers that were already on file in the repository when it was written
+(whether or not the forked session had read them). It is kept as a recorded observation, not as a registered
+prediction. I2 is genuinely post hoc and is evaluated in `PGPE_TRANSPORT_RESULTS.md`.

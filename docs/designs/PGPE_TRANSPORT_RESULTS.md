@@ -141,3 +141,16 @@ Note on `pair_speed_T0.json` (forked session, 60-time-unit windows): its box-fra
 agree with the 150-time-unit sweep above; the fork read the large-d excess as an imprint transient. It is the mean
 flow `u = P/(nL²)`, which accounts for the excess at every size (table above); after subtracting it the fork's
 tight-pair values become +4 % (d = 3), +3 % (4), +1 % (5), ≈ 0 (6), consistent with the Jones–Roberts correction.
+
+## I1/I2 of amendment E-A1 (forked session; see the record correction in the pre-registration)
+
+- **I1 (retrodiction, not a prediction):** the residual exponent rises with temperature, `γ = 0.71, 0.82, 1.28`
+  at `T/T_BKT = 0.14, 0.27, 0.43` — the numbers were on file (CLAIM-081) before E-A1 was written. Consistent with
+  the "regular island + bath" reading at low T, and with thermal-vortex drift at the warm end; it does not
+  discriminate by itself.
+- **I2 (post hoc, computed here):** the W1 pair separations on t ∈ [2000, 4000] put **0.32 and 0.36** of their
+  variance in the three largest spectral lines (island criterion: > 0.5), with a log–log spectral slope of −0.5
+  (random walk: −2; white: 0). **Neither an island nor a random walk**: a 1/f^0.5 spectrum — long-memory
+  fluctuation of a stalled pair, which is at least consistent with a pair wandering about a stall point under a
+  wind that itself responds to the pair (hypothesis W), and is what sub-diffusion with γ ≈ 0.7 looks like in the
+  frequency domain.
