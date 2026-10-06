@@ -136,3 +136,8 @@ The duality offset with the torus Green function on `r ∈ [8, 32]`: `ηK − 1 
 window or geometry effect and is larger at L = 192 in equilibrated states. The suspects left are the estimator
 pair itself (η from `g1` against K from current correlators on a fixed-momentum microcanonical field) and
 amplitude fluctuations renormalising the bare stiffness. A pre-registration of its own is warranted.
+
+Note on `pair_speed_T0.json` (forked session, 60-time-unit windows): its box-frame ratios (1.06 → 1.46 for d = 3 → 16)
+agree with the 150-time-unit sweep above; the fork read the large-d excess as an imprint transient. It is the mean
+flow `u = P/(nL²)`, which accounts for the excess at every size (table above); after subtracting it the fork's
+tight-pair values become +4 % (d = 3), +3 % (4), +1 % (5), ≈ 0 (6), consistent with the Jones–Roberts correction.
