@@ -68,3 +68,17 @@ gas; ρ is taken as `n_s n`; one cutoff; two dimensions. A pass does not validat
 beyond its second moments; a violation would mean either that the vortex's bath is not the equilibrium field on
 the time scales sampled, or that α measured from the energy decay is not the mobility conjugate to the measured
 diffusion — the write-up must say which observables distinguish these before interpreting it.
+
+
+## Amendment E-A1 (2026-10-06, before the warm-temperature analysis is run): the residual exponent as a result, not a nuisance
+
+Motivated by Dong et al., Nature Physics 2026 (`docs/designs/LEVERAGE_DONG2026.md`): a vortex configuration is a
+variational manifold of the field, and bounded quasi-periodic motion about the projected trajectory (a regular
+island) would show as sub-diffusion, not as Brownian motion. At T/T_BKT = 0.14 the residual MSD exponent is 0.71
+(seen; eight runs). Registered before the warm tracks are analysed:
+- **I1.** `γ(T)` from the production tracks at 0.14, 0.27, 0.43 T_BKT, lags 20–400. Mixed-phase-space reading:
+  `γ` increases with T; Brownian reading: `γ ≥ 0.8` at every T once lags ≥ 100 are used. `R_E` is reported at every
+  temperature but is a test of the Einstein relation only where `γ ∈ [0.8, 1.2]` (rule E2 unchanged).
+- **I2.** W1 pairs, separation power spectrum on t ∈ [2000, 4000]: island if the three largest lines carry > 50 %
+  of the variance; random walk otherwise.
+No threshold of the Einstein test changes.
