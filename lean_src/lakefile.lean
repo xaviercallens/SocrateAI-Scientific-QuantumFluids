@@ -85,6 +85,9 @@ lean_lib EinsteinRelation
 lean_lib PairPolarisation
 
 @[default_target]
+lean_lib QuasiPeriodicBound
+
+@[default_target]
 lean_lib Fricke
 
 @[default_target]

@@ -29,6 +29,7 @@ useful to others in their own right are marked (*).
 | `DissipativeVortexDynamics` | dissipative point-vortex model `v = (1−α')v_s − α q ẑ×v_s`: for any skew + gradient flow `d/dt H = −γ‖∇H‖²` whatever the skew part (energy estimator of α for any vortex configuration, plane or torus, independent of `α'`); plane dipole: `|d|² = |d₀|² − 4αt`, lifetime bound, centre speed `(1−α')/|d|` (estimator of `α'`); closed-box phonon wind: `d' = −c(d−a)(d−b)/d` never falls below `b` (stall instead of annihilation). Companion of PGPE_FRICTION_PREREG A1 and PGPE_ALPHAPRIME_PREREG |
 | `EinsteinRelation` | stochastic dissipative pair: the KT pair distribution `|d|^{−K}` carries zero probability current iff `D K = 2α`; in vortex units `η = αT/(2πρ)`; one-dimensional Gibbs-flux identity. Companion of PGPE_EINSTEIN_PREREG |
 | `PairPolarisation` | vortex charge density of pairs: `‖ρ(k)‖ ≤ ‖k‖Σ‖d_i‖`; polarisation form `ρ(k) = i k·P(k)` with remainder `≤ ‖k‖²Σ‖d_i‖²` when `|k·d_i| ≤ 1`; k-independent ceiling of the bound-pair transverse response. Companion of PGPE_DIELECTRIC_PREREG |
+| `QuasiPeriodicBound` | a finite trigonometric sum has increments bounded by `2Σ|aₖ|`, so every sample mean of squared increments (any times, any lags) is `≤ 4(Σ|aₖ|)²`; a linearly growing MSD exceeds it beyond a finite lag; contrapositive: an MSD above the bound refutes the quasi-periodic (regular-island) reading for any frequencies and phases. Torus dipole at α = 0 has constant separation. Companion of PGPE_EINSTEIN_PREREG amendment E-A1 (I2) |
 | `GPGalerkin` (*) | truncated Gross–Pitaevskii on any finite mode set: `Q = Σ_q |A_q|² ≥ 0`, mass and energy algebra, the Hamiltonian gradient identity |
 | `MadelungSplit` | `|∇ψ|² = |∇a|² + a²|∇S|²` — the quantum-pressure / hydrodynamic split |
 | `MadelungNSE` | the same objects in the OpenAI Navier–Stokes vocabulary; `∇·(∇φ) = Δφ` in their formalism |
@@ -62,6 +63,7 @@ import KTFlow
 import DissipativeVortexDynamics
 import EinsteinRelation
 import PairPolarisation
+import QuasiPeriodicBound
 import Fricke
 import QHFricke
 import TopologicalProtection

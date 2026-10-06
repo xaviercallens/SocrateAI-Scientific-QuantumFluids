@@ -89,3 +89,30 @@ analysis it says it precedes was run and committed at 06:45 the same day (`f5ed5
 reading" (γ rising with T) matches numbers that were already on file in the repository when it was written
 (whether or not the forked session had read them). It is kept as a recorded observation, not as a registered
 prediction. I2 is genuinely post hoc and is evaluated in `PGPE_TRANSPORT_RESULTS.md`.
+
+### I1 / I2 results (2026-10-06, `data/generated/pgpe/transport/island_I1_I2.json`, `exploration/pgpe/analyze_island.py`)
+
+| T/T_BKT | γ (lags 20–400) | γ (lags ≥ 100) | α (energy) | tracks |
+|---|---|---|---|---|
+| 0.14 | 0.709 ± 0.011 | 1.24 | 0.0062 | 8 |
+| 0.27 | 0.82 ± 0.09 | 1.10 | 0.0138 | 6 (3 annihilations) |
+| 0.43 | 1.28 ± 0.27 | 0.63 | 0.0205 | 6 (short, 118–729 time units) |
+
+**I1: neither reading as stated.** γ over the registered lag range rises with T (0.71 → 0.82 → 1.28), which is the
+mixed-phase-space prediction's direction; but restricted to lags ≥ 100 the exponent is ≈ 1.1–1.2 at the two cooler
+temperatures, which is the Brownian reading's prediction ("γ ≥ 0.8 once lags ≥ 100"). The sub-diffusion at 0.14 is
+confined to lags 20–100: a short-time regime, not an island. At 0.43 the tracks are too short for lags ≥ 100 to mean
+anything (0.63 on a handful of points). **Consequence for the Einstein test:** by rule E2 as written (γ on 20–400
+within [0.8, 1.2]) η is quotable at 0.27 only; by the lag ≥ 100 exponent it would be quotable at 0.14 and 0.27. Rule
+E2 is **not** changed after the fact; both exponents are reported and the Einstein verdict uses E2 as registered.
+
+**I2: not an island.** Both W1 separations put 32 % and 36 % of their variance in the three largest lines (criterion
+> 50 %), and the leading line is the lowest resolvable frequency (a slow drift over the 2000-unit window, 22–28 %),
+not an oscillation. The W1 pairs are stalled, not quasi-periodic: consistent with a stalled relative equilibrium
+(Modin–Viviani Theorem 8: the torus dipole is a relative equilibrium) perturbed by a bath, not with a KAM-like
+orbit. `QuasiPeriodicBound.lean` makes the one-directional logic explicit: a plateau never proves an island, only
+growth refutes one — and the W1 spectra are plateau-like without the line structure an island would carry.
+
+α(T) from these same tracks (report, the registered F2/F3 verdicts belong to the friction results file):
+0.0062, 0.0138, 0.0205 at T/T_BKT = 0.14, 0.27, 0.43 — monotone, roughly ∝ T; and 0.042 at 0.56 (report-only base,
+thermal pairs present, short tracks).
