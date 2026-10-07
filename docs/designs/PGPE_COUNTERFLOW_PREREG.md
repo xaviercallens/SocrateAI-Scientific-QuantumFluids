@@ -29,6 +29,23 @@ paper with Figure 3.
 - **If the two W2 runs disagree** (one stalls, one does not): W2 is inconclusive; two more L = 96 runs are added
   before anything else, and the rule above is applied to the four.
 
+### Amendment W2-A (2026-10-07 23:35, filed before runs 3 and 4 are read; they end ≈ 00:30)
+
+Runs 1 and 2 disagreed (run 1 meets the no-stall criterion, run 2 does not; CLAIM-090), so runs 3 and 4 were
+launched at 20:48. "The rule applied to the four" is made explicit now, since a 2–2 split is possible:
+
+- **≥ 3 of 4 meet the criterion → SUPPORTED** (no stall at L = 96): the counterflow campaign below runs.
+- **≤ 1 of 4 meets it → REFUTED**: the box mechanism is withdrawn as written; the friction-law campaign runs.
+- **2–2 → INCONCLUSIVE at this sample size**: the binary control cannot decide a graded effect. The paper reports
+  the split and the parameter-free wind-equation comparison without claiming support. The friction-law campaign
+  (independent of W) runs first; the stall map runs second, and its C1 (a graded criterion over eleven cells) is
+  then the decisive test of W, with the kill conditions as written.
+
+If one of the four runs fails (tracking lost, crash), the rule is applied to the three: 3 meet → supported,
+0 meet → refuted, otherwise inconclusive. The evaluation is `exploration/pgpe/evaluate_w2.py`; the night
+workflow `scripts/night_publish_v2.py` applies exactly this rule and fills the paper's pending sentences from
+templates written before the data (one per outcome).
+
 ## Campaign (conditional), frozen now
 
 Single pairs, corrected imprint, raw detection with sub-grid refinement, 4000 time units, positions, total field
