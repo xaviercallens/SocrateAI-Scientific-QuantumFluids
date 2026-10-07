@@ -596,7 +596,12 @@ equations used in the text are consequences of the model's equations, not that t
   skew, $\tfrac{d}{dt}H=-\gamma|\nabla H|^2$ (the energy estimator, independent of the skew part and hence of $\alpha'$);
   for the plane pair, $|\mathbf d|^2=|\mathbf d_0|^2-4\alpha t$ on the interval of existence, the lifetime bound, and the
   centre velocity $(1-\alpha')/|\mathbf d|$ perpendicular to the axis; for $\dot d=-c(d-a)(d-b)/d$ with $0<a<b$, a pair
-  starting at or above $b$ never falls below it (the wind stall).
+  starting at or above $b$ never falls below it (the wind stall), and the same for any drive $-c\,g(d)$ with $g<0$ on
+  an interval below $b$ (the torus drive of the follow-up).
+\item \lean{FrictionKinetic}: in the kinetic model $D=\sum_k w_kf_k$, $\rho_n=\sum_kw_k$ over the bath's modes, the
+  ratio $\alpha/(\rho_n/\rho)$ is the $w$-weighted mean of $f=c_g\sigma_{\rm tr}$ (times $\rho/\rho_s\kappa$), lies between
+  the smallest and the largest $f$ over the bath, and is the plain arithmetic mean for a Rayleigh--Jeans bath ---
+  Eq.~\eqref{eq:kinetic}; nothing about the value of $\sigma_{\rm tr}$ is asserted.
 \item \lean{EinsteinRelation}: the pair distribution $|\mathbf d|^{-K}$ carries zero Fokker--Planck current for drift
   $-2\alpha\mathbf d/|\mathbf d|^2$ and diffusion $D$ iff $DK=2\alpha$; in vortex units $\eta=\alpha T/(2\pi\rho)$.
 \item \lean{PairPolarisation}: $\|\rho_q(k)\|\le\|k\|\sum_i\|\mathbf d_i\|$; $\rho_q(k)=i\,\mathbf k\cdot\mathbf P(k)$ with
