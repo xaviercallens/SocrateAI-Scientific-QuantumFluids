@@ -27,9 +27,10 @@ Estimated 30 CPU-hours plus 10 for the `dx = ξ/4` bases.
 - **FL2 (the registered prediction: near-universality).** The coefficient `c = α/(ρ_n/ρ)` differs between the three
   cutoffs by less than 20 % (spread of the three values over their mean). Rival: a shift larger than 40 % with the
   logarithm of the cutoff energy, as a bath-dominated momentum transfer would give.
-- **FL3 (classical phonon scattering, report only).** The Born-approximation momentum-transfer rate of a
-  Rayleigh–Jeans phonon bath scattering off a Bernoulli vortex core, integrated to each cutoff, against the
-  measured `c`; computed before the runs and recorded with its assumptions.
+- **FL3 (kinetic reading, computed before the runs — `FRICTION_LAW_THEORY_NOTE.md`).** `α/(ρ_n/ρ) = (ρ/ρ_s)⟨c_g σ_tr⟩/κ`,
+  the disk-averaged transport cross-section of the vortex; the measured 0.232 means `⟨σ_tr⟩ = 1.4 ξ` (geometric
+  core size). Expectation recorded: `c(2π/3) < c(π) ≤ c(2π)` with a spread of 10–30 %; a spread above 40 % linear
+  in `k_c` would mean the long-wavelength `σ_tr ∝ k` law holds to the cutoff.
 - **Report:** `α′` at each cutoff (with the T = 0 baseline of each); the residual exponents.
 
 Verdict: FL1 ∧ FL2 → the friction law is a property of the model's vortex–phonon interaction, usable at any cutoff

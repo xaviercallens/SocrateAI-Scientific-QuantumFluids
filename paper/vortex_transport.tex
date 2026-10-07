@@ -211,6 +211,23 @@ measurements~\cite{Moon2015} and above the unitary-gas value~\cite{Kwon2021}. An
 programme (eight imprinted vortices at $d=16$, $0.14\,T_{\rm BKT}$) gives $\alpha=0.0048$--$0.0057$ with the same
 estimators.
 
+The proportionality has a simple kinetic reading. For an isotropic bath of excitations with occupation $n_k$ and
+transport cross-section $\sigma_{\rm tr}(k)$ (a length in two dimensions), the drag on a slowly moving vortex and the
+Landau normal density are integrals of the same weight, $D=\tfrac12\!\int\!\tfrac{d^2k}{(2\pi)^2}(-\partial n/\partial\varepsilon)\,k^2\,c_g\sigma_{\rm tr}$
+and $\rho_n=\tfrac12\!\int\!\tfrac{d^2k}{(2\pi)^2}(-\partial n/\partial\varepsilon)\,k^2$; for a Rayleigh--Jeans bath every mode
+carries the same weight, so $D/\rho_n=\langle c_g\sigma_{\rm tr}\rangle$, the uniform average over the disk $|k|<k_c$,
+and with $\alpha=D/(\rho_s\kappa)$ at leading order,
+\begin{equation}
+  \frac{\alpha}{\rho_n/\rho}=\frac{\rho}{\rho_s}\,\frac{\langle c_g\sigma_{\rm tr}\rangle}{\kappa}.
+  \label{eq:kinetic}
+\end{equation}
+The law $\alpha\propto\rho_n$ is what any scattering bath gives; \textbf{the coefficient measures the mode-averaged
+transport cross-section of the vortex}, here $\langle c_g\sigma_{\rm tr}\rangle=0.232\times2\pi\times0.95=1.4\pm0.1$
+healing lengths ($c=1$). That is the geometric size of the core, not the long-wavelength phonon value
+(which grows with $k$~\cite{Iordanskii1964,Sonin1997}): with $k_c=\pi$, nine tenths of the bath's modes have
+$k\xi>1$ and see the density-depleted core. Whether the coefficient is therefore nearly cutoff-independent, as
+geometric saturation would make it, is the registered question of the follow-up (Appendix~\ref{app:protocol}).
+
 \begin{table}[t]\centering\small
 \begin{tabular}{lcccccc}
 \toprule
@@ -482,7 +499,8 @@ form factor.
   gas; the Onsager-cluster reading of the depressed-stiffness states; the earlier ``saturating offset'' reading.
 \item \emph{Undecided by rule:} the Einstein relation (one admitted temperature).
 \item \emph{Open:} the phonon-wind stall \PENDING{until the $L=96$ control}; the cause of the Josephson offset; the current
-  form factor of tight thermal pairs; why $\alpha\propto\rho_n$ with coefficient $0.24$.
+  form factor of tight thermal pairs; whether the coefficient $0.23$ of the friction law --- a mode-averaged transport
+  cross-section of $1.4\,\xi$ --- is cutoff-independent.
 \item \emph{Scope:} a Rayleigh--Jeans field with one momentum cutoff, $mg=1$, two dimensions; the classical-field normal
   fraction depends on the cutoff, so comparisons with quantum gases are made at equal $\rho_n/\rho$, not equal $T/T_c$.
 \end{itemize}
