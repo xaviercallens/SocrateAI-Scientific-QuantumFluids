@@ -78,8 +78,10 @@ def main():
     ap.add_argument("--dt-sample", type=float, default=1.0); ap.add_argument("--r-track", type=float, default=3.0)   # 1.5 until amendment A1.2
     ap.add_argument("--d-stop", type=float, default=1.5); ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--imprint", default="v2", choices=["v1", "v2"], help="v1 = round2.imprint (first G1 run); v2 = periodic phase + Bernoulli density")
+    ap.add_argument("--kcut-frac", type=float, default=0.5, help="projector cutoff as a fraction of the grid wavenumber (friction-law campaign: 1/3, 1/2)")
+    ap.add_argument("--nk-every", type=float, default=0.0, help="save the occupation spectrum |c_k|^2 every this many time units (0 = never; counterflow C3)")
     a = ap.parse_args(); t0 = time.time()
-    s = PGPE(N=a.N, L=a.L); rng = np.random.default_rng(a.seed)
+    s = PGPE(N=a.N, L=a.L, kcut_frac=a.kcut_frac); rng = np.random.default_rng(a.seed)
     if a.base == "T0":
         c0 = np.zeros((a.N, a.N), complex); c0[0, 0] = a.N ** 2                 # psi = 1: uniform condensate, n = 1
     else:
@@ -92,7 +94,10 @@ def main():
         pos = np.mod(np.array([[x0 + a.d0 / 2, y0], [x0 - a.d0 / 2, y0]]), a.L); q = np.array([1, -1])
     P_base = momentum(s, c0); c = (imprint if a.imprint == 'v1' else imprint_v2)(s, c0, pos, q); E0 = s.energy(c)
     T, R, ND, P, PH = [], [], [], [], []; last = pos.copy(); t = 0.0; ended = "t_max"
+    NKT, NK = [], []                                                       # occupation spectra (times, |c_k|^2 as float32)
     while True:
+        if a.nk_every > 0 and (len(NKT) == 0 or t >= NKT[-1] + a.nk_every - 1e-9):
+            NKT.append(t); NK.append((np.abs(c) ** 2 / s.N ** 4).astype(np.float32))   # |psi_k|^2 per mode, sum = mean density
         dp, dq = detect(s, c); cur = np.full_like(last, np.nan)
         for i in range(len(q)):
             cand = np.nonzero(dq == q[i])[0]
@@ -110,8 +115,10 @@ def main():
         c = s.run(c, a.dt_sample); t += a.dt_sample
     meta = {"base": a.base, "geom": a.geom, "d0": a.d0, "seed": a.seed, "L": a.L, "N": a.N, "ended": ended, "t_end": t,
             "n_raw_base": n_raw_base, "P_base": P_base.tolist(), "E_imprinted": E0, "drift_E": abs(s.energy(c) - E0) / abs(E0),
-            "pos0": pos.tolist(), "q": q.tolist(), "imprint": a.imprint, "r_track": a.r_track, "seconds": round(time.time() - t0, 1)}
-    np.savez(a.out, t=np.array(T), R=np.array(R), q=q, n_det=np.array(ND), P=np.array(P), P_hi=np.array(PH), meta=json.dumps(meta))
+            "pos0": pos.tolist(), "q": q.tolist(), "imprint": a.imprint, "r_track": a.r_track, "kcut_frac": a.kcut_frac,
+            "kcut": float(s.kcut), "seconds": round(time.time() - t0, 1)}
+    extra = {"nk_t": np.array(NKT), "nk": np.array(NK)} if NK else {}
+    np.savez(a.out, t=np.array(T), R=np.array(R), q=q, n_det=np.array(ND), P=np.array(P), P_hi=np.array(PH), meta=json.dumps(meta), **extra)
     print(a.out, {k: meta[k] for k in ("ended", "t_end", "n_raw_base", "drift_E", "seconds")}, flush=True)
 
 
