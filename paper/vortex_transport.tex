@@ -25,10 +25,9 @@ pre-registered, with the instrument failures that preceded the measurements}
 \author{Xavier Callens\\
 \small SocrateAI-Scientific-QuantumFluids\\
 \small \url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}}
-\date{October 2026 --- DRAFT: the registered verdicts marked \PENDING{} are not yet computed}
+\date{October 2026}
 
 \begin{document}
-% DRAFT STATUS (2026-10-06, main session): written in a forked session before LEDGER CLAIM-081/082. Stale: the warm-temperature verdicts are done (CLAIM-081: F1'/F2/F3 pass; alpha' rule -> no transverse force; Einstein inconclusive); alpha' = -0.010 is superseded by alpha' = 0 within ~1% after the mean-flow and T=0 pair-size baseline (CLAIM-082). Revise before any use.
 
 \maketitle
 
@@ -37,26 +36,26 @@ pre-registered, with the instrument failures that preceded the measurements}
 A quantized vortex in a thermal two-dimensional Bose gas is dragged by the normal fluid (friction $\alpha$),
 pushed sideways by it (transverse coefficient $\alpha'$) and kicked by it (diffusion $\eta$). The only
 first-principles values of $\alpha$ for a bosonic classical field stop at $0.18\,T_{\rm BKT}$ and carry no error
-bar on $\alpha'$~\cite{Shukla2014}; the fluctuation--dissipation relation that ties $\eta$ to $\alpha$ has been
-proposed for test~\cite{Mehdi2023} and found violated by two orders of magnitude in one
-experiment~\cite{Neely2024}, where walls and noise are suspected. We measure the three coefficients in the
-projected Gross--Pitaevskii equation --- microcanonical, no damping term, no noise put in by hand --- with
-vortex positions tracked to sub-grid precision and estimators that are identities of the dissipative point-vortex
-model, machine-checked in Lean~4 (\lean{DissipativeVortexDynamics.lean}, \lean{EinsteinRelation.lean}). Every
-hypothesis, gate and decision rule was committed before the corresponding run. The instrument failed its
-$T=0$ control twice before it passed: a vortex imprint that is not periodic on the torus and an amplitude factor
-whose sound moves vortices at $T=0$ as much as thermal friction does at $0.14\,T_{\rm BKT}$; both are reported,
-and one earlier ``known-answer pass'' built on that instrument is withdrawn. With the corrected instrument, at
-$T=0$ a pair neither shrinks nor diffuses over $400$ time units and moves at the torus point-vortex velocity to
-$0.14\%$; at $T/T_{\rm BKT}=0.14$, $\alpha=0.0062\pm0.0004$ from the energy decay and $0.0065\pm0.0004$ from the
-trajectory regression, with no dependence on pair size, and $\alpha'=-0.010\pm0.002$. The warmer temperatures,
-the Einstein-relation verdict and the dielectric relation on fully equilibrated $L=192$ fields are
-\PENDING{production analysis and the last three $L=192$ runs}. On the way we identify the single
-non-equilibrium vortex pair that corrupts the superfluid-stiffness estimator in finite boxes (the finite-$k$
-form of the Vallat--Beck polarisation term~\cite{VallatBeck1994,Faulkner2017}), show that it decays by a factor
-$3$--$28$ when the box is given $L^{z}$-scaled time ($z\approx1.7$--$2$~\cite{GroszekBillam2026,Bray2000}), and find
-that the Josephson offset $\eta_{g_1}K-1$ of this classical field does not go away with box size or geometry:
-$+0.31\pm0.11$ at $L=192$ on equilibrated states. No physics is claimed as new; the numbers are.
+bar on $\alpha'$~\cite{Shukla2014}; the fluctuation--dissipation relation tying $\eta$ to $\alpha$ was proposed for
+test~\cite{Mehdi2023} and found violated by two orders of magnitude in one experiment~\cite{Neely2024}. We
+measure the three coefficients in the projected Gross--Pitaevskii equation --- microcanonical, no damping term, no
+noise put in by hand --- with sub-grid vortex tracking and estimators that are identities of the dissipative
+point-vortex model, machine-checked in Lean~4. Every hypothesis, gate and decision rule was committed before the
+corresponding run; the instrument failed its $T=0$ control twice before it passed, an earlier gate verdict built
+on the flawed instrument is withdrawn, and both are reported. Results: at $T/T_{\rm BKT}=0.14,0.27,0.43$,
+$\alpha=0.0062(4),\,0.014(2),\,0.02(1)$ --- size- and estimator-independent, $\alpha\approx0.24\,\rho_n/\rho$;
+$\alpha'$ is zero within $1\%$ once the $T=0$ compressible pair speed is subtracted, excluding the Iordanskii value
+$\rho_n/\rho$ at $18\sigma$ (the registered Iordanskii-like prediction is refuted); the Einstein relation is
+inconclusive by the registered rule, with the one admitted temperature at $\eta K/\alpha=2.1\pm0.7$ and the others
+at $1.4$--$3$ --- not $100$. Single pairs stop shrinking while the phonon band takes the impulse they shed
+(a self-generated counterflow, with a published precedent~\cite{KrstulovicBrachet2011}); the decisive box-size
+control is not run. Separately: the single non-equilibrium pair that corrupts the stiffness estimator in finite
+boxes decays by $4$--$27\times$ given $L^{z}$-scaled time, one of six $L=192$ trajectories still unfinished at
+$t=14\,500$; the pre-registered mode-by-mode dielectric relation \emph{fails} in the thermal pair gas (coherence
+$0.06$--$0.28$) while the vortex-charge structure factor equals the Kosterlitz--Thouless polarisability
+$\Sigma d^2$ from the measured pair sizes to $5$--$21\%$; and the Josephson offset $\eta_{g_1}K-1=+0.3$ survives at
+$L=192$ in equilibrium, independent of window and torus geometry. No physics is claimed as new; the numbers, the
+refutations and the method are.
 \end{abstract}
 
 \section{What is measured and why it is open}
@@ -127,10 +126,10 @@ closed box drives a phonon wind that stalls it (\lean{wind\_stall}) --- which st
 Section~\ref{sec:wind}.
 \end{failbox}
 
-\section{Results at $T/T_{\rm BKT}=0.14$ (complete) and warmer (pending)}
+\section{Friction, transverse coefficient, diffusion}
 
-Eight runs (antiparallel pairs, $d_0=8$ and $12$, $2000$ time units, corrected imprint, raw detection with
-sub-grid refinement):
+\paragraph{The coldest temperature, in detail.} Eight runs at $T/T_{\rm BKT}=0.14$ (antiparallel pairs, $d_0=8$
+and $12$, $2000$ time units, corrected imprint, raw detection with sub-grid refinement):
 \begin{center}\small
 \begin{tabular}{lccc}
 \toprule
@@ -138,41 +137,84 @@ sub-grid refinement):
 \midrule
 $\alpha$, energy estimator & $0.0057\pm0.0006$ & $0.0063\pm0.0011$ & $\mathbf{0.0062\pm0.0004}$ \\
 $\alpha$, regression & $0.0059\pm0.0005$ & $0.0063\pm0.0010$ & $0.0065\pm0.0004$ \\
-$\alpha'$ & $-0.014\pm0.002$ & $-0.004\pm0.002$ & $\mathbf{-0.010\pm0.002}$ \\
-$\eta$ (not quoted: exponent $0.71$) & --- & --- & ($3.7\times10^{-4}$ if read; Einstein $1.2\times10^{-4}$) \\
+$\alpha'$, raw (before the $T=0$ baseline of the next paragraph) & $-0.014\pm0.002$ & $-0.004\pm0.002$ & $-0.010\pm0.002$ \\
 \bottomrule
 \end{tabular}
 \end{center}
 Friction is $17\times$ the $T=0$ floor, within a factor two of~\cite{Shukla2014} interpolated to this temperature
-and of an independent configuration of this programme (eight imprinted vortices, $\alpha=0.0056$), and shows no
-pair-size dependence (criterion F1$'$: ratio $0.91$, window $[0.7,1.43]$). The transverse coefficient is small and
-\emph{negative}: vortices move $1\%$ faster than the torus point-vortex velocity. Two facts bear on its reading
-before any Iordanskii-versus-no-force statement: $\alpha'$ differs between the two pair sizes by five standard
-errors, and at $T=0$ a pair of separation $3$--$6$ already moves $5\%$ faster than the point-vortex prediction
-(compressible correction to the pair speed; measured here on $60$-time-unit runs, credible only for tight pairs).
-The registered test regresses $\alpha'$ on $\rho_n/\rho$ over three temperatures; the $T=0$ baseline must be
-subtracted size by size. Residual motion is sub-diffusive on these time scales (exponent $0.71$), so by the
-registered rule $\eta$ is not quoted at this temperature.
+and of an independent configuration of this programme (eight imprinted vortices, $\alpha=0.0056$). The raw
+$\alpha'$ differs between the two pair sizes by five standard errors --- the first sign that it contains a
+size-dependent $T=0$ term, treated below.
 
-\paragraph{Warmer temperatures.} The first production pass at $T/T_{\rm BKT}=0.27,0.43,0.56$ produced no data:
-thermal jitter of the detected core exceeds the $1.5$ tracking radius (per-sample displacement 95th percentile
-$0.98$--$1.0$ against $0.60$ at $0.14$), and every track was lost inside the settling window (amendment A1.2,
-radius $3.0$, nothing else changed). The repeat finished with usable tracks ($556$--$2000$ time units at $0.27$,
-three natural annihilations; $118$--$729$ at $0.43$). \PENDING{registered F2, F3, the $\alpha'$ regression and
-$R_E$ --- to be computed by the rules as written}.
+\paragraph{Three temperatures.} The first production pass at $T/T_{\rm BKT}=0.27,0.43,0.56$ produced no data
+(thermal jitter of the detected core exceeded the tracking radius inside the settling window; amendment A1.2,
+radius $3.0$, nothing else changed) and was repeated. Friction, energy estimator (regression in parentheses):
+\begin{center}\small
+\begin{tabular}{lcccc}
+\toprule
+$T/T_{\rm BKT}$ & $\rho_n/\rho$ & $\alpha$ & $\alpha(d_0{=}8)/\alpha(d_0{=}12)$ & $\alpha/(\rho_n/\rho)$\\
+\midrule
+0.14 & 0.027 & $0.0062\pm0.0004$ ($0.0065$) & 0.91 & 0.23\\
+0.27 & 0.053 & $0.0138\pm0.0023$ ($0.0156$) & 0.76 & 0.26\\
+0.43 (base flagged: thermal vortices in $>5\%$ of samples) & 0.094 & $0.021\pm0.014$ ($0.024$) & 1.04 & 0.22\\
+\bottomrule
+\end{tabular}
+\end{center}
+The three registered criteria pass: no intrinsic size dependence (ratios in $[0.7,1.43]$), monotone in $T$, the two
+estimators within $25\%$. Not pre-registered, and the cleanest statement of the data: $\alpha\approx0.24\,\rho_n/\rho$
+at all three temperatures. Against the literature, $0.0062$ at $0.14\,T_{\rm BKT}$ is a factor two below the
+interpolation of~\cite{Shukla2014} (whose $T_{\rm BKT}$ is itself uncertain); at $0.27$ and $0.43$ no closed-field
+value existed, and ours lie in the range of the atomic-gas measurements~\cite{Moon2015} and above the unitary-gas
+value~\cite{Kwon2021}.
+
+\paragraph{Transverse coefficient.} Registered estimator: weighted regression of $\hat\alpha'$ on $\rho_n/\rho$ over
+the three temperatures and $T=0$. Values $+0.0014$, $-0.0100\pm0.0015$, $-0.0154\pm0.0029$, $-0.0093\pm0.0106$;
+slope $b=-0.31\pm0.05$. By the rule, ``no transverse force'' (the Iordanskii window $b\in[0.6,1.4]$ is excluded at
+$18\sigma$); \textbf{the registered prediction --- Iordanskii-like --- is refuted.} The raw $\alpha'$ is negative at
+$7\sigma$ and $5\sigma$, which neither theory predicts; two post-hoc controls (estimator unchanged in the verdict)
+account for it. In a periodic box a single pair carries net momentum, so the fluid has a mean velocity $u=P/nL^2$
+absent from the point-vortex prediction; in the fluid frame a $T=0$ pair moves at the torus point-vortex speed to
+$+0.4\%$ for $d\ge8$, $+1\%$ at $d=6$ and $+3$--$4\%$ at $d=3$--$4$ (the Jones--Roberts compressible correction;
+production runs have $|u|\le2\times10^{-3}$ and two counter-moving pairs, so the frame correction to them is
+$\le0.0002$). Subtracting that $T=0$ baseline at the matched pair sizes leaves $\alpha'=-0.006$, $-0.011$, $-0.006$
+with a mapping uncertainty of the same order: \textbf{$\alpha'=0$ within about $1\%$}, and the Iordanskii values
+$+2.7\%$, $+5.3\%$, $+9.4\%$ are excluded. The round-3 configuration (eight imprinted vortices, $d=16$) gives
+$1-\alpha'=1.0012$, consistent.
+
+\paragraph{Diffusion and the Einstein relation.} $\eta$ from the residuals of the two-coefficient regression
+against lag, quoted only where the scaling exponent lies in $[0.8,1.2]$ (rule E2):
+$3.7\times10^{-4}$ (exponent $0.71$, not quoted), $(1.08\pm0.35)\times10^{-3}$ ($0.82$, quoted),
+$(1.8\pm0.4)\times10^{-3}$ ($1.28$, not quoted). With $K=2\pi n_s/T$, $R_E=\eta K/\alpha=3.2,\,\mathbf{2.1\pm0.7},\,1.4$.
+\textbf{Verdict by the registered rule: inconclusive} (one admitted temperature; two required). Informally and
+against the rule, the vortex diffuses at $1.4$--$3$ times the Einstein value, decreasing with temperature --- not
+the $100\times$ of~\cite{Neely2024} and not clearly $1$. The exponents are the reason for caution, and were examined
+after the fact (amendment E-A1, filed after the analysis it concerns and labelled a retrodiction): over lags
+$20$--$400$ the exponent rises with $T$ ($0.71\to0.82\to1.28$), but over lags $\ge100$ the two cooler temperatures
+give $1.1$--$1.2$; the sub-diffusion at $0.14\,T_{\rm BKT}$ is a short-lag regime, not a bounded orbit. The
+machine-checked statement behind that reading is one-directional: a finite quasi-periodic sum has a bounded
+mean-square increment, so growth refutes a regular island and a plateau never proves one
+(\lean{QuasiPeriodicBound.lean}).
 
 \section{The phonon wind of a closed box}\label{sec:wind}
 
 A pair of separation $d$ carries impulse $2\pi\rho_sd$; in a periodic box its decrease has nowhere to go but the
-phonons, which then drift at $u=2\pi\rho_s(d_0-d)/(\rho_nL^2)$ and reduce the friction drive:
-$\dot d=-2\alpha(1/d-u)$, which stalls at $b=[d_0+(d_0^2-2\rho_nL^2/\pi\rho_s)^{1/2}]/2$ when the root is real
-(\lean{wind\_stall}, machine-checked). At $T/T_{\rm BKT}=0.14$, $L=64$: $d_0=12$ should stall (predicted $b=10.2$),
-$d_0=8$ should not. Two single-pair runs with the corrected imprint, $4000$ time units: both pairs stop shrinking
---- one at $9.3$ after $2000$ units, one re-expands from $10.2$ to $11.2$ --- while antiparallel pairs at the same
-temperature shrink steadily from $10$ to $7$--$8$; the momentum in the phonon band grows with the impulse the pair
-loses, slopes $0.68$ and $0.52$ (registered window $[0.5,1.2]$). The plateau is below the predicted $10.2$. The
-decisive test, the same pair in an $L=96$ box where no stall is predicted, has not been run. If the mechanism
-holds, closed-box friction measurements on single pairs at low temperature are contaminated unless
+phonons, which then drift at $u=2\pi\rho_s(d_0-d)/(\rho_nL^2)$ and reduce the friction drive,
+$\dot d=-2\alpha(1/d-u)$, stalling at $b=[d_0+(d_0^2-2\rho_nL^2/\pi\rho_s)^{1/2}]/2$ when the root is real
+(\lean{wind\_stall}). At $T/T_{\rm BKT}=0.14$, $L=64$, $d_0=12$ should stall ($b=10.2$ in the plane formula,
+$\approx9$ torus-corrected) and $d_0=8$ should not. Two single-pair runs of $4000$ time units: neither pair
+annihilates; one shrinks $11.6\to9.3$ and stays there (late $d^2$ slope $4\%$ of the early one: criterion W1
+met), the other shrinks $11.2\to10.2$ and re-expands to $11.2$ (W1 failed by the letter, the pair moving back toward
+the stall point); the momentum of the modes with $|k|>1$ follows the impulse the pair sheds with slopes $0.68$ and
+$0.52$ (W3, window $[0.5,1.2]$, met), falling back when the pair re-expands. Zero-impulse pairs at the same
+temperature shrink steadily from $10$ to $7$--$8$. The decisive control --- the same pair in an $L=96$ box, where
+no stall is predicted --- has not been run; the hypothesis is \textbf{unresolved with first support}. Its object
+has a precedent: in the truncated GPE a thermal cloud with net momentum relative to the condensate is a metastable
+state decaying by Arrhenius ring nucleation~\cite{KrstulovicBrachet2011}; ours would be the same counterflow,
+self-generated by a shrinking pair. On the torus the zero-circulation dipole is a relative equilibrium of the
+point-vortex flow~\cite{ModinViviani2020}, so the wobble of the stalled pair is bath-driven by theorem; its spectrum
+over $t\in[2000,4000]$ puts only $32$--$36\%$ of the variance in three lines, led by the slowest resolvable
+frequency: a stalled equilibrium perturbed by a bath, not a quasi-periodic orbit. If the mechanism holds,
+closed-box friction measurements on single pairs at low temperature are contaminated unless
 $\rho_nL^2\gg\pi\rho_sd_0^2/2$ --- a condition the literature's truncated-GPE measurements should be checked against.
 
 \section{Box-scale vortex charge, equilibration and the stiffness estimator}
@@ -189,20 +231,29 @@ initial relaxation. Equilibrium finite-size stiffness is monotone in $L$~\cite{P
 coarsening under conservative dynamics gives $z\approx1.7$--$1.8$~\cite{GroszekBillam2026} ($L^2\ln L$ for
 dissipative XY~\cite{Bray2000,JelicCugliandolo2011}; $L^2/\ln L$ Hamiltonian XY~\cite{Nam2012}), so the warm-up that
 cured $L=128$ should scale to $\approx11\,000$--$14\,600$ at $L=192$. Registered before the runs: continuing the six
-$L=192$ trajectories to $t=14\,500$ should admit at least five of six, bring the vortex transverse current below
-$0.45$ in every admitted run, and drop it by at least $2\times$ in the two anomalous ones. Three of six are in:
+$L=192$ trajectories to $t=14\,500$ should admit at least five of six (E1), bring the vortex transverse current below
+$0.45$ in every admitted run (E2), and drop it by at least $2\times$ in the two anomalous ones (E3):
 \begin{center}\small
-\begin{tabular}{lcccc}
+\begin{tabular}{lccc}
 \toprule
-run & admitted & $R_T^{\rm vortex}$: $t\in[6000,7000]\to[13500,14500]$ & $n_s/n$ & $\eta_{g_1}K-1$ \\
+run & admitted & $R_T^{\rm vortex}$: $[6000,7000]\to[13\,500,14\,500]$ & $n_s/n$ \\
 \midrule
-e1.00 s11 (was anomalous) & yes & $1.98\to0.07$ & $-0.38\to+0.81$ & $+0.26$ \\
-e1.00 s12 & yes & $0.65\to0.08$ & $+0.49\to+0.77$ & $+0.13$ \\
-e1.10 s12 & yes & $0.74\to0.19$ & $+0.41\to+0.80$ & $+0.51$ \\
+e1.00 s11 (anomalous) & yes & $1.98\to0.07$ ($\div27$) & $-0.38\to+0.81$ \\
+e1.00 s12 & yes & $0.65\to0.08$ & $+0.49\to+0.77$ \\
+e1.10 s11 (anomalous) & yes & $3.38\to0.80$ ($\div4.2$) & $-0.96\to+0.34$ \\
+e1.10 s12 & yes & $0.74\to0.19$ & $+0.41\to+0.80$ \\
+e1.20 s11 & yes & $0.55\to0.38$ & $+0.56\to+0.61$ \\
+e1.20 s12 & yes & $0.44\to0.41$ & $+0.73\to+0.74$ \\
 \bottomrule
 \end{tabular}
 \end{center}
-\PENDING{the other three runs, including the second anomalous one; verdict by the registered rule}.
+\textbf{E1 pass (6/6), E3 pass, E2 fail on one run} (e1.10 s11, still at $0.80$ with $K=3.5$ against its partner's
+$8.3$): the box-scale charge decays as the mechanism says in every run, and the equilibration time of an $L=192$ box
+at this temperature exceeds $13\,500$ for some trajectories --- above the $L^2$ and $z\approx1.7$ estimates, as
+the $L^2\ln L$ form would have it; one trajectory is one trajectory. The offsets $\eta_{g_1}K-1$ on the
+equilibrated window are $+0.20,+0.16,+0.30$ ($e=1.00,1.10,1.20$): positive at every size and energy once
+equilibrated, so the earlier ``saturation'' verdict rested on under-equilibrated states, and the $L=128$ states fall
+under the same suspicion.
 
 \paragraph{Josephson relation.} On these equilibrated $L=192$ states the coherence exponent fitted with the exact
 torus Green function on $r\in[8,32]$ gives $\eta_{g_1}K-1=+0.31\pm0.11$, unchanged by the fit window ($16$--$48$)
@@ -216,61 +267,76 @@ of the bare stiffness by amplitude fluctuations. Reported, not explained; the ea
 \section{The finite-wavevector dielectric relation}
 
 Pre-registered claims: mode by mode and snapshot by snapshot, $J_T(k)=n_{\rm eff}\,(2\pi i\rho_q(k)/|k|)$ plus a
-phonon part uncorrelated with $\rho_q$ (coherence $\gamma^2\ge0.4$ on every shell $|m|^2\le16$ in $\ge5$ of 6 runs),
-with one real $k$-independent $n_{\rm eff}$. Five gate runs on imprinted pair gases failed as written and are on
-file; the coherence criterion passed in all five ($\gamma^2=1.000$ at $T=0$ with the corrected imprint, residual
-power $10^{-4}$): the relation exists mode by mode. What moved was the amplitude's known answer: it is not~$1$ for
-pairs of finite size but rises with pair size, $0.922,0.971,0.991$ at $d=5,8,14$ (density is depleted where the
-flow is fast, so a tight pair carries less current than two point vortices); a static Bernoulli form factor is
-low by $0.02$--$0.04$. For pairs of polarisation form $\rho_q(k)=i\mathbf k\!\cdot\!\mathbf P(k)$ with explicit
-remainder, and the $k$-independent ceiling of the bound-pair response, see \lean{PairPolarisation.lean}.
-\PENDING{D1, D2 on the six equilibrated $L=192$ runs; $n_{\rm eff}$ against the three registered closures with
-no favourite}. The size dependence has a consequence worth stating now: thermal pairs sit at $d\approx1$--$3$, where
-the amplitude is $\lesssim0.9$, so part of the stiffness reduction attributed to vortices near $T_{\rm BKT}$ is
-compressible, not Coulomb-gas.
+phonon part uncorrelated with $\rho_q$ (D1: coherence $\gamma^2\ge0.4$ on every shell $|m|^2\le16$ in $\ge5$ of 6
+runs), with one real $k$-independent $n_{\rm eff}$ (D2); and (D4) the plateau of $\langle|\rho_q(k)|^2\rangle/k^2$
+equal to $\Sigma_{\rm pairs}d^2/2$ from the minimum-cost matching of the detected vortices, within $30\%$. Five gate
+runs on imprinted pair gases failed on the amplitude's known answer and are on file; the coherence criterion
+passed in all five ($\gamma^2=1.000$ at $T=0$ with the corrected imprint): the relation exists for an imprinted pair
+gas, with an amplitude that rises with pair size ($0.922,0.971,0.991$ at $d=5,8,14$ --- a tight pair carries less
+current than two point vortices). On the six equilibrated $L=192$ states ($170$--$830$ vortices, almost all in
+tight pairs, $T/T_{\rm BKT}\approx0.6$--$0.85$):
+\textbf{D1 fails (1 of 6), D2 fails (1 of 6), D4 passes ($0.79$--$0.95$ in all five runs without a box-scale pair).}
+The coherence between the transverse current and the detected charge density at the same $k$ and $t$ is
+$0.06$--$0.28$; the one run that passes is the one still carrying a box-scale pair. So the $r=0.996$ of the
+diagnosis above and the $0.987$ of the triage probe were, as the pre-registration itself warned, correlations of
+run-averaged powers carried by box-scale pairs: the diagnostic detects one unscreened pair and does not extend to a
+dielectric function of the thermal pair gas. What survives is D4: the bound-pair gas has a $k$-independent
+charge structure factor out to $k\xi\approx0.13$ whose value is the Kosterlitz--Thouless polarisability
+$\varepsilon-1\propto\Sigma d^2$ computed from the measured pair sizes, $5$--$21\%$ lower (screening of dipoles by
+dipoles), read directly from vortex positions in a Bose field~\cite{KosterlitzThouless1973,Kosterlitz1974,FanWilliams2022}.
+How much of the stiffness that polarisability accounts for is what D1's failure leaves open; the first analysis
+code carried a $k^2$ unit error in D4, corrected to the registered formula before anything else was changed.
 
 \section{What this establishes, and what it does not}
 
 \begin{keybox}
-\textbf{Established.}
+\textbf{Established (pre-registered criteria, or controls stated as such).}
 \begin{itemize}[leftmargin=*]
-\item At $T=0$ a vortex pair in the projected GPE neither shrinks nor diffuses over $400$ time units and moves at
-  the torus point-vortex velocity to $0.14\%$; tight pairs ($d\le6$) move $5\%$ faster.
-\item At $T/T_{\rm BKT}=0.14$: $\alpha=0.0062\pm0.0004$ by two estimators that agree, no pair-size dependence,
-  $\alpha'=-0.010\pm0.002$; the fluctuation of the separation is sub-diffusive on $2000$ time units.
-\item The depressed-stiffness states of finite boxes are not vortex clusters; they carry one unscreened box-scale
-  pair whose transverse current accounts for the measured one ($r=0.996$); given $L^{z}$-scaled time it decays by
-  $3$--$28\times$ (three of six runs).
+\item At $T=0$ a vortex pair neither shrinks nor diffuses over $400$ time units and moves at the torus point-vortex
+  velocity to $0.14\%$ in the fluid frame; tight pairs ($d\le6$) move $1$--$4\%$ faster (compressible correction).
+\item $\alpha(T)=0.0062(4),\,0.014(2),\,0.02(1)$ at $T/T_{\rm BKT}=0.14,0.27,0.43$, size- and estimator-independent;
+  $\alpha\approx0.24\,\rho_n/\rho$.
+\item $\alpha'$ is not Iordanskii-like ($18\sigma$); after the $T=0$ baseline it is zero within $\sim1\%$.
+\item The depressed-stiffness states of finite boxes carry one unscreened box-scale pair, not clusters; given
+  $L^z$-scaled time it decays by $4$--$27\times$ (six of six admitted; one trajectory not finished at $14\,500$).
+\item The vortex-charge structure factor of the thermal pair gas is $k$-independent and equals the
+  Kosterlitz--Thouless polarisability from the measured pair sizes to $5$--$21\%$.
 \item The Josephson offset $\eta_{g_1}K-1=+0.31\pm0.11$ survives at $L=192$ in equilibrium, independent of window
   and torus geometry.
-\item The transverse current of a pair gas is the point-vortex term mode by mode (coherence $1.000$ at $T=0$,
-  $0.99$ at $0.14\,T_{\rm BKT}$), with an amplitude that depends on pair size.
-\item Theorems: energy dissipation of any skew-plus-gradient vortex flow, the $d^2$ law and its lifetime bound, the
-  centre-velocity identity, the wind stall, the zero-flux/Einstein equivalence, the pair-polarisation form and
-  response ceiling, the charge-density/matching bound and the Kosterlitz-flow invariant (all standard axioms).
+\item Theorems (standard axioms): energy dissipation of any skew-plus-gradient vortex flow, the $d^2$ law and
+  lifetime bound, the centre-velocity identity, the wind stall, the zero-flux/Einstein equivalence, the
+  pair-polarisation form and response ceiling, the charge-density/matching bound, the Kosterlitz-flow invariant,
+  and the bounded increments of quasi-periodic signals.
 \end{itemize}
 \end{keybox}
 \begin{failbox}
-\textbf{Not established.}
+\textbf{Refuted, inconclusive, or not established.}
 \begin{itemize}[leftmargin=*]
-\item $\alpha(T)$ above $0.14\,T_{\rm BKT}$, the $\alpha'$ regression, and the Einstein relation: the data exist,
-  the registered analysis has not been run.
-\item The phonon-wind mechanism: two single pairs stall as predicted in direction, not in value; the $L=96$
-  control does not exist.
-\item The cause of the Josephson offset; the quantitative form factor of a pair's current.
-\item Whether $\alpha'<0$ is a normal-fluid force or a compressible correction to the pair speed: separable only
-  after the $T=0$ baseline is measured over $100$--$400$ time units at each size.
-\item Anything about quantum gases or helium: this is a Rayleigh--Jeans field with one cutoff, $mg=1$, two
-  dimensions.
+\item \emph{Refuted:} the registered Iordanskii-like prediction for $\alpha'$; the mode-by-mode dielectric relation
+  in the thermal pair gas; the Onsager-cluster reading of the depressed-stiffness states; the earlier
+  ``saturation'' reading of the finite-size offset.
+\item \emph{Inconclusive by rule:} the Einstein relation (one admitted temperature; $1.4$--$3\times$ informally).
+\item \emph{Unresolved:} the phonon-wind mechanism (first support; $L=96$ control missing); the cause of the
+  Josephson offset; the current carried by tight thermal pairs; why $\alpha\propto\rho_n$ with coefficient $0.24$.
+\item \emph{Scope:} a Rayleigh--Jeans field with one cutoff, $mg=1$, two dimensions; nothing about quantum gases or
+  helium follows without a cutoff study.
 \end{itemize}
 \end{failbox}
 
+\paragraph{Method, in one paragraph.} The point-vortex model is a variational projection of the field onto the
+manifold of vortex positions; the coefficients measured here are the statistics of the field's leak out of that
+manifold --- the same object that a recent many-body experiment reads from the other end, by projecting a quantum
+state back onto a variational manifold at every step and asking how much coherence survives~\cite{Dong2026}. The
+hypotheses tested here were themselves ranked by an automated five-minute-probe loop under priors fixed before
+any probe ran, and the literature behind the design is a local database of $774$ entries ($382$ arXiv identifiers
+verified against the arXiv API), described in the repository.
+
 \paragraph{Process record.} Three gate failures on the transport instrument (one generator, two imprint), one
 withdrawn gate verdict, one tracking amendment after a production pass with no data; five dielectric gate failures
-on the amplitude's known answer with the coherence criterion untouched; every hypothesis ranked by a five-minute
-probe under priors fixed before the probe, with the ranking's sensitivity reported. Data, code, pre-registrations
-and the Lean sources are in the repository; the literature base behind the design (773 entries, 382 arXiv
-identifiers verified against the arXiv API) is described in \texttt{docs/designs/LITERATURE\_REVIEW\_2026-10.md}.
+on the amplitude's known answer with the coherence criterion untouched; one registered prediction refuted, one
+inconclusive by rule, one amendment filed after the analysis it concerned and labelled a retrodiction; one unit
+error in analysis code caught and corrected before use. Data, code, pre-registrations, the ledger of claims and the
+Lean sources are in the repository.
 
 \bibliographystyle{unsrt}
 \bibliography{refs_vortex_transport}
