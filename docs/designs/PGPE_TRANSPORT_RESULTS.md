@@ -154,3 +154,33 @@ tight-pair values become +4 % (d = 3), +3 % (4), +1 % (5), ≈ 0 (6), consistent
   fluctuation of a stalled pair, which is at least consistent with a pair wandering about a stall point under a
   wind that itself responds to the pair (hypothesis W), and is what sub-diffusion with γ ≈ 0.7 looks like in the
   frequency domain.
+
+## W2 — the L = 96 control (2026-10-07, first two runs; two more added by the registered tie-break rule)
+
+Base `transport/base_L96_e0.60` (T = 0.110, `n_s/n = 0.971`, no thermal vortex; `C_96 = ρ_nL²/(2πρ_s) = 44.3 > d₀²/4 = 36`:
+no stall predicted by the plane criterion). Two single pairs, `d₀ = 12`, 4000 time units, corrected imprint.
+
+| run | d at t = 1000 / 2000 / 3000 / 4000 | early `d²` slope | late `d²` slope | W2 criterion (late ≥ 50 % of early, or annihilation) |
+|---|---|---|---|---|
+| 1 | 10.45 / 10.95 / 9.70 / 9.25 | −0.0025 | −0.0140 | met (no stall) |
+| 2 | 10.28 / 10.15 / 9.62 / 9.56 | −0.0794 | +0.0092 | not met (stall-like) |
+
+**By the registered rule the two runs disagree: W2 is inconclusive, and two more L = 96 runs were launched
+(`s3`, `s4`) before anything else, as the counterflow pre-registration prescribes.** The verdict will be taken on
+the four.
+
+Quantitative comparison (post hoc relative to the binary criterion; no free parameter): integrating the wind
+equation `ḋ = −2α[1/d − 2πρ_s(d₀−d)/(ρ_nL²)]` with the friction measured on the zero-impulse pairs,
+`α = 0.0062`, from each run's own `d(t≈120)`:
+
+| | measured d(4000) | wind model | free shrinking (no wind) |
+|---|---|---|---|
+| L = 64, run 1 | 8.96 | 10.1 | 6.2 |
+| L = 64, run 2 | 11.33 | 9.65 | 5.5 |
+| L = 96, run 1 | 9.25 | 8.0 | 5.3 |
+| L = 96, run 2 | 9.56 | 8.7 | 6.3 |
+
+At both box sizes the pairs end 3–5 above free shrinking and within about 1–1.5 of the wind model, which predicts
+no full stall at L = 96 but a drive halved by the drift once the pair has shed two units of separation — which is
+what the L = 96 pairs do. The binary criterion was written for a full stall and does not resolve a graded
+suppression; the graded prediction is what the counterflow pre-registration's stall map (C1–C2) will test.

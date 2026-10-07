@@ -65,8 +65,20 @@ for f, col in zip(sorted(glob.glob(str(T / "G2_e0.60_antiparallel_d10_s*.npz")))
     for i in range(2):
         grow = np.nonzero(d[i] > 11.0)[0]; n_i = min(n_ok, int(grow[0])) if len(grow) else n_ok      # the original pairing stops being the physical one at the exchange
         ax[0].plot(t[:n_i], sm(d[i])[:n_i], color=col, lw=0.9, alpha=0.9, label=("zero-impulse pairs (two runs, until partner exchange)" if (i == 0 and col == C["orange"]) else None))
-ax[0].axhline(10.2, color=C["grey"], ls=":", lw=0.8); ax[0].text(2500, 10.45, "predicted stall (plane formula)", fontsize=7, color=C["grey"])
-ax[0].set_xlabel("time"); ax[0].set_ylabel(r"pair separation $d$ (25-unit running mean)"); ax[0].set_ylim(5, 13); ax[0].set_xlim(0, 4000); ax[0].legend(frameon=False, loc="lower left", fontsize=7)
+# L = 96 controls (W2) and the parameter-free prediction of the wind model with the independently measured alpha
+alpha = 0.0062
+def w_ode(d0, Lb, rho_n, rho_s, t_end=4000.0, wind=True):
+    Cc = 2 * np.pi * rho_s / (rho_n * Lb ** 2); d = d0; out = [d]; dt = 0.5
+    for _ in range(int(t_end / dt)):
+        d += dt * (-2 * alpha * (1 / d - (Cc * (d0 - d) if wind else 0.0))); out.append(max(d, 0.1))
+    return np.arange(0, t_end + dt, dt)[:len(out)], np.array(out)
+for f, col in zip(sorted(glob.glob(str(T / "W2_L96_e0.60_dipole_d12_s*.npz"))), (C["grey"], "#9c6b9c", "#5a7d9a", "#8a8a3a")):
+    t, R, q, z, meta = load(f); d = pair_separations(R, q, 96.0)[0]
+    ax[0].plot(t, sm(d), color=col, lw=0.9, ls="-.", label=(r"single pairs, $L=96$ (controls)" if f.endswith("s1.npz") else None))
+tt, pw = w_ode(11.5, 64.0, 0.027, 0.973); ax[0].plot(tt + 120, pw, "k:", lw=1.2, label=r"wind model, $L=64$ (no free parameter)")
+tt, pw = w_ode(11.5, 96.0, 0.0293, 0.9707); ax[0].plot(tt + 120, pw, "k--", lw=1.0, label=r"wind model, $L=96$")
+tt, pf = w_ode(11.5, 64.0, 0.027, 0.973, wind=False); ax[0].plot(tt + 120, pf, color=C["grey"], ls=":", lw=1.0, label=r"free shrinking $d^2=d_0^2-4\alpha t$")
+ax[0].set_xlabel("time"); ax[0].set_ylabel(r"pair separation $d$ (25-unit running mean)"); ax[0].set_ylim(4.5, 13); ax[0].set_xlim(0, 4000); ax[0].legend(frameon=False, loc="lower left", fontsize=6)
 ax[1].axhline(0, color="k", lw=0.5); ax[1].set_xlabel("time"); ax[1].set_ylabel("momentum (running mean)"); ax[1].set_xlim(0, 4000); ax[1].legend(frameon=False, fontsize=6.5, loc="upper left")
 fig.tight_layout(); fig.savefig(FIG / "vt_fig3_wind.pdf"); plt.close(fig)
 
