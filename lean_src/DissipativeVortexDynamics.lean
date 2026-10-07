@@ -190,6 +190,40 @@ theorem wind_stall {a b c : ℝ} (ha : 0 < a) (hab : a < b) (hc : 0 < c) (d : �
   have h' : -d t ≤ -(b - ε) := hfence ⟨ht, le_refl t⟩
   linarith
 
+/-- General form (torus drive, PGPE_COUNTERFLOW_PREREG.md): `d' = −c · g(d)` for ANY drive `g` that is negative on an
+interval `(a, b)` just below the stall point `b` -- e.g. `g(d) = v_pair(d) − u(d)` with the torus pair speed and the
+measured momentum factor. A pair starting at or above `b` never falls below `b`. -/
+theorem stall_of_drive_sign {a b c : ℝ} (hab : a < b) (hc : 0 < c) (g : ℝ → ℝ) (hg : ∀ x, a < x → x < b → g x < 0)
+    (d : ℝ → ℝ) (hd : ∀ t, HasDerivAt d (-c * g (d t)) t) (h0 : b ≤ d 0) :
+    ∀ t, 0 ≤ t → b ≤ d t := by
+  intro t ht
+  by_contra hlt
+  push Not at hlt
+  set ε := min ((b - d t) / 2) ((b - a) / 2) with hε
+  have hεpos : 0 < ε := lt_min (by linarith) (by linarith)
+  have hε1 : ε ≤ (b - d t) / 2 := min_le_left _ _
+  have hε2 : ε ≤ (b - a) / 2 := min_le_right _ _
+  have hfence : ∀ ⦃x⦄, x ∈ Icc (0 : ℝ) t → (fun s => -d s) x ≤ (fun _ => -(b - ε)) x := by
+    refine image_le_of_deriv_right_lt_deriv_boundary (f' := fun s => -(-c * g (d s)))
+      (B' := fun _ => 0) (fun x _ => (hd x).neg.continuousAt.continuousWithinAt)
+      (fun x _ => (hd x).neg.hasDerivWithinAt) (show -d 0 ≤ -(b - ε) by linarith)
+      (fun x => hasDerivAt_const x _) ?_
+    intro x _ hx
+    have hx' : -d x = -(b - ε) := hx
+    have hdx : d x = b - ε := by linarith
+    have hneg : g (d x) < 0 := hg _ (by rw [hdx]; linarith) (by rw [hdx]; linarith)
+    have : 0 < -c * g (d x) := by nlinarith
+    show -(-c * g (d x)) < 0
+    linarith
+  have h' : -d t ≤ -(b - ε) := hfence ⟨ht, le_refl t⟩
+  linarith
+
+/-- The plane case is the instance `g(x) = (x − a)(x − b)/x` of the general theorem. -/
+example {a b c : ℝ} (ha : 0 < a) (hab : a < b) (hc : 0 < c) (d : ℝ → ℝ)
+    (hd : ∀ t, HasDerivAt d (-c * ((d t - a) * (d t - b) / d t)) t) (h0 : b ≤ d 0) : ∀ t, 0 ≤ t → b ≤ d t :=
+  stall_of_drive_sign hab hc (fun x => (x - a) * (x - b) / x)
+    (fun x hax hxb => div_neg_of_neg_of_pos (mul_neg_of_pos_of_neg (by linarith) (by linarith)) (by linarith)) d hd h0
+
 /-- Negative control: the hypothesis `b ≤ d 0` cannot be dropped -- the constant flow at the lower zero `a` is a
 solution that stays strictly below `b`. -/
 example {a b c : ℝ} (hab : a < b) :
