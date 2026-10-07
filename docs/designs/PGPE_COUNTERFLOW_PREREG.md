@@ -46,7 +46,15 @@ If one of the four runs fails (tracking lost, crash), the rule is applied to the
 workflow `scripts/night_publish_v2.py` applies exactly this rule and fills the paper's pending sentences from
 templates written before the data (one per outcome).
 
-## Campaign (conditional), frozen now
+### Outcome (2026-10-08 01:10, read by the night workflow)
+
+**REFUTED: 1 of 4 runs meets the no-stall criterion** (run 1; runs 2–4: late/early d² slope reversed, 0.10, 0.37;
+CLAIM-092). The box mechanism is withdrawn as the cause of the stall; the campaign below **does not run**; the
+friction-law campaign (`PGPE_FRICTION_LAW_PREREG.md`) runs first, the microcanonical bottleneck (R2-05) second.
+The parameter-free wind curve ends within 0.6–1.7 of all six pairs — consistent with a drift of the normal
+component, not evidence that it causes the stall. Paper v2 (10.5281/zenodo.23225101) and v2.1 (10.5281/zenodo.23225293).
+
+## Campaign (NOT RUNNING — kept as the pre-registered graded test, should the stall's cause be revisited)
 
 Single pairs, corrected imprint, raw detection with sub-grid refinement, 4000 time units, positions, total field
 momentum and band momentum `P_{|k|>1}` saved every time unit; occupation spectrum `n_k` saved every 100 time units.
