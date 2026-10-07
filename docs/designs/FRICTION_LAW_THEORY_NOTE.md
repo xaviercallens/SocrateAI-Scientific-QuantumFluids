@@ -39,22 +39,34 @@ vortex has a mode-averaged transport cross-section of **1.4 healing lengths** (c
 ## What this predicts for the cutoff dependence (the FL2 question)
 
 The coefficient depends on the cutoff only through the disk average of `σ_tr(k)`.
-- Long-wavelength phonons (`kξ ≪ 1`): Pitaevskii–Iordanskii scattering off the vortex velocity field (the
-  Aharonov–Bohm problem of sound) gives a transport cross-section that **grows with `k`** — the small-angle
-  divergence of the differential cross-section cancels in the transport one, leaving `σ_tr ∝ κ²k/c²` up to a
-  numerical factor. If this law held up to the cutoff, `⟨σ_tr⟩ ∝ k_c` and the coefficient would scale **linearly
-  with the cutoff** (the external direction R2's reading).
+- Long-wavelength phonons (`kξ ≪ 1`): Born scattering off the vortex velocity field (Pitaevskii 1959; Sonin,
+  PRB 55, 485 (1997), Eqs. 40 and 44, read 2026-10-07 21:40): amplitude
+  `a(φ) = ½√(k/2π)(κ/c) e^{iπ/4} sinφ cosφ/(1−cosφ)`, so `σ(φ)(1−cosφ) = (kκ²/8πc²)(1+cosφ)cos²φ` and the
+  transport cross-section is
+  ```
+  σ_∥(k) = κ² k / (8 c²)      (Born, valid for κk/c = 2πkξ ≪ 1)
+  ```
+  — it **grows linearly with `k`** (the small-angle divergence is integrable in `σ_∥`). The transverse one is
+  `σ_⊥ = κ/c`, `k`-independent, which is the Iordanskii force `D′ = ρ_n κ` that our `α′ ≈ 0` excludes.
+  Sonin's own validity condition is the Born parameter `κk/c ≪ 1`, i.e. `kξ ≪ 1/2π ≈ 0.16`: in our disk
+  (`k_c = π`) fewer than **3 %** of the modes satisfy it. Extrapolating the Born law over the whole disk anyway
+  gives `⟨σ_∥⟩ = κ²⟨k⟩/(8c²) = κ²k_c/(12c²) = π³/3 ≈ 10 ξ` at `k_c = π` — **seven times the measured 1.4 ξ**
+  (more with `c_g > c` at `kξ > 1`). So the measured coefficient is already far below the long-wavelength law: the
+  cross-section of the short-wavelength modes that dominate the bath is much smaller than the Born extrapolation.
+  If the Born law *did* hold to the cutoff the coefficient would scale **linearly with the cutoff**:
+  `c(2π/3) : c(π) : c(2π) = 0.67 : 1 : 2`.
 - Short wavelengths (`kξ ≳ 1`), which dominate the disk average for our cutoffs (`k_c = π`, so 90 % of the modes
   have `kξ > 1`): the excitation sees the density-depleted core, and the transport cross-section saturates at the
   **geometric** scale of the core, a few `ξ`. Then `⟨σ_tr⟩` is nearly cutoff-independent for `k_c ≳ 2/ξ`, and the
   coefficient is nearly universal across cutoffs in that range.
 - Our value, `⟨σ_tr⟩ = 1.4ξ`, is of the geometric size, which is the second regime.
 
-**Registered expectation for FL3 (recorded here before the runs):** the coefficient `c = α/(ρ_n/ρ)` falls
-moderately at `k_c = 2π/3` (fewer short-wavelength modes in the average, the long-wavelength `∝ k` law weighing
-more) and is nearly unchanged at `k_c = 2π`: a spread across the three cutoffs of order 10–30 %, i.e. at the edge
-of FL2's 20 % criterion, with the ordering `c(2π/3) < c(π) ≤ c(2π)`. A spread above 40 % that is linear in `k_c`
-would mean the long-wavelength law holds to the cutoff and the "geometric saturation" reading is wrong.
+**Registered expectation for FL3 (recorded here before the runs):** the coefficient `c = α/(ρ_n/ρ)` is nearly
+unchanged across the three cutoffs — a spread of order 10–30 %, at the edge of FL2's 20 % criterion, with the weak
+ordering `c(2π/3) ≤ c(π) ≤ c(2π)` (the Born-regime modes, which have the smallest cross-sections per unit `k` only
+at the very smallest `k`, weigh slightly more at the lowest cutoff). The sharp rival, from Sonin's Born law
+extended to the cutoff, is `c ∝ k_c`: `0.67 : 1 : 2`, a spread of 110 %. The two are separated by any measurement
+at the 20 % level, which the existing estimators give.
 
 ## What would settle `σ_tr(k)` directly (not part of the campaign; recorded as the obvious follow-up)
 

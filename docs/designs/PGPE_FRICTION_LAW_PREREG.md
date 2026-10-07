@@ -29,8 +29,10 @@ Estimated 30 CPU-hours plus 10 for the `dx = ξ/4` bases.
   logarithm of the cutoff energy, as a bath-dominated momentum transfer would give.
 - **FL3 (kinetic reading, computed before the runs — `FRICTION_LAW_THEORY_NOTE.md`).** `α/(ρ_n/ρ) = (ρ/ρ_s)⟨c_g σ_tr⟩/κ`,
   the disk-averaged transport cross-section of the vortex; the measured 0.232 means `⟨σ_tr⟩ = 1.4 ξ` (geometric
-  core size). Expectation recorded: `c(2π/3) < c(π) ≤ c(2π)` with a spread of 10–30 %; a spread above 40 % linear
-  in `k_c` would mean the long-wavelength `σ_tr ∝ k` law holds to the cutoff.
+  core size). Sonin's Born transport cross-section `σ_∥ = κ²k/(8c²)` (valid for `2πkξ ≪ 1`, i.e. < 3 % of our modes),
+  extrapolated over the disk, gives 10 ξ: seven times the measurement. Expectation recorded: `c` nearly constant
+  across cutoffs (spread 10–30 %, weak ordering `c(2π/3) ≤ c(π) ≤ c(2π)`); the rival is the Born scaling
+  `c ∝ k_c`, i.e. `0.67 : 1 : 2`.
 - **Report:** `α′` at each cutoff (with the T = 0 baseline of each); the residual exponents.
 
 Verdict: FL1 ∧ FL2 → the friction law is a property of the model's vortex–phonon interaction, usable at any cutoff
