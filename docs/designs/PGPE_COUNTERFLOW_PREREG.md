@@ -39,7 +39,7 @@ momentum and band momentum `P_{|k|>1}` saved every time unit; occupation spectru
 | 1–4 | 64 | 8, 10, 12, 14 | 16, 25, 36, 49 | 18.1 | no stall, stall, stall, stall |
 | 5–7 | 96 | 12, 14, 16 | 36, 49, 64 | 40.7 | no stall, stall, stall |
 | 8–9 | 128 | 16, 20 | 64, 100 | 72.4 | no stall, stall |
-| 10–11 | 64 at T/T_BKT = 0.27 (`ρ_n/ρ = 0.053`, `C_64 = 35.5`) | 10, 14 | 25, 49 | 35.5 | no stall, stall |
+| 10–11 | 64 at T/T_BKT = 0.27 (`ρ_n/ρ = 0.053`, `C_64 = 36.8`) | 10, 14 | 25, 49 | 36.8 | no stall, stall |
 
 Two runs per cell (seeds), 22 runs; estimated 60 CPU-hours.
 
