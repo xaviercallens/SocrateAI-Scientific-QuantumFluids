@@ -8,7 +8,10 @@ import argparse, os, subprocess, sys, time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]; OUT = ROOT / "data/generated/pgpe/transport/fl"
-JOBS = [(1 / 3, 128, e, 1500, 1000) for e in (0.54, 0.56, 0.58, 0.60)] + [(0.5, 256, e, 2500, 2000) for e in (0.90, 1.10, 1.30)]
+# calibration (smoke runs of 100 t.u., 2026-10-08 01:50-02:10): k_cut = 2pi/3, e = 0.555 -> T = 0.104 (the projected e = 0.60 state
+# has e = 0.545); k_cut = 2pi (N = 256), e = 1.00 -> T = 0.148, n_s/n = 0.924 (1052 s per 100 t.u. on a loaded machine).
+# Long N = 256 jobs first; the start is an equilibrated condensate so 1000 t.u. of transient is used at both cutoffs.
+JOBS = [(0.5, 256, e, 1500, 1000) for e in (0.80, 0.95, 1.10)] + [(1 / 3, 128, e, 1500, 1000) for e in (0.56, 0.60, 0.62, 0.66)]
 
 
 def main():
