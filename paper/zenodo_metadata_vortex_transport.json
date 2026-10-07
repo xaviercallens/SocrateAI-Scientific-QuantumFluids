@@ -1,0 +1,44 @@
+{
+ "metadata": {
+  "title": "Vortex transport and screening in a closed two-dimensional Bose field: friction, transverse force, diffusion and the finite-wavevector dielectric relation of quantized vortices, measured in an energy-conserving classical field with no reservoir and no fit parameter",
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "description": "<p>A quantized vortex in a thermal two-dimensional Bose gas is dragged by the normal fluid (friction &alpha;), pushed sideways by it (transverse coefficient &alpha;&prime;) and kicked by it (diffusion &eta;). We measure the three coefficients in the projected Gross-Pitaevskii equation &mdash; microcanonical, no damping term, no noise put in by hand &mdash; with sub-grid vortex tracking and estimators that are identities of the dissipative point-vortex model, machine-checked in Lean 4. Every hypothesis, gate and decision rule was committed before the corresponding run; the instrument failed its T = 0 control twice before it passed, an earlier gate verdict built on the flawed instrument is withdrawn, and both are reported.</p><p><b>Results.</b> At T/T<sub>BKT</sub> = 0.14, 0.27, 0.43: &alpha; = 0.0062(4), 0.014(2), 0.02(1), size- and estimator-independent, &alpha; &asymp; 0.24 &rho;<sub>n</sub>/&rho;. &alpha;&prime; is zero within 1% once the T = 0 compressible pair speed is subtracted; the Iordanskii value &rho;<sub>n</sub>/&rho; is excluded at 18&sigma; and the registered Iordanskii-like prediction is refuted. The Einstein relation is inconclusive by the registered rule (one admitted temperature at &eta;K/&alpha; = 2.1 &plusmn; 0.7; informally 1.4-3x, not 100x). Single pairs stop shrinking while the phonon band takes the impulse they shed (a self-generated counterflow with a published precedent in the truncated GPE); the decisive box-size control is not run. The single non-equilibrium pair that corrupts the superfluid-stiffness estimator in finite boxes decays by 4-27x given L<sup>z</sup>-scaled time (six of six L = 192 trajectories admitted, one unfinished at t = 14 500). The pre-registered mode-by-mode dielectric relation fails in the thermal pair gas (coherence 0.06-0.28), while the vortex-charge structure factor equals the Kosterlitz-Thouless polarisability &Sigma;d<sup>2</sup> from the measured pair sizes to 5-21%. The Josephson offset &eta;K &minus; 1 = +0.3 survives at L = 192 in equilibrium, independent of fit window and torus geometry.</p><p><b>Formal companions</b> (Lean 4 / Mathlib, standard axioms): energy dissipation of any skew-plus-gradient vortex flow, the d<sup>2</sup> law and lifetime bound, the centre-velocity identity, the wind stall, the zero-flux/Einstein equivalence, the pair-polarisation form and response ceiling, the charge-density/matching bound, the Kosterlitz-flow invariant, the bounded increments of quasi-periodic signals. Pre-registrations, amendments, gate records, data and code are in the software repository (concept DOI 10.5281/zenodo.22855581). No physics is claimed as new; the numbers, the refutations and the method are.</p>",
+  "creators": [
+   {
+    "name": "Callens, Xavier",
+    "affiliation": "SocrateAI Research"
+   }
+  ],
+  "keywords": [
+   "quantized vortices",
+   "mutual friction",
+   "Iordanskii force",
+   "Einstein relation",
+   "Berezinskii-Kosterlitz-Thouless",
+   "projected Gross-Pitaevskii equation",
+   "classical field",
+   "superfluid density",
+   "dielectric function",
+   "pre-registration",
+   "Lean 4",
+   "Mathlib",
+   "formal verification"
+  ],
+  "license": "CC-BY-4.0",
+  "access_right": "open",
+  "related_identifiers": [
+   {
+    "identifier": "10.5281/zenodo.22855581",
+    "relation": "isDerivedFrom",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids",
+    "relation": "isSupplementedBy",
+    "scheme": "url"
+   }
+  ],
+  "notes": "Registered verdicts: friction criteria pass; the Iordanskii-like prediction for the transverse coefficient is refuted; the Einstein relation is inconclusive by rule; equilibration predictions E1/E3 pass, E2 fails on one run; dielectric D1/D2 fail, D4 passes. One earlier gate verdict (CLAIM-075) is withdrawn in the text."
+ }
+}
