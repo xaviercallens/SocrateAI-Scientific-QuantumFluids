@@ -54,3 +54,31 @@ to `1 ± 0.1`, and what is concluded if none does.
 
 Not selected now, with reason: D3 (instrument-limited), D4 (closes a verdict rather than opening a question),
 D5 (competes with a group that has GPUs), D6 (a useful rule, but a rule).
+
+## Round 2 of the autoresearch loop (2026-10-07 07:30–08:10): the ten directions probed
+
+The seven directions above and the five external ones pasted by the owner (R1–R5) were merged into ten registered
+hypotheses with fixed priors (`exploration/autoresearch/round2/hypotheses.json`, committed before any probe) and
+probed under the round-1 rules (five minutes each, same score). `results.tsv` in that directory.
+
+| rank | id | direction | D | score | probe outcome |
+|---|---|---|---|---|---|
+| 1 | R2-01 | self-generated counterflow (D1/R1) | 6.0 | **0.556** | single pairs' late `d²` slope +0.009 vs −0.034 for zero-impulse pairs at the same T; W2 unread |
+| 2 | R2-05 | the box-scale pair's longevity is microcanonical (R4) | 4.6 | **0.382** | L = 24 box-scale pair after 120 time units: d = 9.1 (PGPE) vs 7.7 (damped GPE) |
+| 3 | R2-04 | the friction law α ∝ ρ_n (D7/R2) | 16.2 | **0.375** | α = (0.232 ± 0.014) ρ_n/ρ, free intercept −0.001 ± 0.002 |
+| 4 | R2-07 | vortex vs phonon share of the stiffness (D3) | 6.3 | 0.300 | vortex share of ρ_n(k₁) in equilibrium 7–28 % (median 0.23): phonons dominate |
+| 5 | R2-02 | acoustic memory in the vortex VACF (R1b) | 3.1 | 0.229 | negative lobe −0.010 ± 0.003 at lag 79 (L/c = 64) |
+| 6 | R2-08 | equilibration-time statistics (D5) | 1.8 | 0.205 | as in round 1 |
+| 7 | R2-09 | cutoff law of the BKT point (D6) | 2.7 | 0.201 | as in round 1 |
+| 8 | R2-10 | Einstein at a second temperature (D4) | 1.6 | 0.081 | R_E = 2.1 ± 0.7 at the one admitted T |
+| 9 | R2-03 | Josephson offset = amplitude fluctuations (D2/R3) | 0.5 | 0.048 | **refuted**: phase-only correlator gives the same offset (+0.225 vs +0.225, Δ = 0.000 ± 0.001) |
+| 10 | R2-06 | quantum vacuum noise restores α′ (R5) | 0 | 0.000 | unresolvable in the budget; cost 14 days |
+
+Two probes changed the picture by themselves: the Josephson offset is **not** in the amplitude of `g1` (so the
+suspect is the stiffness estimator or the relation at `mg = 1`), and in the equilibrated L = 192 states vortices
+carry only a quarter of the normal density. Both went into the paper.
+
+**Selection (realistic contribution): R2-01, the self-generated counterflow, conditional on tonight's L = 96
+control; R2-04 (the friction law against cutoff and temperature) if the control refutes it, with R2-05 (the
+microcanonical bottleneck, now with a first positive probe) as the second campaign in either case.**
+The external directions R3 (amplitude fluctuations) and R5 (quantum noise) are set aside with their reasons on file.
