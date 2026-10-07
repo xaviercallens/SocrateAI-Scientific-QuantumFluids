@@ -2,7 +2,7 @@
 
 **A machine-checked Lean 4 library of quantum-fluid structure — with a record of what formalization caught, and what it could not**
 
-[![Tests](https://img.shields.io/badge/tests-183%20passing-brightgreen)]() [![Lean](https://img.shields.io/badge/Lean-4.34.0--rc2-blue)]() [![Theorems](https://img.shields.io/badge/theorems-257%20kernel--checked-blue)]() [![Comparator](https://img.shields.io/badge/Comparator-two%20kernels-success)]() [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23144587.svg)](https://doi.org/10.5281/zenodo.23144587) [![Release](https://img.shields.io/badge/release-v1.17.0-orange)](https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids/releases)
+[![Tests](https://img.shields.io/badge/tests-183%20passing-brightgreen)]() [![Lean](https://img.shields.io/badge/Lean-4.34.0--rc2-blue)]() [![Theorems](https://img.shields.io/badge/theorems-257%20kernel--checked-blue)]() [![Comparator](https://img.shields.io/badge/Comparator-two%20kernels-success)]() [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23225129.svg)](https://doi.org/10.5281/zenodo.23225129) [![Release](https://img.shields.io/badge/release-v1.17.0-orange)](https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids/releases)
 
 > **The Sector Causality Theory has moved to its own repository:**
 > **[SocrateAI-Scientific-SectorCausalityTheory](https://github.com/xaviercallens/SocrateAI-Scientific-SectorCausalityTheory)**
@@ -155,7 +155,7 @@ aligned at 4.34.0-rc2 across streams for cross-integration.
 ## Citing
 
 The software (this library, its numerical experiments, and every companion paper) is archived on
-Zenodo: **[10.5281/zenodo.23144587](https://doi.org/10.5281/zenodo.23144587)** (`v1.16.0`). Cite the
+Zenodo: **[10.5281/zenodo.23225129](https://doi.org/10.5281/zenodo.23225129)** (`v1.17.0`). Cite the
 concept DOI **10.5281/zenodo.22855581** for all versions.
 
 The vortex-transport paper, `paper/vortex_transport.tex` ("*Vortex transport and screening in a closed two-dimensional Bose field*"), is archived on its own DOI: **[10.5281/zenodo.23225101](https://doi.org/10.5281/zenodo.23225101)** (version 2, revised after peer review; concept DOI 10.5281/zenodo.23202454).
