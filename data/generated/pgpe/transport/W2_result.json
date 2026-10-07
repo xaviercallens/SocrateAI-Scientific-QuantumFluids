@@ -23,9 +23,34 @@
    "wind_end": 8.702368113729307,
    "free_end": 6.266633870935859,
    "d_mean_last1000": 9.869341982066576
+  },
+  "W2_L96_e0.60_dipole_d12_s3.npz": {
+   "ended": "t_max",
+   "t_end": 4000.0,
+   "early": -0.02708590873990334,
+   "late": -0.002804240413094888,
+   "meets": false,
+   "d0": 11.907551532482126,
+   "d_end": 8.30399480661263,
+   "wind_end": 8.896716869052037,
+   "free_end": 6.526370471873739,
+   "d_mean_last1000": 7.977986619337832
+  },
+  "W2_L96_e0.60_dipole_d12_s4.npz": {
+   "ended": "t_max",
+   "t_end": 4000.0,
+   "early": -0.016678820716579508,
+   "late": -0.006116911458271983,
+   "meets": false,
+   "d0": 11.84617047568236,
+   "d_end": 9.500862874274144,
+   "wind_end": 8.81201513397853,
+   "free_end": 6.413700873641622,
+   "d_mean_last1000": 9.142183499950837
   }
  },
- "n": 2,
+ "n": 4,
  "n_meet": 1,
- "verdict": "INCONCLUSIVE"
+ "verdict": "REFUTED",
+ "rule": "W2-A: >=3 of 4 meet -> SUPPORTED; <=1 -> REFUTED; else INCONCLUSIVE"
 }

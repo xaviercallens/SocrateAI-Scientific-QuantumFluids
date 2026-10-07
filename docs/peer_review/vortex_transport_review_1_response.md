@@ -19,4 +19,4 @@ Not changed, with reason: the Einstein verdict stays "undecided by rule" — the
 fluctuations are sub-diffusive) is the reason the rule was written, and relaxing it after the fact would be the kind of
 move the protocol exists to prevent. The informal 1.4–3× statement is kept, labelled informal.
 
-Status: version 2 compiles (14 pages, 5 figures); the only pending content is the L = 96 control (item B).
+Status: version 2 published (10.5281/zenodo.23225101, record 23225101); the L = 96 control (item B) is reported, verdict REFUTED by the registered rule.
