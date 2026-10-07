@@ -76,6 +76,23 @@ mode by mode and would turn the friction law into a prediction with no measured 
 counterpart of the phonon-scattering calculations of Pitaevskii (1959), Iordanskii (1966) and Sonin (1997), done
 on the compressible core instead of a point vortex.
 
+## Consistency check of the "same weight" premise (computed 2026-10-07 21:45, report only)
+
+The Landau normal density of a Rayleigh–Jeans Bogoliubov bath on the actual PGPE mode set (`ρ_n = ½L⁻²Σ_k T k²/ε_k²`,
+`ε_k² = k² + k⁴/4`, disk `|k| ≤ π`) against the measured `1 − n_s/n` of the three transport bases:
+
+| base | T | measured ρ_n/ρ | Landau RJ–Bogoliubov | ratio |
+|---|---|---|---|---|
+| L = 96, e = 0.60 | 0.110 | 0.0293 | 0.0218 | 1.35 |
+| L = 64, e = 0.70 | 0.220 | 0.0534 | 0.0434 | 1.23 |
+| L = 64, e = 0.80 | 0.353 | 0.0945 | 0.0697 | 1.36 |
+
+The free-quasiparticle formula accounts for 74–81 % of the measured normal density, consistently across
+temperature; the remainder is interaction (the condensate density is below `n`, the modes are not free Bogoliubov
+modes at `mg = 1`). The kinetic reading therefore holds at the 25 % level, and the inferred `⟨σ_tr⟩ = 1.4 ξ` carries
+that systematic in addition to its statistical error. It does not affect the FL3 rival (a factor 7 and a factor 2
+scaling against a 25 % systematic).
+
 ## Caveats
 
 The kinetic argument assumes independent excitations scattering off a vortex at rest in the bath frame, a Markovian
