@@ -40,12 +40,12 @@ for k in range(300):
     traj.append(cur.copy()); last = cur
 traj = np.array(traj); rho1 = np.abs(s.psi(c)) ** 2; th1 = np.angle(s.psi(c))
 
-fig, ax = plt.subplots(2, 3, figsize=(7.2, 4.6))
+fig, ax = plt.subplots(2, 3, figsize=(7.4, 4.8), constrained_layout=True)
 nrm = TwoSlopeNorm(vcenter=0.0, vmin=-0.08, vmax=0.08)
 for a, lab in zip(ax[0, :2], maps):
     im = a.imshow(maps[lab].T, origin="lower", extent=[0, L, 0, L], cmap="RdBu_r", norm=nrm); a.set_title(rf"$T=0$, {lab}: $\rho-1$ at $t=20$", fontsize=8)
     a.plot(pos[:, 0], pos[:, 1], "k.", ms=3)
-fig.colorbar(im, ax=ax[0, :2], fraction=0.025, pad=0.02, label=r"$\rho-1$")
+fig.colorbar(im, ax=list(ax[0, :2]), shrink=0.8, pad=0.01, label=r"$\rho-1$")
 a = ax[0, 2]; a.imshow(rho0.T, origin="lower", extent=[0, L, 0, L], cmap="viridis", vmin=0, vmax=1.4); a.set_title(r"thermal state ($T/T_{\rm BKT}=0.14$), $\rho$ at $t=0$", fontsize=8)
 a.plot(pa[qa > 0, 0], pa[qa > 0, 1], "o", mfc="none", mec="w", ms=5); a.plot(pa[qa < 0, 0], pa[qa < 0, 1], "s", mfc="none", mec="w", ms=5)
 a = ax[1, 0]; a.imshow(th0.T, origin="lower", extent=[0, L, 0, L], cmap="twilight"); a.set_title(r"phase at $t=0$", fontsize=8)
@@ -56,7 +56,7 @@ for i in range(4):
 a = ax[1, 2]; a.imshow(th1.T, origin="lower", extent=[0, L, 0, L], cmap="twilight"); a.set_title(r"phase at $t=300$", fontsize=8)
 for a in ax.ravel():
     a.set_xticks([0, 32, 64]); a.set_yticks([0, 32, 64]); a.set_xlabel(r"$x/\xi$"); a.set_ylabel(r"$y/\xi$")
-fig.tight_layout(); fig.savefig(FIG / "vt_fig0_fields.pdf"); plt.close(fig)
+fig.savefig(FIG / "vt_fig0_fields.pdf"); plt.close(fig)
 
 # ---- phase portrait of the stalled single pairs: separation against phonon-band momentum, coloured by time -----------
 fig, ax = plt.subplots(1, 2, figsize=(7.0, 3.0))

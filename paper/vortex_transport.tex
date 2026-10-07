@@ -10,6 +10,8 @@
 \usepackage{microtype}
 \usepackage{enumitem}
 \usepackage[most]{tcolorbox}
+\usepackage{listings}
+\lstset{language=Python,basicstyle=\ttfamily\scriptsize,breaklines=true,columns=fullflexible,keepspaces=true,frame=single,framerule=0.3pt,xleftmargin=4pt}
 
 \newcommand{\lean}[1]{\texttt{\small #1}}
 \newcommand{\PENDING}[1]{\textcolor{red!70!black}{[pending: #1]}}
@@ -121,10 +123,22 @@ were found by the $T=0$ control of this study and corrected (Appendix~\ref{app:i
 a single pair is periodic only up to a constant jump $2\pi d/L$ across one boundary of the box, which we remove by a
 uniform phase gradient; and the customary per-vortex amplitude $[r^2/(r^2+2)]^{1/2}$ has a $1/r^2$ tail four times
 the quasi-static (Bernoulli) depletion, whose excess leaves the box as sound and pushes the vortices. We use instead
-the Bernoulli amplitude $[1+|\mathbf v|^2/2]^{-1/2}$ built from the velocity of the imprinted phase itself. With the
-old imprint a pair at $T=0$ drifted by $0.6$--$0.8$ in separation over $400$ time units --- an apparent friction as
+the Bernoulli amplitude $[1+|\mathbf v|^2/2]^{-1/2}$ built from the velocity of the imprinted phase itself. Figure~\ref{fig:fields} shows the
+two imprints side by side. With the old imprint a pair at $T=0$ drifted by $0.6$--$0.8$ in separation over $400$ time units --- an apparent friction as
 large as the thermal one at $0.14\,T_{\rm BKT}$ (cf.~\cite{Rorai2013} on product-ansatz pairs); with the corrected one
 it does not move (below).
+
+\begin{figure}[t]\centering
+\includegraphics[width=\textwidth]{figures/vt_fig0_fields.pdf}
+\caption{Top left and middle: density deviation $\rho-1$ twenty time units after imprinting a single pair of
+separation $10$ into a uniform condensate ($T=0$, $L=64$) with the imprint of the earlier rounds and with the
+corrected one. The old imprint leaves a phase step along a whole line of the box and a $1/r^2$ density tail,
+which turn into the sound sheet and the strong radiation on the left; the corrected one leaves the quiet wake on
+the right. Top right and bottom: a thermal state at $T/T_{\rm BKT}=0.14$ with two antiparallel pairs imprinted
+(density and phase at $t=0$; density at $t=300$ with the tracked trajectories of the four vortices, white for
+$+$, orange for $-$; phase at $t=300$).}
+\label{fig:fields}
+\end{figure}
 
 \paragraph{Geometry.} A pair of separation $d$ carries the impulse $2\pi\rho_sd$. In a periodic box that impulse
 cannot be shed without consequence (Section~\ref{sec:wind}), so transport runs use two antiparallel pairs
@@ -292,7 +306,9 @@ excess decreasing with temperature --- far from the hundredfold of~\cite{Neely20
 sub-diffusion at the coldest temperature is a short-lag regime, not a bounded orbit: a finite quasi-periodic sum has
 a bounded mean-square increment, so growth refutes a regular island while a plateau never proves one
 (\lean{QuasiPeriodicBound.lean}), and the spectrum of a stalled pair's separation (next section) is a $1/f^{0.5}$
-continuum, not lines. The physical reading we can defend is that at the lowest temperature the vortex's bath is
+continuum, not lines. The autocorrelation of the residual velocity at $0.14\,T_{\rm BKT}$ has a small negative lobe,
+$-0.010\pm0.003$, at lag $79$ --- near the acoustic crossing time of the box, $L/c=64$ --- which is at least
+consistent with the vortex meeting its own shed sound. The physical reading we can defend is that at the lowest temperature the vortex's bath is
 not yet Markovian on the lag scale of the fit: the kicks come from phonons whose period ($L/c\approx64$) is not short
 compared with the lags, and the thermal vortices that make the warmest state Brownian also add drift.
 
@@ -315,8 +331,17 @@ $2\pi\rho_s(d_0-d)$.}
 \label{fig:wind}
 \end{figure}
 
-Figure~\ref{fig:wind} shows two single-pair runs of $4000$ time units against the zero-impulse pairs of the same
-temperature. The zero-impulse pairs shrink steadily from $10$ to $7$--$8$ within $1500$ time units; neither single
+\begin{figure}[t]\centering
+\includegraphics[width=0.92\textwidth]{figures/vt_fig6_portrait.pdf}
+\caption{Phase portrait of the two stalled single pairs: phonon-band momentum against pair separation, coloured
+by time ($50$-unit running means). The dashed line is momentum conservation between the pair and the phonons,
+$P_{|k|>1}=2\pi\rho_s(d_0-d)$; the dotted line is the stall separation of the plane formula. Both trajectories
+move along the conservation line and settle near the predicted stall, the second drifting back along it.}
+\label{fig:portrait}
+\end{figure}
+
+Figures~\ref{fig:wind} and~\ref{fig:portrait} show two single-pair runs of $4000$ time units against the
+zero-impulse pairs of the same temperature. The zero-impulse pairs shrink steadily from $10$ to $7$--$8$ within $1500$ time units; neither single
 pair annihilates. One shrinks from $11.6$ to $9.3$ by $t\approx1800$ and stays there for the remaining $2200$ time
 units (the late slope of $d^2$ is $4\%$ of the early one); the other shrinks to $10.2$ and re-expands to $11.2$,
 moving back toward the predicted stall point. In both, the momentum carried by the modes with $|k|>1$ follows the
@@ -378,9 +403,13 @@ a saturating finite-size offset rested on under-equilibrated states.
 Green function on $r\in[8,32]$ gives $\eta_{g_1}K-1=+0.31\pm0.11$, unchanged by the fit window and equal to the
 naive-window value: the $12$--$27\%$ excess over the Josephson relation reported at $L\le64$ is neither a geometry
 factor (cf.\ ``close to unity''~\cite{HolzmannBaym2007}) nor a finite-size transient. It persists at $L=192$ in
-equilibrium. What remains is the estimator pair itself --- $\eta$ from $g_1$ against $K$ from current correlators
-on a fixed-momentum microcanonical field, for which no fluctuation formula has been derived --- or the
-renormalisation of the bare stiffness by amplitude fluctuations. Reported, not explained.
+equilibrium. One candidate can already be excluded: that the offset is the signature of amplitude (density) fluctuations in
+$g_1=\langle\psi^*\psi\rangle$. The phase-only correlator $\langle e^{i(\theta-\theta')}\rangle$, fitted on the same
+states, the same windows and the same torus Green function, carries \emph{exactly} the same offset ($+0.225$ against
+$+0.225$ on $r\in[8,48]$; difference $0.000\pm0.001$ over the six runs). The offset is not in the amplitude of
+$g_1$. What remains is the estimator of $K$ itself --- the transverse current response at the lowest wavevectors of
+a fixed-momentum microcanonical field, for which no fluctuation formula has been derived --- or the relation as
+applied at this coupling ($mg=1$). Reported, not explained.
 
 \begin{figure}[t]\centering
 \includegraphics[width=0.52\textwidth]{figures/vt_fig4_structure_factor.pdf}
@@ -549,6 +578,54 @@ equations used in the text are consequences of the model's equations, not that t
 \item \lean{VortexWinding}, \lean{TopologicalProtection}: the plaquette winding rule and the integer conservation of
   winding, from earlier rounds.
 \end{itemize}
+
+\section{Code}\label{app:code}
+
+The field solver, the instrument and the estimators are Python (NumPy) in the repository
+(\texttt{exploration/pgpe/}: \texttt{pgpe.py}, \texttt{vortex\_transport.py}, \texttt{transport\_estimators.py},
+\texttt{dielectric\_modes.py}); a Rust port of the instrument is in rusty-SUNDIALS (\texttt{qf-pgpe}, example
+\texttt{vortex\_transport.rs}), cross-checked against the Python one to $5\times10^{-7}$ in positions. The two pieces a
+reader needs to reproduce the measurements are short.
+
+\noindent\textbf{The corrected imprint} (Appendix~\ref{app:imprint}; \texttt{theta1} is the Jacobi function with
+nome $e^{-\pi}$, \texttt{s} the solver with grid \texttt{s.N}, box \texttt{s.L}, projector \texttt{s.P}):
+\begin{lstlisting}
+def imprint_v2(s, c, pos, q):
+    x = np.arange(s.N) * s.dx; X, Y = np.meshgrid(x, x, indexing="ij"); Z = X + 1j * Y
+    def factor(Zs):                                   # theta-function phase of all vortices
+        ph = np.ones(Zs.shape, complex)
+        for (xj, yj), qj in zip(pos, q):
+            t = theta1(np.pi * (Zs - (xj + 1j * yj)) / s.L); u = t / (np.abs(t) + 1e-300)
+            ph = ph * (u if qj > 0 else np.conj(u))
+        return ph
+    ph = factor(Z)
+    jx = np.angle(np.mean(factor(Z + s.L) * np.conj(ph)))        # phase jump across x = L
+    jy = np.angle(np.mean(factor(Z + 1j * s.L) * np.conj(ph)))   # ... and across y = L
+    ph = ph * np.exp(-1j * (jx * X + jy * Y) / s.L)             # uniform gradient: periodic for any dipole moment
+    vx = np.angle(np.roll(ph, -1, 0) * np.conj(np.roll(ph, 1, 0))) / (2 * s.dx)   # velocity of the imprinted phase
+    vy = np.angle(np.roll(ph, -1, 1) * np.conj(np.roll(ph, 1, 1))) / (2 * s.dx)
+    amp = np.sqrt(1.0 / (1.0 + 0.5 * (vx**2 + vy**2)))        # Bernoulli density: 0 at the cores, 1 - v^2/2 far away
+    c2 = s.modes(s.psi(c) * ph * amp)
+    return c2 * np.sqrt(s.norm(c) / s.norm(c2))
+\end{lstlisting}
+
+\noindent\textbf{The estimators} (\texttt{pv\_velocity} returns the torus point-vortex velocity at every vortex,
+\texttt{pv\_energy} the Weiss--McWilliams energy; \texttt{U} are the unwrapped tracked positions, shape (time,
+vortex, 2)):
+\begin{lstlisting}
+V = np.array([pv_velocity(np.mod(U[k], L), q, L) for k in range(nt)])      # v_s,i(t)
+H = np.array([pv_energy(np.mod(U[k], L), q, L) for k in range(nt)])        # point-vortex energy
+S = (V**2).sum(axis=(1, 2))                                               # sum_i |v_s,i|^2
+I = np.concatenate([[0.0], np.cumsum(0.5 * (S[1:] + S[:-1]) * np.diff(t))])
+alpha_energy = -np.polyfit(2 * I, H, 1)[0]                                # dH/dt = -2 alpha sum |v_s|^2
+Bv = -q[None, :, None] * np.stack([-V[..., 1], V[..., 0]], -1)             # -q z x v_s
+CA = np.concatenate([np.zeros_like(V[:1]), np.cumsum(0.5*(V[1:]+V[:-1])*dt, 0)])
+CB = np.concatenate([np.zeros_like(V[:1]), np.cumsum(0.5*(Bv[1:]+Bv[:-1])*dt, 0)])
+D, A, B = U[lag:] - U[:-lag], CA[lag:] - CA[:-lag], CB[lag:] - CB[:-lag]
+M = [[(A*A).sum(), (A*B).sum()], [(A*B).sum(), (B*B).sum()]]
+one_minus_alpha_prime, alpha_regression = np.linalg.solve(M, [(A*D).sum(), (B*D).sum()])
+e = D - one_minus_alpha_prime * A - alpha_regression * B                 # residuals -> <|e|^2>(lag) = c0 + 4 eta lag
+\end{lstlisting}
 
 \bibliographystyle{unsrt}
 \bibliography{refs_vortex_transport}
