@@ -14,6 +14,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import prepare as P
 
 HERE = Path(__file__).resolve().parent
+if "--round" in sys.argv:                                   # round 2+: a sub-directory with its own hypotheses.json, probes.py, results.tsv
+    HERE = HERE / sys.argv[sys.argv.index("--round") + 1]
 TSV = HERE / "results.tsv"; HDR = "commit\thyp\tD\tnovelty\treach\tcost_days\tscore\tseconds\tstatus\tdescription\n"
 
 
@@ -45,7 +47,7 @@ def run_probe(hid: str):
 
 
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument("--only"); a = ap.parse_args()
+    ap = argparse.ArgumentParser(); ap.add_argument("--only"); ap.add_argument("--round"); a = ap.parse_args()
     hyps = json.loads((HERE / "hypotheses.json").read_text())["hypotheses"]
     if not TSV.exists():
         TSV.write_text(HDR)
