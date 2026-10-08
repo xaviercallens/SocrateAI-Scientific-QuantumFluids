@@ -37,3 +37,33 @@ Estimated 30 CPU-hours plus 10 for the `dx = ξ/4` bases.
 
 Verdict: FL1 ∧ FL2 → the friction law is a property of the model's vortex–phonon interaction, usable at any cutoff
 within 20 %. FL1 ∧ ¬FL2 → the coefficient is a bath property; the cutoff dependence is reported as the result.
+
+## Amendment FL-A1 (2026-10-08 21:45) — filed after the coarse arm and the fine T = 0.127 arm were read, BEFORE the fine T = 0.173 arm (started 21:31) is read
+
+**What was read.** Coarse arm (k_cut = 2π/3, T = 0.100 and 0.216, 6 runs each) and fine arm (k_cut = 2π, T = 0.127,
+6 runs). The fine T ≈ 0.22 base (e = 1.25: T = 0.217, 1.32 thermal vortices) failed admission (n_v < 0.5); the
+second fine temperature is the admitted e = 1.10 base (T = 0.173, n_v = 0.08), not the registered 0.22 — a deviation, reported.
+
+**Registered predictions, as read** (details in `PGPE_FRICTION_LAW_RESULTS.md`): c = α_E/(ρ_n/ρ) = 0.32 ± 0.05
+(2π/3, T = 0.100), 0.31 ± 0.04 (2π/3, T = 0.216), 0.232 ± 0.014 (π, reference), 0.096 ± 0.013 (2π, T = 0.127).
+**FL2 (spread < 20 %) FAILS** (factor 3.3 between the extremes); **the Born rival (c ∝ k_c) FAILS** (c falls with
+the cutoff, it does not rise); **FL3's expectation (spread 10–30 %) FAILS.** FL1 holds at 2π/3 (two temperatures,
+c = 0.32, 0.31) and at π (published); it cannot be tested at 2π until the second temperature is read.
+
+**Post hoc observation (not registered; labelled as such).** α is nearly independent of the cutoff at fixed T while ρ_n
+is not: α_E/T = 0.049 ± 0.008 (2π/3, 0.100), 0.056 ± 0.008 (2π/3, 0.216), 0.054 ± 0.004 and 0.063 ± 0.011 (π, 0.115 and
+0.220), 0.053 ± 0.007 (2π, 0.127). The earlier "α ∝ ρ_n" was a degeneracy: at fixed cutoff ρ_n ∝ T.
+
+**New hypothesis H-T: α = a·T with a = 0.054 ± 0.004, independent of the cutoff for k_cξ ≥ 2.** (The coarse cutoff,
+k_cξ = 2.1, already has the full friction: the modes that drag the vortex have kξ ≲ 2.)
+
+**Prediction for the unread fine arm, fixed now:** at T = 0.1734 (e = 1.10, ρ_n/ρ = 0.0802, k_cut = 2π),
+**H-T predicts α_E = 0.0094 ± 0.0010** (a·T with its error); the proportionality to ρ_n at the 2π coefficient
+(c = 0.096) predicts 0.0077. **Decision:** α_E ∈ [0.0084, 0.0104] supports H-T; α_E ∈ [0.0067, 0.0087] supports
+"∝ ρ_n at the cutoff-specific coefficient"; the two windows overlap in [0.0084, 0.0087] and a value there is
+**inconclusive**. The comparison across cutoffs (the 2π point against the others) does not depend on this arm.
+
+**Instrument caveat to carry.** At k_cut = 2π/3, α′ = −0.017 ± 0.001 (T = 0.100) and −0.031 ± 0.003 (T = 0.216),
+and the d₀ = 12 pairs show 35 % larger α than d₀ = 8 at k_cut = 2π/3 and 2π; at k_cut = π neither appeared. These are
+reported, not explained: the pair-size dependence is a possible bias of the energy estimator at the coarse cutoff or a
+physical finite-pair effect.
