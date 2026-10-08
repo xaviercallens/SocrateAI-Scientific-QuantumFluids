@@ -63,3 +63,24 @@ magnitude outside FL2's 20 % band on the high side. Two things to carry into the
 are cutoff effects.
 
 L = 128, e = 0.60 base (for the bottleneck direction) finished: T = 0.1097, n_s/n = 0.969, no thermal vortex (11.8 h).
+
+## Verdicts so far (2026-10-08 22:00; `analyze_friction_law.py` → `fl/friction_law_results.json`; fine T = 0.173 arm still running)
+
+| arm | T | ρ_n/ρ | runs | α (energy) | c = α/(ρ_n/ρ) | α/T |
+|---|---|---|---|---|---|---|
+| k_cut = 2π/3 | 0.100 | 0.0154 | 6 | 0.0049 ± 0.0008 | 0.32 ± 0.05 | 0.049 ± 0.008 |
+| k_cut = 2π/3 | 0.216 | 0.0397 | 6 (4 ended by track loss/exchange) | 0.0121 ± 0.0017 | 0.31 ± 0.04 | 0.056 ± 0.008 |
+| k_cut = π (published) | 0.115 | 0.0270 | 8 | 0.0062 ± 0.0004 | 0.229 ± 0.015 | 0.054 ± 0.004 |
+| k_cut = π (published) | 0.220 | 0.0534 | 6 | 0.0138 ± 0.0023 | 0.26 ± 0.04 | 0.063 ± 0.010 |
+| k_cut = 2π | 0.127 | 0.0709 | 6 (3 annihilated) | 0.0068 ± 0.0009 | 0.096 ± 0.013 | 0.053 ± 0.007 |
+
+- **FL1 (proportional to ρ_n at each cutoff):** consistent where two temperatures exist (2π/3: 0.32, 0.31; π: 0.23, 0.26); 2π untestable until T = 0.173 lands.
+- **FL2 (c within 20 % across cutoffs): FAILS.** Weighted c: 0.31 ± 0.03 (2π/3), 0.232 ± 0.014 (π), 0.096 ± 0.013 (2π): (max − min)/mean = 1.01, factor 3.3.
+- **Born rival (c ∝ k_c): REJECTED**, χ² = 201 for 2 d.o.f.; the coefficient *falls* with the cutoff.
+- **FL3 expectation (spread 10–30 %): FAILS** — the kinetic identity (Lean `FrictionKinetic`) is intact, but ⟨c_g σ_tr⟩ is not a property of the vortex: from 1.9 ξ (2π/3) to 1.4 ξ (π) to 0.56 ξ (2π); the "geometric core size 1.4 ξ" reading in paper v2/v2.1 is withdrawn.
+- **One coefficient for all arms** (α = c·ρ_n/ρ): χ² = 71.8 for 4 d.o.f. — rejected.
+- **H-T (post hoc, FL-A1): α = a·T, a = 0.0539 ± 0.0027, χ² = 1.26 for 4 d.o.f.** — consistent across all five arms, three cutoffs, T = 0.10–0.22.
+  The earlier "α ∝ ρ_n" (paper v2) was a degeneracy at fixed cutoff (ρ_n ∝ T there). Test pending: fine T = 0.173 arm (H-T 0.0094 ± 0.0010 vs
+  0.0077 for ρ_n at c = 0.096), prediction filed before it was read.
+- **Correction of FL-A1's side remark:** the d₀ = 12 / d₀ = 8 ratio of α_E is 1.38 (2π/3, T = 0.100), 1.85 (2π/3, T = 0.216), 1.47 (2π, T = 0.127) — not "35 %"
+  uniformly; at k_cut = π it was 0.91, 0.76 (i.e. α(8)/α(12), inverted sign convention) within the 0.7–1.43 band.
