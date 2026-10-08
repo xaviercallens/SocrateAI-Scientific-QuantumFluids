@@ -1,0 +1,48 @@
+{
+ "metadata": {
+  "title": "The friction on a quantized vortex in a truncated Gross-Pitaevskii field follows the temperature, not the normal density: a pre-registered test of alpha proportional to rho_n against the cutoff, and the correction of a published reading",
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "description": "<p>The mutual friction alpha on a quantized vortex in a two-dimensional Bose field is commonly taken to scale with the normal fraction rho_n/rho. In an earlier paper (doi:10.5281/zenodo.23225293) we measured alpha(T) in the projected Gross-Pitaevskii equation at one cutoff and found alpha ~ 0.24 rho_n/rho; we read the coefficient as a mode-averaged transport cross-section of the vortex (1.4 healing lengths) and registered its cutoff dependence as the open question, with the Born phonon-scattering law (coefficient proportional to the cutoff) as the rival. Here the same energy-conserving instrument, with its T = 0 known answer reproduced to 0.3 % at each cutoff, is run at two further cutoffs (k_c xi = 2 pi/3 and 2 pi). The registered prediction of a cutoff-independent coefficient fails and so does its rival: the coefficient is 0.31 +- 0.03, 0.232 +- 0.014, 0.096 +- 0.013 at k_c xi = 2.1, 3.1, 6.3. What does not move is alpha itself: alpha/T = 0.054 +- 0.003 over five arms and three cutoffs (chi2 = 1.3 for 4 degrees of freedom). The proportionality to rho_n was a degeneracy of a single cutoff, where rho_n is proportional to T; the 'geometric core size' reading is withdrawn. The temperature law was found after the data were read; it is registered as a hypothesis, with its prediction for the next arm fixed before that arm was read (reported in the paper). Pre-registrations, controls, scripts, analysis file and Lean companion (FrictionKinetic.lean) are in the software record.</p>",
+  "creators": [
+   {
+    "name": "Callens, Xavier",
+    "affiliation": "SocrateAI Research"
+   }
+  ],
+  "keywords": [
+   "quantized vortices",
+   "mutual friction",
+   "projected Gross-Pitaevskii equation",
+   "classical field",
+   "normal density",
+   "temperature scaling",
+   "cutoff dependence",
+   "pre-registration",
+   "negative result",
+   "Lean 4",
+   "formal verification"
+  ],
+  "license": "CC-BY-4.0",
+  "access_right": "open",
+  "related_identifiers": [
+   {
+    "identifier": "10.5281/zenodo.23225293",
+    "relation": "continues",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.22855581",
+    "relation": "isDerivedFrom",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids",
+    "relation": "isSupplementedBy",
+    "scheme": "url"
+   }
+  ],
+  "version": "1",
+  "notes": "Companion to the vortex-transport paper; corrects its reading of alpha proportional to rho_n (see its version 2.2)."
+ }
+}
