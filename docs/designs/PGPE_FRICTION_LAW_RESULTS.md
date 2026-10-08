@@ -43,3 +43,23 @@ MSD exponent 0.74. One of the two runs ended in a partner exchange (d → 41; th
 **c = α/(ρ_n/ρ) = 0.29–0.31**, against 0.232 at k_cut = π and the Born rival's 0.155 at this cutoff. Two runs
 only; the direction (coefficient *up* when the short-wavelength modes are removed) is opposite to the Born
 scaling, which predicted a fall.
+
+### k_cut = 2π/3, T = 0.100 (ρ_n/ρ = 0.0154) — arm complete (10:10, 6 runs, all to t = 2000)
+
+| | all 6 | d₀ = 8 (3) | d₀ = 12 (3) |
+|---|---|---|---|
+| α_energy | 0.0049 ± 0.0008 | 0.0048 ± 0.0008 | 0.0065 ± 0.0009 |
+| α_regression | 0.0058 ± 0.0007 | 0.0052 ± 0.0008 | 0.0078 ± 0.0011 |
+| 1 − α′ | 1.0170 ± 0.0009 | | |
+| η | 3.2×10⁻⁴ ± 0.5 | | |
+| MSD exponent | 0.73 ± 0.02 | | |
+
+**c = α/(ρ_n/ρ) = 0.32 ± 0.05 (energy), 0.38 ± 0.05 (regression)** against 0.232 ± 0.014 at k_cut = π: the
+coefficient is 40–60 % *higher* at the coarser cutoff. Direction opposite to the Born rival (0.155, i.e. −33 %);
+magnitude outside FL2's 20 % band on the high side. Two things to carry into the reading, not to explain away:
+(i) α is larger for d₀ = 12 than for d₀ = 8 by ~35 % here, whereas at k_cut = π it was independent of pair size;
+(ii) α′ = −0.017 ± 0.001, a small transverse coefficient of anti-Iordanskii sign, where k_cut = π gave zero within
+1 %. Both are at one temperature of one cutoff; the T = 0.216 arm (running) and the fine arm decide whether they
+are cutoff effects.
+
+L = 128, e = 0.60 base (for the bottleneck direction) finished: T = 0.1097, n_s/n = 0.969, no thermal vortex (11.8 h).
