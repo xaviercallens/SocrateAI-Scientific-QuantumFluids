@@ -27,7 +27,7 @@ vortex-pair gas, measured in an energy-conserving classical field with no reserv
 \author{Xavier Callens\\
 \small SocrateAI-Scientific-QuantumFluids\\
 \small \url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}}
-\date{October 2026 --- version 2, revised after peer review}
+\date{October 2026 --- version 2.2: version 2, revised after peer review, with the correction of Section~\ref{sec:transport}}
 
 \begin{document}
 
@@ -44,8 +44,9 @@ violated a hundredfold in one experiment~\cite{Neely2024}. We measure the three 
 Gross--Pitaevskii equation --- microcanonical, no damping term, no noise added --- by tracking imprinted vortex
 pairs with sub-grid resolution and reading the coefficients through estimators that are exact identities of the
 dissipative point-vortex model (machine-checked in Lean~4). At $T/T_{\rm BKT}=0.14$, $0.27$ and $0.43$ we find
-$\alpha=0.0062(4)$, $0.014(2)$ and $0.02(1)$, independent of pair size and of estimator, and proportional to the
-normal fraction, $\alpha\simeq0.24\,\rho_n/\rho$. The transverse coefficient is zero within $1\%$ once the
+$\alpha=0.0062(4)$, $0.014(2)$ and $0.02(1)$, independent of pair size and of estimator, and, at this cutoff, proportional to the
+normal fraction, $\alpha\simeq0.24\,\rho_n/\rho$ --- a proportionality that a scan of two further cutoffs shows to be a degeneracy of one cutoff
+($\rho_n\propto T$ there; the friction itself follows $T$, Section~\ref{sec:transport}). The transverse coefficient is zero within $1\%$ once the
 kinematics of a compressible pair on a torus are accounted for; the Iordanskii value $\rho_n/\rho$ is excluded at
 $18\sigma$. The vortex diffuses at $1.4$--$3$ times the Einstein value --- not $100$ times --- but the fluctuations are
 not cleanly diffusive, so the relation is left undecided by our own rule. A single pair in a closed box stops
@@ -202,34 +203,27 @@ The three criteria registered for it pass: the two pair sizes agree (ratios $0.9
 registered $[0.7,1.43]$), $\alpha$ increases with $T$, and the energy and regression estimators agree within $5$,
 $13$ and $18\%$. The warmest base contains a thermal vortex in more than $5\%$ of its samples and its error is
 large; it is kept with that flag. What was not registered and is the cleanest statement of the data is the ratio
-$\alpha/(\rho_n/\rho)=0.23$, $0.26$, $0.22$: within errors, \textbf{the friction is proportional to the normal
-fraction, $\alpha\simeq0.24\,\rho_n/\rho$}, over a factor $3.5$ in $\rho_n$. At $0.14\,T_{\rm BKT}$ our $0.0062$
+$\alpha/(\rho_n/\rho)=0.23$, $0.26$, $0.22$: within errors, \textbf{at this cutoff the friction is proportional to the normal
+fraction, $\alpha\simeq0.24\,\rho_n/\rho$}, over a factor $3.5$ in $\rho_n$ --- \emph{but see the correction at the end of this section}. At $0.14\,T_{\rm BKT}$ our $0.0062$
 is a factor two below the interpolation of~\cite{Shukla2014}, whose transition temperature is itself a rough
 estimate; at $0.27$ and $0.43$ no closed-field value existed, and ours lie in the range of the oblate-condensate
 measurements~\cite{Moon2015} and above the unitary-gas value~\cite{Kwon2021}. An independent configuration of this
 programme (eight imprinted vortices at $d=16$, $0.14\,T_{\rm BKT}$) gives $\alpha=0.0048$--$0.0057$ with the same
 estimators.
 
-The proportionality has a simple kinetic reading. For an isotropic bath of excitations with occupation $n_k$ and
-transport cross-section $\sigma_{\rm tr}(k)$ (a length in two dimensions), the drag on a slowly moving vortex and the
-Landau normal density are integrals of the same weight, $D=\tfrac12\!\int\!\tfrac{d^2k}{(2\pi)^2}(-\partial n/\partial\varepsilon)\,k^2\,c_g\sigma_{\rm tr}$
-and $\rho_n=\tfrac12\!\int\!\tfrac{d^2k}{(2\pi)^2}(-\partial n/\partial\varepsilon)\,k^2$; for a Rayleigh--Jeans bath every mode
-carries the same weight, so $D/\rho_n=\langle c_g\sigma_{\rm tr}\rangle$, the uniform average over the disk $|k|<k_c$,
-and with $\alpha=D/(\rho_s\kappa)$ at leading order,
-\begin{equation}
-  \frac{\alpha}{\rho_n/\rho}=\frac{\rho}{\rho_s}\,\frac{\langle c_g\sigma_{\rm tr}\rangle}{\kappa}.
-  \label{eq:kinetic}
-\end{equation}
-The law $\alpha\propto\rho_n$ is what any scattering bath gives; \textbf{the coefficient measures the mode-averaged
-transport cross-section of the vortex}, here $\langle c_g\sigma_{\rm tr}\rangle=0.232\times2\pi\times0.95=1.4\pm0.1$
-healing lengths ($c=1$). That is the geometric size of the core, not the long-wavelength phonon value: the Born transport
-cross-section of a phonon on a vortex, $\sigma_\parallel=\kappa^2k/8c^2$~\cite{Sonin1997}, grows with $k$ and is
-valid only for $2\pi k\xi\ll1$ --- fewer than $3\,\%$ of the modes of our bath; extrapolated over the disk it
-would give $10\,\xi$, seven times the measurement. With $k_c=\pi$, nine tenths of the bath's modes have
-$k\xi>1$ and see the density-depleted core, whose cross-section is evidently far below the Born
-extrapolation (the same modes give no Iordanskii transverse force, $\sigma_\perp=\kappa/c$, as
-Section~\ref{sec:transport} found). Whether the coefficient is therefore nearly cutoff-independent, as
-geometric saturation would make it, is the registered question of the follow-up (Appendix~\ref{app:protocol}).
+\begin{failbox}
+\textbf{Correction (version 2.2, October 2026).} Versions 2 and 2.1 of this paper read the proportionality above as a property of the vortex: the
+coefficient $0.24$ as a mode-averaged transport cross-section of $1.4$ healing lengths, ``the geometric size of the core'', and registered the
+cutoff dependence of the coefficient as the open question. The test was run at two further cutoffs ($k_c\xi=2\pi/3$ and $2\pi$, same instrument, $T=0$ known answer reproduced to $0.3\,\%$) and the registered
+prediction failed: the coefficient is $0.31\pm0.03$, $0.232\pm0.014$, $0.096\pm0.013$ at $k_c\xi=2.1$, $3.1$, $6.3$, so the reading as a property of the vortex is \textbf{withdrawn}.
+What does not move with the cutoff is the friction itself, $\alpha/T=0.054\pm0.003$ in five arms; at the single cutoff of this paper, $\rho_n/\rho\propto T$ and the two proportionalities
+could not be told apart. Details, with the fixed-in-advance test of the temperature law: the companion paper~\cite{Callens2026b}. The statements of this paper that survive are
+those at $k_c=\pi$: $\alpha(T)$ at the three temperatures, its independence of pair size and estimator, and $\alpha'$.
+\end{failbox}
+For an isotropic bath of excitations with occupation $n_k$ and
+transport cross-section $\sigma_{\rm tr}(k)$, the drag on a slowly moving vortex and the Landau normal density are integrals of the same weight over the modes (Appendix~\ref{app:lean}),
+so that $\alpha/(\rho_n/\rho)$ is the weighted mean of $c_g\sigma_{\rm tr}$ over the bath's modes, times $\rho/\rho_s\kappa$. This identity is exact in the kinetic model; its value
+($1.4\,\xi$ at $k_c=\pi$) is a property of the bath's mode set, not of the vortex.
 
 \begin{table}[t]\centering\small
 \begin{tabular}{lcccccc}
@@ -486,7 +480,7 @@ form factor.
 \item A vortex pair at $T=0$ in the projected GPE neither shrinks nor diffuses and moves at the torus point-vortex
   velocity to $0.14\%$ in the fluid frame; tight pairs ($d\le6$) move $1$--$4\%$ faster, a compressible correction.
 \item $\alpha=0.0062(4)$, $0.014(2)$, $0.02(1)$ at $T/T_{\rm BKT}=0.14$, $0.27$, $0.43$, independent of pair size and
-  estimator; $\alpha\simeq0.24\,\rho_n/\rho$.
+  estimator; $\alpha\simeq0.24\,\rho_n/\rho$ at this cutoff, which two further cutoffs show to be a degeneracy ($\alpha\simeq0.054\,T$ at all three).
 \item $\alpha'$ is zero within about $1\%$ after the $T=0$ kinematics; the Iordanskii value is excluded at $18\sigma$.
 \item The vortex diffuses at $1.4$--$3$ times the Einstein value, not $100$; the relation itself is undecided by our rule.
 \item The depressed stiffness of finite-box classical-field simulations is one unscreened box-scale pair, not
@@ -505,10 +499,9 @@ form factor.
   gas; the Onsager-cluster reading of the depressed-stiffness states; the earlier ``saturating offset'' reading.
 \item \emph{Undecided by rule:} the Einstein relation (one admitted temperature).
 \item \emph{Open:} the cause of the box-scale stall (the $L=96$ control refutes the box mechanism); the cause of the Josephson offset; the current
-  form factor of tight thermal pairs; whether the coefficient $0.23$ of the friction law --- a mode-averaged transport
-  cross-section of $1.4\,\xi$ --- is cutoff-independent.
+  form factor of tight thermal pairs; the direct measurement of the transport cross-section $\sigma_{\rm tr}(k)$ of one vortex, which would explain why the friction is cutoff-independent while $\rho_n$ is not~\cite{Callens2026b}.
 \item \emph{Scope:} a Rayleigh--Jeans field with one momentum cutoff, $mg=1$, two dimensions; the classical-field normal
-  fraction depends on the cutoff, so comparisons with quantum gases are made at equal $\rho_n/\rho$, not equal $T/T_c$.
+  fraction depends on the cutoff while the friction, at fixed $T$, does not~\cite{Callens2026b}; the temperature itself maps onto a physical one only through the cutoff.
 \end{itemize}
 \end{failbox}
 
@@ -603,7 +596,7 @@ equations used in the text are consequences of the model's equations, not that t
 \item \lean{FrictionKinetic}: in the kinetic model $D=\sum_k w_kf_k$, $\rho_n=\sum_kw_k$ over the bath's modes, the
   ratio $\alpha/(\rho_n/\rho)$ is the $w$-weighted mean of $f=c_g\sigma_{\rm tr}$ (times $\rho/\rho_s\kappa$), lies between
   the smallest and the largest $f$ over the bath, and is the plain arithmetic mean for a Rayleigh--Jeans bath ---
-  Eq.~\eqref{eq:kinetic}; nothing about the value of $\sigma_{\rm tr}$ is asserted.
+  the identity quoted in the correction of Section~\ref{sec:transport}; nothing about the value of $\sigma_{\rm tr}$ is asserted.
 \item \lean{EinsteinRelation}: the pair distribution $|\mathbf d|^{-K}$ carries zero Fokker--Planck current for drift
   $-2\alpha\mathbf d/|\mathbf d|^2$ and diffusion $D$ iff $DK=2\alpha$; in vortex units $\eta=\alpha T/(2\pi\rho)$.
 \item \lean{PairPolarisation}: $\|\rho_q(k)\|\le\|k\|\sum_i\|\mathbf d_i\|$; $\rho_q(k)=i\,\mathbf k\cdot\mathbf P(k)$ with
