@@ -1,0 +1,65 @@
+{
+ "date": "2026-10-09 20:37:06",
+ "results": [
+  {
+   "engine": "jax-cpu",
+   "n": 64,
+   "steps": 400,
+   "us_per_step_best": 1132.6809274032712,
+   "us_per_step_median": 1155.384834855795,
+   "checksum": 6119.680466625314,
+   "device": "cpu:0",
+   "jax": "0.11.2",
+   "dtype": "complex128",
+   "rust_checksum_12digits": 6119.680466625,
+   "rel_diff_vs_rust": 5.127321170164091e-14,
+   "rust_us_per_step_same_session": 599.9
+  },
+  {
+   "engine": "jax-cpu",
+   "n": 128,
+   "steps": 100,
+   "us_per_step_best": 4913.643540348858,
+   "us_per_step_median": 5276.654630433768,
+   "checksum": 22865.440911782316,
+   "device": "cpu:0",
+   "jax": "0.11.2",
+   "dtype": "complex128",
+   "rust_checksum_12digits": 22865.44091178,
+   "rel_diff_vs_rust": 1.0134912810378078e-13,
+   "rust_us_per_step_same_session": 2859.2
+  },
+  {
+   "engine": "jax-cpu",
+   "n": 256,
+   "steps": 25,
+   "us_per_step_best": 13560.470594093204,
+   "us_per_step_median": 15126.652121543884,
+   "checksum": 79955.05069932094,
+   "device": "cpu:0",
+   "jax": "0.11.2",
+   "dtype": "complex128",
+   "rust_checksum_12digits": 79955.05069932,
+   "rel_diff_vs_rust": 1.1830078044736828e-14,
+   "rust_us_per_step_same_session": 27158.8
+  },
+  {
+   "engine": "jax-cpu",
+   "n": 512,
+   "steps": 10,
+   "us_per_step_best": 73604.74299639463,
+   "us_per_step_median": 76641.16939995438,
+   "checksum": 287430.05564062105,
+   "device": "cpu:0",
+   "jax": "0.11.2",
+   "dtype": "complex128",
+   "rust_checksum_12digits": 287430.0556406,
+   "rel_diff_vs_rust": 7.33088723227414e-14,
+   "rust_us_per_step_same_session": 123467.0
+  }
+ ],
+ "meta": {
+  "note": "JAX 0.11.2 XLA CPU, complex128, jit + lax.fori_loop, default thread pool (multi-threaded), best of 5; Rust bench_step single-threaded best of 3, measured in the same minutes. Machine shared with other jobs (8 cores, load average ~7): timings vary by up to 2x between runs (the same JAX N=128 gave 8.8 ms in an earlier session and 4.9 ms here). Checksum = sum|Re c|+|Im c| after the same number of steps; Rust prints 13 digits only, so the agreement is limited by that printout.",
+  "steps_rule": "400/100/25/10 steps for N=64/128/256/512 (as bench_engines.py / bench_step.rs)"
+ }
+}

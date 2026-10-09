@@ -14,7 +14,34 @@ Rule: an entry states the reference (DOI, licence), what was compared, with what
 | the same with `v` read at RK4 stage times instead of the reference's step-end convention | constant offset **3.5×10⁻³** created during the 0.1 τ ramp (an O(dt) artefact of the reference: Σ v(iΔt)Δt overshoots ∫v dt by 0.00275 ξ) |
 | force, t ≤ 10 (numpy, 1000 steps) | max \|F − F_ref\| = **2.2×10⁻⁴** at t = 7.8 (4×10⁻⁵ of max \|F\| = 5.45), growing smoothly (5×10⁻⁶ at t = 1, 6×10⁻⁵ at t = 3, 1.5×10⁻⁴ at t = 5) and decreasing after t ≈ 8 |
 | ψ(t = 10) against the reference snapshot (numpy) | relative L2 distance **2.2×10⁻⁴**, max \|Δψ\| = 1.2×10⁻³ |
-| Rust at t = 10 | running (same scheme as numpy; to be appended) |
+| Rust at t = 10 (1000 steps, 1241 s on a loaded machine) | force max \|F − F_ref\| = **2.207×10⁻⁴** (4.1×10⁻⁵ of max \|F\|), ψ(10) relative L2 distance **2.175×10⁻⁴** — the same as numpy to the digits quoted, i.e. the two implementations of the scheme agree with each other far better than either agrees with the reference |
 
 **Reading.** The smooth, monotone growth of the difference is what a systematic discretisation difference looks like (the reference's splitting is second order and its arithmetic single precision; ours is fourth order in time and double): it is not the chaotic divergence of a shedding wake, which in the reference sets in later (vortices first counted at t = 25). Agreement at the 10⁻⁴ level in ψ over 10 τ, for two different schemes, supports the recovered model and the reference run.
 **Not tested / not agreeing.** (i) t > 10: ψ snapshots at 20–50 and the vortex counts (0, 0, 0, 0, 0, 2, 3, 2, 4, 6, 7 at t = 0…50) are not yet compared; the wake becomes unstable, so a pass criterion must be statistical (counts, first-shedding time), not pointwise. (ii) The ground state (imaginary-time) is not reproduced. (iii) **Speed:** the Rust engine is not faster than numpy on this 1000 × 500 problem (≈ 0.8 against ≈ 0.9 s per RK4 step single-threaded, both on a loaded machine); the advantage of the square power-of-two engine does not carry over. This size is the natural first GPU/TPU target.
+
+### 1b. Ground-state preparation (the reference's `psi_time_0.0.npy`) — reproduced, and what it shows
+
+**Scheme** (re-implemented from `imag_time_evolv.py` and `run_shedding.py`, v_init = 0, `init = "imaginary"`): Thomas–Fermi start √(1−V), then repeated first-order splitting — heat kernel exp(−k²δτ/2) in Fourier space, then the exact solution of ∂τψ = −(V′+|ψ|²)ψ with V′ = V − 1 — until γ = ∫|ψ_new − ψ_old|² dx dy (trapezoid rule) < ε δτ with ε = N_x N_y·10⁻⁹, δτ = 0.04, at most 25 000 steps; then the seeded noise 10⁻⁴(integers in [−5, 5) + i·integers) from `default_rng(2026)`. Implemented in numpy (`exploration/external/kwon_shin_ground_state.py`) and in Rust (`FlowSolver::ground_state`, example `kwon_shin_ground`; the noise is added in Python because the numpy random stream is not reproduced in Rust).
+
+| comparison with the stored `psi_time_0.0.npy` | relative L2 | max \|Δψ\| |
+|---|---|---|
+| numpy, without the noise | 4.1×10⁻⁴ (= the rms of the noise) | 7.1×10⁻⁴ |
+| **numpy, with the seeded noise** | **2.84×10⁻⁸** | 6.0×10⁻⁸ |
+| **Rust, with the seeded noise** | **2.84×10⁻⁸** (same digits) | 6.0×10⁻⁸ |
+
+2.8×10⁻⁸ is single-precision round-off: the stored field (complex64) is reproduced to its representation, including the noise realisation. The algorithm is therefore read correctly.
+
+**What it shows about the reference.** With the reference's tolerance the stopping criterion is met **at the first imaginary-time step** (γ(1) = 1.395×10⁻⁵ < ε δτ = 2×10⁻⁵; both implementations stop after one step, τ = 0.04). The stored initial field is thus the Thomas–Fermi field after a single step of the imaginary-time operator plus noise, not a relaxed stationary state of the penetrable-obstacle problem. (Our unit test shows the opposite regime: with a tight tolerance the loop converges to a state whose stationary-equation residual is first order in δτ.) This is a statement about the data deposited, not a criticism of the published analysis, whose observables are measured at late times; but anyone using `psi_time_0.0.npy` as a ground state should know that the early-time force contains the relaxation of that initial state through the first few τ (the absorbing layers remove the radiated sound). It is also the reason why the reference's F(t) at t ≲ 5 is not a stationary-flow quantity.
+
+### 1c. Engine timings (JAX/XLA added to the comparison; CPU only)
+
+JAX 0.11.2 (XLA CPU, complex128, `jit` + `fori_loop`, default thread pool), best of 5, against the single-threaded Rust step, same minutes, machine shared with other jobs (8 cores, load ≈ 7: timings vary up to 2× between runs):
+
+| N | steps | Rust (µs/step) | JAX-CPU (µs/step) | checksum difference |
+|---|---|---|---|---|
+| 64 | 400 | 600 | 1133 | 5×10⁻¹⁴ |
+| 128 | 100 | 2859 | 4914 | 1×10⁻¹³ |
+| 256 | 25 | 27 159 | 13 560 | 1×10⁻¹⁴ |
+| 512 | 10 | 123 467 | 73 605 | 7×10⁻¹⁴ |
+
+The checksum agreement (limited by the 13 digits printed by the Rust example) holds at all sizes. **Reading:** below N = 128 the single-threaded Rust engine is 1.7–1.9× faster than JAX; at N = 256 and 512 the multi-threaded XLA engine is 1.8–2× *faster* than single-threaded Rust. The earlier Rust "parallel" variant (rayon over rows) gave no speed-up and was removed; the cause was never investigated. The honest summary for the software paper is that the Rust engine wins at small sizes and loses at large ones until its intra-step parallelism works — a defect to fix before any GPU comparison, not a result to hide (data: `data/generated/pgpe/bench/jax_cpu.json`).
