@@ -130,3 +130,15 @@ Controls: |slope of d_x| = 6×10⁻⁶ – 2.5×10⁻⁵ (all below the 3×10⁻
 - P2 (σ_⊥ small) was read on the first scan (passes); not repeated here. P1 as registered failed on the first scan and is not redeemed by this follow-up (the d₀ spread is of the size of the ripple).
 
 **What the follow-up does not establish:** an isolated-vortex σ(k). That needs a lattice-free measurement (a larger box with the pair far apart, and the same k grid) — Rust replication of this matrix (`wave_scan --d0 20,24,28`, ran 2026-10-09 14:20, an independent implementation agreeing with Python to 5×10⁻¹¹ on the d₀ = 32 matrix) and an L = 128 repetition are the next steps.
+
+## Amendment WS-A2 (2026-10-09 14:40) — filed before any run of it; implementation: the Rust `wave_scan` (rusty-SUNDIALS, branch feat/qf-pgpe-reference; agrees with the Python instrument to 5×10⁻¹¹ on the d₀ = 32 matrix)
+
+**Question.** Is the d₀-dependence of σ_∥ (39–252 % at k ≤ 1.6) the periodic arrangement? A box twice as large, with the pair twice as far apart, should shrink it: the amplitude of a scattered wave at a neighbour at distance r falls as (σ/2πkr)^{1/2}.
+**Design.** L = 128, N = 256 (dx = ξ/2, k_cut = π, the same wave numbers as the L = 64 scan: m = 2 m₆₄), pair separations d₀ = 64 and 48, m ∈ {8, 16, 24, 32, 40, 48} (k = 0.393, 0.785, 1.178, 1.571, 1.963, 2.356), both directions, A_v = 0.04, 400 t.u., one control per d₀: 2 × (12 + 1) = 26 runs.
+**Registered before the data:**
+- **L2a (the ripple shrinks with the spacing).** At m = 16, 24, 32 (k = 0.79, 1.18, 1.57) the spread max/min − 1 of σ_∥ over the two d₀ is **< 50 %** (L = 64: 252, 45, 103 %); the mean over the two d₀ of the three points is the L = 128 estimate.
+- **L2b (agreement with the L = 64 d₀-mean).** At every k in common (0.39, 0.79, 1.18, 1.57, 1.96) the L = 128 two-d₀ mean is within **40 %** of the L = 64 four-d₀ mean (1.83, 1.85, 1.42, 0.60, 0.30).
+- **L2c (the fall).** σ_∥(k = 1.96) and σ_∥(2.36) are below 0.5 ξ (Born: 9.7, 11.6 ξ).
+- **P4″.** The friction predicted from the L = 128 σ_∥ (the k = 0.39–2.36 points; the 1/k tail beyond; k < 0.39 filled from the L = 64 first scan) lies within **30 %** of the measured α/T = 0.054–0.060 at k_c = 2.09 (so 0.038–0.078).
+**Conclusions registered:** L2a ∧ L2b → the L = 64 d₀-mean is a usable estimate and the lattice is the source of the ripple; L2a fails → the d₀-dependence is not the lattice (a response of the core or a resonance) and σ_∥(k) of an isolated vortex is not defined by this observable; L2a ∧ ¬L2b → the L = 64 means are biased by the lattice and only L = 128 numbers are quoted.
+**Known now (not new information):** the L = 64 values and the Born baseline (0.214 / 0.678 / 3.95); the Rust replication of the L = 64 d₀ matrix is running (45 runs) and will be compared point by point with the Python one.
