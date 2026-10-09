@@ -36,7 +36,7 @@ with the same energy-conserving instrument, with its $T=0$ known answer reproduc
 prediction of a cutoff-independent coefficient fails, and so does its rival: the coefficient $c=\alpha/(\rho_n/\rho)$ is
 $0.31\pm0.03$, $0.232\pm0.014$ and $0.102\pm0.011$ at $k_c\xi=2.1$, $3.1$, $6.3$, falling by a factor $3.1$ while $\rho_n/(\rho T)$
 rises by a factor of three to four. What does not move is $\alpha$ itself: $\alpha/T=0.054\pm0.003$ in six arms ($\chi^2=1.3$ for $5$ degrees of freedom)
-over three cutoffs and $T=0.10$--$0.22$. The proportionality to $\rho_n$ reported before was a degeneracy of a single cutoff, where
+over three cutoffs and $T=0.10$--$0.22$ ($0.060\pm0.002$ with the regression estimator: the primary energy estimator is biased low by diffusion, a flaw of the registered synthetic gate that a second implementation exposed). The proportionality to $\rho_n$ reported before was a degeneracy of a single cutoff, where
 $\rho_n\propto T$; the mode-averaged cross-section is not a property of the vortex ($1.9$, $1.4$, $0.59$ healing lengths) and the
 ``geometric core size'' reading is withdrawn. The temperature law was found after the data were read; it was registered as a hypothesis,
 with its prediction for the next arm fixed in advance: $\alpha=0.0094\pm0.0010$ at $k_c=2\pi$, $T=0.173$, against $0.0077$ if the friction followed $\rho_n$. The arm gives $0.0096\pm0.0018$, inside the window registered for the temperature law --- a confirmation by the rule, although the error is almost twice the one assumed when the window was written, so the arm alone separates the two readings by one standard deviation; the discrimination rests on the comparison across cutoffs.
@@ -173,6 +173,8 @@ The energy estimator of $\alpha$ is biased low by diffusion (above), so the abso
 A pre-registered test failed in the way that matters: the coefficient between the friction and the normal density is not a property of the vortex, and neither the registered cutoff-independence nor its Born rival describes it. What the
 test found instead is a friction that follows the temperature and ignores the cutoff over a factor three, which
 is a stricter statement than the one it replaces, and a correction of the preceding paper's reading, made here rather than left to a reader.
+
+\paragraph{Data and code availability.} Pre-registrations, results logs, the ledger (claims 089--098), analysis scripts, the Lean sources and the figure scripts are in the repository \url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids} (scripts as of commit \texttt{2ff887a4f57a}); the numerical record up to the preceding paper is archived in~\cite{Callens2026sw}. The pure-Rust re-implementation of the engine and estimators that exposed the estimator bias is in the rusty-SUNDIALS crate \texttt{qf-pgpe}.
 
 \appendix
 \section{Registered items and outcomes}\label{app:protocol}
