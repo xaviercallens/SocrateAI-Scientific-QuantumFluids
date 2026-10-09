@@ -57,3 +57,7 @@ The suspected causes of the earlier failure (serial transposes and element-wise 
 | 512 | 159 595 | 119 715 | 87 824 | 67 761 | 73 605 |
 
 N = 512: 2.4× at 8 threads (Rust 68 ms against 74 ms for XLA); N = 256: 1.6×, still slower than XLA (19 against 14 ms); N = 128: threading is slower than serial and must stay off. Two things remain: the measurement on an idle machine, and the remaining serial work (the copy into the scratch buffer, the plan scratch allocation per row block).
+
+### 1e. Our own time-stepping error (stage-times ramp, t ≤ 5)
+
+With `v(t)` read at the RK4 stage times (the dt-consistent model), the force at dt = 0.01 and dt = 0.005 differs by **3.3×10⁻¹⁰** at most over t ≤ 5 (max |F| = 3.25). The scheme's own temporal error is therefore negligible against every difference to the reference quoted above. The differences to the reference (1.1×10⁻⁶ at t ≤ 0.3, 1.4×10⁻⁴ at t ≤ 5 and 2.2×10⁻⁴ at t ≤ 10 with the reference's step-end convention; a constant 3.5×10⁻³ with stage times) are thus properties of the reference's discretisation and of the dt-dependent velocity-ramp convention, not of the integration here. (Halving dt *with* the step-end convention changes the force by 1.7×10⁻³ at t = 0.1, because that convention itself depends on dt — it is not a convergence test.) The registered acceptance of plan item A2 (force within 10⁻⁵ relative for t ≤ 10) is **not met**: 4×10⁻⁵ of max |F| at t = 10 (met only for t ≤ 0.3, 6×10⁻⁶); the criterion was set before the reference's convention was known and is kept as failed in the plan.
