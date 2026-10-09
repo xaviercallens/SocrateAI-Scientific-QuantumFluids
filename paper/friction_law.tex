@@ -143,6 +143,12 @@ $[0.0084,0.0104]$ supports H-T, $[0.0067,0.0087]$ the alternative, the overlap i
 \textbf{Outcome} (read 2026-10-09 by the pre-written rule): $\alpha_E=0.0096\pm0.0018$ ($\alpha_{\rm reg}=0.0110\pm0.0014$; six runs, two ended by annihilation, two by track loss), $c=0.120\pm0.023$, $\alpha/T=0.055\pm0.011$ --- \textbf{in the window of H-T}, outside that of the $\rho_n$ law (inclusion by the rule; by itself the arm lies $0.2\sigma$ from $0.0094$ and $1.0\sigma$ from $0.0077$).
 \end{keybox}
 
+\paragraph{Estimator robustness (found while porting the estimators to Rust).} A re-implementation of the registered estimators in a second language, bit-identical to the Python on four real tracks, was run on the registered synthetic gate over many seeds
+and showed that the energy estimator of $\alpha$, the primary estimator used throughout, is \emph{biased low by the diffusion}: for a true $\alpha=0.02$ it returns $0.0200$ without diffusion and $0.0183$, $0.0163$, $0.0156$ at $\eta=5\times10^{-4}$, $10^{-3}$, $2\times10^{-3}$
+($-8$, $-18$, $-22\,\%$), independently of the detection noise, while the regression estimator is unbiased ($0.0194$); the registered gate passed on one seed. In the data the two estimators differ by $5$--$21\,\%$ in that direction. With the regression estimator
+$\alpha/T=0.0598\pm0.0023$ ($\chi^2=5.2$ for $5$ degrees of freedom; $0.0540\pm0.0026$ with the energy estimator) and the coefficient $c$ is $0.355\pm0.035$, $0.250\pm0.012$, $0.124\pm0.011$ at the three cutoffs, a factor $2.9$: every conclusion above stands, with
+absolute values of $\alpha$ higher by about $11\,\%$ (the values quoted for $k_c=\pi$ in the preceding paper are low by $5$--$20\,\%$).
+
 \paragraph{Why a temperature law is natural, and what it requires.} In a classical field every mode carries the energy $T$, so occupations are $n_k=T/\varepsilon_k$ and anything linear in the occupation is linear in $T$. The kinetic form
 $D=\tfrac12\!\int\!\frac{d^2k}{(2\pi)^2}\,\frac{T}{\varepsilon_k^2}\,k^2c_g\sigma_{\rm tr}$ with the Bogoliubov energy $\varepsilon_k=\sqrt{k^2+k^4/4}$ is then $T$ times a function of the cutoff;
 for $k\xi\gg1$ ($\varepsilon\simeq k^2/2$, $c_g\simeq k$) the integrand is $\propto\sigma_{\rm tr}(k)$, so a drag that does not depend on the cutoff beyond $k_c\xi\simeq2$ requires $\int^\infty\sigma_{\rm tr}\,dk$ to converge --- a transport cross-section
@@ -160,7 +166,7 @@ linearly with $k$ and is valid for fewer than $3\,\%$ of the modes of a cutoff $
 \section{Limits}\label{sec:limits}
 
 One box ($L=64$), one interaction strength ($mg=1$), pairs of two sizes and two or three temperatures per cutoff; the two new cutoffs at one and two temperatures; the dependence on the pair size ($\alpha$ larger for $d_0=12$ than for $d_0=8$ by $38$--$85\,\%$ at the new cutoffs, not at $\pi$) and the small negative transverse coefficient, whose magnitude grows toward the coarse cutoff ($\alpha'=-0.005$ at $2\pi$, $-0.010$ and $-0.015$ at $\pi$, $-0.017$ and $-0.031$ at $2\pi/3$; always far from the Iordanskii value) are reported and unexplained --- either a bias of the energy estimator at the coarse cutoff or a finite-pair effect. The cutoff $2\pi/3$ shares its grid with $\pi$ and the cutoff $2\pi$ has a finer grid: a lattice-spacing effect is not excluded by this design, though the $T=0$ pair is insensitive to it to $0.3\,\%$.
-The temperature law was formulated after five arms were read and confirmed by the rule on the sixth, whose error is large; it is a well-supported empirical relation over $T=0.10$--$0.22$ and three cutoffs, not a derived one, and it has not been tested above $T=0.22$ (where thermal vortices enter) or at other box sizes or interaction strengths.
+The energy estimator of $\alpha$ is biased low by diffusion (above), so the absolute coefficient is $0.054$--$0.060$; the law is estimator-independent in its form. The temperature law was formulated after five arms were read and confirmed by the rule on the sixth, whose error is large; it is a well-supported empirical relation over $T=0.10$--$0.22$ and three cutoffs, not a derived one, and it has not been tested above $T=0.22$ (where thermal vortices enter) or at other box sizes or interaction strengths.
 
 \section{Conclusion}
 
@@ -177,6 +183,7 @@ FL2 & $c$ within $20\,\%$ across cutoffs & fails (spread $0.98$)\\
 Born rival & $c\propto k_c$ & rejected ($\chi^2=204/2$)\\
 FL3 & spread $10$--$30\,\%$, $c(2\pi/3)\le c(\pi)\le c(2\pi)$ & fails (ordering reversed)\\
 $T=0$ control & speed within $4\,\%$, $|\alpha|\le10^{-3}$ & passes at all cutoffs; $\eta$ floor marginal at $2\pi/3$\\
+G0 energy criterion & $\alpha_E$ within $15\,\%$ (one numpy seed) & passes on 2 of 12 seeds: biased low by diffusion (regression unbiased)\\
 base admission & raw $n_v<0.5$ & fine $T=0.217$ base fails; replaced by $T=0.173$ (admitted, $n_v=0.08$)\\
 H-T & post hoc, FL-A1 & consistent ($\chi^2=1.28/5$); registered window for the last arm met ($0.0096$ in $[0.0084,0.0104]$)\\\bottomrule\end{tabular}\end{center}
 
