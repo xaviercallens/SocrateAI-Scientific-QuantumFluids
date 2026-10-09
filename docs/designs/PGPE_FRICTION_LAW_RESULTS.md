@@ -84,3 +84,11 @@ L = 128, e = 0.60 base (for the bottleneck direction) finished: T = 0.1097, n_s/
   0.0077 for ρ_n at c = 0.096), prediction filed before it was read.
 - **Correction of FL-A1's side remark:** the d₀ = 12 / d₀ = 8 ratio of α_E is 1.38 (2π/3, T = 0.100), 1.85 (2π/3, T = 0.216), 1.47 (2π, T = 0.127) — not "35 %"
   uniformly; at k_cut = π it was 0.91, 0.76 (i.e. α(8)/α(12), inverted sign convention) within the 0.7–1.43 band.
+
+## Last arm read (2026-10-09 04:24, by `evaluate_fine173.py`, window of amendment FL-A1)
+
+k_cut = 2π, T = 0.1734 (ρ_n/ρ = 0.0802), 6 runs (ended: 2 t_max, 2 track_lost, 2 annihilated): **α_E = 0.0096 ± 0.0018** (regression 0.0110 ± 0.0014), c = 0.120 ± 0.023, α/T = 0.055 ± 0.011, α′ = −0.004, η = 1.8×10⁻³.
+**Window rule: [0.0084, 0.0104] → SUPPORTS H-T** (ρ_n-law window [0.0067, 0.0087] excluded). Caveat recorded: the error is 0.0018, not the 0.0010 assumed when the window was written, so the arm alone is 0.2σ from 0.0094 and 1.0σ from 0.0077; the discrimination rests on the comparison across cutoffs.
+All six arms: α/T = 0.0540 ± 0.0026, χ² = 1.28/5; one common c: χ² = 75.9/5; FL2 spread 0.98 (c = 0.31 ± 0.03, 0.232 ± 0.014, 0.102 ± 0.011); Born rival χ² = 204/2.
+FL1 holds at all three cutoffs (2π: c = 0.096 ± 0.013 at T = 0.127, 0.120 ± 0.023 at T = 0.173).
+⟨c_g σ_tr⟩ = c κ ρ_s/ρ = 1.9, 1.4, 0.59 ξ at k_c = 2.1, 3.1, 6.3 (the 0.56 quoted earlier used the first 2π arm only).
