@@ -142,3 +142,30 @@ Controls: |slope of d_x| = 6×10⁻⁶ – 2.5×10⁻⁵ (all below the 3×10⁻
 - **P4″.** The friction predicted from the L = 128 σ_∥ (the k = 0.39–2.36 points; the 1/k tail beyond; k < 0.39 filled from the L = 64 first scan) lies within **30 %** of the measured α/T = 0.054–0.060 at k_c = 2.09 (so 0.038–0.078).
 **Conclusions registered:** L2a ∧ L2b → the L = 64 d₀-mean is a usable estimate and the lattice is the source of the ripple; L2a fails → the d₀-dependence is not the lattice (a response of the core or a resonance) and σ_∥(k) of an isolated vortex is not defined by this observable; L2a ∧ ¬L2b → the L = 64 means are biased by the lattice and only L = 128 numbers are quoted.
 **Known now (not new information):** the L = 64 values and the Born baseline (0.214 / 0.678 / 3.95); the Rust replication of the L = 64 d₀ matrix is running (45 runs) and will be compared point by point with the Python one.
+
+## Results of WS-A2 (read 2026-10-09 ≈ 20:00 by the registered rules, Rust `wave_scan`: 26 runs at L = 128, N = 256, 5.5 h wall) and of the Rust replicate of the d₀ matrix
+
+**Rust replicate of the WS-A1 matrix (45 runs, independent implementation):** all 21 σ_∥ values agree with the Python results to ≤ 1.0×10⁻¹¹ relative (the second, independent execution of the follow-up reproduces it to roundoff).
+
+**L = 128 (d₀ = 64, 48), σ_∥ (ξ):**
+
+| m (k) | d₀ = 64 | d₀ = 48 | mean | spread | L = 64 mean (4 d₀) | L128/L64 − 1 |
+|---|---|---|---|---|---|---|
+| 8 (0.39) | 1.80 | 1.64 | 1.72 | 9 % | 1.83 | −6 % |
+| 16 (0.79) | 2.36 | 1.42 | 1.89 | **67 %** | 1.85 | +2 % |
+| 24 (1.18) | 1.56 | 1.41 | 1.48 | 10 % | 1.42 | +4 % |
+| 32 (1.57) | 1.56 | 0.85 | 1.21 | **85 %** | 0.60 | **+101 %** |
+| 40 (1.96) | 0.40 | 0.60 | 0.50 | 50 % | 0.30 | **+65 %** |
+| 48 (2.36) | 0.81 | 0.51 | 0.66 | 61 % | — | — |
+
+σ_⊥ at L = 128: 0.8–0.9, 0.4–0.6, 0.14–0.19, 0.1–0.26, 0.18–0.26, 0.3 (k = 0.39 … 2.36); all below κ/2c = 3.14 (P2 holds again). Oddness (±y) holds in all 12 pairs; controls |slope d_x| ≤ 4.8×10⁻⁵ (L = 128: 4.8×10⁻⁵ and 2.7×10⁻⁵, above the 3×10⁻⁵ amended clause for d₀ = 64 — recorded).
+
+**Registered tests:**
+- **L2a (spread < 50 % at m = 16, 24, 32): FAILS** — 67 %, 10 %, 85 %. Doubling the box and the spacing did **not** remove the d₀-dependence at two of three wavenumbers.
+- **L2b (L = 128 mean within 40 % of the L = 64 mean at the five common k): FAILS** — it holds at k = 0.39, 0.79, 1.18 (−6, +2, +4 %) and fails at 1.57 (+101 %) and 1.96 (+65 %).
+- **L2c (σ_∥ < 0.5 ξ at k = 1.96 and 2.36): FAILS** — 0.496 (passes by 0.004) and 0.658.
+- **P4″ (friction from the L = 128 σ_∥, k_c = 2.09, window [0.038, 0.078]): nominally inside** — 0.0381 — **but** (i) it is at the edge of the window, (ii) the registered conclusion for a failed L2a is that *σ_∥ of an isolated vortex is not defined by this observable*, and (iii) from the same L = 128 data the prediction grows ×2.8 from k_c = 2.09 to 2π (0.038, 0.059, 0.106) whereas the measured friction is flat to 8 %: with L = 128 alone the cutoff independence is **not** reproduced.
+**Registered conclusion (L2a fails):** the d₀-dependence is not (only) the periodic lattice; **an isolated-vortex σ_∥(k) is not defined by this observable at the geometries tried.**
+
+**What survives, stated as measurements and not as the isolated-vortex cross-section.** Pooling every geometry measured (L = 64 with d₀ = 20, 24, 28, 32; L = 128 with d₀ = 48, 64): at k ≲ 1.2 the mean σ_∥ (1.4–1.9 ξ) is stable between the two box sizes to 6 %, against the Born law's 3.9–5.8 ξ at k = 0.8–1.2 (a reduction by a factor 2–3 already there); above k ≈ 1.5 it falls to 0.2–1.2 ξ but depends on the geometry by factors of 1.7–2. The friction predicted from the pooled means is α/T = **0.035** (envelope over geometries 0.023–0.050) at k_c = 2.09, **0.043** (0.029–0.062) at π, **0.047** (0.033–0.066) at 2π (1/k tail; 0.0425 with a zero tail), against 0.054 (energy) / 0.060 (regression) measured and the Born law's 0.21 / 0.68 / 3.95: the **saturation is reproduced** (+36 % predicted from 2.09 to 6.28 against +8 % measured), the **magnitude to about 0.6–0.65** with a geometric uncertainty of ±40 %, the measured values lying inside the envelope at π and 2π and just outside at 2.09 (0.050 against 0.054).
+**Limits and next step.** The observable measures the force on a vortex pair in a periodic arrangement; a lattice-free measurement needs another geometry (a single vortex pinned by a potential in an open box with absorbing boundaries — the flow solver `qf-pgpe::flow` of rusty-SUNDIALS now provides rectangular boxes, potentials and absorbing layers; or randomised vortex positions averaged over many realisations). This is recorded as the follow-up, not started.
