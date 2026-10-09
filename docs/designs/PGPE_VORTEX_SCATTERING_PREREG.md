@@ -105,3 +105,28 @@ wave at a neighbour is ~(σ/2πkr)^{1/2}, and its phase kr changes by 2π when k
 - If L1 fails (variation < 30 % at m = 10–16): the ripple is a property of the single-vortex response (e.g. core-bound resonances, Wood-type resonance of the core with the wave — cf. core-bound waves on a GP vortex, arXiv:2603.05505), not of the lattice, and the first-scan σ_∥(k) stands; the amendment then reads: gates KA1 (clause) and KA4 are failed for a reason other than the lattice, and the Born limit at k ≤ 0.3 fails *in the measurement*, which would be reported as such.
 - **KA1 amended** (retrospective relaxation, flagged): the clause on the control's separation drift is dropped in favour of the slope clause that is used in the estimator (|slope of d_x| ≤ 3×10⁻⁵ in the control of every d₀).
 - Known limits unchanged; additionally: d₀ ≠ 32 pairs translate along y at ~1/d₀ − 1/(L − d₀) (0.006–0.017), subtracted by the per-d₀ control.
+
+## Results of the WS-A1 follow-up (2026-10-09 14:17; `analyze_wave_scan_d0.py` → `scan_d0/wave_scan_d0_results.json`) — as registered, no spin
+
+All 45 runs completed. σ_∥ (ξ) by pair separation d₀ = 20, 24, 28, 32 (d₀ = 32 from the first scan):
+
+| m | k | d₀=20 | 24 | 28 | 32 | mean | spread (max/min − 1) |
+|---|---|---|---|---|---|---|---|
+| 4 | 0.39 | 1.60 | 1.66 | 1.84 | 2.23 | 1.83 | 39 % |
+| 8 | 0.79 | 0.69 | 2.40 | 2.44 | 1.88 | 1.85 | 252 % |
+| 10 | 0.98 | 1.10 | 1.69 | 1.57 | 0.75 | 1.28 | 125 % |
+| 12 | 1.18 | 1.44 | 1.36 | 1.70 | 1.17 | 1.42 | 45 % |
+| 14 | 1.37 | 1.10 | 0.93 | 0.94 | 2.52 | 1.37 | 170 % |
+| 16 | 1.57 | 0.71 | 0.63 | 0.35 | 0.70 | 0.60 | 103 % |
+| 20 | 1.96 | 0.26 | 0.33 | 0.37 | 0.23 | 0.30 | 63 % |
+
+Controls: |slope of d_x| = 6×10⁻⁶ – 2.5×10⁻⁵ (all below the 3×10⁻⁵ amended clause).
+
+- **L1 as registered: FAILS** — its first clause holds (spread > 30 % at m = 10, 12, 14, 16: 125, 45, 170, 103 %) but its second does not (spread at m = 20 is 63 %, not < 30 %). The registered branches did not anticipate this mixed outcome (the "L1 holds → average" branch needs both clauses; the "L1 fails → ripple belongs to the vortex" branch was defined by spread < 30 % at m = 10–16, which did not occur).
+  Reading: σ_∥(k) at a given k depends on the pair separation by factors of 1.4–3.5 for k ≤ 1.6, and still by 63 % at k = 1.96 where σ is small (0.23–0.37): **the periodic arrangement contaminates the single-vortex cross-section at every k measured**, and the d₀-mean is an estimate with an uncertainty of a factor ≈ 1.5–2 per point, not a single-vortex measurement.
+- **P4′ (friction from the d₀-averaged σ_∥), as registered: PARTIAL (30–60 %).** Predicted α/T at k_c = 2.09: **0.0323** against the measured 0.054 (energy) / 0.060 (regression) (ratio 0.60 / 0.54). Envelope from the per-point minimum and maximum over d₀ (±20 % on the points not repeated): 0.022–0.043 at k_c = 2.09; 0.027–0.050 at π; 0.030–0.055 at 2π.
+  Prediction at the other cutoffs (1/k tail beyond k = 2.75 assumed): 0.032 → 0.038 → 0.042 (k_c = 2.09, π, 2π), against the Born law's 0.21 → 0.68 → 3.95.
+  **Two readings, kept apart:** (i) the **saturation** — the friction nearly independent of the cutoff (predicted +30 % from k_c = 2.1 to 6.3, measured +8 % / +10 %; Born ×18) — **is reproduced** by the T = 0 scattering data under the independent-mode kinetic picture, because σ_∥ falls above k ≈ 1.5 (0.3 ξ at k = 2); (ii) the **magnitude** is reproduced to 55–60 %, with an uncertainty band of ±40 % from the lattice spread that includes the lower measured value only at 2π: the independent-mode picture is qualitatively right and quantitatively incomplete (or the lattice-contaminated σ is low).
+- P2 (σ_⊥ small) was read on the first scan (passes); not repeated here. P1 as registered failed on the first scan and is not redeemed by this follow-up (the d₀ spread is of the size of the ripple).
+
+**What the follow-up does not establish:** an isolated-vortex σ(k). That needs a lattice-free measurement (a larger box with the pair far apart, and the same k grid) — Rust replication of this matrix (`wave_scan --d0 20,24,28`, ran 2026-10-09 14:20, an independent implementation agreeing with Python to 5×10⁻¹¹ on the d₀ = 32 matrix) and an L = 128 repetition are the next steps.
