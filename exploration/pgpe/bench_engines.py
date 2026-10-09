@@ -5,7 +5,7 @@
 
 Problem (identical in `crates/qf-pgpe/examples/bench_step.rs`): N x N grid, L = N/2 (dx = 0.5), g = 1, dt = 0.01, cutoff k_max/2, initial state c[0,0] = N^2,
 c[0,1] = (0.3, 0.1) N, c[1,0] = (-0.2, 0.2) N projected by modes(psi(.)). Engines: numpy (pgpe.PGPE, pocketfft), scipy.fft (workers = 1, T), torch CPU (1, T threads)
-and the Rust engine (single thread; `--rust-parallel` build with the rayon feature). The statistic is the best of `reps` repetitions (time per step); all engines'
+and the Rust engine (single thread; a rayon-parallel build was tried and removed: no speed-up). The statistic is the best of `reps` repetitions (time per step); all engines'
 final states are compared with the Rust checksum sum|Re c| + |Im c|. Run on a quiet machine (the scans of the programme were SIGSTOPped during the measurement).
 """
 from __future__ import annotations
@@ -17,7 +17,6 @@ ROOT = Path(__file__).resolve().parents[2]; OUT = ROOT / "data/generated/pgpe/be
 sys.path.insert(0, str(ROOT / "exploration/pgpe"))
 RUST = Path(os.environ.get("RUSTY_SUNDIALS", Path.home() / "xdev/rusty-SUNDIALS-c3"))
 RUST_BIN = Path(os.environ.get("CARGO_TARGET_DIR", RUST / "target")) / "release/examples/bench_step"
-RUST_PAR = Path("/mnt/data/xdev-cache/cargo-target-par/release/examples/bench_step")
 
 
 def initial(N):
@@ -79,8 +78,6 @@ def single(a):
         steps = max(10, int(a.steps * (128 / N) ** 2)) if a.scale_steps else a.steps
         row = [time_rust(RUST_BIN, N, steps, a.reps)]
         for eng in a.engines.split(","): row.append(time_python(eng, N, steps, a.reps))
-        if RUST_PAR.exists() and N >= 256:
-            for th in (2, 4, 8): row.append(time_rust(RUST_PAR, N, steps, a.reps, th))
         ref = row[0]["checksum"]
         for r in row: r["checksum_rel_diff_vs_rust"] = abs(r["checksum"] - ref) / ref
         res += row

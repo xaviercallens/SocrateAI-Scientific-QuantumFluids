@@ -1,0 +1,4 @@
+N = 64 (400 steps): {'rust': 617, 'numpy': 2633, 'scipy-1': 2189, 'scipy-4': 3864, 'torch-1': 1963, 'torch-4': 2176} max checksum rel diff 5.2e-14
+N = 128 (100 steps): {'rust': 2735, 'numpy': 11499, 'scipy-1': 10321, 'scipy-4': 12511, 'torch-1': 6378, 'torch-4': 5649} max checksum rel diff 1.0e-13
+N = 256 (25 steps): {'rust': 22522, 'numpy': 60221, 'scipy-1': 52719, 'scipy-4': 105107, 'torch-1': 42999, 'torch-4': 36019, 'rust-parallel-2': 22866, 'rust-parallel-4': 23772, 'rust-parallel-8': 23226} max checksum rel diff 1.3e-14
+N = 512 (10 steps): {'rust': 104598, 'numpy': 260000, 'scipy-1': 220173, 'scipy-4': 236923, 'torch-1': 218957, 'torch-4': 153404, 'rust-parallel-2': 140933, 'rust-parallel-4': 151724, 'rust-parallel-8': 151828} max checksum rel diff 7.7e-14
