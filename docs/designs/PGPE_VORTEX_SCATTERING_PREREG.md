@@ -1,6 +1,6 @@
 # Pre-registration: the vortex–phonon transport cross-section σ(k) from T = 0 scattering, and the friction law it predicts
 
-Filed 2026-10-09 09:40, **before the scan below is run**. Follows `PGPE_FRICTION_LAW_RESULTS.md` (CLAIM-096/097: α = 0.054 T at three cutoffs, c = α/(ρ_n/ρ) not a vortex property)
+Filed 2026-10-09 ≈ 08:30 (the file was written before the scan was launched at 08:32:04; the git commit followed seconds later, at 08:32), **before any run of the scan below has finished**. Follows `PGPE_FRICTION_LAW_RESULTS.md` (CLAIM-096/097: α = 0.054 T at three cutoffs, c = α/(ρ_n/ρ) not a vortex property)
 and the constraint stated in `friction_law.tex` §4: if the drag is a sum over independent Bogoliubov modes, a cutoff-independent α requires the vortex's transport cross-section
 to fall faster than 1/k for kξ ≳ 2, whereas the Born law σ_∥ = κ²k/8c² (Sonin 1997) grows with k.
 
