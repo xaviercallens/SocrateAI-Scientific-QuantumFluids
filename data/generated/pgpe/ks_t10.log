@@ -1,0 +1,13 @@
+  step 0/1000  t=0.00  1s
+  step 100/1000  t=1.00  91s
+  step 200/1000  t=2.00  178s
+  step 300/1000  t=3.00  274s
+  step 400/1000  t=4.00  390s
+  step 500/1000  t=5.00  511s
+  step 600/1000  t=6.00  715s
+  step 700/1000  t=7.00  951s
+  step 800/1000  t=8.00  1200s
+  step 900/1000  t=9.00  1474s
+t =  10.0: relative L2 difference of psi vs reference 2.175e-04  max |dpsi| 1.221e-03
+  step 1000/1000  t=10.00  1694s
+force_x(t): max |ours - reference| over t <= 10.0: 2.207e-04 (reference range -5.450 .. 0.000); relative to max |F|: 4.05e-05
