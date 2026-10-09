@@ -1,0 +1,27 @@
+force: 501 reference points, t = 0.0..50.0;  max|F_ref| = 8.935
+  t in [   0,   1): max|dF| = 3.999e-06  rms|dF| = 1.681e-06  rms|F_ref| = 0.346
+  t in [   1,   5): max|dF| = 1.404e-04  rms|dF| = 7.542e-05  rms|F_ref| = 2.105
+  t in [   5,  10): max|dF| = 2.207e-04  rms|dF| = 1.914e-04  rms|F_ref| = 4.491
+  t in [  10,  20): max|dF| = 7.872e-03  rms|dF| = 3.586e-03  rms|F_ref| = 6.274
+  t in [  20,  30): max|dF| = 1.667e-02  rms|dF| = 1.375e-02  rms|F_ref| = 7.255
+  t in [  30,  40): max|dF| = 1.683e-02  rms|dF| = 1.655e-02  rms|F_ref| = 8.407
+  t in [  40,  50): max|dF| = 1.597e-02  rms|dF| = 1.552e-02  rms|F_ref| = 8.896
+wave function against the reference snapshots (complex64 in the reference):
+  t = 10: relative L2 of psi = 2.175e-04, of the density = 2.390e-04
+  t = 20: relative L2 of psi = 5.822e-04, of the density = 2.040e-04
+  t = 30: relative L2 of psi = 1.323e-03, of the density = 2.013e-04
+  t = 40: relative L2 of psi = 2.495e-03, of the density = 2.777e-04
+  t = 50: relative L2 of psi = 4.087e-03, of the density = 3.970e-04
+vortex counts (reference rule applied to our snapshots) | reference:
+  t =  5: ours  0 (+0/-0)   reference 0
+  t = 10: ours  0 (+0/-0)   reference 0
+  t = 15: ours  0 (+0/-0)   reference 0
+  t = 20: ours  0 (+0/-0)   reference 0
+  t = 25: ours  2 (+1/-1)   reference 2
+  t = 30: ours  3 (+2/-1)   reference 3
+  t = 35: ours  2 (+1/-1)   reference 2
+  t = 40: ours  4 (+2/-2)   reference 4
+  t = 45: ours  7 (+4/-3)   reference 6
+  t = 50: ours  7 (+4/-3)   reference 7
+counts ours : [0, 0, 0, 0, 2, 3, 2, 4, 7, 7]
+counts ref  : [0, 0, 0, 0, 2, 3, 2, 4, 6, 7]

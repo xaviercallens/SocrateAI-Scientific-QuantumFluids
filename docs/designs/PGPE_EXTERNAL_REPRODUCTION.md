@@ -61,3 +61,17 @@ N = 512: 2.4× at 8 threads (Rust 68 ms against 74 ms for XLA); N = 256: 1.6×, 
 ### 1e. Our own time-stepping error (stage-times ramp, t ≤ 5)
 
 With `v(t)` read at the RK4 stage times (the dt-consistent model), the force at dt = 0.01 and dt = 0.005 differs by **3.3×10⁻¹⁰** at most over t ≤ 5 (max |F| = 3.25). The scheme's own temporal error is therefore negligible against every difference to the reference quoted above. The differences to the reference (1.1×10⁻⁶ at t ≤ 0.3, 1.4×10⁻⁴ at t ≤ 5 and 2.2×10⁻⁴ at t ≤ 10 with the reference's step-end convention; a constant 3.5×10⁻³ with stage times) are thus properties of the reference's discretisation and of the dt-dependent velocity-ramp convention, not of the integration here. (Halving dt *with* the step-end convention changes the force by 1.7×10⁻³ at t = 0.1, because that convention itself depends on dt — it is not a convergence test.) The registered acceptance of plan item A2 (force within 10⁻⁵ relative for t ≤ 10) is **not met**: 4×10⁻⁵ of max |F| at t = 10 (met only for t ≤ 0.3, 6×10⁻⁶); the criterion was set before the reference's convention was known and is kept as failed in the plan.
+
+## 2. Kwon & Shin to t = 50 (Rust, 5000 steps, 2741 s; snapshots every 5 τ; `data/generated/pgpe/ks_rust_t50_compare.txt`)
+
+No acceptance criterion was registered for t > 10 before the run; the numbers are reported as found.
+
+| quantity | result |
+|---|---|
+| force, max \|ΔF\| per window (max \|F_ref\| = 8.94) | t<1: 4.0×10⁻⁶; 1–5: 1.4×10⁻⁴; 5–10: 2.2×10⁻⁴; 10–20: **7.9×10⁻³**; 20–30: 1.7×10⁻²; 30–40: 1.7×10⁻²; 40–50: 1.6×10⁻² (overall 1.88×10⁻³ of max \|F\|) |
+| ψ against the reference snapshot, relative L2 | t=10: 2.2×10⁻⁴; 20: 5.8×10⁻⁴; 30: 1.3×10⁻³; 40: 2.5×10⁻³; 50: 4.1×10⁻³ |
+| density \|ψ\|² relative L2 | 2.4×10⁻⁴, 2.0×10⁻⁴, 2.0×10⁻⁴, 2.8×10⁻⁴, 4.0×10⁻⁴ (stays at the 10⁻⁴ level; the larger ψ distance is mostly phase) |
+| vortex counts at t = 5…50 (reference's own rule applied to our snapshots) | ours 0,0,0,0,2,3,2,4,**7**,7; reference 0,0,0,0,2,3,2,4,**6**,7 — **9 of 10 equal**, one differs by one (t = 45) |
+| onset of shedding | both first count vortices at t = 25 (two, one of each sign) |
+
+**Reading.** The wake instability sets in at the same time with the same sign structure, and the counts agree at 9 of 10 times, with the single discrepancy a unit difference during the period when the count is growing (6 → 7) — a vortex near the threshold of the density-minimum test or of the winding criterion is the likeliest cause, but it was not examined. The force separates from the reference once the wake exists (differences grow by a factor ≈ 35 between the windows 5–10 and 10–20 and then saturate at 1.7×10⁻², i.e. 0.19 % of the maximum force): this is the signature of a perturbation amplified by the unstable wake, not of a different model, since the density stays within 4×10⁻⁴ of the reference's. **What is not shown:** statistics of the counts beyond t = 50 (the reference has them to t = 100 and beyond in other runs), the Strouhal number, and agreement with the reference's own single-precision arithmetic as a separate source of the difference (not isolated: a complex64 run of the same scheme would separate arithmetic from discretisation).
