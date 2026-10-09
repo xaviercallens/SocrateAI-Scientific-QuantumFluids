@@ -45,3 +45,15 @@ JAX 0.11.2 (XLA CPU, complex128, `jit` + `fori_loop`, default thread pool), best
 | 512 | 10 | 123 467 | 73 605 | 7×10⁻¹⁴ |
 
 The checksum agreement (limited by the 13 digits printed by the Rust example) holds at all sizes. **Reading:** below N = 128 the single-threaded Rust engine is 1.7–1.9× faster than JAX; at N = 256 and 512 the multi-threaded XLA engine is 1.8–2× *faster* than single-threaded Rust. The earlier Rust "parallel" variant (rayon over rows) gave no speed-up and was removed; the cause was never investigated. **Pinned to one core** (`taskset`, two different cores, best of 5, same minutes) the order reverses: Rust 3.0–3.5 ms / 27.6–30.3 ms / 149–160 ms against JAX 5.4–5.8 / 33.6–33.8 / 155–172 ms at N = 128 / 256 / 512, i.e. Rust is 1.1–1.8× faster per core at every size. The XLA advantage at N ≥ 256 is therefore **threading, not a better algorithm**, and the missing piece of the Rust engine is a working intra-step parallelism (serial transposes and element-wise loops are the suspects; the earlier attempt parallelised only the row pass; none of this is measured yet). The honest summary for the software paper is that the Rust engine wins at small sizes and loses at large ones until its intra-step parallelism works — a defect to fix before any GPU comparison, not a result to hide (data: `data/generated/pgpe/bench/jax_cpu.json`).
+
+### 1d. Intra-step threading in Rust (`parallel` feature) — first measurement, machine not idle
+
+The suspected causes of the earlier failure (serial transposes and element-wise loops around a parallel row pass) were removed: the row FFT passes, the in-place transposes (disjoint tile pairs) and all element-wise loops now run on a rayon pool, behind the cargo feature `parallel` and `ComplexField2D::with_threads(t)`. The unit test asserts bit-identical results for 1, 2 and 5 threads; the benchmark checksums are identical for every thread count. Best of 5, µs per step, **with the machine at load average ≈ 7** (the scaling is therefore a lower bound; to be repeated on an idle machine):
+
+| N | 1 thread | 2 | 4 | 8 | JAX-CPU (default threads) |
+|---|---|---|---|---|---|
+| 128 | 3340 | 4260 | 3994 | 5153 | 4914 |
+| 256 | 30 650 | 23 826 | 19 094 | 18 949 | 13 560 |
+| 512 | 159 595 | 119 715 | 87 824 | 67 761 | 73 605 |
+
+N = 512: 2.4× at 8 threads (Rust 68 ms against 74 ms for XLA); N = 256: 1.6×, still slower than XLA (19 against 14 ms); N = 128: threading is slower than serial and must stay off. Two things remain: the measurement on an idle machine, and the remaining serial work (the copy into the scratch buffer, the plan scratch allocation per row block).

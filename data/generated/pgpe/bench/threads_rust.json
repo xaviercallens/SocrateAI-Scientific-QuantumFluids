@@ -1,0 +1,10 @@
+{
+ "date": "2026-10-09 20:50",
+ "note": "qf-pgpe bench_step with feature 'parallel' (rayon pool inside the step: row FFT passes, transposes, element-wise loops), best of 5 repetitions, us per step. MACHINE NOT IDLE: 8 cores, load average ~7 (other jobs) during the measurement, so the scaling is a lower bound; to be repeated on an idle machine. Checksums are identical for every thread count (also asserted bit-for-bit by the unit test threads_are_bit_identical).",
+ "us_per_step_best": {
+  "128": {"1": 3340, "2": 4260, "4": 3994, "8": 5153},
+  "256": {"1": 30650, "2": 23826, "4": 19094, "8": 18949},
+  "512": {"1": 159595, "2": 119715, "4": 87824, "8": 67761}
+ },
+ "jax_cpu_default_threads_us": {"128": 4914, "256": 13560, "512": 73605}
+}
