@@ -6,7 +6,7 @@
 Everything except `run` (and the invariants `norm`, `energy`, `momentum`, which are delegated too) is inherited from the Python class, so the
 measurement code (observables.py, round2.py, ...) is unchanged. `run(c, t_end, callback, every)` keeps the contract of PGPE.run: with a
 callback, the evolution is chunked in blocks of `every` steps and `callback(t, c)` is called after each block.
-The extension is built from `rusty-SUNDIALS/crates/qf-pgpe-py` (`cargo build --release -p qf-pgpe-py`, then copy `libqf_pgpe.so` to `qf_pgpe.so` on PYTHONPATH,
+The extension is built from `rusty-SUNDIALS/crates/qf-pgpe-py` (`cargo build --release -p qf-pgpe-py`, then copy `libqf_pgpe_py.so` to `qf_pgpe.so` on PYTHONPATH,
 or $QF_PGPE_EXT). Results agree with the numpy engine to ~1e-10 after 20 time units (tests in crates/qf-pgpe-py).
 """
 from __future__ import annotations
