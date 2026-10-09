@@ -158,7 +158,9 @@ The software (this library, its numerical experiments, and every companion paper
 Zenodo: **[10.5281/zenodo.23225129](https://doi.org/10.5281/zenodo.23225129)** (`v1.17.0`). Cite the
 concept DOI **10.5281/zenodo.22855581** for all versions.
 
-The vortex-transport paper, `paper/vortex_transport.tex` ("*Vortex transport and screening in a closed two-dimensional Bose field*"), is archived on its own DOI: **[10.5281/zenodo.23225293](https://doi.org/10.5281/zenodo.23225293)** (version 2.1, revised after peer review; concept DOI 10.5281/zenodo.23202454).
+The vortex-transport paper, `paper/vortex_transport.tex` ("*Vortex transport and screening in a closed two-dimensional Bose field*"), is archived on its own DOI: **[10.5281/zenodo.23262143](https://doi.org/10.5281/zenodo.23262143)** (version 2.2: peer-review revision plus two corrections; concept DOI 10.5281/zenodo.23202454).
+
+The companion paper on the friction law, `paper/friction_law.tex` ("*The friction on a quantized vortex in a truncated Gross–Pitaevskii field follows the temperature, not the normal density*"), has its own DOI: **[10.5281/zenodo.23262132](https://doi.org/10.5281/zenodo.23262132)** (concept 10.5281/zenodo.23262131).
 
 The theory itself has a standalone foundational paper, `paper/sector_thesis.tex`
 ("*When does self-duality cause physics?*"), archived separately on its **own dedicated DOI**:

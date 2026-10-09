@@ -19,4 +19,4 @@ Not changed, with reason: the Einstein verdict stays "undecided by rule" — the
 fluctuations are sub-diffusive) is the reason the rule was written, and relaxing it after the fact would be the kind of
 move the protocol exists to prevent. The informal 1.4–3× statement is kept, labelled informal.
 
-Status: version 2 published (10.5281/zenodo.23225101) and corrected the same night as version 2.1 (10.5281/zenodo.23225293, record 23225293); the L = 96 control (item B) is reported, verdict REFUTED by the registered rule (1 of 4 runs without stall).
+Status: version 2 published (10.5281/zenodo.23225101), version 2.1 (10.5281/zenodo.23225293, text correction), version 2.2 (10.5281/zenodo.23262143, 2026-10-09: withdraws the reading of alpha ∝ rho_n as a property of the vortex and records the energy-estimator bias; see the companion paper 10.5281/zenodo.23262132). The L = 96 control (item B) is reported, verdict REFUTED by the registered rule (1 of 4 runs without stall).
