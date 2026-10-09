@@ -20,16 +20,23 @@ def sh(cmd, check=True):
     return r
 
 
-mp = ROOT / "paper/zenodo_metadata.json"; meta = json.load(open(mp)); meta["metadata"]["description"] += f"<p><b>New in {TAG}.</b> {NOTES}</p>"
-json.dump(meta, open(mp, "w"), indent=1, ensure_ascii=False)
-dp = ROOT / "scripts/zenodo_deposit.py"; s = dp.read_text()
-if "friction_law.pdf" not in s:
-    s = s.replace('ROOT / "paper" / "vortex_transport.pdf"]', 'ROOT / "paper" / "vortex_transport.pdf", ROOT / "paper" / "friction_law.pdf"]'); dp.write_text(s)
-rp = ROOT / "README.md"; r = rp.read_text(); rp.write_text(re.sub(r"release-v1\.\d+\.\d+-orange", f"release-{TAG}-orange", r))
-sh(["git", "add", "paper/zenodo_metadata.json", "scripts/zenodo_deposit.py", "scripts/release_v1_18.py", "README.md"])
-sh(["git", "commit", "-q", "-m", f"{TAG}: friction-law paper (FL2 and Born rival fail; alpha follows T), vortex-transport v2.2 correction, energy-estimator bias, scattering pre-registration and first scan, FrictionKinetic.lean"])
-sh(["git", "tag", "-a", TAG, "-m", f"{TAG}: friction law follows the temperature; energy-estimator bias; scattering instrument"]); sh(["git", "push", "-q", "origin", "master"]); sh(["git", "push", "-q", "origin", TAG])
-sh(["python3", "scripts/zenodo_deposit.py", "--tag", TAG, "--new-version-of", PREV, "--publish"])
+tag_exists = bool(subprocess.run(["git", "tag", "-l", TAG], cwd=ROOT, capture_output=True, text=True).stdout.strip())
+if not tag_exists:
+    mp = ROOT / "paper/zenodo_metadata.json"; meta = json.load(open(mp)); meta["metadata"]["description"] += f"<p><b>New in {TAG}.</b> {NOTES}</p>"
+    json.dump(meta, open(mp, "w"), indent=1, ensure_ascii=False)
+    dp = ROOT / "scripts/zenodo_deposit.py"; s = dp.read_text()
+    if "friction_law.pdf" not in s:
+        s = s.replace('ROOT / "paper" / "vortex_transport.pdf"]', 'ROOT / "paper" / "vortex_transport.pdf", ROOT / "paper" / "friction_law.pdf"]'); dp.write_text(s)
+    rp = ROOT / "README.md"; r = rp.read_text(); rp.write_text(re.sub(r"release-v1\.\d+\.\d+-orange", f"release-{TAG}-orange", r))
+    sh(["git", "add", "paper/zenodo_metadata.json", "scripts/zenodo_deposit.py", "scripts/release_v1_18.py", "README.md"])
+    sh(["git", "commit", "-q", "-m", f"{TAG}: friction-law paper (FL2 and Born rival fail; alpha follows T), vortex-transport v2.2 correction, energy-estimator bias, scattering pre-registration and first scan, FrictionKinetic.lean"])
+    sh(["git", "tag", "-a", TAG, "-m", f"{TAG}: friction law follows the temperature; energy-estimator bias; scattering instrument"]); sh(["git", "push", "-q", "origin", "master"]); sh(["git", "push", "-q", "origin", TAG])
+for attempt in range(4):
+    if sh(["python3", "scripts/zenodo_deposit.py", "--tag", TAG, "--new-version-of", PREV, "--publish"], check=False).returncode == 0:
+        break
+    time.sleep(30)
+else:
+    sys.exit("Zenodo deposit failed 4 times")
 rec = json.load(open(ROOT / "paper/zenodo_record.json")); doi = rec["doi"]; print("bundle", rec)
 r = rp.read_text().replace(f"10.5281/zenodo.{PREV}", doi).replace("(`v1.17.0`)", f"(`{TAG}`)"); rp.write_text(r)
 lp = ROOT / "LEDGER.md"; L = lp.read_text().split("\n"); i = next(k for k, l in enumerate(L) if l.startswith("| CLAIM-099 |"))
