@@ -131,7 +131,7 @@ Controls: |slope of d_x| = 6×10⁻⁶ – 2.5×10⁻⁵ (all below the 3×10⁻
 
 **What the follow-up does not establish:** an isolated-vortex σ(k). That needs a lattice-free measurement (a larger box with the pair far apart, and the same k grid) — Rust replication of this matrix (`wave_scan --d0 20,24,28`, ran 2026-10-09 14:20, an independent implementation agreeing with Python to 5×10⁻¹¹ on the d₀ = 32 matrix) and an L = 128 repetition are the next steps.
 
-## Amendment WS-A2 (2026-10-09 14:40) — filed before any run of it; implementation: the Rust `wave_scan` (rusty-SUNDIALS, branch feat/qf-pgpe-reference; agrees with the Python instrument to 5×10⁻¹¹ on the d₀ = 32 matrix)
+## Amendment WS-A2 (2026-10-09 ≈ 14:19; committed before the L = 128 runs were launched) — filed before any run of it; implementation: the Rust `wave_scan` (rusty-SUNDIALS, branch feat/qf-pgpe-reference; agrees with the Python instrument to 5×10⁻¹¹ on the d₀ = 32 matrix)
 
 **Question.** Is the d₀-dependence of σ_∥ (39–252 % at k ≤ 1.6) the periodic arrangement? A box twice as large, with the pair twice as far apart, should shrink it: the amplitude of a scattered wave at a neighbour at distance r falls as (σ/2πkr)^{1/2}.
 **Design.** L = 128, N = 256 (dx = ξ/2, k_cut = π, the same wave numbers as the L = 64 scan: m = 2 m₆₄), pair separations d₀ = 64 and 48, m ∈ {8, 16, 24, 32, 40, 48} (k = 0.393, 0.785, 1.178, 1.571, 1.963, 2.356), both directions, A_v = 0.04, 400 t.u., one control per d₀: 2 × (12 + 1) = 26 runs.
