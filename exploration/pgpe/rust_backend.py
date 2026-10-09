@@ -7,7 +7,7 @@ layout of the Python instrument (npz with t, R, q, n_det, P, P_hi, meta), so tha
     run_vortex_transport("T0", "out.npz", geom="dipole", d0=10, t_max=100, n=128, l=64, seed=1)
 
 The Rust binaries are built from the `rusty-SUNDIALS` workspace (`cargo build --release -p qf-pgpe --examples`); the location is taken from
-$RUSTY_SUNDIALS (default ~/xdev/rusty-SUNDIALS-c3, the worktree of branch feat/qf-pgpe-reference) and its `target/release/examples`.
+$RUSTY_SUNDIALS (default ~/xdev/rusty-SUNDIALS-c3, a worktree of rusty-SUNDIALS; the crate is on main since PR #69, commit 72cad84) and its `target/release/examples`.
 Rust placements use a small LCG, not numpy's generator: single trajectories differ from the Python ones for the same seed; the
 campaign's claims are ensemble statements. Measurements on a GIVEN field are identical (see crates/qf-pgpe/*CROSSCHECK.md).
 """
