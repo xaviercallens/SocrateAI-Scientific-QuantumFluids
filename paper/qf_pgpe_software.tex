@@ -20,7 +20,7 @@
 \large The quantum-fluids module of rusty-SUNDIALS --- design, cross-language verification, performance, and what porting found}
 \author{Xavier Callens\\ \small SocrateAI-Scientific-QuantumFluids and rusty-SUNDIALS\\
 \small \url{https://github.com/xaviercallens/rusty-SUNDIALS}}
-\date{October 2026}
+\date{October 2026 (version 2)}
 
 \begin{document}
 \maketitle
@@ -38,7 +38,10 @@ one of them in the Python programme: its primary estimator of the mutual frictio
 registered synthetic gate had not shown. On a single thread of a 2013 laptop CPU the engine is $\SpNumpyA\times$, $\SpNumpyB\times$, $\SpNumpyC\times$ and $\SpNumpyD\times$ faster per step than the
 numpy engine at $N=64$, $128$, $256$, $512$ ($\SpBestA\times$--$\SpBestD\times$ against the fastest of the Python engines we tried, torch on CPU), and a drop-in replacement of the
 Python stepper makes an end-to-end thermal-state measurement $5.3\times$ faster with identical results. We make no claim about GPU codes or other
-published solvers, which we did not measure; intra-run threading, tried, did not help on this machine.
+published solvers, which we did not measure. \emph{Version 2} adds the first reproduction of an external, published solver run
+(Kwon and Shin's flow past a penetrable obstacle, a different equation, scheme and precision): the initial field is reproduced to $2.8\times10^{-8}$,
+the force on the obstacle to $2\times10^{-4}$ over $10$ time units and the vortex counts at $9$ of $10$ times to $t=50$, with the places where it does not agree stated;
+a JAX/XLA row (equal checksums to $10^{-13}$; faster than the single-threaded Rust step at $N\ge256$ only because it uses threads), and an intra-step threading option of the engine (bit-identical, $2.4\times$ at $N=512$ on a loaded machine).
 \end{abstract}
 
 \section{Introduction}
@@ -53,13 +56,13 @@ This paper describes the module of the rusty-SUNDIALS library~\cite{Hindmarsh200
 and records what we can and cannot say about it. Its design rule is that no module is accepted without a direct numeric comparison against the original it replaces, on
 the same inputs. Our contributions are: (i) the engine and instruments (Section~\ref{sec:design}); (ii) a verification record that includes independent integration by the library's own CVODE and
 cross-language comparisons with quantified differences (Section~\ref{sec:verification}); (iii) the three defects this found (Section~\ref{sec:found}); (iv) measured performance against numpy, scipy and torch, with the conditions stated
-(Section~\ref{sec:performance}); (v) a Python extension with a drop-in stepper (Section~\ref{sec:extension}). The physics results that the programme obtained with these tools are
+(Section~\ref{sec:performance}); (v) a Python extension with a drop-in stepper (Section~\ref{sec:extension}); (vi) in this version, a reproduction of an external published run (Section~\ref{sec:external}). The physics results that the programme obtained with these tools are
 published separately~\cite{Callens2026a,Callens2026b,Callens2026sw}; here they serve as use cases (Section~\ref{sec:use}).
 
 \begin{keybox}
-\textbf{What is claimed, and what is not.} Claimed: agreement with the Python originals at the stated levels; single-thread speed-ups over the numpy, scipy and torch-CPU engines on the
-stated machine; bit-identical results between optimisations. \textbf{Not claimed:} that this is the best PGPE solver. We did not benchmark GPU codes, FFTW-based C codes or other published
-solvers (none were installed), the machine is a 2013 quad-core laptop CPU, and the one parallelisation we tried inside a run gave no speed-up.
+\textbf{What is claimed, and what is not.} Claimed: agreement with the Python originals at the stated levels; agreement with one external published run (Section~\ref{sec:external}) at the stated levels, with the disagreements listed; single-thread speed-ups over the numpy, scipy and torch-CPU engines on the
+stated machine; bit-identical results between optimisations and thread counts. \textbf{Not claimed:} that this is the best PGPE solver. We did not benchmark GPU codes, FFTW-based C codes or other published
+solvers (none were installed), no GPU or TPU has been used yet, and the machine is a 2013 quad-core laptop CPU shared with other jobs.
 \end{keybox}
 
 \section{Design}\label{sec:design}
@@ -152,8 +155,37 @@ the speed-up is \SpBestA, \SpBestB, \SpBestC\ and \SpBestD. The advantage shrink
 \caption{Aggregate throughput of independent runs ($N=128$, one thread each) against the number of concurrent processes, on the same machine and under the same external load.}\label{fig:thr}
 \end{figure}
 
+\paragraph{JAX/XLA and threading (added in version 2).} The same problem, written for JAX~\cite{Bradbury2018} (\texttt{jit}, \texttt{fori\_loop}, complex128, CPU, default thread pool), reproduces the Rust checksum to $\le10^{-13}$ at the four sizes, so its times are for the same computation:
+$1.13$, $4.9$, $13.6$ and $73.6$\,ms per step at $N=64$, $128$, $256$, $512$ against $0.60$, $2.9$, $27.2$ and $123$\,ms for the single-threaded Rust step measured in the same minutes (machine at load $\approx7$, so every number is perturbed; the same JAX case gave $8.8$\,ms at $N=128$ in an earlier session). XLA is thus faster at $N\ge256$.
+Pinned to one core (two cores tried) the order reverses: Rust $3.0$--$3.5$, $27.6$--$30.3$, $149$--$160$\,ms against JAX $5.4$--$5.8$, $33.6$--$33.8$, $155$--$172$\,ms at $N=128$, $256$, $512$. The XLA advantage is therefore threading, not a better algorithm.
+The Rust engine now has an optional threading mode (cargo feature \texttt{parallel}): row FFT passes, transposes and element-wise loops run on a thread pool; results are bit-identical for any thread count (tested). On the same loaded machine the step at $N=512$ takes $160$, $120$, $88$, $68$\,ms with $1$, $2$, $4$, $8$ threads ($2.4\times$; JAX: $74$\,ms), at $N=256$ $30.7$, $23.8$, $19.1$, $18.9$\,ms ($1.6\times$; JAX: $13.6$\,ms), and at $N=128$ threading is slower than serial and must stay off.
+These are first measurements, to be repeated on an idle machine and on GPU/TPU hardware (JAX is the path to TPUs and the differential-testing oracle for any GPU kernel).
+
 \paragraph{Throughput and end-to-end use.} The programme's experiments are many independent runs (seeds, pair sizes, wavenumbers), so throughput is the relevant quantity: with no interpreter lock and no per-step round trip, one process delivers \ThrRustOne\ steps per second at $N=128$ (numpy: \ThrNumpyOne) and the best aggregate over the concurrency we tried is \ThrRustMax\ against \ThrNumpyMax, a ratio of \ThroughputRatio\ (Fig.~\ref{fig:thr}).
 End to end: a $50$-time-unit tracked $T=0$ vortex run at $128^2$ takes $41$\,s of CPU in Rust against $106$\,s in numpy ($2.6\times$), and a thermal-state measurement (\texttt{run\_blocks}, $60$ time units with measurements, $N=64$) takes $20.8$\,s with the drop-in extension against $109.8$\,s ($5.3\times$) with the same $T$, $n_s/n$, vortex count and energy (the measurement code is the same Python).
+
+\section{Reproducing an external solver run}\label{sec:external}
+
+Everything above compares the engine with its own origin. The first comparison with someone else's published run is the reference run of Kwon and Shin~\cite{KwonShin2026} (flow of a superfluid past a penetrable Gaussian obstacle; data and GPU code deposited with a CC-BY licence). It is a different problem from the programme's: a $1000\times500$ grid on $[-250,250)\times[-125,125)$, an obstacle $V_0=0.9$, $\sigma=20$, a moving-frame term, absorbing layers, dissipative dynamics $\partial_t\psi=v(t)\partial_x\psi-(i+\Gamma)[-\tfrac12\nabla^2+|\psi|^2-1]\psi-iV\psi$, a split-step scheme in single precision.
+We implemented that model with an independent scheme (explicit RK4 on the whole right-hand side, spectral derivatives, double precision, $\Delta t=0.01$) twice, in numpy and in Rust (\texttt{qf-pgpe::flow}); the two agree with each other to the digits quoted.
+No acceptance threshold was registered for $t>10$; the results are reported as found.
+
+\begin{table}[h]\centering\small
+\begin{tabular}{p{0.34\linewidth}p{0.58\linewidth}}\toprule
+quantity & result\\\midrule
+initial field & reproduced to $2.8\times10^{-8}$ (relative $L^2$, float32 round-off), including the seeded noise\\
+force, $t\le0.3$ / $\le5$ / $\le10$ & max $|\Delta F|=1.1\times10^{-6}$ / $1.4\times10^{-4}$ / $2.2\times10^{-4}$ ($|F|\le5.5$)\\
+force, $10\le t\le50$ & $7.9\times10^{-3}$ then $\approx1.7\times10^{-2}$ ($0.19\,\%$ of the maximum $8.94$), saturating after the wake forms\\
+$\psi$ against the snapshots, $t=10,20,30,40,50$ & $2.2\times10^{-4}$, $5.8\times10^{-4}$, $1.3\times10^{-3}$, $2.5\times10^{-3}$, $4.1\times10^{-3}$ (density: $2$--$4\times10^{-4}$ throughout)\\
+vortex counts, $t=5,\dots,50$ & ours $0,0,0,0,2,3,2,4,7,7$; reference $0,0,0,0,2,3,2,4,6,7$ (reference rule applied to our snapshots; first shedding at $t=25$ in both)\\
+own temporal error & $3\times10^{-10}$ in the force ($\Delta t$ halved, $t\le5$)\\\bottomrule
+\end{tabular}
+\caption{Rust \texttt{qf-pgpe::flow} against the reference run of Kwon and Shin.}\label{tab:ks}
+\end{table}
+
+\paragraph{What the comparison showed about the reference.} (i) The reference reads the flow velocity at the end of each step; during the $0.1$ ramp this shifts the obstacle by $0.00275$ and changes the force by $3.5\times10^{-3}$ relative to the stage-time reading --- an $O(\Delta t)$ convention that we reproduce on request (and that makes a halving of $\Delta t$ an invalid convergence test). (ii) Its stored initial field is the Thomas--Fermi field after \emph{one} imaginary-time step plus noise: with its own tolerance ($\epsilon=N_xN_y10^{-9}$) the stopping criterion is met at the first step, as both of our implementations confirm. This is a statement about the deposited data, not about the published analysis, whose observables are measured at late times.
+\paragraph{Where it does not agree.} The force separates from the reference once the wake exists, by a factor $\approx35$ between the windows $5$--$10$ and $10$--$20$, then saturates; the single count that differs (7 against 6 at $t=45$) occurs while the count is growing, and we did not examine which vortex is responsible. We did not separate the effect of single precision from that of the discretisation, did not compare beyond $t=50$, and did not compute the Strouhal number. The model was recovered from the code, not from the paper's text.
+A CI workflow (\texttt{reproduction.yml}, weekly and on demand, outside the required checks because it needs an external download) re-runs the ground state and the first $0.3$ time units against a checksummed copy.
 
 \section{The Python extension}\label{sec:extension}
 
@@ -174,8 +206,8 @@ The tools have been used in a pre-registered programme whose results are publish
 \section{Limitations and future work}
 
 \begin{itemize}[nosep]
-\item One machine, one CPU generation, a concurrent external load; no GPU and no comparison with other published solvers. A GPU backend and a comparison with FFTW-based C codes are the obvious next measurements.
-\item Intra-run parallelism did not help here (cause not investigated); large single simulations on many cores are not served.
+\item One machine, one CPU generation, a concurrent external load; no GPU or TPU yet, one external run reproduced, no comparison with other published solvers or with FFTW-based C codes. The plan (a reference-solver gap analysis, a reproduction registry in CI, a differential-testing design with JAX as the TPU path) is in the programme's repository; none of its GPU/TPU items is measured.
+\item Threading inside a run helps at $N\ge256$ but the scaling is only measured on a loaded machine and is below that of XLA at $N=256$; below $N=256$ it must stay off.
 \item The thermal constructors use their own RNG; reproducing a numpy-seeded construction bit for bit is not possible and not a goal.
 \item The module is two-dimensional and periodic; the programme's three-dimensional and trapped geometries are not covered.
 \item Momentum is conserved to $\sim10^{-6}$ (not $10^{-10}$) for noisy fields with weight at the cutoff edge, where the cubic term aliases; the numpy engine shows the identical drift.
@@ -183,7 +215,7 @@ The tools have been used in a pre-registered programme whose results are publish
 
 \section{Availability}
 
-Source: \url{https://github.com/xaviercallens/rusty-SUNDIALS} (crates \texttt{qf-pgpe}, \texttt{qf-pgpe-py}; merged as pull request \#69, commit \texttt{72cad84}, 2026-10-09); BSD-3-Clause. The Python programme, the benchmark script (\texttt{exploration/pgpe/bench\_engines.py}), the data (\texttt{data/generated/pgpe/bench/}) and the ledger are in~\cite{Callens2026sw}. Reproduction: \texttt{cargo test --release -p qf-pgpe} (27 tests), \texttt{python3 exploration/pgpe/bench\_engines.py single}.
+Source: \url{https://github.com/xaviercallens/rusty-SUNDIALS} (crates \texttt{qf-pgpe}, \texttt{qf-pgpe-py}; merged as pull requests \#69 and \#70; the reproduction and threading of version 2 are in the follow-up branch \texttt{feat/qf-pgpe-reproduction}); BSD-3-Clause. The Python programme, the benchmark script (\texttt{exploration/pgpe/bench\_engines.py}), the data (\texttt{data/generated/pgpe/bench/}) and the ledger are in~\cite{Callens2026sw}. Reproduction: \texttt{cargo test --release -p qf-pgpe} (including the threaded bit-identity test), \texttt{python3 exploration/pgpe/bench\_engines.py single}.
 
 \bibliographystyle{unsrt}
 \bibliography{refs_software,refs_vortex_transport}
