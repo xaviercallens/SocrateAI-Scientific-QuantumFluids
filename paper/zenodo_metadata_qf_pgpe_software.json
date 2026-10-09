@@ -3,7 +3,7 @@
   "title": "qf-pgpe: a verified pure-Rust projected Gross-Pitaevskii engine for quantum-fluid experiments, with a Python extension (the quantum-fluids module of rusty-SUNDIALS)",
   "upload_type": "publication",
   "publication_type": "preprint",
-  "description": "<p>Classical-field (projected Gross-Pitaevskii) simulations of two-dimensional Bose fluids are usually scripts whose correctness is checked, when at all, by a few conservation laws. We describe <b>qf-pgpe</b>, the quantum-fluids module of the rusty-SUNDIALS numerical library: a pure-Rust integrating-factor RK4 engine for the projected equation on a periodic grid, a vortex instrument (periodic theta-function imprint, sub-grid detection, tracking), the registered estimators of vortex friction and diffusion, a thermal-state toolkit, a vortex-phonon scattering instrument, and a Python extension (pyo3, numpy) with a drop-in stepper. Every module is a port of a Python original of an ongoing pre-registered research programme and carries a numeric cross-check against it: estimators agree to 2e-14 on real vortex tracks, a 31-run scattering matrix to 5e-11, measurements on a shared thermal field to 1e-14; the engine is checked against known answers and against rusty-SUNDIALS' own CVODE (global error falling as dt^4.00). The cross-checks found three defects, one of them in the Python programme: its primary estimator of the mutual friction is biased low by vortex diffusion (-8 to -22 %), a flaw the registered synthetic gate had not shown. On one thread of a 2013 laptop CPU the engine is 4.3, 4.2, 2.7, 2.5 times faster per step than the numpy engine at N = 64, 128, 256, 512 (3.2 to 1.5 times against the fastest Python engine tried, torch on CPU), and the drop-in extension makes an end-to-end thermal-state measurement 5.3 times faster with identical results. No claim is made about GPU codes or other published solvers, which were not measured; intra-run threading, tried, did not help on this machine.</p>",
+  "description": "<p>Classical-field (projected Gross-Pitaevskii) simulations of two-dimensional Bose fluids are usually scripts whose correctness is checked, when at all, by a few conservation laws. We describe <b>qf-pgpe</b>, the quantum-fluids module of the rusty-SUNDIALS numerical library: a pure-Rust integrating-factor RK4 engine for the projected equation on a periodic grid, a vortex instrument (periodic theta-function imprint, sub-grid detection, tracking), the registered estimators of vortex friction and diffusion, a thermal-state toolkit, a vortex-phonon scattering instrument, and a Python extension (pyo3, numpy) with a drop-in stepper. Every module is a port of a Python original of an ongoing pre-registered research programme and carries a numeric cross-check against it: estimators agree to 2e-14 on real vortex tracks, a 31-run scattering matrix to 5e-11, measurements on a shared thermal field to 1e-14; the engine is checked against known answers and against rusty-SUNDIALS' own CVODE (global error falling as dt^4.00). The cross-checks found three defects, one of them in the Python programme: its primary estimator of the mutual friction is biased low by vortex diffusion (-8 to -22 %), a flaw the registered synthetic gate had not shown. On one thread of a 2013 laptop CPU the engine is 4.3, 4.2, 2.7, 2.5 times faster per step than the numpy engine at N = 64, 128, 256, 512 (3.2 to 1.5 times against the fastest Python engine tried, torch on CPU), and the drop-in extension makes an end-to-end thermal-state measurement 5.3 times faster with identical results. No claim is made about GPU codes or other published solvers, which were not measured.</p><p><b>Version 2</b> adds the first reproduction of an external, published solver run (Kwon and Shin, flow past a penetrable obstacle: a different scheme and precision): the initial field is reproduced to 2.8e-8, the force on the obstacle to 2e-4 over 10 time units, and the vortex counts at 9 of 10 times up to t = 50, with the disagreements stated (force differences of 0.19 % of the maximum once the wake forms; one count differs by one). It also reports a JAX/XLA row (checksums equal to 1e-13; faster than the single-threaded Rust step at N >= 256 only because it uses threads; pinned to one core Rust is 1.1-1.8 times faster) and an optional, bit-identical intra-step threading mode of the engine (2.4 times at N = 512, measured on a loaded machine).</p>",
   "creators": [
    {
     "name": "Callens, Xavier",
@@ -50,9 +50,19 @@
     "identifier": "10.5281/zenodo.23262524",
     "relation": "isDerivedFrom",
     "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.20068724",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23266977",
+    "relation": "isNewVersionOf",
+    "scheme": "doi"
    }
   ],
-  "version": "1",
-  "notes": "Software paper of the qf-pgpe crate (rusty-SUNDIALS main, commit 72cad84). Companion to the vortex-transport and friction-law papers of the SocrateAI-Scientific-QuantumFluids programme."
+  "version": "2",
+  "notes": "Software paper of the qf-pgpe crate, version 2 (rusty-SUNDIALS release v11.6.0, which adds the reference-reproduction test and the optional threading). Version 1: 10.5281/zenodo.23266977. Companion to the vortex-transport and friction-law papers of the SocrateAI-Scientific-QuantumFluids programme."
  }
 }
