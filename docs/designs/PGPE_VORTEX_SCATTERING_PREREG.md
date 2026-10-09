@@ -80,3 +80,28 @@ Gates fail → the observable is not a clean measure of the force (e.g. wave–p
 P1 fails → the temperature law's cutoff independence needs another explanation than a falling σ(k).
 
 Limits stated now: T = 0 (no thermal dressing of the vortex), one box and one interaction strength (mg = 1), linear regime only, Rayleigh–Jeans occupations assumed, projected-field cutoff π (σ above k = 2.75 inferred, not measured).
+
+## Results of the first scan (2026-10-09 10:20; `analyze_wave_scan.py` → `scan/wave_scan_results.json`) — as registered, no spin
+
+All 31 runs completed (no vortex lost). **Gates: KA3 passes (amplitude doubling multiplies the force by 3.9 at m = 8 and 4.7 at m = 16). KA1 fails on its second clause**
+(slope of d_x in the control 1.0×10⁻⁵ passes; the control separation changes by 0.132 over 400 t.u., clause ≤ 0.02 — the saddle at d₀ = L/2 drifts slowly; the control slope is subtracted in every estimate, but the registered clause is failed).
+**KA2 fails at m = 28 only** (σ_∥ = 0.049 ± 0.008, at the noise floor; oddness holds at the other 12 wavenumbers). **KA4 fails**: σ_∥ at k = 0.098, 0.196, 0.295 is 1.56, 3.60, 2.83 against Born 0.48, 0.97, 1.45
+(ratios 3.2, 3.7, 1.9). By the registered rule: *gates fail → the observable is not a clean measure of the isolated-vortex force; report and stop; revise the instrument under an amendment.*
+
+σ_∥(k) (xi; Born in parentheses): 1.56 (0.48), 3.60 (0.97), 2.83 (1.45), 2.23 (1.94), 2.73 (2.91), 1.88 (3.88), 0.75 (4.85), 1.17 (5.81), 2.52 (6.78), 0.70 (7.75), 0.23 (9.69), 0.33 (11.6), 0.05 (13.6) at k = 0.098 … 2.75.
+σ_⊥ = 2.1, 2.0, 1.1, 1.7, 2.0, 1.3, 0.8, 1.0, 1.6, 1.0, 0.3, 0.2, 0.2 (point-vortex Iordanskii κ/c = 6.28; **P2 passes**: max 2.04 < 3.14).
+**P1 fails as written** (σ_∥/k is not monotone for k ≥ 1: 0.75, 1.17, 2.52, 0.70 at k = 0.98 … 1.57), although σ_∥ above k = 1.96 is 0.05–0.33, thirty to two hundred times below Born.
+**P4 as registered: predicted α/T(k_c = 2.09) = 0.035 against the measured 0.054 (ratio 0.65, "partial 30–60 %") — but read with the gates failed, it is not a valid test.** Born would give 0.214.
+
+**Diagnosis (hypothesis, to be tested, not asserted).** The pair sits in a periodic box: each vortex has its antivortex 32 away and four periodic images, and a continuous wave of wavenumber k is re-scattered between them. The relative amplitude of a scattered
+wave at a neighbour is ~(σ/2πkr)^{1/2}, and its phase kr changes by 2π when k changes by 2π/32 = 0.196 — exactly twice the step of the scan at low k, so the scan **aliases** a lattice ripple. The non-monotone values (k = 0.98 … 1.57) and the large low-k values
+(where kr ≈ 3 and the scattered wave is not small at the neighbour) are what that would produce. The high-k fall (k ≳ 1.96, where the scattered wave is weaker at the neighbours) may be the isolated-vortex behaviour.
+
+## Amendment WS-A1 (2026-10-09 10:30) — filed before the follow-up runs
+
+**Registered question L1 (is the ripple the lattice?).** Repeat the scan at m ∈ {4, 8, 10, 12, 14, 16, 20} with pair separations d₀ = 20, 24, 28 (control for each d₀; the d₀ = 32 data are the first scan), both directions, A_v = 0.04, 400 t.u. (45 runs).
+- **L1 prediction:** at k = 0.98–1.57 (m = 10, 12, 14, 16) σ_∥ varies between the four d₀ by more than **30 %** (max/min − 1), i.e. the ripple is the lattice; at m ≥ 20 the variation is below 30 %.
+- If L1 holds: **the isolated-vortex σ_∥(k) is estimated as the d₀-average at each k** (with the spread as its uncertainty); the amended **P4′** is P4 evaluated with the d₀-averaged σ_∥, and the verdict bands are unchanged (30 % / 60 %). The amendment is **retrospective in its motivation** (the lattice was suggested by the first scan) and is flagged as such; the first-scan values are kept in every table.
+- If L1 fails (variation < 30 % at m = 10–16): the ripple is a property of the single-vortex response (e.g. core-bound resonances, Wood-type resonance of the core with the wave — cf. core-bound waves on a GP vortex, arXiv:2603.05505), not of the lattice, and the first-scan σ_∥(k) stands; the amendment then reads: gates KA1 (clause) and KA4 are failed for a reason other than the lattice, and the Born limit at k ≤ 0.3 fails *in the measurement*, which would be reported as such.
+- **KA1 amended** (retrospective relaxation, flagged): the clause on the control's separation drift is dropped in favour of the slope clause that is used in the estimator (|slope of d_x| ≤ 3×10⁻⁵ in the control of every d₀).
+- Known limits unchanged; additionally: d₀ ≠ 32 pairs translate along y at ~1/d₀ − 1/(L − d₀) (0.006–0.017), subtracted by the per-d₀ control.
