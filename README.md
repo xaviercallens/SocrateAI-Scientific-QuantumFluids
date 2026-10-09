@@ -162,7 +162,7 @@ The vortex-transport paper, `paper/vortex_transport.tex` ("*Vortex transport and
 
 The companion paper on the friction law, `paper/friction_law.tex` ("*The friction on a quantized vortex in a truncated Gross–Pitaevskii field follows the temperature, not the normal density*"), has its own DOI: **[10.5281/zenodo.23262132](https://doi.org/10.5281/zenodo.23262132)** (concept 10.5281/zenodo.23262131).
 
-The software paper on the quantum-fluids engine, `paper/qf_pgpe_software.tex` ("*qf-pgpe: a verified pure-Rust projected Gross–Pitaevskii engine for quantum-fluid experiments, with a Python extension*"; the crate `qf-pgpe` of rusty-SUNDIALS, merged as PR #69), has its own DOI: **[10.5281/zenodo.23266977](https://doi.org/10.5281/zenodo.23266977)**.
+The software paper on the quantum-fluids engine, `paper/qf_pgpe_software.tex` ("*qf-pgpe: a verified pure-Rust projected Gross–Pitaevskii engine for quantum-fluid experiments, with a Python extension*"; the crate `qf-pgpe` of rusty-SUNDIALS, merged as PR #69), has its own DOI (concept **[10.5281/zenodo.23266976](https://doi.org/10.5281/zenodo.23266976)**; version 1 10.5281/zenodo.23266977; **version 2, with the external reproduction of the Kwon–Shin run, the JAX row and the threading mode: [10.5281/zenodo.23269715](https://doi.org/10.5281/zenodo.23269715)**; PR #71, rusty-SUNDIALS v11.6.0).
 
 The theory itself has a standalone foundational paper, `paper/sector_thesis.tex`
 ("*When does self-duality cause physics?*"), archived separately on its **own dedicated DOI**:
