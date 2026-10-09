@@ -61,5 +61,34 @@
  "meta": {
   "note": "JAX 0.11.2 XLA CPU, complex128, jit + lax.fori_loop, default thread pool (multi-threaded), best of 5; Rust bench_step single-threaded best of 3, measured in the same minutes. Machine shared with other jobs (8 cores, load average ~7): timings vary by up to 2x between runs (the same JAX N=128 gave 8.8 ms in an earlier session and 4.9 ms here). Checksum = sum|Re c|+|Im c| after the same number of steps; Rust prints 13 digits only, so the agreement is limited by that printout.",
   "steps_rule": "400/100/25/10 steps for N=64/128/256/512 (as bench_engines.py / bench_step.rs)"
+ },
+ "one_core_pinned": {
+  "note": "taskset to a single core (two cores tried, 6 and 7), JAX default settings vs Rust bench_step, best of 5, same minutes",
+  "us_per_step": {
+   "core6": {
+    "jax": {
+     "128": 5418,
+     "256": 33641,
+     "512": 155163
+    },
+    "rust": {
+     "128": 3039,
+     "256": 27640,
+     "512": 149479
+    }
+   },
+   "core7": {
+    "jax": {
+     "128": 5827,
+     "256": 33832,
+     "512": 172333
+    },
+    "rust": {
+     "128": 3480,
+     "256": 30336,
+     "512": 159846
+    }
+   }
+  }
  }
 }
