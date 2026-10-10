@@ -1,6 +1,8 @@
 # Exciton fluids: proof, physics and solver — a study and an implementation plan
 
-**Status: STUDY AND PLAN. Nothing here has been implemented, compiled in Lean, run through a solver or released.**
+**Status: STUDY AND PLAN, revision 2. No solver experiment has been run and nothing is released.** Revision 2 records
+what changed when the owner supplied the Lean material (§0); the Lean statements of §3.4 and the keystone lemma X1
+have since been compiled in the QuantumFluids pin (producer: this session, **verifier pending**).
 Numbers marked *(computed here)* come from throw-away scripts run while writing this document (Appendix B lists them);
 everything else is quoted from the sources named in §11. Drafted with AI assistance, like the rest of the programme;
 owner review pending.
@@ -10,6 +12,51 @@ rusty-SUNDIALS with Lean 4 … prepare, and I will provide the GitHub repo and t
 plan as md combining, as the book, the Lean 4 formalization, the physics and the solvers".
 Related: the book (concept DOI 10.5281/zenodo.23272153), `docs/designs/RUSTY_SUNDIALS_EVOLUTION_PLAN.md`,
 `docs/designs/PGPE_EXTERNAL_REPRODUCTION.md`, LL-15 (check dependencies, not analogy).
+
+---
+
+## 0. Revision 2: what the LeanMaster delivery changed (2026-10-10, evening)
+
+The owner pointed to LeanMaster v3.48.0 (`contrib/openai_math_corollaries/`, produced on a second server from the
+AutoevolveAI worktree `worktree-openai-math-discovery`, merged as PR #3, 4f2ce235). I read it from a fresh sparse clone
+of the tag. The GitHub account `callensxavier` has one unrelated public repository; the work is under `xaviercallens`.
+
+**Checked here.** The sha256 manifest (1,586 files) matches the files on disk and no file is missing or extra; a scan for
+token patterns found none. `TRI_CMP/result.json`: verdict `COMPARATOR_ACCEPTS` for
+`OAI.Analysis.Triangular.Energy.Universal` against `ComparatorChallenges.TriangularEnergy` (same statement; axioms
+propext, Quot.sound, Classical.choice; 140 min), with the stated limits: statement adequacy not human-audited, no
+external kernel (nanoda not run), the other triangular roots not run. `audit/triangular/D1/compile_Axioms.json`: D1,
+D1b, D2 and their controls depend only on the three standard axioms; the planted `ctl_sorry` and `ctl_axiom` are
+flagged. A statement-fidelity audit against CKMRV Definitions 1.1–1.3 exists (`audit/triangular/statement_fidelity.md`),
+by the producing agent: not independent. Pins: Lean 4.34.1, Mathlib `d13f23b7`, openai/math `adc7f124` (files
+unchanged at `fd4aeeb2`); LeanMaster's own library is `v4.34.0-rc2`, the QuantumFluids pin, and the contribution is
+explicitly outside its five gates and not Tier A.
+
+**What it changes in this plan.**
+
+1. **Gate G-U is largely met by a record, not by me.** The Comparator and axiom audits were run on the second server;
+   I re-check only what is cheap (manifest, axiom lists). An independent re-run (140 min) is optional.
+2. **D1/D1b/D2 import the upstream modules directly** (`import OAI.Analysis.Triangular.Energy.Universal`), they are not
+   hypothesis-passing. Track M Lean work that needs the upstream definitions therefore lives in that environment
+   (§4a); QuantumFluids quotes statements verbatim. Their names: `TriangularRiesz.riesz_admissible`,
+   `triangular_riesz_optimal`, `latticeEnergy_riesz_lt_top`, `TriangularDensity.universal_any_density`,
+   `triangular_optimal_any_density`, `attained`, `unscaled_false`, `TriangularControls.*`.
+3. **Label clash.** Their pending D3 is *CKMRV Definition 1.3 at every density, with the vacancy configuration
+   A∖{0} as a second, non-isometric minimiser*; their earlier D3 candidate (Yukawa, costed ~50 %) is not it. This
+   plan's new lemmas are therefore labelled **X1–X6** (was D3a–D6).
+4. **Non-uniqueness is now a fact, not a caveat**: in the infinite-configuration formulation the minimiser is not
+   unique (a vacancy changes neither the density nor the `liminf`). Any physical uniqueness claim needs a periodic
+   class or a rigidity argument; §3.2 item 3 stands and is sharpened.
+5. **L3 and part of L5 exist in practice**: BAOCert (rational interval arithmetic with a soundness theorem, integer
+   certificates by `decide +kernel`, a tampered-table control) and `scripts/mcp_crosscheck_p2.py`, which uses the
+   rusty-SUNDIALS `sundials-mcp` server **from a PR #63 worktree** as an untrusted cross-check of the certified
+   enclosures. PR #63 Part B (stdout → stderr) matters to them: merging it is more useful than I had assumed.
+6. **I proved the keystone lemma and the four-flavour theorems** (they were cheap: ≈ 20 s and ≈ 2 min compiles in the
+   QuantumFluids pin), which moves them from paper-level to kernel-checked, with the producer/verifier caveat:
+   `exploration/exciton/lean/ExcitonX1.lean` (X1, bilayer admissibility given D1, the GEM-4 control) and
+   `FourFlavour.lean` (T1, T2, T3, density, T5 gap and critical field, T6), standard axioms only, plus
+   `FourFlavourNegativeControl.lean` which fails as intended. The brief for the second server is
+   `docs/designs/EXCITON_FLUID_LEAN_HANDOFF.md`.
 
 ---
 
@@ -34,7 +81,7 @@ with a Lean formalization whose Comparator configuration permits only the three 
 and to be kernel-checked — to the *classical point-particle limit* of the exciton–exciton direct interaction:
 
 * the bilayer dipole kernel, and in fact `g(t) − g(t + d²)` for **any** completely monotone single-layer potential
-  `g` (Coulomb, Yukawa, Keldysh), is completely monotone (a five-line proof, Appendix A.1);
+  `g` (Coulomb, Yukawa, Keldysh), is completely monotone (a five-line proof, Appendix A.1, **kernel-checked as X1**, §0);
 * hence (i) a rigorous lower bound `e_lat(ρ) ≤ e₀(ρ)` on the ground-state energy per particle, (ii) positivity of the
   Fourier transform, so the Gross–Pitaevskii minimiser is the uniform state and the Bogoliubov spectrum has no roton
   (Appendix A.3), (iii) the value of the classical minimum in the strong-coupling limit.
@@ -46,7 +93,8 @@ independent test of the solver — not a prediction of the phase diagram.
 
 **What does govern the observed phases** is a four-variable quadratic energy. Lean can prove, exactly, the
 at-most-two-flavours theorem, the polarisation formulas the authors quote, the density in each phase and the critical
-field of the first-order transition (§3.4); the solver reproduces them and extends to spatial structure.
+field of the first-order transition (§3.4) — **now compiled, verifier pending** (§0); the solver reproduces them and
+extends to spatial structure.
 
 **The solver**: rusty-SUNDIALS has **no ARKode** and its CVODE has a **dense direct linear solver only**. The existing
 `qf-gpe2d` (split-step) and `qf-pgpe` (projected GP, IF-RK4, damping layers) engines are the base; CVODE is the
@@ -55,13 +103,12 @@ fields). Whether an implicit or ImEx method is needed is a *measurement* (§5, W
 
 **Recommendation.** Two tracks, in this order, with an owner review after each phase:
 **Track P** (physics model, short, high yield: four-flavour theorems + solver) and **Track M** (upstream-based:
-hypothesis-passing interface, kernel catalogue, torus bound, N-particle experiments in which the *theorem certifies
-the solver's output*). The driven-dissipative extension of the briefing and the Hugging Face/AI layer are optional
+kernel catalogue on top of the LeanMaster D1/D1b/D2, torus bound, N-particle experiments in which the *theorem
+certifies the solver's output*). The driven-dissipative extension of the briefing and the Hugging Face/AI layer are optional
 and gated. The exciton material is a companion note first, and a Part VI of a second edition only afterwards (§8).
 
-**Needed from you:** §10 (repo and commit of D1/D1b/D2, the upstream commit you verified, home for the new modules,
-track and solver choices). Also pending from earlier today: rusty-SUNDIALS PR #63 (merge) and PR #68 (close), which
-the permission system declined (§3.5).
+**Needed from you:** §10 (a go for Phase 1 and where it runs, home for the new modules, solver choice). Also pending
+from earlier today: rusty-SUNDIALS PR #63 (merge) and PR #68 (close), which the permission system declined (§3.5).
 
 ---
 
@@ -70,7 +117,7 @@ the permission system declined (§3.5).
 | instrument | here | trust anchor | how it fails |
 |---|---|---|---|
 | **experiment / physics** | Qi et al. 2026 (their data and their model); the literature on dipolar fluids | the published, peer-reviewed version of record; primary sources | arXiv ≠ version of record; phenomenological parameters; analogy mistaken for dependency |
-| **proof** | Lean 4 + Mathlib: upstream statement (as a hypothesis), our corollaries D1–D2, new D3–D6 and the four-flavour theorems | the Lean kernel; standard axioms only; negative controls | vacuous or mis-normalised statements (KTFlow, Ch. 6), a theorem true of hypotheses the physics does not meet |
+| **proof** | Lean 4 + Mathlib: the upstream theorem (imported on the second server, quoted verbatim here), the owner's corollaries D1–D2, new X1–X6 and the four-flavour theorems T1–T6 | the Lean kernel; standard axioms only; negative controls | vacuous or mis-normalised statements (KTFlow, Ch. 6), a theorem true of hypotheses the physics does not meet |
 | **simulation** | rusty-SUNDIALS: CVODE, `qf-gpe2d`, `qf-pgpe` | known answers, convergence order, independent second integrator | stale builds (first-order Adams, Ch. 10), silent defects, wrong model |
 
 The pattern is the book's: an untrusted generator (an AI-written proof, an AI-assisted solver, a language model's
@@ -138,9 +185,11 @@ Things a reader must not lose:
 1. **Ordered pairs.** The energy counts ordered pairs: it is *twice* the usual pair energy per particle. Physical
    `e_lat(ρ) = ½ Σ_{a ∈ A_ρ∖0} V(|a|)`. A factor-2 slip here is exactly what the solver's lattice sum will catch.
 2. **Centred-disk density and `liminf`**: infinite configurations, not tori. A bound on a finite periodic box needs a
-   (new) periodic-extension lemma (D4).
+   (new) periodic-extension lemma (X4).
 3. **Value, not minimisers.** The manuscript says it "identifies the minimum value, not all minimizers". Uniqueness of
-   the triangular minimiser is *not* part of the theorem; do not write "the ground state is the triangular lattice".
+   the triangular minimiser is *not* part of the theorem and is **false in this formulation**: the vacancy
+   configuration `A∖{0}` has the same density and the same `liminf` energy (the pending D3 of the LeanMaster
+   contribution). Do not write "the ground state is the triangular lattice".
 4. **Universal over the *class*, not per potential.** "Sharp auxiliary functions for every Gaussian", positive
    mixtures give every completely monotone potential; "a sharp auxiliary for each mixed potential … is not claimed".
 5. **Infinite energies are allowed** (singular potentials, divergent lattice sums): the comparison then says every
@@ -155,10 +204,11 @@ Things a reader must not lose:
    Appendices A and C). A Lean proof of such a certificate is exactly where `native_decide`/`Lean.ofReduceBool` tends to
    appear; the Comparator config forbids it, and checking that is a gate in WP0, not a given.
 
-Status for our purposes: **an external hypothesis**. Every downstream Lean statement takes the upstream statement as an
-explicit hypothesis (`H_up : UpstreamTheorem`) so that the dependency is visible in the type; the upstream *proof* is
-not imported into the QuantumFluids build (it is one large library; its README advises compiling small portions; disk
-here is tight).
+Status for our purposes: **an external hypothesis, Comparator-accepted on the second server** (§0). On that server the
+corollaries import the upstream modules directly and their `#print axioms` includes the upstream proof. In
+QuantumFluids the statement is quoted verbatim and never re-proved: the upstream library is one large project (its
+README advises compiling small portions) and the root disk here is 96 % full. Mathlib-only results (X1, T1–T6) are
+independent of it.
 
 ### 3.3 Where the theorem and exciton fluids actually meet (LL-15: dependencies, not analogy)
 
@@ -184,8 +234,8 @@ Consequences, each with its status:
 
 * **C1 — lower bound.** For N bosons on a torus with the periodised kernel and any (normalised) wave function,
   `E ≥ ⟨U⟩ ≥ N e_lat(ρ)` because the kinetic energy is non-negative and the periodic extension of any N-point
-  configuration has centred density ρ. Needs: the upstream theorem as hypothesis, density scaling (D2), a periodic
-  extension lemma (D4, the hardest new item), and the trivial variational step (D5). The *open-system* statement is a
+  configuration has centred density ρ. Needs: the upstream theorem, density scaling (D2), a periodic
+  extension lemma (X4, the hardest new item), and the trivial variational step (X5). The *open-system* statement is a
   different theorem (boundary terms) and is not claimed.
 * **C2 — no mean-field crystallisation; stability.** All Fourier coefficients of a CM kernel are ≥ 0, so
   `∬ n U n = Σ_k Ũ(k)|ñ(k)|² ≥ Ũ(0)N²/L²`: the **uniform state is the GP minimiser**, `e_GP = e_H = ½ρŨ(0)`
@@ -286,9 +336,9 @@ Honest roles, in order of usefulness:
 |---|---|---|---|---|
 | **L1** | Lean-derived known answers (closed forms) → solver tests | low | the book's Ch. 5, 6, 8, 10 | everywhere |
 | **L2** | Lean-verified invariants as runtime monitors (energy non-increasing along gradient flow; norm balance; positivity) | low | Ch. 3, 9 (norm/energy checks) | WP4–WP7 |
-| **L3** | certificate checkers: the solver emits rational/interval data, Lean checks inequalities by `norm_num`/`decide` | medium | `WassersteinCertificate.lean` | WP4 (the torus certificate) |
+| **L3** | certificate checkers: the solver emits rational/interval data, Lean checks inequalities by `norm_num`/`decide +kernel` | medium | `WassersteinCertificate.lean` here; **BAOCert** (integer tables, soundness theorem, tampered-table control) and the `sundials-mcp` cross-check on the second server | WP4 (the torus certificate), H7 |
 | **L4** | Lean-generated artefacts consumed by Rust: Butcher tableaux with proved order conditions, kernel tables | medium | `exploration/godfrin/gen_phonon_series_lean.py` goes Python → Lean; the reverse is new | optional WP-S |
-| **L5** | verified a-posteriori error bounds for the small ODEs (interval arithmetic) | high | none | stretch, not planned |
+| **L5** | verified a-posteriori error bounds for the small ODEs (interval arithmetic) | high | BAOCert does it for one integral (monotone integrand, cell bounds); not for ODE solves | stretch, not planned |
 
 Trust boundary, stated once: **no statement here is about the Rust code.** Lean proves statements about models and
 invariants; the solver is tested against them. The bridge `examples/leanflow_bridge.rs` of the owner's local clone
@@ -296,6 +346,20 @@ re-types a Lean-proved inequality as a Rust function; nothing connects the two, 
 rule is **one source of truth**: constants and test oracles are exported from the Lean elaboration (or computed by an
 independent script and compared mechanically with the Lean statement, as `facts/appA_citation_check.md` does for the
 book), never retyped.
+
+### 4a. Two servers, one contract
+
+| | server A (this machine, QuantumFluids) | server B (LeanMaster / AutoevolveAI sessions) |
+|---|---|---|
+| runs | physics, rusty-SUNDIALS experiments, book; Mathlib-only Lean at the QuantumFluids pin (rc2), ≈ 2 min per file | the upstream-pinned stack (Lean 4.34.1, Mathlib `d13f23b7`), Comparator (140 min), BAOCert, `sundials-mcp` cross-checks |
+| constraint | root disk 96 % full (data under `/mnt/data`); never `lake update` here | RAM and swap contention between sessions |
+| owns | WP4–WP6 solver side, kernels' numerical tests, T1–T6 (done, verifier pending), the plan and the book | H1–H7 of the handoff (re-verification, bilayer corollaries of D1/D2, periodic configurations, certified numerics) |
+| exchanges | quotes Lean statements verbatim from a manifest (name, file, sha256, axioms) | receives `docs/designs/EXCITON_FLUID_LEAN_HANDOFF.md`; returns files, `compile_*.json`, `verification.md` |
+
+The contract: (1) the manifest above, regenerated at every hand-back; (2) certificates in the BAOCert convention
+(common denominator `D`, integer `lo`/`hi` tables, a named claim) from the solver to server B, never the reverse;
+(3) producer ≠ verifier on both sides; (4) every result carries its toolchain pin; (5) nothing is merged into
+LeanMaster's `main`, and no Tier A label is used, without the owner.
 
 ---
 
@@ -306,53 +370,58 @@ edition: ≈ 12 agent-hours for ten chapters).
 
 ### WP0 — Intake and gates (S)
 
-* Receive the owner's material (§10). Read the Nature version of record and the Extended Data of Qi et al.
-* Upstream: clone `openai/math` shallow under `/mnt/data/xdev-cache/` (never in the repo); measure the import closure
-  of `OAI.Analysis.Triangular.Energy.Universal` **before** any `lake build` (disk; mmap note in its README); record the
-  commit. Run the Comparator on `ComparatorChallenges/TriangularEnergy.json` (needs `comparator`, `landrun`,
-  `lean4export`, not installed here) and `#print axioms` on the solution theorem.
-* **Gate G-U:** the formal statement equals the manuscript's Theorem 1.1 (mechanical diff of definitions); axioms ⊆
-  {propext, Classical.choice, Quot.sound}; no `native_decide`. If it fails, the plan continues with the upstream as
-  an *unverified* hypothesis and says so in every box.
+* **Done (§0):** material received and checked (manifest, verdicts, axiom lists). **Still to do:** read the Nature
+  version of record and the Extended Data of Qi et al.
+* Upstream: nothing to build here. The Comparator run and the axiom audit are the second server's record (TRI_CMP,
+  `COMPARATOR_ACCEPTS`, 140 min, standard axioms, nanoda not run).
+* **Gate G-U (revised):** the formal statement equals the manuscript's Theorem 1.1 (mechanical diff of definitions,
+  done by the producing agent, not independent: redo it once from the two sources); axioms ⊆ {propext,
+  Classical.choice, Quot.sound}; no `native_decide`. Status: met by the record, with the caveats the record states. If a
+  later check fails, the plan continues with the upstream as an *unverified* hypothesis and says so in every box.
 * Literature gate (the programme's rule): QMC results for 2D dipolar bosons (Astrakharchik et al. arXiv:0707.4630;
   Mora–Parcollet–Waintal PRB 76, 064511; Büchler et al. PRL 98, 060404) — copy the crystallisation density and its
   definition from the primary sources; bilayer exciton literature for the exchange/correlation corrections to the
   capacitor formula.
 * **Gate S0:** re-measure CVODE order (Adams and BDF) and the `qf-pgpe` cross-check on the chosen build.
 
-### WP1 — Lean: upstream interface and our D1, D1b, D2 (M)
+### WP1 — Lean: upstream interface and the owner's D1, D1b, D2 (S; exists, to be consumed)
 
-* `UniversalOptimality.lean`: the definitions of §3.2 verbatim; `def UpstreamTheorem : Prop`; the three corollaries of
-  the owner's paper restated with `H_up` as hypothesis, or imported if their repo is a dependency.
+* The owner's D1, D1b, D2 and controls exist (LeanMaster `contrib/…/lean/Triangular/`, §0); QuantumFluids quotes them
+  through the manifest. No new work except the two items below, both on server B (handoff H3).
 * Normalisation lemma: `latticeEnergy g = 2 · e_lat` (ordered pairs), with the density scaling
   `g_ρ(t) = g(t/ρ)` (D2).
-* Negative controls: density scaling without the factor; ordered/unordered confusion — both must fail.
+* Negative controls: `unscaled_false` already exists for density; add the ordered/unordered confusion — must fail.
 
 ### WP2 — Lean: kernel catalogue (M)
 
-* **D3a** `admissible_sub_shift`: `AdmissiblePotential g → d > 0 → AdmissiblePotential (fun t => g t − g (t + d²))`
-  (five lines, A.1); corollaries: bilayer dipole (from Riesz s = 1), Yukawa/Keldysh-derived exciton kernels.
-* **D3b** `admissible_laplace`: Laplace transform of a finite positive measure is admissible (Mathlib's mgf
-  derivative lemma, if present in the pinned version — check), then Yukawa and the Keldysh integral representation as a
-  *definition*; the Struve–Neumann identity is cited (DLMF §11.5) and checked numerically by the solver side, not
-  proved.
-* **D3c** Fourier positivity for Gaussian mixtures (Mathlib has the Gaussian Fourier transform) ⇒ `Ũ(k) ≥ 0`.
-* **D6** `uniform_is_gp_minimiser`: for `Ũ ≥ 0` the interaction energy is minimised by the uniform density; Bogoliubov
-  `ω² > 0` (extends the book's Ch. 5, `bogEps`).
+* **X1** `admissible_sub_shift`: `AdmissiblePotential g → c > 0 → AdmissiblePotential (fun t => g t − g (t + c))`
+  (A.1). **Proved** in `exploration/exciton/lean/ExcitonX1.lean` (rc2 pin, standard axioms; verifier pending), with
+  `admissible_const_mul`, `bilayerDipole_admissible` (given D1 at s = 1) and the control `gem4_not_admissible`. To do on
+  server B: port to the upstream pin and discharge the D1 hypothesis (handoff H1, H2), then the corollaries
+  `triangular_bilayer_optimal`, `bilayer_any_density`, `latticeEnergy_bilayer_lt_top`.
+* **X2** `admissible_laplace` (Yukawa, Keldysh): Laplace transform of a finite positive measure is admissible
+  (differentiation under the integral; Mathlib's mgf derivative lemma if present). Their own estimate for Yukawa was
+  ~50 % (Bernstein/Faà di Bruno absent). Optional (handoff H4); the Keldysh kernel can be a *hypothesis*; the
+  Struve–Neumann identity (DLMF §11.5) is checked numerically *(done here, 3·10⁻³¹)*, not proved.
+* **X3** Fourier positivity of Gaussian mixtures: replaced by the *hypothesis form* of X6 (handoff H6); that completely
+  monotone kernels are positive definite is classical (Schoenberg, Bernstein) and tested numerically by the solver.
+* **X6** `uniform_minimises`: for a positive-definite `U` on a finite abelian group the interaction energy is minimised by
+  the uniform density (write `n = n̄ + f`, `Σf = 0`; no Fourier transform needed); Bogoliubov `ω² > 0` extends the
+  book's Ch. 5 (`bogEps`).
 * **Gate A-2 (applicability of the real device kernel):** prove or refute that the dual-gated kernel is completely
   monotone. Numerical evidence says yes to order 5; an interval-arithmetic proof of the sign pattern or a Laplace
   representation of the image series is the deliverable; a counterexample would mean the theorem does not apply to the
   device without modification — itself a result.
-* Negative controls: GEM-4 `e^(−t²)` not admissible (Lean `norm_num` at t = ½); the bilayer kernel with the wrong sign;
+* Negative controls: GEM-4 `e^(−t²)` not admissible (**done**, X1 file); the bilayer kernel with the wrong sign;
   Gaussian − Gaussian.
 
 ### WP3 — Lean: torus bound and quantum lower bound (L, riskiest new Lean)
 
-* **D4** `periodic_energy_eq_cell_average`: for a configuration periodic under a full-rank lattice with N points per
+* **X4** `periodic_energy_eq_cell_average`: for a configuration periodic under a full-rank lattice with N points per
   cell, centred density = N/area and `energy = per-cell average` (lattice-point counting plus a boundary-layer
-  estimate; the divergent case is trivial). **Fallback** if too heavy: state C1 *conditional* on D4 as a hypothesis and
-  say so.
-* **D5** `quantum_lower_bound`: for any probability density on the N-point torus and any kinetic functional ≥ 0,
+  estimate; the divergent case is trivial). On server B (handoff H5). **Fallback** if too heavy: state C1
+  *conditional* on X4 as a hypothesis and say so.
+* **X5** `quantum_lower_bound`: for any probability density on the N-point torus and any kinetic functional ≥ 0,
   `E ≥ N e_lat(ρ)`; modelled at the level of expectations (no operator theory).
 * Explicit **non-claim** in the docstring: not the open system, not uniqueness, not tight at the experimental density.
 
@@ -372,7 +441,7 @@ edition: ≈ 12 agent-hours for ten chapters).
 
 * `qf-gpe2d` extension: the nonlinear half-step uses `U ∗ |ψ|²` by FFT (a regression test: a constant `Ũ` reproduces
   the current outputs bit for bit). Kernel `Ũ(k) = (e²/ε₀εk)(1 − e^(−kd))` with the `k → 0` limit set analytically.
-* Known answers: `Ũ(0) = e²d/ε₀ε`; the GP minimiser is uniform (D6); sound speed `c² = nŨ(0)/m`; Bogoliubov
+* Known answers: `Ũ(0) = e²d/ε₀ε`; the GP minimiser is uniform (X6); sound speed `c² = nŨ(0)/m`; Bogoliubov
   `ω(k)` from linearising the solver's own right-hand side vs the formula.
 * Negative control (kernel with negative Fourier lobes: GEM-4, or a soft-core with a tail): density modulation
   appears, energy < `e_H`, instability band predicted by `ω² < 0`.
@@ -380,7 +449,8 @@ edition: ≈ 12 agent-hours for ten chapters).
 
 ### WP6 — Track P: the four-flavour model (M)
 
-* `FourFlavour.lean`: T1–T6 (§3.4) with the paper's parameters as a `structure`; T2, T3 labelled confirmations.
+* `FourFlavour.lean`: T1–T6 (§3.4) — **proved here** (standard axioms; verifier pending; parameters as arguments, a
+  `structure` for the paper's values still to add); T2, T3 labelled confirmations; the negative control fails as intended.
 * Solver: CVODE on the four-amplitude imaginary-time flow (4 variables, dense is fine); a B-scan with continuation up
   and down shows the hysteresis window of the first-order transition; compare B_c to T5 (1e-6 relative).
 * Exploratory, labelled as such: four-component split-step in 2D (`qf-gpe2d` with the coupling matrix of Eq. 2),
@@ -424,7 +494,7 @@ Register in `docs/designs/` *before* any run (the programme's practice); claim i
 | EX-2 | hypotheses are needed | GEM-4 (and Gaussian − Gaussian) reaches ≥ 1 % below `e_lat` at a registered density | none found → the control is mis-specified |
 | EX-3 | GP minimiser is uniform; `ω² > 0` | solver `ω(k)` within 1e-4 of the formula; imaginary parts zero | non-CM kernel must show `ω² < 0` |
 | EX-4 | sandwich | `e_lat ≤ e_H` at every tabulated density; table reproduced to 1e-6 | — |
-| FF-1 | T1–T6 compile, standard axioms | audit | T6 with g_X > 0 must fail |
+| FF-1 | T1–T6 compile, standard axioms | **met by the producer** (rc2 pin); verifier pending | T6 needs `g_X < 0`; the wrong-sign control fails (done) |
 | FF-2 | solver reproduces T2, T3, T5 | 1e-10 (T2, T3), 1e-6 (B_c); hysteresis window found | — |
 | AP-2 | gated kernel completely monotone | proof, or a counterexample with certified enclosure | — |
 
@@ -439,8 +509,8 @@ without the owner's explicit say-so** (the Godfrin rule applies here).
 | phase | content | owner review |
 |---|---|---|
 | 0 | WP0 (+ PR housekeeping) | gate G-U, G-S0, inputs received |
-| 1 | WP6 (Track P), WP1, WP2 (D3a, D3c, D6), WP4 | after FF-1/FF-2 and EX-1 |
-| 2 | WP5, WP2 (D3b, A-2), WP3 | after EX-3, EX-4 and A-2 |
+| 1 | WP6 (Track P, solver side), WP4; on server B: handoff H1–H3, H6 | after FF-2 and EX-1 |
+| 2 | WP5; on server B: H5 (X4), X2, A-2, H7 | after EX-3, EX-4 and A-2 |
 | 3 | WP7, WP8, WP-T (only if wanted) | — |
 | 4 | WP9 | publication decision |
 
@@ -448,8 +518,9 @@ Rough budget: Phase 1 ≈ 6–8 agent-hours, Phase 2 ≈ 6–10, Phase 3 ≈ 4�
 and **check the spend limit before any fan-out** (the second-edition fan-out of eight agents stopped at the monthly
 limit, reset 11:00 Europe/Paris). Compute is CPU only: WP4 minutes; WP5–WP6 2D runs ≲ 1 h each under
 `flock /mnt/data/xdev-cache/tmp/qf_heavy.lock nice`. Disk: never `lake update` in this repo; the upstream clone and its
-build go under `/mnt/data/xdev-cache/`; measure first. Mathlib version skew (rc2 vs 4.34.1) is avoided by the
-hypothesis-passing design; the statement-versus-statement diff is mechanical.
+build go under `/mnt/data/xdev-cache/`; measure first. Mathlib version skew (rc2 vs 4.34.1) is handled by keeping
+Mathlib-only files portable (the two proved files are; one local definition is a verbatim copy, guarded by an `Iff.rfl`
+check on server B) and by the statement-versus-statement diff, which is mechanical.
 
 ---
 
@@ -459,7 +530,7 @@ hypothesis-passing design; the statement-versus-statement diff is mechanical.
   record, registered gates, ledger claims) first; then a **Part VI "Excitons: a quantum fluid in a solid"** of the
   second edition with three chapters — (16) *Four flavours*: the model, T1–T6, the solver, the experiment; (17) *How far
   from a crystal?*: the theorem, the kernel catalogue, the sandwich, the torus certificate; (18) *Trusting a theorem you
-  did not prove*: hypothesis-passing, Comparator, negative controls, the numerical test of an AI-generated theorem.
+  did not prove*: conditional statements, Comparator and the statement-fidelity audit, negative controls, the numerical test of an AI-generated theorem.
   An optional chapter on driven-dissipative fluids only if WP7 is executed.
 * **Template.** Each chapter keeps the book's boxes: `leanbox`, `rustbox`, `honestbox`, three exercises; the
   `godfrinbox` becomes a new neutral `expbox` ("Experiment: Qi et al.") in `qfbook.sty`. The dedication stays to
@@ -474,42 +545,40 @@ hypothesis-passing design; the statement-versus-statement diff is mechanical.
 
 | risk | mitigation |
 |---|---|
-| upstream theorem wrong or mis-stated (AI-generated, unrefereed, "some unformalized results could have issues") | hypothesis-passing; Comparator and axiom audit (G-U); EX-1 as an independent numerical test; every box says it |
+| upstream theorem wrong or mis-stated (AI-generated, unrefereed, "some unformalized results could have issues") | conditional statements; Comparator and axiom audit (G-U, record of server B); statement-fidelity audit (producer's, not independent); EX-1 as an independent numerical test; every box says it |
 | analogy mistaken for dependency (LL-15) | §3.3 table; every use states which hypothesis of the theorem the physics meets |
 | the bound is uninformative at experimental densities | stated up front (ratio 8–22); framed as structure and solver test |
 | arXiv ≠ version of record; phenomenological parameters | read the Nature version and Extended Data in WP0; label agreement "not independent" |
 | normalisation slips (ordered pairs, density scaling) | planted negative controls; solver lattice sum as the cross-check |
 | solver defects (Adams, stale venv, stdout diagnostics) | gate S0; build 5db8041 or a recorded newer commit; record `rusty_sundials.__file__` |
 | scope creep (DD-GPE, ARKode, AI layer) | all optional and gated; default S1 |
-| Lean cost of D4 | fallback to a conditional statement, said so |
+| Lean cost of X4 | fallback to a conditional statement, said so |
+| the new Lean files have no independent verifier yet | marked "verifier pending" everywhere; handoff H1 asks for a separate instance; nothing is cited as verified until then |
 | three layers of AI assistance (math, Lean, code) | untrusted-generator/trusted-checker everywhere; negative controls; independent second instrument |
 
 ---
 
 ## 10. What I need from you
 
-**Material** (you said you will provide it):
-
-1. The GitHub repo and commit holding D1, D1b, D2 and their negative controls, the paper (PDF/DOI), and the toolchain
-   and Mathlib pin they were checked against, with the audit log (axioms).
-2. Which `openai/math` commit you verified against. Your fork `xaviercallens/xOpenAImath` is a single "Initial
-   commit" of 2026-10-06 and so predates the upstream update of 2026-10-07 (three withdrawals, 14 revised manuscripts,
-   six more formalizations; family 090 is not named in it, but check).
-3. Permission, and a machine or disk budget, for installing the Comparator tools (`comparator`, `landrun`,
-   `lean4export`) — not present here.
+**Material: received (§0)** — LeanMaster v3.48.0 `contrib/openai_math_corollaries/`, with the pins and audit logs. Still
+open from it: (a) which upstream commit family 090 was verified against — the contribution says `adc7f124`, files
+unchanged at `fd4aeeb2` (7 Oct), while your fork `xaviercallens/xOpenAImath` is a single commit of 2026-10-06 and
+predates that update; (b) the status of their pending D3; (c) the Nature version of record of Qi et al. and its
+Extended Data (I have only arXiv v1).
 
 **Decisions:**
 
 | # | question | my recommendation |
 |---|---|---|
 | Q1 | tracks | Track P first (short, high yield), then M |
-| Q2 | where do the new Lean modules live | `lean_src/` of this repo (audited library) for D3–D6 and T1–T6; the upstream interface there too; negative controls beside them |
+| Q2 | where do the new Lean modules live | T1–T6 and X1 (Mathlib-only, rc2): stay in `exploration/exciton/lean/` until a separate instance has verified them, then either `lean_src/` here (our audit) or LeanMaster proper (its five gates, a *Tier A* candidate since LeanMaster is also on rc2). Everything that imports openai/math (H2, H5, H7): the contribution tree on server B |
 | Q3 | solver path | S1 only; revisit after gate S0′ |
 | Q4 | driven-dissipative extension (WP7) | defer |
 | Q5 | Hugging Face/AI layer (WP8) | provenance ledger only, defer the rest |
 | Q6 | publication | companion note, then Part VI |
 | Q7 | rusty-SUNDIALS PRs | update/merge #63 (Part B), close #68 as superseded — say go and I will do it, or run the `gh` commands yourself |
 | Q8 | budget | two waves, spend limit checked first |
+| Q9 | go for Phase 1 | yes: the solver side (WP4, WP6) here, the handoff H1–H3, H6 on server B; I will not start a fan-out without your word |
 
 ---
 
@@ -542,7 +611,7 @@ Kosterlitz, Phys. Rev. Lett. 39, 1201 (1977); I. J. Schoenberg, Trans. AMS 44, 5
 
 ## Appendix A — proofs and derivations (paper level)
 
-**A.1 Differencing preserves complete monotonicity.** Let `g` be admissible and `h_r(t) = (−1)^r g^(r)(t) ≥ 0`.
+**A.1 Differencing preserves complete monotonicity** *(kernel-checked: `exploration/exciton/lean/ExcitonX1.lean`)*. Let `g` be admissible and `h_r(t) = (−1)^r g^(r)(t) ≥ 0`.
 Then `h_r' = −h_{r+1} ≤ 0`, so each `h_r` is non-increasing on (0, ∞). For `c > 0` set `f(t) = g(t) − g(t + c)`.
 Then `(−1)^r f^(r)(t) = h_r(t) − h_r(t + c) ≥ 0` for every `r ≥ 0` (for `r = 0` this is `f ≥ 0`); `f` is smooth on
 (0, ∞). Hence `f` is admissible. With `g(t) = t^(−1/2)` and `c = d²` this is the bilayer dipole kernel. ∎
@@ -571,7 +640,7 @@ a = 1: 11.0341757349…
 ## Appendix B — numbers computed in this study
 
 Scripts (scratch, not committed): `study_checks.py`, `study_checks2.py`, `study_gated_cm.py` in the session scratchpad;
-mpmath (30–40 digits) and numpy/scipy.
+mpmath (30–40 digits) and numpy/scipy. The Lean files are committed (`exploration/exciton/lean/`).
 
 | quantity | value |
 |---|---|
@@ -586,3 +655,5 @@ mpmath (30–40 digits) and numpy/scipy.
 | four-flavour model, n = 0.5 × 10¹² cm⁻², paper's parameters | g_H = 33.5 Ry a_B², μ = 25.6 meV, B_c ≈ 56 mT, II_A → II_B between 40 and 56 mT |
 | k_BT_BKT = 1.3ħ²n/m₀ at 0.5 × 10¹² cm⁻² | 5.7 K (paper: ≈ 6 K) |
 | rusty-SUNDIALS in-tree Lean | 75 files; `sorry` token in 17, `axiom` in 17, `native_decide` in 13 |
+| Lean, QuantumFluids pin (4.34.0-rc2, Mathlib 85e3a25), `exploration/exciton/lean/` | `ExcitonX1.lean`: 5 theorems; `FourFlavour.lean`: 7 named theorems plus helpers; every `#print axioms` ⊆ {propext, Classical.choice, Quot.sound}; no `sorry` token; the negative control fails with the expected `ring` residual (`−g_c` against `+g_c`); verifier pending |
+| LeanMaster v3.48.0 contribution, checked here | manifest 1,586 entries: 0 missing, 0 mismatched, 0 extra; token-pattern scan: none; TRI_CMP `COMPARATOR_ACCEPTS`; D1/D1b/D2 axioms standard (their log) |
