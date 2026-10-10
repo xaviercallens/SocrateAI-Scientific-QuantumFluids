@@ -53,6 +53,30 @@ def summarise(cid, recs, meta, elat_factor=1.0):
         out["EX2_pass"] = bool(rmin <= 0.99)
     return out
 
+def occupancy(meta, tol=0.15):
+    """Exploratory: group the best configuration's points that lie within `tol` of each other (periodic) and return
+    the occupancy histogram {occupancy: number of sites}."""
+    x = meta.get("best_x")
+    if not x:
+        return None
+    lx, ly, n = meta["lx"], meta["ly"], meta["n"]
+    pts = [(x[2 * i], x[2 * i + 1]) for i in range(n)]
+    parent = list(range(n))
+    def find(a):
+        while parent[a] != a:
+            parent[a] = parent[parent[a]]
+            a = parent[a]
+        return a
+    for i in range(n):
+        for j in range(i + 1, n):
+            dx = pts[i][0] - pts[j][0]; dy = pts[i][1] - pts[j][1]
+            dx -= lx * round(dx / lx); dy -= ly * round(dy / ly)
+            if dx * dx + dy * dy < tol * tol:
+                parent[find(i)] = find(j)
+    from collections import Counter
+    sizes = Counter(Counter(find(i) for i in range(n)).values())
+    return {int(k): v for k, v in sorted(sizes.items())}
+
 def main():
     runs_dir, out_path = sys.argv[1], sys.argv[2]
     cases = load(runs_dir)
@@ -77,6 +101,9 @@ def main():
         "n_errors": sum(r["n_errors"] for r in rows),
         "NEG": neg,
     }
+    for r in rows:
+        if r["kernel"] in CONTROL:
+            r["exploratory_best_occupancy_histogram"] = occupancy(cases[r["case"]][1])
     json.dump({"gates": gates, "cases": rows}, open(out_path, "w"), indent=1)
     print(f"{'case':16s} {'runs':>5s} {'conv':>5s} {'min E/e_lat - 1':>16s} {'#att':>5s} {'EX1a':>5s} {'EX1b':>5s} {'EX2':>5s} {'L2':>3s} {'med steps':>9s}")
     for r in rows:
