@@ -19,7 +19,7 @@ def U_B(k):
 
 def U_C(k):
     k = np.asarray(k, dtype=float)
-    return U_B(k) - 40.0 * np.exp(-(k - k0) ** 2 / (2 * 0.2 ** 2))
+    return U_B(k) - 28.0 * np.exp(-(k - k0) ** 2 / (2 * 0.2 ** 2))
 
 ms = np.arange(M)
 ms = np.where(ms > M // 2, ms - M, ms)            # wavenumber indices -8..7 (Nyquist at -8)

@@ -1,0 +1,46 @@
+{
+ "P2a": {
+  "n_runs": 50,
+  "n_converged": 50,
+  "worst_density_dev": 1.848570303944575e-14,
+  "worst_omega_rel_err": 1.5695408241038843e-15,
+  "pass": true
+ },
+ "P2b": {
+  "n_modes": 255,
+  "worst_omega_rel_err": 5.7665736684304556e-11,
+  "worst_omega2_rel_err": 1.153314182240741e-10,
+  "worst_abs_real_part": 2.3908517328900002e-11,
+  "sign_mismatches": 0,
+  "n_unstable_solver": 0,
+  "n_unstable_formula": 0,
+  "pass": true
+ },
+ "P2c": {
+  "n_modes": 255,
+  "worst_omega_rel_err": 6.272439147164063e-11,
+  "worst_omega2_rel_err": 6.329590812879935e-09,
+  "worst_abs_real_part": 4.4558873375669996e-11,
+  "sign_mismatches": 0,
+  "n_unstable_solver": 16,
+  "n_unstable_formula": 16,
+  "pass_i": true,
+  "flow": {
+   "converged": false,
+   "tau": 100,
+   "max_rel_modulation": 0.005839798796526367,
+   "omega": -0.00248672354082,
+   "omega_uniform": -0.002486796147638,
+   "rel_below": -2.9196931775435827e-05,
+   "error": "solve at tau=100: Solver(ConvFailure)"
+  },
+  "pass_ii": false,
+  "pass": false
+ },
+ "P2d": {
+  "n_runs": 5,
+  "min_density_dev": 0.5000000000000328,
+  "pass": true
+ },
+ "all_pass": false
+}

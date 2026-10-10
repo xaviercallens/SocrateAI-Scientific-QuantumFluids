@@ -17,7 +17,7 @@ interaction by convolution in Fourier space: `(U∗n)(x) = L⁻² Σ_k Ũ(k) n̂
 | id | `Ũ(k)` | role |
 |---|---|---|
 | B | `4π(1 − e^{−kd})/k`, `d = 1`, `Ũ(0) = 4πd` | the bilayer direct kernel (completely monotone in `r²`, so `Ũ ≥ 0`) |
-| C | `Ũ_B(k) − 40 exp(−(k − k₀)²/(2·0.2²))`, `k₀ = 2π·3/L = 1.1781` | control: a negative Fourier band (not completely monotone) |
+| C | `Ũ_B(k) − 28 exp(−(k − k₀)²/(2·0.2²))`, `k₀ = 2π·3/L = 1.1781` | control: a negative Fourier band (not completely monotone) |
 
 Uniform state: `n₀ = μ/Ũ(0)`; grand-potential density `ω₀ = −μ²/(2Ũ(0))`.
 
@@ -39,3 +39,37 @@ Uniform state: `n₀ = μ/Ũ(0)`; grand-potential density `ω₀ = −μ²/(2Ũ(
 ## Not in this phase
 
 Dipole-gated kernels, finite temperature, vortices (`qf-pgpe`), real-time nonlinear dynamics, and any comparison with data.
+
+## Amendments
+
+**A1 (before any Phase 2 run).** The control depth was first written as 40. At that depth `½Ũ(0) + ¼Ũ(k₀) < 0`, so a fully
+modulated density has an energy density `∝ n̄²` with a negative coefficient: the grand-canonical functional is unbounded below and
+the flow would collapse. The depth is `28`, for which `Ũ_C(k₀) = −20.6`: `2n₀Ũ_C(k₀) = −0.82 < −ε_{k₀} = −0.69` (unstable) and
+`½Ũ(0) + ¼Ũ(k₀) = 1.1 > 0` (bounded). `reference.json` regenerated; no result had been produced.
+
+**A2 (2026-10-11 00:10, after the registered run; its record is `exploration/exciton/results/phase2/mf_report.json`).**
+The registered run gave P2-a, P2-b, P2-c(i) and P2-d as registered (see the results note), but **P2-c(ii) failed as
+registered**: the imaginary-time flow of kernel C from uniform + noise ended with a CVODE convergence failure
+(`Solver(ConvFailure)`) in the first chunk (`τ ≤ 100`), at a density modulation of `5.8×10⁻³` (gate `≥ 0.1`). That failure stays
+on record as the registered result. Because it is a solver-side failure, not a statement about the model, the control flow is
+repeated, as an *amended re-run* and labelled as such, with relaxed tolerances `rtol = 1e-9`, `atol = 1e-11` and stopping
+criterion `max|Hψ| < 1e-8` (the other gates are not re-run); the gate P2-c(ii) is applied unchanged. Environment variable
+`MF_MODE=ctrl_A2` of the same binary; record `mf_report_A2.json`.
+
+**A3 (2026-10-11 00:30, after the A2 re-run, which gave the same failure: 42 193 steps, same state, so it is not a tolerance
+matter).** A diagnostic run of the control flow in chunks of `Δτ = 0.5` (exploratory, `MF_MODE=ctrl_debug`, same noise seed,
+`rtol = 1e-9`, `atol = 1e-11`; log `results/phase2/mf_debug.log`) shows what happened: `Ω` decreases monotonically, the density
+modulation grows exponentially from `1e-3` at a rate of about `0.12` per unit `τ`, reaches `0.1` near `τ ≈ 38` (with `Ω` below
+`Ω₀` by `6×10⁻⁴`, relative) and `4.5` at `τ ≈ 56` (`Ω` more than twice `Ω₀`), after which the flow runs away and CVODE
+fails. The failure is therefore **physical, not numerical**, and it is a flaw of the control as registered: at fixed `μ`
+the grand-canonical functional of kernel C is *unbounded below*. For a stripe of Gaussian profile `c_m = n̄ e^{−m²k₀²w²/2}` the
+interaction energy density is `½ n̄² F(w)`, `F(w) = Ũ(0) + 2 Σ_{m≥1} Ũ(m k₀) e^{−m² k₀² w²}`, and
+`min_w F = −19.0 < 0` for depth 28 over the harmonics representable on the grid (`m ≤ 2`; `−15.5` when the sum is taken to `m ≤ 8`), so `Ω → −∞` as `n̄` grows. Amendment A1's check
+(a cosine profile, `½Ũ(0) + ¼Ũ(k₀) > 0`) was incomplete. Over this kernel family no bounded, linearly unstable control exists at
+fixed `μ`: `min_w F` is negative for depth ≳ 18 (`−0.5` at 18, `−3.9` at 20, grid harmonics) while linear instability needs depth > 24.8.
+
+Consequences, stated before they are written up: (i) the gate P2-c(ii) **stays FAILED AS REGISTERED** (the registered run and
+the A2 re-run both fail); (ii) the diagnostic is exploratory evidence that the *content* of the gate — the uniform state of a
+kernel with a negative Fourier band is not the minimiser, a modulation grows from noise and `Ω` drops below `Ω₀` by more than
+`1e-3` — is met before the run-away, and the analytic argument above is stronger (the functional has no minimum); (iii) a
+bounded control would need a fixed-mass flow or a regularising term, which is outside Phase 2 and is not run here.

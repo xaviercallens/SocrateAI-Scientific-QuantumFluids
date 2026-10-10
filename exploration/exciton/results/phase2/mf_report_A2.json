@@ -1,0 +1,1 @@
+{"mode":"ctrl_A2","rtol":1e-9,"atol":1e-11,"rate_tol":1e-8,"converged":false,"tau":100,"steps":42193,"max_rel_modulation":5.839798796526367e-3,"omega":-2.486723540820e-3,"omega_uniform":-2.486796147638e-3,"rel_below":-2.9196931775435827e-5,"wall_s":121.2,"error":"solve at tau=100: Solver(ConvFailure)"}
