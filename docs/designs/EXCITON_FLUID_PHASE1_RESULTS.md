@@ -23,7 +23,7 @@ violation of the theorem on tori of N = 36 and 64 points; it does not prove it.
 
 | gate | registered | result |
 |---|---|---|
-| S0-a | `cargo test -p cvode`: all tests pass | 22/22 pass |
+| S0-a | `cargo test -p cvode`: all tests pass | 22/22 pass (8 + 9 + 5 in the three test binaries; the original run's log was not kept, the tree was re-tested on 2026-10-11: `results/phase1/s0a_cargo_test_rerun_2026-10-11.txt`) |
 | S0-b | `y' = −y`, t ∈ [0,10]: Adams at rtol 1e-10 ≤ 1000 RHS evaluations and error ≤ 1e-8; BDF at rtol 1e-8 error ≤ 1e-5 | Adams: 400 evaluations, error 9.8e-10; BDF rtol 1e-8: error 3.1e-7 |
 | KA-3 | Rust vs independent numpy: energy 1e-12, force 1e-10, analytic Hessian vs finite difference of the force 1e-6 | numpy side: energy ≤ 5.2e-14, force ≤ 6.4e-16; Rust side: Hessian vs FD ≤ 5.0e-9; a planted sign flip in the Hessian gives relative error 2.0 (detected) |
 
@@ -68,10 +68,10 @@ max|F| < 1e-9 and |ΔE| ≤ 1e-14|E|. Runs that did not converge count in every 
 | K4_0.1_T36s | 60 | 0 | 7.61e-03 | 0 | EX-1a pass; EX-1c frustration +7.61e-03 | 7.58e-03 |
 | K4_0.5_T36c | 60 | 45 | 9.55e-15 | 27 | EX-1a pass; EX-1b attained | — |
 | K4_0.5_T36s | 60 | 36 | 3.41e-03 | 0 | EX-1a pass; EX-1c frustration +3.41e-03 | 3.41e-03 |
-| N1_1_T36c | 200 | 200 | -3.37e-01 | 200 | EX-2 pass (best E/e_lat = 0.6625) | — |
-| N1_1_T36s | 200 | 200 | -3.29e-01 | 200 | EX-2 pass (best E/e_lat = 0.6706) | — |
-| N1_4_T36c | 200 | 200 | -2.77e-01 | 200 | EX-2 pass (best E/e_lat = 0.7231) | — |
-| N1_4_T36s | 200 | 200 | -2.76e-01 | 200 | EX-2 pass (best E/e_lat = 0.7240) | — |
+| N1_1_T36c | 200 | 200 | -3.37e-01 | — | EX-2 pass (best E/e_lat = 0.6625) | — |
+| N1_1_T36s | 200 | 200 | -3.29e-01 | — | EX-2 pass (best E/e_lat = 0.6706) | — |
+| N1_4_T36c | 200 | 200 | -2.77e-01 | — | EX-2 pass (best E/e_lat = 0.7231) | — |
+| N1_4_T36s | 200 | 200 | -2.76e-01 | — | EX-2 pass (best E/e_lat = 0.7240) | — |
 
 Totals: 2860 runs, 1404 did not meet the convergence criterion within τ_max
 (counted with their final energy); L2 violations: 0; solver errors: 0.

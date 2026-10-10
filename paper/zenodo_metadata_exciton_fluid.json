@@ -1,0 +1,80 @@
+{
+ "metadata": {
+  "title": "Testing a planar lattice-optimality theorem against an exciton-fluid interaction: kernel-checked lemmas, a four-flavour model theorem, and N-particle tests on rusty-SUNDIALS",
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "description": "<p>In September 2026 OpenAI released an AI-generated proof, with a Lean formalisation, that the triangular lattice minimises the energy per particle among all locally finite planar configurations of centred density one for every smooth completely monotone function of the squared distance. The theorem is unrefereed; its Comparator acceptance was obtained by the author's own LeanMaster project, and the statement has not been audited by a human. This note asks, as a <b>dependency check</b> and without any claim of novelty, what the theorem says about the interaction of the dipolar interlayer excitons of a 2026 equilibrium exciton-condensate experiment (Qi et al., Nature 654). In Lean 4 (Mathlib only, standard axioms): differencing preserves complete monotonicity, so the direct exciton-exciton kernel built from any admissible single-layer potential is covered; the finite telescoping identity behind the capacitor formula of the Hartree coefficient; the uniform density minimises a positive-semidefinite translation-invariant interaction; six statements about the experiment's own four-flavour mean-field model; and, <i>conditionally on the theorem taken as a hypothesis</i>, the periodic-extension step that turns it into a lower bound for N particles on a torus (with the interaction of a particle with its own images made explicit). At the experimental densities the classical lower bound sits 8-22 times below the Hartree energy: the sandwich is wide, and the bound is structural, not predictive. Numerical tests, with gates fixed before the runs, were executed on the author's Rust implementation of CVODE (rusty-SUNDIALS): 2860 N-particle gradient flows on tori of 36 and 64 particles never violated the bound (minimum -1.1e-13, roundoff and truncation level), attained the lattice energy on 8 of 9 commensurate cases as registered, stayed above it on incommensurate tori, and went far below it for a non-completely-monotone control; T1-T3 and the critical field of the four-flavour model were reproduced with CVODE flows to 1.7e-12; a nonlocal-kernel mean-field test passed four of five registered gates. The note reports what went wrong: a lattice-enumeration slip shared by two implementations and caught only by a closed-form constant, a compute-budget amendment, a registered stopping rule too short for soft modes, and a control kernel whose functional is unbounded below (that gate failed as registered; the control had also been changed from its committed depth before the run). Producer, verifiers and reviewer of this work are instances of the same AI model; no human reviewed it before deposit; neither the experimental group nor the authors of the theorem have seen it; the experiment's model parameters are phenomenological.</p>",
+  "creators": [
+   {
+    "name": "Callens, Xavier",
+    "affiliation": "SocrateAI Research"
+   }
+  ],
+  "keywords": [
+   "universal optimality",
+   "triangular lattice",
+   "completely monotone functions",
+   "dipolar excitons",
+   "exciton condensate",
+   "Lean 4",
+   "Mathlib",
+   "formal verification",
+   "pre-registration",
+   "rusty-SUNDIALS",
+   "CVODE",
+   "negative results"
+  ],
+  "license": "CC-BY-4.0",
+  "access_right": "open",
+  "language": "eng",
+  "related_identifiers": [
+   {
+    "identifier": "https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids",
+    "relation": "isSupplementedBy",
+    "scheme": "url"
+   },
+   {
+    "identifier": "https://github.com/xaviercallens/rusty-SUNDIALS",
+    "relation": "isSupplementedBy",
+    "scheme": "url"
+   },
+   {
+    "identifier": "https://github.com/openai/math",
+    "relation": "cites",
+    "scheme": "url"
+   },
+   {
+    "identifier": "10.1038/s41586-026-10636-y",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "arXiv:2603.15443",
+    "relation": "cites",
+    "scheme": "arxiv"
+   },
+   {
+    "identifier": "10.5281/zenodo.23286893",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23269715",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23272153",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23285631",
+    "relation": "cites",
+    "scheme": "doi"
+   }
+  ],
+  "version": "1",
+  "notes": "Technical note of the SocrateAI-Scientific-QuantumFluids programme, written overnight by an AI system under the author's standing instructions. Source archive attached (note sources, pre-registrations and results documents, Lean files with two independent verification reports and an adversarial review, Rust crate, run records). Lean 4.34.1 / Mathlib v4.34.1; rusty-SUNDIALS tag v11.6.0. Repository state: git tag exciton-note-1."
+ }
+}

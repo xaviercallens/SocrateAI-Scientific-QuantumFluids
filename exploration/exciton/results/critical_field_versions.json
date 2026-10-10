@@ -1,0 +1,66 @@
+[
+ {
+  "units": "repo reference (aB=1.5 nm, Ry=67 meV)",
+  "version": "arXiv v1",
+  "g_X": 1.0,
+  "Delta_ueV": 1.0,
+  "n_x_1e12_cm2": 0.4,
+  "B_c_mT": 50.0
+ },
+ {
+  "units": "repo reference (aB=1.5 nm, Ry=67 meV)",
+  "version": "arXiv v1",
+  "g_X": 1.0,
+  "Delta_ueV": 1.0,
+  "n_x_1e12_cm2": 0.5,
+  "B_c_mT": 55.9
+ },
+ {
+  "units": "repo reference (aB=1.5 nm, Ry=67 meV)",
+  "version": "Nature (ED Fig. 8)",
+  "g_X": 1.5,
+  "Delta_ueV": 0.3,
+  "n_x_1e12_cm2": 0.4,
+  "B_c_mT": 33.5
+ },
+ {
+  "units": "repo reference (aB=1.5 nm, Ry=67 meV)",
+  "version": "Nature (ED Fig. 8)",
+  "g_X": 1.5,
+  "Delta_ueV": 0.3,
+  "n_x_1e12_cm2": 0.5,
+  "B_c_mT": 37.5
+ },
+ {
+  "units": "paper Methods (aB=1.543 nm, Ry=66.64 meV)",
+  "version": "arXiv v1",
+  "g_X": 1.0,
+  "Delta_ueV": 1.0,
+  "n_x_1e12_cm2": 0.4,
+  "B_c_mT": 51.3
+ },
+ {
+  "units": "paper Methods (aB=1.543 nm, Ry=66.64 meV)",
+  "version": "arXiv v1",
+  "g_X": 1.0,
+  "Delta_ueV": 1.0,
+  "n_x_1e12_cm2": 0.5,
+  "B_c_mT": 57.3
+ },
+ {
+  "units": "paper Methods (aB=1.543 nm, Ry=66.64 meV)",
+  "version": "Nature (ED Fig. 8)",
+  "g_X": 1.5,
+  "Delta_ueV": 0.3,
+  "n_x_1e12_cm2": 0.4,
+  "B_c_mT": 34.4
+ },
+ {
+  "units": "paper Methods (aB=1.543 nm, Ry=66.64 meV)",
+  "version": "Nature (ED Fig. 8)",
+  "g_X": 1.5,
+  "Delta_ueV": 0.3,
+  "n_x_1e12_cm2": 0.5,
+  "B_c_mT": 38.5
+ }
+]

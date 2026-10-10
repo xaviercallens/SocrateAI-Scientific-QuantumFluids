@@ -1,0 +1,56 @@
+    Finished `release` profile [optimized] target(s) in 0.42s
+     Running unittests src/lib.rs (/mnt/data/xdev-cache/target_rs_c3/release/deps/cvode-24a58e56b66bad83)
+
+running 8 tests
+test solver::tests::test_cvode_is_send_sync ... ok
+test adjoint::tests::test_adjoint_sensitivity ... ok
+test solver::tests::test_get_dky_bad_k_returns_error ... ok
+test solver::tests::test_exponential_decay ... ok
+test solver::tests::test_get_dky_at_current_time ... ok
+test solver::tests::test_linear_growth ... ok
+test step::tests::test_compute_eta ... ok
+test step::tests::test_compute_ewt ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/adams_order.rs (/mnt/data/xdev-cache/target_rs_c3/release/deps/adams_order-06a8692904969d76)
+
+running 9 tests
+test logistic_matches_closed_form ... ok
+test decay_error_scales_linearly_with_rtol ... ok
+test cosine_error_scales_linearly_with_rtol ... ok
+test eds_distance_rtol_1e7_beats_audit_by_100x ... ok
+test bdf_decay_unchanged_reference ... ok
+test lotka_volterra_conserves_invariant_and_agrees_with_bdf ... ok
+test work_precision_adams_decay ... ok
+test order_reaches_at_least_three_on_smooth_problem ... ok
+test control_order_one_adams_has_sqrt_scaling ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.45s
+
+     Running tests/tight_tolerance.rs (/mnt/data/xdev-cache/target_rs_c3/release/deps/tight_tolerance-f88be77634c73792)
+
+running 5 tests
+test lr_circuit_rtol_1e10 ... ok
+test decay_rtol_1e10_to_t10 ... ok
+test quadrature_cos_rtol_1e10 ... ok
+test work_precision_decay_monotone ... ok
+test coupled_circuit_2x2_rtol_1e8 ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+   Doc-tests cvode
+
+running 1 test
+test crates/cvode/src/solver.rs - solver::Cvode<F>::get_dky (line 289) ... ignored
+
+test result: ok. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 1 test
+test crates/cvode/src/builder.rs - builder::CvodeBuilder::jacobian (line 93) ... ignored
+
+test result: ok. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+all doctests ran in 0.43s; merged doctests compilation took 0.42s
+exit 0

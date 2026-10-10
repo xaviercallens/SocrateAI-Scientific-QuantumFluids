@@ -46,14 +46,18 @@ Also noted by the verifier and recorded here:
 
 ## Re-compilation after the edit (producer, 2026-10-11, Lean 4.34.1 / Mathlib d13f23b7)
 
-| file | exit | sha256 (first 16) | `#print axioms` lines | not within {propext, Classical.choice, Quot.sound} | Lean warnings |
+| file | exit, Lean 4.34.1 / Mathlib d13f23b7 | exit, Lean 4.34.0-rc2 / Mathlib 85e3a25 | sha256 (first 16) | `#print axioms` outside {propext, Classical.choice, Quot.sound} | Lean warnings |
 |---|---|---|---|---|---|
-| `ExcitonX1.lean` | 0 | `44c5f1df22d5cc21` | 11 | none | 0 |
-| `GradientFlow.lean` | 0 | `b67bbb917e9c5de4` | 5 | none | 0 |
-| `MeanField.lean` | 0 | `143f83b47707c3e1` | 9 | none | 0 |
-| `FourFlavour.lean` | 0 | `899bb4a5bed6401a` | 24 | none | 0 |
-| `FourFlavourNegativeControl.lean` | 1 (intended) | `28dce072996aee82` | – | – | 1 error (the `ring` residual) |
-| `TorusBound.lean` | 0 | `5165d3961b82c4ea` | 5 | none | 24 (lint/deprecation) |
+| `ExcitonX1.lean` | 0 | 0 | `44c5f1df22d5cc21` | none | 0 |
+| `GradientFlow.lean` | 0 | 0 | `a18b79cad3ad84f8` | none | 0 |
+| `MeanField.lean` | 0 | 0 | `143f83b47707c3e1` | none | 0 |
+| `FourFlavour.lean` | 0 | 0 | `cbf9ebcfaf110d1f` | none | 0 |
+| `FourFlavourNegativeControl.lean` | 1 (intended) | – | `28dce072996aee82` | – | 1 error (the `ring` residual) |
+| `TorusBound.lean` | 0 | not tried (written against the upstream pin) | `5165d3961b82c4ea` | none | 24 (lint/deprecation) |
+
+Two verifier probes in the integrated sections had to be adapted so that they compile under both pins (a `convert … using 1`
+in the two `GradientFlow` instances, replaced by `congr_deriv`; the proof of `Ew_generic` in `FourFlavour`, rewritten with explicit
+`rfl` facts); both under 4.34.1 and rc2 now compile with standard axioms only.
 
 Two probes of the verifier's file (`local_iff_upstream`, `upstream_sub_shift`) needed upstream's definitions in scope and
 were *not* integrated; they are cited in a comment of `ExcitonX1.lean` and in the report.

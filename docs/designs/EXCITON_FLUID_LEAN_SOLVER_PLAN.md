@@ -1,5 +1,13 @@
 # Exciton fluids: proof, physics and solver — a study and an implementation plan
 
+> **Update 2026-10-11 (supersedes the status sentence below).** Phases 1 and 2 were run as pre-registered, the Lean files were
+> re-checked by two separate instances, the library was aligned to Lean 4.34.1, and the results were written up as a technical
+> note (Zenodo, concept DOI 10.5281/zenodo.23289026). Read `docs/designs/EXCITON_FLUID_PHASE1_RESULTS.md`,
+> `EXCITON_FLUID_PHASE2_RESULTS.md`, `exploration/exciton/README.md` and the status section at the end of
+> `EXCITON_FLUID_LEAN_HANDOFF.md`. Two things changed the plan: the experiment's own four-flavour model is the Lean target
+> (not a driven-dissipative GPE), and the control kernel of Phase 2 was ill-posed (unbounded functional). WP3's X4 is done
+> conditionally on the upstream theorem.
+
 **Status: STUDY AND PLAN, revision 2. No solver experiment has been run and nothing is released.** Revision 2 records
 what changed when the owner supplied the Lean material (§0); the Lean statements of §3.4 and the keystone lemma X1
 have since been compiled in the QuantumFluids pin (producer: this session, **verifier pending**).

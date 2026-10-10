@@ -12,7 +12,8 @@ phenomenological in the paper.  Scope notes are in docs/designs/EXCITON_FLUID_LE
 Status: kernel-checked under Lean 4.34.1 / Mathlib d13f23b7 and under Lean 4.34.0-rc2 / Mathlib 85e3a25, standard axioms
 only, no unproved goals.  Producer: the session that wrote the plan.  Independent re-check by a separate instance of the
 same model: `VERIFICATION_BY_INSTANCE_2026-10-10.md` (VERIFIED WITH REMARKS; not human review).  The section at the end of
-the file ("Verifier probes") was written and compiled by that instance and integrated verbatim afterwards.
+the file ("Verifier probes") was written and compiled by that instance and integrated verbatim afterwards (one proof, `Ew_generic`, was
+rewritten with explicit `rfl` facts so that the section also compiles under the older pin).
 `IIA_polarisation` and `IIB_polarisation` reproduce formulas printed in the paper's main text (a confirmation).  The paper
 prints only qualitative forms of `support_in_one_pair` ("no more than two flavors condense simultaneously", Methods) and
 `single_component_of_neg_gX` ("negative g_X leads to a ferromagnetic single-component condensate"); the exchange-pair
@@ -412,7 +413,11 @@ theorem Ew_generic :
     ∀ i ∈ ({0, 1} : Finset (Fin 4)), ∀ j ∈ ({2, 3} : Finset (Fin 4)), Ew i ≠ Ew j := by
   intro i hi j hj
   simp only [Finset.mem_insert, Finset.mem_singleton] at hi hj
-  rcases hi with rfl | rfl <;> rcases hj with rfl | rfl <;> norm_num [Ew]
+  have e0 : Ew 0 = 0 := rfl
+  have e1 : Ew 1 = 0 := rfl
+  have e2 : Ew 2 = 1 := rfl
+  have e3 : Ew 3 = 1 := rfl
+  rcases hi with rfl | rfl <;> rcases hj with rfl | rfl <;> simp [e0, e1, e2, e3]
 
 theorem nw_minimiser : ∀ m, Feasible m → H 1 1 1 Ew nw ≤ H 1 1 1 Ew m := by
   intro m hm

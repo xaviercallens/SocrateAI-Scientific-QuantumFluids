@@ -149,3 +149,28 @@ Your note says other sessions' builds filled RAM and swap. Build only the closur
 `OAI.Analysis.Triangular.Energy.Universal` and `OAI.NumberTheory.DirichletL.LatticeSummability` (as in your
 `REPRODUCE.md`); H1, H2, H3, H6 are short compiles; H5 and H7 are the expensive ones. QuantumFluids can re-run the
 Mathlib-only files (`FourFlavour.lean`) locally in about two minutes.
+
+---
+
+## 7. Status after the night of 2026-10-10/11 (written by the producer's session; read before starting)
+
+The Mathlib-only items were done here, in the Lean 4.34.1 / Mathlib `d13f23b7` stack (the upstream pin), and re-checked by two
+separate instances of the same model (reports in `exploration/exciton/lean/VERIFICATION_*.md`; not human review). What remains is
+what needs the upstream proof tree, the Comparator, or a human.
+
+| task | status | where |
+|---|---|---|
+| **H1** port and re-verify | **done** (both stacks; verdicts VERIFIED / VERIFIED WITH REMARKS; remarks answered) | `ExcitonX1`, `FourFlavour`, `MeanField`, `GradientFlow`; `VERIFICATION_BY_INSTANCE_2026-10-10.md`, `VERIFICATION_RESPONSE_2026-10-11.md` |
+| **H2** bilayer kernel as a corollary | **partly**: `t ↦ t^(−1/2)` admissible from Mathlib alone (verifier's probe, integrated), hence `bilayer_unconditional`; the corollaries *about the upstream theorem* (`triangular_bilayer_optimal`, `bilayer_any_density`, `latticeEnergy_bilayer_lt_top`) still need your tree | `ExcitonX1.lean`, `VerifierProbe` section |
+| **H3** ordered-pairs normalisation | **not done as a Lean lemma**; the convention is stated in every docstring and the numerics carry a planted-bug gate (doubled `e_lat` must fail EX-1a) | `TorusBound.lean` (`torus_energy_per_particle`: the factor ½), prereg NEG |
+| **H4** Yukawa / Keldysh (`e^{−κ√t}/√t` completely monotone) | **not done** (hypothesis form only; the Struve–Neumann identity is checked numerically to 3e-31, not proved) | — |
+| **H5** periodic configurations (X4) | **done, conditional**: with the first conjunct of `universal_energy_minimum` as a hypothesis, for every ℤ-lattice of covolume `N/ρ` and `N` pairwise inequivalent points; definitions copied verbatim from upstream, verified identical (line by line and by `rfl`); non-vacuity examples compiled. You may want to re-prove it against your imported theorem instead of the hypothesis, and to add the quantum (expectation) step | `TorusBound.lean`, `VERIFICATION_TORUSBOUND_2026-10-11.md` |
+| **H6** uniform minimiser from PSD | **done** (PSD is a hypothesis; shown necessary) | `MeanField.lean` |
+| **H7** certified lattice-sum enclosures | **not done** | — |
+
+Added during the night, not in the original handoff: the four-flavour identities `H = Ω + non-negative squares` on each pair
+subspace (verifier-supplied, integrated), and `admissible_comp_div` (rescaling `t ↦ g(t/ρ)` preserves admissibility).
+Open, and worth your tools: the Comparator run of these files and of the library under v4.34.1 (not done; the library was
+rebuilt under v4.34.1 without source change, see `LEAN_TOOLCHAIN_ALIGNMENT_v4_34_1.md`); a Mathlib proof that `exp(−c√t)` is
+completely monotone (H4); the ground-state statement "II_A is the global minimiser below B_c" (needs existence of a minimiser
+and feasibility of the closed-form points).

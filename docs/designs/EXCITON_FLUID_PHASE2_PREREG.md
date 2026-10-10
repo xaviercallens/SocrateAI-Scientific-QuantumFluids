@@ -42,7 +42,7 @@ Dipole-gated kernels, finite temperature, vortices (`qf-pgpe`), real-time nonlin
 
 ## Amendments
 
-**A1 (before any Phase 2 run).** The control depth was first written as 40. At that depth `½Ũ(0) + ¼Ũ(k₀) < 0`, so a fully
+**A1 (written into this file 2026-10-10 about 23:16, 36 seconds after `363475b` and before the run started; committed only with the results, `3203d78`, 2026-10-11 00:09; the registered depth in `363475b` was 40).** The control depth was first written as 40. At that depth `½Ũ(0) + ¼Ũ(k₀) < 0`, so a fully
 modulated density has an energy density `∝ n̄²` with a negative coefficient: the grand-canonical functional is unbounded below and
 the flow would collapse. The depth is `28`, for which `Ũ_C(k₀) = −20.6`: `2n₀Ũ_C(k₀) = −0.82 < −ε_{k₀} = −0.69` (unstable) and
 `½Ũ(0) + ¼Ũ(k₀) = 1.1 > 0` (bounded). `reference.json` regenerated; no result had been produced.

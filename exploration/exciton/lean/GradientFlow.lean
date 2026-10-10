@@ -11,7 +11,8 @@ inequality at the chunk ends (a numerical solution may violate it only by its to
 Status: kernel-checked under Lean 4.34.1 / Mathlib d13f23b7 and under Lean 4.34.0-rc2 / Mathlib 85e3a25; producer: the
 session that wrote the Phase 1 pre-registration.  Independent re-check by a separate instance of the same model:
 `VERIFICATION_BY_INSTANCE_2026-10-10.md` (VERIFIED; not human review); its instances (`VerifierProbe`, end of the file)
-were integrated verbatim.  `energy_monotone_ascent` is a *sign control* (the opposite sign gives the opposite
+were integrated verbatim, except that two `convert … using 1` steps were replaced by `congr_deriv` so that the section also
+compiles under the older pin.  `energy_monotone_ascent` is a *sign control* (the opposite sign gives the opposite
 monotonicity), not a failing check.  The statements are about exact flows defined on all of `ℝ`; numerical solutions and
 the Rust code are not covered.  Mathlib only; not part of the audited library `lean_src/`.
 -/
@@ -82,7 +83,7 @@ theorem gradient_flow_instance :
       rw [gradient_eq_deriv']
       have h2 : HasDerivAt (fun x : ℝ => x ^ 2 / 2) (Real.exp (-t)) (Real.exp (-t)) := by
         have := (hasDerivAt_pow 2 (Real.exp (-t))).div_const 2
-        convert this using 1
+        refine this.congr_deriv ?_
         norm_num
       exact h2.deriv
     rw [hg]; exact h1
@@ -99,7 +100,7 @@ theorem ascent_instance :
       rw [gradient_eq_deriv']
       have h2 : HasDerivAt (fun x : ℝ => x ^ 2 / 2) (Real.exp t) (Real.exp t) := by
         have := (hasDerivAt_pow 2 (Real.exp t)).div_const 2
-        convert this using 1
+        refine this.congr_deriv ?_
         norm_num
       exact h2.deriv
     rw [hg]; exact Real.hasDerivAt_exp t

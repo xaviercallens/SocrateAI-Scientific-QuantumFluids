@@ -1,8 +1,11 @@
 # Exciton fluids, Phase 2 (nonlocal-kernel mean field): results, as registered
 
-Date: 2026-10-11 (night). Pre-registration: `docs/designs/EXCITON_FLUID_PHASE2_PREREG.md` (committed before any run, with its
-independent reference numbers `exploration/exciton/results/phase2/reference.json`; amendments A1–A3 recorded in that file, A1
-before the run, A2 and A3 after the registered run, with their reasons). Program: `exploration/exciton/rust/qf-exciton-p1/src/bin/mf.rs`
+Date: 2026-10-11 (night). Pre-registration: `docs/designs/EXCITON_FLUID_PHASE2_PREREG.md` (committed as `363475b` before any run,
+with its independent reference numbers `exploration/exciton/results/phase2/reference.json`; amendments A1–A3 recorded in that
+file). **Registration history, in full:** the committed registration had control depth 40; 36 seconds after the commit the depth
+was changed to 28 (reference numbers regenerated, amendment A1 written into the working copy), before the run started; A1 was
+committed only with the results (`3203d78`) and carries no date in the file (a note giving the time was added afterwards). A2 and
+A3 were written after the registered run, with their reasons. Program: `exploration/exciton/rust/qf-exciton-p1/src/bin/mf.rs`
 (rusty-SUNDIALS tree `996aaf0706e1`, CVODE BDF, finite-difference dense Jacobian; the field is a 16×16 grid, 256 unknowns).
 Evaluation: `exploration/exciton/python/phase2_summarise.py` → `results/phase2/summary.json`. Raw record: `results/phase2/mf_report.json`.
 
