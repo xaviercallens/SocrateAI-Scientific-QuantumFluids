@@ -2,7 +2,7 @@
 
 **A machine-checked Lean 4 library of quantum-fluid structure — with a record of what formalization caught, and what it could not**
 
-[![Tests](https://img.shields.io/badge/tests-183%20passing-brightgreen)]() [![Lean](https://img.shields.io/badge/Lean-4.34.0--rc2-blue)]() [![Theorems](https://img.shields.io/badge/theorems-257%20kernel--checked-blue)]() [![Comparator](https://img.shields.io/badge/Comparator-two%20kernels-success)]() [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23268302.svg)](https://doi.org/10.5281/zenodo.23268302) [![Release](https://img.shields.io/badge/release-v1.20.0-orange)](https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids/releases)
+[![Tests](https://img.shields.io/badge/tests-183%20passing-brightgreen)]() [![Lean](https://img.shields.io/badge/Lean-4.34.0--rc2-blue)]() [![Theorems](https://img.shields.io/badge/theorems-257%20kernel--checked-blue)]() [![Comparator](https://img.shields.io/badge/Comparator-two%20kernels-success)]() [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23286893.svg)](https://doi.org/10.5281/zenodo.23286893) [![Release](https://img.shields.io/badge/release-v1.20.0-orange)](https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids/releases)
 
 > **The Sector Causality Theory has moved to its own repository:**
 > **[SocrateAI-Scientific-SectorCausalityTheory](https://github.com/xaviercallens/SocrateAI-Scientific-SectorCausalityTheory)**
@@ -161,7 +161,7 @@ aligned at 4.34.0-rc2 across streams for cross-integration.
 ## Citing
 
 The software (this library, its numerical experiments, and every companion paper) is archived on
-Zenodo: **[10.5281/zenodo.23268302](https://doi.org/10.5281/zenodo.23268302)** (`v1.19.0`). Cite the
+Zenodo: **[10.5281/zenodo.23286893](https://doi.org/10.5281/zenodo.23286893)** (`v1.20.0`). Cite the
 concept DOI **10.5281/zenodo.22855581** for all versions.
 
 The textbook *Quantum Fluids in Lean 4: a tribute to Henri Godfrin* (`book/`: ten chapters, each pairing a measurement, machine-checked theorems and a solver computation; Appendix A, the complete catalogue of this library; Appendix B, how to rebuild every figure and rerun the audit) has its own DOI: **[10.5281/zenodo.23272153](https://doi.org/10.5281/zenodo.23272153)** (concept; first edition 10.5281/zenodo.23272154, with the source archive).
