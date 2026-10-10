@@ -1,0 +1,10 @@
+{"gate":"S0-b","build":"rusty-SUNDIALS tree 996aaf0706e1 (v11.6.0)","rows":[
+  {"method":"adams","rtol":1e-4,"max_rel_err":2.707370012166765e-4,"rhs_evals":165,"steps":53},
+  {"method":"adams","rtol":1e-6,"max_rel_err":1.080747540504745e-6,"rhs_evals":207,"steps":68},
+  {"method":"adams","rtol":1e-8,"max_rel_err":1.5822890715825016e-8,"rhs_evals":292,"steps":100},
+  {"method":"adams","rtol":1e-10,"max_rel_err":9.756676129847215e-10,"rhs_evals":400,"steps":132},
+  {"method":"bdf","rtol":1e-4,"max_rel_err":2.3251766199476847e-4,"rhs_evals":333,"steps":131},
+  {"method":"bdf","rtol":1e-6,"max_rel_err":1.1770036820663672e-5,"rhs_evals":562,"steps":209},
+  {"method":"bdf","rtol":1e-8,"max_rel_err":3.11348038897379e-7,"rhs_evals":1133,"steps":413},
+  {"method":"bdf","rtol":1e-10,"max_rel_err":1.014868341983348e-8,"rhs_evals":1754,"steps":614}
+],"adams_rtol1e-10":{"rhs":400,"err":9.756676129847215e-10,"pass":true},"bdf_rtol1e-8":{"err":3.11348038897379e-7,"pass":true}}

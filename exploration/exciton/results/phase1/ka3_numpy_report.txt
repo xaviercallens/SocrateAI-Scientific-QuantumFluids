@@ -1,0 +1,8 @@
+K1: energy rel 1.79e-15   force rel (max-norm) 0.00e+00
+K2: energy rel 5.23e-14   force rel (max-norm) 6.00e-16
+K3: energy rel 7.52e-15   force rel (max-norm) 2.43e-16
+K4: energy rel 1.40e-14   force rel (max-norm) 6.39e-16
+K5: energy rel 1.09e-14   force rel (max-norm) 5.61e-16
+K6: energy rel 9.07e-15   force rel (max-norm) 5.66e-16
+N1: energy rel 0.00e+00   force rel (max-norm) 0.00e+00
+{"KA3_numpy_side": {"worst_energy_rel": 5.231855952854347e-14, "worst_force_rel": 6.390859127078164e-16, "pass": true, "n_configs": 35}}

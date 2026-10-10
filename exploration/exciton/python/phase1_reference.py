@@ -26,9 +26,13 @@ def K6(t): return _b(t)
 def N1(t): return np.exp(-t * t)
 
 def lat_r(a, R):
-    n = int(R / a) + 3
-    m = np.arange(-n, n + 1)
-    M, N = np.meshgrid(m, m)
+    # k (the second index) must reach R / (a sqrt(3)/2); m must reach R/a + |k|/2.  (Amendment A1: the first version
+    # used n = R/a + 3 for both and missed the caps |y| > (sqrt(3)/2) R; caught by the closed-form KA-1a.)
+    kmax = int(R / (a * math.sqrt(3) / 2)) + 3
+    mmax = int(R / a + kmax / 2) + 3
+    m = np.arange(-mmax, mmax + 1)
+    k = np.arange(-kmax, kmax + 1)
+    M, N = np.meshgrid(m, k)
     X = a * (M + 0.5 * N); Y = a * (math.sqrt(3) / 2 * N)
     r = np.hypot(X, Y)
     return r[(r > 1e-12) & (r <= R)]

@@ -138,3 +138,17 @@ search found nothing.
 
 Mean-field PDE solvers (`qf-gpe2d`/`qf-pgpe` extensions: Phase 2), Lean verification of the new files (second
 server), the Hugging Face layer, any driven-dissipative model, ARKode, and any comparison with experimental data.
+
+## 7. Amendments
+
+**A1 (2026-10-10, after the instrument and known-answer gates, before any EX or FF run).** KA-1a failed as registered
+(relative errors 1.8e-4, 1.0e-4, 5.4e-5 at `R = 200, 400, 800`, halving with `R`). Cause: the lattice enumeration of
+both the numpy reference and the Rust crate looped `|m|, |k| ≤ R/a + 3`, which misses the caps `|y| > (√3/2) R` of the
+disk; the two implementations, written by the same hand, shared the slip, and only the closed-form number exposed it.
+Both were corrected (`k` to `R/(a√3/2)`, `m` to `R/a + |k|/2`), `reference.json` was regenerated, and the gates were
+re-run unchanged. Effect on the references: the exactly summable `e_lat` values changed by less than `2e-16` relative
+(the neglected points lie where the kernels are below `1e-14`); the K6 sandwich table changed by at most `3.0e-4`
+relative (`ρd² = 10⁻³`: unchanged, 44.71; 0.01: 14.19 → 14.19; 0.1: 4.643 → 4.642; 0.3: 2.867 → 2.867; 1: 1.873 → 1.872;
+3: 1.444 → 1.444). The plan's Appendix B table used a short cutoff; its `10⁻³` entry (43.8) is corrected to 44.7 there.
+Gates, tolerances and procedures are unchanged. Lesson recorded: two implementations by one author are not independent
+of that author's blind spots; a closed-form known answer is.

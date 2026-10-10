@@ -1,0 +1,17 @@
+[package]
+name = "qf-exciton-p1"
+version = "0.1.0"
+edition = "2021"
+description = "Phase 1 of the exciton-fluid plan: classical N-particle gradient flows on a torus and the four-flavour flow, on rusty-SUNDIALS CVODE"
+publish = false
+
+[workspace]
+
+# rusty-SUNDIALS v11.6.0 (tree 996aaf0706e1 = commit 5db8041), as in book/rust/.
+[dependencies]
+cvode = { path = "/home/xavkal/xdev/rusty-SUNDIALS-c3/crates/cvode" }
+nvector = { path = "/home/xavkal/xdev/rusty-SUNDIALS-c3/crates/nvector" }
+
+[profile.release]
+opt-level = 3
+debug = false
