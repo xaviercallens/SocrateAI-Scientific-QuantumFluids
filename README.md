@@ -2,7 +2,7 @@
 
 **A machine-checked Lean 4 library of quantum-fluid structure — with a record of what formalization caught, and what it could not**
 
-[![Tests](https://img.shields.io/badge/tests-183%20passing-brightgreen)]() [![Lean](https://img.shields.io/badge/Lean-4.34.0--rc2-blue)]() [![Theorems](https://img.shields.io/badge/theorems-257%20kernel--checked-blue)]() [![Comparator](https://img.shields.io/badge/Comparator-two%20kernels-success)]() [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23286893.svg)](https://doi.org/10.5281/zenodo.23286893) [![Release](https://img.shields.io/badge/release-v1.20.0-orange)](https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids/releases)
+[![Tests](https://img.shields.io/badge/tests-183%20passing-brightgreen)]() [![Lean](https://img.shields.io/badge/Lean-4.34.1-blue)]() [![Theorems](https://img.shields.io/badge/theorems-257%20kernel--checked-blue)]() [![Comparator](https://img.shields.io/badge/Comparator-two%20kernels-success)]() [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23286893.svg)](https://doi.org/10.5281/zenodo.23286893) [![Release](https://img.shields.io/badge/release-v1.20.0-orange)](https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids/releases)
 
 > **The Sector Causality Theory has moved to its own repository:**
 > **[SocrateAI-Scientific-SectorCausalityTheory](https://github.com/xaviercallens/SocrateAI-Scientific-SectorCausalityTheory)**
@@ -26,7 +26,7 @@ A **Lean 4 / Mathlib library of 257 machine-checked theorems on the structure of
 the verification tooling around it and an unusually complete record of what went wrong on the way.
 
 ```lean
-import QuantumFluids   -- Lean 4.34.0-rc2, Mathlib tag v4.34.0-rc2
+import QuantumFluids   -- Lean 4.34.1, Mathlib tag v4.34.1 (commit d13f23b7)
 ```
 
 | module | what it gives you |
@@ -111,7 +111,7 @@ which remains a human audit.
 # 174 tests
 uv run pytest tests/ -q
 
-# Lean (4.34.0-rc2, Mathlib v4.34.0-rc2); 257 theorems across 30 libraries
+# Lean (4.34.1, Mathlib v4.34.1); 257 theorems across 30 libraries
 cd lean_src && lake build
 
 # Comparator (needs landrun, lean4export, nanoda_bin on PATH — see docs/COMPARATOR_SETUP.md)
@@ -156,7 +156,9 @@ they depend on, never by analogy (LL-15).
 
 `SocrateAI-Scientific-MechanicaFluidorum` (Hypothesis U; the O5 uniformity obstruction),
 `SocrateAI-Mathesis` (Stream 0), and the OpenAI Navier–Stokes/Euler audit work. The Lean toolchain is
-aligned at 4.34.0-rc2 across streams for cross-integration.
+aligned at 4.34.1 (Mathlib v4.34.1, the pin of `openai/math`) since 2026-10-11 — the library was rebuilt without any
+source change, 257 `#print axioms` statements all within `{propext, Classical.choice, Quot.sound}`; it was 4.34.0-rc2
+from 2026-09-19 (releases up to v1.20.0 were checked under rc2) — for cross-integration.
 
 ## Citing
 
