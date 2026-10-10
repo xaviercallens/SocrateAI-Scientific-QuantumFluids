@@ -1,0 +1,57 @@
+[P2a] seed 1: converged=true tau=100 steps=1107 dev=1.134e-14 omega_err=1.744e-16 err=None
+[P2a] seed 2: converged=true tau=100 steps=1100 dev=4.011e-15 omega_err=5.232e-16 err=None
+[P2a] seed 3: converged=true tau=100 steps=1111 dev=3.662e-15 omega_err=1.570e-15 err=None
+[P2a] seed 4: converged=true tau=100 steps=1122 dev=5.057e-15 omega_err=3.488e-16 err=None
+[P2a] seed 5: converged=true tau=100 steps=1120 dev=8.196e-15 omega_err=8.720e-16 err=None
+[P2a] seed 6: converged=true tau=100 steps=1122 dev=4.185e-15 omega_err=5.232e-16 err=None
+[P2a] seed 7: converged=true tau=100 steps=1104 dev=1.918e-15 omega_err=3.488e-16 err=None
+[P2a] seed 8: converged=true tau=100 steps=1124 dev=4.185e-15 omega_err=0.000e0 err=None
+[P2a] seed 9: converged=true tau=100 steps=1119 dev=1.570e-14 omega_err=3.488e-16 err=None
+[P2a] seed 10: converged=true tau=100 steps=1097 dev=3.139e-15 omega_err=8.720e-16 err=None
+[P2a] seed 11: converged=true tau=100 steps=1110 dev=5.929e-15 omega_err=1.744e-16 err=None
+[P2a] seed 12: converged=true tau=100 steps=1114 dev=9.592e-15 omega_err=0.000e0 err=None
+[P2a] seed 13: converged=true tau=100 steps=1117 dev=2.790e-15 omega_err=5.232e-16 err=None
+[P2a] seed 14: converged=true tau=100 steps=1123 dev=9.068e-15 omega_err=1.744e-16 err=None
+[P2a] seed 15: converged=true tau=100 steps=1097 dev=2.616e-15 omega_err=3.488e-16 err=None
+[P2a] seed 16: converged=true tau=100 steps=1123 dev=8.545e-15 omega_err=0.000e0 err=None
+[P2a] seed 17: converged=true tau=100 steps=1121 dev=3.837e-15 omega_err=1.570e-15 err=None
+[P2a] seed 18: converged=true tau=100 steps=1120 dev=1.168e-14 omega_err=8.720e-16 err=None
+[P2a] seed 19: converged=true tau=100 steps=1101 dev=1.849e-14 omega_err=1.046e-15 err=None
+[P2a] seed 20: converged=true tau=100 steps=1099 dev=7.848e-15 omega_err=6.976e-16 err=None
+[P2a] seed 21: converged=true tau=100 steps=1105 dev=2.616e-15 omega_err=1.744e-16 err=None
+[P2a] seed 22: converged=true tau=100 steps=1121 dev=9.766e-15 omega_err=8.720e-16 err=None
+[P2a] seed 23: converged=true tau=100 steps=1095 dev=3.139e-15 omega_err=1.744e-16 err=None
+[P2a] seed 24: converged=true tau=100 steps=1114 dev=3.837e-15 omega_err=1.744e-16 err=None
+[P2a] seed 25: converged=true tau=100 steps=1094 dev=2.093e-15 omega_err=1.744e-16 err=None
+[P2a] seed 26: converged=true tau=100 steps=1122 dev=1.796e-14 omega_err=5.232e-16 err=None
+[P2a] seed 27: converged=true tau=100 steps=1093 dev=9.940e-15 omega_err=6.976e-16 err=None
+[P2a] seed 28: converged=true tau=100 steps=1133 dev=4.011e-15 omega_err=3.488e-16 err=None
+[P2a] seed 29: converged=true tau=100 steps=1120 dev=1.291e-14 omega_err=1.570e-15 err=None
+[P2a] seed 30: converged=true tau=100 steps=1121 dev=8.196e-15 omega_err=3.488e-16 err=None
+[P2a] seed 31: converged=true tau=100 steps=1110 dev=2.616e-15 omega_err=1.395e-15 err=None
+[P2a] seed 32: converged=true tau=100 steps=1096 dev=2.093e-15 omega_err=8.720e-16 err=None
+[P2a] seed 33: converged=true tau=100 steps=1111 dev=4.883e-15 omega_err=3.488e-16 err=None
+[P2a] seed 34: converged=true tau=100 steps=1113 dev=1.482e-14 omega_err=3.488e-16 err=None
+[P2a] seed 35: converged=true tau=100 steps=1099 dev=6.976e-15 omega_err=3.488e-16 err=None
+[P2a] seed 36: converged=true tau=100 steps=1117 dev=3.488e-15 omega_err=1.046e-15 err=None
+[P2a] seed 37: converged=true tau=100 steps=1101 dev=2.267e-15 omega_err=5.232e-16 err=None
+[P2a] seed 38: converged=true tau=100 steps=1100 dev=1.570e-14 omega_err=8.720e-16 err=None
+[P2a] seed 39: converged=true tau=100 steps=1100 dev=8.196e-15 omega_err=1.395e-15 err=None
+[P2a] seed 40: converged=true tau=100 steps=1104 dev=8.894e-15 omega_err=1.744e-16 err=None
+[P2a] seed 41: converged=true tau=100 steps=1112 dev=1.918e-15 omega_err=8.720e-16 err=None
+[P2a] seed 42: converged=true tau=100 steps=1111 dev=2.267e-15 omega_err=6.976e-16 err=None
+[P2a] seed 43: converged=true tau=100 steps=1124 dev=2.267e-15 omega_err=6.976e-16 err=None
+[P2a] seed 44: converged=true tau=100 steps=1115 dev=5.755e-15 omega_err=1.744e-16 err=None
+[P2a] seed 45: converged=true tau=100 steps=1105 dev=1.046e-14 omega_err=3.488e-16 err=None
+[P2a] seed 46: converged=true tau=100 steps=1114 dev=1.116e-14 omega_err=3.488e-16 err=None
+[P2a] seed 47: converged=true tau=100 steps=1094 dev=1.918e-15 omega_err=1.744e-16 err=None
+[P2a] seed 48: converged=true tau=100 steps=1114 dev=9.417e-15 omega_err=8.720e-16 err=None
+[P2a] seed 49: converged=true tau=100 steps=1102 dev=3.837e-15 omega_err=1.395e-15 err=None
+[P2a] seed 50: converged=true tau=100 steps=1114 dev=3.837e-15 omega_err=3.488e-16 err=None
+[P2d] seed 1: dev=5.000e-1 converged=true
+[P2d] seed 2: dev=5.000e-1 converged=true
+[P2d] seed 3: dev=5.000e-1 converged=true
+[P2d] seed 4: dev=5.000e-1 converged=true
+[P2d] seed 5: dev=5.000e-1 converged=true
+[P2c] flow: converged=false modulation=5.840e-3 omega=-2.486724e-3 uniform=-2.486796e-3 err=Some("solve at tau=100: Solver(ConvFailure)")
+written /mnt/data/xdev-cache/exciton_p1/phase2/mf_report.json (65596 bytes)

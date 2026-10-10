@@ -58,10 +58,10 @@ criterion `max|Hψ| < 1e-8` (the other gates are not re-run); the gate P2-c(ii) 
 
 **A3 (2026-10-11 00:30, after the A2 re-run, which gave the same failure: 42 193 steps, same state, so it is not a tolerance
 matter).** A diagnostic run of the control flow in chunks of `Δτ = 0.5` (exploratory, `MF_MODE=ctrl_debug`, same noise seed,
-`rtol = 1e-9`, `atol = 1e-11`; log `results/phase2/mf_debug.log`) shows what happened: `Ω` decreases monotonically, the density
+`rtol = 1e-9`, `atol = 1e-11`; log `results/phase2/mf_debug_trace.txt`) shows what happened: `Ω` decreases monotonically, the density
 modulation grows exponentially from `1e-3` at a rate of about `0.12` per unit `τ`, reaches `0.1` near `τ ≈ 38` (with `Ω` below
-`Ω₀` by `6×10⁻⁴`, relative) and `4.5` at `τ ≈ 56` (`Ω` more than twice `Ω₀`), after which the flow runs away and CVODE
-fails. The failure is therefore **physical, not numerical**, and it is a flaw of the control as registered: at fixed `μ`
+`Ω₀` by `7×10⁻⁴`, relative) and `4.5` at `τ ≈ 56` (`Ω` about twice `Ω₀`), after which the flow runs away and CVODE
+fails (`ConvFailure` in the chunk ending at `τ = 58`). The failure is therefore **physical, not numerical**, and it is a flaw of the control as registered: at fixed `μ`
 the grand-canonical functional of kernel C is *unbounded below*. For a stripe of Gaussian profile `c_m = n̄ e^{−m²k₀²w²/2}` the
 interaction energy density is `½ n̄² F(w)`, `F(w) = Ũ(0) + 2 Σ_{m≥1} Ũ(m k₀) e^{−m² k₀² w²}`, and
 `min_w F = −19.0 < 0` for depth 28 over the harmonics representable on the grid (`m ≤ 2`; `−15.5` when the sum is taken to `m ≤ 8`), so `Ω → −∞` as `n̄` grows. Amendment A1's check
