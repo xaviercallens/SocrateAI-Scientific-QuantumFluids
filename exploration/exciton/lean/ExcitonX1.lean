@@ -3,17 +3,19 @@ import Mathlib
 /-!
 # X1: differencing preserves complete monotonicity (exciton-fluid study, 2026-10-10)
 
-Status: kernel-checked under Lean 4.34.0-rc2 / Mathlib 85e3a25 (the QuantumFluids pin); `#print axioms` of every theorem
-is a subset of {propext, Classical.choice, Quot.sound}; no unproved goals.  Producer: the session that wrote
-`docs/designs/EXCITON_FLUID_LEAN_SOLVER_PLAN.md`.  **Verifier: pending** (a separate instance, ideally in the
-upstream environment Lean 4.34.1 / Mathlib d13f23b7, where `AdmissiblePotential` is
-`OAI.TriangularUniversal.AdmissiblePotential`; replace the local copy below by `open OAI.TriangularUniversal`).
-This file is exploration material, not part of the audited library `lean_src/`.
+Status: kernel-checked under Lean 4.34.1 / Mathlib d13f23b7 and under Lean 4.34.0-rc2 / Mathlib 85e3a25;
+`#print axioms` of every theorem is a subset of {propext, Classical.choice, Quot.sound}; no unproved goals.
+Producer: the session that wrote `docs/designs/EXCITON_FLUID_LEAN_SOLVER_PLAN.md`.  Independent re-check by a separate
+instance of the same model: `VERIFICATION_BY_INSTANCE_2026-10-10.md` (verdict VERIFIED; not human review).  The section
+at the end of this file ("Verifier probes") was written and compiled by that instance and integrated verbatim by the
+producer afterwards; nothing else was changed except this docstring and the docstring of `bilayerDipole`.  This file is
+exploration material, not part of the audited library `lean_src/`.
 
 * `admissible_sub_shift`: if `g` is admissible (smooth, non-negative, completely monotone on `(0, ∞)`) and `c > 0`, then
   `t ↦ g t - g (t + c)` is admissible.  With `g = t^(-1/2)` and `c = d²` this is the direct interaction of two
-  interlayer excitons separated by `d` in a bilayer (`bilayerDipole_admissible`, given the Riesz case `s = 1`, which is
-  `TriangularRiesz.riesz_admissible` of the LeanMaster contribution).
+  interlayer excitons in a bilayer whose layers are `d` apart (in-plane separation `r = √t`)
+  (`bilayerDipole_admissible`, given the Riesz case `s = 1`; that hypothesis is discharged by the verifier's
+  `VerifierProbe.riesz1_admissible`, which proves `t ↦ t^(-1/2)` admissible from Mathlib alone).
 * `gem4_not_admissible`: negative control, `exp (-t²)` (cluster-crystal kernel) is not admissible.
 * Mathlib naming churn: `ENat.natCast_lt_top` was `ENat.coe_lt_top` in other Mathlib versions.
 -/
@@ -103,7 +105,8 @@ theorem admissible_const_mul {g : ℝ → ℝ} (hg : AdmissiblePotential g) {a :
 
 noncomputable def riesz (s : ℝ) : ℝ → ℝ := fun t => t ^ (-(s / 2))
 
-/-- Direct interaction of two interlayer excitons (units `e²/4πε₀ε = 1`, `t = r²`). Needs the Riesz case `s = 1` (D1). -/
+/-- Direct interaction of two interlayer excitons (units `e²/4πε₀ε = 1`, `t = r²`, `r` the in-plane separation, `d` the
+layer separation). Needs the Riesz case `s = 1`, supplied by `VerifierProbe.riesz1_admissible` below. -/
 noncomputable def bilayerDipole (d : ℝ) : ℝ → ℝ := fun t => 2 * (riesz 1 t - riesz 1 (t + d ^ 2))
 
 theorem bilayerDipole_admissible {d : ℝ} (hd : d ≠ 0) (hR : AdmissiblePotential (riesz 1)) :
@@ -148,3 +151,91 @@ end ExcitonX1
 #print axioms ExcitonX1.admissible_const_mul
 #print axioms ExcitonX1.bilayerDipole_admissible
 #print axioms ExcitonX1.gem4_not_admissible
+
+
+/-! ## ===== Verifier probes (independent instance; not part of the producer's files) ===== -/
+
+namespace VerifierProbe
+
+/- (1) In the verifier's run the local definition was shown to be definitionally the upstream one
+(`example (g) : ExcitonX1.AdmissiblePotential g ↔ OAI.TriangularUniversal.AdmissiblePotential g := Iff.rfl`, compiled
+against upstream's file text; see the report).  That probe needs upstream's definitions and is therefore not repeated here. -/
+
+/-- (2) Iterated derivatives of `exp (-t)`. -/
+theorem iter_exp_neg (r : ℕ) :
+    iteratedDeriv r (fun t : ℝ => Real.exp (-t)) = fun t => (-1 : ℝ) ^ r * Real.exp (-t) := by
+  induction r with
+  | zero => funext t; simp
+  | succ k ih =>
+    rw [iteratedDeriv_succ, ih]
+    funext t
+    have h1 : HasDerivAt (fun t : ℝ => Real.exp (-t)) (Real.exp (-t) * (-1)) t :=
+      (hasDerivAt_neg t).exp
+    have h : HasDerivAt (fun t : ℝ => (-1 : ℝ) ^ k * Real.exp (-t))
+        ((-1 : ℝ) ^ k * (Real.exp (-t) * (-1))) t := h1.const_mul _
+    rw [h.deriv, pow_succ]
+    ring
+
+/-- The hypothesis of `admissible_sub_shift` is satisfiable: `exp (-t)` is admissible. -/
+theorem exp_neg_admissible : ExcitonX1.AdmissiblePotential (fun t : ℝ => Real.exp (-t)) := by
+  refine ⟨?_, fun t _ => (Real.exp_pos _).le, ?_⟩
+  · exact (Real.contDiff_exp.comp contDiff_neg).contDiffOn
+  · intro r t _
+    rw [iter_exp_neg r]
+    show 0 ≤ (-1 : ℝ) ^ r * ((-1 : ℝ) ^ r * Real.exp (-t))
+    have h : (-1 : ℝ) ^ r * ((-1 : ℝ) ^ r * Real.exp (-t)) = Real.exp (-t) := by
+      rw [← mul_assoc, ← mul_pow]; norm_num
+    rw [h]; exact (Real.exp_pos _).le
+
+/-- (3) `t ^ (-1/2)` (the Coulomb kernel in the variable `t = r²`) is admissible. -/
+theorem rpow_neg_half_admissible :
+    ExcitonX1.AdmissiblePotential (fun t : ℝ => t ^ (-(1 / 2 : ℝ))) := by
+  refine ⟨?_, fun t ht => Real.rpow_nonneg ht.le _, ?_⟩
+  · intro t ht
+    exact (Real.contDiffAt_rpow_const_of_ne (ne_of_gt ht)).contDiffWithinAt
+  · intro r t ht
+    have key : ∀ k : ℕ, 0 ≤ (-1 : ℝ) ^ k * (descPochhammer ℝ k).eval (-(1 / 2 : ℝ)) := by
+      intro k
+      induction k with
+      | zero => simp
+      | succ k ih =>
+        rw [descPochhammer_succ_right, Polynomial.eval_mul, Polynomial.eval_sub, Polynomial.eval_X,
+          Polynomial.eval_natCast, pow_succ]
+        have h2 : (0 : ℝ) ≤ ((-1 : ℝ) ^ k * (descPochhammer ℝ k).eval (-(1 / 2 : ℝ))) *
+            ((k : ℝ) + 1 / 2) := mul_nonneg ih (by positivity)
+        calc (0 : ℝ) ≤ ((-1 : ℝ) ^ k * (descPochhammer ℝ k).eval (-(1 / 2 : ℝ))) * ((k : ℝ) + 1 / 2) := h2
+          _ = (-1 : ℝ) ^ k * (-1) * ((descPochhammer ℝ k).eval (-(1 / 2 : ℝ)) * (-(1 / 2 : ℝ) - k)) := by ring
+    rw [iteratedDeriv_eq_iterate, Real.iter_deriv_rpow_const]
+    have hpos : 0 ≤ t ^ (-(1 / 2 : ℝ) - (r : ℝ)) := Real.rpow_nonneg ht.le _
+    calc (0 : ℝ) ≤ ((-1 : ℝ) ^ r * (descPochhammer ℝ r).eval (-(1 / 2 : ℝ))) *
+          t ^ (-(1 / 2 : ℝ) - (r : ℝ)) := mul_nonneg (key r) hpos
+      _ = (-1 : ℝ) ^ r * ((descPochhammer ℝ r).eval (-(1 / 2 : ℝ)) * t ^ (-(1 / 2 : ℝ) - (r : ℝ))) := by ring
+
+/-- (4) The assumption `hR` of `bilayerDipole_admissible` is dischargeable (Riesz s = 1). -/
+theorem riesz1_admissible : ExcitonX1.AdmissiblePotential (ExcitonX1.riesz 1) :=
+  rpow_neg_half_admissible
+
+theorem bilayer_unconditional : ExcitonX1.AdmissiblePotential (ExcitonX1.bilayerDipole 1) :=
+  ExcitonX1.bilayerDipole_admissible one_ne_zero riesz1_admissible
+
+/-- (5) The conclusion of `admissible_sub_shift` is not vacuous: an instance, plus strict positivity somewhere. -/
+theorem sub_shift_nonvacuous :
+    ExcitonX1.AdmissiblePotential (fun t : ℝ => Real.exp (-t) - Real.exp (-(t + 1))) ∧
+      0 < Real.exp (-(1 : ℝ)) - Real.exp (-((1 : ℝ) + 1)) := by
+  refine ⟨ExcitonX1.admissible_sub_shift exp_neg_admissible one_pos, ?_⟩
+  exact sub_pos.mpr (Real.exp_lt_exp.mpr (by norm_num))
+
+/-- (6) The predicate has negative instances other than the control (a function that is not non-negative). -/
+theorem neg_one_not_admissible : ¬ ExcitonX1.AdmissiblePotential (fun _ : ℝ => (-1 : ℝ)) := by
+  intro h
+  have := h.2.1 1 one_pos
+  norm_num at this
+
+end VerifierProbe
+
+#print axioms VerifierProbe.exp_neg_admissible
+#print axioms VerifierProbe.rpow_neg_half_admissible
+#print axioms VerifierProbe.riesz1_admissible
+#print axioms VerifierProbe.bilayer_unconditional
+#print axioms VerifierProbe.sub_shift_nonvacuous
+#print axioms VerifierProbe.neg_one_not_admissible

@@ -9,10 +9,24 @@ Flavours `0,1,2,3 = KK, K'K', KK', K'K` (electron valley, hole valley).  Grand-c
 Everything here is algebra about this model.  It is NOT a statement about the experiment: `g_X` and `Δ` are
 phenomenological in the paper.  Scope notes are in docs/designs/EXCITON_FLUID_LEAN_SOLVER_PLAN.md §3.4.
 
-Status: kernel-checked under Lean 4.34.0-rc2 / Mathlib 85e3a25, standard axioms only, no unproved goals.  Producer: the
-session that wrote the plan; **verifier pending**.  `IIA_polarisation` and `IIB_polarisation` reproduce formulas printed
-in the paper (a confirmation); `support_in_one_pair`, `critical_field` and `single_component_of_neg_gX` are not printed
-in the arXiv v1 main text.  Not part of the audited library `lean_src/`. -/
+Status: kernel-checked under Lean 4.34.1 / Mathlib d13f23b7 and under Lean 4.34.0-rc2 / Mathlib 85e3a25, standard axioms
+only, no unproved goals.  Producer: the session that wrote the plan.  Independent re-check by a separate instance of the
+same model: `VERIFICATION_BY_INSTANCE_2026-10-10.md` (VERIFIED WITH REMARKS; not human review).  The section at the end of
+the file ("Verifier probes") was written and compiled by that instance and integrated verbatim afterwards.
+`IIA_polarisation` and `IIB_polarisation` reproduce formulas printed in the paper's main text (a confirmation).  The paper
+prints only qualitative forms of `support_in_one_pair` ("no more than two flavors condense simultaneously", Methods) and
+`single_component_of_neg_gX` ("negative g_X leads to a ferromagnetic single-component condensate"); the exchange-pair
+structure and the critical-field formula are not printed.
+
+Scope (answering the verifier's remarks).  `IIA_polarisation`, `IIB_polarisation` and `intravalley_density` take the
+stationarity equations as hypotheses and assert neither feasibility `n ≥ 0` nor phase membership.  `grand_potential_gap`
+and `critical_field` are identities in the parameters and do not mention `H` (equality case only for `critical_field`);
+that the closed forms are the minima of `H` on the two pair subspaces is `VerifierProbe.omegaA_identity` and
+`omegaB_identity` at the end of the file.  `support_in_one_pair` and `single_component_of_neg_gX` need the genericity
+hypothesis `E_i ≠ E_j` across the pairs, which fails on the four lines `Δ = ±2 g_v b`, `±2 g_c b` of the `(b, Δ)` plane
+(`B ≈ 1.4` and `2.9` mT for the paper's values); `VerifierProbe.hE_needed` shows it cannot be dropped.  If `2 g_H + g_X ≤ 0`
+the function `H` is unbounded below on the orthant and the minimiser theorems are vacuous there.  Not part of the
+audited library `lean_src/`. -/
 
 namespace FourFlavour
 
@@ -379,3 +393,154 @@ end FourFlavour
 #print axioms FourFlavour.grand_potential_gap
 #print axioms FourFlavour.critical_field
 #print axioms FourFlavour.single_component_of_neg_gX
+
+
+/-! ## ===== Verifier probes (independent instance) ===== -/
+
+namespace VerifierProbe
+open FourFlavour
+
+/-! ### Satisfiability of the hypotheses of T1 (`gH = gX = μ = 1`, `E = (0,0,1,1)`, minimiser `(1/3,1/3,0,0)`) -/
+
+noncomputable def Ew : Fin 4 → ℝ := ![0, 0, 1, 1]
+noncomputable def nw : Fin 4 → ℝ := ![1 / 3, 1 / 3, 0, 0]
+
+theorem nw_feasible : Feasible nw := by
+  intro i; fin_cases i <;> norm_num [nw]
+
+theorem Ew_generic :
+    ∀ i ∈ ({0, 1} : Finset (Fin 4)), ∀ j ∈ ({2, 3} : Finset (Fin 4)), Ew i ≠ Ew j := by
+  intro i hi j hj
+  simp only [Finset.mem_insert, Finset.mem_singleton] at hi hj
+  rcases hi with rfl | rfl <;> rcases hj with rfl | rfl <;> norm_num [Ew]
+
+theorem nw_minimiser : ∀ m, Feasible m → H 1 1 1 Ew nw ≤ H 1 1 1 Ew m := by
+  intro m hm
+  have h0 := hm 0
+  have h1 := hm 1
+  have h2 := hm 2
+  have h3 := hm 3
+  simp only [H, Ew, nw, Fin.sum_univ_four]
+  simp
+  nlinarith [sq_nonneg (m 0 - m 1), sq_nonneg (m 2 - m 3), sq_nonneg (m 0 + m 1 - 2 / 3),
+    mul_nonneg (add_nonneg h0 h1) (add_nonneg h2 h3), sq_nonneg (m 2 + m 3)]
+
+theorem witness_T1 : (nw 2 = 0 ∧ nw 3 = 0) ∨ (nw 0 = 0 ∧ nw 1 = 0) :=
+  FourFlavour.support_in_one_pair (gH := 1) (gX := 1) (μ := 1) (E := Ew) one_pos Ew_generic
+    nw_feasible nw_minimiser
+
+/-! ### The genericity hypothesis `E_i ≠ E_j` cannot be dropped: `E = (0,10,0,10)` has a minimiser spanning both pairs -/
+
+noncomputable def E2 : Fin 4 → ℝ := ![0, 10, 0, 10]
+noncomputable def n2w : Fin 4 → ℝ := ![1 / 4, 0, 1 / 4, 0]
+
+theorem n2w_feasible : Feasible n2w := by
+  intro i; fin_cases i <;> norm_num [n2w]
+
+theorem n2w_minimiser : ∀ m, Feasible m → H 1 1 1 E2 n2w ≤ H 1 1 1 E2 m := by
+  intro m hm
+  have h0 := hm 0
+  have h1 := hm 1
+  have h2 := hm 2
+  have h3 := hm 3
+  simp only [H, E2, n2w, Fin.sum_univ_four]
+  simp
+  nlinarith [sq_nonneg (m 0 + m 2 - 1 / 2), sq_nonneg (m 1 + m 3), mul_nonneg h0 h1, mul_nonneg h0 h3,
+    mul_nonneg h1 h2, mul_nonneg h2 h3]
+
+theorem hE_needed :
+    ∃ (E n : Fin 4 → ℝ), Feasible n ∧ (∀ m, Feasible m → H 1 1 1 E n ≤ H 1 1 1 E m) ∧
+      ¬ ((n 2 = 0 ∧ n 3 = 0) ∨ (n 0 = 0 ∧ n 1 = 0)) := by
+  refine ⟨E2, n2w, n2w_feasible, n2w_minimiser, ?_⟩
+  simp [n2w]
+
+/-! ### Satisfiability of T6 (`gX = -1`, `gH = 2`) -/
+
+noncomputable def nsc : Fin 4 → ℝ := ![1, 0, 0, 0]
+
+theorem nsc_feasible : Feasible nsc := by
+  intro i; fin_cases i <;> norm_num [nsc]
+
+theorem nsc_minimiser : ∀ m, Feasible m → H 2 (-1) 1 Ew nsc ≤ H 2 (-1) 1 Ew m := by
+  intro m hm
+  have h0 := hm 0
+  have h1 := hm 1
+  have h2 := hm 2
+  have h3 := hm 3
+  simp only [H, Ew, nsc, Fin.sum_univ_four]
+  simp
+  nlinarith [mul_nonneg h0 h1, mul_nonneg h2 h3, sq_nonneg (m 0 + m 1 - 1),
+    mul_nonneg (add_nonneg h0 h1) (add_nonneg h2 h3), sq_nonneg (m 2 + m 3)]
+
+theorem witness_T6 : ∀ i j : Fin 4, i ≠ j → nsc i = 0 ∨ nsc j = 0 :=
+  FourFlavour.single_component_of_neg_gX (gH := 2) (gX := -1) (μ := 1) (E := Ew) (by norm_num) Ew_generic
+    nsc_feasible nsc_minimiser
+
+/-! ### The closed forms of `grand_potential_gap` ARE the minima of `H` on the two pair subspaces -/
+
+theorem omegaA_identity {gH gX gc gv μ b Δ : ℝ} (hgX : gX ≠ 0) (hD : 2 * gH + gX ≠ 0)
+    (n : Fin 4 → ℝ) (h2 : n 2 = 0) (h3 : n 3 = 0) :
+    H gH gX μ (Eflav gc gv b Δ) n =
+      (-((μ + Δ) ^ 2) / (2 * gH + gX) - ((gv - gc) * b) ^ 2 / gX)
+        + (2 * gH + gX) / 4 * ((n 0 + n 1) - 2 * (μ + Δ) / (2 * gH + gX)) ^ 2
+        + gX / 4 * ((n 0 - n 1) + 2 * ((gv - gc) * b) / gX) ^ 2 := by
+  have e0 : Eflav gc gv b Δ 0 = (gv - gc) * b - Δ := rfl
+  have e1 : Eflav gc gv b Δ 1 = -(gv - gc) * b - Δ := rfl
+  have hD1 : gX + gH * 2 ≠ 0 := by intro h; apply hD; linarith
+  have hD2 : gH * 2 + gX ≠ 0 := by intro h; apply hD; linarith
+  have hD3 : gX + 2 * gH ≠ 0 := by intro h; apply hD; linarith
+  simp only [H, Fin.sum_univ_four, h2, h3, e0, e1]
+  field_simp
+  ring
+
+theorem omegaB_identity {gH gX gc gv μ b Δ : ℝ} (hgX : gX ≠ 0) (hD : 2 * gH + gX ≠ 0)
+    (n : Fin 4 → ℝ) (h0 : n 0 = 0) (h1 : n 1 = 0) :
+    H gH gX μ (Eflav gc gv b Δ) n =
+      (-(μ ^ 2) / (2 * gH + gX) - ((gc + gv) * b) ^ 2 / gX)
+        + (2 * gH + gX) / 4 * ((n 2 + n 3) - 2 * μ / (2 * gH + gX)) ^ 2
+        + gX / 4 * ((n 2 - n 3) - 2 * ((gc + gv) * b) / gX) ^ 2 := by
+  have e2 : Eflav gc gv b Δ 2 = -(gc + gv) * b := rfl
+  have e3 : Eflav gc gv b Δ 3 = (gc + gv) * b := rfl
+  have hD1 : gX + gH * 2 ≠ 0 := by intro h; apply hD; linarith
+  have hD2 : gH * 2 + gX ≠ 0 := by intro h; apply hD; linarith
+  have hD3 : gX + 2 * gH ≠ 0 := by intro h; apply hD; linarith
+  simp only [H, Fin.sum_univ_four, h0, h1, e2, e3]
+  field_simp
+  ring
+
+/-! ### The stationarity hypotheses of `IIA_polarisation` are jointly satisfiable (all parameters) -/
+
+theorem IIA_hyps_satisfiable {gH gX gc gv μ b Δ : ℝ} (hgX : gX ≠ 0) (hD : 2 * gH + gX ≠ 0) :
+    ∃ n0 n1 : ℝ, (Eflav gc gv b Δ 0 - μ) + (gH + gX) * (n0 + n1) - gX * n1 = 0 ∧
+      (Eflav gc gv b Δ 1 - μ) + (gH + gX) * (n0 + n1) - gX * n0 = 0 := by
+  have e0 : Eflav gc gv b Δ 0 = (gv - gc) * b - Δ := rfl
+  have e1 : Eflav gc gv b Δ 1 = -(gv - gc) * b - Δ := rfl
+  obtain ⟨s', hs⟩ : ∃ s' : ℝ, (2 * gH + gX) * s' = 2 * (μ + Δ) :=
+    ⟨2 * (μ + Δ) / (2 * gH + gX), by field_simp⟩
+  obtain ⟨d', hd⟩ : ∃ d' : ℝ, gX * d' = -2 * ((gv - gc) * b) :=
+    ⟨-2 * ((gv - gc) * b) / gX, by field_simp⟩
+  refine ⟨(s' + d') / 2, (s' - d') / 2, ?_, ?_⟩
+  · rw [e0]; linear_combination (1 / 2 : ℝ) * hs + (1 / 2 : ℝ) * hd
+  · rw [e1]; linear_combination (1 / 2 : ℝ) * hs + (-1 / 2 : ℝ) * hd
+
+end VerifierProbe
+
+#print axioms VerifierProbe.nw_minimiser
+#print axioms VerifierProbe.witness_T1
+#print axioms VerifierProbe.n2w_minimiser
+#print axioms VerifierProbe.hE_needed
+#print axioms VerifierProbe.nsc_minimiser
+#print axioms VerifierProbe.witness_T6
+#print axioms VerifierProbe.omegaA_identity
+#print axioms VerifierProbe.omegaB_identity
+#print axioms VerifierProbe.IIA_hyps_satisfiable
+
+-- axioms of the helper lemmas that the producer's file does not print
+#print axioms FourFlavour.H_shift
+#print axioms FourFlavour.midpoint
+#print axioms FourFlavour.first_order
+#print axioms FourFlavour.exists_margin
+#print axioms FourFlavour.feasible_of_coords
+#print axioms FourFlavour.midpoint4
+#print axioms FourFlavour.first_order4
+#print axioms FourFlavour.intravalley_polarisation

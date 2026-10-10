@@ -9,13 +9,18 @@ import Mathlib
   monotone kernels are positive definite is classical (Schoenberg, Bernstein) and is tested numerically by the solver.
 * `telescoping_integral`: `∫₀^R [g(t) - g(t + c)] dt = ∫₀^c g - ∫_R^{R+c} g`; with `g → 0` this is the identity behind
   the capacitor formula `Ũ(0) = π ∫₀^{d²} g` of the plan (appendix A.2).
-* `bilayer_hartree`: for `g(t) = 2 t^(-1/2)` and `c = d²`, `∫₀^c g = 4 d`, i.e. `g_H = 4π d` in units
-  `e²/(4πε₀ε) = 1` (the paper's `g_H = 8πd` in Rydberg units).
+* `bilayer_hartree`: for `g(t) = 2 t^(-1/2)` and `c = d²`, `∫₀^c g = 4 d` (`d > 0`).  With the polar-coordinate factor `π`
+  and the limit `g → 0` (neither is formalised here) this is `Ũ(0) = 4π d` in units `e²/(4πε₀ε) = 1`, i.e. the paper's
+  `g_H = 8πd` in Rydberg units.
 * `variational_lower_bound` (X5, schema): a non-negative kinetic term and a pointwise lower bound on the potential
   give a lower bound on the expected energy of any normalised state.
 
-Status: kernel-checked under Lean 4.34.0-rc2 / Mathlib 85e3a25 by the producing session; independent verification is a
-separate step.  Not part of the audited library `lean_src/`.
+Status: kernel-checked under Lean 4.34.1 / Mathlib d13f23b7 and under Lean 4.34.0-rc2 / Mathlib 85e3a25.  Independent
+re-check by a separate instance of the same model: `VERIFICATION_BY_INSTANCE_2026-10-10.md` (VERIFIED WITH REMARKS; not
+human review).  The section at the end of the file ("Verifier probes") was written and compiled by that instance and
+integrated verbatim afterwards; it shows that the hypothesis `hU` is satisfiable and cannot be dropped.
+`variational_lower_bound` is a schema (monotonicity of the integral for a probability measure); positive semidefiniteness
+is a hypothesis of `uniform_minimises`.  Not part of the audited library `lean_src/`.
 -/
 
 open MeasureTheory
@@ -117,3 +122,73 @@ end MeanField
 #print axioms MeanField.telescoping_integral
 #print axioms MeanField.bilayer_hartree
 #print axioms MeanField.variational_lower_bound
+
+
+/-! ## ===== Verifier probes (independent instance) ===== -/
+
+namespace VerifierProbe
+open MeasureTheory
+
+/-- Indicator of `0`: the simplest positive-semidefinite translation-invariant kernel. -/
+def indU {G : Type*} [AddCommGroup G] [DecidableEq G] (z : G) : ℝ := if z = 0 then 1 else 0
+
+/-- `hU` is satisfiable: it holds for `indU` on every finite abelian group. -/
+theorem hU_indicator {G : Type*} [AddCommGroup G] [Fintype G] [DecidableEq G] (f : G → ℝ) :
+    0 ≤ ∑ x : G, ∑ y : G, f x * f y * indU (x - y) := by
+  have h : ∀ x : G, ∑ y : G, f x * f y * indU (x - y) = f x * f x := by
+    intro x
+    rw [Finset.sum_eq_single x]
+    · simp [indU]
+    · intro y _ hy
+      have hne : x - y ≠ 0 := sub_ne_zero.mpr (Ne.symm hy)
+      simp [indU, hne]
+    · intro hx; exact absurd (Finset.mem_univ x) hx
+  simp_rw [h]
+  exact Finset.sum_nonneg (fun x _ => mul_self_nonneg (f x))
+
+/-- Instance of `uniform_minimises`: the uniform density minimises `Σ n(x)²` at fixed mass (Cauchy-Schwarz). -/
+theorem uniform_minimises_instance {G : Type*} [AddCommGroup G] [Fintype G] [DecidableEq G] [Nonempty G]
+    (n : G → ℝ) :
+    (∑ x : G, ∑ y : G, ((∑ z : G, n z) / Fintype.card G) * ((∑ z : G, n z) / Fintype.card G) * indU (x - y))
+      ≤ ∑ x : G, ∑ y : G, n x * n y * indU (x - y) :=
+  MeanField.uniform_minimises indU hU_indicator n
+
+/-- A kernel on `Fin 2` that is NOT positive semidefinite: `U 0 = 0`, `U 1 = 1`. -/
+def Ubad (z : Fin 2) : ℝ := ((z : ℕ) : ℝ)
+
+theorem Ubad_not_psd : ¬ (∀ f : Fin 2 → ℝ, 0 ≤ ∑ x, ∑ y, f x * f y * Ubad (x - y)) := by
+  intro h
+  have h' := h ![1, -1]
+  have e1 : ((0 : Fin 2) - 1) = 1 := by decide
+  have e2 : ((1 : Fin 2) - 0) = 1 := by decide
+  have e3 : ((0 : Fin 2) - 0) = 0 := by decide
+  have e4 : ((1 : Fin 2) - 1) = 0 := by decide
+  norm_num [Fin.sum_univ_two, e1, e2, e3, e4, Ubad] at h'
+
+/-- Without `hU` the conclusion of `uniform_minimises` is false: uniform energy 1/2 > energy 0 of `(1, 0)`. -/
+theorem conclusion_fails_for_Ubad :
+    ¬ ((∑ x : Fin 2, ∑ y : Fin 2, ((∑ z : Fin 2, (![1, 0] : Fin 2 → ℝ) z) / (Fintype.card (Fin 2) : ℝ)) *
+          ((∑ z : Fin 2, (![1, 0] : Fin 2 → ℝ) z) / (Fintype.card (Fin 2) : ℝ)) * Ubad (x - y))
+      ≤ ∑ x : Fin 2, ∑ y : Fin 2, (![1, 0] : Fin 2 → ℝ) x * (![1, 0] : Fin 2 → ℝ) y * Ubad (x - y)) := by
+  intro h
+  have e1 : ((0 : Fin 2) - 1) = 1 := by decide
+  have e2 : ((1 : Fin 2) - 0) = 1 := by decide
+  have e3 : ((0 : Fin 2) - 0) = 0 := by decide
+  have e4 : ((1 : Fin 2) - 1) = 0 := by decide
+  norm_num [Fin.sum_univ_two, e1, e2, e3, e4, Ubad] at h
+
+/-- `telescoping_integral` has satisfiable hypotheses: `g t = 2 t^(-1/2)` is interval integrable at 0. -/
+theorem telescoping_instance (R c : ℝ) (hR : 0 ≤ R) (hc : 0 ≤ c) :
+    ∫ t in (0 : ℝ)..R, ((fun t : ℝ => 2 * t ^ (-(1 / 2 : ℝ))) t - (fun t : ℝ => 2 * t ^ (-(1 / 2 : ℝ))) (t + c)) =
+      (∫ t in (0 : ℝ)..c, (fun t : ℝ => 2 * t ^ (-(1 / 2 : ℝ))) t) -
+        ∫ t in R..(R + c), (fun t : ℝ => 2 * t ^ (-(1 / 2 : ℝ))) t :=
+  MeanField.telescoping_integral (g := fun t : ℝ => 2 * t ^ (-(1 / 2 : ℝ))) hc hR
+    ((intervalIntegral.intervalIntegrable_rpow' (by norm_num : (-1 : ℝ) < -(1 / 2))).const_mul 2)
+
+end VerifierProbe
+
+#print axioms VerifierProbe.hU_indicator
+#print axioms VerifierProbe.uniform_minimises_instance
+#print axioms VerifierProbe.Ubad_not_psd
+#print axioms VerifierProbe.conclusion_fails_for_Ubad
+#print axioms VerifierProbe.telescoping_instance

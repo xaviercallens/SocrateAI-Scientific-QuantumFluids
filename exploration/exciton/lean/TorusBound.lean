@@ -5,13 +5,19 @@ import Mathlib
 
 Exploration material for the exciton-fluid study (SocrateAI-Scientific-QuantumFluids, 2026-10-11).
 Toolchain: Lean 4.34.1 / Mathlib v4.34.1 (the pin of the upstream project `openai/math`).
-Producer: the session that wrote `docs/designs/EXCITON_FLUID_LEAN_SOLVER_PLAN.md`; **verifier pending**.
+Producer: the session that wrote `docs/designs/EXCITON_FLUID_LEAN_SOLVER_PLAN.md`.  Independent re-check by a separate
+instance of the same model: `VERIFICATION_TORUSBOUND_2026-10-11.md` (VERIFIED WITH REMARKS; not human review; the
+verification is of the Lean file and of its fidelity to upstream's definitions, not of the upstream theorem, which no one
+here has checked).  The remarks were answered by docstring edits only; `hfin` and `hρ` are logically redundant and left
+in place on purpose (harmless).
 
 ## What is proved here
 
 The namespace `OAI` below carries a *verbatim copy* of the definitions of upstream's
 `lean/ComparatorChallenges/TriangularEnergy.lean` (`LocallyFinite`, `diskPoints`, `diskCount`, `DensityOne`,
-`AdmissiblePotential`, `diskEnergy`, `energy`, `triangularPoint`, `A`, `latticeEnergy`).  The upstream theorem
+`AdmissiblePotential`, `diskEnergy`, `energy`, `b`, `triangularPoint`, `A`, the seven `abbrev`s of namespace
+`AtomicTriangular`, `latticeEnergy`); the verifier compared them line by line and by `rfl` against upstream's file at
+`openai/math` HEAD `fd4aeeb2`.  The upstream theorem
 
     universal_energy_minimum : latticeEnergy g ≤ energy g C ∧ latticeEnergy g = energy g A
 

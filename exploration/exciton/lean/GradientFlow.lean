@@ -8,8 +8,12 @@ has derivative `-‖∇f(γ t)‖² ≤ 0`, hence is antitone.  The N-particle e
 `docs/designs/EXCITON_FLUID_PHASE1_PREREG.md` integrate exactly such a flow with rusty-SUNDIALS CVODE and check this
 inequality at the chunk ends (a numerical solution may violate it only by its tolerance).
 
-Status: kernel-checked under Lean 4.34.0-rc2 / Mathlib 85e3a25; producer: the session that wrote the Phase 1
-pre-registration; verifier pending.  Mathlib only; not part of the audited library `lean_src/`.
+Status: kernel-checked under Lean 4.34.1 / Mathlib d13f23b7 and under Lean 4.34.0-rc2 / Mathlib 85e3a25; producer: the
+session that wrote the Phase 1 pre-registration.  Independent re-check by a separate instance of the same model:
+`VERIFICATION_BY_INSTANCE_2026-10-10.md` (VERIFIED; not human review); its instances (`VerifierProbe`, end of the file)
+were integrated verbatim.  `energy_monotone_ascent` is a *sign control* (the opposite sign gives the opposite
+monotonicity), not a failing check.  The statements are about exact flows defined on all of `ℝ`; numerical solutions and
+the Rust code are not covered.  Mathlib only; not part of the audited library `lean_src/`.
 -/
 
 namespace GradientFlow
@@ -57,3 +61,52 @@ end GradientFlow
 
 #print axioms GradientFlow.energy_antitone
 #print axioms GradientFlow.energy_monotone_ascent
+
+
+/-! ## ===== Verifier probes (independent instance) ===== -/
+
+namespace VerifierProbe
+
+/-- Instance: `f x = x^2/2` on `ℝ`, `γ t = exp (-t)` solves `γ' = -∇f(γ)`; the energy is antitone. -/
+theorem gradient_flow_instance :
+    Antitone (fun t : ℝ => (fun x : ℝ => x ^ 2 / 2) (Real.exp (-t))) := by
+  refine GradientFlow.energy_antitone (E := ℝ) (f := fun x : ℝ => x ^ 2 / 2)
+    (γ := fun t : ℝ => Real.exp (-t)) ?_ ?_
+  · intro x
+    fun_prop
+  · intro t
+    have h1 : HasDerivAt (fun t : ℝ => Real.exp (-t)) (-Real.exp (-t)) t := by
+      have := (hasDerivAt_neg t).exp
+      simpa using this
+    have hg : gradient (fun x : ℝ => x ^ 2 / 2) (Real.exp (-t)) = Real.exp (-t) := by
+      rw [gradient_eq_deriv']
+      have h2 : HasDerivAt (fun x : ℝ => x ^ 2 / 2) (Real.exp (-t)) (Real.exp (-t)) := by
+        have := (hasDerivAt_pow 2 (Real.exp (-t))).div_const 2
+        convert this using 1
+        norm_num
+      exact h2.deriv
+    rw [hg]; exact h1
+
+/-- The ascent control: the same energy along the ascent flow `γ t = exp t` is monotone (non-decreasing). -/
+theorem ascent_instance :
+    Monotone (fun t : ℝ => (fun x : ℝ => x ^ 2 / 2) (Real.exp t)) := by
+  refine GradientFlow.energy_monotone_ascent (E := ℝ) (f := fun x : ℝ => x ^ 2 / 2)
+    (γ := fun t : ℝ => Real.exp t) ?_ ?_
+  · intro x
+    fun_prop
+  · intro t
+    have hg : gradient (fun x : ℝ => x ^ 2 / 2) (Real.exp t) = Real.exp t := by
+      rw [gradient_eq_deriv']
+      have h2 : HasDerivAt (fun x : ℝ => x ^ 2 / 2) (Real.exp t) (Real.exp t) := by
+        have := (hasDerivAt_pow 2 (Real.exp t)).div_const 2
+        convert this using 1
+        norm_num
+      exact h2.deriv
+    rw [hg]; exact Real.hasDerivAt_exp t
+
+end VerifierProbe
+
+#print axioms VerifierProbe.gradient_flow_instance
+#print axioms VerifierProbe.ascent_instance
+
+#print axioms GradientFlow.deriv_energy
