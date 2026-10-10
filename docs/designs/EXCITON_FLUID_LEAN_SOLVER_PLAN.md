@@ -244,8 +244,8 @@ Consequences, each with its status:
   Consequence for the solver: a GP code *cannot* find the crystal for these kernels; that is a theorem, not a bug.
 * **C3 — the value of the classical minimum** (not its minimiser, §3.2 item 3).
 * **The sandwich.** `e_lat(ρ) ≤ e₀(ρ) ≤ e_H(ρ)`. Width *(computed here, bilayer kernel, units e²/4πε₀ε = 1, d = 1)*:
-  `e_H/e_lat` = 43.8, 14.1, 4.64, 2.87, 1.87, 1.44 at ρd² = 10⁻³, 10⁻², 0.1, 0.3, 1, 3. At d = 2 nm and
-  n = 0.1, 0.3, 0.5, 0.75 × 10¹² cm⁻² (ρd² = 0.004–0.03) the ratio is 22.3, 13.0, 10.1, 8.3. The experiment is deep in
+  `e_H/e_lat` = 44.7, 14.2, 4.64, 2.87, 1.87, 1.44 at ρd² = 10⁻³, 10⁻², 0.1, 0.3, 1, 3 (the first entry read 43.8 in revision 1: short lattice cutoff; corrected by Phase 1 KA-4). At d = 2 nm and
+  n = 0.1, 0.3, 0.5, 0.75 × 10¹² cm⁻² (ρd² = 0.004–0.03) the ratio is 22.4, 13.0, 10.1, 8.3. The experiment is deep in
   the quantum-fluid regime; the bound is far from tight there and tight only in the crystal limit, which the Mott
   transition pre-empts. State this in every chapter that uses it.
 * **Where the theorem's own domain is cheap to test.** For a torus commensurate with the triangular lattice
@@ -650,8 +650,8 @@ mpmath (30–40 digits) and numpy/scipy. The Lean files are committed (`explorat
 | H₀(x) − Y₀(x) vs (2/π)∫e^(−xu)/√(1+u²)du, x = 0.1, 1, 5 | agree to 2·10⁻³¹ |
 | (−1)^k g^(k) ≥ 0, ungated bilayer, k ≤ 8, 5 values of t | holds |
 | same, dual-gated V_xx and G_ee, h = 5, 7.5, 10 nm, d = 2 nm, k ≤ 5, 7 values of t | holds (not a proof) |
-| e_H/e_lat, ρd² = 10⁻³, 10⁻², 0.1, 0.3, 1, 3 | 43.8, 14.1, 4.64, 2.87, 1.87, 1.44 |
-| e_H/e_lat at d = 2 nm, n = 0.1, 0.3, 0.5, 0.75 × 10¹² cm⁻² | 22.3, 13.0, 10.1, 8.3 |
+| e_H/e_lat, ρd² = 10⁻³, 10⁻², 0.1, 0.3, 1, 3 | 44.7, 14.2, 4.64, 2.87, 1.87, 1.44 (corrected after Phase 1; independent numpy and Rust sums agree to 9e-14) |
+| e_H/e_lat at d = 2 nm, n = 0.1, 0.3, 0.5, 0.75 × 10¹² cm⁻² | 22.4, 13.0, 10.1, 8.3 |
 | four-flavour model, n = 0.5 × 10¹² cm⁻², paper's parameters | g_H = 33.5 Ry a_B², μ = 25.6 meV, B_c ≈ 56 mT, II_A → II_B between 40 and 56 mT |
 | k_BT_BKT = 1.3ħ²n/m₀ at 0.5 × 10¹² cm⁻² | 5.7 K (paper: ≈ 6 K) |
 | rusty-SUNDIALS in-tree Lean | 75 files; `sorry` token in 17, `axiom` in 17, `native_decide` in 13 |
