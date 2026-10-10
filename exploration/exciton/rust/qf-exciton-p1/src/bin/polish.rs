@@ -1,9 +1,10 @@
 //! Exploratory (not registered): continue the best configuration of a case with a much longer flow, to separate
 //! "not attained by the registered stopping rule" from "not attained at all".
 //!
-//!     polish <runs_dir> <case-id> [tau_max]      e.g. polish runs K1_1.5_T36c 1e6
+//!     [QF_AMEND=A2] polish <runs_dir> <case-id> [tau_max]      e.g. polish runs K1_1.5_T36c 1e6
+//! (QF_AMEND=A2 selects the amended cutoffs, as for ex1, for the cases that were run under amendment A2)
 use qf_exciton_p1::flow::{relax, FlowOpts};
-use qf_exciton_p1::kernel::by_id;
+use qf_exciton_p1::kernel::active as by_id;
 use qf_exciton_p1::lattice::{e_lat, spacing};
 use qf_exciton_p1::torus::Torus;
 use std::fs;

@@ -1,0 +1,13 @@
+[K1_0.5_T36c] N=36 a=1.5197 e_lat=0.3011939430 selftest=2.7645551576469224e-15
+[K1_0.5_T36c] done: best ratio 1.000000000000 (200 runs, 0 hops)
+[K1_0.5_T36s] N=36 a=1.5197 e_lat=0.3011939430 selftest=NaN
+[K1_0.5_T36s] done: best ratio 1.006909862889 (200 runs, 0 hops)
+[K1_0.5_T64c] N=64 a=1.5197 e_lat=0.3011939430 selftest=1.0505309599058305e-14
+[K1_0.5_T64c] done: best ratio 1.000000000000 (200 runs, 0 hops)
+[K1_1.5_T36c] N=36 a=0.8774 e_lat=1.8561950226 selftest=2.0336000462010637e-15
+[K1_1.5_T36c] done: best ratio 1.000000005938 (400 runs, 200 hops)
+[K1_1.5_T36s] N=36 a=0.8774 e_lat=1.8561950226 selftest=NaN
+[K1_1.5_T36s] done: best ratio 1.000000789016 (200 runs, 0 hops)
+[K2_0.5_T36c] N=36 a=1.5197 e_lat=0.6064164050 selftest=1.5195583478591742e-14
+[K2_0.5_T36c] done: best ratio 1.000000000000 (200 runs, 0 hops)
+[K2_0.5_T36s] N=36 a=1.5197 e_lat=0.6064164050 selftest=NaN

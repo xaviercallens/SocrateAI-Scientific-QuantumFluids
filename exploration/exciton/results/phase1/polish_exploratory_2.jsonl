@@ -1,0 +1,6 @@
+{"case":"K2_1.5_T36s","tau_max":300000,"ratio_before":1.0012756780690719e0,"ratio_after":1.0012756780690601e0,"ratio_after_minus_1":1.2756780690601488e-3,"fmax":2.646494134950217e-14,"converged":true,"tau_used":1000,"steps":128,"wall_s":1.31}
+{"case":"K3_0.1_T36c","tau_max":300000,"ratio_before":1.0000000000154221e0,"ratio_after":9.9999999999999500e-1,"ratio_after_minus_1":-4.9960036108132044e-15,"fmax":7.140074850494796e-11,"converged":true,"tau_used":1500,"steps":179,"wall_s":0.37}
+{"case":"K3_0.1_T36s","tau_max":300000,"ratio_before":1.0086156829534771e0,"ratio_after":1.0086126346056725e0,"ratio_after_minus_1":8.61263460567252e-3,"fmax":9.172833756806867e-10,"converged":true,"tau_used":7000,"steps":337,"wall_s":0.71}
+{"case":"K3_0.5_T36c","tau_max":300000,"ratio_before":9.9999999999997258e-1,"ratio_after":9.9999999999996358e-1,"ratio_after_minus_1":-3.6415315207705135e-14,"fmax":5.344683029484543e-15,"converged":true,"tau_used":500,"steps":93,"wall_s":0.76}
+{"case":"K3_0.5_T36s","tau_max":300000,"ratio_before":1.0060696159713205e0,"ratio_after":1.0060696159713272e0,"ratio_after_minus_1":6.069615971327158e-3,"fmax":1.7966184095996596e-13,"converged":true,"tau_used":500,"steps":85,"wall_s":0.69}
+done

@@ -1,0 +1,32 @@
+start 2026-10-10T21:08:06Z
+[N1_1_T36c] N=36 a=1.0746 e_lat=0.7908098486 selftest=9.827344950236771e-16
+[N1_1_T36c] done: best ratio 0.662540674951 (200 runs, 0 hops)
+[N1_1_T36s] N=36 a=1.0746 e_lat=0.7908098486 selftest=NaN
+[N1_1_T36s] done: best ratio 0.670629931971 (200 runs, 0 hops)
+[N1_4_T36c] N=36 a=0.5373 e_lat=5.0726671874 selftest=1.050546058182043e-15
+[N1_4_T36c] done: best ratio 0.723087769375 (200 runs, 0 hops)
+[N1_4_T36s] N=36 a=0.5373 e_lat=5.0726671874 selftest=NaN
+[N1_4_T36s] done: best ratio 0.723996868250 (200 runs, 0 hops)
+[K4_0.1_T36c] N=36 a=3.3981 e_lat=0.0702732930 selftest=1.1848986051366311e-15
+[K4_0.1_T36c] done: best ratio 1.000000000587 (60 runs, 0 hops)
+[K4_0.1_T36s] N=36 a=3.3981 e_lat=0.0702732930 selftest=NaN
+[K4_0.1_T36s] done: best ratio 1.007607200150 (60 runs, 0 hops)
+[K4_0.5_T36c] N=36 a=1.5197 e_lat=0.9849696860 selftest=2.6826518991149842e-14
+[K4_0.5_T36c] done: best ratio 1.000000000000 (60 runs, 0 hops)
+[K4_0.5_T36s] N=36 a=1.5197 e_lat=0.9849696860 selftest=NaN
+[K4_0.5_T36s] done: best ratio 1.003408594759 (60 runs, 0 hops)
+[K2_0.5_T36s] N=36 a=1.5197 e_lat=0.6064164050 selftest=NaN
+[K2_0.5_T36s] done: best ratio 1.003000014853 (60 runs, 0 hops)
+[K2_1.5_T36c] N=36 a=0.8774 e_lat=2.7655828111 selftest=6.680006491038988e-14
+[K2_1.5_T36c] done: best ratio 1.000000000000 (60 runs, 0 hops)
+[K2_1.5_T36s] N=36 a=0.8774 e_lat=2.7655828111 selftest=NaN
+[K2_1.5_T36s] done: best ratio 1.001275678069 (60 runs, 0 hops)
+[K3_0.1_T36c] N=36 a=3.3981 e_lat=0.0741861649 selftest=5.050810637726346e-15
+[K3_0.1_T36c] done: best ratio 1.000000000015 (60 runs, 0 hops)
+[K3_0.1_T36s] N=36 a=3.3981 e_lat=0.0741861649 selftest=NaN
+[K3_0.1_T36s] done: best ratio 1.008615682953 (60 runs, 0 hops)
+[K3_0.5_T36c] N=36 a=1.5197 e_lat=1.2059838149 selftest=1.4729524704257326e-14
+[K3_0.5_T36c] done: best ratio 1.000000000000 (60 runs, 0 hops)
+[K3_0.5_T36s] N=36 a=1.5197 e_lat=1.2059838149 selftest=NaN
+[K3_0.5_T36s] done: best ratio 1.006069615971 (60 runs, 0 hops)
+finished 2026-10-10T22:37:04Z
