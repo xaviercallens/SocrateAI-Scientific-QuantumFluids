@@ -1,0 +1,16 @@
+'QuantumFluids.Madelung.normSq_phase_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Madelung.hasDerivAt_line' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Madelung.hasDerivAt_psi_line' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Madelung.norm_sq_deriv_psi' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Madelung.madelung_gradient_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Madelung.kinetic_density_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|14|6|1|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.Madelung.normSq_phase_mul|30|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Madelung.norm_sq_deriv_psi|81|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Madelung.hasDerivAt_psi_line|52|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Madelung.madelung_gradient_split|92|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Madelung.kinetic_density_split|103|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Madelung.hasDerivAt_line|45|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 27.554

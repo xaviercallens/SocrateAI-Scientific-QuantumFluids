@@ -1,0 +1,9 @@
+[package]
+name = "ch08_vlasov"
+version = "0.1.0"
+edition = "2021"
+
+[workspace]
+
+[dependencies]
+qf-vlasov1d = { path = "/home/xavkal/xdev/rusty-SUNDIALS-c3/crates/qf-vlasov1d" }

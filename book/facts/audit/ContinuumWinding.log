@@ -1,0 +1,24 @@
+'QuantumFluids.ContinuumWinding.pdiff_congr' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ContinuumWinding.sum_pdiff_telescope' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ContinuumWinding.degree_int' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ContinuumWinding.sample_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ContinuumWinding.sample_self' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ContinuumWinding.sample_val' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ContinuumWinding.dist_sample' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ContinuumWinding.discrete_eq_degree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ContinuumWinding.detector_correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|16|11|1|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.ContinuumWinding.sum_pdiff_telescope|49|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ContinuumWinding.detector_correct|128|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ContinuumWinding.dist_sample|78|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ContinuumWinding.sample_val|70|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ContinuumWinding.sample.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ContinuumWinding.discrete_eq_degree|89|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ContinuumWinding.sample_self|66|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ContinuumWinding.degree_int|55|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ContinuumWinding.pdiff_congr|40|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ContinuumWinding.sample_zero|63|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ContinuumWinding.instFactLtRealOfNatHMulPi_continuumWinding|87|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 48.207

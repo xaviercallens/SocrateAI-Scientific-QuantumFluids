@@ -45,9 +45,14 @@ Source of the Landau phonon-roton dispersion figures and DMBT (Davydov–Makeev�
 ### [LIT-002] Godfrin et al. (2021) — Dispersion data (PRB)
 
 **Full citation:**  
-Godfrin, H., Beauvois, M., Sultan, A., Krotscheck, E., Dawidowski, J., Fåk, B., & Ollivier, J. (2021).  
-"Dispersion relation of Landau elementary excitations in superfluid helium by inelastic neutron scattering."  
-Physical Review B, 103, 104516.
+Godfrin, H., Beauvois, K., Sultan, A., Krotscheck, E., Dawidowski, J., Fåk, B., & Ollivier, J. (2021).  
+"Dispersion relation of Landau elementary excitations and thermodynamic properties of superfluid ⁴He."  
+Physical Review B, 103, 104516. doi:10.1103/PhysRevB.103.104516 (published 29 March 2021).
+
+*Correction 2026-10-10:* author initial ("Beauvois, M." → "Beauvois, K.") and title corrected against the Crossref
+record of the DOI; the earlier title here was a paraphrase. Some programme notes also listed a co-author "Sokol",
+who is not an author of this paper; removed from `lean_src/PhononSeries.lean` (docstring), its generator, and
+`docs/designs/PHONON_SERIES_A_TO_L.md`.
 
 **Status:** VERIFIED (publisher listing checked, 2026-08-14)
 

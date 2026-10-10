@@ -1,0 +1,14 @@
+QFAUDIT|SUMMARY|18|10|1|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|DissipativeVortexDynamics.energy_antitone|53|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|DissipativeVortexDynamics.r2_hasDerivAt|99|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|DissipativeVortexDynamics.dissipation_indep_of_skew|63|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|DissipativeVortexDynamics.dipole_lifetime_bound|126|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|DissipativeVortexDynamics.centre_velocity_identity|136|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|DissipativeVortexDynamics.dipole_sq_law|111|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|DissipativeVortexDynamics.energy_dissipation|40|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|DissipativeVortexDynamics.r2.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|DissipativeVortexDynamics.wind_stall|162|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|DissipativeVortexDynamics.stall_of_drive_sign|193|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 37.573

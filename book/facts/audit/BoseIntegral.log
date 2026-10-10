@@ -1,0 +1,22 @@
+/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/ch10_audit/src/BoseIntegral.lean:106:50: warning: Unused tactic linter: `push_cast` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+'QuantumFluids.BoseIntegral.hasSum_bose' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.BoseIntegral.hasSum_mellin_bose' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.BoseIntegral.mellin_bose_four' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.BoseIntegral.bose_integral_nat' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.BoseIntegral.bose_integral_even' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.BoseIntegral.debyeEnergy_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.BoseIntegral.debye_specific_heat' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|28|8|2|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.BoseIntegral.bose_integral_even|125|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BoseIntegral.bose.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BoseIntegral.hasSum_mellin_bose|50|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BoseIntegral.debye_specific_heat|161|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BoseIntegral.hasSum_bose|26|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BoseIntegral.mellin_bose_four|60|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BoseIntegral.bose_integral_nat|96|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BoseIntegral.debyeEnergy_eq|153|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 184.115

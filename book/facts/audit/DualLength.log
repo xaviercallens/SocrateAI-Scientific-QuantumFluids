@@ -1,0 +1,36 @@
+/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/ch10_audit/src/DualLength.lean:105:77: warning: Variable name `hks` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hks
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+'QuantumFluids.DualLength.dualLength_phonon' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DualLength.dualLength_free' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DualLength.dualLength_bogoliubov' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DualLength.dual_involutive' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DualLength.ell_dual_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DualLength.ell_ge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DualLength.ell_eq_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DualLength.not_bogoliubov_of_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DualLength.ell_ge_iff_envelope' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DualLength.bogoliubov_envelope' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DualLength.dualLength_feynman' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DualLength.feynman_ge_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DualLength.not_bogoliubov_of_structure_factor' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|23|13|3|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.DualLength.ell_eq_iff|72|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DualLength.ell_ge|64|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DualLength.dualLength_bogoliubov|49|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DualLength.feynman_ge_iff|133|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DualLength.dualLength_phonon|39|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DualLength.dualLength_free|44|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DualLength.dual_involutive|54|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DualLength.dualLength_feynman|128|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DualLength.not_bogoliubov_of_structure_factor|144|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DualLength.ell_dual_invariant|59|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DualLength.ell_ge_iff_envelope|101|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DualLength.not_bogoliubov_of_lt|92|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DualLength.bogoliubov_envelope|112|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 153.423

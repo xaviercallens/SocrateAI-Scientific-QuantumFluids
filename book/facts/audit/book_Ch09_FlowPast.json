@@ -1,0 +1,109 @@
+{
+ "module": "book_Ch09_FlowPast",
+ "exit": 0,
+ "compile_s": 42.3,
+ "request_to_done_s": 42.3,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 10,
+  "named_theorems": 8,
+  "named_defs": 1,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.FlowPast.bogEps_ge_sound",
+   "line": 36,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.FlowPast.landau_uniform_gp",
+   "line": 44,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.FlowPast.supersonic_iff",
+   "line": 63,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.FlowPast.sonic_speed_threshold",
+   "line": 73,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.FlowPast.bernoulli_min",
+   "line": 81,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.FlowPast.bernoulli_eq_iff",
+   "line": 92,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.FlowPast.barrier_height_bound",
+   "line": 114,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.FlowPast.ramp_overshoot",
+   "line": 125,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "2c895fe939a0fe47",
+  "code_sha256": "94ac7bc445b50b57",
+  "lines": 146,
+  "imports": [
+   "Mathlib"
+  ],
+  "theorem_decls": 8,
+  "print_axioms_lines": 8
+ },
+ "when": "2026-10-10 01:29:54",
+ "kind": "file"
+}

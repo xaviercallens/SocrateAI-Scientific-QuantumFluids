@@ -1,0 +1,70 @@
+{
+ "module": "SectorDuality",
+ "exit": 0,
+ "compile_s": 22.0,
+ "request_to_done_s": 22.0,
+ "errors": 0,
+ "warnings": 1,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 4,
+  "named_theorems": 3,
+  "named_defs": 0,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.SectorDuality.sectorDuality_bijective",
+   "line": 41,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.SectorDuality.sectorDuality_sq_ne_id",
+   "line": 49,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.SectorDuality.kramersWannier_gauging_sq",
+   "line": 70,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "cd441bfcfbbe0b66",
+  "code_sha256": "988791bdcacaca3d",
+  "lines": 91,
+  "imports": [
+   "Mathlib"
+  ],
+  "theorem_decls": 3,
+  "print_axioms_lines": 3,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 3,
+  "source_unmatched": [],
+  "env_not_in_source": []
+ },
+ "when": "2026-10-10 01:37:47"
+}

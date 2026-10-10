@@ -1,0 +1,116 @@
+{
+ "module": "BoseIntegral",
+ "exit": 0,
+ "compile_s": 184.1,
+ "request_to_done_s": 184.1,
+ "errors": 0,
+ "warnings": 1,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 28,
+  "named_theorems": 8,
+  "named_defs": 2,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.BoseIntegral.bose.eq_1",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BoseIntegral.hasSum_bose",
+   "line": 26,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BoseIntegral.hasSum_mellin_bose",
+   "line": 50,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BoseIntegral.mellin_bose_four",
+   "line": 60,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BoseIntegral.bose_integral_nat",
+   "line": 96,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BoseIntegral.bose_integral_even",
+   "line": 125,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BoseIntegral.debyeEnergy_eq",
+   "line": 153,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BoseIntegral.debye_specific_heat",
+   "line": 161,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "4391f45b849698dd",
+  "lines": 189,
+  "imports": [
+   "Mathlib"
+  ],
+  "theorem_decls": 7,
+  "print_axioms_lines": 7,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 7,
+  "source_unmatched": [],
+  "env_not_in_source": [
+   "QuantumFluids.BoseIntegral.bose.eq_1"
+  ]
+ },
+ "when": "2026-10-10 00:31:01"
+}

@@ -1,0 +1,196 @@
+{
+ "module": "GPGalerkin",
+ "exit": 0,
+ "compile_s": 25.3,
+ "request_to_done_s": 25.3,
+ "errors": 0,
+ "warnings": 2,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 26,
+  "named_theorems": 17,
+  "named_defs": 7,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.GPGalerkin.dens.congr_simp",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.GPGalerkin.nl.congr_simp",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.GPGalerkin.pairingRe.congr_simp",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.GPGalerkin.pairingRe.eq_1",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.GPGalerkin.pairing_eq_prod",
+   "line": 58,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.GPGalerkin.dens_mul_conj",
+   "line": 72,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.GPGalerkin.pairing_eq_sum",
+   "line": 81,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.GPGalerkin.pairing_eq_ofReal",
+   "line": 102,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.GPGalerkin.pairing_nonneg",
+   "line": 109,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.GPGalerkin.pairing_im_zero",
+   "line": 113,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.GPGalerkin.mass_rate_zero",
+   "line": 117,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.GPGalerkin.kinetic_le_energy",
+   "line": 138,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.GPGalerkin.nl_eq_dens",
+   "line": 150,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.GPGalerkin.dens_neg",
+   "line": 167,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.GPGalerkin.sum_densVar",
+   "line": 186,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.GPGalerkin.grad_identity",
+   "line": 203,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.GPGalerkin.energy_rate_zero",
+   "line": 244,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "0e38355787d6b6a4",
+  "code_sha256": "c7669d219f31de51",
+  "lines": 299,
+  "imports": [
+   "Mathlib"
+  ],
+  "theorem_decls": 13,
+  "print_axioms_lines": 13,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 13,
+  "source_unmatched": [],
+  "env_not_in_source": []
+ },
+ "when": "2026-10-10 01:31:42"
+}

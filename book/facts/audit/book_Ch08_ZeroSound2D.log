@@ -1,0 +1,22 @@
+'QuantumFluids.ZeroSound2D.ph_energy_window' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ZeroSound2D.ph_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ZeroSound2D.ph_edge_attained' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ZeroSound2D.zero_sound_2d_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ZeroSound2D.s0_sq_sub_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ZeroSound2D.one_lt_s0' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ZeroSound2D.omega2_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ZeroSound2D.pole_weight' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ZeroSound2D.pole_fraction' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|20|9|2|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.ZeroSound2D.omega2_hasDerivAt|148|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ZeroSound2D.pole_fraction|183|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ZeroSound2D.pole_weight|169|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ZeroSound2D.ph_energy_window|33|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ZeroSound2D.zero_sound_2d_unique|96|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ZeroSound2D.s0_sq_sub_one|128|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ZeroSound2D.one_lt_s0|138|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ZeroSound2D.ph_edge_attained|65|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ZeroSound2D.ph_gap|51|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 41.976

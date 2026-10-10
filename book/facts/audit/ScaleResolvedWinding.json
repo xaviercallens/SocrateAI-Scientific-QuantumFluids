@@ -1,0 +1,177 @@
+{
+ "module": "ScaleResolvedWinding",
+ "exit": 0,
+ "compile_s": 27.1,
+ "request_to_done_s": 27.1,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 33,
+  "named_theorems": 14,
+  "named_defs": 12,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.ScaleResolvedWinding.Region.mk.inj",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ScaleResolvedWinding.Region.mk.injEq",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ScaleResolvedWinding.Region.mk.sizeOf_spec",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ScaleResolvedWinding.Region.\u03c3_mem",
+   "line": 50,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ScaleResolvedWinding.Region.invol",
+   "line": 51,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ScaleResolvedWinding.Region.no_fix",
+   "line": 52,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ScaleResolvedWinding.Region.rev_start",
+   "line": 53,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ScaleResolvedWinding.Region.rev_end",
+   "line": 54,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ScaleResolvedWinding.winding_int",
+   "line": 67,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ScaleResolvedWinding.interior_sum_eq_zero",
+   "line": 79,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ScaleResolvedWinding.stokes",
+   "line": 91,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ScaleResolvedWinding.boundary_eq_charge",
+   "line": 100,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ScaleResolvedWinding.dipole_invisible",
+   "line": 107,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ScaleResolvedWinding.single_core_visible",
+   "line": 114,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "4c40be4d464e88ff",
+  "lines": 132,
+  "imports": [
+   "VortexWinding"
+  ],
+  "theorem_decls": 6,
+  "print_axioms_lines": 6,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 6,
+  "source_unmatched": [],
+  "env_not_in_source": [
+   "QuantumFluids.ScaleResolvedWinding.Region.mk.inj",
+   "QuantumFluids.ScaleResolvedWinding.Region.mk.injEq",
+   "QuantumFluids.ScaleResolvedWinding.Region.mk.sizeOf_spec",
+   "QuantumFluids.ScaleResolvedWinding.Region.\u03c3_mem",
+   "QuantumFluids.ScaleResolvedWinding.Region.invol",
+   "QuantumFluids.ScaleResolvedWinding.Region.no_fix",
+   "QuantumFluids.ScaleResolvedWinding.Region.rev_start",
+   "QuantumFluids.ScaleResolvedWinding.Region.rev_end"
+  ]
+ },
+ "when": "2026-10-10 00:35:53"
+}

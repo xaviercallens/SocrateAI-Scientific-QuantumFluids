@@ -1,0 +1,16 @@
+QFAUDIT|SUMMARY|30|12|3|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|MatchingScreening.wave.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|MatchingScreening.matching_lower_bound|63|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|MatchingScreening.rho_one_pair|132|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|MatchingScreening.pointVortex_transverse|113|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|MatchingScreening.exists_long_pair|69|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|MatchingScreening.norm_rho_le_matching_torus|93|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|MatchingScreening.norm_exp_sub_exp_le|32|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|MatchingScreening.wave_add_period|84|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|MatchingScreening.norm_rho_le_matching|55|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|MatchingScreening.rho.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|MatchingScreening.pointVortex_norm_sq|118|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|MatchingScreening.norm_wave_sub_le|49|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 41.443

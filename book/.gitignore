@@ -1,0 +1,40 @@
+# LaTeX build products (the book PDF itself is tracked, like the paper PDFs)
+*.aux
+*.bbl
+*.blg
+*.log
+!facts/audit/*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+chapter_wrapper*.pdf
+chapter_wrapper_ch*.tex
+# per-chapter scratch, Python caches, Rust builds, the deposit archive
+chapters/chtest.tex
+__pycache__/
+rust/*/target/
+dist/
+/ch*_build*
+/app*_build*
+/*_build[0-9]*
+# superseded stubs that could not be deleted (rm is denied in the authoring environment)
+chapters/ch03_part1.tex
+figures/ch03_run_pair.py
+figures/ch03_run_quad.py
+lean/Ch06_KTEscape.lean
+figures/ch06_screening_info.json
+facts/*.pdf
+# authors' ad-hoc build PDFs and wrappers at the top level (the book PDF is kept)
+/*.pdf
+!/quantum_fluids_book.pdf
+/chapter_wrapper_*.tex
+# 200-dpi PNG previews written next to every figure PDF (the book uses the PDFs; the cover uses its PNG)
+figures/*.png
+!figures/cover_frontispiece.png
+/bibtex_console.txt
+# page thumbnails made while checking layout
+/*.png

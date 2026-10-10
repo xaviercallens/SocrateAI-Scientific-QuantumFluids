@@ -1,0 +1,17 @@
+'QuantumFluids.QHFricke.M_mem_Gamma0' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.QHFricke.M_mul_M' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.QHFricke.M_fixes_crit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.QHFricke.gamma0_two_odd_den' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.QHFricke.fricke_crit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.QHFricke.fricke_plateau_not_plateau' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|14|7|3|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.QHFricke.M_fixes_crit|51|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.QHFricke.M.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.QHFricke.fricke_crit|70|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.QHFricke.fricke_plateau_not_plateau|81|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.QHFricke.gamma0_two_odd_den|59|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.QHFricke.M_mul_M|47|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.QHFricke.M_mem_Gamma0|44|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 28.018

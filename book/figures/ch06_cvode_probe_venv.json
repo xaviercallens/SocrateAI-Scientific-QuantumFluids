@@ -1,0 +1,78 @@
+{
+ "tag": "venv",
+ "module": "/home/xavkal/xdev/SocrateAI-Scientific-QuantumFluids/.venv/lib/python3.12/site-packages/rusty_sundials/__init__.py",
+ "extension_module": "/home/xavkal/xdev/SocrateAI-Scientific-QuantumFluids/.venv/lib/python3.12/site-packages/rusty_sundials/rusty_sundials.cpython-312-x86_64-linux-gnu.so",
+ "sha256": "9fbd09e985c2faf0ae858d8229e2b38eb7ef5b6c7bb2324f948c16f7c7cc81a5",
+ "probes": [
+  {
+   "label": "P1 y'=-y [0,10] adams 1e-8",
+   "method": "adams",
+   "rtol": 1e-08,
+   "atol": 1e-14,
+   "t_end": 10.0,
+   "rhs_calls": 237022,
+   "cpu_s": 1.17,
+   "status": "ok",
+   "relerr": 0.0006372768761975223,
+   "y_end": [
+    4.542886208790348e-05
+   ]
+  },
+  {
+   "label": "P2 y'=-y [0,1] adams 1e-9",
+   "method": "adams",
+   "rtol": 1e-09,
+   "atol": 1e-13,
+   "t_end": 1.0,
+   "rhs_calls": 75063,
+   "cpu_s": 0.313,
+   "status": "ok",
+   "relerr": 2.0125726776755258e-05,
+   "y_end": [
+    0.36788684501256214
+   ]
+  },
+  {
+   "label": "P3 flow 0->0.25 adams 1e-9",
+   "method": "adams",
+   "rtol": 1e-09,
+   "atol": 1e-13,
+   "t_end": 0.25,
+   "rhs_calls": 12898,
+   "cpu_s": 0.068,
+   "status": "ok",
+   "y_end": [
+    1.2365807308027061,
+    0.0319544275073407
+   ]
+  },
+  {
+   "label": "P4 flow 0->20 adams 1e-9",
+   "method": "adams",
+   "rtol": 1e-09,
+   "atol": 1e-13,
+   "t_end": 20.0,
+   "rhs_calls": 353469,
+   "cpu_s": 2.407,
+   "status": "ok",
+   "y_end": [
+    1.400884618359286,
+    0.00016856810569546317
+   ]
+  },
+  {
+   "label": "P5 y'=-y [0,10] bdf 1e-4",
+   "method": "bdf",
+   "rtol": 0.0001,
+   "atol": 1e-08,
+   "t_end": 10.0,
+   "rhs_calls": 334,
+   "cpu_s": 0.002,
+   "status": "ok",
+   "relerr": 0.0017553178997481349,
+   "y_end": [
+    4.547962107184425e-05
+   ]
+  }
+ ]
+}

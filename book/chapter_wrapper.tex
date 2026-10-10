@@ -1,0 +1,8 @@
+% Compile ONE chapter alone:  lualatex -interaction=nonstopmode '\def\chap{chapters/ch03}\input{chapter_wrapper}'
+\documentclass[11pt,twoside]{book}
+\usepackage{qfbook}
+\begin{document}
+\frontmatter\tableofcontents\mainmatter
+\input{\chap}
+\bibliographystyle{unsrtnat}\bibliography{refs}
+\end{document}

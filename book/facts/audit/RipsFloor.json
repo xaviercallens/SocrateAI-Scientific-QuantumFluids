@@ -1,0 +1,79 @@
+{
+ "module": "RipsFloor",
+ "exit": 0,
+ "compile_s": 34.4,
+ "request_to_done_s": 34.4,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 6,
+  "named_theorems": 4,
+  "named_defs": 2,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.RipsFloor.no_adj_of_lt",
+   "line": 31,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.RipsFloor.le_of_adj",
+   "line": 37,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.RipsFloor.isLeast_edge_scale",
+   "line": 43,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.RipsFloor.separated_zero_of_not_injective",
+   "line": 50,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "0c58bb2825bc96b3",
+  "code_sha256": "717479fa2a8759f1",
+  "lines": 62,
+  "imports": [
+   "Mathlib"
+  ],
+  "theorem_decls": 4,
+  "print_axioms_lines": 4,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 4,
+  "source_unmatched": [],
+  "env_not_in_source": []
+ },
+ "when": "2026-10-10 01:37:25"
+}

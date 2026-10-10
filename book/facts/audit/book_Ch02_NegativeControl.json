@@ -1,0 +1,27 @@
+{
+ "module": "book_Ch02_NegativeControl",
+ "exit": 1,
+ "compile_s": 22.9,
+ "request_to_done_s": 22.9,
+ "errors": 2,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": "ring failed, ring expressions not equal",
+ "audit": null,
+ "theorems": [],
+ "user_axioms": [],
+ "source": {
+  "sha256": "862a6b2dff3e28e9",
+  "code_sha256": "e24e50892359cdd1",
+  "lines": 13,
+  "imports": [
+   "Mathlib"
+  ],
+  "theorem_decls": 0,
+  "print_axioms_lines": 0
+ },
+ "when": "2026-10-10 01:30:17",
+ "kind": "control",
+ "expect_fail": true,
+ "as_expected": true
+}

@@ -1,0 +1,20 @@
+'QuantumFluids.FlowPast.bogEps_ge_sound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.FlowPast.landau_uniform_gp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.FlowPast.supersonic_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.FlowPast.sonic_speed_threshold' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.FlowPast.bernoulli_min' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.FlowPast.bernoulli_eq_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.FlowPast.barrier_height_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.FlowPast.ramp_overshoot' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|10|8|1|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.FlowPast.sonic_speed_threshold|73|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.FlowPast.bernoulli_min|81|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.FlowPast.landau_uniform_gp|44|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.FlowPast.bernoulli_eq_iff|92|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.FlowPast.ramp_overshoot|125|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.FlowPast.supersonic_iff|63|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.FlowPast.bogEps_ge_sound|36|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.FlowPast.barrier_height_bound|114|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 42.294

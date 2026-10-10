@@ -1,0 +1,10 @@
+'QuantumFluids.NeutronWindow.q_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.NeutronWindow.transfer_le_window' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.NeutronWindow.min_incident_wavevector' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|12|3|1|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.NeutronWindow.q_bounds|30|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.NeutronWindow.min_incident_wavevector|50|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.NeutronWindow.transfer_le_window|35|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 41.992

@@ -1,0 +1,14 @@
+QFAUDIT|SUMMARY|13|10|2|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|KTFlow.f.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|KTFlow.f_ge_H|72|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|KTFlow.f_antitone|33|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|KTFlow.u_monotone|87|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|KTFlow.kt_invariant|67|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|KTFlow.kt_trapped|75|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|KTFlow.kt_fugacity_bounded|92|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|KTFlow.kt_units|105|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|KTFlow.hasDerivAt_H|53|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|KTFlow.H.eq_1|-1|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 54.547

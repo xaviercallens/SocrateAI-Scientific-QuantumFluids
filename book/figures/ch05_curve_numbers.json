@@ -1,0 +1,14 @@
+{
+ "maxon_grid_k": 1.114,
+ "maxon_grid_e_meV": 1.1914,
+ "roton_grid_k": 1.92,
+ "roton_grid_e_meV": 0.7413,
+ "maxon_fit_k": 1.1054551317952426,
+ "maxon_fit_e_meV": 1.190737210426765,
+ "roton_fit_k": 1.9173609978251716,
+ "roton_fit_e_meV": 0.7418570101775542,
+ "landau_velocity_ms": 57.88826272664694,
+ "landau_k_A_inv": 1.966,
+ "phase_velocity_max_over_c": 1.0543292964221536,
+ "phase_velocity_max_at_k": 0.348
+}

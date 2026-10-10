@@ -1,0 +1,11 @@
+/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/ch10_audit/src/SectorDuality.lean:63:27: warning: `if_pos` has been deprecated: Use `ite_eq_left` instead
+'QuantumFluids.SectorDuality.sectorDuality_bijective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.SectorDuality.sectorDuality_sq_ne_id' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.SectorDuality.kramersWannier_gauging_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|4|3|0|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.SectorDuality.sectorDuality_bijective|41|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.SectorDuality.kramersWannier_gauging_sq|70|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.SectorDuality.sectorDuality_sq_ne_id|49|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 22.013

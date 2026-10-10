@@ -1,0 +1,42 @@
+'QuantumFluids.KTForward.f_antitone' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.KTForward.f_gt_fc' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.KTForward.f_ge_fc' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.KTForward.hasDerivWithinAt_H' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.KTForward.kt_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.KTForward.f_ge_H' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.KTForward.kt_trapped' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.KTForward.u_monotoneOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.KTForward.kt_fugacity_bounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.KTForward.kt_scalar' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.KTForward.kt_escape' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.KTForward.kt_escape_time' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.KTForward.kt_stiffness_vanishes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.KTForward.kt_dichotomy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.KTForward.hasDerivAt_H_global' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.KTForward.kt_invariant_global' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.KTForward.u_monotone_global' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.KTForward.kt_eternal_trivial' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|44|20|2|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.KTForward.H.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.KTForward.u_monotone_global|257|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.KTForward.kt_eternal_trivial|261|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.KTForward.kt_scalar|146|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.KTForward.f_ge_fc|71|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.KTForward.f_gt_fc|49|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.KTForward.hasDerivWithinAt_H|87|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.KTForward.kt_dichotomy|215|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.KTForward.kt_trapped|112|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.KTForward.kt_fugacity_bounded|135|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.KTForward.u_monotoneOn|125|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.KTForward.kt_invariant_global|252|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.KTForward.f_ge_H|109|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.KTForward.hasDerivAt_H_global|238|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.KTForward.kt_invariant|102|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.KTForward.kt_escape_time|177|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.KTForward.f.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.KTForward.f_antitone|37|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.KTForward.kt_escape|154|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.KTForward.kt_stiffness_vanishes|194|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 37.759

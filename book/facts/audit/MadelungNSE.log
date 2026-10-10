@@ -1,0 +1,36 @@
+/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/ch10_audit/src/MadelungNSE.lean:62:6: warning: `ContinuousLinearMap.sum_apply` has been deprecated: Use `sum_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.sum_apply` to `sum_apply x`).
+/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/ch10_audit/src/MadelungNSE.lean:77:28: warning: `EuclideanSpace.single_apply` has been deprecated: Use `PiLp.single_apply` instead
+
+Note: The updated constant has a different type:
+  ∀ (p : ENNReal) (𝕜 : Type u_1) {ι : Type u_2} [inst : DecidableEq ι] [inst_1 : Zero 𝕜] (i : ι) (a : 𝕜) (j : ι),
+    (PiLp.single p i a).ofLp j = if j = i then a else 0
+instead of
+  ∀ {ι : Type u_1} {𝕜 : Type u_3} [inst : RCLike 𝕜] [inst_1 : DecidableEq ι] (i : ι) (a : 𝕜) (j : ι),
+    (EuclideanSpace.single i a).ofLp j = if j = i then a else 0
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.single_apply` to `PiLp.single_apply x`).
+/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/ch10_audit/src/MadelungNSE.lean:77:28: warning: This simp argument is unused:
+  EuclideanSpace.single_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [coordinateVector, eq_comm]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/ch10_audit/src/MadelungNSE.lean:77:57: warning: This simp argument is unused:
+  eq_comm
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [coordinateVector, EuclideanSpace.single_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'QuantumFluids.MadelungNSE.divergence_pressureGradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.MadelungNSE.divergence_madelungVelocity' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|7|3|3|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.MadelungNSE.divergence_pressureGradient|50|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|NavierStokes.ProblemStatement.coordinateVector.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.MadelungNSE.divergence_madelungVelocity|85|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 28.790

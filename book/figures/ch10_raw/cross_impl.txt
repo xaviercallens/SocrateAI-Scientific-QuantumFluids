@@ -1,0 +1,14 @@
+tracks generated in 199.4 s; lengths (time units): [1630.0, 792.0, 611.0, 1377.0, 1603.0, 1162.0, 964.0, 1666.0]
+one_minus_alpha_prime        numpy 0.9006424379  rust 0.9006424379  rel.diff 0.00e+00
+alpha_regression             numpy 0.0210333747409  rust 0.0210333747409  rel.diff 0.00e+00
+alpha_energy                 numpy 0.0186899323211  rust 0.0186899323211  rel.diff 0.00e+00
+eta                          numpy 0.00153310568769  rust 0.00153310568769  rel.diff 1.41e-16
+msd_exponent                 numpy 1.17923857466  rust 1.17923857466  rel.diff 1.13e-15
+msd_offset                   numpy 0.257985126211  rust 0.257985126211  rel.diff 4.30e-16
+one_minus_alpha_prime_se     numpy 0.00205204667231  rust 0.00205204667231  rel.diff 0.00e+00
+alpha_regression_se          numpy 0.00260981988614  rust 0.00260981988614  rel.diff 0.00e+00
+alpha_energy_se              numpy 0.00238202011067  rust 0.00238202011067  rel.diff 0.00e+00
+eta_se                       numpy 0.000130544937528  rust 0.000130544937528  rel.diff 1.04e-15
+msd_exponent_se              numpy 0.122595683051  rust 0.122595683051  rel.diff 3.06e-15
+msd_offset_se                numpy 0.0346502862807  rust 0.0346502862807  rel.diff 7.61e-15
+max relative difference of the six estimates: 1.13e-15 ; of the six errors: 7.61e-15 ; numpy 25.4 s, Rust 1.789 s

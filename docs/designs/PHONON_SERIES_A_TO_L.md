@@ -1,6 +1,6 @@
 # The phonon specific-heat series, coefficients A to L — derivation and completion record
 
-**Subject.** Godfrin, Beauvois, Sultan, Krotscheck, Dawidowski, Fåk, Ollivier, Sokol,
+**Subject.** Godfrin, Beauvois, Sultan, Krotscheck, Dawidowski, Fåk, Ollivier,
 PRB 103, 104516 (2021), arXiv:2012.09067, Eq. (22):
 `C_V = A T³ + C T⁵ + D T⁶ + E T⁷ + K T⁸ + L T⁹` for `ε = ck(1 + α₂k² + … + α₆k⁶)`, `α₁ = 0`.
 The paper remarks that earlier published versions of this series contain errors; that remark is why the

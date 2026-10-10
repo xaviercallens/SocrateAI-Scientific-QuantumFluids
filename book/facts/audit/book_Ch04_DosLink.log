@@ -1,0 +1,24 @@
+'QuantumFluids.DosLink.kInv0_inverts' depends on axioms: [propext, Quot.sound]
+'QuantumFluids.DosLink.derivative_kPoly' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DosLink.dos_coeffs' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DosLink.phonon_specific_heat_from_dos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DosLink.phonon_specific_heat_end_to_end' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DosLink.energyMonomial_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DosLink.phonon_specific_heat_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|35|13|4|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.DosLink.map_kInv0Deriv|69|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DosLink.dosRhs_poly|93|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DosLink.kInv0_inverts|47|propext, Quot.sound
+QFAUDIT|THM|QuantumFluids.DosLink.phonon_specific_heat_integral|237|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DosLink.phonon_specific_heat_from_dos|142|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DosLink.kInv_zero|43|propext, Quot.sound
+QFAUDIT|THM|QuantumFluids.DosLink.map_kInv0|65|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DosLink.derivative_kPoly|83|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DosLink.dos_eq|61|propext, Quot.sound
+QFAUDIT|THM|QuantumFluids.DosLink.map_dosRhs|73|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DosLink.phonon_specific_heat_end_to_end|163|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DosLink.energyMonomial_eq|213|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DosLink.dos_coeffs|101|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 39.150

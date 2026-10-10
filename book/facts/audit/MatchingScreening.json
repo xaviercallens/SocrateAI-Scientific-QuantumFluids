@@ -1,0 +1,153 @@
+{
+ "module": "MatchingScreening",
+ "exit": 0,
+ "compile_s": 41.4,
+ "request_to_done_s": 41.5,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 30,
+  "named_theorems": 12,
+  "named_defs": 3,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "MatchingScreening.rho.eq_1",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "MatchingScreening.wave.eq_1",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "MatchingScreening.norm_exp_sub_exp_le",
+   "line": 32,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "MatchingScreening.norm_wave_sub_le",
+   "line": 49,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "MatchingScreening.norm_rho_le_matching",
+   "line": 55,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "MatchingScreening.matching_lower_bound",
+   "line": 63,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "MatchingScreening.exists_long_pair",
+   "line": 69,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "MatchingScreening.wave_add_period",
+   "line": 84,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "MatchingScreening.norm_rho_le_matching_torus",
+   "line": 93,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "MatchingScreening.pointVortex_transverse",
+   "line": 113,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "MatchingScreening.pointVortex_norm_sq",
+   "line": 118,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "MatchingScreening.rho_one_pair",
+   "line": 132,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "56b0f7f42515a9c7",
+  "lines": 148,
+  "imports": [
+   "Mathlib"
+  ],
+  "theorem_decls": 10,
+  "print_axioms_lines": 0,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 10,
+  "source_unmatched": [],
+  "env_not_in_source": [
+   "MatchingScreening.rho.eq_1",
+   "MatchingScreening.wave.eq_1"
+  ]
+ },
+ "when": "2026-10-10 00:17:56"
+}

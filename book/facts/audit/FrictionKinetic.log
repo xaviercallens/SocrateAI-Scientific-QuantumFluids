@@ -1,0 +1,13 @@
+/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/ch10_audit/src/FrictionKinetic.lean:58:44: warning: Variable name `k` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _k
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+QFAUDIT|SUMMARY|12|3|2|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|FrictionKinetic.rayleigh_jeans_mean|55|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|FrictionKinetic.coeff_eq_weighted_mean|38|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|FrictionKinetic.weighted_mean_mem_Icc|45|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 88.038

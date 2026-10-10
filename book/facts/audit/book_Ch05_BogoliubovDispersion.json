@@ -1,0 +1,280 @@
+{
+ "module": "book_Ch05_BogoliubovDispersion",
+ "exit": 0,
+ "compile_s": 43.5,
+ "request_to_done_s": 43.5,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 46,
+  "named_theorems": 27,
+  "named_defs": 3,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.bogEps.eq_1",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.bogEps_sq",
+   "line": 49,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.bogEps_zero",
+   "line": 53,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.bogEps_nonneg",
+   "line": 55,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.bogEps_pos",
+   "line": 57,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.bogEps_neg",
+   "line": 60,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.bogEps_eq_mul",
+   "line": 63,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.bogEps_strictMonoOn",
+   "line": 71,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.sound_line_le",
+   "line": 85,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.eps_arg",
+   "line": 91,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.bogEps_le_phononDisp",
+   "line": 95,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.aux_t",
+   "line": 109,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.phononDisp_sub_le_bogEps",
+   "line": 117,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.sound_speed_limit",
+   "line": 140,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.alpha2_limit",
+   "line": 155,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.alpha2_pos",
+   "line": 184,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.sound_lt_phase_velocity",
+   "line": 189,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.landau_velocity_eq",
+   "line": 199,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.landau_velocity_sInf",
+   "line": 216,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.bogEps_superadditive",
+   "line": 222,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.three_phonon_excess",
+   "line": 242,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.three_phonon_open_iff",
+   "line": 248,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.bogoliubov_lowk_three_phonon_open",
+   "line": 263,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.abs_bogEps_sub_phononDisp_le",
+   "line": 274,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.bogEps_sub_sound_strictMonoOn",
+   "line": 283,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.phase_velocity_universal",
+   "line": 304,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.BogoliubovDispersion.bogEps_sq_gp",
+   "line": 316,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "45b3ee2e37aa6c79",
+  "code_sha256": "0308104ff74198f0",
+  "lines": 341,
+  "imports": [
+   "Mathlib"
+  ],
+  "theorem_decls": 26,
+  "print_axioms_lines": 15
+ },
+ "when": "2026-10-10 01:26:31",
+ "kind": "file"
+}

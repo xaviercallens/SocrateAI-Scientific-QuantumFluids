@@ -1,0 +1,107 @@
+{
+ "module": "QuantizedCirculation",
+ "exit": 0,
+ "compile_s": 53.2,
+ "request_to_done_s": 53.2,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 11,
+  "named_theorems": 7,
+  "named_defs": 3,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.Circulation.quarterLoop.eq_1",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Circulation.circulation_quantized",
+   "line": 43,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Circulation.circulation_eq_zero_iff",
+   "line": 53,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Circulation.abs_circulation_ge",
+   "line": 64,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Circulation.pdiff_of_mem",
+   "line": 81,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Circulation.pdiff_of_wrap",
+   "line": 88,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Circulation.circulation_quantum_attained",
+   "line": 100,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "7d54e15740ef7330",
+  "lines": 133,
+  "imports": [
+   "VortexWinding"
+  ],
+  "theorem_decls": 6,
+  "print_axioms_lines": 6,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 6,
+  "source_unmatched": [],
+  "env_not_in_source": [
+   "QuantumFluids.Circulation.quarterLoop.eq_1"
+  ]
+ },
+ "when": "2026-10-10 00:21:30"
+}

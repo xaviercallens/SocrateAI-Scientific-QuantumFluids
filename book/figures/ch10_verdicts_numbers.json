@@ -1,0 +1,100 @@
+{
+ "total": 113,
+ "tallies": {
+  "P": 53,
+  "F": 47,
+  "M": 11,
+  "V": 1,
+  "N": 1
+ },
+ "rows": [
+  {
+   "id": "tda_floor",
+   "n": 4,
+   "P": 1,
+   "F": 2,
+   "M": 1
+  },
+  {
+   "id": "kinetic",
+   "n": 25,
+   "P": 14,
+   "F": 11
+  },
+  {
+   "id": "closed_loop",
+   "n": 14,
+   "P": 14
+  },
+  {
+   "id": "bkt",
+   "n": 11,
+   "P": 5,
+   "F": 3,
+   "M": 2,
+   "N": 1
+  },
+  {
+   "id": "torus",
+   "n": 4,
+   "P": 3,
+   "F": 1
+  },
+  {
+   "id": "finite_size",
+   "n": 7,
+   "P": 2,
+   "F": 3,
+   "M": 2
+  },
+  {
+   "id": "onsager",
+   "n": 5,
+   "P": 2,
+   "F": 3
+  },
+  {
+   "id": "gates",
+   "n": 7,
+   "P": 3,
+   "F": 3,
+   "V": 1
+  },
+  {
+   "id": "dielectric",
+   "n": 8,
+   "P": 1,
+   "F": 7
+  },
+  {
+   "id": "production",
+   "n": 8,
+   "P": 4,
+   "F": 2,
+   "M": 2
+  },
+  {
+   "id": "friction_law",
+   "n": 5,
+   "P": 1,
+   "F": 3,
+   "M": 1
+  },
+  {
+   "id": "scattering",
+   "n": 12,
+   "P": 2,
+   "F": 8,
+   "M": 2
+  },
+  {
+   "id": "external",
+   "n": 3,
+   "P": 1,
+   "F": 1,
+   "M": 1
+  }
+ ],
+ "n_rows": 13,
+ "source": "LEDGER.md rows named in ch10_verdicts.json (verified by this script)"
+}

@@ -1,0 +1,20 @@
+'QuantumFluids.SectorTemperature.count_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.SectorTemperature.sectorCount_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.SectorTemperature.entropy_ge_sector' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.SectorTemperature.mediant_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.SectorTemperature.le_mediant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.SectorTemperature.globalRatio_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.SectorTemperature.global_eq_sector_of_single' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.SectorTemperature.sector_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|16|8|5|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.SectorTemperature.mediant_le|84|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.SectorTemperature.sectorCount_le|67|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.SectorTemperature.global_eq_sector_of_single|130|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.SectorTemperature.sector_invariant|141|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.SectorTemperature.count_sum|58|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.SectorTemperature.globalRatio_mem|115|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.SectorTemperature.entropy_ge_sector|73|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.SectorTemperature.le_mediant|95|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 29.769

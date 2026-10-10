@@ -1,0 +1,34 @@
+'QuantumFluids.TopologicalProtection.pdiff_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.TopologicalProtection.loop_sum_stable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.TopologicalProtection.loop_sum_stable_of_small' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'QuantumFluids.TopologicalProtection.circulation_conserved' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.TopologicalProtection.continuousAt_pdiff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.TopologicalProtection.loop_sum_const_of_no_slip' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'QuantumFluids.TopologicalProtection.slip_of_winding_change' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.TopologicalProtection.cos_pdiff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.TopologicalProtection.slip_energy_ge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.TopologicalProtection.mountain_pass' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.TopologicalProtection.twisted_loopSum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.TopologicalProtection.twisted_energy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.TopologicalProtection.barrier_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|25|13|2|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.TopologicalProtection.pdiff_shift|41|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.TopologicalProtection.barrier_pos|238|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.TopologicalProtection.mountain_pass|202|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.TopologicalProtection.twisted_loopSum|211|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.TopologicalProtection.slip_energy_ge|183|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.TopologicalProtection.circulation_conserved|72|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.TopologicalProtection.loop_sum_const_of_no_slip|98|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.TopologicalProtection.loop_sum_stable_of_small|61|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.TopologicalProtection.cos_pdiff|178|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.TopologicalProtection.loop_sum_stable|52|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.TopologicalProtection.slip_of_winding_change|157|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.TopologicalProtection.twisted_energy|229|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.TopologicalProtection.continuousAt_pdiff|80|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 63.726

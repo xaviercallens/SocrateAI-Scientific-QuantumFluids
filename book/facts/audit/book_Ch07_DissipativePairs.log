@@ -1,0 +1,19 @@
+'QuantumFluids.DissipativePairs.r2_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DissipativePairs.corot_sq_law' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DissipativePairs.roots_spec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DissipativePairs.stall_fence' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DissipativePairs.wind_stall_at_b' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DissipativePairs.wind_no_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DissipativePairs.stall_needs_start' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|13|8|3|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.DissipativePairs.stall_fence|109|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DissipativePairs.r2.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DissipativePairs.stall_needs_start|166|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DissipativePairs.r2_hasDerivAt|53|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DissipativePairs.wind_stall_at_b|136|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DissipativePairs.corot_sq_law|65|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DissipativePairs.wind_no_zero|156|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.DissipativePairs.roots_spec|91|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 36.341

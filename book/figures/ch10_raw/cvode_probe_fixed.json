@@ -1,0 +1,73 @@
+{
+ "tag": "fixed",
+ "module": "/mnt/data/xdev-cache/rs_py_5db8041/rusty_sundials.so",
+ "shared_object": "/mnt/data/xdev-cache/rs_py_5db8041/rusty_sundials.so",
+ "sha256": "0bdb1b4a504fb4817738c483f797e6a109b99121b666f1e51ad8e05c2fb996d7",
+ "built": "2026-10-10 00:16",
+ "rows": [
+  {
+   "method": "adams",
+   "rtol": 0.0001,
+   "nfe": 168,
+   "relerr": 0.0005891915138357431,
+   "status": "ok",
+   "wall_s": 0.0
+  },
+  {
+   "method": "adams",
+   "rtol": 1e-06,
+   "nfe": 359,
+   "relerr": 1.866708943351767e-05,
+   "status": "ok",
+   "wall_s": 0.0
+  },
+  {
+   "method": "adams",
+   "rtol": 1e-08,
+   "nfe": 511,
+   "relerr": 1.975598302069012e-07,
+   "status": "ok",
+   "wall_s": 0.0
+  },
+  {
+   "method": "adams",
+   "rtol": 1e-10,
+   "nfe": 616,
+   "relerr": 1.6812646410520497e-09,
+   "status": "ok",
+   "wall_s": 0.0
+  },
+  {
+   "method": "bdf",
+   "rtol": 0.0001,
+   "nfe": 246,
+   "relerr": 0.0007078453135032014,
+   "status": "ok",
+   "wall_s": 0.0
+  },
+  {
+   "method": "bdf",
+   "rtol": 1e-06,
+   "nfe": 492,
+   "relerr": 1.96572627344103e-05,
+   "status": "ok",
+   "wall_s": 0.0
+  },
+  {
+   "method": "bdf",
+   "rtol": 1e-08,
+   "nfe": 933,
+   "relerr": 4.5406224778131344e-07,
+   "status": "ok",
+   "wall_s": 0.0
+  },
+  {
+   "method": "bdf",
+   "rtol": 1e-10,
+   "nfe": 1618,
+   "relerr": 1.1662753349389493e-08,
+   "status": "ok",
+   "wall_s": 0.01
+  }
+ ]
+}

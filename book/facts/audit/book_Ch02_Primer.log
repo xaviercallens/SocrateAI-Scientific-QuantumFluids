@@ -1,0 +1,17 @@
+2 : ℕ
+2 + 2 = 4 : Prop
+[0, 1, 4, 9, 16, 25]
+0.300000
+false
+'QuantumFluids.Ch02Primer.and_swap'' does not depend on any axioms
+'QuantumFluids.Ch02Primer.two_add_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Ch02Primer.tenth_plus_fifth' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Ch02Primer.one_add_nilpotent_inv' depends on axioms: [propext, Quot.sound]
+QFAUDIT|SUMMARY|4|4|0|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.Ch02Primer.two_add_two|23|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Primer.and_swap'|20|
+QFAUDIT|THM|QuantumFluids.Ch02Primer.tenth_plus_fifth|32|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Primer.one_add_nilpotent_inv|37|propext, Quot.sound
+
+--- stderr ---
+QF_WALL 21.887

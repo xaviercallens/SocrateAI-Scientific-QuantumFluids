@@ -1,0 +1,73 @@
+{
+ "book_negative_controls": {
+  "Ch02_NegativeControl": {
+   "exit": 1,
+   "errors": 2,
+   "as_expected": true
+  },
+  "Ch04_NegativeControl_D15121": {
+   "exit": 1,
+   "errors": 1,
+   "as_expected": true
+  },
+  "Ch04_NegativeControl_L54": {
+   "exit": 1,
+   "errors": 1,
+   "as_expected": true
+  }
+ },
+ "book_files": [
+  "Ch01_NeutronWindow",
+  "Ch02_Galerkin",
+  "Ch02_Primer",
+  "Ch03_PointVortexPair",
+  "Ch04_DosLink",
+  "Ch05_BogoliubovDispersion",
+  "Ch06_KTForward",
+  "Ch07_DissipativePairs",
+  "Ch08_ZeroSound2D",
+  "Ch09_FlowPast"
+ ],
+ "book_ok": [
+  "Ch01_NeutronWindow",
+  "Ch02_Galerkin",
+  "Ch02_Primer",
+  "Ch03_PointVortexPair",
+  "Ch04_DosLink",
+  "Ch05_BogoliubovDispersion",
+  "Ch06_KTForward",
+  "Ch07_DissipativePairs",
+  "Ch08_ZeroSound2D",
+  "Ch09_FlowPast"
+ ],
+ "book_failed": [],
+ "book_not_audited": [],
+ "book_theorem_constants": 116,
+ "modules": 37,
+ "env_ok": 37,
+ "failed": [],
+ "stale": [],
+ "first_pass_only": [],
+ "nothing_usable": [],
+ "not_reached": [],
+ "declared_theorems": 6,
+ "generated_by_lean": 42,
+ "source_theorem_keywords": 310,
+ "sorry_modules": [],
+ "user_axiom_modules": [],
+ "nonstandard_modules": [],
+ "classes": {
+  "all three": 303,
+  "propext and Quot.sound": 17,
+  "propext only": 1
+ },
+ "mismatches": [
+  "ContinuumWinding",
+  "ScaleResolvedWinding",
+  "VortexWinding",
+  "ZeroSound"
+ ],
+ "fewer_audit_lines_than_theorems": {
+  "Villani": 2
+ }
+}

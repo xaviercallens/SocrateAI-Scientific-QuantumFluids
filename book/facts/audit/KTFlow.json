@@ -1,0 +1,135 @@
+{
+ "module": "KTFlow",
+ "exit": 0,
+ "compile_s": 54.5,
+ "request_to_done_s": 54.6,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 13,
+  "named_theorems": 10,
+  "named_defs": 2,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "KTFlow.H.eq_1",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "KTFlow.f.eq_1",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "KTFlow.f_antitone",
+   "line": 33,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "KTFlow.hasDerivAt_H",
+   "line": 53,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "KTFlow.kt_invariant",
+   "line": 67,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "KTFlow.f_ge_H",
+   "line": 72,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "KTFlow.kt_trapped",
+   "line": 75,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "KTFlow.u_monotone",
+   "line": 87,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "KTFlow.kt_fugacity_bounded",
+   "line": 92,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "KTFlow.kt_units",
+   "line": 105,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "8d97d3f4ef775ee3",
+  "lines": 124,
+  "imports": [
+   "Mathlib"
+  ],
+  "theorem_decls": 8,
+  "print_axioms_lines": 0,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 8,
+  "source_unmatched": [],
+  "env_not_in_source": [
+   "KTFlow.H.eq_1",
+   "KTFlow.f.eq_1"
+  ]
+ },
+ "when": "2026-10-10 00:17:15"
+}

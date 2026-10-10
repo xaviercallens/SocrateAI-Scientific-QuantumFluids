@@ -1,0 +1,22 @@
+'QuantumFluids.PhononSeries.kPow2_eq' depends on axioms: [propext, Quot.sound]
+'QuantumFluids.PhononSeries.kPow3_eq' depends on axioms: [propext, Quot.sound]
+'QuantumFluids.PhononSeries.kPow4_eq' depends on axioms: [propext, Quot.sound]
+'QuantumFluids.PhononSeries.kPow5_eq' depends on axioms: [propext, Quot.sound]
+'QuantumFluids.PhononSeries.kPow6_eq' depends on axioms: [propext, Quot.sound]
+'QuantumFluids.PhononSeries.kPow7_eq' depends on axioms: [propext, Quot.sound]
+'QuantumFluids.PhononSeries.dispersion_kInv' depends on axioms: [propext, Quot.sound]
+'QuantumFluids.PhononSeries.kSq0_eq' depends on axioms: [propext, Quot.sound]
+'QuantumFluids.PhononSeries.density_of_states' depends on axioms: [propext, Quot.sound]
+QFAUDIT|SUMMARY|51|9|10|0|false|Quot.sound, propext
+QFAUDIT|THM|QuantumFluids.PhononSeries.kPow5_eq|65|propext, Quot.sound
+QFAUDIT|THM|QuantumFluids.PhononSeries.kPow7_eq|83|propext, Quot.sound
+QFAUDIT|THM|QuantumFluids.PhononSeries.kSq0_eq|128|propext, Quot.sound
+QFAUDIT|THM|QuantumFluids.PhononSeries.kPow6_eq|74|propext, Quot.sound
+QFAUDIT|THM|QuantumFluids.PhononSeries.kPow3_eq|47|propext, Quot.sound
+QFAUDIT|THM|QuantumFluids.PhononSeries.kPow4_eq|56|propext, Quot.sound
+QFAUDIT|THM|QuantumFluids.PhononSeries.density_of_states|133|propext, Quot.sound
+QFAUDIT|THM|QuantumFluids.PhononSeries.kPow2_eq|38|propext, Quot.sound
+QFAUDIT|THM|QuantumFluids.PhononSeries.dispersion_kInv|88|propext, Quot.sound
+
+--- stderr ---
+QF_WALL 461.429

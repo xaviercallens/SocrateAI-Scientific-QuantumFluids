@@ -1,0 +1,52 @@
+{
+ "module": "LevelRankDuality",
+ "exit": 0,
+ "compile_s": 26.1,
+ "request_to_done_s": 26.1,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 4,
+  "named_theorems": 1,
+  "named_defs": 2,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.LevelRankDuality.inBox_transpose_iff",
+   "line": 45,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "3c02a2b2e367cffd",
+  "code_sha256": "952af4799875db5e",
+  "lines": 67,
+  "imports": [
+   "Mathlib"
+  ],
+  "theorem_decls": 1,
+  "print_axioms_lines": 1,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 1,
+  "source_unmatched": [],
+  "env_not_in_source": []
+ },
+ "when": "2026-10-10 01:33:03"
+}

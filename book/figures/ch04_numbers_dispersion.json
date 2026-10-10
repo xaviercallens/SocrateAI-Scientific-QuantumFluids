@@ -1,0 +1,32 @@
+{
+ "hbarc_meV_A_paper_constant": 1.56851443,
+ "hbarc_meV_A_from_SI": 1.5685190934140107,
+ "theta_K_A": 18.20190824352019,
+ "n_points_total": 1727,
+ "n_points_window": 176,
+ "k_window": [
+  0.15,
+  0.5
+ ],
+ "rms_residual_window_meV": 0.0006657346941092641,
+ "max_abs_residual_window_meV": 0.002153569235270436,
+ "eps_at_0p5_meV": 0.804,
+ "poly_at_0p5_meV": 0.8048463598080643,
+ "rel_dev_poly_at_1p0": 0.07587472746663426,
+ "min_du_dk_on_0_3": 0.41244923664036914,
+ "maxon_k": 1.114,
+ "maxon_meV": 1.1914,
+ "roton_k": 1.92,
+ "roton_meV": 0.7413,
+ "roton_K": 8.602429283505074,
+ "maxon_K": 13.825622890014767,
+ "n_rows_with_uncertainty": 34,
+ "k_first_row_with_uncertainty": 0.15,
+ "n_grid_steps_not_0p002": 4,
+ "grid_steps_not_0p002": [
+  0.006,
+  0.05
+ ],
+ "grid_uniform_until_k": 3.444,
+ "coarse_step": 0.05
+}

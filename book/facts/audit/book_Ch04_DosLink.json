@@ -1,0 +1,154 @@
+{
+ "module": "book_Ch04_DosLink",
+ "exit": 0,
+ "compile_s": 39.1,
+ "request_to_done_s": 39.2,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 35,
+  "named_theorems": 13,
+  "named_defs": 4,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.DosLink.kInv_zero",
+   "line": 43,
+   "axioms": [
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.DosLink.kInv0_inverts",
+   "line": 47,
+   "axioms": [
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.DosLink.dos_eq",
+   "line": 61,
+   "axioms": [
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.DosLink.map_kInv0",
+   "line": 65,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.DosLink.map_kInv0Deriv",
+   "line": 69,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.DosLink.map_dosRhs",
+   "line": 73,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.DosLink.derivative_kPoly",
+   "line": 83,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.DosLink.dosRhs_poly",
+   "line": 93,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.DosLink.dos_coeffs",
+   "line": 101,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.DosLink.phonon_specific_heat_from_dos",
+   "line": 142,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.DosLink.phonon_specific_heat_end_to_end",
+   "line": 163,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.DosLink.energyMonomial_eq",
+   "line": 213,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.DosLink.phonon_specific_heat_integral",
+   "line": 237,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "21a61fd6b1f90afd",
+  "code_sha256": "eed3564e0d1c4b7f",
+  "lines": 280,
+  "imports": [
+   "Mathlib",
+   "BoseIntegral",
+   "PhononSeries",
+   "PhononSpecificHeat"
+  ],
+  "theorem_decls": 13,
+  "print_axioms_lines": 7
+ },
+ "when": "2026-10-10 01:46:34",
+ "kind": "file"
+}

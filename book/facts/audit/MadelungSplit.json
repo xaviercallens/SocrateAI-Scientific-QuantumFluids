@@ -1,0 +1,97 @@
+{
+ "module": "MadelungSplit",
+ "exit": 0,
+ "compile_s": 27.6,
+ "request_to_done_s": 27.6,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 14,
+  "named_theorems": 6,
+  "named_defs": 1,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.Madelung.normSq_phase_mul",
+   "line": 30,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Madelung.hasDerivAt_line",
+   "line": 45,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Madelung.hasDerivAt_psi_line",
+   "line": 52,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Madelung.norm_sq_deriv_psi",
+   "line": 81,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Madelung.madelung_gradient_split",
+   "line": 92,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Madelung.kinetic_density_split",
+   "line": 103,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "d7628359f765f300",
+  "code_sha256": "b896737e4f907b1b",
+  "lines": 121,
+  "imports": [
+   "Mathlib"
+  ],
+  "theorem_decls": 6,
+  "print_axioms_lines": 6,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 6,
+  "source_unmatched": [],
+  "env_not_in_source": []
+ },
+ "when": "2026-10-10 01:34:45"
+}

@@ -1,0 +1,26 @@
+'QuantumFluids.WassersteinCertificate.weak_duality' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.WassersteinCertificate.certificate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.WassersteinCertificate.C_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.WassersteinCertificate.feasible' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.WassersteinCertificate.tight' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.WassersteinCertificate.toy_certificate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.WassersteinCertificate.toy_cost_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.WassersteinCertificate.broken_infeasible' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|27|14|6|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.WassersteinCertificate.feasible|100|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.WassersteinCertificate.certificate|48|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.WassersteinCertificate.v.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.WassersteinCertificate.σ.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.WassersteinCertificate.v_broken.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.WassersteinCertificate.toy_certificate|107|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.WassersteinCertificate.toy_cost_eq|113|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.WassersteinCertificate.σfun.eq_1|-1|propext
+QFAUDIT|THM|QuantumFluids.WassersteinCertificate.C.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.WassersteinCertificate.tight|103|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.WassersteinCertificate.weak_duality|38|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.WassersteinCertificate.u.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.WassersteinCertificate.broken_infeasible|122|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.WassersteinCertificate.C_eq|73|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 28.973

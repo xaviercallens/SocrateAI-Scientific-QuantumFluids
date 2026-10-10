@@ -1,0 +1,12 @@
+'QuantumFluids.RipsFloor.no_adj_of_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.RipsFloor.le_of_adj' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.RipsFloor.isLeast_edge_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.RipsFloor.separated_zero_of_not_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|6|4|2|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.RipsFloor.isLeast_edge_scale|43|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.RipsFloor.le_of_adj|37|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.RipsFloor.separated_zero_of_not_injective|50|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.RipsFloor.no_adj_of_lt|31|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 34.378

@@ -1,0 +1,116 @@
+{
+ "tag": "venv",
+ "module_file": "/home/xavkal/xdev/SocrateAI-Scientific-QuantumFluids/.venv/lib/python3.12/site-packages/rusty_sundials/__init__.py",
+ "extension_file": "/home/xavkal/xdev/SocrateAI-Scientific-QuantumFluids/.venv/lib/python3.12/site-packages/rusty_sundials/rusty_sundials.cpython-312-x86_64-linux-gnu.so",
+ "sha256": "9fbd09e985c2faf0ae858d8229e2b38eb7ef5b6c7bb2324f948c16f7c7cc81a5",
+ "cap_calls": 60000,
+ "loadavg_start": 17.01513671875,
+ "runs": [
+  {
+   "problem": "decay",
+   "method": "adams",
+   "rtol": 1e-08,
+   "atol": 1e-14,
+   "status": "stopped at the cap of 60000 calls",
+   "rhs_calls": 60001,
+   "last_t": 2.527118583257276,
+   "rel_err": null,
+   "seconds": 0.29884678102098405
+  },
+  {
+   "problem": "cos",
+   "method": "adams",
+   "rtol": 1e-06,
+   "atol": 1e-09,
+   "status": "stopped at the cap of 60000 calls",
+   "rhs_calls": 60001,
+   "last_t": 25.261256619468544,
+   "rel_err": null,
+   "seconds": 0.33181525813415647
+  },
+  {
+   "problem": "bose3",
+   "method": "adams",
+   "rtol": 1e-06,
+   "atol": 1e-08,
+   "status": "ok",
+   "rhs_calls": 15532,
+   "rel_err": 0.0006490089375669475,
+   "seconds": 0.14865142200142145
+  },
+  {
+   "problem": "bose3",
+   "method": "adams",
+   "rtol": 1e-09,
+   "atol": 1e-11,
+   "status": "stopped at the cap of 60000 calls",
+   "rhs_calls": 60001,
+   "last_t": 0.204547170181222,
+   "rel_err": null,
+   "seconds": 0.3059317469596863
+  },
+  {
+   "problem": "decay",
+   "method": "bdf",
+   "rtol": 1e-08,
+   "atol": 1e-14,
+   "status": "ok",
+   "rhs_calls": 1327,
+   "rel_err": 4.948070441393389e-07,
+   "seconds": 0.0052341080736368895
+  },
+  {
+   "problem": "cos",
+   "method": "bdf",
+   "rtol": 1e-06,
+   "atol": 1e-09,
+   "status": "ok",
+   "rhs_calls": 2997,
+   "rel_err": null,
+   "seconds": 0.012186859967187047
+  },
+  {
+   "problem": "bose3",
+   "method": "bdf",
+   "rtol": 1e-06,
+   "atol": 1e-08,
+   "status": "ok",
+   "rhs_calls": 413,
+   "rel_err": 1.3086183060183272e-06,
+   "seconds": 0.001891604857519269
+  },
+  {
+   "problem": "bose3",
+   "method": "bdf",
+   "rtol": 1e-09,
+   "atol": 1e-11,
+   "status": "ok",
+   "rhs_calls": 1051,
+   "rel_err": 6.534601875952521e-09,
+   "seconds": 0.004702579928562045
+  }
+ ],
+ "landing": {
+  "adams": {
+   "problem": "y_m' = x^m/(m!(e^x-1)), m = 3,5,6,7,8,9, y(0) = 0, integrated from 0 to each end point",
+   "rtol": 1e-09,
+   "atol": 1e-11,
+   "call_cap": 5000,
+   "n_endpoints": 160,
+   "n_solver_errors": 160,
+   "n_over_cap": 0,
+   "total_rhs_calls": 800160
+  },
+  "bdf": {
+   "problem": "y_m' = x^m/(m!(e^x-1)), m = 3,5,6,7,8,9, y(0) = 0, integrated from 0 to each end point",
+   "rtol": 1e-09,
+   "atol": 1e-11,
+   "call_cap": 5000,
+   "n_endpoints": 160,
+   "n_solver_errors": 38,
+   "n_over_cap": 0,
+   "total_rhs_calls": 178048
+  }
+ },
+ "loadavg_end": 15.47998046875
+}

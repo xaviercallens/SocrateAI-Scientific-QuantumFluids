@@ -1,0 +1,109 @@
+{
+ "module": "book_Ch03_PointVortexPair",
+ "exit": 0,
+ "compile_s": 20.6,
+ "request_to_done_s": 20.6,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 17,
+  "named_theorems": 8,
+  "named_defs": 1,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.Ch03PointVortexPair.cancel_aux",
+   "line": 31,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Ch03PointVortexPair.induced_mul_conj",
+   "line": 35,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Ch03PointVortexPair.induced_perp",
+   "line": 47,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Ch03PointVortexPair.norm_induced_mul",
+   "line": 54,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Ch03PointVortexPair.norm_induced",
+   "line": 65,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Ch03PointVortexPair.pair_velocities_equal",
+   "line": 75,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Ch03PointVortexPair.separation_const",
+   "line": 85,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Ch03PointVortexPair.pair_speed_quantum",
+   "line": 98,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "65a9383ccc3da8d6",
+  "code_sha256": "e42df9f7cb6c4ea0",
+  "lines": 116,
+  "imports": [
+   "Mathlib"
+  ],
+  "theorem_decls": 8,
+  "print_axioms_lines": 7
+ },
+ "when": "2026-10-10 01:24:55",
+ "kind": "file"
+}

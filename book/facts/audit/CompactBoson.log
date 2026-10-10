@@ -1,0 +1,29 @@
+'QuantumFluids.CompactBoson.dim_dual' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.CompactBoson.spin_dual' depends on axioms: [propext]
+'QuantumFluids.CompactBoson.partition_dual' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.CompactBoson.dim_electric' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.CompactBoson.dim_magnetic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.CompactBoson.electric_mul_magnetic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.CompactBoson.eq_of_sq_eq_sq_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.CompactBoson.selfDual_radius' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.CompactBoson.selfDual_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.CompactBoson.vortex_marginal_radius' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.CompactBoson.bkt_not_selfDual' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.CompactBoson.eta_at_bkt' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|17|13|3|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.CompactBoson.electric_mul_magnetic|70|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.CompactBoson.swap.eq_1|-1|
+QFAUDIT|THM|QuantumFluids.CompactBoson.partition_dual|53|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.CompactBoson.dim_magnetic|67|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.CompactBoson.selfDual_radius|83|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.CompactBoson.vortex_marginal_radius|104|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.CompactBoson.dim_electric|64|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.CompactBoson.eta_at_bkt|121|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.CompactBoson.spin_dual|46|propext
+QFAUDIT|THM|QuantumFluids.CompactBoson.eq_of_sq_eq_sq_pos|76|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.CompactBoson.bkt_not_selfDual|116|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.CompactBoson.selfDual_value|101|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.CompactBoson.dim_dual|40|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 26.596

@@ -1,0 +1,11 @@
+QFAUDIT|SUMMARY|39|7|3|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|EinsteinRelation.Jx_eq|59|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|EinsteinRelation.hasDerivAt_p_x|30|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|EinsteinRelation.zero_flux_iff|65|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|EinsteinRelation.Jy_eq|62|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|EinsteinRelation.hasDerivAt_p_y|41|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|EinsteinRelation.flux_gibbs|95|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|EinsteinRelation.einstein_vortex|80|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 33.100

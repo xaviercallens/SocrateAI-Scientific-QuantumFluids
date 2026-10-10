@@ -1,0 +1,16 @@
+'QuantumFluids.ShellComplex.gw_mul_kdy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ShellComplex.gw_mul_kdy_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ShellComplex.sigma_two_weight' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ShellComplex.sigma_three_weight' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ShellComplex.enstrophy_le_sigma_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ShellComplex.halfNorm_le_sigma_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|10|6|3|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.ShellComplex.halfNorm_le_sigma_two|100|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.sigma_three_weight|59|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.sigma_two_weight|52|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.gw_mul_kdy_pow|44|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.enstrophy_le_sigma_three|69|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.gw_mul_kdy|38|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 47.328

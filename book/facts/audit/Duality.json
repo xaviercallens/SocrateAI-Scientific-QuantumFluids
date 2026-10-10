@@ -1,0 +1,142 @@
+{
+ "module": "Duality",
+ "exit": 0,
+ "compile_s": 26.3,
+ "request_to_done_s": 26.3,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 25,
+  "named_theorems": 11,
+  "named_defs": 0,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "Mathesis.Duality.sqrt_le_max_of_le_mul",
+   "line": 38,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "Mathesis.Duality.min_le_sqrt_of_mul_le",
+   "line": 52,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "Mathesis.Duality.sqrt_between_duals",
+   "line": 64,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "Mathesis.Duality.two_sqrt_mul_le_add",
+   "line": 70,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "Mathesis.Duality.self_dual_fixed_point",
+   "line": 78,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "Mathesis.Duality.Reff_ge_sqrt_of_selfDual",
+   "line": 95,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "Mathesis.Duality.sqrt_le_max_of_le_mul_nat",
+   "line": 108,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "Mathesis.Duality.eoq_lower_bound",
+   "line": 124,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "Mathesis.Duality.bogoliubov_dual_form",
+   "line": 142,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "Mathesis.Duality.bogoliubov_selfdual_bound",
+   "line": 151,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "Mathesis.Duality.sinh_selfDual_coupling",
+   "line": 168,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "7f6ceb122a7e4f68",
+  "code_sha256": "426cb6a554fbfc7c",
+  "lines": 239,
+  "imports": [
+   "Mathlib"
+  ],
+  "theorem_decls": 11,
+  "print_axioms_lines": 11,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 11,
+  "source_unmatched": [],
+  "env_not_in_source": []
+ },
+ "when": "2026-10-10 01:32:37"
+}

@@ -1,0 +1,57 @@
+/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/ch10_audit/src/Villani.lean:63:31: warning: `if_pos` has been deprecated: Use `ite_eq_left` instead
+/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/ch10_audit/src/Villani.lean:66:45: warning: `if_neg` has been deprecated: Use `ite_eq_right` instead
+/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/ch10_audit/src/Villani.lean:86:28: warning: This simp argument is unused:
+  crossover_apply_mem hi
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [mem_diff_iff, hi, hd]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/ch10_audit/src/Villani.lean:163:76: warning: Variable name `hc` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hc
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+'QuantumFluids.Villani.mem_diff_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Villani.diff_crossover_left' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Villani.diff_crossover_right' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Villani.dist_crossover_left' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Villani.dist_crossover_right' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Villani.isMidpoint_crossover' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Villani.takeHalf_subset' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Villani.card_takeHalf' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Villani.takeHalf_card_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Villani.encode_fst_isMidpoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Villani.encode_snd_isMidpoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Villani.encode_mem_midpointSet' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Villani.diff_crossover_crossover_compl' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Villani.encode_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Villani.card_sq_ge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Villani.klDiv_nonincreasing_to_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|42|22|8|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.Villani.encode.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Villani.mem_diff_iff|46|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Villani.crossover_apply_not_mem|65|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Villani.takeHalf.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Villani.card_takeHalf|121|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Villani.isMidpoint_crossover|95|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Villani.takeHalf_subset|114|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Villani.dist_crossover_right|92|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Villani.card_sq_ge|224|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Villani.diff_crossover_left|68|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Villani.klDiv_nonincreasing_to_invariant|251|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Villani.encode_fst_isMidpoint|142|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Villani.encode_mem_midpointSet|155|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Villani.takeHalf_card_bounds|131|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Villani.encode_snd_isMidpoint|145|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Villani.diff_crossover_crossover_compl|160|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Villani.encode_injective|180|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Villani.crossover_apply_mem|62|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Villani.diff.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Villani.diff_crossover_right|80|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Villani.dist.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Villani.dist_crossover_left|89|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 33.994

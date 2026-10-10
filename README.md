@@ -12,6 +12,12 @@
 > (`LEDGER.md`, `RETRACTIONS.md`, the full 257-theorem library, the raw experiment results); new work on
 > the theory happens there.
 
+> **The textbook — *Quantum Fluids in Lean 4: a tribute to Henri Godfrin*** ([`book/`](book/), 282 pages):
+> quantum-fluid physics taught through three instruments used together — the neutron-scattering measurements
+> of Henri Godfrin and his collaborators, this Lean library, and the rusty-SUNDIALS solver — in ten chapters
+> with exercises, 49 figures made by scripts in the repository, and the complete catalogue of the library as
+> Appendix A. DOI **[10.5281/zenodo.23272153](https://doi.org/10.5281/zenodo.23272153)**.
+
 ---
 
 ## What this is
@@ -157,6 +163,8 @@ aligned at 4.34.0-rc2 across streams for cross-integration.
 The software (this library, its numerical experiments, and every companion paper) is archived on
 Zenodo: **[10.5281/zenodo.23268302](https://doi.org/10.5281/zenodo.23268302)** (`v1.19.0`). Cite the
 concept DOI **10.5281/zenodo.22855581** for all versions.
+
+The textbook *Quantum Fluids in Lean 4: a tribute to Henri Godfrin* (`book/`: ten chapters, each pairing a measurement, machine-checked theorems and a solver computation; Appendix A, the complete catalogue of this library; Appendix B, how to rebuild every figure and rerun the audit) has its own DOI: **[10.5281/zenodo.23272153](https://doi.org/10.5281/zenodo.23272153)** (concept; first edition 10.5281/zenodo.23272154, with the source archive).
 
 The vortex-transport paper, `paper/vortex_transport.tex` ("*Vortex transport and screening in a closed two-dimensional Bose field*"), is archived on its own DOI: **[10.5281/zenodo.23262143](https://doi.org/10.5281/zenodo.23262143)** (version 2.2: peer-review revision plus two corrections; concept DOI 10.5281/zenodo.23202454).
 

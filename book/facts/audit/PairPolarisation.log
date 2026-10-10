@@ -1,0 +1,12 @@
+QFAUDIT|SUMMARY|10|8|2|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|PairPolarisation.norm_rho_le_of_size|58|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|PairPolarisation.norm_rho_le_pairs|51|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|PairPolarisation.response_ceiling|100|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|PairPolarisation.remainder_le|90|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|PairPolarisation.rho_polarisation|65|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|PairPolarisation.norm_wave|34|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|PairPolarisation.pair_factor|36|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|PairPolarisation.norm_pair_le|44|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 54.804

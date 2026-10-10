@@ -1,0 +1,204 @@
+{
+ "module": "VortexWinding",
+ "exit": 0,
+ "compile_s": 49.6,
+ "request_to_done_s": 49.6,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 33,
+  "named_theorems": 17,
+  "named_defs": 8,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.VortexWinding.Balanced.mk.inj",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.VortexWinding.Balanced.mk.injEq",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.VortexWinding.Balanced.mk.sizeOf_spec",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.VortexWinding.pdiff.eq_1",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.VortexWinding.two_pi_pos",
+   "line": 37,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.VortexWinding.pdiff_mem",
+   "line": 43,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.VortexWinding.pdiff_eq",
+   "line": 49,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.VortexWinding.loop_sum_eq_mul",
+   "line": 54,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.VortexWinding.pdiff_add_rev_eq",
+   "line": 69,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.VortexWinding.pdiff_add_rev",
+   "line": 77,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.VortexWinding.pdiff_add_rev_eq_two_pi_iff",
+   "line": 101,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.VortexWinding.Balanced.invol",
+   "line": 132,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.VortexWinding.Balanced.no_fix",
+   "line": 133,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.VortexWinding.Balanced.rev_start",
+   "line": 134,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.VortexWinding.Balanced.rev_end",
+   "line": 135,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.VortexWinding.balanced_sum_eq_zero",
+   "line": 137,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.VortexWinding.cut_free_of_ne_pi",
+   "line": 156,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "0217e857972b3784",
+  "lines": 179,
+  "imports": [
+   "Mathlib"
+  ],
+  "theorem_decls": 9,
+  "print_axioms_lines": 9,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 9,
+  "source_unmatched": [],
+  "env_not_in_source": [
+   "QuantumFluids.VortexWinding.Balanced.mk.inj",
+   "QuantumFluids.VortexWinding.Balanced.mk.injEq",
+   "QuantumFluids.VortexWinding.Balanced.mk.sizeOf_spec",
+   "QuantumFluids.VortexWinding.pdiff.eq_1",
+   "QuantumFluids.VortexWinding.Balanced.invol",
+   "QuantumFluids.VortexWinding.Balanced.no_fix",
+   "QuantumFluids.VortexWinding.Balanced.rev_start",
+   "QuantumFluids.VortexWinding.Balanced.rev_end"
+  ]
+ },
+ "when": "2026-10-10 00:20:36"
+}

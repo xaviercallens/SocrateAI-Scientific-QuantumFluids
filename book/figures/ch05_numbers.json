@@ -1,0 +1,1134 @@
+{
+ "tableRows": {
+  "tex": "1\\,727",
+  "value": 1727
+ },
+ "nErrRows": {
+  "tex": "34",
+  "value": 34.0
+ },
+ "kmax": {
+  "tex": "3.6",
+  "value": 3.6
+ },
+ "c": {
+  "tex": "238.3",
+  "value": 238.3
+ },
+ "kDense": {
+  "tex": "3.44",
+  "value": 3.44
+ },
+ "maxonKshort": {
+  "tex": "1.1",
+  "value": 1.1
+ },
+ "maxonE": {
+  "tex": "1.19",
+  "value": 1.19
+ },
+ "rotonE": {
+  "tex": "0.741",
+  "value": 0.741
+ },
+ "rotonGapK": {
+  "tex": "8.60",
+  "value": 8.6
+ },
+ "rotonKshort": {
+  "tex": "1.92",
+  "value": 1.92
+ },
+ "rotonMass": {
+  "tex": "0.141",
+  "value": 0.141
+ },
+ "landauV": {
+  "tex": "57.9",
+  "value": 57.9
+ },
+ "landauK": {
+  "tex": "1.97",
+  "value": 1.97
+ },
+ "landauOverC": {
+  "tex": "0.243",
+  "value": 0.243
+ },
+ "landauQuad": {
+  "tex": "57.9",
+  "value": 57.9
+ },
+ "landauQuadPct": {
+  "tex": "0.01",
+  "value": 0.01
+ },
+ "phaseMaxPct": {
+  "tex": "5.4",
+  "value": 5.4
+ },
+ "vphLow": {
+  "tex": "238.5",
+  "value": 238.5
+ },
+ "phaseMaxPctAlt": {
+  "tex": "5.3",
+  "value": 5.3
+ },
+ "phaseMaxK": {
+  "tex": "0.35",
+  "value": 0.35
+ },
+ "kGroup": {
+  "tex": "0.404",
+  "value": 0.404
+ },
+ "kSym": {
+  "tex": "0.455",
+  "value": 0.455
+ },
+ "kPhase": {
+  "tex": "0.566",
+  "value": 0.566
+ },
+ "kSymTable": {
+  "tex": "0.453",
+  "value": 0.453
+ },
+ "shiftG": {
+  "tex": "0.002",
+  "value": 0.002
+ },
+ "shiftP": {
+  "tex": "0.005",
+  "value": 0.005
+ },
+ "symMax": {
+  "tex": "14.5",
+  "value": 14.5
+ },
+ "symMaxK": {
+  "tex": "0.31",
+  "value": 0.31
+ },
+ "seriesDevMax": {
+  "tex": "2.2",
+  "value": 2.2
+ },
+ "kstar": {
+  "tex": "3.00",
+  "value": 3.0
+ },
+ "alphaBog": {
+  "tex": "0.055",
+  "value": 0.055
+ },
+ "alphaRatio": {
+  "tex": "28",
+  "value": 28.0
+ },
+ "h2m4": {
+  "tex": "0.522",
+  "value": 0.522
+ },
+ "paper_quotes_used_literally": {
+  "Delta_R_calibration_meV": "0.7418 +- 0.001 (Stirling, triple axis; used to calibrate the energy scale)",
+  "c_ultrasound_ms": "238.3 +- 0.1",
+  "alpha2_Rugar_Foster_A2": "1.55 +- 0.01 (alpha1 = 0)",
+  "series_SVP_A": "alpha2 = 1.55, alpha3 = -4.04, alpha4 = 2.30 (valid k < 0.5 A^-1)",
+  "normal_dispersion_pressure_bar": "about 20 (20.4 in the DMBT-corrected analysis)",
+  "table_composition": "k < 0.15 ultrasound; 0.15-0.3 combined; > 0.3 neutron",
+  "exercise1_roton": "Delta = 0.7418 meV, k_R = 1.918 A^-1, mu_R = 0.141 (paper's Table III)",
+  "relative_energy_systematic": 0.0021,
+  "source": "arXiv:2012.09067v1 (read from data/external/godfrin_papers/.../2020-Dispersion-paper-v6d.tex)"
+ },
+ "from_paper_text": {
+  "resolution_fwhm_meV_at_Ei_3p52": 0.07,
+  "more_than_pixels_per_bin": 70,
+  "detector_pixels": "384 tubes x 241 pixels",
+  "source": "arXiv:2012.09067v1, Sections 'The time of flight spectrometer IN5' and 'Detailed pixel-by-pixel analysis'"
+ },
+ "resFWHM": {
+  "tex": "0.07",
+  "value": 0.07
+ },
+ "nPixBin": {
+  "tex": "70",
+  "value": 70.0
+ },
+ "err03ueV": {
+  "tex": "1.0",
+  "value": 1.0
+ },
+ "bend03ueV": {
+  "tex": "23",
+  "value": 23.0
+ },
+ "err_row_used": {
+  "k": 0.298,
+  "err_meV": 0.001
+ },
+ "rotonYat": {
+  "tex": "0.25",
+  "value": 0.25
+ },
+ "vgMax": {
+  "tex": "1.08",
+  "value": 1.08
+ },
+ "vgMaxPct": {
+  "tex": "8.5",
+  "value": 8.5
+ },
+ "vgMaxK": {
+  "tex": "0.27",
+  "value": 0.27
+ },
+ "vgCrossK": {
+  "tex": "0.40",
+  "value": 0.4
+ },
+ "vgZeroK": {
+  "tex": "1.10",
+  "value": 1.1
+ },
+ "vgMin": {
+  "tex": "-0.57",
+  "value": -0.57
+ },
+ "vgMinK": {
+  "tex": "1.63",
+  "value": 1.63
+ },
+ "group_velocity_landmarks": {
+  "max": 1.0846034196785472,
+  "max_k": 0.268,
+  "crosses_c_k": 0.396,
+  "zero_k": 1.102,
+  "min": -0.5733760031645947,
+  "min_k": 1.634
+ },
+ "exLandau": {
+  "tex": "58.0",
+  "value": 58.0
+ },
+ "mfMaxK": {
+  "tex": "0.56",
+  "value": 0.56
+ },
+ "mfMaxW": {
+  "tex": "0.350",
+  "value": 0.35
+ },
+ "mfMinK": {
+  "tex": "0.84",
+  "value": 0.84
+ },
+ "mfMinW": {
+  "tex": "0.304",
+  "value": 0.304
+ },
+ "mfLandau": {
+  "tex": "0.349",
+  "value": 0.349
+ },
+ "mfLandauK": {
+  "tex": "0.90",
+  "value": 0.9
+ },
+ "mean_field_roton_example": {
+  "maxon_k": 0.558238040396734,
+  "maxon_w": 0.3501057905309577,
+  "roton_k": 0.8401415185691975,
+  "roton_w": 0.3041429913245927,
+  "landau": 0.34855542321481714,
+  "landau_k": 0.9012514337523895,
+  "all_omega2_positive": true
+ },
+ "landau_vs_pressure": [
+  {
+   "P_bar": 0.0,
+   "c_ultrasound_ms": 238.3,
+   "roton_k": 1.92,
+   "roton_E_meV": 0.7413,
+   "landau_k": 1.966,
+   "landau_ms": 57.88826272664694,
+   "landau_over_c": 0.24292179071190492,
+   "k_range_max": 2.206
+  },
+  {
+   "P_bar": 0.51,
+   "c_ultrasound_ms": 242.6,
+   "roton_k": 1.924,
+   "roton_E_meV": 0.7381,
+   "landau_k": 1.968,
+   "landau_ms": 57.54379855938658,
+   "landau_over_c": 0.23719620181115655,
+   "k_range_max": 2.208
+  },
+  {
+   "P_bar": 1.02,
+   "c_ultrasound_ms": 246.5,
+   "roton_k": 1.92,
+   "roton_E_meV": 0.7357,
+   "landau_k": 1.968,
+   "landau_ms": 57.19640508807287,
+   "landau_over_c": 0.23203409772037675,
+   "k_range_max": 2.21
+  },
+  {
+   "P_bar": 2.01,
+   "c_ultrasound_ms": 253.9,
+   "roton_k": 1.932,
+   "roton_E_meV": 0.7301,
+   "landau_k": 1.986,
+   "landau_ms": 56.540310711333966,
+   "landau_over_c": 0.22268732064330038,
+   "k_range_max": 2.212
+  },
+  {
+   "P_bar": 5.01,
+   "c_ultrasound_ms": 274.0,
+   "roton_k": 1.966,
+   "roton_E_meV": 0.7138,
+   "landau_k": 2.01,
+   "landau_ms": 54.837240469449924,
+   "landau_over_c": 0.20013591412208,
+   "k_range_max": 2.218
+  },
+  {
+   "P_bar": 10.01,
+   "c_ultrasound_ms": 302.3,
+   "roton_k": 1.982,
+   "roton_E_meV": 0.6882,
+   "landau_k": 2.028,
+   "landau_ms": 52.04315069237089,
+   "landau_over_c": 0.1721572963690734,
+   "k_range_max": 2.228
+  },
+  {
+   "P_bar": 24.08,
+   "c_ultrasound_ms": 361.9,
+   "roton_k": 2.048,
+   "roton_E_meV": 0.6256,
+   "landau_k": 2.084,
+   "landau_ms": 46.073753697662745,
+   "landau_over_c": 0.12731073141106036,
+   "k_range_max": 2.248
+  }
+ ],
+ "pLandau0": {
+  "tex": "57.9",
+  "value": 57.9
+ },
+ "pLandau24": {
+  "tex": "46.1",
+  "value": 46.1
+ },
+ "pRatio0": {
+  "tex": "0.243",
+  "value": 0.243
+ },
+ "pRatio24": {
+  "tex": "0.127",
+  "value": 0.127
+ },
+ "pC24": {
+  "tex": "362",
+  "value": 362.0
+ },
+ "pCrise": {
+  "tex": "52",
+  "value": 52.0
+ },
+ "pRoton24": {
+  "tex": "0.626",
+  "value": 0.626
+ },
+ "pKR24": {
+  "tex": "2.05",
+  "value": 2.05
+ },
+ "pP24": {
+  "tex": "24.08",
+  "value": 24.08
+ },
+ "pKmaxRange": {
+  "tex": "2.2",
+  "value": 2.2
+ },
+ "nModesMain": {
+  "tex": "3208",
+  "value": 3208.0
+ },
+ "nmodesRetained": {
+  "tex": "3209",
+  "value": 3209.0
+ },
+ "nModesG2": {
+  "tex": "796",
+  "value": 796.0
+ },
+ "Tmain": {
+  "tex": "300",
+  "value": 300.0
+ },
+ "nGolden": {
+  "tex": "28",
+  "value": 28.0
+ },
+ "secRun": {
+  "tex": "65",
+  "value": 65.0
+ },
+ "secFit": {
+  "tex": "12",
+  "value": 12.0
+ },
+ "medMain": {
+  "tex": "0.60",
+  "value": 0.6
+ },
+ "p99Main": {
+  "tex": "8.5",
+  "value": 8.5
+ },
+ "maxMain": {
+  "tex": "26",
+  "value": 26.0
+ },
+ "medG2": {
+  "tex": "0.42",
+  "value": 0.42
+ },
+ "medSplit": {
+  "tex": "1.2",
+  "value": 1.2
+ },
+ "medLowK": {
+  "tex": "3.8",
+  "value": 3.8
+ },
+ "medHighK": {
+  "tex": "0.33",
+  "value": 0.33
+ },
+ "nBand": {
+  "tex": "3128",
+  "value": 3128.0
+ },
+ "zMin": {
+  "tex": "-0.976",
+  "value": -0.976
+ },
+ "zMax": {
+  "tex": "-0.488",
+  "value": -0.488
+ },
+ "zDev": {
+  "tex": "0.009",
+  "value": 0.009
+ },
+ "ladA": {
+  "tex": "\\ensuremath{3.6\\times10^{-7}}",
+  "value": 3.6e-07
+ },
+ "ladB": {
+  "tex": "\\ensuremath{2.3\\times10^{-8}}",
+  "value": 2.2999999999999998e-08
+ },
+ "ladC": {
+  "tex": "\\ensuremath{1.4\\times10^{-9}}",
+  "value": 1.4e-09
+ },
+ "ratioA": {
+  "tex": "15.6",
+  "value": 15.6
+ },
+ "ratioB": {
+  "tex": "16.8",
+  "value": 16.8
+ },
+ "ladVsFit": {
+  "tex": "26",
+  "value": 26.0
+ },
+ "collapseA": {
+  "tex": "\\ensuremath{2.6\\times10^{-5}}",
+  "value": 2.6000000000000002e-05
+ },
+ "collapseB": {
+  "tex": "\\ensuremath{1.7\\times10^{-5}}",
+  "value": 1.7e-05
+ },
+ "labK": {
+  "tex": "1.571",
+  "value": 1.571
+ },
+ "labOmega": {
+  "tex": "1.9974",
+  "value": 1.9974
+ },
+ "labPeakA": {
+  "tex": "-2.9975",
+  "value": -2.9975
+ },
+ "labPeakB": {
+  "tex": "0.9974",
+  "value": 0.9974
+ },
+ "labExpA": {
+  "tex": "-2.9974",
+  "value": -2.9974
+ },
+ "labExpB": {
+  "tex": "0.9974",
+  "value": 0.9974
+ },
+ "ampK1": {
+  "tex": "0.393",
+  "value": 0.393
+ },
+ "ampK2": {
+  "tex": "1.571",
+  "value": 1.571
+ },
+ "ampS1": {
+  "tex": "\\ensuremath{-2.7\\times10^{-5}}",
+  "value": null
+ },
+ "ampS2": {
+  "tex": "\\ensuremath{-2.6\\times10^{-3}}",
+  "value": null
+ },
+ "ampS3": {
+  "tex": "\\ensuremath{-2.2\\times10^{-2}}",
+  "value": null
+ },
+ "ampS3pct": {
+  "tex": "2.2",
+  "value": 2.2
+ },
+ "ampR1": {
+  "tex": "0.19",
+  "value": 0.19
+ },
+ "unkMain": {
+  "tex": "6\\,418",
+  "value": 6418
+ },
+ "relSys": {
+  "tex": "2.1\\times10^{-3}",
+  "value": 0.0021
+ },
+ "phaseMaxRatio": {
+  "tex": "1.054",
+  "value": 1.054
+ },
+ "vgKcut": {
+  "tex": "3.19",
+  "value": 3.19
+ },
+ "ringRmin": {
+  "tex": "11",
+  "value": 11.0
+ },
+ "ringRmax": {
+  "tex": "28",
+  "value": 28.0
+ },
+ "ringKmin": {
+  "tex": "0.8",
+  "value": 0.8
+ },
+ "ringKmax": {
+  "tex": "3.1",
+  "value": 3.1
+ },
+ "ringMed": {
+  "tex": "3.4",
+  "value": 3.4
+ },
+ "ringMax": {
+  "tex": "13",
+  "value": 13.0
+ },
+ "cvN": {
+  "tex": "16",
+  "value": 16.0
+ },
+ "cvModes": {
+  "tex": "49",
+  "value": 49.0
+ },
+ "cvUnknowns": {
+  "tex": "98",
+  "value": 98.0
+ },
+ "cvT": {
+  "tex": "20",
+  "value": 20.0
+ },
+ "cvRustSec": {
+  "tex": "0.3",
+  "value": 0.3
+ },
+ "cvRk4Dt": {
+  "tex": "\\ensuremath{5.3\\times10^{-7}}",
+  "value": 5.3e-07
+ },
+ "cvEta": {
+  "tex": "10^{-4}",
+  "value": null
+ },
+ "cvErr4": {
+  "tex": "\\ensuremath{7.8\\times10^{-4}}",
+  "value": 0.00078
+ },
+ "cvErr6": {
+  "tex": "\\ensuremath{2.7\\times10^{-5}}",
+  "value": 2.7000000000000002e-05
+ },
+ "cvErr8": {
+  "tex": "\\ensuremath{2.7\\times10^{-7}}",
+  "value": 2.7e-07
+ },
+ "cvErr10": {
+  "tex": "\\ensuremath{3.3\\times10^{-9}}",
+  "value": 3.3e-09
+ },
+ "cvBogMax": {
+  "tex": "\\ensuremath{3.3\\times10^{-4}}",
+  "value": 0.00033
+ },
+ "cvPerMin": {
+  "tex": "1.3",
+  "value": 1.3
+ },
+ "cvPerMax": {
+  "tex": "6.4",
+  "value": 6.4
+ },
+ "cvFineErr": {
+  "tex": "\\ensuremath{2.1\\times10^{-9}}",
+  "value": 2.1e-09
+ },
+ "cvBestTol": {
+  "tex": "\\ensuremath{10^{-10}}",
+  "value": null
+ },
+ "cvBestErr": {
+  "tex": "\\ensuremath{3.3\\times10^{-9}}",
+  "value": 3.3e-09
+ },
+ "cvBestTraj": {
+  "tex": "\\ensuremath{8.0\\times10^{-7}}",
+  "value": 8e-07
+ },
+ "cvScale8": {
+  "tex": "365",
+  "value": 365.0
+ },
+ "cvScale16": {
+  "tex": "710",
+  "value": 710.0
+ },
+ "cvScale32": {
+  "tex": "2\\,291",
+  "value": 2291.0
+ },
+ "cvScaleSec8": {
+  "tex": "0.2",
+  "value": 0.2
+ },
+ "cvScaleSec16": {
+  "tex": "0.5",
+  "value": 0.5
+ },
+ "cvScaleSec32": {
+  "tex": "9.4",
+  "value": 9.4
+ },
+ "cvScaleUnk8": {
+  "tex": "26",
+  "value": 26.0
+ },
+ "cvScaleUnk16": {
+  "tex": "98",
+  "value": 98.0
+ },
+ "cvScaleUnk32": {
+  "tex": "394",
+  "value": 394.0
+ },
+ "unkRatio": {
+  "tex": "16",
+  "value": 16.0
+ },
+ "cvSmallN": {
+  "tex": "8",
+  "value": 8.0
+ },
+ "cvGrowOldA": {
+  "tex": "7",
+  "value": 7.0
+ },
+ "cvGrowOldB": {
+  "tex": "9",
+  "value": 9.0
+ },
+ "cvOldFallA": {
+  "tex": "11",
+  "value": 11.0
+ },
+ "cvOldFallB": {
+  "tex": "10",
+  "value": 10.0
+ },
+ "cvOldDate": {
+  "tex": "26 September 2026",
+  "value": null
+ },
+ "cvRatio4": {
+  "tex": "2",
+  "value": 2.0
+ },
+ "cvRatio6": {
+  "tex": "14",
+  "value": 14.0
+ },
+ "cvOldErr6": {
+  "tex": "\\ensuremath{1.7\\times10^{-3}}",
+  "value": 0.0017
+ },
+ "cvNewErr6": {
+  "tex": "\\ensuremath{1.7\\times10^{-5}}",
+  "value": 1.7e-05
+ },
+ "cvRatio8": {
+  "tex": "92",
+  "value": 92.0
+ },
+ "cvode": {
+  "new": {
+   "tag": "new",
+   "main": {
+    "N": 16,
+    "L": 16.0,
+    "g": 1.0,
+    "T": 20.0,
+    "dts": 0.4,
+    "eta": 0.0001,
+    "seed": 3,
+    "dt_rk": 0.01,
+    "n_modes": 49,
+    "n_modes_fitted": 48,
+    "n_unknowns": 98,
+    "distinct_k": [
+     0.392699,
+     0.55536,
+     0.785398,
+     0.878102,
+     1.110721,
+     1.178097,
+     1.241824,
+     1.415897,
+     1.570796
+    ],
+    "n_samples": 51,
+    "seconds_rust_rk4": 0.26,
+    "rusty_sundials_file": "/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/rs_py/rusty_sundials.so",
+    "rk4_vs_bogoliubov_max": 0.00033342197190555645,
+    "rk4_vs_bogoliubov_median": 7.811076087649305e-05,
+    "rk4_dt_vs_dt4_max": 5.296170385357254e-07,
+    "ladder": [
+     {
+      "rtol": 0.0001,
+      "atol": 1.0000000000000001e-07,
+      "rhs_calls": 6229,
+      "seconds": 4.85,
+      "omega_max_rel_vs_fine_rk4": 0.0007754073196446758,
+      "omega_median_rel_vs_fine_rk4": 0.0005102161960985086,
+      "omega_max_rel_vs_bogoliubov": 0.0008714253838906227,
+      "trajectory_max_rel": 0.07654877318697907
+     },
+     {
+      "rtol": 1e-06,
+      "atol": 1e-09,
+      "rhs_calls": 6948,
+      "seconds": 5.41,
+      "omega_max_rel_vs_fine_rk4": 2.7201184167792242e-05,
+      "omega_median_rel_vs_fine_rk4": 1.3759211942779438e-05,
+      "omega_max_rel_vs_bogoliubov": 0.0003409043883284557,
+      "trajectory_max_rel": 0.0015650724216348412
+     },
+     {
+      "rtol": 1e-08,
+      "atol": 1.0000000000000001e-11,
+      "rhs_calls": 8313,
+      "seconds": 6.98,
+      "omega_max_rel_vs_fine_rk4": 2.6902621125996176e-07,
+      "omega_median_rel_vs_fine_rk4": 1.1816872791599106e-07,
+      "omega_max_rel_vs_bogoliubov": 0.0003334799127410193,
+      "trajectory_max_rel": 1.766226013791305e-05
+     },
+     {
+      "rtol": 1e-10,
+      "atol": 1e-13,
+      "rhs_calls": 10158,
+      "seconds": 7.56,
+      "omega_max_rel_vs_fine_rk4": 3.347550401810045e-09,
+      "omega_median_rel_vs_fine_rk4": 9.970432506352949e-10,
+      "omega_max_rel_vs_bogoliubov": 0.0003334242848165303,
+      "trajectory_max_rel": 7.992663452849287e-07
+     }
+    ]
+   },
+   "small": {
+    "N": 8,
+    "L": 8.0,
+    "g": 1.0,
+    "T": 4.0,
+    "dts": 0.4,
+    "eta": 0.0001,
+    "seed": 3,
+    "dt_rk": 0.01,
+    "n_modes": 13,
+    "n_modes_fitted": 12,
+    "n_unknowns": 26,
+    "distinct_k": [
+     0.785398,
+     1.110721,
+     1.570796
+    ],
+    "n_samples": 11,
+    "seconds_rust_rk4": 0.01,
+    "rusty_sundials_file": "/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/rs_py/rusty_sundials.so",
+    "rk4_vs_bogoliubov_max": 0.00048611617417404496,
+    "rk4_vs_bogoliubov_median": 4.2477637656079814e-05,
+    "rk4_dt_vs_dt4_max": 2.2191736947270944e-09,
+    "ladder": [
+     {
+      "rtol": 0.0001,
+      "atol": 1.0000000000000001e-07,
+      "rhs_calls": 599,
+      "seconds": 0.35,
+      "omega_max_rel_vs_fine_rk4": 0.0003841627987290848,
+      "omega_median_rel_vs_fine_rk4": 0.0002378006569123836,
+      "omega_max_rel_vs_bogoliubov": 0.00038919199162146256,
+      "trajectory_max_rel": 0.005893158525888037
+     },
+     {
+      "rtol": 1e-06,
+      "atol": 1e-09,
+      "rhs_calls": 718,
+      "seconds": 0.34,
+      "omega_max_rel_vs_fine_rk4": 1.6558348716224184e-05,
+      "omega_median_rel_vs_fine_rk4": 7.563695623597424e-06,
+      "omega_max_rel_vs_bogoliubov": 0.0005015331151287938,
+      "trajectory_max_rel": 0.00014342253270279681
+     },
+     {
+      "rtol": 1e-08,
+      "atol": 1.0000000000000001e-11,
+      "rhs_calls": 992,
+      "seconds": 0.45,
+      "omega_max_rel_vs_fine_rk4": 3.4902910670666877e-07,
+      "omega_median_rel_vs_fine_rk4": 5.454136316003386e-08,
+      "omega_max_rel_vs_bogoliubov": 0.0004862445884770139,
+      "trajectory_max_rel": 2.0794933498780272e-06
+     }
+    ]
+   },
+   "scaling": [
+    {
+     "N": 8,
+     "L": 8.0,
+     "g": 1.0,
+     "T": 2.0,
+     "dts": 0.4,
+     "eta": 0.0001,
+     "seed": 3,
+     "dt_rk": 0.01,
+     "n_modes": 13,
+     "n_modes_fitted": 12,
+     "n_unknowns": 26,
+     "distinct_k": [
+      0.785398,
+      1.110721,
+      1.570796
+     ],
+     "n_samples": 6,
+     "seconds_rust_rk4": 0.0,
+     "rusty_sundials_file": "/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/rs_py/rusty_sundials.so",
+     "rk4_vs_bogoliubov_max": 0.0005598579965653272,
+     "rk4_vs_bogoliubov_median": 0.00010373550319692226,
+     "rk4_dt_vs_dt4_max": 2.2212952299096738e-09,
+     "ladder": [
+      {
+       "rtol": 1e-06,
+       "atol": 1e-09,
+       "rhs_calls": 365,
+       "seconds": 0.19,
+       "omega_max_rel_vs_fine_rk4": 1.9076186091432826e-05,
+       "omega_median_rel_vs_fine_rk4": 4.3853012872973275e-06,
+       "omega_max_rel_vs_bogoliubov": 0.0005789351210487848,
+       "trajectory_max_rel": 8.045436330721187e-05
+      }
+     ]
+    },
+    {
+     "N": 16,
+     "L": 16.0,
+     "g": 1.0,
+     "T": 2.0,
+     "dts": 0.4,
+     "eta": 0.0001,
+     "seed": 3,
+     "dt_rk": 0.01,
+     "n_modes": 49,
+     "n_modes_fitted": 48,
+     "n_unknowns": 98,
+     "distinct_k": [
+      0.392699,
+      0.55536,
+      0.785398,
+      0.878102,
+      1.110721,
+      1.178097,
+      1.241824,
+      1.415897,
+      1.570796
+     ],
+     "n_samples": 6,
+     "seconds_rust_rk4": 0.01,
+     "rusty_sundials_file": "/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/rs_py/rusty_sundials.so",
+     "rk4_vs_bogoliubov_max": 0.00305885747064627,
+     "rk4_vs_bogoliubov_median": 0.0002574306926358405,
+     "rk4_dt_vs_dt4_max": 4.4654339912423884e-06,
+     "ladder": [
+      {
+       "rtol": 1e-06,
+       "atol": 1e-09,
+       "rhs_calls": 710,
+       "seconds": 0.51,
+       "omega_max_rel_vs_fine_rk4": 2.929128675544858e-05,
+       "omega_median_rel_vs_fine_rk4": 1.1170085952617716e-05,
+       "omega_max_rel_vs_bogoliubov": 0.0030388795721860706,
+       "trajectory_max_rel": 0.00014395530609391565
+      }
+     ]
+    },
+    {
+     "N": 32,
+     "L": 16.0,
+     "g": 1.0,
+     "T": 2.0,
+     "dts": 0.4,
+     "eta": 0.0001,
+     "seed": 3,
+     "dt_rk": 0.01,
+     "n_modes": 197,
+     "n_modes_fitted": 196,
+     "n_unknowns": 394,
+     "distinct_k": [
+      0.392699,
+      0.55536,
+      0.785398,
+      0.878102,
+      1.110721,
+      1.178097,
+      1.241824,
+      1.415897,
+      1.570796,
+      1.61914,
+      1.666081,
+      1.756204,
+      1.963495,
+      2.00238,
+      2.114749,
+      2.221441,
+      2.289809,
+      2.356194,
+      2.388695,
+      2.483647,
+      2.514501,
+      2.634306,
+      2.748894,
+      2.776802,
+      2.831793,
+      2.858892,
+      2.990707,
+      3.067078,
+      3.141593
+     ],
+     "n_samples": 6,
+     "seconds_rust_rk4": 0.04,
+     "rusty_sundials_file": "/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/rs_py/rusty_sundials.so",
+     "rk4_vs_bogoliubov_max": 0.0054579393265672405,
+     "rk4_vs_bogoliubov_median": 0.00022033672976717877,
+     "rk4_dt_vs_dt4_max": 6.026106005717817e-08,
+     "ladder": [
+      {
+       "rtol": 1e-06,
+       "atol": 1e-09,
+       "rhs_calls": 2291,
+       "seconds": 9.43,
+       "omega_max_rel_vs_fine_rk4": 3.292658749693064e-05,
+       "omega_median_rel_vs_fine_rk4": 5.595845403570223e-06,
+       "omega_max_rel_vs_bogoliubov": 0.005457539526948496,
+       "trajectory_max_rel": 0.00037903502157853324
+      }
+     ]
+    }
+   ]
+  },
+  "old": {
+   "tag": "old",
+   "small": {
+    "N": 8,
+    "L": 8.0,
+    "g": 1.0,
+    "T": 4.0,
+    "dts": 0.4,
+    "eta": 0.0001,
+    "seed": 3,
+    "dt_rk": 0.01,
+    "n_modes": 13,
+    "n_modes_fitted": 12,
+    "n_unknowns": 26,
+    "distinct_k": [
+     0.785398,
+     1.110721,
+     1.570796
+    ],
+    "n_samples": 11,
+    "seconds_rust_rk4": 0.01,
+    "rusty_sundials_file": "/home/xavkal/xdev/SocrateAI-Scientific-QuantumFluids/.venv/lib/python3.12/site-packages/rusty_sundials/__init__.py",
+    "rk4_vs_bogoliubov_max": 0.00048611617417404496,
+    "rk4_vs_bogoliubov_median": 4.2477637656079814e-05,
+    "rk4_dt_vs_dt4_max": 2.2191736947270944e-09,
+    "ladder": [
+     {
+      "rtol": 0.0001,
+      "atol": 1.0000000000000001e-07,
+      "rhs_calls": 1361,
+      "seconds": 0.71,
+      "omega_max_rel_vs_fine_rk4": 0.01869280921713445,
+      "omega_median_rel_vs_fine_rk4": 0.012591845147313636,
+      "omega_max_rel_vs_bogoliubov": 0.018731020245730257,
+      "trajectory_max_rel": 0.30542268630071984
+     },
+     {
+      "rtol": 1e-06,
+      "atol": 1e-09,
+      "rhs_calls": 9730,
+      "seconds": 8.26,
+      "omega_max_rel_vs_fine_rk4": 0.0017034546079129707,
+      "omega_median_rel_vs_fine_rk4": 0.001258563290652516,
+      "omega_max_rel_vs_bogoliubov": 0.0017416656365087935,
+      "trajectory_max_rel": 0.03474978111087803
+     },
+     {
+      "rtol": 1e-08,
+      "atol": 1.0000000000000001e-11,
+      "rhs_calls": 91519,
+      "seconds": 85.74,
+      "omega_max_rel_vs_fine_rk4": 0.00016866493155769352,
+      "omega_median_rel_vs_fine_rk4": 0.0001258627712535303,
+      "omega_max_rel_vs_bogoliubov": 0.0003981894564915045,
+      "trajectory_max_rel": 0.003522404250784269
+     }
+    ]
+   }
+  },
+  "module_new_file": "/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/rs_py/rusty_sundials.so",
+  "module_old_file": "/home/xavkal/xdev/SocrateAI-Scientific-QuantumFluids/.venv/lib/python3.12/site-packages/rusty_sundials/__init__.py",
+  "module_new_sha256": "0bdb1b4a504fb4817738c483f797e6a109b99121b666f1e51ad8e05c2fb996d7",
+  "module_old_sha256": "9fbd09e985c2faf0ae858d8229e2b38eb7ef5b6c7bb2324f948c16f7c7cc81a5",
+  "module_old_so": "/home/xavkal/xdev/SocrateAI-Scientific-QuantumFluids/.venv/lib/python3.12/site-packages/rusty_sundials/rusty_sundials.cpython-312-x86_64-linux-gnu.so",
+  "module_old_mtime": "2026-09-26 15:00:05.984840",
+  "editor_build_sha256": "0bdb1b4a504fb4817738c483f797e6a109b99121b666f1e51ad8e05c2fb996d7",
+  "note": "new build = rusty-SUNDIALS commit 5db8041 (byte-identical to /mnt/data/xdev-cache/rs_py_5db8041); old = the stale module of the project venv, run on purpose for the old/new comparison"
+ },
+ "nAxiomLines": {
+  "tex": "15",
+  "value": 15.0
+ },
+ "lean": {
+  "axiom_lines": 15,
+  "no_sorry": true,
+  "log": "Ch05_BogoliubovDispersion.compile.log"
+ },
+ "meta": {
+  "note": "numbers quoted by chapters/ch05.tex; macros in ch05_numbers.tex",
+  "machine": "shared 8-core machine, load average 10-36 during runs"
+ },
+ "helium_features": {
+  "table_rows": 1727,
+  "k_min": 0.0,
+  "k_max": 3.6,
+  "e_at_kmax_meV": 1.5538,
+  "rows_with_error": 34,
+  "c_ms": 238.3,
+  "hbar_c_meV_A": 1.5685190934140107,
+  "hbar2_over_2m4_meV_A2": 0.5221800751794478,
+  "K_per_meV": 11.60451812155008,
+  "kstar_A_inv": 3.003789627313887,
+  "alpha2_bogoliubov_barem_A2": 0.055415464490687946,
+  "alpha2_measured_A2": 1.55,
+  "alpha2_ratio": 27.970531587991346,
+  "density_A3": 0.021836,
+  "maxon_grid_k": 1.114,
+  "maxon_grid_e_meV": 1.1914,
+  "maxon_fit_k": 1.1054551317952426,
+  "maxon_fit_e_meV": 1.190737210426765,
+  "maxon_mass_over_m4": -0.5479960497789563,
+  "roton_grid_k": 1.92,
+  "roton_grid_e_meV": 0.7413,
+  "roton_fit_k": 1.9173609978251716,
+  "roton_fit_e_meV": 0.7418570101775542,
+  "roton_gap_K": 8.60889311820439,
+  "roton_mass_over_m4": 0.14120877369791715,
+  "landau_k_A_inv": 1.966,
+  "landau_meV_A": 0.3810274669379451,
+  "landau_velocity_ms": 57.88826272664694,
+  "landau_over_c": 0.24292179071190492,
+  "landau_quadratic_roton_k": 1.971513006631308,
+  "landau_quadratic_roton_ms": 57.881495304950946,
+  "roton_grid_gap_K": 8.602429283505074,
+  "vph_at_k_0p01_ms": 238.52498931694427,
+  "paper_roton": {
+   "gap_meV": 0.7418,
+   "k": 1.918,
+   "mu": 0.141
+  },
+  "paper_maxon": {
+   "e_meV": 1.191,
+   "k": 1.103,
+   "mu": -0.545
+  },
+  "phase_velocity_over_c_at_0.3": 1.0493974902258574,
+  "phase_velocity_over_c_at_0.5": 1.0251708166969493,
+  "phase_velocity_over_c_at_1.0": 0.7528757571128281,
+  "phase_velocity_max_over_c": 1.0543292964221536,
+  "phase_velocity_max_at_k": 0.348,
+  "debye_k_A_inv": 1.089451815987481,
+  "k_group_series": 0.4037589790401407,
+  "k_group_series_other_root": 1.0014584122642072,
+  "k_sym_series": 0.4553006405035795,
+  "k_sym_series_other_root": 1.184119649351493,
+  "k_phase_series": 0.5661245026817815,
+  "k_phase_series_other_root": 1.1903972364486535,
+  "k_group_shift_max": 0.0018897796915574583,
+  "k_phase_shift_max": 0.004614414354440655,
+  "k_sym_table_crossings": [
+   0.45299999999999996
+  ],
+  "sym_excess_max_ueV": 14.500000000000068,
+  "sym_excess_max_at_k": 0.306,
+  "paper_relative_energy_systematic": 0.0021,
+  "series_minus_table_max_ueV_025_05": 2.153569235270325,
+  "series_minus_table_rms_ueV_025_05": 0.7756946568182718
+ }
+}

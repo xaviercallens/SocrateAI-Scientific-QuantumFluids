@@ -1,0 +1,30 @@
+'QuantumFluids.VortexWinding.two_pi_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.VortexWinding.pdiff_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.VortexWinding.pdiff_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.VortexWinding.loop_sum_eq_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.VortexWinding.pdiff_add_rev_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.VortexWinding.pdiff_add_rev' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.VortexWinding.pdiff_add_rev_eq_two_pi_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.VortexWinding.balanced_sum_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.VortexWinding.cut_free_of_ne_pi' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|33|17|8|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.VortexWinding.Balanced.mk.inj|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.VortexWinding.pdiff_eq|49|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.VortexWinding.balanced_sum_eq_zero|137|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.VortexWinding.Balanced.mk.sizeOf_spec|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.VortexWinding.Balanced.mk.injEq|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.VortexWinding.two_pi_pos|37|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.VortexWinding.pdiff_mem|43|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.VortexWinding.pdiff_add_rev_eq_two_pi_iff|101|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.VortexWinding.cut_free_of_ne_pi|156|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.VortexWinding.pdiff_add_rev|77|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.VortexWinding.loop_sum_eq_mul|54|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.VortexWinding.pdiff_add_rev_eq|69|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.VortexWinding.Balanced.rev_start|134|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.VortexWinding.Balanced.no_fix|133|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.VortexWinding.pdiff.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.VortexWinding.Balanced.invol|132|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.VortexWinding.Balanced.rev_end|135|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 49.597

@@ -1,0 +1,617 @@
+{
+ "_comment": "Verdicts of the criteria that LEDGER.md records one by one, per campaign. v: P = met as registered, F = not met / refuted, M = mixed, partial or inconclusive, V = voided or withdrawn later, N = not run. Every cell is read from the ledger row(s) named in 'claims'; unlabeled cells ('') are criteria the ledger counts but does not name. Selection rule: all campaigns of the programme whose per-criterion outcomes are given in the ledger text; criteria not itemised there are not shown. 'check' is a phrase that must occur in the ledger text of one of the claims (verified by ch10_verdicts.py).",
+ "rows": [
+  {
+   "id": "tda_floor",
+   "title": "TDA vortex floor",
+   "date": "2026-09-20",
+   "claims": [
+    "CLAIM-T1",
+    "CLAIM-T2",
+    "CLAIM-T3"
+   ],
+   "check": "HYPOTHESIS REFUTED",
+   "cells": [
+    {
+     "l": "T1",
+     "v": "M"
+    },
+    {
+     "l": "T2a",
+     "v": "P"
+    },
+    {
+     "l": "T2b",
+     "v": "F"
+    },
+    {
+     "l": "T3",
+     "v": "F"
+    }
+   ]
+  },
+  {
+   "id": "kinetic",
+   "title": "Kinetic benchmark\nand TDA instruments",
+   "date": "2026-09-21",
+   "claims": [
+    "CLAIM-028"
+   ],
+   "check": "25 criteria, 14 met, 11 not",
+   "cells": [
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "F"
+    },
+    {
+     "l": "",
+     "v": "F"
+    },
+    {
+     "l": "",
+     "v": "F"
+    },
+    {
+     "l": "",
+     "v": "F"
+    },
+    {
+     "l": "",
+     "v": "F"
+    },
+    {
+     "l": "",
+     "v": "F"
+    },
+    {
+     "l": "",
+     "v": "F"
+    },
+    {
+     "l": "",
+     "v": "F"
+    },
+    {
+     "l": "",
+     "v": "F"
+    },
+    {
+     "l": "",
+     "v": "F"
+    },
+    {
+     "l": "",
+     "v": "F"
+    }
+   ],
+   "note": "25 criteria, 14 met"
+  },
+  {
+   "id": "closed_loop",
+   "title": "Closed loop:\ndiagrams, W1 certificates",
+   "date": "2026-09-22",
+   "claims": [
+    "CLAIM-032"
+   ],
+   "check": "14 PASS out of 14 applicable lines",
+   "cells": [
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "P"
+    },
+    {
+     "l": "",
+     "v": "P"
+    }
+   ],
+   "note": "14 lines met; 1 certificate re-scoped later"
+  },
+  {
+   "id": "bkt",
+   "title": "BKT gate and duality",
+   "date": "2026-09-24",
+   "claims": [
+    "CLAIM-038"
+   ],
+   "check": "NOT RUN: B5",
+   "cells": [
+    {
+     "l": "B3",
+     "v": "P"
+    },
+    {
+     "l": "D1",
+     "v": "P"
+    },
+    {
+     "l": "D2",
+     "v": "P"
+    },
+    {
+     "l": "T1a",
+     "v": "P"
+    },
+    {
+     "l": "T1c",
+     "v": "P"
+    },
+    {
+     "l": "B1",
+     "v": "M"
+    },
+    {
+     "l": "D3",
+     "v": "M"
+    },
+    {
+     "l": "B2",
+     "v": "F"
+    },
+    {
+     "l": "B4",
+     "v": "F"
+    },
+    {
+     "l": "T1b",
+     "v": "F"
+    },
+    {
+     "l": "B5",
+     "v": "N"
+    }
+   ]
+  },
+  {
+   "id": "torus",
+   "title": "Round 4: the torus test",
+   "date": "2026-09-26",
+   "claims": [
+    "CLAIM-049"
+   ],
+   "check": "3 of 4 pass; B2 fails a threshold",
+   "cells": [
+    {
+     "l": "B1",
+     "v": "P"
+    },
+    {
+     "l": "B3",
+     "v": "P"
+    },
+    {
+     "l": "B4",
+     "v": "P"
+    },
+    {
+     "l": "B2",
+     "v": "F"
+    }
+   ]
+  },
+  {
+   "id": "finite_size",
+   "title": "Round 3: finite-size ladder",
+   "date": "2026-09-26",
+   "claims": [
+    "CLAIM-048",
+    "CLAIM-065",
+    "CLAIM-067",
+    "CLAIM-084"
+   ],
+   "check": "E1 PASS (6/6) / E2 FAIL (one run) / E3 PASS",
+   "cells": [
+    {
+     "l": "C adm.",
+     "v": "F"
+    },
+    {
+     "l": "C1",
+     "v": "F"
+    },
+    {
+     "l": "C2",
+     "v": "M"
+    },
+    {
+     "l": "C3",
+     "v": "M"
+    },
+    {
+     "l": "E1",
+     "v": "P"
+    },
+    {
+     "l": "E2",
+     "v": "F"
+    },
+    {
+     "l": "E3",
+     "v": "P"
+    }
+   ]
+  },
+  {
+   "id": "onsager",
+   "title": "Onsager-cluster test",
+   "date": "2026-10-04",
+   "claims": [
+    "CLAIM-069"
+   ],
+   "check": "P1 (S_q(k1)>1, charge separation) FAIL",
+   "cells": [
+    {
+     "l": "P1",
+     "v": "F"
+    },
+    {
+     "l": "P2",
+     "v": "F"
+    },
+    {
+     "l": "P3",
+     "v": "F"
+    },
+    {
+     "l": "P4",
+     "v": "P"
+    },
+    {
+     "l": "C0",
+     "v": "P"
+    }
+   ]
+  },
+  {
+   "id": "gates",
+   "title": "Transport gates",
+   "date": "2026-10-05",
+   "claims": [
+    "CLAIM-075",
+    "CLAIM-078",
+    "CLAIM-079",
+    "CLAIM-080",
+    "CLAIM-098"
+   ],
+   "check": "G0's 15 % energy criterion passes on 2 of 12 seeds",
+   "cells": [
+    {
+     "l": "KA",
+     "v": "V"
+    },
+    {
+     "l": "G0 #1",
+     "v": "F"
+    },
+    {
+     "l": "G0 #2",
+     "v": "P"
+    },
+    {
+     "l": "G1 #1",
+     "v": "F"
+    },
+    {
+     "l": "G1 #2",
+     "v": "P"
+    },
+    {
+     "l": "G2",
+     "v": "P"
+    },
+    {
+     "l": "G0 ×12",
+     "v": "F"
+    }
+   ]
+  },
+  {
+   "id": "dielectric",
+   "title": "Finite-k dielectric relation",
+   "date": "2026-10-05",
+   "claims": [
+    "CLAIM-078",
+    "CLAIM-079",
+    "CLAIM-085"
+   ],
+   "check": "D1 FAIL (1/6) / D2 FAIL (1/6)",
+   "cells": [
+    {
+     "l": "dG1",
+     "v": "F"
+    },
+    {
+     "l": "dG1′",
+     "v": "F"
+    },
+    {
+     "l": "dG1″",
+     "v": "F"
+    },
+    {
+     "l": "dG2′",
+     "v": "F"
+    },
+    {
+     "l": "dG2″",
+     "v": "F"
+    },
+    {
+     "l": "D1",
+     "v": "F"
+    },
+    {
+     "l": "D2",
+     "v": "F"
+    },
+    {
+     "l": "D4",
+     "v": "P"
+    }
+   ]
+  },
+  {
+   "id": "production",
+   "title": "Transport production",
+   "date": "2026-10-06",
+   "claims": [
+    "CLAIM-081",
+    "CLAIM-092"
+   ],
+   "check": "REFUTED (1 of 4 runs meet the no-stall criterion",
+   "cells": [
+    {
+     "l": "F1′",
+     "v": "P"
+    },
+    {
+     "l": "F2",
+     "v": "P"
+    },
+    {
+     "l": "F3",
+     "v": "P"
+    },
+    {
+     "l": "W3",
+     "v": "P"
+    },
+    {
+     "l": "H03",
+     "v": "F"
+    },
+    {
+     "l": "W2",
+     "v": "F"
+    },
+    {
+     "l": "H02",
+     "v": "M"
+    },
+    {
+     "l": "W1",
+     "v": "M"
+    }
+   ]
+  },
+  {
+   "id": "friction_law",
+   "title": "Friction law\nagainst the cutoff",
+   "date": "2026-10-08",
+   "claims": [
+    "CLAIM-096",
+    "CLAIM-097"
+   ],
+   "check": "FL2 FAILS",
+   "cells": [
+    {
+     "l": "FL1",
+     "v": "P"
+    },
+    {
+     "l": "FL2",
+     "v": "F"
+    },
+    {
+     "l": "c∝k",
+     "v": "F"
+    },
+    {
+     "l": "1 c",
+     "v": "F"
+    },
+    {
+     "l": "H-T",
+     "v": "M"
+    }
+   ]
+  },
+  {
+   "id": "scattering",
+   "title": "Vortex-phonon scattering",
+   "date": "2026-10-09",
+   "claims": [
+    "CLAIM-101",
+    "CLAIM-105"
+   ],
+   "check": "L2a, L2b, L2c FAIL",
+   "cells": [
+    {
+     "l": "KA3",
+     "v": "P"
+    },
+    {
+     "l": "P2",
+     "v": "P"
+    },
+    {
+     "l": "KA1",
+     "v": "F"
+    },
+    {
+     "l": "KA2",
+     "v": "F"
+    },
+    {
+     "l": "KA4",
+     "v": "F"
+    },
+    {
+     "l": "P1",
+     "v": "F"
+    },
+    {
+     "l": "L1",
+     "v": "F"
+    },
+    {
+     "l": "P4′",
+     "v": "M"
+    },
+    {
+     "l": "L2a",
+     "v": "F"
+    },
+    {
+     "l": "L2b",
+     "v": "F"
+    },
+    {
+     "l": "L2c",
+     "v": "F"
+    },
+    {
+     "l": "P4″",
+     "v": "M"
+    }
+   ]
+  },
+  {
+   "id": "external",
+   "title": "External reproduction\n(Kwon & Shin)",
+   "date": "2026-10-09",
+   "claims": [
+    "CLAIM-103",
+    "CLAIM-106"
+   ],
+   "check": "plan A2 criterion (1e-5 to t = 10) NOT met",
+   "cells": [
+    {
+     "l": "init",
+     "v": "P"
+    },
+    {
+     "l": "A2",
+     "v": "F"
+    },
+    {
+     "l": "counts",
+     "v": "M"
+    }
+   ]
+  }
+ ]
+}

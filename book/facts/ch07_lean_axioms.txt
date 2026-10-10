@@ -1,0 +1,59 @@
+# Chapter 7: axiom check of every Lean theorem quoted in chapters/ch07.tex
+# Date: 2026-10-09. Toolchain: Lean 4.34.0-rc2 with the pinned Mathlib (lake env lean in /home/xavkal/xdev/OpenAINavierStokesEuler/NavierStokesAndEuler).
+# The three library modules carry no '#print axioms' lines; scratch copies (module text + one #print axioms line per theorem) were compiled instead.
+# Each compile: exit code 0, no error, no 'sorry' warning. Seconds are wall-clock on the shared machine.
+
+AxDVD exit=0 seconds=37
+AxEin exit=0 seconds=26
+AxFK exit=0 seconds=20
+AxQPB exit=0 seconds=23
+ALLDONE
+
+## AxDVD.lean (scratch copy of DissipativeVortexDynamics.lean)
+'DissipativeVortexDynamics.energy_dissipation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DissipativeVortexDynamics.energy_antitone' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DissipativeVortexDynamics.dissipation_indep_of_skew' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DissipativeVortexDynamics.r2_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DissipativeVortexDynamics.dipole_sq_law' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DissipativeVortexDynamics.dipole_lifetime_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DissipativeVortexDynamics.centre_velocity_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DissipativeVortexDynamics.wind_stall' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DissipativeVortexDynamics.stall_of_drive_sign' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+## AxEin.lean (scratch copy of EinsteinRelation.lean)
+'EinsteinRelation.hasDerivAt_p_x' depends on axioms: [propext, Classical.choice, Quot.sound]
+'EinsteinRelation.hasDerivAt_p_y' depends on axioms: [propext, Classical.choice, Quot.sound]
+'EinsteinRelation.Jx_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'EinsteinRelation.Jy_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'EinsteinRelation.zero_flux_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'EinsteinRelation.einstein_vortex' depends on axioms: [propext, Classical.choice, Quot.sound]
+'EinsteinRelation.flux_gibbs' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+## AxFK.lean (scratch copy of FrictionKinetic.lean)
+/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/lean_ax/AxFK.lean:58:44: warning: Variable name `k` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _k
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+'FrictionKinetic.coeff_eq_weighted_mean' depends on axioms: [propext, Classical.choice, Quot.sound]
+'FrictionKinetic.weighted_mean_mem_Icc' depends on axioms: [propext, Classical.choice, Quot.sound]
+'FrictionKinetic.rayleigh_jeans_mean' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+## AxQPB.lean (scratch copy of QuasiPeriodicBound.lean)
+'QuasiPeriodicBound.trig_sum_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuasiPeriodicBound.increment_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuasiPeriodicBound.msd_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuasiPeriodicBound.random_walk_exceeds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuasiPeriodicBound.not_qp_of_msd_large' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuasiPeriodicBound.relative_equilibrium_dipole' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+## book/lean/Ch07_DissipativePairs.lean (the new module, compiled as is; its own #print axioms lines)
+'QuantumFluids.DissipativePairs.r2_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DissipativePairs.corot_sq_law' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DissipativePairs.roots_spec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DissipativePairs.stall_fence' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DissipativePairs.wind_stall_at_b' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DissipativePairs.wind_no_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.DissipativePairs.stall_needs_start' depends on axioms: [propext, Classical.choice, Quot.sound]
+exit=0 seconds=29

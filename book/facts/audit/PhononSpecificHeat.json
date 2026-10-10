@@ -1,0 +1,169 @@
+{
+ "module": "PhononSpecificHeat",
+ "exit": 0,
+ "compile_s": 84.0,
+ "request_to_done_s": 84.0,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 23,
+  "named_theorems": 14,
+  "named_defs": 1,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.PhononSpecificHeat.bernoulli'_five",
+   "line": 34,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.PhononSpecificHeat.bernoulli'_six",
+   "line": 39,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.PhononSpecificHeat.bernoulli'_seven",
+   "line": 44,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.PhononSpecificHeat.bernoulli'_eight",
+   "line": 49,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.PhononSpecificHeat.bernoulli'_nine",
+   "line": 54,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.PhononSpecificHeat.bernoulli'_ten",
+   "line": 60,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.PhononSpecificHeat.riemannZeta_six",
+   "line": 68,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.PhononSpecificHeat.riemannZeta_eight",
+   "line": 75,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.PhononSpecificHeat.riemannZeta_ten",
+   "line": 82,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.PhononSpecificHeat.thermal_bose_integral",
+   "line": 91,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.PhononSpecificHeat.bose_integral_values",
+   "line": 97,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.PhononSpecificHeat.energyTerm_two",
+   "line": 127,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.PhononSpecificHeat.energyTerm_hasDerivAt",
+   "line": 131,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.PhononSpecificHeat.phonon_specific_heat",
+   "line": 137,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "d8cf5172366694a3",
+  "lines": 185,
+  "imports": [
+   "BoseIntegral",
+   "PhononSeries"
+  ],
+  "theorem_decls": 14,
+  "print_axioms_lines": 14,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 14,
+  "source_unmatched": [],
+  "env_not_in_source": []
+ },
+ "when": "2026-10-10 00:35:26"
+}

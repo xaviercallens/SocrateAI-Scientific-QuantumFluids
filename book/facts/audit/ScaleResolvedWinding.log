@@ -1,0 +1,24 @@
+'QuantumFluids.ScaleResolvedWinding.winding_int' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ScaleResolvedWinding.interior_sum_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ScaleResolvedWinding.stokes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ScaleResolvedWinding.boundary_eq_charge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ScaleResolvedWinding.dipole_invisible' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ScaleResolvedWinding.single_core_visible' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|33|14|12|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.ScaleResolvedWinding.Region.σ_mem|50|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ScaleResolvedWinding.Region.rev_start|53|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ScaleResolvedWinding.Region.mk.inj|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ScaleResolvedWinding.boundary_eq_charge|100|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ScaleResolvedWinding.single_core_visible|114|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ScaleResolvedWinding.Region.invol|51|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ScaleResolvedWinding.Region.rev_end|54|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ScaleResolvedWinding.winding_int|67|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ScaleResolvedWinding.dipole_invisible|107|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ScaleResolvedWinding.stokes|91|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ScaleResolvedWinding.interior_sum_eq_zero|79|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ScaleResolvedWinding.Region.no_fix|52|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ScaleResolvedWinding.Region.mk.sizeOf_spec|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ScaleResolvedWinding.Region.mk.injEq|-1|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 27.119

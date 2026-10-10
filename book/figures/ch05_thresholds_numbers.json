@@ -1,0 +1,15 @@
+{
+ "k_group_series": 0.4037589790401407,
+ "k_sym_series": 0.4553006405035795,
+ "k_phase_series": 0.5661245026817815,
+ "k_group_series_other_root": 1.0014584122642072,
+ "k_sym_series_other_root": 1.184119649351493,
+ "k_phase_series_other_root": 1.1903972364486535,
+ "k_sym_table_crossings": [
+  0.45299999999999996
+ ],
+ "sym_excess_max_ueV": 14.500000000000068,
+ "sym_excess_max_at_k": 0.306,
+ "series_minus_table_max_ueV_025_05": 2.153569235270325,
+ "series_minus_table_rms_ueV_025_05": 0.7756946568182718
+}

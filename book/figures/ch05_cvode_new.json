@@ -1,0 +1,273 @@
+{
+ "tag": "new",
+ "main": {
+  "N": 16,
+  "L": 16.0,
+  "g": 1.0,
+  "T": 20.0,
+  "dts": 0.4,
+  "eta": 0.0001,
+  "seed": 3,
+  "dt_rk": 0.01,
+  "n_modes": 49,
+  "n_modes_fitted": 48,
+  "n_unknowns": 98,
+  "distinct_k": [
+   0.392699,
+   0.55536,
+   0.785398,
+   0.878102,
+   1.110721,
+   1.178097,
+   1.241824,
+   1.415897,
+   1.570796
+  ],
+  "n_samples": 51,
+  "seconds_rust_rk4": 0.26,
+  "rusty_sundials_file": "/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/rs_py/rusty_sundials.so",
+  "rk4_vs_bogoliubov_max": 0.00033342197190555645,
+  "rk4_vs_bogoliubov_median": 7.811076087649305e-05,
+  "rk4_dt_vs_dt4_max": 5.296170385357254e-07,
+  "ladder": [
+   {
+    "rtol": 0.0001,
+    "atol": 1.0000000000000001e-07,
+    "rhs_calls": 6229,
+    "seconds": 4.85,
+    "omega_max_rel_vs_fine_rk4": 0.0007754073196446758,
+    "omega_median_rel_vs_fine_rk4": 0.0005102161960985086,
+    "omega_max_rel_vs_bogoliubov": 0.0008714253838906227,
+    "trajectory_max_rel": 0.07654877318697907
+   },
+   {
+    "rtol": 1e-06,
+    "atol": 1e-09,
+    "rhs_calls": 6948,
+    "seconds": 5.41,
+    "omega_max_rel_vs_fine_rk4": 2.7201184167792242e-05,
+    "omega_median_rel_vs_fine_rk4": 1.3759211942779438e-05,
+    "omega_max_rel_vs_bogoliubov": 0.0003409043883284557,
+    "trajectory_max_rel": 0.0015650724216348412
+   },
+   {
+    "rtol": 1e-08,
+    "atol": 1.0000000000000001e-11,
+    "rhs_calls": 8313,
+    "seconds": 6.98,
+    "omega_max_rel_vs_fine_rk4": 2.6902621125996176e-07,
+    "omega_median_rel_vs_fine_rk4": 1.1816872791599106e-07,
+    "omega_max_rel_vs_bogoliubov": 0.0003334799127410193,
+    "trajectory_max_rel": 1.766226013791305e-05
+   },
+   {
+    "rtol": 1e-10,
+    "atol": 1e-13,
+    "rhs_calls": 10158,
+    "seconds": 7.56,
+    "omega_max_rel_vs_fine_rk4": 3.347550401810045e-09,
+    "omega_median_rel_vs_fine_rk4": 9.970432506352949e-10,
+    "omega_max_rel_vs_bogoliubov": 0.0003334242848165303,
+    "trajectory_max_rel": 7.992663452849287e-07
+   }
+  ]
+ },
+ "small": {
+  "N": 8,
+  "L": 8.0,
+  "g": 1.0,
+  "T": 4.0,
+  "dts": 0.4,
+  "eta": 0.0001,
+  "seed": 3,
+  "dt_rk": 0.01,
+  "n_modes": 13,
+  "n_modes_fitted": 12,
+  "n_unknowns": 26,
+  "distinct_k": [
+   0.785398,
+   1.110721,
+   1.570796
+  ],
+  "n_samples": 11,
+  "seconds_rust_rk4": 0.01,
+  "rusty_sundials_file": "/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/rs_py/rusty_sundials.so",
+  "rk4_vs_bogoliubov_max": 0.00048611617417404496,
+  "rk4_vs_bogoliubov_median": 4.2477637656079814e-05,
+  "rk4_dt_vs_dt4_max": 2.2191736947270944e-09,
+  "ladder": [
+   {
+    "rtol": 0.0001,
+    "atol": 1.0000000000000001e-07,
+    "rhs_calls": 599,
+    "seconds": 0.35,
+    "omega_max_rel_vs_fine_rk4": 0.0003841627987290848,
+    "omega_median_rel_vs_fine_rk4": 0.0002378006569123836,
+    "omega_max_rel_vs_bogoliubov": 0.00038919199162146256,
+    "trajectory_max_rel": 0.005893158525888037
+   },
+   {
+    "rtol": 1e-06,
+    "atol": 1e-09,
+    "rhs_calls": 718,
+    "seconds": 0.34,
+    "omega_max_rel_vs_fine_rk4": 1.6558348716224184e-05,
+    "omega_median_rel_vs_fine_rk4": 7.563695623597424e-06,
+    "omega_max_rel_vs_bogoliubov": 0.0005015331151287938,
+    "trajectory_max_rel": 0.00014342253270279681
+   },
+   {
+    "rtol": 1e-08,
+    "atol": 1.0000000000000001e-11,
+    "rhs_calls": 992,
+    "seconds": 0.45,
+    "omega_max_rel_vs_fine_rk4": 3.4902910670666877e-07,
+    "omega_median_rel_vs_fine_rk4": 5.454136316003386e-08,
+    "omega_max_rel_vs_bogoliubov": 0.0004862445884770139,
+    "trajectory_max_rel": 2.0794933498780272e-06
+   }
+  ]
+ },
+ "scaling": [
+  {
+   "N": 8,
+   "L": 8.0,
+   "g": 1.0,
+   "T": 2.0,
+   "dts": 0.4,
+   "eta": 0.0001,
+   "seed": 3,
+   "dt_rk": 0.01,
+   "n_modes": 13,
+   "n_modes_fitted": 12,
+   "n_unknowns": 26,
+   "distinct_k": [
+    0.785398,
+    1.110721,
+    1.570796
+   ],
+   "n_samples": 6,
+   "seconds_rust_rk4": 0.0,
+   "rusty_sundials_file": "/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/rs_py/rusty_sundials.so",
+   "rk4_vs_bogoliubov_max": 0.0005598579965653272,
+   "rk4_vs_bogoliubov_median": 0.00010373550319692226,
+   "rk4_dt_vs_dt4_max": 2.2212952299096738e-09,
+   "ladder": [
+    {
+     "rtol": 1e-06,
+     "atol": 1e-09,
+     "rhs_calls": 365,
+     "seconds": 0.19,
+     "omega_max_rel_vs_fine_rk4": 1.9076186091432826e-05,
+     "omega_median_rel_vs_fine_rk4": 4.3853012872973275e-06,
+     "omega_max_rel_vs_bogoliubov": 0.0005789351210487848,
+     "trajectory_max_rel": 8.045436330721187e-05
+    }
+   ]
+  },
+  {
+   "N": 16,
+   "L": 16.0,
+   "g": 1.0,
+   "T": 2.0,
+   "dts": 0.4,
+   "eta": 0.0001,
+   "seed": 3,
+   "dt_rk": 0.01,
+   "n_modes": 49,
+   "n_modes_fitted": 48,
+   "n_unknowns": 98,
+   "distinct_k": [
+    0.392699,
+    0.55536,
+    0.785398,
+    0.878102,
+    1.110721,
+    1.178097,
+    1.241824,
+    1.415897,
+    1.570796
+   ],
+   "n_samples": 6,
+   "seconds_rust_rk4": 0.01,
+   "rusty_sundials_file": "/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/rs_py/rusty_sundials.so",
+   "rk4_vs_bogoliubov_max": 0.00305885747064627,
+   "rk4_vs_bogoliubov_median": 0.0002574306926358405,
+   "rk4_dt_vs_dt4_max": 4.4654339912423884e-06,
+   "ladder": [
+    {
+     "rtol": 1e-06,
+     "atol": 1e-09,
+     "rhs_calls": 710,
+     "seconds": 0.51,
+     "omega_max_rel_vs_fine_rk4": 2.929128675544858e-05,
+     "omega_median_rel_vs_fine_rk4": 1.1170085952617716e-05,
+     "omega_max_rel_vs_bogoliubov": 0.0030388795721860706,
+     "trajectory_max_rel": 0.00014395530609391565
+    }
+   ]
+  },
+  {
+   "N": 32,
+   "L": 16.0,
+   "g": 1.0,
+   "T": 2.0,
+   "dts": 0.4,
+   "eta": 0.0001,
+   "seed": 3,
+   "dt_rk": 0.01,
+   "n_modes": 197,
+   "n_modes_fitted": 196,
+   "n_unknowns": 394,
+   "distinct_k": [
+    0.392699,
+    0.55536,
+    0.785398,
+    0.878102,
+    1.110721,
+    1.178097,
+    1.241824,
+    1.415897,
+    1.570796,
+    1.61914,
+    1.666081,
+    1.756204,
+    1.963495,
+    2.00238,
+    2.114749,
+    2.221441,
+    2.289809,
+    2.356194,
+    2.388695,
+    2.483647,
+    2.514501,
+    2.634306,
+    2.748894,
+    2.776802,
+    2.831793,
+    2.858892,
+    2.990707,
+    3.067078,
+    3.141593
+   ],
+   "n_samples": 6,
+   "seconds_rust_rk4": 0.04,
+   "rusty_sundials_file": "/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/rs_py/rusty_sundials.so",
+   "rk4_vs_bogoliubov_max": 0.0054579393265672405,
+   "rk4_vs_bogoliubov_median": 0.00022033672976717877,
+   "rk4_dt_vs_dt4_max": 6.026106005717817e-08,
+   "ladder": [
+    {
+     "rtol": 1e-06,
+     "atol": 1e-09,
+     "rhs_calls": 2291,
+     "seconds": 9.43,
+     "omega_max_rel_vs_fine_rk4": 3.292658749693064e-05,
+     "omega_median_rel_vs_fine_rk4": 5.595845403570223e-06,
+     "omega_max_rel_vs_bogoliubov": 0.005457539526948496,
+     "trajectory_max_rel": 0.00037903502157853324
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,1 @@
+STATS F=4 ic=uniform N=64 method=bdf rtol=1e-8 atol=1e-10 tend=60 steps=5963 rhs_evals=15015 wall_s=13.607

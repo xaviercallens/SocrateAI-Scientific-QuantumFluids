@@ -1,0 +1,20 @@
+{
+ "scipy_version": "1.18.1",
+ "codata_note": "scipy.constants 1.18.1 (CODATA values shipped with scipy)",
+ "m_He4_kg": 6.646479080869192e-27,
+ "m_He4_amu": 4.00260325413,
+ "kB": 1.380649e-23,
+ "h": 6.62607015e-34,
+ "hbar": 1.0545718176461565e-34,
+ "universal_jump_SI_kg_m2_K": 3.4913578770496594e-08,
+ "universal_jump_cgs_g_cm2_K": 3.4913578770496592e-09,
+ "identity_check_relative_difference": 1.895378570018217e-16,
+ "two_over_pi": 0.6366197723675814,
+ "pi_over_two": 1.5707963267948966,
+ "f_at_pi_over_2": 1.7229037441642372,
+ "four_pi_cubed": 124.02510672119926,
+ "two_pi_cubed": 62.01255336059963,
+ "ln380": 5.940171252720432,
+ "two_pi_ln2": 4.355172180607204,
+ "eta_at_jump": 0.25
+}

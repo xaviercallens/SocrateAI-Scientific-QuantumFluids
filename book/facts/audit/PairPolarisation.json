@@ -1,0 +1,114 @@
+{
+ "module": "PairPolarisation",
+ "exit": 0,
+ "compile_s": 54.8,
+ "request_to_done_s": 54.8,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 10,
+  "named_theorems": 8,
+  "named_defs": 2,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "PairPolarisation.norm_wave",
+   "line": 34,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "PairPolarisation.pair_factor",
+   "line": 36,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "PairPolarisation.norm_pair_le",
+   "line": 44,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "PairPolarisation.norm_rho_le_pairs",
+   "line": 51,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "PairPolarisation.norm_rho_le_of_size",
+   "line": 58,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "PairPolarisation.rho_polarisation",
+   "line": 65,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "PairPolarisation.remainder_le",
+   "line": 90,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "PairPolarisation.response_ceiling",
+   "line": 100,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "082d1d19fd88ba05",
+  "lines": 134,
+  "imports": [
+   "Mathlib"
+  ],
+  "theorem_decls": 8,
+  "print_axioms_lines": 0,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 8,
+  "source_unmatched": [],
+  "env_not_in_source": []
+ },
+ "when": "2026-10-10 00:18:51"
+}

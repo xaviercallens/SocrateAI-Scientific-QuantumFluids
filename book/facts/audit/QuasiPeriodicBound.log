@@ -1,0 +1,10 @@
+QFAUDIT|SUMMARY|7|6|1|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuasiPeriodicBound.increment_bound|40|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuasiPeriodicBound.not_qp_of_msd_large|65|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuasiPeriodicBound.random_walk_exceeds|58|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuasiPeriodicBound.trig_sum_bound|34|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuasiPeriodicBound.relative_equilibrium_dipole|76|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuasiPeriodicBound.msd_bound|46|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 55.448

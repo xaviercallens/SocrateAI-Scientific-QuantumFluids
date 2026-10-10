@@ -1,0 +1,167 @@
+{
+ "module": "WassersteinCertificate",
+ "exit": 0,
+ "compile_s": 29.0,
+ "request_to_done_s": 29.0,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 27,
+  "named_theorems": 14,
+  "named_defs": 6,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.WassersteinCertificate.C.eq_1",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.WassersteinCertificate.u.eq_1",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.WassersteinCertificate.v.eq_1",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.WassersteinCertificate.v_broken.eq_1",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.WassersteinCertificate.\u03c3.eq_1",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.WassersteinCertificate.\u03c3fun.eq_1",
+   "line": -1,
+   "axioms": [
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.WassersteinCertificate.weak_duality",
+   "line": 38,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.WassersteinCertificate.certificate",
+   "line": 48,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.WassersteinCertificate.C_eq",
+   "line": 73,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.WassersteinCertificate.feasible",
+   "line": 100,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.WassersteinCertificate.tight",
+   "line": 103,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.WassersteinCertificate.toy_certificate",
+   "line": 107,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.WassersteinCertificate.toy_cost_eq",
+   "line": 113,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.WassersteinCertificate.broken_infeasible",
+   "line": 122,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "eec6b4380873aac4",
+  "code_sha256": "30542c15187e0b2c",
+  "lines": 142,
+  "imports": [
+   "Mathlib"
+  ],
+  "theorem_decls": 8,
+  "print_axioms_lines": 8,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 8,
+  "source_unmatched": [],
+  "env_not_in_source": []
+ },
+ "when": "2026-10-10 01:38:16"
+}

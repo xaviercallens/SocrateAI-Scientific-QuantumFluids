@@ -1,0 +1,59 @@
+/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/ch10_audit/src/HeliumKinematics.lean:48:4: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/ch10_audit/src/HeliumKinematics.lean:102:0: warning: automatically included section variable(s) unused in theorem `QuantumFluids.HeliumKinematics.two_roton_momentum_le`:
+  [InnerProductSpace ℝ V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [InnerProductSpace ℝ V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/ch10_audit/src/HeliumKinematics.lean:113:0: warning: automatically included section variable(s) unused in theorem `QuantumFluids.HeliumKinematics.two_roton_antiparallel`:
+  [InnerProductSpace ℝ V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [InnerProductSpace ℝ V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+'QuantumFluids.HeliumKinematics.three_phonon_excess' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.HeliumKinematics.three_phonon_open_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.HeliumKinematics.symmetric_split_excess' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.HeliumKinematics.phase_velocity_excess' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.HeliumKinematics.group_velocity_excess' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.HeliumKinematics.two_roton_momentum_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.HeliumKinematics.two_roton_parallel' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.HeliumKinematics.two_roton_antiparallel' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.HeliumKinematics.tofEnergy_rescale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.HeliumKinematics.plateau_excess_calibration_invariant' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'QuantumFluids.HeliumKinematics.tof_eq12_eq_eq13' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.HeliumKinematics.landau_velocity_parabolic_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'QuantumFluids.HeliumKinematics.landau_velocity_ge_of_above_sound_line' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'QuantumFluids.HeliumKinematics.abraham_sound_speed_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.HeliumKinematics.debye_mode_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|33|15|4|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.HeliumKinematics.two_roton_parallel|107|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.HeliumKinematics.two_roton_antiparallel|111|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.HeliumKinematics.phase_velocity_excess|71|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.HeliumKinematics.symmetric_split_excess|65|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.HeliumKinematics.landau_velocity_parabolic_zero|144|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.HeliumKinematics.debye_mode_count|177|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.HeliumKinematics.three_phonon_open_iff|36|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.HeliumKinematics.tofEnergy_rescale|120|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.HeliumKinematics.tof_eq12_eq_eq13|135|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.HeliumKinematics.plateau_excess_calibration_invariant|126|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.HeliumKinematics.group_velocity_excess|76|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.HeliumKinematics.two_roton_momentum_le|99|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.HeliumKinematics.landau_velocity_ge_of_above_sound_line|154|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.HeliumKinematics.abraham_sound_speed_sq|165|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.HeliumKinematics.three_phonon_excess|30|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 27.260

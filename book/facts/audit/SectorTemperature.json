@@ -1,0 +1,115 @@
+{
+ "module": "SectorTemperature",
+ "exit": 0,
+ "compile_s": 29.8,
+ "request_to_done_s": 29.8,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 16,
+  "named_theorems": 8,
+  "named_defs": 5,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.SectorTemperature.count_sum",
+   "line": 58,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.SectorTemperature.sectorCount_le",
+   "line": 67,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.SectorTemperature.entropy_ge_sector",
+   "line": 73,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.SectorTemperature.mediant_le",
+   "line": 84,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.SectorTemperature.le_mediant",
+   "line": 95,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.SectorTemperature.globalRatio_mem",
+   "line": 115,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.SectorTemperature.global_eq_sector_of_single",
+   "line": 130,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.SectorTemperature.sector_invariant",
+   "line": 141,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "7fea31eab8bb500a",
+  "lines": 163,
+  "imports": [
+   "Mathlib",
+   "TopologicalProtection"
+  ],
+  "theorem_decls": 8,
+  "print_axioms_lines": 8,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 8,
+  "source_unmatched": [],
+  "env_not_in_source": []
+ },
+ "when": "2026-10-10 00:37:27"
+}

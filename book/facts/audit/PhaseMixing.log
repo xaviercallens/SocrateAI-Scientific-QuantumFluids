@@ -1,0 +1,10 @@
+'QuantumFluids.PhaseMixing.transport_solution' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.PhaseMixing.phase_mixing' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.PhaseMixing.maxwellian_mode' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|10|3|0|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.PhaseMixing.transport_solution|25|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.PhaseMixing.phase_mixing|36|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.PhaseMixing.maxwellian_mode|58|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 25.558

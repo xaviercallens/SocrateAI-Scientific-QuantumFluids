@@ -1,0 +1,170 @@
+{
+ "module": "ChargeLattice",
+ "exit": 0,
+ "compile_s": 166.7,
+ "request_to_done_s": 166.8,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 25,
+  "named_theorems": 15,
+  "named_defs": 4,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.ChargeLattice.gram_pp",
+   "line": 80,
+   "axioms": [
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ChargeLattice.gram_pq",
+   "line": 87,
+   "axioms": [
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ChargeLattice.disc_sl2",
+   "line": 94,
+   "axioms": [
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ChargeLattice.disc_sl2_invariant",
+   "line": 103,
+   "axioms": [
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ChargeLattice.disc_electric_magnetic_swap",
+   "line": 107,
+   "axioms": [
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ChargeLattice.disc_scale",
+   "line": 112,
+   "axioms": [
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ChargeLattice.disc_zero_of_parallel",
+   "line": 118,
+   "axioms": [
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ChargeLattice.area_sl2_invariant",
+   "line": 127,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ChargeLattice.bp_step",
+   "line": 146,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ChargeLattice.bp_step_neg_iff",
+   "line": 162,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ChargeLattice.bp_ge_bare",
+   "line": 182,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ChargeLattice.bp_min_at_zero",
+   "line": 191,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ChargeLattice.kaloper_step",
+   "line": 216,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ChargeLattice.kaloper_min",
+   "line": 221,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ChargeLattice.kaloper_terminates",
+   "line": 242,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "24d9d4eb69648232",
+  "lines": 272,
+  "imports": [
+   "Mathlib"
+  ],
+  "theorem_decls": 15,
+  "print_axioms_lines": 15,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 15,
+  "source_unmatched": [],
+  "env_not_in_source": []
+ },
+ "when": "2026-10-10 00:42:24"
+}

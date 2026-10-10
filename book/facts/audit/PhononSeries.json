@@ -1,0 +1,115 @@
+{
+ "module": "PhononSeries",
+ "exit": 0,
+ "compile_s": 461.4,
+ "request_to_done_s": 461.4,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 51,
+  "named_theorems": 9,
+  "named_defs": 10,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.PhononSeries.kPow2_eq",
+   "line": 38,
+   "axioms": [
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.PhononSeries.kPow3_eq",
+   "line": 47,
+   "axioms": [
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.PhononSeries.kPow4_eq",
+   "line": 56,
+   "axioms": [
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.PhononSeries.kPow5_eq",
+   "line": 65,
+   "axioms": [
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.PhononSeries.kPow6_eq",
+   "line": 74,
+   "axioms": [
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.PhononSeries.kPow7_eq",
+   "line": 83,
+   "axioms": [
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.PhononSeries.dispersion_kInv",
+   "line": 88,
+   "axioms": [
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.PhononSeries.kSq0_eq",
+   "line": 128,
+   "axioms": [
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.PhononSeries.density_of_states",
+   "line": 133,
+   "axioms": [
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "73aa596b953425ae",
+  "code_sha256": "c01b216f4c6053b5",
+  "lines": 157,
+  "imports": [
+   "Mathlib.Tactic.LinearCombination",
+   "Mathlib.Tactic.Ring"
+  ],
+  "theorem_decls": 9,
+  "print_axioms_lines": 9,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 9,
+  "source_unmatched": [],
+  "env_not_in_source": []
+ },
+ "when": "2026-10-10 01:16:58"
+}

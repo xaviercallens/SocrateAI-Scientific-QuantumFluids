@@ -1,0 +1,11 @@
+/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/ch10_audit/src/book_Ch02_NegativeControl.lean:9:2: error: ring failed, ring expressions not equal
+R : Type u_1
+inst✝ : CommRing R
+e : R
+h : e ^ 2 = 0
+⊢ -(e ^ 2 * 2) = 0
+/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/ch10_audit/src/book_Ch02_NegativeControl.lean:12:29: error: unsolved goals
+⊢ False
+
+--- stderr ---
+QF_WALL 22.863

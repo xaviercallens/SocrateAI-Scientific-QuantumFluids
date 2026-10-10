@@ -1,0 +1,78 @@
+{
+ "tag": "5db8041",
+ "module": "/mnt/data/xdev-cache/rs_py_5db8041/rusty_sundials.so",
+ "extension_module": "/mnt/data/xdev-cache/rs_py_5db8041/rusty_sundials.so",
+ "sha256": "0bdb1b4a504fb4817738c483f797e6a109b99121b666f1e51ad8e05c2fb996d7",
+ "probes": [
+  {
+   "label": "P1 y'=-y [0,10] adams 1e-8",
+   "method": "adams",
+   "rtol": 1e-08,
+   "atol": 1e-14,
+   "t_end": 10.0,
+   "rhs_calls": 511,
+   "cpu_s": 0.003,
+   "status": "ok",
+   "relerr": 1.975598302069012e-07,
+   "y_end": [
+    4.539993873168727e-05
+   ]
+  },
+  {
+   "label": "P2 y'=-y [0,1] adams 1e-9",
+   "method": "adams",
+   "rtol": 1e-09,
+   "atol": 1e-13,
+   "t_end": 1.0,
+   "rhs_calls": 103,
+   "cpu_s": 0.0,
+   "status": "ok",
+   "relerr": 3.1550969903097506e-09,
+   "y_end": [
+    0.36787944233213765
+   ]
+  },
+  {
+   "label": "P3 flow 0->0.25 adams 1e-9",
+   "method": "adams",
+   "rtol": 1e-09,
+   "atol": 1e-13,
+   "t_end": 0.25,
+   "rhs_calls": 64,
+   "cpu_s": 0.0,
+   "status": "ok",
+   "y_end": [
+    1.2365818162931603,
+    0.03195428584921511
+   ]
+  },
+  {
+   "label": "P4 flow 0->20 adams 1e-9",
+   "method": "adams",
+   "rtol": 1e-09,
+   "atol": 1e-13,
+   "t_end": 20.0,
+   "rhs_calls": 354,
+   "cpu_s": 0.002,
+   "status": "ok",
+   "y_end": [
+    1.4008866606461974,
+    0.0001685554089085945
+   ]
+  },
+  {
+   "label": "P5 y'=-y [0,10] bdf 1e-4",
+   "method": "bdf",
+   "rtol": 0.0001,
+   "atol": 1e-08,
+   "t_end": 10.0,
+   "rhs_calls": 244,
+   "cpu_s": 0.001,
+   "status": "ok",
+   "relerr": 0.0007784402419681292,
+   "y_end": [
+    4.54352708947945e-05
+   ]
+  }
+ ]
+}

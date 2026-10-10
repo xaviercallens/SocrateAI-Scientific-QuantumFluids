@@ -1,0 +1,34 @@
+'QuantumFluids.ShellComplex.re_conj_sq_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ShellComplex.sum_re_conj_mul_shellBc' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ShellComplex.shellBc_energy_conservation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ShellComplex.shellBc_real' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ShellComplex.rtrace_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ShellComplex.rtrace_mulRight' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ShellComplex.rtrace_mul_I' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ShellComplex.rtrace_conj_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ShellComplex.shell_divergence_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ShellComplex.seam_conserves_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ShellComplex.seam_zero_conserves' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ShellComplex.seam_gpe_conserves' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|25|18|6|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.ShellComplex.shell_divergence_zero|163|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.seam_zero_conserves|202|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.rtrace_mul_I|148|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.shellBc_energy_conservation|88|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.sum_re_conj_mul_shellBc|65|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.rtrace_mulRight|142|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.rtrace_add|139|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.out.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.shellBc_real|104|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.re_conj_sq_mul|52|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.seam_conserves_iff|187|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.rtrace_conj_mul|155|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.seam_gpe_conserves|209|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.shellBc.match_1.eq_2|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.shellBc.eq_2|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.shellBc.match_1.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.shellBc.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.rtrace.eq_1|-1|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 40.243

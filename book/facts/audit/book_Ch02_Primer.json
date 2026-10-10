@@ -1,0 +1,68 @@
+{
+ "module": "book_Ch02_Primer",
+ "exit": 0,
+ "compile_s": 21.9,
+ "request_to_done_s": 21.9,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 4,
+  "named_theorems": 4,
+  "named_defs": 0,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.Ch02Primer.and_swap'",
+   "line": 20,
+   "axioms": []
+  },
+  {
+   "name": "QuantumFluids.Ch02Primer.two_add_two",
+   "line": 23,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Ch02Primer.tenth_plus_fifth",
+   "line": 32,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Ch02Primer.one_add_nilpotent_inv",
+   "line": 37,
+   "axioms": [
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "f4b024cf86eda093",
+  "code_sha256": "42edc9806229479c",
+  "lines": 49,
+  "imports": [
+   "Mathlib"
+  ],
+  "theorem_decls": 4,
+  "print_axioms_lines": 4
+ },
+ "when": "2026-10-10 01:24:35",
+ "kind": "file"
+}

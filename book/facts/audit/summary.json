@@ -1,0 +1,762 @@
+{
+ "totals": {
+  "mods": 37,
+  "ok": 37,
+  "thms": 321,
+  "auto": 42,
+  "src": 310,
+  "own": 257,
+  "sorry": 0,
+  "useraxioms": 0,
+  "nonstd": 0
+ },
+ "toolchain": "Lean (version 4.34.0-rc2, x86_64-unknown-linux-gnu, commit 6a10ac8c22beadecabdbb0919c2b50214762f91d, Release)",
+ "modules": [
+  {
+   "module": "BoseIntegral",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 184.1,
+   "named_theorems": 7,
+   "auto_theorems": 1,
+   "src_theorems": 7,
+   "own_print": 7,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib"
+   ]
+  },
+  {
+   "module": "ChargeLattice",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 166.7,
+   "named_theorems": 15,
+   "auto_theorems": 0,
+   "src_theorems": 15,
+   "own_print": 15,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib"
+   ]
+  },
+  {
+   "module": "CompactBoson",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 26.6,
+   "named_theorems": 12,
+   "auto_theorems": 1,
+   "src_theorems": 12,
+   "own_print": 12,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib"
+   ]
+  },
+  {
+   "module": "ContinuumWinding",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 48.2,
+   "named_theorems": 10,
+   "auto_theorems": 1,
+   "src_theorems": 9,
+   "own_print": 9,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "VortexWinding",
+    "QuantizedCirculation"
+   ]
+  },
+  {
+   "module": "DissipativeVortexDynamics",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 37.6,
+   "named_theorems": 9,
+   "auto_theorems": 1,
+   "src_theorems": 9,
+   "own_print": 0,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib"
+   ]
+  },
+  {
+   "module": "DualLength",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 153.4,
+   "named_theorems": 13,
+   "auto_theorems": 0,
+   "src_theorems": 13,
+   "own_print": 13,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib"
+   ]
+  },
+  {
+   "module": "Duality",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 26.3,
+   "named_theorems": 11,
+   "auto_theorems": 0,
+   "src_theorems": 11,
+   "own_print": 11,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib"
+   ]
+  },
+  {
+   "module": "EinsteinRelation",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 33.1,
+   "named_theorems": 7,
+   "auto_theorems": 0,
+   "src_theorems": 7,
+   "own_print": 0,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib"
+   ]
+  },
+  {
+   "module": "Fricke",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 186.0,
+   "named_theorems": 12,
+   "auto_theorems": 2,
+   "src_theorems": 12,
+   "own_print": 12,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib",
+    "DualLength"
+   ]
+  },
+  {
+   "module": "FrictionKinetic",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 88.0,
+   "named_theorems": 3,
+   "auto_theorems": 0,
+   "src_theorems": 3,
+   "own_print": 0,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib"
+   ]
+  },
+  {
+   "module": "GPGalerkin",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 25.3,
+   "named_theorems": 13,
+   "auto_theorems": 4,
+   "src_theorems": 13,
+   "own_print": 13,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib"
+   ]
+  },
+  {
+   "module": "HeliumKinematics",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 27.3,
+   "named_theorems": 15,
+   "auto_theorems": 0,
+   "src_theorems": 15,
+   "own_print": 15,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib"
+   ]
+  },
+  {
+   "module": "KTFlow",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 54.5,
+   "named_theorems": 8,
+   "auto_theorems": 2,
+   "src_theorems": 8,
+   "own_print": 0,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib"
+   ]
+  },
+  {
+   "module": "LevelRankDuality",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 26.1,
+   "named_theorems": 1,
+   "auto_theorems": 0,
+   "src_theorems": 1,
+   "own_print": 1,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib"
+   ]
+  },
+  {
+   "module": "MadelungNSE",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 28.8,
+   "named_theorems": 2,
+   "auto_theorems": 1,
+   "src_theorems": 2,
+   "own_print": 2,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "NavierStokes.ProblemStatement",
+    "Mathlib"
+   ]
+  },
+  {
+   "module": "MadelungSplit",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 27.6,
+   "named_theorems": 6,
+   "auto_theorems": 0,
+   "src_theorems": 6,
+   "own_print": 6,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib"
+   ]
+  },
+  {
+   "module": "MatchingScreening",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 41.4,
+   "named_theorems": 10,
+   "auto_theorems": 2,
+   "src_theorems": 10,
+   "own_print": 0,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib"
+   ]
+  },
+  {
+   "module": "PairPolarisation",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 54.8,
+   "named_theorems": 8,
+   "auto_theorems": 0,
+   "src_theorems": 8,
+   "own_print": 0,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib"
+   ]
+  },
+  {
+   "module": "PhaseMixing",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 25.6,
+   "named_theorems": 3,
+   "auto_theorems": 0,
+   "src_theorems": 3,
+   "own_print": 3,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib"
+   ]
+  },
+  {
+   "module": "PhononSeries",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 461.4,
+   "named_theorems": 9,
+   "auto_theorems": 0,
+   "src_theorems": 9,
+   "own_print": 9,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib.Tactic.LinearCombination",
+    "Mathlib.Tactic.Ring"
+   ]
+  },
+  {
+   "module": "PhononSpecificHeat",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 84.0,
+   "named_theorems": 14,
+   "auto_theorems": 0,
+   "src_theorems": 14,
+   "own_print": 14,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "BoseIntegral",
+    "PhononSeries"
+   ]
+  },
+  {
+   "module": "QHFricke",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 28.0,
+   "named_theorems": 6,
+   "auto_theorems": 1,
+   "src_theorems": 6,
+   "own_print": 6,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib"
+   ]
+  },
+  {
+   "module": "QuantizedCirculation",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 53.2,
+   "named_theorems": 6,
+   "auto_theorems": 1,
+   "src_theorems": 6,
+   "own_print": 6,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "VortexWinding"
+   ]
+  },
+  {
+   "module": "QuantumFluidsShell",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 40.2,
+   "named_theorems": 12,
+   "auto_theorems": 6,
+   "src_theorems": 12,
+   "own_print": 12,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib"
+   ]
+  },
+  {
+   "module": "QuasiPeriodicBound",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 55.4,
+   "named_theorems": 6,
+   "auto_theorems": 0,
+   "src_theorems": 6,
+   "own_print": 0,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib"
+   ]
+  },
+  {
+   "module": "RCFTDuality",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 27.5,
+   "named_theorems": 3,
+   "auto_theorems": 0,
+   "src_theorems": 3,
+   "own_print": 3,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib"
+   ]
+  },
+  {
+   "module": "RipsFloor",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 34.4,
+   "named_theorems": 4,
+   "auto_theorems": 0,
+   "src_theorems": 4,
+   "own_print": 4,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib"
+   ]
+  },
+  {
+   "module": "ScaleResolvedWinding",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 27.1,
+   "named_theorems": 11,
+   "auto_theorems": 3,
+   "src_theorems": 6,
+   "own_print": 6,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "VortexWinding"
+   ]
+  },
+  {
+   "module": "SectorDuality",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 22.0,
+   "named_theorems": 3,
+   "auto_theorems": 0,
+   "src_theorems": 3,
+   "own_print": 3,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib"
+   ]
+  },
+  {
+   "module": "SectorTemperature",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 29.8,
+   "named_theorems": 8,
+   "auto_theorems": 0,
+   "src_theorems": 8,
+   "own_print": 8,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib",
+    "TopologicalProtection"
+   ]
+  },
+  {
+   "module": "ShellHamiltonian",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 42.9,
+   "named_theorems": 9,
+   "auto_theorems": 2,
+   "src_theorems": 9,
+   "own_print": 9,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "QuantumFluidsShell"
+   ]
+  },
+  {
+   "module": "SigmaRule",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 47.3,
+   "named_theorems": 6,
+   "auto_theorems": 0,
+   "src_theorems": 6,
+   "own_print": 6,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "ShellHamiltonian"
+   ]
+  },
+  {
+   "module": "TopologicalProtection",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 63.7,
+   "named_theorems": 13,
+   "auto_theorems": 0,
+   "src_theorems": 13,
+   "own_print": 13,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "VortexWinding",
+    "QuantizedCirculation"
+   ]
+  },
+  {
+   "module": "Villani",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 34.0,
+   "named_theorems": 18,
+   "auto_theorems": 4,
+   "src_theorems": 18,
+   "own_print": 16,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib"
+   ]
+  },
+  {
+   "module": "VortexWinding",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 49.6,
+   "named_theorems": 13,
+   "auto_theorems": 4,
+   "src_theorems": 9,
+   "own_print": 9,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib"
+   ]
+  },
+  {
+   "module": "WassersteinCertificate",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 29.0,
+   "named_theorems": 8,
+   "auto_theorems": 6,
+   "src_theorems": 8,
+   "own_print": 8,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib"
+   ]
+  },
+  {
+   "module": "ZeroSound",
+   "exit": 0,
+   "errors": 0,
+   "compile_s": 31.3,
+   "named_theorems": 7,
+   "auto_theorems": 0,
+   "src_theorems": 6,
+   "own_print": 6,
+   "sorryAx": false,
+   "user_axioms": 0,
+   "footprint": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "imports": [
+    "Mathlib"
+   ]
+  }
+ ]
+}

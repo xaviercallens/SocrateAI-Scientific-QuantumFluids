@@ -19,6 +19,14 @@ script does keep an existing concept DOI, exactly mirroring zenodo_deposit.py's 
 
 Publishing cannot be undone, so it is never the default. The token is read from $ZENODO_TOKEN or
 ~/.zenodo_token and is never printed or logged.
+
+Two options added for the book (book/quantum_fluids_book.tex), both off by default:
+
+  --extra FILE (repeatable)  upload further files next to the PDF (e.g. a source archive).
+  --reserve --draft-out F    create an empty draft only, and write its id, its pre-reserved DOI and
+                             its concept DOI to F, so that the document can cite its own concept
+                             DOI before the first publish; then finish that same draft with
+                             --draft-id <id> (uploads, metadata, optional --publish).
 """
 import argparse, json, os, sys
 from pathlib import Path
@@ -40,22 +48,53 @@ def token() -> str:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--meta", required=True, help="path to this paper's zenodo metadata JSON")
-    ap.add_argument("--pdf", required=True, help="path to the paper PDF to upload")
-    ap.add_argument("--record-out", required=True,
+    ap.add_argument("--meta", help="path to this paper's zenodo metadata JSON")
+    ap.add_argument("--pdf", help="path to the paper PDF to upload")
+    ap.add_argument("--record-out",
                      help="path to write {doi, conceptdoi, id} after a successful publish")
     ap.add_argument("--publish", action="store_true")
     ap.add_argument("--new-version-of", dest="prev", default=None,
                      help="record id of a PREVIOUS version of this same standalone paper (rare)")
+    ap.add_argument("--extra", action="append", default=[],
+                     help="further file to upload next to the PDF (repeatable)")
+    ap.add_argument("--reserve", action="store_true",
+                     help="only create an empty draft and write its reserved DOIs to --draft-out")
+    ap.add_argument("--draft-out", help="with --reserve: where to write {id, doi, conceptdoi}")
+    ap.add_argument("--draft-id", default=None,
+                     help="finish an existing draft (from --reserve) instead of creating one")
     a = ap.parse_args()
-
-    meta = json.loads((ROOT / a.meta).read_text())
-    pdf = ROOT / a.pdf
-    if not pdf.exists():
-        sys.exit(f"no such file: {pdf}")
     auth = {"Authorization": f"Bearer {token()}"}
 
-    if a.prev:
+    if a.reserve:
+        if not a.draft_out:
+            sys.exit("--reserve needs --draft-out")
+        r = requests.post(f"{API}/deposit/depositions", json={}, headers=auth, timeout=60)
+        r.raise_for_status()
+        dep = r.json()
+        pre = dep.get("metadata", {}).get("prereserve_doi", {})
+        crid = dep.get("conceptrecid")
+        out = {"id": dep["id"], "doi": pre.get("doi"),
+               "conceptdoi": f"10.5281/zenodo.{crid}" if crid else None, "html": dep["links"]["html"]}
+        (ROOT / a.draft_out).write_text(json.dumps(out, indent=1) + "\n")
+        print("reserved draft", out["id"], " DOI:", out["doi"], " concept DOI:", out["conceptdoi"])
+        return
+
+    if not (a.meta and a.pdf and a.record_out):
+        sys.exit("--meta, --pdf and --record-out are required (except with --reserve)")
+    meta = json.loads((ROOT / a.meta).read_text())
+    pdf = ROOT / a.pdf
+    extras = [ROOT / e for e in a.extra]
+    for f in [pdf] + extras:
+        if not f.exists():
+            sys.exit(f"no such file: {f}")
+
+    if a.draft_id:
+        dep = requests.get(f"{API}/deposit/depositions/{a.draft_id}", headers=auth, timeout=60).json()
+        if dep.get("submitted"):
+            sys.exit(f"deposition {a.draft_id} is already published")
+        for f in dep.get("files", []):
+            requests.delete(f"{API}/deposit/depositions/{dep['id']}/files/{f['id']}", headers=auth, timeout=60)
+    elif a.prev:
         r = requests.post(f"{API}/deposit/depositions/{a.prev}/actions/newversion", headers=auth, timeout=60)
         r.raise_for_status()
         draft_url = r.json()["links"]["latest_draft"]
@@ -68,10 +107,11 @@ def main() -> None:
         dep = r.json()
 
     bucket = dep["links"]["bucket"]
-    with open(pdf, "rb") as fh:
-        u = requests.put(f"{bucket}/{pdf.name}", data=fh, headers=auth, timeout=600)
-        u.raise_for_status()
-    print(f"uploaded {pdf.name} ({pdf.stat().st_size / 1e6:.2f} MB)")
+    for f in [pdf] + extras:
+        with open(f, "rb") as fh:
+            u = requests.put(f"{bucket}/{f.name}", data=fh, headers=auth, timeout=600)
+            u.raise_for_status()
+        print(f"uploaded {f.name} ({f.stat().st_size / 1e6:.2f} MB)")
 
     r = requests.put(f"{API}/deposit/depositions/{dep['id']}", json=meta, headers=auth, timeout=60)
     if r.status_code >= 400:

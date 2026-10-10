@@ -1,0 +1,59 @@
+{
+ "tag": "old",
+ "small": {
+  "N": 8,
+  "L": 8.0,
+  "g": 1.0,
+  "T": 4.0,
+  "dts": 0.4,
+  "eta": 0.0001,
+  "seed": 3,
+  "dt_rk": 0.01,
+  "n_modes": 13,
+  "n_modes_fitted": 12,
+  "n_unknowns": 26,
+  "distinct_k": [
+   0.785398,
+   1.110721,
+   1.570796
+  ],
+  "n_samples": 11,
+  "seconds_rust_rk4": 0.01,
+  "rusty_sundials_file": "/home/xavkal/xdev/SocrateAI-Scientific-QuantumFluids/.venv/lib/python3.12/site-packages/rusty_sundials/__init__.py",
+  "rk4_vs_bogoliubov_max": 0.00048611617417404496,
+  "rk4_vs_bogoliubov_median": 4.2477637656079814e-05,
+  "rk4_dt_vs_dt4_max": 2.2191736947270944e-09,
+  "ladder": [
+   {
+    "rtol": 0.0001,
+    "atol": 1.0000000000000001e-07,
+    "rhs_calls": 1361,
+    "seconds": 0.71,
+    "omega_max_rel_vs_fine_rk4": 0.01869280921713445,
+    "omega_median_rel_vs_fine_rk4": 0.012591845147313636,
+    "omega_max_rel_vs_bogoliubov": 0.018731020245730257,
+    "trajectory_max_rel": 0.30542268630071984
+   },
+   {
+    "rtol": 1e-06,
+    "atol": 1e-09,
+    "rhs_calls": 9730,
+    "seconds": 8.26,
+    "omega_max_rel_vs_fine_rk4": 0.0017034546079129707,
+    "omega_median_rel_vs_fine_rk4": 0.001258563290652516,
+    "omega_max_rel_vs_bogoliubov": 0.0017416656365087935,
+    "trajectory_max_rel": 0.03474978111087803
+   },
+   {
+    "rtol": 1e-08,
+    "atol": 1.0000000000000001e-11,
+    "rhs_calls": 91519,
+    "seconds": 85.74,
+    "omega_max_rel_vs_fine_rk4": 0.00016866493155769352,
+    "omega_median_rel_vs_fine_rk4": 0.0001258627712535303,
+    "omega_max_rel_vs_bogoliubov": 0.0003981894564915045,
+    "trajectory_max_rel": 0.003522404250784269
+   }
+  ]
+ }
+}

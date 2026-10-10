@@ -1,0 +1,154 @@
+{
+ "module": "CompactBoson",
+ "exit": 0,
+ "compile_s": 26.6,
+ "request_to_done_s": 26.6,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 17,
+  "named_theorems": 13,
+  "named_defs": 3,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.CompactBoson.swap.eq_1",
+   "line": -1,
+   "axioms": []
+  },
+  {
+   "name": "QuantumFluids.CompactBoson.dim_dual",
+   "line": 40,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.CompactBoson.spin_dual",
+   "line": 46,
+   "axioms": [
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.CompactBoson.partition_dual",
+   "line": 53,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.CompactBoson.dim_electric",
+   "line": 64,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.CompactBoson.dim_magnetic",
+   "line": 67,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.CompactBoson.electric_mul_magnetic",
+   "line": 70,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.CompactBoson.eq_of_sq_eq_sq_pos",
+   "line": 76,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.CompactBoson.selfDual_radius",
+   "line": 83,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.CompactBoson.selfDual_value",
+   "line": 101,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.CompactBoson.vortex_marginal_radius",
+   "line": 104,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.CompactBoson.bkt_not_selfDual",
+   "line": 116,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.CompactBoson.eta_at_bkt",
+   "line": 121,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "bfb4dc1c44d79f3b",
+  "code_sha256": "a55b928c0f93580b",
+  "lines": 140,
+  "imports": [
+   "Mathlib"
+  ],
+  "theorem_decls": 12,
+  "print_axioms_lines": 12,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 12,
+  "source_unmatched": [],
+  "env_not_in_source": []
+ },
+ "when": "2026-10-10 01:32:11"
+}

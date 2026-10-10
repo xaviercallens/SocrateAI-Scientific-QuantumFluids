@@ -1,0 +1,73 @@
+\documentclass[11pt,twoside,openright]{book}
+\usepackage{qfbook}
+\title{Quantum Fluids in Lean~4}
+\author{Xavier Callens}
+\hypersetup{pdftitle={Quantum Fluids in Lean 4: a tribute to Henri Godfrin},pdfauthor={Xavier Callens}}
+\newcommand{\IfCh}[2]{\IfFileExists{chapters/#1.tex}{#2}{}}
+\newcommand{\BookConceptDOI}{10.5281/zenodo.23272153}% concept DOI reserved 2026-10-10 (zenodo_draft_book.json); cite it, never a version DOI
+\begin{document}
+\frontmatter
+\pagestyle{empty}
+% ------------------------------------------------------------------ title page
+\begin{titlepage}
+\begin{tikzpicture}[remember picture,overlay]
+  \node[anchor=north,inner sep=0pt] at ([yshift=-0.8in]current page.north) {\includegraphics[width=0.50\paperwidth]{figures/cover_frontispiece.png}};
+\end{tikzpicture}
+\vspace*{3.55in}
+\begin{center}
+{\color{qfgrey}\scshape\large A tribute to Henri Godfrin}\\[1.6em]
+{\fontsize{34}{38}\selectfont\bfseries\color{qfblue} Quantum Fluids\\[0.2em] in Lean~4}\\[1.0em]
+{\color{qfgold}\rule{0.45\textwidth}{1.1pt}}\\[1.0em]
+{\large\itshape Machine-checked mathematics, solver experiments\\and the measurements of a master experimentalist}\\[1.6em]
+{\large Xavier Callens}\\[0.3em]
+{\small SocrateAI Research}\\[1.5em]
+{\small\color{qfgrey} with the Lean~4 library \texttt{QuantumFluids}\\ and the rusty-SUNDIALS solver (\texttt{qf-pgpe}, CVODE)}\\[0.9em]
+{\small\color{qfgrey} October 2026 \enspace $\cdot$ \enspace first edition}
+\end{center}
+\end{titlepage}
+% ------------------------------------------------------------------ colophon (verso of the title page)
+\thispagestyle{empty}
+\vspace*{\fill}
+\begingroup\small\setlength{\parindent}{0pt}\setlength{\parskip}{0.7em}
+\textbf{Quantum Fluids in Lean~4: a tribute to Henri Godfrin.}\\
+Xavier Callens, SocrateAI Research. First edition, October 2026.
+
+\textbf{How to cite.} X.~Callens, \emph{Quantum Fluids in Lean~4: a tribute to Henri Godfrin}, SocrateAI Research (2026), doi:\href{https://doi.org/\BookConceptDOI}{\BookConceptDOI}. This is the concept DOI of the book; it always resolves to the latest edition.
+
+\textbf{Licence.} Text and figures: Creative Commons Attribution 4.0 International (CC~BY~4.0). Lean, Python and Rust sources: MIT or Apache-2.0, at the reader's option.
+
+\textbf{Sources.} Every chapter, figure script, number file, Lean file and audit log of this book is in the source archive deposited with it under the DOI above, and in the directory \texttt{book/} of \url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}. Lean~4 toolchain \texttt{v4.34.0-rc2}, Mathlib at commit \texttt{85e3a25}. The Lean library \texttt{QuantumFluids} is also archived as software under doi:\href{https://doi.org/10.5281/zenodo.22855581}{10.5281/zenodo.22855581}; the solver is rusty-SUNDIALS, \url{https://github.com/xaviercallens/rusty-SUNDIALS}. Appendix~B says how to rebuild every figure and rerun the Lean audit.
+
+\textbf{A note on the dedication.} Henri Godfrin has not reviewed this book, and nothing in it speaks for him or for his collaborators. The book describes their published measurements; the proofs are proofs of mathematical statements, not of experimental data; every remaining error is the author's.
+\endgroup
+\cleardoublepage
+% ------------------------------------------------------------------ dedication
+\thispagestyle{empty}\vspace*{2.2in}
+\begin{center}
+{\large\itshape To Henri Godfrin,\\[0.6em] and to everyone who builds the cold apparatus\\[0.3em] that lets a quantum fluid answer.}
+\end{center}
+\cleardoublepage
+\pagestyle{fancy}
+% ------------------------------------------------------------------ preface
+\chapter*{Preface}\addcontentsline{toc}{chapter}{Preface}\markboth{Preface}{Preface}
+\input{frontmatter_preface}
+\tableofcontents
+\listoffigures
+\mainmatter
+\IfCh{ch01}{\input{chapters/ch01}}
+\IfCh{ch02}{\input{chapters/ch02}}
+\IfCh{ch03}{\input{chapters/ch03}}
+\IfCh{ch04}{\input{chapters/ch04}}
+\IfCh{ch05}{\input{chapters/ch05}}
+\IfCh{ch06}{\input{chapters/ch06}}
+\IfCh{ch07}{\input{chapters/ch07}}
+\IfCh{ch08}{\input{chapters/ch08}}
+\IfCh{ch09}{\input{chapters/ch09}}
+\IfCh{ch10}{\input{chapters/ch10}}
+\appendix
+\IfCh{appA}{\input{chapters/appA}}
+\IfCh{appB}{\input{chapters/appB}}
+\backmatter
+\bibliographystyle{unsrtnat}
+\bibliography{refs_all}
+\end{document}

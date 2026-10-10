@@ -1,0 +1,178 @@
+{
+ "module": "HeliumKinematics",
+ "exit": 0,
+ "compile_s": 27.3,
+ "request_to_done_s": 27.3,
+ "errors": 0,
+ "warnings": 3,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 33,
+  "named_theorems": 15,
+  "named_defs": 4,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.HeliumKinematics.three_phonon_excess",
+   "line": 30,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.HeliumKinematics.three_phonon_open_iff",
+   "line": 36,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.HeliumKinematics.symmetric_split_excess",
+   "line": 65,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.HeliumKinematics.phase_velocity_excess",
+   "line": 71,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.HeliumKinematics.group_velocity_excess",
+   "line": 76,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.HeliumKinematics.two_roton_momentum_le",
+   "line": 99,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.HeliumKinematics.two_roton_parallel",
+   "line": 107,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.HeliumKinematics.two_roton_antiparallel",
+   "line": 111,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.HeliumKinematics.tofEnergy_rescale",
+   "line": 120,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.HeliumKinematics.plateau_excess_calibration_invariant",
+   "line": 126,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.HeliumKinematics.tof_eq12_eq_eq13",
+   "line": 135,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.HeliumKinematics.landau_velocity_parabolic_zero",
+   "line": 144,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.HeliumKinematics.landau_velocity_ge_of_above_sound_line",
+   "line": 154,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.HeliumKinematics.abraham_sound_speed_sq",
+   "line": 165,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.HeliumKinematics.debye_mode_count",
+   "line": 177,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "6d67bc9699bac287",
+  "code_sha256": "ba0144068bdc2f83",
+  "lines": 205,
+  "imports": [
+   "Mathlib"
+  ],
+  "theorem_decls": 15,
+  "print_axioms_lines": 15,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 15,
+  "source_unmatched": [],
+  "env_not_in_source": []
+ },
+ "when": "2026-10-10 01:31:16"
+}

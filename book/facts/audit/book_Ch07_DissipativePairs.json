@@ -1,0 +1,109 @@
+{
+ "module": "book_Ch07_DissipativePairs",
+ "exit": 0,
+ "compile_s": 36.3,
+ "request_to_done_s": 36.4,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 13,
+  "named_theorems": 8,
+  "named_defs": 3,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.DissipativePairs.r2.eq_1",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.DissipativePairs.r2_hasDerivAt",
+   "line": 53,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.DissipativePairs.corot_sq_law",
+   "line": 65,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.DissipativePairs.roots_spec",
+   "line": 91,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.DissipativePairs.stall_fence",
+   "line": 109,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.DissipativePairs.wind_stall_at_b",
+   "line": 136,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.DissipativePairs.wind_no_zero",
+   "line": 156,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.DissipativePairs.stall_needs_start",
+   "line": 166,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "0f751318d310972c",
+  "code_sha256": "e8712ed15c6eae18",
+  "lines": 195,
+  "imports": [
+   "Mathlib"
+  ],
+  "theorem_decls": 7,
+  "print_axioms_lines": 7
+ },
+ "when": "2026-10-10 01:27:45",
+ "kind": "file"
+}

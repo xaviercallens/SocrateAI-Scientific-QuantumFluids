@@ -1,0 +1,2977 @@
+\chapter{The Lean Library: a Complete Catalogue}\label{appA}
+\providecommand{\citedmark}[1]{\textcolor{qfgold}{$\star$}{\fontsize{6}{6}\selectfont\,#1}}
+\lstdefinestyle{leancat}{style=lean,basicstyle=\ttfamily\fontsize{8.4}{9.9}\selectfont,columns=fixed,xleftmargin=0.9em,xrightmargin=0pt,aboveskip=1.6pt,belowskip=2.8pt,breakindent=1.0em,escapeinside={;}{;}}
+\noindent This appendix lists the whole of the Lean~4 library \lean{QuantumFluids} that the book is about: 37 modules, 310 theorems and lemmas, and 103 definitions, structures and abbreviations. It is \emph{generated} from the sources in \texttt{lean\_src/} by \texttt{book/facts/make\_appA.py} (see appendix~\ref{appB}); nothing in it is typed by hand except these paragraphs. Every statement is copied verbatim, line breaks included, up to the \texttt{:=} that starts its proof or definition body; the proofs are not reproduced.
+\paragraph{How to read an entry.} Each module is headed by one line of its own docstring, by the namespace in which its declarations live (for 13 of the 37 modules this is \emph{not} \texttt{QuantumFluids.}\emph{Module}; see table~\ref{appA:tab-ns}), by the numbers of theorems and of definitions, and by its audit status. A gold $\star$ in the margin followed by chapter numbers marks a declaration that those chapters cite (through \texttt{\textbackslash Lthm} or by copying its statement). The catalogue is a statement of \emph{what is proved}, not of what is measured: to read a statement as physics, go to the chapter that cites it.
+\paragraph{What the audit status means.} \emph{The audit is of the kernel environment, not of the source text.} For each module the book's audit driver (\texttt{book/facts/lean\_audit.py}, appendix~\ref{appB}) compiles the module in dependency order against the pinned Mathlib and asks Lean, for \emph{every constant the file declares}, which axioms it depends on (\texttt{Lean.collectAxioms}). The status line reports the number of theorem constants found, whether \texttt{sorryAx} is reachable, the number of axioms the module declares itself, and the union of the axioms used. The three standard axioms are abbreviated $p$ = \texttt{propext}, $c$ = \texttt{Classical.choice}, $q$ = \texttt{Quot.sound}. At the time this appendix was generated, 37 of 37 modules had such an environment audit on file; 0 more carry only the first-pass compile log (author-written \texttt{\#print axioms} lines, marked $^\dagger$ in the table); for the remaining 0 the status reads ``not re-checked''. Compiling a module with exit code~0 is not the same as auditing it: 7 modules (\texttt{DissipativeVortexDynamics}, \texttt{EinsteinRelation}, \texttt{FrictionKinetic}, \texttt{KTFlow}, \texttt{MatchingScreening}, \texttt{PairPolarisation}, \texttt{QuasiPeriodicBound}) carry no \texttt{\#print axioms} line in their sources, so a compile log of theirs is empty; the environment audit is what supplies their footprint (chapter~\ref{ch10}).
+\begin{table}[p]\centering\footnotesize\setlength{\tabcolsep}{3.2pt}
+\caption{The 37 modules of the library at a glance. \emph{thm}: theorems and lemmas; \emph{def}: definitions, structures, abbreviations; \emph{audit}: axiom footprint ($p$, $c$, $q$ as in the text; \texttt{n/c}: not re-checked; \texttt{stale}: the file changed after it was audited; \texttt{!}: a non-standard axiom or \texttt{sorryAx}); \emph{cited by}: chapters that cite a declaration of the module.}\label{appA:tab-modules}
+\begin{tabular}{@{}lrrll@{}}\toprule module & thm & def & audit & cited by \\\midrule
+\hyperref[appA:BoseIntegral]{BoseIntegral} & 7 & 2 & p c q & 1, 4 \\
+\hyperref[appA:ChargeLattice]{ChargeLattice} & 15 & 4 & p c q & -- \\
+\hyperref[appA:CompactBoson]{CompactBoson} & 12 & 3 & p c q & -- \\
+\hyperref[appA:ContinuumWinding]{ContinuumWinding} & 9 & 1 & p c q & 3 \\
+\hyperref[appA:DissipativeVortexDynamics]{DissipativeVortexDynamics} & 9 & 1 & p c q & 7, 10 \\
+\hyperref[appA:DualLength]{DualLength} & 13 & 3 & p c q & -- \\
+\hyperref[appA:Duality]{Duality} & 11 & 0 & p c q & -- \\
+\hyperref[appA:EinsteinRelation]{EinsteinRelation} & 7 & 3 & p c q & 7 \\
+\hyperref[appA:Fricke]{Fricke} & 12 & 3 & p c q & -- \\
+\hyperref[appA:FrictionKinetic]{FrictionKinetic} & 3 & 2 & p c q & 7, 10 \\
+\hyperref[appA:GPGalerkin]{GPGalerkin} & 13 & 7 & p c q & 2 \\
+\hyperref[appA:HeliumKinematics]{HeliumKinematics} & 15 & 4 & p c q & 1, 4, 5, 9 \\
+\hyperref[appA:KTFlow]{KTFlow} & 8 & 2 & p c q & 6, 10 \\
+\hyperref[appA:LevelRankDuality]{LevelRankDuality} & 1 & 2 & p c q & -- \\
+\hyperref[appA:MadelungNSE]{MadelungNSE} & 2 & 3 & p c q & 3 \\
+\hyperref[appA:MadelungSplit]{MadelungSplit} & 6 & 1 & p c q & 3, 9 \\
+\hyperref[appA:MatchingScreening]{MatchingScreening} & 10 & 3 & p c q & 6 \\
+\hyperref[appA:PairPolarisation]{PairPolarisation} & 8 & 2 & p c q & 6 \\
+\hyperref[appA:PhaseMixing]{PhaseMixing} & 3 & 0 & p c q & 8 \\
+\hyperref[appA:PhononSeries]{PhononSeries} & 9 & 10 & p q & 2, 4 \\
+\hyperref[appA:PhononSpecificHeat]{PhononSpecificHeat} & 14 & 1 & p c q & 1, 4 \\
+\hyperref[appA:QHFricke]{QHFricke} & 6 & 3 & p c q & -- \\
+\hyperref[appA:QuantizedCirculation]{QuantizedCirculation} & 6 & 3 & p c q & 1, 3 \\
+\hyperref[appA:QuantumFluidsShell]{QuantumFluidsShell} & 12 & 3 & p c q & -- \\
+\hyperref[appA:QuasiPeriodicBound]{QuasiPeriodicBound} & 6 & 1 & p c q & 7, 10 \\
+\hyperref[appA:RCFTDuality]{RCFTDuality} & 3 & 1 & p c q & -- \\
+\hyperref[appA:RipsFloor]{RipsFloor} & 4 & 2 & p c q & -- \\
+\hyperref[appA:ScaleResolvedWinding]{ScaleResolvedWinding} & 6 & 4 & p c q & 3 \\
+\hyperref[appA:SectorDuality]{SectorDuality} & 3 & 0 & p c q & -- \\
+\hyperref[appA:SectorTemperature]{SectorTemperature} & 8 & 5 & p c q & -- \\
+\hyperref[appA:ShellHamiltonian]{ShellHamiltonian} & 9 & 2 & p c q & -- \\
+\hyperref[appA:SigmaRule]{SigmaRule} & 6 & 3 & p c q & -- \\
+\hyperref[appA:TopologicalProtection]{TopologicalProtection} & 13 & 2 & p c q & -- \\
+\hyperref[appA:Villani]{Villani} & 18 & 8 & p c q & -- \\
+\hyperref[appA:VortexWinding]{VortexWinding} & 9 & 2 & p c q & 1, 3, 9 \\
+\hyperref[appA:WassersteinCertificate]{WassersteinCertificate} & 8 & 6 & p c q & -- \\
+\hyperref[appA:ZeroSound]{ZeroSound} & 6 & 1 & p c q & 1, 8 \\
+\bottomrule\end{tabular}\end{table}
+\begin{table}[t]\centering\footnotesize\setlength{\tabcolsep}{3.2pt}
+\caption{Modules whose declarations do \emph{not} live in \texttt{QuantumFluids.}\emph{Module}. The fully qualified name of a theorem is the namespace below, a dot, and the name printed in the catalogue.}\label{appA:tab-ns}
+\begin{tabular}{@{}ll@{}}\toprule module & namespace in the source \\\midrule
+DissipativeVortexDynamics & \texttt{DissipativeVortexDynamics} \\
+Duality & \texttt{Mathesis.\allowbreak{}Duality} \\
+EinsteinRelation & \texttt{EinsteinRelation} \\
+FrictionKinetic & \texttt{FrictionKinetic} \\
+KTFlow & \texttt{KTFlow} \\
+MadelungSplit & \texttt{QuantumFluids.\allowbreak{}Madelung} \\
+MatchingScreening & \texttt{MatchingScreening} \\
+PairPolarisation & \texttt{PairPolarisation} \\
+QuantizedCirculation & \texttt{QuantumFluids.\allowbreak{}Circulation} \\
+QuantumFluidsShell & \texttt{QuantumFluids.\allowbreak{}ShellComplex} \\
+QuasiPeriodicBound & \texttt{QuasiPeriodicBound} \\
+ShellHamiltonian & \texttt{QuantumFluids.\allowbreak{}ShellComplex} \\
+SigmaRule & \texttt{QuantumFluids.\allowbreak{}ShellComplex} \\
+\bottomrule\end{tabular}\end{table}
+\section{The catalogue, module by module}
+\subsection{BoseIntegral}\label{appA:BoseIntegral}
+{\footnotesize\raggedright\texttt{The Bose integral behind the phonon specific heat of superfluid helium.\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}BoseIntegral} $\cdot$ 7 theorems, 2 definitions $\cdot$ \emph{audit}: 7 theorem constants audited (+1 generated by Lean), 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{4}\,};noncomputable def bose (t : ℝ) : ℂ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{4}\,};theorem hasSum_bose {t : ℝ} (ht : t ∈ Ioi (0 : ℝ)) :
+    HasSum (fun n : ℕ => (1 : ℂ) * rexp (-((n : ℝ) + 1) * t)) (bose t)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem hasSum_mellin_bose {s : ℂ} (hs : 1 < s.re) :
+    HasSum (fun n : ℕ => Complex.Gamma s * 1 / (((n : ℝ) + 1 : ℝ) : ℂ) ^ s) (mellin bose s)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{1,4}\,};theorem mellin_bose_four : mellin bose 4 = (π : ℂ) ^ 4 / 15
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{4}\,};theorem bose_integral_nat {n : ℕ} (hn : 1 ≤ n) :
+    mellin bose (n + 1) = (Nat.factorial n : ℂ) * riemannZeta (n + 1)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem bose_integral_even {k : ℕ} (hk : k ≠ 0) :
+    mellin bose ((2 * k - 1 : ℕ) + 1) = (Nat.factorial (2 * k - 1) : ℂ) *
+      ((-1) ^ (k + 1) * (2 : ℂ) ^ (2 * k - 1) * (π : ℂ) ^ (2 * k) * bernoulli (2 * k)
+        / Nat.factorial (2 * k))
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{1}\,};noncomputable def debyeEnergy (V kB hbar c I T : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem debyeEnergy_eq (V kB hbar c T : ℝ) :
+    debyeEnergy V kB hbar c (π ^ 4 / 15) T = π ^ 2 * V * (kB * T) ^ 4 / (30 * (hbar * c) ^ 3)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{1,4}\,};theorem debye_specific_heat (V kB hbar c T : ℝ) :
+    HasDerivAt (fun T => debyeEnergy V kB hbar c (π ^ 4 / 15) T)
+      (2 * π ^ 2 * kB ^ 4 * V / (15 * c ^ 3 * hbar ^ 3) * T ^ 3) T
+\end{lstlisting}
+
+\subsection{ChargeLattice}\label{appA:ChargeLattice}
+{\footnotesize\raggedright\texttt{Two cosmological charge lattices stated so that the kernel reads off the same distinction as CompactBoson.\allowbreak{}lean: the duality is a relabelling of the sectors; what the physics depends on is a …}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}ChargeLattice} $\cdot$ 15 theorems, 4 definitions $\cdot$ \emph{audit}: 15 theorem constants audited, 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+def disc (p q : Λ) : ℤ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem gram_pp (hB : B.IsSymm) (a b : ℤ) (p q : Λ) :
+    B (a • p + b • q) (a • p + b • q) = a ^ 2 * B p p + 2 * a * b * B p q + b ^ 2 * B q q
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem gram_pq (hB : B.IsSymm) (a b c d : ℤ) (p q : Λ) :
+    B (a • p + b • q) (c • p + d • q)
+      = a * c * B p p + (a * d + b * c) * B p q + b * d * B q q
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem disc_sl2 (hB : B.IsSymm) (a b c d : ℤ) (p q : Λ) :
+    disc B (a • p + b • q) (c • p + d • q) = (a * d - b * c) ^ 2 * disc B p q
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem disc_sl2_invariant (hB : B.IsSymm) {a b c d : ℤ} (hdet : a * d - b * c = 1) (p q : Λ) :
+    disc B (a • p + b • q) (c • p + d • q) = disc B p q
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem disc_electric_magnetic_swap (hB : B.IsSymm) (p q : Λ) : disc B q (-p) = disc B p q
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem disc_scale (hB : B.IsSymm) (t : ℤ) (p q : Λ) : disc B (t • p) (t • q) = t ^ 4 * disc B p q
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem disc_zero_of_parallel (hB : B.IsSymm) (k : ℤ) (p : Λ) : disc B p (k • p) = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem area_sl2_invariant (hB : B.IsSymm) {a b c d : ℤ} (hdet : a * d - b * c = 1) (p q : Λ) :
+    Real.sqrt (-(disc B (a • p + b • q) (c • p + d • q) : ℝ)) = Real.sqrt (-(disc B p q : ℝ))
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def bpLambda {J : ℕ} (Λbare : ℝ) (q : Fin J → ℝ) (n : Fin J → ℤ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def nucleate {J : ℕ} (n : Fin J → ℤ) (i : Fin J) : Fin J → ℤ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem bp_step {J : ℕ} (Λbare : ℝ) (q : Fin J → ℝ) (n : Fin J → ℤ) (i : Fin J) :
+    bpLambda Λbare q (nucleate n i) - bpLambda Λbare q n = -((n i : ℝ) - 1 / 2) * q i ^ 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem bp_step_neg_iff {J : ℕ} (Λbare : ℝ) (q : Fin J → ℝ) (n : Fin J → ℤ) (i : Fin J) (hq : q i ≠ 0) :
+    bpLambda Λbare q (nucleate n i) < bpLambda Λbare q n ↔ 1 ≤ n i
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem bp_ge_bare {J : ℕ} (Λbare : ℝ) (q : Fin J → ℝ) (n : Fin J → ℤ) :
+    bpLambda Λbare q 0 ≤ bpLambda Λbare q n
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem bp_min_at_zero {J : ℕ} (Λbare : ℝ) (q : Fin J → ℝ) (hq : ∀ i, q i ≠ 0) (n : Fin J → ℤ) :
+    bpLambda Λbare q n = bpLambda Λbare q 0 ↔ n = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def kaloperV (X θ : ℝ) (N : ℤ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem kaloper_step (X θ : ℝ) (N : ℤ) :
+    kaloperV X θ N - kaloperV X θ (N + 1) = X * θ ^ 2 * (((1 : ℝ) - N) - 1 / 2)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem kaloper_min (X θ : ℝ) (hX : 0 < X) (hθ : θ ≠ 0) (N : ℤ) :
+    0 ≤ kaloperV X θ N ∧ (kaloperV X θ N = 0 ↔ N = 1)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem kaloper_terminates (X θ : ℝ) (N : ℤ) (hN : N ≤ 1) :
+    kaloperV X θ (N + ((1 - N).toNat : ℤ)) = 0
+\end{lstlisting}
+
+\subsection{CompactBoson}\label{appA:CompactBoson}
+{\footnotesize\raggedright\texttt{The T-\allowbreak{}duality of the compact boson stated on its SECTORS,\allowbreak{} so that three things can be read off the kernel: the duality is a reindexing of the sector lattice; the product of the electric and …}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}CompactBoson} $\cdot$ 12 theorems, 3 definitions $\cdot$ \emph{audit}: 12 theorem constants audited (+1 generated by Lean), 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+noncomputable def dim (R : ℝ) (n w : ℤ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def spin (n w : ℤ) : ℤ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem dim_dual (R : ℝ) (hR : R ≠ 0) (n w : ℤ) : dim R n w = dim (2 / R) w n
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem spin_dual (n w : ℤ) : spin n w = spin w n
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def swap : ℤ × ℤ ≃ ℤ × ℤ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem partition_dual (R : ℝ) (hR : R ≠ 0) (F : ℝ → ℤ → ℝ) :
+    ∑' p : ℤ × ℤ, F (dim R p.1 p.2) (spin p.1 p.2) = ∑' p : ℤ × ℤ, F (dim (2 / R) p.1 p.2) (spin p.1 p.2)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem dim_electric (R : ℝ) : dim R 1 0 = 1 / R ^ 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem dim_magnetic (R : ℝ) : dim R 0 1 = R ^ 2 / 4
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem electric_mul_magnetic (R : ℝ) (hR : R ≠ 0) : dim R 1 0 * dim R 0 1 = 1 / 4
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem eq_of_sq_eq_sq_pos {a b : ℝ} (ha : 0 < a) (hb : 0 < b) (h : a ^ 2 = b ^ 2) : a = b
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem selfDual_radius {R : ℝ} (hR : 0 < R) : dim R 1 0 = dim R 0 1 ↔ R = Real.sqrt 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem selfDual_value : dim (Real.sqrt 2) 1 0 = 1 / 2 ∧ dim (Real.sqrt 2) 0 1 = 1 / 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem vortex_marginal_radius {R : ℝ} (hR : 0 < R) : dim R 0 1 = 2 ↔ R = 2 * Real.sqrt 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem bkt_not_selfDual : (2 * Real.sqrt 2 : ℝ) ≠ Real.sqrt 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem eta_at_bkt : dim (2 * Real.sqrt 2) 1 0 = 1 / 8
+\end{lstlisting}
+
+\subsection{ContinuumWinding}\label{appA:ContinuumWinding}
+{\footnotesize\raggedright\texttt{"Rome": the discrete winding number equals the continuum degree.\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}ContinuumWinding} $\cdot$ 9 theorems, 1 definition $\cdot$ \emph{audit}: 10 theorem constants audited (+1 generated by Lean), 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+theorem pdiff_congr {a a' b b' : ℝ} (ha : (a : Real.Angle) = a') (hb : (b : Real.Angle) = b') :
+    pdiff a b = pdiff a' b'
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem sum_pdiff_telescope (Γ : ℕ → ℝ) (n : ℕ) (h : ∀ i < n, Γ (i + 1) - Γ i ∈ Set.Ioc (-π) π) :
+    ∑ i ∈ Finset.range n, pdiff (Γ i) (Γ (i + 1)) = Γ n - Γ 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem degree_int (x y : ℝ) (h : (x : Real.Angle) = y) : ∃ w : ℤ, x - y = (w : ℝ) * (2 * π)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{3}\,};noncomputable def sample (n i : ℕ) : I
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem sample_zero (n : ℕ) : sample n 0 = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem sample_self (n : ℕ) (hn : 0 < n) : sample n n = 1
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem sample_val (n i : ℕ) (hi : i ≤ n) (hn : 0 < n) : (sample n i : ℝ) = (i : ℝ) / n
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem dist_sample (n i : ℕ) (hi : i < n) :
+    dist (sample n (i + 1)) (sample n i) = 1 / n
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem discrete_eq_degree (γ : C(I, Real.Angle)) (hclosed : γ 1 = γ 0) :
+    ∃ w : ℤ, ∃ n₀ : ℕ, 0 < n₀ ∧ ∀ n ≥ n₀, ∀ θ : ℕ → ℝ,
+      (∀ i ≤ n, (θ i : Real.Angle) = γ (sample n i)) →
+      ∑ i ∈ Finset.range n, pdiff (θ i) (θ (i + 1)) = (w : ℝ) * (2 * π)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{3}\,};theorem detector_correct (c : C(I, ℂ)) (hne : ∀ t, c t ≠ 0) (hclosed : c 1 = c 0) :
+    ∃ w : ℤ, ∃ n₀ : ℕ, 0 < n₀ ∧ ∀ n ≥ n₀,
+      ∑ i ∈ Finset.range n, pdiff (Complex.arg (c (sample n i))) (Complex.arg (c (sample n (i + 1))))
+        = (w : ℝ) * (2 * π)
+\end{lstlisting}
+
+\subsection{DissipativeVortexDynamics}\label{appA:DissipativeVortexDynamics}
+{\footnotesize\raggedright\texttt{The dissipative point-\allowbreak{}vortex model behind the friction,\allowbreak{} transverse-\allowbreak{}force and Einstein-\allowbreak{}relation measurements (docs/\allowbreak{}designs/\allowbreak{}PGPE\_\allowbreak{}FRICTION\_\allowbreak{}PREREG.\allowbreak{}md amendment A1,\allowbreak{} PGPE\_\allowbreak{}ALPHAPRIME\_\allowbreak{}PREREG.\allowbreak{}md,\allowbreak{} …}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{DissipativeVortexDynamics} $\cdot$ 9 theorems, 1 definition $\cdot$ \emph{audit}: 9 theorem constants audited (+1 generated by Lean), 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext; the source has no \#print axioms line (footprint from the appended environment audit).\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{7,10}\,};theorem energy_dissipation (H : X → ℝ) (gradH : X → X) (hH : ∀ x, HasGradientAt H (gradH x) x)
+    (A : X → X) (hA : ∀ v, inner ℝ v (A v) = 0) (γ : ℝ) (r : ℝ → X)
+    (hr : ∀ t, HasDerivAt r (A (gradH (r t)) - γ • gradH (r t)) t) (t : ℝ) :
+    HasDerivAt (fun t => H (r t)) (-γ * ‖gradH (r t)‖ ^ 2) t
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{10}\,};theorem energy_antitone (H : X → ℝ) (gradH : X → X) (hH : ∀ x, HasGradientAt H (gradH x) x)
+    (A : X → X) (hA : ∀ v, inner ℝ v (A v) = 0) {γ : ℝ} (hγ : 0 ≤ γ) (r : ℝ → X)
+    (hr : ∀ t, HasDerivAt r (A (gradH (r t)) - γ • gradH (r t)) t) :
+    Antitone (fun t => H (r t))
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{7,10}\,};theorem dissipation_indep_of_skew (H : X → ℝ) (gradH : X → X) (hH : ∀ x, HasGradientAt H (gradH x) x)
+    (A B : X → X) (hA : ∀ v, inner ℝ v (A v) = 0) (hB : ∀ v, inner ℝ v (B v) = 0) (γ : ℝ)
+    (r s : ℝ → X) (hr : ∀ t, HasDerivAt r (A (gradH (r t)) - γ • gradH (r t)) t)
+    (hs : ∀ t, HasDerivAt s (B (gradH (s t)) - γ • gradH (s t)) t) (t : ℝ) (hrs : r t = s t) :
+    deriv (fun t => H (r t)) t = deriv (fun t => H (s t)) t
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{7}\,};noncomputable def r2 (t : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{7}\,};theorem r2_hasDerivAt (t : ℝ) (ht : t ∈ Icc (0 : ℝ) T) : HasDerivAt (r2 px py mx my) (-4 * α) t
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{7}\,};theorem dipole_sq_law (t : ℝ) (ht : t ∈ Icc (0 : ℝ) T) :
+    r2 px py mx my t = r2 px py mx my 0 - 4 * α * t
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{7}\,};theorem dipole_lifetime_bound (hα : 0 < α) (hT : 0 ≤ T) : T < r2 px py mx my 0 / (4 * α)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{7}\,};theorem centre_velocity_identity (t : ℝ) (ht : t ∈ Icc (0 : ℝ) T) :
+    ∃ cx' cy' : ℝ, HasDerivAt (fun s => (px s + mx s) / 2) cx' t ∧ HasDerivAt (fun s => (py s + my s) / 2) cy' t ∧
+      cx' * (py t - my t) - cy' * (px t - mx t) = 1 - α' ∧
+      cx' * (px t - mx t) + cy' * (py t - my t) = 0 ∧
+      (cx' ^ 2 + cy' ^ 2) * r2 px py mx my t = (1 - α') ^ 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{7}\,};theorem wind_stall {a b c : ℝ} (ha : 0 < a) (hab : a < b) (hc : 0 < c) (d : ℝ → ℝ)
+    (hd : ∀ t, HasDerivAt d (-c * (d t - a) * (d t - b) / d t) t) (h0 : b ≤ d 0) :
+    ∀ t, 0 ≤ t → b ≤ d t
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem stall_of_drive_sign {a b c : ℝ} (hab : a < b) (hc : 0 < c) (g : ℝ → ℝ) (hg : ∀ x, a < x → x < b → g x < 0)
+    (d : ℝ → ℝ) (hd : ∀ t, HasDerivAt d (-c * g (d t)) t) (h0 : b ≤ d 0) :
+    ∀ t, 0 ≤ t → b ≤ d t
+\end{lstlisting}
+
+\subsection{DualLength}\label{appA:DualLength}
+{\footnotesize\raggedright\texttt{The dual length of a quantum fluid (design memo docs/\allowbreak{}designs/\allowbreak{}DUAL\_\allowbreak{}SCALE\_\allowbreak{}QUANTUM\_\allowbreak{}FLUID.\allowbreak{}md; CLAIM-\allowbreak{}024).\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}DualLength} $\cdot$ 13 theorems, 3 definitions $\cdot$ \emph{audit}: 13 theorem constants audited, 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+noncomputable def dualLength (hc k epsSq : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def bogoliubovSq (hc ks k : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def ell (ks k : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem dualLength_phonon {hc k : ℝ} (hhc : hc ≠ 0) (hk : k ≠ 0) :
+    dualLength hc k ((hc * k) ^ 2) = 1 / k
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem dualLength_free {hc ks k : ℝ} (hhc : hc ≠ 0) (hk : k ≠ 0) (hks : ks ≠ 0) :
+    dualLength hc k ((hc * k ^ 2 / ks) ^ 2) = k / ks ^ 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem dualLength_bogoliubov {hc ks k : ℝ} (hhc : hc ≠ 0) (hk : k ≠ 0) (hks : ks ≠ 0) :
+    dualLength hc k (bogoliubovSq hc ks k) = ell ks k
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem dual_involutive {ks k : ℝ} (hk : k ≠ 0) (hks : ks ≠ 0) :
+    ks ^ 2 / (ks ^ 2 / k) = k
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem ell_dual_invariant {ks k : ℝ} (hk : k ≠ 0) (hks : ks ≠ 0) :
+    ell ks (ks ^ 2 / k) = ell ks k
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem ell_ge {ks k : ℝ} (hk : 0 < k) (hks : 0 < ks) : 2 / ks ≤ ell ks k
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem ell_eq_iff {ks k : ℝ} (hk : 0 < k) (hks : 0 < ks) : ell ks k = 2 / ks ↔ k = ks
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem not_bogoliubov_of_lt {hc ks k epsSq : ℝ} (hhc : hc ≠ 0) (hk : 0 < k) (hks : 0 < ks)
+    (hmeas : dualLength hc k epsSq < 2 / ks) : epsSq ≠ bogoliubovSq hc ks k
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem ell_ge_iff_envelope {hc ks k epsSq : ℝ} (hhc : hc ≠ 0) (hk : 0 < k) (hks : 0 < ks) :
+    2 / ks ≤ dualLength hc k epsSq ↔ 2 * hc ^ 2 / ks * k ^ 3 ≤ epsSq
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem bogoliubov_envelope {hc ks k : ℝ} (hhc : hc ≠ 0) (hk : 0 < k) (hks : 0 < ks) :
+    2 * hc ^ 2 / ks * k ^ 3 ≤ bogoliubovSq hc ks k
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem dualLength_feynman {hc ks k S : ℝ} (hhc : hc ≠ 0) (hk : k ≠ 0) (hks : ks ≠ 0) (hS : S ≠ 0) :
+    dualLength hc k ((hc * k ^ 2 / (ks * S)) ^ 2) = k / (ks ^ 2 * S ^ 2)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem feynman_ge_iff {ks k S : ℝ} (_hk : 0 < k) (hks : 0 < ks) (hS : 0 < S) :
+    2 / ks ≤ k / (ks ^ 2 * S ^ 2) ↔ S ^ 2 ≤ k / (2 * ks)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem not_bogoliubov_of_structure_factor {hc ks k S epsSq : ℝ}
+    (hhc : hc ≠ 0) (hk : 0 < k) (hks : 0 < ks) (hS : 0 < S)
+    (hfeyn : epsSq ≤ (hc * k ^ 2 / (ks * S)) ^ 2)        -- Feynman's variational bound
+    (hpeak : k / (2 * ks) < S ^ 2) :                      -- measured: S above the dual-scale bound
+    epsSq ≠ bogoliubovSq hc ks k
+\end{lstlisting}
+
+\subsection{Duality}\label{appA:Duality}
+{\footnotesize\raggedright\texttt{The Abstract Self-\allowbreak{}Dual Bound and Its First Instances (Rung 0 + Rung 1)}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{Mathesis.\allowbreak{}Duality} $\cdot$ 11 theorems, 0 definitions $\cdot$ \emph{audit}: 11 theorem constants audited, 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+theorem sqrt_le_max_of_le_mul {C x y : ℝ} (hx : 0 ≤ x) (hy : 0 ≤ y)
+    (h : C ≤ x * y) : Real.sqrt C ≤ max x y
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem min_le_sqrt_of_mul_le {C x y : ℝ} (hx : 0 ≤ x) (hy : 0 ≤ y)
+    (h : x * y ≤ C) : min x y ≤ Real.sqrt C
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem sqrt_between_duals {C x y : ℝ} (hx : 0 ≤ x) (hy : 0 ≤ y)
+    (h : x * y = C) : min x y ≤ Real.sqrt C ∧ Real.sqrt C ≤ max x y
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem two_sqrt_mul_le_add {x y : ℝ} (hx : 0 ≤ x) (hy : 0 ≤ y) :
+    2 * Real.sqrt (x * y) ≤ x + y
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem self_dual_fixed_point {C x : ℝ} (hC : 0 < C) (hx : 0 < x) :
+    x = C / x ↔ x = Real.sqrt C
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem Reff_ge_sqrt_of_selfDual {α R : ℝ} (hα : 0 < α) (hR : 0 < R) :
+    Real.sqrt α ≤ max R (α / R)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem sqrt_le_max_of_le_mul_nat {a b N : ℕ} (h : N ≤ a * b) :
+    Real.sqrt (N : ℝ) ≤ max (a : ℝ) (b : ℝ)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem eoq_lower_bound {D K h Q : ℝ}
+    (hD : 0 < D) (hK : 0 < K) (hh : 0 < h) (hQ : 0 < Q) :
+    2 * Real.sqrt (D * K * h / 2) ≤ D * K / Q + h * Q / 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem bogoliubov_dual_form {c ks k : ℝ} (hks : 0 < ks) (hk : 0 < k) :
+    c ^ 2 * k ^ 2 + c ^ 2 * k ^ 4 / ks ^ 2 = c ^ 2 * k ^ 3 / ks * (k / ks + ks / k)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem bogoliubov_selfdual_bound {c ks k : ℝ} (hks : 0 < ks) (hk : 0 < k) :
+    2 * c ^ 2 * k ^ 3 / ks ≤ c ^ 2 * k ^ 2 + c ^ 2 * k ^ 4 / ks ^ 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem sinh_selfDual_coupling {K : ℝ} (hK : 0 < K)
+    (hfix : Real.sinh (2 * K) * Real.sinh (2 * K) = 1) :
+    K = Real.log (1 + Real.sqrt 2) / 2
+\end{lstlisting}
+
+\subsection{EinsteinRelation}\label{appA:EinsteinRelation}
+{\footnotesize\raggedright\texttt{Companion of docs/\allowbreak{}designs/\allowbreak{}PGPE\_\allowbreak{}EINSTEIN\_\allowbreak{}PREREG.\allowbreak{}md.\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{EinsteinRelation} $\cdot$ 7 theorems, 3 definitions $\cdot$ \emph{audit}: 7 theorem constants audited, 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext; the source has no \#print axioms line (footprint from the appended environment audit).\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{7}\,};noncomputable def p (K x y : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem hasDerivAt_p_x (K x y : ℝ) (h : x ^ 2 + y ^ 2 ≠ 0) :
+    HasDerivAt (fun x => p K x y) (-K * x / (x ^ 2 + y ^ 2) * p K x y) x
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem hasDerivAt_p_y (K x y : ℝ) (h : x ^ 2 + y ^ 2 ≠ 0) :
+    HasDerivAt (fun y => p K x y) (-K * y / (x ^ 2 + y ^ 2) * p K x y) y
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{7}\,};noncomputable def Jx (α D K x y : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def Jy (α D K x y : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem Jx_eq (α D K x y : ℝ) : Jx α D K x y = (D * K - 2 * α) * (x / (x ^ 2 + y ^ 2) * p K x y)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem Jy_eq (α D K x y : ℝ) : Jy α D K x y = (D * K - 2 * α) * (y / (x ^ 2 + y ^ 2) * p K x y)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{7}\,};theorem zero_flux_iff (α D K : ℝ) :
+    (∀ x y : ℝ, x ^ 2 + y ^ 2 ≠ 0 → Jx α D K x y = 0 ∧ Jy α D K x y = 0) ↔ D * K = 2 * α
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{7}\,};theorem einstein_vortex (α η ρ T : ℝ) (hρ : 0 < ρ) (hT : 0 < T) :
+    (∀ x y : ℝ, x ^ 2 + y ^ 2 ≠ 0 → Jx α (2 * η) (2 * π * ρ / T) x y = 0 ∧ Jy α (2 * η) (2 * π * ρ / T) x y = 0)
+      ↔ η = α * T / (2 * π * ρ)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem flux_gibbs (E : ℝ → ℝ) (E' μ D T x : ℝ) (hT : T ≠ 0) (hE : HasDerivAt E E' x) :
+    ∃ ρ' : ℝ, HasDerivAt (fun x => exp (-E x / T)) ρ' x ∧
+      μ * E' * exp (-E x / T) + D * ρ' = (μ - D / T) * E' * exp (-E x / T)
+\end{lstlisting}
+
+\subsection{Fricke}\label{appA:Fricke}
+{\footnotesize\raggedright\texttt{The group-\allowbreak{}theoretic core of the "Fricke /\allowbreak{} K3" gate of paper/\allowbreak{}wasserstein\_\allowbreak{}slack.\allowbreak{}tex §6.\allowbreak{}3,\allowbreak{} and NOTHING more.\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}Fricke} $\cdot$ 12 theorems, 3 definitions $\cdot$ \emph{audit}: 12 theorem constants audited (+2 generated by Lean), 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+def W (n : ℤ) : Matrix (Fin 2) (Fin 2) ℤ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem W_mul_W (n : ℤ) : W n * W n = (-n) • (1 : Matrix (Fin 2) (Fin 2) ℤ)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def conj (n : ℤ) (g : Matrix (Fin 2) (Fin 2) ℤ) (c' : ℤ) : Matrix (Fin 2) (Fin 2) ℤ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem W_mul_eq (n : ℤ) (g : Matrix (Fin 2) (Fin 2) ℤ) (c' : ℤ) (hc : g 1 0 = n * c') :
+    W n * g = conj n g c' * W n
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem det_conj (n : ℤ) (g : Matrix (Fin 2) (Fin 2) ℤ) (c' : ℤ) (hc : g 1 0 = n * c') :
+    (conj n g c').det = g.det
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem conj_apply_one_zero (n : ℤ) (g : Matrix (Fin 2) (Fin 2) ℤ) (c' : ℤ) :
+    conj n g c' 1 0 = n * (-(g 0 1))
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem conj_conj (n : ℤ) (g : Matrix (Fin 2) (Fin 2) ℤ) (c' : ℤ) (hc : g 1 0 = n * c') :
+    conj n (conj n g c') (-(g 0 1)) = g
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem mem_Gamma0_iff_dvd (n : ℕ) [NeZero n] (A : SL(2, ℤ)) :
+    A ∈ Gamma0 n ↔ (n : ℤ) ∣ A 1 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem fricke_normalizes (n : ℕ) [NeZero n] (A : SL(2, ℤ)) (hA : A ∈ Gamma0 n) :
+    ∃ B : SL(2, ℤ), B ∈ Gamma0 n ∧
+      W n * (A : Matrix (Fin 2) (Fin 2) ℤ) = (B : Matrix (Fin 2) (Fin 2) ℤ) * W n
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem fricke_on_axis (n y : ℝ) (hn : n ≠ 0) (hy : y ≠ 0) :
+    ((0 : ℂ) * (Complex.I * y) + (-1)) / ((n : ℂ) * (Complex.I * y) + 0) = Complex.I * (1 / (n * y))
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def axis (n y : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem axis_involutive {n y : ℝ} (hn : n ≠ 0) (hy : y ≠ 0) : axis n (axis n y) = y
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem axis_eq_dual {ks : ℝ} (hks : ks ≠ 0) (k : ℝ) : axis (1 / ks ^ 2) k = ks ^ 2 / k
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem ell_axis_invariant {ks k : ℝ} (hk : k ≠ 0) (hks : ks ≠ 0) :
+    QuantumFluids.DualLength.ell ks (axis (1 / ks ^ 2) k) = QuantumFluids.DualLength.ell ks k
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem axis_fixed_iff {n y : ℝ} (hn : 0 < n) (hy : 0 < y) :
+    axis n y = y ↔ y = 1 / Real.sqrt n
+\end{lstlisting}
+
+\subsection{FrictionKinetic}\label{appA:FrictionKinetic}
+{\footnotesize\raggedright\texttt{The kinetic reading of the friction law (docs/\allowbreak{}designs/\allowbreak{}FRICTION\_\allowbreak{}LAW\_\allowbreak{}THEORY\_\allowbreak{}NOTE.\allowbreak{}md)}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{FrictionKinetic} $\cdot$ 3 theorems, 2 definitions $\cdot$ \emph{audit}: 3 theorem constants audited, 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext; the source has no \#print axioms line (footprint from the appended environment audit).\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{7,10}\,};noncomputable def alpha (K : Finset ι) (w f : ι → ℝ) (ρs κ : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{7,10}\,};noncomputable def rhoN (K : Finset ι) (w : ι → ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{7,10}\,};theorem coeff_eq_weighted_mean (K : Finset ι) (w f : ι → ℝ) (ρ ρs κ : ℝ) (hρn : rhoN K w ≠ 0) (hρ : ρ ≠ 0) :
+    alpha K w f ρs κ / (rhoN K w / ρ) = ρ / (ρs * κ) * ((∑ k ∈ K, w k * f k) / ∑ k ∈ K, w k)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{7}\,};theorem weighted_mean_mem_Icc (K : Finset ι) (w f : ι → ℝ) (hw : ∀ k ∈ K, 0 ≤ w k) (hpos : 0 < ∑ k ∈ K, w k)
+    (m M : ℝ) (hm : ∀ k ∈ K, m ≤ f k) (hM : ∀ k ∈ K, f k ≤ M) :
+    (∑ k ∈ K, w k * f k) / (∑ k ∈ K, w k) ∈ Set.Icc m M
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{7}\,};theorem rayleigh_jeans_mean (K : Finset ι) (f : ι → ℝ) (T c : ℝ) (hT : 0 < T) (hc : 0 < c) :
+    (∑ k ∈ K, (T / (2 * c ^ 2)) * f k) / (∑ k ∈ K, (T / (2 * c ^ 2))) = (∑ k ∈ K, f k) / K.card
+\end{lstlisting}
+
+\subsection{GPGalerkin}\label{appA:GPGalerkin}
+{\footnotesize\raggedright\texttt{D3 (docs/\allowbreak{}OPENAI\_\allowbreak{}NSE\_\allowbreak{}LEVERAGE\_\allowbreak{}FOR\_\allowbreak{}QUANTUM\_\allowbreak{}FLUIDS.\allowbreak{}md): structure of the Fourier-\allowbreak{}Galerkin Gross-\allowbreak{}Pitaevskii nonlinearity that is INDEPENDENT of the truncation set.\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}GPGalerkin} $\cdot$ 13 theorems, 7 definitions $\cdot$ \emph{audit}: 13 theorem constants audited (+4 generated by Lean), 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{2}\,};noncomputable def nl (Λ : Finset G) (ψ : G → ℂ) (k : G) : ℂ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def pairing (Λ : Finset G) (ψ : G → ℂ) : ℂ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def ff (ψ : G → ℂ) (p : G × G) : ℂ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def dens (Λ : Finset G) (ψ : G → ℂ) (q : G) : ℂ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def diffs (Λ : Finset G) : Finset G
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem pairing_eq_prod (Λ : Finset G) (ψ : G → ℂ) :
+    pairing Λ ψ = ∑ p ∈ Λ ×ˢ Λ, ∑ r ∈ Λ ×ˢ Λ,
+      if p.1 - p.2 = r.1 - r.2 then ff ψ p * (starRingEnd ℂ) (ff ψ r) else 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem dens_mul_conj (Λ : Finset G) (ψ : G → ℂ) (q : G) :
+    dens Λ ψ q * (starRingEnd ℂ) (dens Λ ψ q) = ∑ p ∈ Λ ×ˢ Λ, ∑ r ∈ Λ ×ˢ Λ,
+      if p.1 - p.2 = q ∧ r.1 - r.2 = q then ff ψ p * (starRingEnd ℂ) (ff ψ r) else 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{2}\,};theorem pairing_eq_sum (Λ : Finset G) (ψ : G → ℂ) :
+    pairing Λ ψ = ∑ q ∈ diffs Λ, dens Λ ψ q * (starRingEnd ℂ) (dens Λ ψ q)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def pairingRe (Λ : Finset G) (ψ : G → ℂ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem pairing_eq_ofReal (Λ : Finset G) (ψ : G → ℂ) :
+    pairing Λ ψ = (pairingRe Λ ψ : ℂ)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{2}\,};theorem pairing_nonneg (Λ : Finset G) (ψ : G → ℂ) : 0 ≤ pairingRe Λ ψ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem pairing_im_zero (Λ : Finset G) (ψ : G → ℂ) : (pairing Λ ψ).im = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{2}\,};theorem mass_rate_zero (Λ : Finset G) (ψ : G → ℂ) (ω : G → ℝ) (g : ℝ) :
+    ∑ k ∈ Λ, ((starRingEnd ℂ) (ψ k) * ((ω k : ℂ) * ψ k + (g : ℂ) * nl Λ ψ k)).im = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem kinetic_le_energy (Λ : Finset G) (ψ : G → ℂ) (ω : G → ℝ) (g E : ℝ) (hg : 0 ≤ g)
+    (hE : E = ∑ k ∈ Λ, ω k * Complex.normSq (ψ k) + g / 2 * pairingRe Λ ψ) :
+    ∑ k ∈ Λ, ω k * Complex.normSq (ψ k) ≤ E
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem nl_eq_dens (Λ : Finset G) (ψ : G → ℂ) (k : G) :
+    nl Λ ψ k = ∑ b ∈ Λ, ψ b * dens Λ ψ (k - b)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem dens_neg (Λ : Finset G) (ψ : G → ℂ) (q : G) :
+    dens Λ ψ (-q) = (starRingEnd ℂ) (dens Λ ψ q)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def densVar (Λ : Finset G) (ψ δ : G → ℂ) (q : G) : ℂ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem sum_densVar (Λ : Finset G) (ψ δ : G → ℂ) :
+    ∑ q ∈ diffs Λ, (starRingEnd ℂ) (dens Λ ψ q) * densVar Λ ψ δ q
+      = ∑ p ∈ Λ ×ˢ Λ, (starRingEnd ℂ) (dens Λ ψ (p.1 - p.2)) *
+          (δ p.1 * (starRingEnd ℂ) (ψ p.2) + ψ p.1 * (starRingEnd ℂ) (δ p.2))
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{2}\,};theorem grad_identity (Λ : Finset G) (ψ δ : G → ℂ) :
+    ∑ q ∈ diffs Λ, 2 * ((starRingEnd ℂ) (dens Λ ψ q) * densVar Λ ψ δ q).re
+      = 4 * (∑ k ∈ Λ, (starRingEnd ℂ) (δ k) * nl Λ ψ k).re
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{2}\,};theorem energy_rate_zero (Λ : Finset G) (ψ : G → ℂ) (ω : G → ℝ) (g : ℝ) :
+    ∑ k ∈ Λ, 2 * ω k * ((starRingEnd ℂ) (ψ k) *
+        (-Complex.I * ((ω k : ℂ) * ψ k + (g : ℂ) * nl Λ ψ k))).re
+      + g / 2 * ∑ q ∈ diffs Λ, 2 * ((starRingEnd ℂ) (dens Λ ψ q) *
+          densVar Λ ψ (fun k => -Complex.I * ((ω k : ℂ) * ψ k + (g : ℂ) * nl Λ ψ k)) q).re = 0
+\end{lstlisting}
+
+\subsection{HeliumKinematics}\label{appA:HeliumKinematics}
+{\footnotesize\raggedright\texttt{Kinematic and consistency identities behind the analysis of neutron-\allowbreak{}scattering data on superfluid helium-\allowbreak{}4,\allowbreak{} formalised from statements made in}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}HeliumKinematics} $\cdot$ 15 theorems, 4 definitions $\cdot$ \emph{audit}: 15 theorem constants audited, 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{1,5}\,};def phononDisp (c a k : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{5}\,};theorem three_phonon_excess (c a k₁ k₂ : ℝ) :
+    phononDisp c a (k₁ + k₂) - phononDisp c a k₁ - phononDisp c a k₂
+      = 3 * c * a * k₁ * k₂ * (k₁ + k₂)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{1,4,5}\,};theorem three_phonon_open_iff {c a k₁ k₂ : ℝ} (hc : 0 < c) (h₁ : 0 < k₁) (h₂ : 0 < k₂) :
+    phononDisp c a k₁ + phononDisp c a k₂ ≤ phononDisp c a (k₁ + k₂) ↔ 0 ≤ a
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{5}\,};def seriesDisp (c α₂ α₃ α₄ k : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{5}\,};theorem symmetric_split_excess (c α₂ α₃ α₄ k : ℝ) :
+    seriesDisp c α₂ α₃ α₄ k - 2 * seriesDisp c α₂ α₃ α₄ (k / 2)
+      = c * k ^ 3 * (3 / 4 * α₂ + 7 / 8 * α₃ * k + 15 / 16 * α₄ * k ^ 2)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{5}\,};theorem phase_velocity_excess (c α₂ α₃ α₄ k : ℝ) (hk : k ≠ 0) :
+    seriesDisp c α₂ α₃ α₄ k / k - c = c * k ^ 2 * (α₂ + α₃ * k + α₄ * k ^ 2)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{5}\,};theorem group_velocity_excess (c α₂ α₃ α₄ k : ℝ) :
+    HasDerivAt (seriesDisp c α₂ α₃ α₄)
+      (c + c * k ^ 2 * (3 * α₂ + 4 * α₃ * k + 5 * α₄ * k ^ 2)) k
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{5}\,};theorem two_roton_momentum_le {k₁ k₂ : V} {kR : ℝ} (h₁ : ‖k₁‖ = kR) (h₂ : ‖k₂‖ = kR) :
+    ‖k₁ + k₂‖ ≤ 2 * kR
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{5}\,};theorem two_roton_parallel (k₁ : V) : ‖k₁ + k₁‖ = 2 * ‖k₁‖
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{5}\,};theorem two_roton_antiparallel (k₁ : V) : ‖k₁ + (-k₁)‖ = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def tofEnergy (Ei r : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{5}\,};theorem tofEnergy_rescale (lam Ei r : ℝ) : tofEnergy (lam * Ei) r = lam * tofEnergy Ei r
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{9}\,};theorem plateau_excess_calibration_invariant {lam : ℝ} (hlam : 0 < lam) (Ei r rR : ℝ) :
+    2 * tofEnergy (lam * Ei) rR < tofEnergy (lam * Ei) r ↔ 2 * tofEnergy Ei rR < tofEnergy Ei r
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{5,9}\,};theorem tof_eq12_eq_eq13 {m v tel tin ts : ℝ} (h₁ : tel - ts ≠ 0) (h₂ : tin - ts ≠ 0) :
+    (1 / 2) * m * (v * (tel - ts)) ^ 2 * (1 / (tel - ts) ^ 2 - 1 / (tin - ts) ^ 2)
+      = tofEnergy ((1 / 2) * m * v ^ 2) ((tel - ts) / (tin - ts))
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{5,9}\,};theorem landau_velocity_parabolic_zero {a : ℝ} (ha : 0 < a) {v : ℝ} (hv : 0 < v) :
+    ∃ k : ℝ, 0 < k ∧ a * k ^ 2 / k < v
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{5,9}\,};theorem landau_velocity_ge_of_above_sound_line {ε : ℝ → ℝ} {c k : ℝ} (hk : 0 < k)
+    (h : c * k ≤ ε k) : c ≤ ε k / k
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def abrahamP (A₁ A₂ A₃ ρ₀ ρ : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem abraham_sound_speed_sq (A₁ A₂ A₃ ρ₀ ρ : ℝ) :
+    HasDerivAt (abrahamP A₁ A₂ A₃ ρ₀) (A₁ + 2 * A₂ * (ρ - ρ₀) + 3 * A₃ * (ρ - ρ₀) ^ 2) ρ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem debye_mode_count (kD : ℝ) :
+    (1 / (2 * Real.pi ^ 2)) * ∫ k in (0 : ℝ)..kD, k ^ 2 = kD ^ 3 / (6 * Real.pi ^ 2)
+\end{lstlisting}
+
+\subsection{KTFlow}\label{appA:KTFlow}
+{\footnotesize\raggedright\texttt{The Kosterlitz renormalisation-\allowbreak{}group flow: an exact conserved quantity,\allowbreak{} and the trapping of the superfluid side at the universal stiffness.\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{KTFlow} $\cdot$ 8 theorems, 2 definitions $\cdot$ \emph{audit}: 8 theorem constants audited (+2 generated by Lean), 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext; the source has no \#print axioms line (footprint from the appended environment audit).\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{6}\,};noncomputable def f (u : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{6}\,};noncomputable def H (u y : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+lemma f_antitone {a b : ℝ} (ha : 0 < a) (hab : a ≤ b) (hb : b ≤ π / 2) : f b ≤ f a
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+lemma hasDerivAt_H (l : ℝ) : HasDerivAt (fun l => H (u l) (y l)) 0 l
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{6,10}\,};theorem kt_invariant (l : ℝ) : H (u l) (y l) = H (u 0) (y 0)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+lemma f_ge_H (l : ℝ) : H (u 0) (y 0) ≤ f (u l)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{6,10}\,};theorem kt_trapped (h0 : u 0 < π / 2) (hH : f (π / 2) < H (u 0) (y 0)) : ∀ l, 0 ≤ l → u l < π / 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{6}\,};theorem u_monotone : Monotone u
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{6,10}\,};theorem kt_fugacity_bounded (h0 : u 0 < π / 2) (hH : f (π / 2) < H (u 0) (y 0)) (l : ℝ) (hl : 0 ≤ l) :
+    y l ^ 2 ≤ y 0 ^ 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{6}\,};theorem kt_units (K : ℝ) : 2 / π < K ↔ 4 < 2 * π * K
+\end{lstlisting}
+
+\subsection{LevelRankDuality}\label{appA:LevelRankDuality}
+{\footnotesize\raggedright\texttt{A seventh cross-\allowbreak{}domain case: level-\allowbreak{}rank duality of Chern-\allowbreak{}Simons/\allowbreak{}WZW theories,\allowbreak{} U(N)\_\allowbreak{}K <-\allowbreak{}> U(K)\_\allowbreak{}N (Naculich-\allowbreak{}Schnitzer 2007,\allowbreak{} DOI 10.\allowbreak{}1088/\allowbreak{}1126-\allowbreak{}6708/\allowbreak{}2007/\allowbreak{}06/\allowbreak{}023; Hsin-\allowbreak{}Seiberg 2016,\allowbreak{} DOI …}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}LevelRankDuality} $\cdot$ 1 theorem, 2 definitions $\cdot$ \emph{audit}: 1 theorem constants audited, 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+def inBox (a b : ℕ) (μ : YoungDiagram) : Prop
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem inBox_transpose_iff (a b : ℕ) (μ : YoungDiagram) :
+    inBox a b μ ↔ inBox b a μ.transpose
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def levelRankRelabeling (a b : ℕ) : { μ : YoungDiagram // inBox a b μ } ≃ { μ : YoungDiagram // inBox b a μ }
+\end{lstlisting}
+
+\subsection{MadelungNSE}\label{appA:MadelungNSE}
+{\footnotesize\raggedright\texttt{Bridge: the Madelung (quantum-\allowbreak{}fluid) velocity field expressed in OpenAI's Navier-\allowbreak{}Stokes vocabulary.\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}MadelungNSE} $\cdot$ 2 theorems, 3 definitions $\cdot$ \emph{audit}: 2 theorem constants audited (+1 generated by Lean), 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+noncomputable def scalarLaplacian (p : PressureField) (t : ℝ) (x : Space) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def TwiceSpatial (p : PressureField) (t : ℝ) (x : Space) : Prop
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem divergence_pressureGradient (p : PressureField) (t : ℝ) (x : Space)
+    (h : TwiceSpatial p t x) :
+    spatialDivergence (fun q : SpaceTime => pressureGradient p q.1 q.2) t x
+      = scalarLaplacian p t x
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def madelungVelocity (hbar m : ℝ) (S : PressureField) : VelocityField
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{3}\,};theorem divergence_madelungVelocity (hbar m : ℝ) (S : PressureField) (t : ℝ) (x : Space)
+    (h : TwiceSpatial S t x) :
+    spatialDivergence (madelungVelocity hbar m S) t x = (hbar / m) * scalarLaplacian S t x
+\end{lstlisting}
+
+\subsection{MadelungSplit}\label{appA:MadelungSplit}
+{\footnotesize\raggedright\texttt{D4 (docs/\allowbreak{}OPENAI\_\allowbreak{}NSE\_\allowbreak{}LEVERAGE\_\allowbreak{}FOR\_\allowbreak{}QUANTUM\_\allowbreak{}FLUIDS.\allowbreak{}md): the Madelung energy split.\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}Madelung} $\cdot$ 6 theorems, 1 definition $\cdot$ \emph{audit}: 6 theorem constants audited, 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+noncomputable def psi {E : Type*} (a S : E → ℝ) (x : E) : ℂ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem normSq_phase_mul (θ p a r : ℝ) :
+    ‖Complex.exp (Complex.I * (θ : ℂ)) * ((p : ℂ) + Complex.I * (a : ℂ) * (r : ℂ))‖ ^ 2
+      = p ^ 2 + a ^ 2 * r ^ 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem hasDerivAt_line (x v : E) :
+    HasDerivAt (fun t : ℝ => x + t • v) v 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem hasDerivAt_psi_line (a S : E → ℝ) (x v : E)
+    (ha : DifferentiableAt ℝ a x) (hS : DifferentiableAt ℝ S x) :
+    HasDerivAt (fun t : ℝ => psi a S (x + t • v))
+      (Complex.exp (Complex.I * (S x : ℂ)) *
+        ((fderiv ℝ a x v : ℝ) + Complex.I * (a x : ℂ) * (fderiv ℝ S x v : ℝ))) 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem norm_sq_deriv_psi (a S : E → ℝ) (x v : E)
+    (ha : DifferentiableAt ℝ a x) (hS : DifferentiableAt ℝ S x) :
+    ‖deriv (fun t : ℝ => psi a S (x + t • v)) 0‖ ^ 2
+      = (fderiv ℝ a x v) ^ 2 + (a x) ^ 2 * (fderiv ℝ S x v) ^ 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{3}\,};theorem madelung_gradient_split {n : ℕ} (a S : EuclideanSpace ℝ (Fin n) → ℝ)
+    (x : EuclideanSpace ℝ (Fin n))
+    (ha : DifferentiableAt ℝ a x) (hS : DifferentiableAt ℝ S x) :
+    ∑ i : Fin n, ‖deriv (fun t : ℝ => psi a S (x + t • EuclideanSpace.single i 1)) 0‖ ^ 2
+      = ∑ i : Fin n, (fderiv ℝ a x (EuclideanSpace.single i 1)) ^ 2
+        + (a x) ^ 2 * ∑ i : Fin n, (fderiv ℝ S x (EuclideanSpace.single i 1)) ^ 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{3,9}\,};theorem kinetic_density_split (ħ m a ga gS : ℝ) (hm : m ≠ 0) :
+    ħ ^ 2 / (2 * m) * (ga ^ 2 + a ^ 2 * gS ^ 2)
+      = ħ ^ 2 / (2 * m) * ga ^ 2 + m / 2 * a ^ 2 * (ħ / m * gS) ^ 2
+\end{lstlisting}
+
+\subsection{MatchingScreening}\label{appA:MatchingScreening}
+{\footnotesize\raggedright\texttt{The vortex-\allowbreak{}charge structure factor certifies a long vortex-\allowbreak{}antivortex matching.\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{MatchingScreening} $\cdot$ 10 theorems, 3 definitions $\cdot$ \emph{audit}: 10 theorem constants audited (+2 generated by Lean), 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext; the source has no \#print axioms line (footprint from the appended environment audit).\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+lemma norm_exp_sub_exp_le (a b : ℝ) :
+    ‖exp (I * (a : ℂ)) - exp (I * (b : ℂ))‖ ≤ |a - b|
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{6}\,};noncomputable def wave (k r : E) : ℂ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{6}\,};noncomputable def rho {N : ℕ} (k : E) (p m : Fin N → E) : ℂ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+lemma norm_wave_sub_le (k r s : E) : ‖wave k r - wave k s‖ ≤ ‖k‖ * ‖r - s‖
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{6}\,};theorem norm_rho_le_matching {N : ℕ} (k : E) (p m : Fin N → E) (σ : Fin N ≃ Fin N) :
+    ‖rho k p m‖ ≤ ‖k‖ * ∑ i, ‖p i - m (σ i)‖
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{6}\,};theorem matching_lower_bound {N : ℕ} (k : E) (hk : k ≠ 0) (p m : Fin N → E) (σ : Fin N ≃ Fin N) :
+    ‖rho k p m‖ / ‖k‖ ≤ ∑ i, ‖p i - m (σ i)‖
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem exists_long_pair {N : ℕ} (hN : 0 < N) (k : E) (hk : k ≠ 0) (p m : Fin N → E)
+    (σ : Fin N ≃ Fin N) : ∃ i, ‖rho k p m‖ / (N * ‖k‖) ≤ ‖p i - m (σ i)‖
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+lemma wave_add_period (k r t : E) (n : ℤ) (ht : inner ℝ k t = 2 * Real.pi * n) :
+    wave k (r + t) = wave k r
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{6}\,};theorem norm_rho_le_matching_torus {N : ℕ} (k : E) (p m : Fin N → E) (σ : Fin N ≃ Fin N)
+    (t : Fin N → E) (ht : ∀ i, ∃ n : ℤ, inner ℝ k (t i) = 2 * Real.pi * n) :
+    ‖rho k p m‖ ≤ ‖k‖ * ∑ i, ‖p i - (m (σ i) + t i)‖
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def vhat (k₁ k₂ : ℝ) (r : ℂ) : ℂ × ℂ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem pointVortex_transverse (k₁ k₂ : ℝ) (r : ℂ) :
+    (k₁ : ℂ) * (vhat k₁ k₂ r).1 + (k₂ : ℂ) * (vhat k₁ k₂ r).2 = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem pointVortex_norm_sq (k₁ k₂ : ℝ) (hk : k₁ ^ 2 + k₂ ^ 2 ≠ 0) (r : ℂ) :
+    ‖(vhat k₁ k₂ r).1‖ ^ 2 + ‖(vhat k₁ k₂ r).2‖ ^ 2 = (2 * Real.pi) ^ 2 * ‖r‖ ^ 2 / (k₁ ^ 2 + k₂ ^ 2)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+lemma rho_one_pair : rho (E := ℝ) (N := 1) Real.pi (fun _ => 1) (fun _ => 0) = -2
+\end{lstlisting}
+
+\subsection{PairPolarisation}\label{appA:PairPolarisation}
+{\footnotesize\raggedright\texttt{Companion of docs/\allowbreak{}designs/\allowbreak{}PGPE\_\allowbreak{}DIELECTRIC\_\allowbreak{}PREREG.\allowbreak{}md (finite-\allowbreak{}k dielectric relation).\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{PairPolarisation} $\cdot$ 8 theorems, 2 definitions $\cdot$ \emph{audit}: 8 theorem constants audited, 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext; the source has no \#print axioms line (footprint from the appended environment audit).\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+noncomputable def wave (k r : E) : ℂ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def rho {N : ℕ} (k : E) (p m : Fin N → E) : ℂ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+lemma norm_wave (k r : E) : ‖wave k r‖ = 1
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+lemma pair_factor (k p m : E) :
+    wave k p - wave k m = wave k m * (exp (I * ((inner ℝ k (p - m) : ℝ) : ℂ)) - 1)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+lemma norm_pair_le (k p m : E) : ‖wave k p - wave k m‖ ≤ ‖k‖ * ‖p - m‖
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem norm_rho_le_pairs {N : ℕ} (k : E) (p m : Fin N → E) :
+    ‖rho k p m‖ ≤ ‖k‖ * ∑ i, ‖p i - m i‖
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem norm_rho_le_of_size {N : ℕ} (k : E) (p m : Fin N → E) {a : ℝ} (ha : ∀ i, ‖p i - m i‖ ≤ a) :
+    ‖rho k p m‖ ≤ ‖k‖ * (N * a)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{6}\,};theorem rho_polarisation {N : ℕ} (k : E) (p m : Fin N → E)
+    (hk : ∀ i, |inner ℝ k (p i - m i)| ≤ 1) :
+    ‖rho k p m - I * ∑ i, ((inner ℝ k (p i - m i) : ℝ) : ℂ) * wave k (m i)‖
+      ≤ ∑ i, (inner ℝ k (p i - m i)) ^ 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem remainder_le {N : ℕ} (k : E) (p m : Fin N → E) :
+    ∑ i, (inner ℝ k (p i - m i)) ^ 2 ≤ ‖k‖ ^ 2 * ∑ i, ‖p i - m i‖ ^ 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem response_ceiling {N : ℕ} (k : E) (hk : k ≠ 0) (p m : Fin N → E) :
+    (2 * Real.pi) ^ 2 * ‖rho k p m‖ ^ 2 / ‖k‖ ^ 2 ≤ (2 * Real.pi) ^ 2 * (∑ i, ‖p i - m i‖) ^ 2
+\end{lstlisting}
+
+\subsection{PhaseMixing}\label{appA:PhaseMixing}
+{\footnotesize\raggedright\texttt{Free transport forgets its initial density: the linear,\allowbreak{} field-\allowbreak{}free core of Landau damping.\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}PhaseMixing} $\cdot$ 3 theorems, 0 definitions $\cdot$ \emph{audit}: 3 theorem constants audited, 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+theorem transport_solution (k v : ℝ) (gv : ℂ) (t x : ℝ) :
+    HasDerivAt (fun t => cexp ((k * (x - v * t) : ℝ) * I) * gv)
+        (-(v : ℂ) * ((k : ℂ) * I * (cexp ((k * (x - v * t) : ℝ) * I) * gv))) t ∧
+    HasDerivAt (fun x => cexp ((k * (x - v * t) : ℝ) * I) * gv)
+        ((k : ℂ) * I * (cexp ((k * (x - v * t) : ℝ) * I) * gv)) x
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{8}\,};theorem phase_mixing (g : ℝ → ℂ) {k : ℝ} (hk : k ≠ 0) :
+    Tendsto (fun t : ℝ => ∫ v : ℝ, cexp (-((k * v * t : ℝ) : ℂ) * I) * g v) atTop (;$\mathcal{N}$; 0)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{8}\,};theorem maxwellian_mode (k t : ℝ) :
+    ∫ v : ℝ, cexp (-((k * v * t : ℝ) : ℂ) * I) * ((rexp (-v ^ 2 / 2) / √(2 * π) : ℝ) : ℂ)
+      = cexp (-((k * t) ^ 2 / 2 : ℝ))
+\end{lstlisting}
+
+\subsection{PhononSeries}\label{appA:PhononSeries}
+{\footnotesize\raggedright\texttt{The algebra behind the phonon specific-\allowbreak{}heat series of Godfrin,\allowbreak{} Beauvois,\allowbreak{} Sultan,\allowbreak{} Krotscheck,\allowbreak{} Dawidowski,\allowbreak{} Faak,\allowbreak{} Ollivier,\allowbreak{} PRB 103,\allowbreak{} 104516 (2021),\allowbreak{} Eq.\allowbreak{} (22).\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}PhononSeries} $\cdot$ 9 theorems, 10 definitions $\cdot$ \emph{audit}: 9 theorem constants audited, 0 sorry, 0 user axioms; axioms used: Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+def kInv (a1 a2 a3 a4 a5 a6 e : R) : R
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def kPow2 (a1 a2 a3 a4 a5 a6 e : R) : R
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{2}\,};theorem kPow2_eq (a1 a2 a3 a4 a5 a6 e : R) (h : e ^ 8 = 0) :
+    kInv a1 a2 a3 a4 a5 a6 e * kInv a1 a2 a3 a4 a5 a6 e = kPow2 a1 a2 a3 a4 a5 a6 e
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def kPow3 (a1 a2 a3 a4 a5 a6 e : R) : R
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem kPow3_eq (a1 a2 a3 a4 a5 a6 e : R) (h : e ^ 8 = 0) :
+    kPow2 a1 a2 a3 a4 a5 a6 e * kInv a1 a2 a3 a4 a5 a6 e = kPow3 a1 a2 a3 a4 a5 a6 e
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def kPow4 (a1 a2 a3 a4 a5 a6 e : R) : R
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem kPow4_eq (a1 a2 a3 a4 a5 a6 e : R) (h : e ^ 8 = 0) :
+    kPow3 a1 a2 a3 a4 a5 a6 e * kInv a1 a2 a3 a4 a5 a6 e = kPow4 a1 a2 a3 a4 a5 a6 e
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def kPow5 (a1 a2 a3 a4 a5 a6 e : R) : R
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem kPow5_eq (a1 a2 a3 a4 a5 a6 e : R) (h : e ^ 8 = 0) :
+    kPow4 a1 a2 a3 a4 a5 a6 e * kInv a1 a2 a3 a4 a5 a6 e = kPow5 a1 a2 a3 a4 a5 a6 e
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def kPow6 (a1 a2 a3 a4 a5 a6 e : R) : R
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem kPow6_eq (a1 a2 a3 a4 a5 a6 e : R) (h : e ^ 8 = 0) :
+    kPow5 a1 a2 a3 a4 a5 a6 e * kInv a1 a2 a3 a4 a5 a6 e = kPow6 a1 a2 a3 a4 a5 a6 e
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def kPow7 (a1 a2 a3 a4 a5 a6 e : R) : R
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem kPow7_eq (a1 a2 a3 a4 a5 a6 e : R) (h : e ^ 8 = 0) :
+    kPow6 a1 a2 a3 a4 a5 a6 e * kInv a1 a2 a3 a4 a5 a6 e = kPow7 a1 a2 a3 a4 a5 a6 e
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{4}\,};theorem dispersion_kInv (a1 a2 a3 a4 a5 a6 e : R) (h : e ^ 8 = 0) :
+    kInv a1 a2 a3 a4 a5 a6 e * (1 + a1 * kInv a1 a2 a3 a4 a5 a6 e + a2 * kInv a1 a2 a3 a4 a5 a6 e ^ 2
+      + a3 * kInv a1 a2 a3 a4 a5 a6 e ^ 3 + a4 * kInv a1 a2 a3 a4 a5 a6 e ^ 4
+      + a5 * kInv a1 a2 a3 a4 a5 a6 e ^ 5 + a6 * kInv a1 a2 a3 a4 a5 a6 e ^ 6) = e
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{4}\,};def kInv0 (a2 a3 a4 a5 a6 e : R) : R
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{4}\,};def kInv0Deriv (a2 a3 a4 a5 a6 e : R) : R
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def kSq0 (a2 a3 a4 a5 a6 e : R) : R
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem kSq0_eq (a2 a3 a4 a5 a6 e : R) (h : e ^ 9 = 0) :
+    kInv0 a2 a3 a4 a5 a6 e ^ 2 = kSq0 a2 a3 a4 a5 a6 e
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{4}\,};theorem density_of_states (a2 a3 a4 a5 a6 e : R) (h : e ^ 9 = 0) :
+    kInv0 a2 a3 a4 a5 a6 e ^ 2 * kInv0Deriv a2 a3 a4 a5 a6 e
+      = e ^ 2 - 5 * a2 * e ^ 4 - 6 * a3 * e ^ 5 + 7 * (4 * a2 ^ 2 - a4) * e ^ 6
+        + 8 * (9 * a2 * a3 - a5) * e ^ 7
+        - 3 * (55 * a2 ^ 3 - 30 * a2 * a4 - 15 * a3 ^ 2 + 3 * a6) * e ^ 8
+\end{lstlisting}
+
+\subsection{PhononSpecificHeat}\label{appA:PhononSpecificHeat}
+{\footnotesize\raggedright\texttt{Assembling the phonon specific-\allowbreak{}heat series of Godfrin et al.\allowbreak{},\allowbreak{} PRB 103,\allowbreak{} 104516 (2021),\allowbreak{} Eq.\allowbreak{} (22):}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}PhononSpecificHeat} $\cdot$ 14 theorems, 1 definition $\cdot$ \emph{audit}: 14 theorem constants audited, 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+theorem bernoulli'_five : bernoulli' 5 = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem bernoulli'_six : bernoulli' 6 = 1 / 42
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem bernoulli'_seven : bernoulli' 7 = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem bernoulli'_eight : bernoulli' 8 = -1 / 30
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem bernoulli'_nine : bernoulli' 9 = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem bernoulli'_ten : bernoulli' 10 = 5 / 66
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem riemannZeta_six : riemannZeta 6 = (π : ℂ) ^ 6 / 945
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem riemannZeta_eight : riemannZeta 8 = (π : ℂ) ^ 8 / 9450
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem riemannZeta_ten : riemannZeta 10 = (π : ℂ) ^ 10 / 93555
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem thermal_bose_integral {n : ℕ} (hn : 1 ≤ n) {β : ℝ} (hβ : 0 < β) :
+    mellin (fun u => bose (β * u)) (n + 1)
+      = (β : ℂ) ^ (-((n : ℂ) + 1)) * ((Nat.factorial n : ℂ) * riemannZeta (n + 1))
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{4}\,};theorem bose_integral_values :
+    mellin bose 4 = (π : ℂ) ^ 4 / 15 ∧ mellin bose 6 = 8 * (π : ℂ) ^ 6 / 63 ∧
+    mellin bose 7 = 720 * riemannZeta 7 ∧ mellin bose 8 = 8 * (π : ℂ) ^ 8 / 15 ∧
+    mellin bose 9 = 40320 * riemannZeta 9 ∧ mellin bose 10 = 128 * (π : ℂ) ^ 10 / 33
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{4}\,};noncomputable def energyTerm (V kB hbar c g : ℝ) (n : ℕ) (I T : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem energyTerm_two (V kB hbar c I T : ℝ) :
+    energyTerm V kB hbar c 1 2 I T = debyeEnergy V kB hbar c I T
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem energyTerm_hasDerivAt (V kB hbar c g : ℝ) (n : ℕ) (I T : ℝ) :
+    HasDerivAt (fun T => energyTerm V kB hbar c g n I T)
+      (V / (2 * π ^ 2) * g * I * kB ^ (n + 2) / (hbar * c) ^ (n + 1) * ((n + 2 : ℕ) * T ^ (n + 1))) T
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{1,4}\,};theorem phonon_specific_heat (V kB hbar c a2 a3 a4 a5 a6 z7 z9 T : ℝ) (hh : hbar ≠ 0) (hc : c ≠ 0) :
+    HasDerivAt (fun T =>
+        energyTerm V kB hbar c 1 2 (π ^ 4 / 15) T
+      + energyTerm V kB hbar c (-5 * a2) 4 (8 * π ^ 6 / 63) T
+      + energyTerm V kB hbar c (-6 * a3) 5 (720 * z7) T
+      + energyTerm V kB hbar c (7 * (4 * a2 ^ 2 - a4)) 6 (8 * π ^ 8 / 15) T
+      + energyTerm V kB hbar c (8 * (9 * a2 * a3 - a5)) 7 (40320 * z9) T
+      + energyTerm V kB hbar c (-3 * (55 * a2 ^ 3 - 30 * a2 * a4 - 15 * a3 ^ 2 + 3 * a6)) 8
+          (128 * π ^ 10 / 33) T)
+      ( 2 * π ^ 2 * kB ^ 4 * V / (15 * c ^ 3 * hbar ^ 3) * T ^ 3
+      + -(40 * (π ^ 4 * a2 * kB ^ 6 * V)) / (21 * (c ^ 5 * hbar ^ 5)) * T ^ 5
+      + -(15120 * (a3 * kB ^ 7 * V * z7)) / (π ^ 2 * c ^ 6 * hbar ^ 6) * T ^ 6
+      + 224 * π ^ 6 * kB ^ 8 * V * (4 * a2 ^ 2 - a4) / (15 * c ^ 7 * hbar ^ 7) * T ^ 7
+      + 1451520 * kB ^ 9 * V * z9 * (9 * a2 * a3 - a5) / (π ^ 2 * c ^ 8 * hbar ^ 8) * T ^ 8
+      + -(640 * (π ^ 8 * kB ^ 10 * V * (55 * a2 ^ 3 - 30 * a2 * a4 - 15 * a3 ^ 2 + 3 * a6)))
+          / (11 * (c ^ 9 * hbar ^ 9)) * T ^ 9) T
+\end{lstlisting}
+
+\subsection{QHFricke}\label{appA:QHFricke}
+{\footnotesize\raggedright\texttt{Where the Fricke involution of Fricke.\allowbreak{}lean meets the quantum Hall modular group,\allowbreak{} and where it stops.\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}QHFricke} $\cdot$ 6 theorems, 3 definitions $\cdot$ \emph{audit}: 6 theorem constants audited (+1 generated by Lean), 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+noncomputable def mob (a b c d : ℤ) (z : ℂ) : ℂ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def crit : ℂ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def M : SL(2, ℤ)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem M_mem_Gamma0 : M ∈ Gamma0 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem M_mul_M : (M : Matrix (Fin 2) (Fin 2) ℤ) * M = -1
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem M_fixes_crit : mob 1 (-1) 2 (-1) crit = crit
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem gamma0_two_odd_den (a b c d p q : ℤ) (hdet : a * d - b * c = 1) (hc : Even c) (hq : Odd q) :
+    Odd (c * p + d * q)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem fricke_crit : mob 0 (-1) 2 0 crit = crit - 1
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem fricke_plateau_not_plateau (p q r s : ℤ) (hp : p ≠ 0) (hq : Odd q) (hs : Odd s) :
+    (r : ℚ) / s ≠ -(q : ℚ) / (2 * p)
+\end{lstlisting}
+
+\subsection{QuantizedCirculation}\label{appA:QuantizedCirculation}
+{\footnotesize\raggedright\texttt{Quantized circulation: the defining property of a quantum fluid.\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}Circulation} $\cdot$ 6 theorems, 3 definitions $\cdot$ \emph{audit}: 6 theorem constants audited (+1 generated by Lean), 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{3}\,};noncomputable def kappa (hbar m : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{3}\,};noncomputable def circulation (hbar m : ℝ) (S : ℕ → ℝ) (n : ℕ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{1,3}\,};theorem circulation_quantized (hbar m : ℝ) (S : ℕ → ℝ) (n : ℕ) (hclosed : S n = S 0) :
+    ∃ q : ℤ, circulation hbar m S n = (q : ℝ) * kappa hbar m
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem circulation_eq_zero_iff (hbar m : ℝ) (hhbar : hbar ≠ 0) (hm : m ≠ 0) (S : ℕ → ℝ) (n : ℕ) :
+    circulation hbar m S n = 0 ↔ ∑ i ∈ Finset.range n, pdiff (S i) (S (i + 1)) = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{3}\,};theorem abs_circulation_ge (hbar m : ℝ) (hhbar : 0 < hbar) (hm : 0 < m) (S : ℕ → ℝ) (n : ℕ)
+    (hclosed : S n = S 0) (hne : circulation hbar m S n ≠ 0) :
+    kappa hbar m ≤ |circulation hbar m S n|
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem pdiff_of_mem {a b : ℝ} (h : b - a ∈ Set.Ioc (-π) π) : pdiff a b = b - a
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem pdiff_of_wrap {a b : ℝ} (h : b - a + 2 * π ∈ Set.Ioc (-π) π) :
+    pdiff a b = b - a + 2 * π
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def quarterLoop : ℕ → ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{3}\,};theorem circulation_quantum_attained (hbar m : ℝ) :
+    circulation hbar m quarterLoop 4 = kappa hbar m
+\end{lstlisting}
+
+\subsection{QuantumFluidsShell}\label{appA:QuantumFluidsShell}
+{\footnotesize\raggedright\texttt{Formalisation of the conjugated complexification's energy conservation.\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}ShellComplex} $\cdot$ 12 theorems, 3 definitions $\cdot$ \emph{audit}: 12 theorem constants audited (+6 generated by Lean), 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+noncomputable def shellBc (k : ℕ → ℝ) : ℕ → (ℕ → ℂ) → ℂ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def out (k : ℕ → ℝ) (v : ℕ → ℂ) (m : ℕ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem re_conj_sq_mul (a b : ℂ) :
+    ((starRingEnd ℂ) a * (starRingEnd ℂ) a * b).re
+      = ((starRingEnd ℂ) b * a * a).re
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem sum_re_conj_mul_shellBc (k : ℕ → ℝ) (v : ℕ → ℂ) :
+    ∀ N : ℕ, ∑ n ∈ Finset.range (N + 1),
+        ((starRingEnd ℂ) (v n) * shellBc k n v).re = -(out k v N)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem shellBc_energy_conservation (k : ℕ → ℝ) (v : ℕ → ℂ) (N : ℕ)
+    (hbc : v (N + 1) = 0) :
+    ∑ n ∈ Finset.range (N + 1), ((starRingEnd ℂ) (v n) * shellBc k n v).re = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem shellBc_real (k : ℕ → ℝ) (v : ℕ → ℂ) (hv : ∀ n, (v n).im = 0) (n : ℕ) :
+    (shellBc k n v).im = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def rtrace (f : ℂ →ₗ[ℝ] ℂ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem rtrace_add (f g : ℂ →ₗ[ℝ] ℂ) : rtrace (f + g) = rtrace f + rtrace g
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem rtrace_mulRight (c : ℂ) : rtrace (LinearMap.mulRight ℝ c) = 2 * c.re
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem rtrace_mul_I (d : ℝ) :
+    rtrace (LinearMap.mulRight ℝ ((d : ℂ) * Complex.I)) = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem rtrace_conj_mul (w : ℂ) :
+    rtrace ((LinearMap.mulRight ℝ w).comp Complex.conjAe.toLinearMap) = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem shell_divergence_zero (d : ℝ) (w : ℂ) :
+    rtrace ((LinearMap.mulRight ℝ w).comp Complex.conjAe.toLinearMap
+      + LinearMap.mulRight ℝ ((d : ℂ) * Complex.I)) = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem seam_conserves_iff (k : ℕ → ℝ) (v : ℕ → ℂ) (N : ℕ) (hk : k N ≠ 0) :
+    (∑ n ∈ Finset.range (N + 1), ((starRingEnd ℂ) (v n) * shellBc k n v).re = 0)
+      ↔ ((starRingEnd ℂ) (v N) * (starRingEnd ℂ) (v N) * v (N + 1)).re = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem seam_zero_conserves (k : ℕ → ℝ) (v : ℕ → ℂ) (N : ℕ) (hk : k N ≠ 0)
+    (hbc : v (N + 1) = 0) :
+    ∑ n ∈ Finset.range (N + 1), ((starRingEnd ℂ) (v n) * shellBc k n v).re = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem seam_gpe_conserves (k : ℕ → ℝ) (v : ℕ → ℂ) (N : ℕ) (μ : ℝ) (hk : k N ≠ 0)
+    (hbc : v (N + 1) = Complex.I * (μ : ℂ) * (v N * v N)) :
+    ∑ n ∈ Finset.range (N + 1), ((starRingEnd ℂ) (v n) * shellBc k n v).re = 0
+\end{lstlisting}
+
+\subsection{QuasiPeriodicBound}\label{appA:QuasiPeriodicBound}
+{\footnotesize\raggedright\texttt{Companion of amendment E-\allowbreak{}A1 of docs/\allowbreak{}designs/\allowbreak{}PGPE\_\allowbreak{}EINSTEIN\_\allowbreak{}PREREG.\allowbreak{}md (criterion I2) and of docs/\allowbreak{}designs/\allowbreak{}LEVERAGE\_\allowbreak{}DONG2026.\allowbreak{}md.\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuasiPeriodicBound} $\cdot$ 6 theorems, 1 definition $\cdot$ \emph{audit}: 6 theorem constants audited, 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext; the source has no \#print axioms line (footprint from the appended environment audit).\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{10}\,};noncomputable def qp (a ω φ : ι → ℝ) (t : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem trig_sum_bound (a ω φ : ι → ℝ) (t : ℝ) : |qp a ω φ t| ≤ ∑ k, |a k|
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem increment_bound (a ω φ : ι → ℝ) (t τ : ℝ) :
+    |qp a ω φ (t + τ) - qp a ω φ t| ≤ 2 * ∑ k, |a k|
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{7}\,};theorem msd_bound (a ω φ : ι → ℝ) {J : Type*} [Fintype J] [Nonempty J] (ts τs : J → ℝ) :
+    (∑ j, (qp a ω φ (ts j + τs j) - qp a ω φ (ts j)) ^ 2) / Fintype.card J ≤ (2 * ∑ k, |a k|) ^ 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem random_walk_exceeds (A c : ℝ) (hc : 0 < c) :
+    ∀ τ, 4 * A ^ 2 / c < τ → (2 * A) ^ 2 < c * τ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{7,10}\,};theorem not_qp_of_msd_large (a : ι → ℝ) {J : Type*} [Fintype J] [Nonempty J] (x : ℝ → ℝ) (ts τs : J → ℝ)
+    (h : (2 * ∑ k, |a k|) ^ 2 < (∑ j, (x (ts j + τs j) - x (ts j)) ^ 2) / Fintype.card J) :
+    ∀ ω φ : ι → ℝ, x ≠ qp a ω φ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem relative_equilibrium_dipole (d0sq : ℝ) :
+    ∀ t : ℝ, (d0sq - 4 * (0 : ℝ) * t) = d0sq
+\end{lstlisting}
+
+\subsection{RCFTDuality}\label{appA:RCFTDuality}
+{\footnotesize\raggedright\texttt{A sixth cross-\allowbreak{}domain case for the criterion of duality\_\allowbreak{}sector.\allowbreak{}tex: the modular S-\allowbreak{}matrix of a rational conformal field theory (RCFT),\allowbreak{} sharper than SectorDuality.\allowbreak{}lean's Z\_\allowbreak{}N case.\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}RCFTDuality} $\cdot$ 3 theorems, 1 definition $\cdot$ \emph{audit}: 3 theorem constants audited, 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+def su2Level1_S : Matrix (Fin 2) (Fin 2) ℤ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem su2Level1_S_sq : su2Level1_S * su2Level1_S = (2 : ℤ) • (1 : Matrix (Fin 2) (Fin 2) ℤ)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem su2Level1_S_symm : su2Level1_S.transpose = su2Level1_S
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem su2Level1_S_det : su2Level1_S.det = -2
+\end{lstlisting}
+
+\subsection{RipsFloor}\label{appA:RipsFloor}
+{\footnotesize\raggedright\texttt{The bridge lemma of workstream T (docs/\allowbreak{}designs/\allowbreak{}TDA\_\allowbreak{}VORTEX\_\allowbreak{}FLOOR.\allowbreak{}md §7).\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}RipsFloor} $\cdot$ 4 theorems, 2 definitions $\cdot$ \emph{audit}: 4 theorem constants audited, 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+def Adj (X : ι → E) (t : ℝ) (i j : ι) : Prop
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def Separated (X : ι → E) (d : ℝ) : Prop
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem no_adj_of_lt {X : ι → E} {d t : ℝ} (hsep : Separated X d) (ht : t < d) (i j : ι) :
+    ¬ Adj X t i j
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem le_of_adj {X : ι → E} {d t : ℝ} (hsep : Separated X d) (h : ∃ i j, Adj X t i j) : d ≤ t
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem isLeast_edge_scale {X : ι → E} {d : ℝ} (hsep : Separated X d)
+    {a b : ι} (hab : a ≠ b) (hd : dist (X a) (X b) = d) :
+    IsLeast {t : ℝ | ∃ i j, Adj X t i j} d
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem separated_zero_of_not_injective {X : ι → E} : Separated X 0
+\end{lstlisting}
+
+\subsection{ScaleResolvedWinding}\label{appA:ScaleResolvedWinding}
+{\footnotesize\raggedright\texttt{The winding number seen at scale R is the net topological charge inside R: a discrete Stokes theorem for phase windings,\allowbreak{} and its two corollaries,\allowbreak{} "a dipole is invisible from outside" and "a …}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}ScaleResolvedWinding} $\cdot$ 6 theorems, 4 definitions $\cdot$ \emph{audit}: 11 theorem constants audited (+3 generated by Lean), 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+structure Region (m : ℕ)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def Region.step (e : Fin m × Fin 4) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def Region.winding (p : Fin m) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def Region.boundarySum : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem winding_int (p : Fin m) : ∃ q : ℤ, Rg.winding p = (q : ℝ) * (2 * π)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem interior_sum_eq_zero (hcut : ∀ e ∈ Rg.interior, Rg.step e ≠ π) :
+    ∑ e ∈ Rg.interior, Rg.step e = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{3}\,};theorem stokes (hcut : ∀ e ∈ Rg.interior, Rg.step e ≠ π) :
+    Rg.boundarySum = ∑ p : Fin m, Rg.winding p
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem boundary_eq_charge (hcut : ∀ e ∈ Rg.interior, Rg.step e ≠ π) (q : Fin m → ℤ)
+    (hq : ∀ p, Rg.winding p = (q p : ℝ) * (2 * π)) :
+    Rg.boundarySum = ((∑ p, q p : ℤ) : ℝ) * (2 * π)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{3}\,};theorem dipole_invisible (hcut : ∀ e ∈ Rg.interior, Rg.step e ≠ π) (q : Fin m → ℤ)
+    (hq : ∀ p, Rg.winding p = (q p : ℝ) * (2 * π)) (hneutral : ∑ p, q p = 0) :
+    Rg.boundarySum = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem single_core_visible (hcut : ∀ e ∈ Rg.interior, Rg.step e ≠ π) (q : Fin m → ℤ)
+    (hq : ∀ p, Rg.winding p = (q p : ℝ) * (2 * π)) (p₀ : Fin m) (hothers : ∀ p ≠ p₀, q p = 0) :
+    Rg.boundarySum = (q p₀ : ℝ) * (2 * π)
+\end{lstlisting}
+
+\subsection{SectorDuality}\label{appA:SectorDuality}
+{\footnotesize\raggedright\texttt{The finite-\allowbreak{}cyclic-\allowbreak{}group counterpart of CompactBoson's duality-\allowbreak{}as-\allowbreak{}reindexing statement: on a Z\_\allowbreak{}N sector group,\allowbreak{} the duality *is* Mathlib's own discrete Fourier transform (ZMod.\allowbreak{}dft),\allowbreak{} and its …}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}SectorDuality} $\cdot$ 3 theorems, 0 definitions $\cdot$ \emph{audit}: 3 theorem constants audited, 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+theorem sectorDuality_bijective (N : ℕ) [NeZero N] :
+    Function.Bijective (ZMod.dft (N := N) (E := ℂ) : (ZMod N → ℂ) → (ZMod N → ℂ))
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem sectorDuality_sq_ne_id (N : ℕ) [NeZero N] (hN : 2 ≤ N) :
+    (ZMod.dft (N := N) (E := ℂ)) ∘ (ZMod.dft (N := N) (E := ℂ)) ≠ id
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem kramersWannier_gauging_sq (Φ : ZMod 2 → ℂ) :
+    (ZMod.dft (N := 2) (E := ℂ)) ((ZMod.dft (N := 2) (E := ℂ)) Φ) = (2 : ℂ) • Φ
+\end{lstlisting}
+
+\subsection{SectorTemperature}\label{appA:SectorTemperature}
+{\footnotesize\raggedright\texttt{What "topological sectors carry their own temperature" means,\allowbreak{} exactly,\allowbreak{} and why a thermometer that averages over sectors cannot read "the" temperature of a mixed state.\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}SectorTemperature} $\cdot$ 8 theorems, 5 definitions $\cdot$ \emph{audit}: 8 theorem constants audited, 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+def sectorCount (ε : Ω → ℕ) (w : Ω → ℤ) (W : ℤ) (E : ℕ) : ℕ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def globalCount (ε : Ω → ℕ) (E : ℕ) : ℕ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def sectors (w : Ω → ℤ) : Finset ℤ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem count_sum (ε : Ω → ℕ) (w : Ω → ℤ) (E : ℕ) :
+    globalCount ε E = ∑ W ∈ sectors w, sectorCount ε w W E
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem sectorCount_le (ε : Ω → ℕ) (w : Ω → ℤ) (W : ℤ) (E : ℕ) :
+    sectorCount ε w W E ≤ globalCount ε E
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem entropy_ge_sector (ε : Ω → ℕ) (w : Ω → ℤ) (W : ℤ) (E : ℕ) :
+    Real.log (sectorCount ε w W E) ≤ Real.log (globalCount ε E)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem mediant_le {ι : Type*} (s : Finset ι) (a b : ι → ℝ) (r : ℝ) (hs : s.Nonempty)
+    (hb : ∀ i ∈ s, 0 < b i) (h : ∀ i ∈ s, a i / b i ≤ r) :
+    (∑ i ∈ s, a i) / (∑ i ∈ s, b i) ≤ r
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem le_mediant {ι : Type*} (s : Finset ι) (a b : ι → ℝ) (r : ℝ) (hs : s.Nonempty)
+    (hb : ∀ i ∈ s, 0 < b i) (h : ∀ i ∈ s, r ≤ a i / b i) :
+    r ≤ (∑ i ∈ s, a i) / (∑ i ∈ s, b i)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def sectorRatio (ε : Ω → ℕ) (w : Ω → ℤ) (W : ℤ) (E : ℕ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def globalRatio (ε : Ω → ℕ) (E : ℕ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem globalRatio_mem (ε : Ω → ℕ) (w : Ω → ℤ) (E : ℕ) (r₁ r₂ : ℝ)
+    (hne : (sectors w).Nonempty)
+    (hpos : ∀ W ∈ sectors w, 0 < sectorCount ε w W E)
+    (hlo : ∀ W ∈ sectors w, r₁ ≤ sectorRatio ε w W E)
+    (hhi : ∀ W ∈ sectors w, sectorRatio ε w W E ≤ r₂) :
+    r₁ ≤ globalRatio ε E ∧ globalRatio ε E ≤ r₂
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem global_eq_sector_of_single (ε : Ω → ℕ) (w : Ω → ℤ) (W₀ : ℤ) (E : ℕ)
+    (hsingle : ∀ x, w x = W₀) :
+    globalRatio ε E = sectorRatio ε w W₀ E
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem sector_invariant (θ : ℝ → ℕ → ℝ) (n : ℕ) {t₀ t₁ : ℝ} (ht : t₀ ≤ t₁)
+    (hcont : ∀ i ≤ n, Continuous (fun t => θ t i)) (hclosed : ∀ t, θ t n = θ t 0)
+    (hslip : ∀ t ∈ Set.Icc t₀ t₁, ∀ i < n, VortexWinding.pdiff (θ t i) (θ t (i + 1)) ≠ Real.pi)
+    (c : ℝ) (h₀ : loopSum θ n t₀ = c) :
+    loopSum θ n t₁ = c
+\end{lstlisting}
+
+\subsection{ShellHamiltonian}\label{appA:ShellHamiltonian}
+{\footnotesize\raggedright\texttt{The second invariant of the complexified dyadic shell model (design memo docs/\allowbreak{}designs/\allowbreak{}DUAL\_\allowbreak{}SCALE\_\allowbreak{}SECOND\_\allowbreak{}INVARIANT.\allowbreak{}md,\allowbreak{} addendum A1; CLAIM-\allowbreak{}023).\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}ShellComplex} $\cdot$ 9 theorems, 2 definitions $\cdot$ \emph{audit}: 9 theorem constants audited (+2 generated by Lean), 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+noncomputable def dT (k : ℕ → ℝ) (v : ℕ → ℂ) (n : ℕ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def flux4 (v : ℕ → ℂ) (n : ℕ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem im_core (a b c d : ℂ) (p q r : ℝ) :
+    (2 * (starRingEnd ℂ) b * (starRingEnd ℂ) ((p : ℂ) * (a * a) - (q : ℂ) * (starRingEnd ℂ) b * c) * c
+      + (starRingEnd ℂ) b * (starRingEnd ℂ) b * ((q : ℂ) * (b * b) - (r : ℂ) * (starRingEnd ℂ) c * d)).im
+    = 2 * p * ((starRingEnd ℂ) a * (starRingEnd ℂ) a * (starRingEnd ℂ) b * c).im
+      - r * ((starRingEnd ℂ) b * (starRingEnd ℂ) b * (starRingEnd ℂ) c * d).im
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem dT_zero (k : ℕ → ℝ) (v : ℕ → ℂ) : dT k v 0 = -(k 1 * flux4 v 0)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem dT_succ (k : ℕ → ℝ) (v : ℕ → ℂ) (m : ℕ) :
+    dT k v (m + 1) = 2 * k m * flux4 v m - k (m + 2) * flux4 v (m + 1)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem sum_dT (k g : ℕ → ℝ) (v : ℕ → ℂ) (hg : ∀ n, g (n + 1) * (2 * k n) = g n * k (n + 1)) :
+    ∀ N : ℕ, ∑ n ∈ Finset.range (N + 1), g n * dT k v n = -(g N * k (N + 1) * flux4 v N)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem hamiltonian_rate_zero (k g : ℕ → ℝ) (v : ℕ → ℂ)
+    (hg : ∀ n, g (n + 1) * (2 * k n) = g n * k (n + 1)) (N : ℕ) (hbc : v (N + 2) = 0) :
+    ∑ n ∈ Finset.range (N + 1), g n * dT k v n = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem weights_ok (k : ℕ → ℝ) (n : ℕ) :
+    ((1 / 2 : ℝ) ^ (n + 1) * k (n + 1)) * (2 * k n) = ((1 / 2 : ℝ) ^ n * k n) * k (n + 1)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem T_real (v : ℕ → ℂ) (hv : ∀ n, (v n).im = 0) (n : ℕ) :
+    ((starRingEnd ℂ) (v n) * (starRingEnd ℂ) (v n) * v (n + 1)).im = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem cubic_bound (c : ℕ → ℝ) (v : ℕ → ℂ) (N : ℕ) (hc : ∀ n, |c n| ≤ 1) :
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem dispersive_norm_le (q c : ℕ → ℝ) (v : ℕ → ℂ) (N : ℕ) (Hval : ℝ) (hc : ∀ n, |c n| ≤ 1)
+    (hH : Hval = ∑ n ∈ Finset.range (N + 2), q n * Complex.normSq (v n)
+      + ∑ n ∈ Finset.range (N + 1), c n * ((starRingEnd ℂ) (v n) * (starRingEnd ℂ) (v n) * v (n + 1)).im) :
+    ∑ n ∈ Finset.range (N + 2), q n * Complex.normSq (v n)
+      ≤ Hval + Real.sqrt (∑ n ∈ Finset.range (N + 2), Complex.normSq (v n))
+        * ∑ n ∈ Finset.range (N + 2), Complex.normSq (v n)
+\end{lstlisting}
+
+\subsection{SigmaRule}\label{appA:SigmaRule}
+{\footnotesize\raggedright\texttt{The sigma-\allowbreak{}rule instantiated: which dispersive order controls which norm,\allowbreak{} uniformly in the cutoff.\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}ShellComplex} $\cdot$ 6 theorems, 3 definitions $\cdot$ \emph{audit}: 6 theorem constants audited, 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+noncomputable def kdy (n : ℕ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def gw (n : ℕ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem gw_mul_kdy (n : ℕ) : gw n * kdy n = 1
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem gw_mul_kdy_pow (n s : ℕ) : gw n * kdy n ^ (s + 1) = kdy n ^ s
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem sigma_two_weight (D : ℝ) (n : ℕ) : gw n * (D * kdy n ^ 2) = D * kdy n
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem sigma_three_weight (D : ℝ) (n : ℕ) : gw n * (D * kdy n ^ 3) = D * kdy n ^ 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def enstrophy (v : ℕ → ℂ) (M : ℕ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem enstrophy_le_sigma_three (D : ℝ) (v : ℕ → ℂ) (N : ℕ) (Hval : ℝ)
+    (hH : Hval = ∑ n ∈ Finset.range (N + 2), (gw n * (D * kdy n ^ 3)) * Complex.normSq (v n)
+      + ∑ n ∈ Finset.range (N + 1), (gw n * kdy n) *
+        ((starRingEnd ℂ) (v n) * (starRingEnd ℂ) (v n) * v (n + 1)).im) :
+    2 * D * enstrophy v (N + 2)
+      ≤ Hval + Real.sqrt (∑ n ∈ Finset.range (N + 2), Complex.normSq (v n))
+        * ∑ n ∈ Finset.range (N + 2), Complex.normSq (v n)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem halfNorm_le_sigma_two (D : ℝ) (v : ℕ → ℂ) (N : ℕ) (Hval : ℝ)
+    (hH : Hval = ∑ n ∈ Finset.range (N + 2), (gw n * (D * kdy n ^ 2)) * Complex.normSq (v n)
+      + ∑ n ∈ Finset.range (N + 1), (gw n * kdy n) *
+        ((starRingEnd ℂ) (v n) * (starRingEnd ℂ) (v n) * v (n + 1)).im) :
+    ∑ n ∈ Finset.range (N + 2), (D * kdy n) * Complex.normSq (v n)
+      ≤ Hval + Real.sqrt (∑ n ∈ Finset.range (N + 2), Complex.normSq (v n))
+        * ∑ n ∈ Finset.range (N + 2), Complex.normSq (v n)
+\end{lstlisting}
+
+\subsection{TopologicalProtection}\label{appA:TopologicalProtection}
+{\footnotesize\raggedright\texttt{Why a winding number can act as a CAUSE: it is conserved by every evolution that avoids a phase slip,\allowbreak{} so it is a memory the dynamics cannot erase continuously.\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}TopologicalProtection} $\cdot$ 13 theorems, 2 definitions $\cdot$ \emph{audit}: 13 theorem constants audited, 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+theorem pdiff_shift (a b da db : ℝ) (h : pdiff a b + (db - da) ∈ Set.Ioc (-π) π) :
+    pdiff (a + da) (b + db) = pdiff a b + (db - da)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem loop_sum_stable (θ δ : ℕ → ℝ) (n : ℕ) (hδ : δ n = δ 0)
+    (h : ∀ i < n, pdiff (θ i) (θ (i + 1)) + (δ (i + 1) - δ i) ∈ Set.Ioc (-π) π) :
+    ∑ i ∈ Finset.range n, pdiff (θ i + δ i) (θ (i + 1) + δ (i + 1))
+      = ∑ i ∈ Finset.range n, pdiff (θ i) (θ (i + 1))
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem loop_sum_stable_of_small (θ δ : ℕ → ℝ) (n : ℕ) (ε : ℝ) (hδ : δ n = δ 0)
+    (hsmall : ∀ i ≤ n, |δ i| < ε) (hedge : ∀ i < n, |pdiff (θ i) (θ (i + 1))| < π - 2 * ε) :
+    ∑ i ∈ Finset.range n, pdiff (θ i + δ i) (θ (i + 1) + δ (i + 1))
+      = ∑ i ∈ Finset.range n, pdiff (θ i) (θ (i + 1))
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem circulation_conserved (hbar m : ℝ) (θ δ : ℕ → ℝ) (n : ℕ) (hδ : δ n = δ 0)
+    (h : ∀ i < n, pdiff (θ i) (θ (i + 1)) + (δ (i + 1) - δ i) ∈ Set.Ioc (-π) π) :
+    Circulation.circulation hbar m (fun i => θ i + δ i) n = Circulation.circulation hbar m θ n
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem continuousAt_pdiff {a b : ℝ} (h : pdiff a b ≠ π) :
+    ContinuousAt (fun p : ℝ × ℝ => pdiff p.1 p.2) (a, b)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def loopSum (θ : ℝ → ℕ → ℝ) (n : ℕ) (t : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem loop_sum_const_of_no_slip (θ : ℝ → ℕ → ℝ) (n : ℕ) {t₀ t₁ : ℝ} (ht : t₀ ≤ t₁)
+    (hcont : ∀ i ≤ n, Continuous (fun t => θ t i))
+    (hclosed : ∀ t, θ t n = θ t 0)
+    (hslip : ∀ t ∈ Set.Icc t₀ t₁, ∀ i < n, pdiff (θ t i) (θ t (i + 1)) ≠ π) :
+    loopSum θ n t₁ = loopSum θ n t₀
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem slip_of_winding_change (θ : ℝ → ℕ → ℝ) (n : ℕ) {t₀ t₁ : ℝ} (ht : t₀ ≤ t₁)
+    (hcont : ∀ i ≤ n, Continuous (fun t => θ t i)) (hclosed : ∀ t, θ t n = θ t 0)
+    (hchange : loopSum θ n t₁ ≠ loopSum θ n t₀) :
+    ∃ t ∈ Set.Icc t₀ t₁, ∃ i < n, pdiff (θ t i) (θ t (i + 1)) = π
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def xyEnergy (J : ℝ) (θ : ℕ → ℝ) (n : ℕ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem cos_pdiff (a b : ℝ) : Real.cos (pdiff a b) = Real.cos (b - a)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem slip_energy_ge (J : ℝ) (hJ : 0 ≤ J) (θ : ℕ → ℝ) (n j : ℕ) (hj : j < n)
+    (hπ : pdiff (θ j) (θ (j + 1)) = π) :
+    -((n : ℝ) - 2) * J ≤ xyEnergy J θ n
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem mountain_pass (J : ℝ) (hJ : 0 ≤ J) (θ : ℝ → ℕ → ℝ) (n : ℕ) {t₀ t₁ : ℝ} (ht : t₀ ≤ t₁)
+    (hcont : ∀ i ≤ n, Continuous (fun t => θ t i)) (hclosed : ∀ t, θ t n = θ t 0)
+    (hchange : loopSum θ n t₁ ≠ loopSum θ n t₀) :
+    ∃ t ∈ Set.Icc t₀ t₁, -((n : ℝ) - 2) * J ≤ xyEnergy J (θ t) n
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem twisted_loopSum (n : ℕ) (hn : 2 ≤ n) :
+    ∑ i ∈ Finset.range n, pdiff (2 * π * i / n) (2 * π * (i + 1 : ℕ) / n) = 2 * π
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem twisted_energy (J : ℝ) (n : ℕ) :
+    xyEnergy J (fun i => 2 * π * i / n) n = -(n : ℝ) * J * Real.cos (2 * π / n)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem barrier_pos (J : ℝ) (hJ : 0 < J) (n : ℕ) (hn : 10 ≤ n) :
+    xyEnergy J (fun i => 2 * π * i / n) n < -((n : ℝ) - 2) * J
+\end{lstlisting}
+
+\subsection{Villani}\label{appA:Villani}
+{\footnotesize\raggedright\texttt{A foundation for formalizing Cédric Villani's work,\allowbreak{} offered as a tribute.\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}Villani} $\cdot$ 18 theorems, 8 definitions $\cdot$ \emph{audit}: 18 theorem constants audited (+4 generated by Lean), 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+abbrev Cube (N : ℕ)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def diff (a b : Cube N) : Finset (Fin N)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def dist (a b : Cube N) : ℕ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem mem_diff_iff {a b : Cube N} {i : Fin N} : i ∈ diff a b ↔ a i ≠ b i
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def IsMidpoint (a b m : Cube N) : Prop
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def midpointSet (A B : Finset (Cube N)) : Finset (Cube N)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def crossover (c : Finset (Fin N)) (a b : Cube N) : Cube N
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+@[simp] theorem crossover_apply_mem {c : Finset (Fin N)} {a b : Cube N} {i : Fin N} (h : i ∈ c) :
+    crossover c a b i = a i
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+@[simp] theorem crossover_apply_not_mem {c : Finset (Fin N)} {a b : Cube N} {i : Fin N}
+    (h : i ∉ c) : crossover c a b i = b i
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem diff_crossover_left (c : Finset (Fin N)) (a b : Cube N) :
+    diff (crossover c a b) a = diff a b \ c
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem diff_crossover_right {c : Finset (Fin N)} {a b : Cube N} (hc : c ⊆ diff a b) :
+    diff (crossover c a b) b = c
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem dist_crossover_left (c : Finset (Fin N)) (a b : Cube N) :
+    dist (crossover c a b) a = (diff a b \ c).card
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem dist_crossover_right {c : Finset (Fin N)} {a b : Cube N} (hc : c ⊆ diff a b) :
+    dist (crossover c a b) b = c.card
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem isMidpoint_crossover {c : Finset (Fin N)} {a b : Cube N} (hc : c ⊆ diff a b)
+    (h1 : 2 * c.card ≤ dist a b + 1) (h2 : dist a b ≤ 2 * c.card + 1) :
+    IsMidpoint a b (crossover c a b)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def takeHalf (s : Finset (Fin N)) : Finset (Fin N)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem takeHalf_subset (s : Finset (Fin N)) : takeHalf s ⊆ s
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem card_takeHalf (s : Finset (Fin N)) : (takeHalf s).card = s.card / 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem takeHalf_card_bounds (a b : Cube N) :
+    2 * (takeHalf (diff a b)).card ≤ dist a b + 1 ∧
+    dist a b ≤ 2 * (takeHalf (diff a b)).card + 1
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def encode (a b : Cube N) : Cube N × Cube N
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem encode_fst_isMidpoint (a b : Cube N) : IsMidpoint a b (encode a b).1
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem encode_snd_isMidpoint (a b : Cube N) : IsMidpoint a b (encode a b).2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem encode_mem_midpointSet {A B : Finset (Cube N)} {a b : Cube N} (ha : a ∈ A) (hb : b ∈ B) :
+    (encode a b).1 ∈ midpointSet A B ∧ (encode a b).2 ∈ midpointSet A B
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem diff_crossover_crossover_compl {c : Finset (Fin N)} {a b : Cube N} (hc : c ⊆ diff a b) :
+    diff (crossover c a b) (crossover (diff a b \ c) a b) = diff a b
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem encode_injective {a b a' b' : Cube N} (h : encode a b = encode a' b') :
+    a = a' ∧ b = b'
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem card_sq_ge (A B : Finset (Cube N)) :
+    A.card * B.card ≤ (midpointSet A B).card * (midpointSet A B).card
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem klDiv_nonincreasing_to_invariant (κ : Kernel ;$\mathcal{X}$; ;$\mathcal{X}$;) [IsMarkovKernel κ]
+    (μ ν : Measure ;$\mathcal{X}$;) [IsFiniteMeasure μ] [IsFiniteMeasure ν] (hν : κ ∘ₘ ν = ν) :
+    klDiv (κ ∘ₘ μ) ν ≤ klDiv μ ν
+\end{lstlisting}
+
+\subsection{VortexWinding}\label{appA:VortexWinding}
+{\footnotesize\raggedright\texttt{Correctness of phase-\allowbreak{}winding vortex detection.\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}VortexWinding} $\cdot$ 9 theorems, 2 definitions $\cdot$ \emph{audit}: 13 theorem constants audited (+4 generated by Lean), 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+theorem two_pi_pos : (0 : ℝ) < 2 * π
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{1,3,9}\,};noncomputable def pdiff (a b : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem pdiff_mem (a b : ℝ) : pdiff a b ∈ Set.Ioc (-π) π
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{1,3}\,};theorem pdiff_eq (a b : ℝ) :
+    pdiff a b = (b - a) - (toIocDiv two_pi_pos (-π) (b - a)) • (2 * π)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{1,3,9}\,};theorem loop_sum_eq_mul (θ : ℕ → ℝ) (n : ℕ) (hclosed : θ n = θ 0) :
+    ∃ m : ℤ, ∑ i ∈ Finset.range n, pdiff (θ i) (θ (i + 1)) = (m : ℝ) * (2 * π)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem pdiff_add_rev_eq (a b : ℝ) :
+    ∃ m : ℤ, pdiff a b + pdiff b a = (m : ℝ) * (2 * π)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem pdiff_add_rev (a b : ℝ) :
+    pdiff a b + pdiff b a = 0 ∨ pdiff a b + pdiff b a = 2 * π
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{1,3,9}\,};theorem pdiff_add_rev_eq_two_pi_iff (a b : ℝ) :
+    pdiff a b + pdiff b a = 2 * π ↔ (pdiff a b = π ∧ pdiff b a = π)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+structure Balanced {n : ℕ} (u v : Fin n → ℝ)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{9}\,};theorem balanced_sum_eq_zero {n : ℕ} {u v : Fin n → ℝ} (B : Balanced u v)
+    (hcut : ∀ i, pdiff (u i) (v i) + pdiff (v i) (u i) = 0) :
+    ∑ i : Fin n, pdiff (u i) (v i) = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{9}\,};theorem cut_free_of_ne_pi {a b : ℝ} (h : pdiff a b ≠ π) : pdiff a b + pdiff b a = 0
+\end{lstlisting}
+
+\subsection{WassersteinCertificate}\label{appA:WassersteinCertificate}
+{\footnotesize\raggedright\texttt{P6 of the closed-\allowbreak{}loop project (docs/\allowbreak{}designs/\allowbreak{}CLOSED\_\allowbreak{}LOOP\_\allowbreak{}PREREG.\allowbreak{}md,\allowbreak{} docs/\allowbreak{}designs/\allowbreak{}CLOSED\_\allowbreak{}LOOP\_\allowbreak{}RESULTS.\allowbreak{}md).\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}WassersteinCertificate} $\cdot$ 8 theorems, 6 definitions $\cdot$ \emph{audit}: 8 theorem constants audited (+6 generated by Lean), 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+theorem weak_duality (C : ι → κ → ℝ) (u : ι → ℝ) (v : κ → ℝ)
+    (hfeas : ∀ i j, u i + v j ≤ C i j) (σ : ι ≃ κ) :
+    ∑ i, u i + ∑ j, v j ≤ ∑ i, C i (σ i)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem certificate (C : ι → κ → ℝ) (u : ι → ℝ) (v : κ → ℝ)
+    (hfeas : ∀ i j, u i + v j ≤ C i j) (σ : ι ≃ κ)
+    (htight : ∑ i, C i (σ i) = ∑ i, u i + ∑ j, v j) (τ : ι ≃ κ) :
+    ∑ i, C i (σ i) ≤ ∑ i, C i (τ i)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def C : Fin 6 → Fin 6 → ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem C_eq (i j : Fin 6) : C i j = ![![0, 1, 2, 3/2, 1000, 1000],
+    ![1, 0, 3/2, 1000, 3/2, 1000],
+    ![2, 1, 5/2, 1000, 1000, 3/2],
+    ![3/2, 1000, 1000, 0, 0, 0],
+    ![1000, 3/2, 1000, 0, 0, 0],
+    ![1000, 1000, 1/4, 0, 0, 0]] i j
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def u : Fin 6 → ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def v : Fin 6 → ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def σfun : Fin 6 → Fin 6
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def σ : Fin 6 ≃ Fin 6
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem feasible : ∀ i j, u i + v j ≤ C i j
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem tight : ∑ i, C i (σ i) = ∑ i, u i + ∑ j, v j
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem toy_certificate (τ : Fin 6 ≃ Fin 6) : ∑ i, C i (σ i) ≤ ∑ i, C i (τ i)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem toy_cost_eq : ∑ i, C i (σ i) = 7 / 4
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def v_broken : Fin 6 → ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem broken_infeasible : ¬ (∀ i j, u i + v_broken j ≤ C i j)
+\end{lstlisting}
+
+\subsection{ZeroSound}\label{appA:ZeroSound}
+{\footnotesize\raggedright\texttt{When does a Fermi liquid support undamped zero sound?}\par}
+{\footnotesize\raggedright\emph{Namespace} \texttt{QuantumFluids.\allowbreak{}ZeroSound} $\cdot$ 6 theorems, 1 definition $\cdot$ \emph{audit}: 7 theorem constants audited, 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\vspace{1pt}
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{8}\,};noncomputable def g3 (s : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem g3_pos {s : ℝ} (hs : 1 < s) : 0 < g3 s
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{8}\,};theorem g3_le {s : ℝ} (hs : 1 < s) : g3 s ≤ 1 / (s - 1)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{8}\,};theorem g3_ge {s : ℝ} (hs : 1 < s) : 1 / 2 * log (2 / (s - 1)) - 1 ≤ g3 s
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{8}\,};theorem continuousOn_g3 {a b : ℝ} (ha : 1 < a) : ContinuousOn g3 (Icc a b)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{8}\,};theorem zero_sound_iff (F : ℝ) : (∃ s, 1 < s ∧ g3 s = 1 / F) ↔ 0 < F
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{1,8}\,};theorem zero_sound_2d_iff (F : ℝ) :
+    (∃ s, 1 < s ∧ 1 + F * (1 - s / √(s ^ 2 - 1)) = 0) ↔ 0 < F
+\end{lstlisting}
+
+\section{Lean written for this book}\label{appA:new}
+The files below are \emph{new}: they were written for the book, are not part of the \lean{QuantumFluids} library, and live in \texttt{book/lean/}. Each is compiled by its chapter author against the same pinned Mathlib (Lean 4.34.0-rc2), together with the library modules it imports when it says so, and, as the book's rules require, ends with \texttt{\#print axioms} lines. Their statements are listed here in the same way as the library's; the status line says whether the book's audit driver has checked them. A file that is \emph{meant to fail} (a negative control quoted in a chapter) is never counted as a theorem file or as a failure: such files are listed apart, at the end of this section. One more piece of Lean written for the book is not a module: the twenty-odd lines of meta-program that the audit driver appends to a scratch copy of every library module (printed in appendix~\ref{appB}); they define no theorem, and they were compiled as part of each of those runs.
+\subsection{Ch01\_\allowbreak{}NeutronWindow}
+{\footnotesize\raggedright\texttt{What a neutron can reach.\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{File} \texttt{book/lean/Ch01\_\allowbreak{}NeutronWindow.\allowbreak{}lean} $\cdot$ \emph{namespace} \texttt{QuantumFluids.\allowbreak{}NeutronWindow} $\cdot$ 3 theorems, 1 definitions $\cdot$ 3 \texttt{\#print axioms} lines in the file $\cdot$ \emph{audit}: 3 theorem constants audited, 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{1}\,};noncomputable def energy (hbar m : ℝ) (k : V) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem q_bounds (ki kf : V) :
+    |‖ki‖ - ‖kf‖| ≤ ‖ki - kf‖ ∧ ‖ki - kf‖ ≤ ‖ki‖ + ‖kf‖
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem transfer_le_window (hbar m : ℝ) (hm : 0 < m) (ki kf : V) :
+    energy hbar m ki - energy hbar m kf
+      ≤ hbar ^ 2 * (2 * ‖ki‖ * ‖ki - kf‖ - ‖ki - kf‖ ^ 2) / (2 * m)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{1}\,};theorem min_incident_wavevector (hbar m : ℝ) (hbar0 : 0 < hbar) (hm : 0 < m) (ki kf : V) (hQ : 0 < ‖ki - kf‖) :
+    ‖ki - kf‖ / 2 + m * (energy hbar m ki - energy hbar m kf) / (hbar ^ 2 * ‖ki - kf‖) ≤ ‖ki‖
+\end{lstlisting}
+
+\subsection{Ch02\_\allowbreak{}Galerkin}
+{\footnotesize\raggedright\texttt{NEW Lean written for Chapter 2 of the book "Quantum Fluids in Lean 4".\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{File} \texttt{book/lean/Ch02\_\allowbreak{}Galerkin.\allowbreak{}lean} $\cdot$ \emph{namespace} \texttt{QuantumFluids.\allowbreak{}Ch02Galerkin} $\cdot$ 20 theorems, 6 definitions $\cdot$ 10 \texttt{\#print axioms} lines in the file $\cdot$ \emph{audit}: 20 theorem constants audited (+6 generated by Lean), 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\begin{lstlisting}[style=leancat]
+noncomputable def nl (Λ : Finset G) (ψ : G → ℂ) (k : G) : ℂ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{2}\,};noncomputable def planeWave (a₀ : ℂ) (ω t : ℝ) : ℂ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem norm_planeWave (a₀ : ℂ) (ω t : ℝ) : ‖planeWave a₀ ω t‖ = ‖a₀‖
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem planeWave_hasDerivAt (a₀ : ℂ) (ω t : ℝ) :
+    HasDerivAt (planeWave a₀ ω) (-(Complex.I * ω) * planeWave a₀ ω t) t
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem nl_single (Λ : Finset G) (k0 : G) (hk0 : k0 ∈ Λ) (a : ℂ) (k : G) :
+    nl Λ (fun x => if x = k0 then a else 0) k = if k = k0 then a * (starRingEnd ℂ) a * a else 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{2}\,};noncomputable def planeState (k0 : G) (a₀ : ℂ) (Ω t : ℝ) : G → ℂ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{2}\,};noncomputable def galerkinField (Λ : Finset G) (ω : G → ℝ) (g : ℝ) (ψ : G → ℂ) (k : G) : ℂ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{2}\,};theorem planeState_solves_galerkin (Λ : Finset G) (k0 : G) (hk0 : k0 ∈ Λ) (ω : G → ℝ) (g : ℝ)
+    (a₀ : ℂ) (k : G) (t : ℝ) :
+    HasDerivAt (fun s : ℝ => planeState k0 a₀ (ω k0 + g * ‖a₀‖ ^ 2) s k)
+      (galerkinField Λ ω g (planeState k0 a₀ (ω k0 + g * ‖a₀‖ ^ 2) t) k) t
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def F (ψ : G → ℂ) (a b c d : G) : ℂ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def S4 (Λ : Finset G) (f : G → G → G → G → ℂ) : ℂ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem S4_congr (Λ : Finset G) {f g : G → G → G → G → ℂ} (h : ∀ a b c d, f a b c d = g a b c d) :
+    S4 Λ f = S4 Λ g
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem S4_add (Λ : Finset G) (f g : G → G → G → G → ℂ) :
+    S4 Λ (fun a b c d => f a b c d + g a b c d) = S4 Λ f + S4 Λ g
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem S4_conj (Λ : Finset G) (f : G → G → G → G → ℂ) :
+    (starRingEnd ℂ) (S4 Λ f) = S4 Λ (fun a b c d => (starRingEnd ℂ) (f a b c d))
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem S4_swap_ac (Λ : Finset G) (f : G → G → G → G → ℂ) :
+    S4 Λ f = S4 Λ (fun a b c d => f c b a d)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem S4_swap_bd (Λ : Finset G) (f : G → G → G → G → ℂ) :
+    S4 Λ f = S4 Λ (fun a b c d => f a d c b)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem S4_swap_pairs (Λ : Finset G) (f : G → G → G → G → ℂ) :
+    S4 Λ f = S4 Λ (fun a b c d => f b a d c)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem F_swap_ac (ψ : G → ℂ) (a b c d : G) : F ψ c b a d = F ψ a b c d
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem F_swap_bd (ψ : G → ℂ) (a b c d : G) : F ψ a d c b = F ψ a b c d
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem F_conj (ψ : G → ℂ) (a b c d : G) : (starRingEnd ℂ) (F ψ a b c d) = F ψ b a d c
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem weighted_pairing_eq_S4 (Λ : Finset G) (ψ : G → ℂ) (p : G → ℝ) :
+    ∑ k ∈ Λ, (p k : ℂ) * ((starRingEnd ℂ) (ψ k) * nl Λ ψ k)
+      = S4 Λ (fun a b c d => (p a : ℂ) * F ψ a b c d)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem weighted_pairing_real (Λ : Finset G) (ψ : G → ℂ) (p : G →+ ℝ) :
+    (∑ k ∈ Λ, (p k : ℂ) * ((starRingEnd ℂ) (ψ k) * nl Λ ψ k)).im = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{2}\,};theorem momentum_rate_zero (Λ : Finset G) (ψ : G → ℂ) (ω : G → ℝ) (g : ℝ) (p : G →+ ℝ) :
+    ∑ k ∈ Λ, p k * ((starRingEnd ℂ) (ψ k) * ((ω k : ℂ) * ψ k + (g : ℂ) * nl Λ ψ k)).im = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem momentum_rate_zero_lattice (Λ : Finset (ℤ × ℤ)) (ψ : ℤ × ℤ → ℂ) (ω : ℤ × ℤ → ℝ) (g : ℝ) :
+    ∑ k ∈ Λ, (k.1 : ℝ) * ((starRingEnd ℂ) (ψ k) * ((ω k : ℂ) * ψ k + (g : ℂ) * nl Λ ψ k)).im = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem additive_map_vanishes_on_torsion {H : Type*} [AddCommGroup H] (p : H →+ ℝ) (x : H) (n : ℕ)
+    (hn : n ≠ 0) (hx : n • x = 0) : p x = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{2}\,};theorem no_momentum_on_torus (N : ℕ) [NeZero N] (p : (ZMod N × ZMod N) →+ ℝ) (x : ZMod N × ZMod N) :
+    p x = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem no_additive_wavenumber (N : ℕ) [NeZero N] : ¬ ∃ p : ZMod N →+ ℝ, p 1 = 1
+\end{lstlisting}
+
+\subsection{Ch02\_\allowbreak{}Primer}
+{\footnotesize\raggedright\texttt{(1) types,\allowbreak{} propositions and proofs in four lines; (2) Lean also runs programs: a computation on Float and a theorem about ℝ are different things; (3) linear\_\allowbreak{}combination checks a certificate …}\par}
+{\footnotesize\raggedright\emph{File} \texttt{book/lean/Ch02\_\allowbreak{}Primer.\allowbreak{}lean} $\cdot$ \emph{namespace} \texttt{QuantumFluids.\allowbreak{}Ch02Primer} $\cdot$ 4 theorems, 0 definitions $\cdot$ 4 \texttt{\#print axioms} lines in the file $\cdot$ \emph{audit}: 4 theorem constants audited, 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{2}\,};theorem and_swap' (p q : Prop) (hp : p) (hq : q) : q ∧ p
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{2}\,};theorem two_add_two : (2 : ℝ) + 2 = 4
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem tenth_plus_fifth : (1 / 10 + 2 / 10 : ℝ) = 3 / 10
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{2}\,};theorem one_add_nilpotent_inv {R : Type*} [CommRing R] (e : R) (h : e ^ 2 = 0) :
+    (1 + e) * (1 - e) = 1
+\end{lstlisting}
+
+\subsection{Ch03\_\allowbreak{}PointVortexPair}
+{\footnotesize\raggedright\texttt{The reduced model against which the Gross-\allowbreak{}Pitaevskii vortex pair is compared in the chapter: point vortices in the plane,\allowbreak{} the velocity induced at z by a vortex of circulation Γ at w being i …}\par}
+{\footnotesize\raggedright\emph{File} \texttt{book/lean/Ch03\_\allowbreak{}PointVortexPair.\allowbreak{}lean} $\cdot$ \emph{namespace} \texttt{QuantumFluids.\allowbreak{}Ch03PointVortexPair} $\cdot$ 8 theorems, 1 definitions $\cdot$ 7 \texttt{\#print axioms} lines in the file $\cdot$ \emph{audit}: 8 theorem constants audited, 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{3}\,};noncomputable def induced (Γ : ℝ) (z w : ℂ) : ℂ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem cancel_aux (a b c : ℂ) (hb : b ≠ 0) (hc : c ≠ 0) : a / (b * c) * c = a / b
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{3}\,};theorem induced_mul_conj (Γ : ℝ) {z w : ℂ} (h : z ≠ w) :
+    induced Γ z w * (starRingEnd ℂ) (z - w) = ((Γ / (2 * Real.pi) : ℝ) : ℂ) * Complex.I
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem induced_perp (Γ : ℝ) {z w : ℂ} (h : z ≠ w) :
+    (induced Γ z w * (starRingEnd ℂ) (z - w)).re = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem norm_induced_mul (Γ : ℝ) {z w : ℂ} (h : z ≠ w) :
+    ‖induced Γ z w‖ * ‖z - w‖ = |Γ| / (2 * Real.pi)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem norm_induced (Γ : ℝ) {z w : ℂ} (h : z ≠ w) :
+    ‖induced Γ z w‖ = |Γ| / (2 * Real.pi * ‖z - w‖)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{3}\,};theorem pair_velocities_equal (Γ : ℝ) (z₁ z₂ : ℂ) :
+    induced (-Γ) z₁ z₂ = induced Γ z₂ z₁
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{3}\,};theorem separation_const (Γ : ℝ) (z₁ z₂ : ℝ → ℂ)
+    (h₁ : ∀ t, HasDerivAt z₁ (induced (-Γ) (z₁ t) (z₂ t)) t)
+    (h₂ : ∀ t, HasDerivAt z₂ (induced Γ (z₂ t) (z₁ t)) t) (t : ℝ) :
+    z₁ t - z₂ t = z₁ 0 - z₂ 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{3}\,};theorem pair_speed_quantum (ħ m : ℝ) (hħ : 0 < ħ) (hm : 0 < m) {z w : ℂ} (h : z ≠ w) :
+    ‖induced (2 * Real.pi * ħ / m) z w‖ = ħ / (m * ‖z - w‖)
+\end{lstlisting}
+
+\subsection{Ch04\_\allowbreak{}DosLink}
+{\footnotesize\raggedright\texttt{Why.\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{File} \texttt{book/lean/Ch04\_\allowbreak{}DosLink.\allowbreak{}lean} $\cdot$ \emph{namespace} \texttt{QuantumFluids.\allowbreak{}DosLink} $\cdot$ 13 theorems, 4 definitions $\cdot$ 7 \texttt{\#print axioms} lines in the file $\cdot$ \emph{audit}: 13 theorem constants audited, 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\begin{lstlisting}[style=leancat]
+theorem kInv_zero (a2 a3 a4 a5 a6 e : R) :
+    kInv 0 a2 a3 a4 a5 a6 e = kInv0 a2 a3 a4 a5 a6 e
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem kInv0_inverts (a2 a3 a4 a5 a6 e : R) (h : e ^ 8 = 0) :
+    kInv0 a2 a3 a4 a5 a6 e * (1 + a2 * kInv0 a2 a3 a4 a5 a6 e ^ 2 + a3 * kInv0 a2 a3 a4 a5 a6 e ^ 3
+      + a4 * kInv0 a2 a3 a4 a5 a6 e ^ 4 + a5 * kInv0 a2 a3 a4 a5 a6 e ^ 5
+      + a6 * kInv0 a2 a3 a4 a5 a6 e ^ 6) = e
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def dosRhs (a2 a3 a4 a5 a6 e : R) : R
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem dos_eq (a2 a3 a4 a5 a6 e : R) (h : e ^ 9 = 0) :
+    kInv0 a2 a3 a4 a5 a6 e ^ 2 * kInv0Deriv a2 a3 a4 a5 a6 e = dosRhs a2 a3 a4 a5 a6 e
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem map_kInv0 {S : Type*} [CommRing S] (f : R →+* S) (a2 a3 a4 a5 a6 e : R) :
+    f (kInv0 a2 a3 a4 a5 a6 e) = kInv0 (f a2) (f a3) (f a4) (f a5) (f a6) (f e)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem map_kInv0Deriv {S : Type*} [CommRing S] (f : R →+* S) (a2 a3 a4 a5 a6 e : R) :
+    f (kInv0Deriv a2 a3 a4 a5 a6 e) = kInv0Deriv (f a2) (f a3) (f a4) (f a5) (f a6) (f e)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem map_dosRhs {S : Type*} [CommRing S] (f : R →+* S) (a2 a3 a4 a5 a6 e : R) :
+    f (dosRhs a2 a3 a4 a5 a6 e) = dosRhs (f a2) (f a3) (f a4) (f a5) (f a6) (f e)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{4}\,};noncomputable def kPoly (a2 a3 a4 a5 a6 : ℝ) : ℝ[X]
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{4}\,};theorem derivative_kPoly (a2 a3 a4 a5 a6 : ℝ) :
+    derivative (kPoly a2 a3 a4 a5 a6) = kInv0Deriv (C a2) (C a3) (C a4) (C a5) (C a6) X
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{4}\,};noncomputable def dosPoly (a2 a3 a4 a5 a6 : ℝ) : ℝ[X]
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem dosRhs_poly (a2 a3 a4 a5 a6 : ℝ) :
+    dosRhs (C a2) (C a3) (C a4) (C a5) (C a6) (X : ℝ[X]) =
+      X ^ 2 - C (5 * a2) * X ^ 4 - C (6 * a3) * X ^ 5 + C (7 * (4 * a2 ^ 2 - a4)) * X ^ 6
+        + C (8 * (9 * a2 * a3 - a5)) * X ^ 7
+        - C (3 * (55 * a2 ^ 3 - 30 * a2 * a4 - 15 * a3 ^ 2 + 3 * a6)) * X ^ 8
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{4}\,};theorem dos_coeffs (a2 a3 a4 a5 a6 : ℝ) :
+    (dosPoly a2 a3 a4 a5 a6).coeff 2 = 1 ∧
+    (dosPoly a2 a3 a4 a5 a6).coeff 3 = 0 ∧
+    (dosPoly a2 a3 a4 a5 a6).coeff 4 = -5 * a2 ∧
+    (dosPoly a2 a3 a4 a5 a6).coeff 5 = -6 * a3 ∧
+    (dosPoly a2 a3 a4 a5 a6).coeff 6 = 7 * (4 * a2 ^ 2 - a4) ∧
+    (dosPoly a2 a3 a4 a5 a6).coeff 7 = 8 * (9 * a2 * a3 - a5) ∧
+    (dosPoly a2 a3 a4 a5 a6).coeff 8 = -3 * (55 * a2 ^ 3 - 30 * a2 * a4 - 15 * a3 ^ 2 + 3 * a6)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem phonon_specific_heat_from_dos (V kB hbar c a2 a3 a4 a5 a6 z7 z9 T : ℝ) (hh : hbar ≠ 0) (hc0 : c ≠ 0) :
+    HasDerivAt (fun T =>
+        energyTerm V kB hbar c ((dosPoly a2 a3 a4 a5 a6).coeff 2) 2 (π ^ 4 / 15) T
+      + energyTerm V kB hbar c ((dosPoly a2 a3 a4 a5 a6).coeff 4) 4 (8 * π ^ 6 / 63) T
+      + energyTerm V kB hbar c ((dosPoly a2 a3 a4 a5 a6).coeff 5) 5 (720 * z7) T
+      + energyTerm V kB hbar c ((dosPoly a2 a3 a4 a5 a6).coeff 6) 6 (8 * π ^ 8 / 15) T
+      + energyTerm V kB hbar c ((dosPoly a2 a3 a4 a5 a6).coeff 7) 7 (40320 * z9) T
+      + energyTerm V kB hbar c ((dosPoly a2 a3 a4 a5 a6).coeff 8) 8 (128 * π ^ 10 / 33) T)
+      ( 2 * π ^ 2 * kB ^ 4 * V / (15 * c ^ 3 * hbar ^ 3) * T ^ 3
+      + -(40 * (π ^ 4 * a2 * kB ^ 6 * V)) / (21 * (c ^ 5 * hbar ^ 5)) * T ^ 5
+      + -(15120 * (a3 * kB ^ 7 * V * z7)) / (π ^ 2 * c ^ 6 * hbar ^ 6) * T ^ 6
+      + 224 * π ^ 6 * kB ^ 8 * V * (4 * a2 ^ 2 - a4) / (15 * c ^ 7 * hbar ^ 7) * T ^ 7
+      + 1451520 * kB ^ 9 * V * z9 * (9 * a2 * a3 - a5) / (π ^ 2 * c ^ 8 * hbar ^ 8) * T ^ 8
+      + -(640 * (π ^ 8 * kB ^ 10 * V * (55 * a2 ^ 3 - 30 * a2 * a4 - 15 * a3 ^ 2 + 3 * a6)))
+          / (11 * (c ^ 9 * hbar ^ 9)) * T ^ 9) T
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{4}\,};theorem phonon_specific_heat_end_to_end (V kB hbar c a2 a3 a4 a5 a6 T : ℝ) (hh : hbar ≠ 0) (hc0 : c ≠ 0) :
+    HasDerivAt (fun T =>
+        energyTerm V kB hbar c ((dosPoly a2 a3 a4 a5 a6).coeff 2) 2 (mellin bose 4).re T
+      + energyTerm V kB hbar c ((dosPoly a2 a3 a4 a5 a6).coeff 4) 4 (mellin bose 6).re T
+      + energyTerm V kB hbar c ((dosPoly a2 a3 a4 a5 a6).coeff 5) 5 (mellin bose 7).re T
+      + energyTerm V kB hbar c ((dosPoly a2 a3 a4 a5 a6).coeff 6) 6 (mellin bose 8).re T
+      + energyTerm V kB hbar c ((dosPoly a2 a3 a4 a5 a6).coeff 7) 7 (mellin bose 9).re T
+      + energyTerm V kB hbar c ((dosPoly a2 a3 a4 a5 a6).coeff 8) 8 (mellin bose 10).re T)
+      ( 2 * π ^ 2 * kB ^ 4 * V / (15 * c ^ 3 * hbar ^ 3) * T ^ 3
+      + -(40 * (π ^ 4 * a2 * kB ^ 6 * V)) / (21 * (c ^ 5 * hbar ^ 5)) * T ^ 5
+      + -(15120 * (a3 * kB ^ 7 * V * (riemannZeta 7).re)) / (π ^ 2 * c ^ 6 * hbar ^ 6) * T ^ 6
+      + 224 * π ^ 6 * kB ^ 8 * V * (4 * a2 ^ 2 - a4) / (15 * c ^ 7 * hbar ^ 7) * T ^ 7
+      + 1451520 * kB ^ 9 * V * (riemannZeta 9).re * (9 * a2 * a3 - a5) / (π ^ 2 * c ^ 8 * hbar ^ 8) * T ^ 8
+      + -(640 * (π ^ 8 * kB ^ 10 * V * (55 * a2 ^ 3 - 30 * a2 * a4 - 15 * a3 ^ 2 + 3 * a6)))
+          / (11 * (c ^ 9 * hbar ^ 9)) * T ^ 9) T
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def energyMonomial (V kB hbar c g : ℝ) (n : ℕ) (T : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{4}\,};theorem energyMonomial_eq (V kB hbar c g : ℝ) (n : ℕ) {T : ℝ} (hbc : 0 < hbar * c) (hkT : 0 < kB * T) :
+    energyMonomial V kB hbar c g n T
+      = energyTerm V kB hbar c g n (mellin bose ((n : ℂ) + 2)).re T
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{4}\,};theorem phonon_specific_heat_integral (V kB hbar c a2 a3 a4 a5 a6 T : ℝ)
+    (hh : 0 < hbar) (hc : 0 < c) (hk : 0 < kB) (hT : 0 < T) :
+    HasDerivAt (fun T =>
+        energyMonomial V kB hbar c ((dosPoly a2 a3 a4 a5 a6).coeff 2) 2 T
+      + energyMonomial V kB hbar c ((dosPoly a2 a3 a4 a5 a6).coeff 4) 4 T
+      + energyMonomial V kB hbar c ((dosPoly a2 a3 a4 a5 a6).coeff 5) 5 T
+      + energyMonomial V kB hbar c ((dosPoly a2 a3 a4 a5 a6).coeff 6) 6 T
+      + energyMonomial V kB hbar c ((dosPoly a2 a3 a4 a5 a6).coeff 7) 7 T
+      + energyMonomial V kB hbar c ((dosPoly a2 a3 a4 a5 a6).coeff 8) 8 T)
+      ( 2 * π ^ 2 * kB ^ 4 * V / (15 * c ^ 3 * hbar ^ 3) * T ^ 3
+      + -(40 * (π ^ 4 * a2 * kB ^ 6 * V)) / (21 * (c ^ 5 * hbar ^ 5)) * T ^ 5
+      + -(15120 * (a3 * kB ^ 7 * V * (riemannZeta 7).re)) / (π ^ 2 * c ^ 6 * hbar ^ 6) * T ^ 6
+      + 224 * π ^ 6 * kB ^ 8 * V * (4 * a2 ^ 2 - a4) / (15 * c ^ 7 * hbar ^ 7) * T ^ 7
+      + 1451520 * kB ^ 9 * V * (riemannZeta 9).re * (9 * a2 * a3 - a5) / (π ^ 2 * c ^ 8 * hbar ^ 8) * T ^ 8
+      + -(640 * (π ^ 8 * kB ^ 10 * V * (55 * a2 ^ 3 - 30 * a2 * a4 - 15 * a3 ^ 2 + 3 * a6)))
+          / (11 * (c ^ 9 * hbar ^ 9)) * T ^ 9) T
+\end{lstlisting}
+
+\subsection{Ch05\_\allowbreak{}BogoliubovDispersion}
+{\footnotesize\raggedright\texttt{The Bogoliubov spectrum of a weakly interacting Bose gas (units hbar = 1),\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{File} \texttt{book/lean/Ch05\_\allowbreak{}BogoliubovDispersion.\allowbreak{}lean} $\cdot$ \emph{namespace} \texttt{QuantumFluids.\allowbreak{}BogoliubovDispersion} $\cdot$ 24 theorems, 3 definitions $\cdot$ 15 \texttt{\#print axioms} lines in the file $\cdot$ \emph{audit}: 26 theorem constants audited (+1 generated by Lean), 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{5}\,};noncomputable def bogEps (c m k : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{5}\,};noncomputable def alpha2 (c m : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+def phononDisp (c a k : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem bogEps_sq (c m k : ℝ) :
+    bogEps c m k ^ 2 = c ^ 2 * k ^ 2 + (k ^ 2 / (2 * m)) ^ 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem bogEps_zero (c m : ℝ) : bogEps c m 0 = 0
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem bogEps_nonneg (c m k : ℝ) : 0 ≤ bogEps c m k
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem bogEps_pos {c m k : ℝ} (hc : 0 < c) (hk : 0 < k) : 0 < bogEps c m k
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem bogEps_neg (c m k : ℝ) : bogEps c m (-k) = bogEps c m k
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem bogEps_eq_mul {c m k : ℝ} (hm : 0 < m) (hk : 0 ≤ k) :
+    bogEps c m k = k * Real.sqrt (c ^ 2 + k ^ 2 / (4 * m ^ 2))
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{5}\,};theorem bogEps_strictMonoOn {c m : ℝ} (hc : 0 < c) (hm : 0 < m) :
+    StrictMonoOn (bogEps c m) (Set.Ici 0)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem sound_line_le (c m k : ℝ) : c * k ≤ bogEps c m k
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{5}\,};theorem bogEps_le_phononDisp {c m k : ℝ} (hc : 0 < c) (hm : 0 < m) (hk : 0 ≤ k) :
+    bogEps c m k ≤ phononDisp c (alpha2 c m) k
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem phononDisp_sub_le_bogEps {c m k : ℝ} (hc : 0 < c) (hm : 0 < m) (hk : 0 ≤ k) :
+    phononDisp c (alpha2 c m) k - c * (alpha2 c m) ^ 2 * k ^ 5 / 2 ≤ bogEps c m k
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem sound_speed_limit {c m : ℝ} (hc : 0 < c) (hm : 0 < m) :
+    Tendsto (fun k => bogEps c m k / k) (;$\mathcal{N}$;[>] 0) (;$\mathcal{N}$; c)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{5}\,};theorem alpha2_limit {c m : ℝ} (hc : 0 < c) (hm : 0 < m) :
+    Tendsto (fun k => (bogEps c m k / (c * k) - 1) / k ^ 2) (;$\mathcal{N}$;[>] 0) (;$\mathcal{N}$; (alpha2 c m))
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem alpha2_pos {c m : ℝ} (hc : 0 < c) (hm : 0 < m) : 0 < alpha2 c m
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{5}\,};theorem sound_lt_phase_velocity {c m k : ℝ} (hc : 0 < c) (hm : 0 < m) (hk : 0 < k) :
+    c < bogEps c m k / k
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{5,9}\,};theorem landau_velocity_eq {c m : ℝ} (hc : 0 < c) (hm : 0 < m) :
+    IsGLB ((fun k => bogEps c m k / k) '' Set.Ioi 0) c
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem landau_velocity_sInf {c m : ℝ} (hc : 0 < c) (hm : 0 < m) :
+    sInf ((fun k => bogEps c m k / k) '' Set.Ioi 0) = c
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{5}\,};theorem bogEps_superadditive {c m k₁ k₂ : ℝ} (hc : 0 < c) (hm : 0 < m) (h₁ : 0 < k₁) (h₂ : 0 < k₂) :
+    bogEps c m k₁ + bogEps c m k₂ < bogEps c m (k₁ + k₂)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem three_phonon_excess (c a k₁ k₂ : ℝ) :
+    phononDisp c a (k₁ + k₂) - phononDisp c a k₁ - phononDisp c a k₂
+      = 3 * c * a * k₁ * k₂ * (k₁ + k₂)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem three_phonon_open_iff {c a k₁ k₂ : ℝ} (hc : 0 < c) (h₁ : 0 < k₁) (h₂ : 0 < k₂) :
+    phononDisp c a k₁ + phononDisp c a k₂ ≤ phononDisp c a (k₁ + k₂) ↔ 0 ≤ a
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem bogoliubov_lowk_three_phonon_open {c m k₁ k₂ : ℝ} (hc : 0 < c) (hm : 0 < m) (h₁ : 0 < k₁) (h₂ : 0 < k₂) :
+    phononDisp c (alpha2 c m) k₁ + phononDisp c (alpha2 c m) k₂ ≤ phononDisp c (alpha2 c m) (k₁ + k₂) ∧
+    phononDisp c (alpha2 c m) (k₁ + k₂) - phononDisp c (alpha2 c m) k₁ - phononDisp c (alpha2 c m) k₂
+      = 3 * c * alpha2 c m * k₁ * k₂ * (k₁ + k₂)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{5}\,};theorem abs_bogEps_sub_phononDisp_le {c m k : ℝ} (hc : 0 < c) (hm : 0 < m) (hk : 0 ≤ k) :
+    |bogEps c m k - phononDisp c (alpha2 c m) k| ≤ c * (alpha2 c m) ^ 2 * k ^ 5 / 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{5}\,};theorem bogEps_sub_sound_strictMonoOn {c m : ℝ} (hc : 0 < c) (hm : 0 < m) :
+    StrictMonoOn (fun k => bogEps c m k - c * k) (Set.Ici 0)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{5}\,};theorem phase_velocity_universal {c m k : ℝ} (hc : 0 < c) (hm : 0 < m) (hk : 0 < k) :
+    bogEps c m k / (c * k) = Real.sqrt (1 + (k / (2 * m * c)) ^ 2)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{5}\,};theorem bogEps_sq_gp {g n k : ℝ} (hg : 0 ≤ g) (hn : 0 ≤ n) :
+    bogEps (Real.sqrt (g * n)) 1 k ^ 2 = (1 / 2) * k ^ 2 * ((1 / 2) * k ^ 2 + 2 * (g * n))
+\end{lstlisting}
+
+\subsection{Ch06\_\allowbreak{}KTForward}
+{\footnotesize\raggedright\texttt{Why it exists.\allowbreak{}}\par}
+{\footnotesize\raggedright\emph{File} \texttt{book/lean/Ch06\_\allowbreak{}KTForward.\allowbreak{}lean} $\cdot$ \emph{namespace} \texttt{QuantumFluids.\allowbreak{}KTForward} $\cdot$ 18 theorems, 2 definitions $\cdot$ 18 \texttt{\#print axioms} lines in the file $\cdot$ \emph{audit}: 18 theorem constants audited (+2 generated by Lean), 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\begin{lstlisting}[style=leancat]
+noncomputable def f (u : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def H (u y : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+lemma f_antitone {a b : ℝ} (ha : 0 < a) (hab : a ≤ b) (hb : b ≤ π / 2) : f b ≤ f a
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+lemma f_gt_fc {u : ℝ} (hu : 0 < u) (hne : u ≠ π / 2) : f (π / 2) < f u
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+lemma f_ge_fc {u : ℝ} (hu : 0 < u) : f (π / 2) ≤ f u
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+lemma hasDerivWithinAt_H (l : ℝ) (hl : 0 ≤ l) :
+    HasDerivWithinAt (fun l => H (u l) (y l)) 0 (Set.Ici 0) l
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{6}\,};theorem kt_invariant (l : ℝ) (hl : 0 ≤ l) : H (u l) (y l) = H (u 0) (y 0)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+lemma f_ge_H (l : ℝ) (hl : 0 ≤ l) : H (u 0) (y 0) ≤ f (u l)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem kt_trapped (h0 : u 0 < π / 2) (hH : f (π / 2) < H (u 0) (y 0)) : ∀ l, 0 ≤ l → u l < π / 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem u_monotoneOn : MonotoneOn u (Set.Ici 0)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem kt_fugacity_bounded (h0 : u 0 < π / 2) (hH : f (π / 2) < H (u 0) (y 0)) (l : ℝ) (hl : 0 ≤ l) :
+    y l ^ 2 ≤ y 0 ^ 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem kt_scalar (l : ℝ) (hl : 0 ≤ l) :
+    HasDerivWithinAt u (2 * (f (u l) - H (u 0) (y 0))) (Set.Ici 0) l
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{6}\,};theorem kt_escape (l : ℝ) (hl : 0 ≤ l) :
+    u 0 + 2 * (f (π / 2) - H (u 0) (y 0)) * l ≤ u l
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{6}\,};theorem kt_escape_time (hH : H (u 0) (y 0) < f (π / 2)) :
+    ∃ l, 0 ≤ l ∧ π / 2 ≤ u l ∧
+      l ≤ max 0 ((π / 2 - u 0) / (2 * (f (π / 2) - H (u 0) (y 0))))
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem kt_stiffness_vanishes (hH : H (u 0) (y 0) < f (π / 2)) (ε : ℝ) (hε : 0 < ε) :
+    ∃ L, 0 ≤ L ∧ ∀ l, L ≤ l → 1 / u l < ε
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{6}\,};theorem kt_dichotomy (h0 : u 0 < π / 2) (hne : H (u 0) (y 0) ≠ f (π / 2)) :
+    (∀ l, 0 ≤ l → u l < π / 2) ∨ ∃ l, 0 ≤ l ∧ π / 2 ≤ u l
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+lemma hasDerivAt_H_global (l : ℝ) : HasDerivAt (fun l => H (u l) (y l)) 0 l
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+lemma kt_invariant_global (l : ℝ) : H (u l) (y l) = H (u 0) (y 0)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+lemma u_monotone_global : Monotone u
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{6}\,};theorem kt_eternal_trivial (h0 : u 0 < π / 2) : y 0 = 0
+\end{lstlisting}
+
+\subsection{Ch07\_\allowbreak{}DissipativePairs}
+{\footnotesize\raggedright\texttt{Two additions to DissipativeVortexDynamics.\allowbreak{}lean,\allowbreak{} in the same model (hbar = m = 1,\allowbreak{} circulation 2 pi,\allowbreak{} normal fluid at rest): a vortex of charge q moves at   v = (1 -\allowbreak{} alpha') v\_\allowbreak{}s -\allowbreak{} alpha q z x …}\par}
+{\footnotesize\raggedright\emph{File} \texttt{book/lean/Ch07\_\allowbreak{}DissipativePairs.\allowbreak{}lean} $\cdot$ \emph{namespace} \texttt{QuantumFluids.\allowbreak{}DissipativePairs} $\cdot$ 7 theorems, 3 definitions $\cdot$ 7 \texttt{\#print axioms} lines in the file $\cdot$ \emph{audit}: 7 theorem constants audited (+1 generated by Lean), 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\begin{lstlisting}[style=leancat]
+noncomputable def r2 (t : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem r2_hasDerivAt (t : ℝ) (ht : t ∈ Icc (0 : ℝ) T) : HasDerivAt (r2 x1 y1 x2 y2) (4 * α) t
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{7}\,};theorem corot_sq_law (t : ℝ) (ht : t ∈ Icc (0 : ℝ) T) :
+    r2 x1 y1 x2 y2 t = r2 x1 y1 x2 y2 0 + 4 * α * t
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def stallPoint (w d0 : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+noncomputable def lowerRoot (w d0 : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem roots_spec {w d0 : ℝ} (hw : 0 < w) (hd0 : 0 < d0) (h4 : 4 < w * d0 ^ 2) :
+    0 < lowerRoot w d0 ∧ lowerRoot w d0 < stallPoint w d0 ∧
+      lowerRoot w d0 + stallPoint w d0 = d0 ∧ lowerRoot w d0 * stallPoint w d0 = 1 / w
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem stall_fence {a b c : ℝ} (hab : a < b) (hc : 0 < c) (g : ℝ → ℝ) (hg : ∀ x, a < x → x < b → g x < 0)
+    (d : ℝ → ℝ) (hd : ∀ t, HasDerivAt d (-c * g (d t)) t) (h0 : b ≤ d 0) :
+    ∀ t, 0 ≤ t → b ≤ d t
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{7}\,};theorem wind_stall_at_b {α w d0 : ℝ} (hα : 0 < α) (hw : 0 < w) (hd0 : 0 < d0) (h4 : 4 < w * d0 ^ 2)
+    (d : ℝ → ℝ) (hd : ∀ t, HasDerivAt d (-(2 * α) * (1 / d t - w * (d0 - d t))) t)
+    (h0 : stallPoint w d0 ≤ d 0) : ∀ t, 0 ≤ t → stallPoint w d0 ≤ d t
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{7}\,};theorem wind_no_zero {w d0 : ℝ} (hw : 0 < w) (h4 : w * d0 ^ 2 < 4) {x : ℝ} (hx : 0 < x) :
+    0 < 1 / x - w * (d0 - x)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem stall_needs_start {α w d0 : ℝ} (hw : 0 < w) (hd0 : 0 < d0) (h4 : 4 < w * d0 ^ 2) :
+    (∀ t : ℝ, HasDerivAt (fun _ : ℝ => lowerRoot w d0)
+        (-(2 * α) * (1 / lowerRoot w d0 - w * (d0 - lowerRoot w d0))) t) ∧
+      lowerRoot w d0 < stallPoint w d0
+\end{lstlisting}
+
+\subsection{Ch08\_\allowbreak{}ZeroSound2D}
+{\footnotesize\raggedright\texttt{Three small additions around ZeroSound.\allowbreak{}lean (which proves: an undamped zero-\allowbreak{}sound root exists iff the Landau parameter F is positive,\allowbreak{} in 2D and 3D,\allowbreak{} with the explicit 2D root s = …}\par}
+{\footnotesize\raggedright\emph{File} \texttt{book/lean/Ch08\_\allowbreak{}ZeroSound2D.\allowbreak{}lean} $\cdot$ \emph{namespace} \texttt{QuantumFluids.\allowbreak{}ZeroSound2D} $\cdot$ 9 theorems, 2 definitions $\cdot$ 9 \texttt{\#print axioms} lines in the file $\cdot$ \emph{audit}: 9 theorem constants audited, 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{8}\,};theorem ph_energy_window {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    {m kF : ℝ} (hm : 0 < m) (k q : E) (hk : ‖k‖ ≤ kF) :
+    (‖q‖ ^ 2 - 2 * kF * ‖q‖) / (2 * m) ≤ (‖k + q‖ ^ 2 - ‖k‖ ^ 2) / (2 * m) ∧
+      (‖k + q‖ ^ 2 - ‖k‖ ^ 2) / (2 * m) ≤ (‖q‖ ^ 2 + 2 * kF * ‖q‖) / (2 * m)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{8}\,};theorem ph_gap {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    {m kF : ℝ} (hm : 0 < m) (hkF : 0 ≤ kF) (k q : E) (hk : ‖k‖ ≤ kF) (hq : 2 * kF < ‖q‖) :
+    0 < ‖q‖ * (‖q‖ - 2 * kF) / (2 * m) ∧
+      ‖q‖ * (‖q‖ - 2 * kF) / (2 * m) ≤ (‖k + q‖ ^ 2 - ‖k‖ ^ 2) / (2 * m)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{8}\,};theorem ph_edge_attained {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    {kF : ℝ} (hkF : 0 ≤ kF) (q : E) (hq0 : q ≠ 0) (hq : 2 * kF ≤ ‖q‖) :
+    ∃ k : E, ‖k‖ = kF ∧ kF ≤ ‖k + q‖ ∧ ‖k + q‖ ^ 2 - ‖k‖ ^ 2 = ‖q‖ ^ 2 - 2 * kF * ‖q‖
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{8}\,};noncomputable def omega2 (s : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{8}\,};noncomputable def s0 (F : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{8}\,};theorem zero_sound_2d_unique {F s : ℝ} (hs : 1 < s) (h : 1 + F * omega2 s = 0) :
+    0 < F ∧ s = s0 F
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{8}\,};theorem s0_sq_sub_one {F : ℝ} (hF : 0 < F) : s0 F ^ 2 - 1 = F ^ 2 / (1 + 2 * F)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+theorem one_lt_s0 {F : ℝ} (hF : 0 < F) : 1 < s0 F
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{8}\,};theorem omega2_hasDerivAt {s : ℝ} (hs : 1 < s) :
+    HasDerivAt omega2 (1 / ((s ^ 2 - 1) * √(s ^ 2 - 1))) s
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{8}\,};theorem pole_weight {F : ℝ} (hF : 0 < F) :
+    1 / (F ^ 2 * deriv omega2 (s0 F)) = F / ((1 + 2 * F) * √(1 + 2 * F))
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{8}\,};theorem pole_fraction {F : ℝ} (hF : 0 < F) :
+    4 * s0 F * (1 / (F ^ 2 * deriv omega2 (s0 F))) = 1 - 1 / (1 + 2 * F) ^ 2
+\end{lstlisting}
+
+\subsection{Ch09\_\allowbreak{}FlowPast}
+{\footnotesize\raggedright\texttt{Elementary statements about the model whose reproduction the chapter reports (units hbar = m = mu = 1,\allowbreak{} density at infinity n = 1,\allowbreak{} hence sound speed c = 1):}\par}
+{\footnotesize\raggedright\emph{File} \texttt{book/lean/Ch09\_\allowbreak{}FlowPast.\allowbreak{}lean} $\cdot$ \emph{namespace} \texttt{QuantumFluids.\allowbreak{}FlowPast} $\cdot$ 8 theorems, 1 definitions $\cdot$ 8 \texttt{\#print axioms} lines in the file $\cdot$ \emph{audit}: 8 theorem constants audited, 0 sorry, 0 user axioms; axioms used: Classical.choice, Quot.sound, propext.\par}
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{9}\,};noncomputable def bogEps (k : ℝ) : ℝ
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{9}\,};theorem bogEps_ge_sound {k : ℝ} (hk : 0 ≤ k) : 1 * k ≤ bogEps k
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{9}\,};theorem landau_uniform_gp :
+    (∀ k : ℝ, 0 < k → 1 ≤ bogEps k / k) ∧
+    (∀ δ : ℝ, 0 < δ → ∃ k : ℝ, 0 < k ∧ bogEps k / k < 1 + δ)
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{9}\,};theorem supersonic_iff {n j : ℝ} (hn : 0 < n) (hj : 0 < j) :
+    Real.sqrt n < j / n ↔ n ^ 3 < j ^ 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{9}\,};theorem sonic_speed_threshold {n u V B : ℝ} (hB : n + u ^ 2 / 2 + V = B) :
+    n < u ^ 2 ↔ 2 / 3 * (B - V) < u ^ 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{9}\,};theorem bernoulli_min {s n : ℝ} (hs : 0 < s) (hn : 0 < n) :
+    3 / 2 * s ≤ s ^ 3 / (2 * n ^ 2) + n
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{9}\,};theorem bernoulli_eq_iff {s n : ℝ} (hs : 0 < s) (hn : 0 < n) :
+    s ^ 3 / (2 * n ^ 2) + n = 3 / 2 * s ↔ n = s
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{9}\,};theorem barrier_height_bound {s n V : ℝ} (hs : 0 < s) (hn : 0 < n)
+    (hB : s ^ 3 / (2 * n ^ 2) + n + V = 1 + s ^ 3 / 2) :
+    V ≤ (1 - s) ^ 2 * (s + 2) / 2
+\end{lstlisting}
+
+\begin{lstlisting}[style=leancat]
+;\llap{\citedmark{9}\,};theorem ramp_overshoot (a h : ℝ) (n : ℕ) :
+    ∑ i ∈ range n, a * (((i : ℝ) + 1) * h) * h - a * ((n : ℝ) * h) ^ 2 / 2 = a * h ^ 2 * n / 2
+\end{lstlisting}
+
+\subsection*{Files that are not counted}
+\paragraph{Ch02\_\allowbreak{}NegativeControl (deliberate negative control).} {\footnotesize\raggedright\texttt{book/lean/Ch02\_\allowbreak{}NegativeControl.\allowbreak{}lean}: this file is MEANT to fail.\allowbreak{} It contains two false statements; the compiler's refusal (quoted in Chapter 2) is the point.\allowbreak{} It is not part of any build.\allowbreak{} \emph{Expected result}: a compile error. \emph{Observed}: compiled by the audit driver expecting errors: exit code 1, 2 errors; it failed, as intended. It declares no theorem, is not audited for axioms, and is counted neither as a failure nor as a file of the book's Lean.\par}
+\paragraph{Ch04\_\allowbreak{}NegativeControl\_\allowbreak{}D15121 (deliberate negative control).} {\footnotesize\raggedright\texttt{book/lean/Ch04\_\allowbreak{}NegativeControl\_\allowbreak{}D15121.\allowbreak{}lean}: This file is MEANT TO FAIL.\allowbreak{} It is a negative control quoted in Chapter 4 of the book “Quantum Fluids in Lean 4: a tribute to Henri Godfrin”: a proof checker that cannot reject a wrong statement proves nothing.\allowbreak{} Please exclude it from audits of theorem files.\allowbreak{} \emph{Expected result}: a compile error. \emph{Observed}: compiled by the audit driver expecting errors: exit code 1, 1 error; it failed, as intended. It declares no theorem, is not audited for axioms, and is counted neither as a failure nor as a file of the book's Lean.\par}
+\paragraph{Ch04\_\allowbreak{}NegativeControl\_\allowbreak{}L54 (deliberate negative control).} {\footnotesize\raggedright\texttt{book/lean/Ch04\_\allowbreak{}NegativeControl\_\allowbreak{}L54.\allowbreak{}lean}: This file is MEANT TO FAIL.\allowbreak{} It is a negative control quoted in Chapter 4 of the book “Quantum Fluids in Lean 4: a tribute to Henri Godfrin”: a proof checker that cannot reject a wrong statement proves nothing.\allowbreak{} Please exclude it from audits of theorem files.\allowbreak{} \emph{Expected result}: a compile error. \emph{Observed}: compiled by the audit driver expecting errors: exit code 1, 1 error; it failed, as intended. It declares no theorem, is not audited for axioms, and is counted neither as a failure nor as a file of the book's Lean.\par}
+\paragraph{Ch06\_\allowbreak{}KTEscape (empty placeholder).} {\footnotesize\raggedright\texttt{book/lean/Ch06\_\allowbreak{}KTEscape.\allowbreak{}lean} says in its header that it is superseded and holds no declaration; it exists only because files cannot be deleted in the working environment of the book. It is not counted.\par}

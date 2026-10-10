@@ -1,0 +1,25 @@
+step 0/100 t = 0.00 (1 s)
+step 100/100 t = 1.00 (1169 s)
+	Command being timed: "flock /mnt/data/xdev-cache/tmp/qf_heavy.lock nice /home/xavkal/xdev/rusty-SUNDIALS-c3/target/release/examples/kwon_shin --ref-dir /mnt/data/xdev-cache/qf-external/20068724/extracted --t-end 1.0 --dt 0.01 --ramp step-end"
+	User time (seconds): 67.18
+	System time (seconds): 0.55
+	Percent of CPU this job got: 4%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 24:34.67
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 94772
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 21
+	Minor (reclaiming a frame) page faults: 24349
+	Voluntary context switches: 49
+	Involuntary context switches: 26485
+	Swaps: 0
+	File system inputs: 13168
+	File system outputs: 32
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

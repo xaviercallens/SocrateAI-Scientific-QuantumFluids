@@ -1,0 +1,58 @@
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/ch10_audit/src/book_Ch04_NegativeControl_D15121.lean:33:52: error: unsolved goals
+V kB hbar c a2 a3 a4 a5 a6 z7 z9 T : ℝ
+hh : hbar ≠ 0
+hc : c ≠ 0
+h :
+  HasDerivAt
+    ((((((fun T => energyTerm V kB hbar c 1 2 (π ^ 4 / 15) T) + fun T =>
+              energyTerm V kB hbar c (-5 * a2) 4 (8 * π ^ 6 / 63) T) +
+            fun T => energyTerm V kB hbar c (-6 * a3) 5 (720 * z7) T) +
+          fun T => energyTerm V kB hbar c (7 * (4 * a2 ^ 2 - a4)) 6 (8 * π ^ 8 / 15) T) +
+        fun T => energyTerm V kB hbar c (8 * (9 * a2 * a3 - a5)) 7 (40320 * z9) T) +
+      fun T =>
+      energyTerm V kB hbar c (-3 * (55 * a2 ^ 3 - 30 * a2 * a4 - 15 * a3 ^ 2 + 3 * a6)) 8 (128 * π ^ 10 / 33) T)
+    (V / (2 * π ^ 2) * 1 * (π ^ 4 / 15) * kB ^ (2 + 2) / (hbar * c) ^ (2 + 1) * (↑(2 + 2) * T ^ (2 + 1)) +
+              V / (2 * π ^ 2) * (-5 * a2) * (8 * π ^ 6 / 63) * kB ^ (4 + 2) / (hbar * c) ^ (4 + 1) *
+                (↑(4 + 2) * T ^ (4 + 1)) +
+            V / (2 * π ^ 2) * (-6 * a3) * (720 * z7) * kB ^ (5 + 2) / (hbar * c) ^ (5 + 1) * (↑(5 + 2) * T ^ (5 + 1)) +
+          V / (2 * π ^ 2) * (7 * (4 * a2 ^ 2 - a4)) * (8 * π ^ 8 / 15) * kB ^ (6 + 2) / (hbar * c) ^ (6 + 1) *
+            (↑(6 + 2) * T ^ (6 + 1)) +
+        V / (2 * π ^ 2) * (8 * (9 * a2 * a3 - a5)) * (40320 * z9) * kB ^ (7 + 2) / (hbar * c) ^ (7 + 1) *
+          (↑(7 + 2) * T ^ (7 + 1)) +
+      V / (2 * π ^ 2) * (-3 * (55 * a2 ^ 3 - 30 * a2 * a4 - 15 * a3 ^ 2 + 3 * a6)) * (128 * π ^ 10 / 33) *
+            kB ^ (8 + 2) /
+          (hbar * c) ^ (8 + 1) *
+        (↑(8 + 2) * T ^ (8 + 1)))
+    T
+hp : π ≠ 0
+⊢ V * kB ^ 4 * T ^ 3 * hbar ^ 6 * c ^ 6 * π ^ 4 * 1920996 -
+                        V * kB ^ 6 * T ^ 5 * hbar ^ 4 * c ^ 4 * π ^ 6 * a2 * 27442800 -
+                      V * kB ^ 7 * T ^ 6 * hbar ^ 3 * c ^ 3 * a3 * z7 * 217840946400 +
+                    V * kB ^ 8 * T ^ 7 * hbar ^ 2 * c ^ 2 * π ^ 8 * a2 ^ 2 * 860606208 -
+                  V * kB ^ 8 * T ^ 7 * hbar ^ 2 * c ^ 2 * π ^ 8 * a4 * 215151552 +
+                V * kB ^ 9 * T ^ 8 * hbar * c * a2 * a3 * z9 * 188214577689600 -
+              V * kB ^ 9 * T ^ 8 * hbar * c * a5 * z9 * 20912730854400 +
+            V * kB ^ 10 * T ^ 9 * π ^ 10 * a2 * a4 * 25147584000 -
+          V * kB ^ 10 * T ^ 9 * π ^ 10 * a2 ^ 3 * 46103904000 +
+        V * kB ^ 10 * T ^ 9 * π ^ 10 * a3 ^ 2 * 12573792000 -
+      V * kB ^ 10 * T ^ 9 * π ^ 10 * a6 * 2514758400 =
+    V * kB ^ 4 * T ^ 3 * hbar ^ 6 * c ^ 6 * π ^ 4 * 1920996 -
+                        V * kB ^ 6 * T ^ 5 * hbar ^ 4 * c ^ 4 * π ^ 6 * a2 * 27442800 -
+                      V * kB ^ 7 * T ^ 6 * hbar ^ 3 * c ^ 3 * a3 * z7 * 217855353870 +
+                    V * kB ^ 8 * T ^ 7 * hbar ^ 2 * c ^ 2 * π ^ 8 * a2 ^ 2 * 860606208 -
+                  V * kB ^ 8 * T ^ 7 * hbar ^ 2 * c ^ 2 * π ^ 8 * a4 * 215151552 +
+                V * kB ^ 9 * T ^ 8 * hbar * c * a2 * a3 * z9 * 188214577689600 -
+              V * kB ^ 9 * T ^ 8 * hbar * c * a5 * z9 * 20912730854400 +
+            V * kB ^ 10 * T ^ 9 * π ^ 10 * a2 * a4 * 25147584000 -
+          V * kB ^ 10 * T ^ 9 * π ^ 10 * a2 ^ 3 * 46103904000 +
+        V * kB ^ 10 * T ^ 9 * π ^ 10 * a3 ^ 2 * 12573792000 -
+      V * kB ^ 10 * T ^ 9 * π ^ 10 * a6 * 2514758400
+
+--- stderr ---
+QF_WALL 31.185

@@ -1,0 +1,15 @@
+{
+ "module": "book/lean/Ch08_ZeroSound2D.lean",
+ "namespace": "QuantumFluids.ZeroSound2D",
+ "toolchain": "Lean (version 4.34.0-rc2, commit 6a10ac8c22beadecabdbb0919c2b50214762f91d) with the Mathlib of /home/xavkal/xdev/OpenAINavierStokesEuler/NavierStokesAndEuler (v4.34.0-rc2), command: cd that tree; lake env lean <file>",
+ "result": "exit 0; the only output lines are the nine '#print axioms' lines; no error, no warning, no sorry",
+ "axioms_text": "propext, Classical.choice, Quot.sound",
+ "n_theorems": 9,
+ "n_defs": 2,
+ "theorems": ["ph_energy_window", "ph_gap", "ph_edge_attained", "zero_sound_2d_unique", "s0_sq_sub_one", "one_lt_s0", "omega2_hasDerivAt", "pole_weight", "pole_fraction"],
+ "cpu_seconds_user": 36.4,
+ "wall_note": "57 min wall including the wait for the shared heavy-job lock (user CPU 36.4 s); the compile log is figures/ch08_lean_compile.log",
+ "file_sha256_prefix": "f17553dc477110a6",
+ "lines": 210,
+ "first_attempt_error": "one superfluous tactic (nlinarith after field_simp closed the goal) in pole_weight; removed; the statements did not change"
+}

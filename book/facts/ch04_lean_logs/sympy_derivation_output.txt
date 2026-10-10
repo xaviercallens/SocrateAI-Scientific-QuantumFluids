@@ -1,0 +1,22 @@
+inverse series, (omega/c)^1: matches
+inverse series, (omega/c)^2: matches
+inverse series, (omega/c)^3: matches
+inverse series, (omega/c)^4: matches
+inverse series, (omega/c)^5: matches
+inverse series, (omega/c)^6: matches
+inverse series, (omega/c)^7: matches
+
+A (T^3): MATCHES the printed closed form
+C (T^5): MATCHES the printed closed form
+D (T^6): MATCHES the printed closed form
+E (T^7): MATCHES the printed closed form
+K (T^8): MATCHES the printed closed form
+L (T^9): MATCHES the printed closed form
+
+T^4 coefficient (paper: absent because alpha_1 = 0): 0
+INVERSE SERIES: all 7 printed coefficients match
+C_V SERIES: ALL SIX MATCH
+
+real	0m32.425s
+user	0m26.299s
+sys	0m0.576s

@@ -1,0 +1,6 @@
+adams rhs calls   1549  error 3.76e-07
+bdf   rhs calls   5217  error 2.53e-06
+plane wave, t = 10: max |psi - exact| = 1.12e-08
+cutoff 0.500  modes 197  max|engine-nl|/max|nl| = 7.85e-16  differing: 0
+cutoff 0.500  modes 197  max|engine-nl|/max|nl| = 1.15e-03  differing: 4
+cutoff 0.667  modes 357  max|engine-nl|/max|nl| = 1.53e-01  differing: 348

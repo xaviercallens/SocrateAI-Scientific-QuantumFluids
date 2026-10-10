@@ -1,0 +1,10 @@
+'QuantumFluids.RCFTDuality.su2Level1_S_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.RCFTDuality.su2Level1_S_symm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.RCFTDuality.su2Level1_S_det' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|4|3|1|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.RCFTDuality.su2Level1_S_det|59|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.RCFTDuality.su2Level1_S_sq|49|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.RCFTDuality.su2Level1_S_symm|55|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 27.492

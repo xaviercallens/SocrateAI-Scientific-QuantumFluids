@@ -1,0 +1,134 @@
+{
+ "module": "DissipativeVortexDynamics",
+ "exit": 0,
+ "compile_s": 37.6,
+ "request_to_done_s": 227.4,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 18,
+  "named_theorems": 10,
+  "named_defs": 1,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "DissipativeVortexDynamics.r2.eq_1",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "DissipativeVortexDynamics.energy_dissipation",
+   "line": 40,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "DissipativeVortexDynamics.energy_antitone",
+   "line": 53,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "DissipativeVortexDynamics.dissipation_indep_of_skew",
+   "line": 63,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "DissipativeVortexDynamics.r2_hasDerivAt",
+   "line": 99,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "DissipativeVortexDynamics.dipole_sq_law",
+   "line": 111,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "DissipativeVortexDynamics.dipole_lifetime_bound",
+   "line": 126,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "DissipativeVortexDynamics.centre_velocity_identity",
+   "line": 136,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "DissipativeVortexDynamics.wind_stall",
+   "line": 162,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "DissipativeVortexDynamics.stall_of_drive_sign",
+   "line": 193,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "986c1a4848c23088",
+  "lines": 235,
+  "imports": [
+   "Mathlib"
+  ],
+  "theorem_decls": 9,
+  "print_axioms_lines": 0,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 9,
+  "source_unmatched": [],
+  "env_not_in_source": [
+   "DissipativeVortexDynamics.r2.eq_1"
+  ]
+ },
+ "when": "2026-10-09 22:53:49"
+}

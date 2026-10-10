@@ -1,0 +1,1125 @@
+{
+ "constants": {
+  "h_Js": 6.62607015e-34,
+  "u_kg": 1.66053906892e-27,
+  "m_He4_u": 4.00260325413,
+  "m_He4_kg": 6.646479080869192e-27,
+  "kappa_SI_m2_per_s": 9.969293620545747e-08,
+  "omega_example_rad_s": 1.0,
+  "feynman_line_density_per_m2": 20061601.91608956,
+  "feynman_line_density_per_cm2": 2006.1601916089562,
+  "source": "h exact (SI); u = scipy.constants CODATA atomic mass constant; m(He-4) = 4.00260325413 u from NIST Atomic Weights and Isotopic Compositions"
+ },
+ "pair": {
+  "snapshot_time": 20,
+  "vortex_plus": [
+   26.22483616097112,
+   32.58473448167287
+  ],
+  "vortex_minus": [
+   38.04368988709993,
+   32.57832353378989
+  ],
+  "separation_d": 11.818855464886676,
+  "wall_s_run": 44.199315309524536,
+  "load_at_start_of_run": 16.72900390625,
+  "grid_phase": {
+   "max_step_over_pi": 0.814686195153598,
+   "n_plus": 1,
+   "n_minus": 1,
+   "n_other": 0,
+   "max_dev_from_integer": 2.1203697876423444e-16
+  },
+  "torus": {
+   "row_winding_values": [
+    0
+   ],
+   "col_winding_values": [
+    0,
+    1
+   ],
+   "max_dev_from_integer": 6.661338147750939e-16,
+   "n_rows_nonzero": 0,
+   "n_cols_nonzero": 24,
+   "mean_uy_from_windings": 0.018407769454627694,
+   "mean_ux_from_windings": 0.0,
+   "sector_flow_formula": [
+    9.834270884621858e-06,
+    0.01812989455071222
+   ],
+   "sector_flow_magnitude": 0.01812989721793338,
+   "kappa_d_over_L2": 0.01812989721793338
+  },
+  "momentum": {
+   "Px": 0.0008280430572368616,
+   "Py": 72.99910080127793,
+   "P_over_N": 0.017822046094939797,
+   "impulse_2pi_d": 74.26005900465512,
+   "ratio_P_to_impulse": 0.9830196984007,
+   "P_t0": [
+    0.0008280430641601916,
+    72.99910079947587
+   ],
+   "P_t40": [
+    0.0008280430532607991,
+    72.99910080234446
+   ],
+   "decomposition": {
+    "box_integral_uy_over_L2": 0.018180745861267007,
+    "momentum_from_field_over_L2": 0.017822046094061968,
+    "deficit_term_over_L2": 0.00035869976720504003,
+    "P_over_N": 0.017822046094939797,
+    "sector_flow_formula_uy": 0.01812989455071222
+   }
+  },
+  "circulation": {
+   "M": 1600,
+   "n_loops": 39,
+   "seconds": 242.32228446006775,
+   "inner_max_dev_from_1": 4.440892098500626e-16,
+   "outer_max_dev_from_0": 2.8271597168564594e-16,
+   "inner_winding_all_1": true,
+   "outer_winding_all_0": true,
+   "R_range_inner": [
+    0.15,
+    10.318855464886676
+   ],
+   "n_wrong_M4": 0,
+   "n_wrong_M8": 0,
+   "n_wrong_M16": 0,
+   "n_wrong_M64": 0,
+   "n_wrong_M256": 0,
+   "all_windings_correct": true,
+   "max_dev_from_integer_all": 0.002004810880791077,
+   "dev_at_delta": [
+    {
+     "delta": -0.1999999999999993,
+     "dev": 1.5203394099216894e-12
+    },
+    {
+     "delta": -0.09999999999999964,
+     "dev": 9.735947494871056e-07
+    },
+    {
+     "delta": -0.05000000000000071,
+     "dev": 0.0007425804214900023
+    },
+    {
+     "delta": 0.05000000000000071,
+     "dev": 0.002004810880791077
+    },
+    {
+     "delta": 0.09999999999999964,
+     "dev": 2.715221239364953e-06
+    },
+    {
+     "delta": 0.1999999999999993,
+     "dev": 5.352025380988042e-12
+    }
+   ],
+   "R_max": 27.818855464886674,
+   "n_loops_dev_below_1e_9": 35,
+   "min_delta_with_dev_below_1e_9": 0.1999999999999993,
+   "max_step_over_pi_any_loop": 0.26632800034568144
+  },
+  "n0_scan": {
+   "Mmax": 7200,
+   "start_angles": [
+    0.37,
+    0.91,
+    1.58,
+    2.33,
+    3.77,
+    5.01
+   ],
+   "rows": [
+    {
+     "delta": 8.0,
+     "side": "zero_outside",
+     "radius": 3.818855464886676,
+     "degree": 1,
+     "M0_worst": 3,
+     "M0_median": 3.0,
+     "M0_all": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+     ]
+    },
+    {
+     "delta": 8.0,
+     "side": "zero_inside",
+     "radius": 19.818855464886674,
+     "degree": 0,
+     "M0_worst": 3,
+     "M0_median": 3.0,
+     "M0_all": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+     ]
+    },
+    {
+     "delta": 4.0,
+     "side": "zero_outside",
+     "radius": 7.818855464886676,
+     "degree": 1,
+     "M0_worst": 4,
+     "M0_median": 4.0,
+     "M0_all": [
+      4,
+      4,
+      4,
+      3,
+      4,
+      4
+     ]
+    },
+    {
+     "delta": 4.0,
+     "side": "zero_inside",
+     "radius": 15.818855464886676,
+     "degree": 0,
+     "M0_worst": 3,
+     "M0_median": 3.0,
+     "M0_all": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+     ]
+    },
+    {
+     "delta": 2.0,
+     "side": "zero_outside",
+     "radius": 9.818855464886676,
+     "degree": 1,
+     "M0_worst": 6,
+     "M0_median": 5.5,
+     "M0_all": [
+      6,
+      6,
+      6,
+      5,
+      5,
+      5
+     ]
+    },
+    {
+     "delta": 2.0,
+     "side": "zero_inside",
+     "radius": 13.818855464886676,
+     "degree": 0,
+     "M0_worst": 3,
+     "M0_median": 3.0,
+     "M0_all": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+     ]
+    },
+    {
+     "delta": 1.0,
+     "side": "zero_outside",
+     "radius": 10.818855464886676,
+     "degree": 1,
+     "M0_worst": 9,
+     "M0_median": 8.0,
+     "M0_all": [
+      9,
+      6,
+      8,
+      8,
+      8,
+      9
+     ]
+    },
+    {
+     "delta": 1.0,
+     "side": "zero_inside",
+     "radius": 12.818855464886676,
+     "degree": 0,
+     "M0_worst": 3,
+     "M0_median": 3.0,
+     "M0_all": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+     ]
+    },
+    {
+     "delta": 0.5,
+     "side": "zero_outside",
+     "radius": 11.318855464886676,
+     "degree": 1,
+     "M0_worst": 12,
+     "M0_median": 12.0,
+     "M0_all": [
+      12,
+      12,
+      12,
+      12,
+      10,
+      10
+     ]
+    },
+    {
+     "delta": 0.5,
+     "side": "zero_inside",
+     "radius": 12.318855464886676,
+     "degree": 0,
+     "M0_worst": 3,
+     "M0_median": 3.0,
+     "M0_all": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+     ]
+    },
+    {
+     "delta": 0.25,
+     "side": "zero_outside",
+     "radius": 11.568855464886676,
+     "degree": 1,
+     "M0_worst": 18,
+     "M0_median": 15.0,
+     "M0_all": [
+      15,
+      15,
+      12,
+      16,
+      18,
+      15
+     ]
+    },
+    {
+     "delta": 0.25,
+     "side": "zero_inside",
+     "radius": 12.068855464886676,
+     "degree": 0,
+     "M0_worst": 3,
+     "M0_median": 3.0,
+     "M0_all": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+     ]
+    },
+    {
+     "delta": 0.1,
+     "side": "zero_outside",
+     "radius": 11.718855464886676,
+     "degree": 1,
+     "M0_worst": 30,
+     "M0_median": 24.5,
+     "M0_all": [
+      30,
+      30,
+      20,
+      24,
+      25,
+      20
+     ]
+    },
+    {
+     "delta": 0.1,
+     "side": "zero_inside",
+     "radius": 11.918855464886676,
+     "degree": 0,
+     "M0_worst": 3,
+     "M0_median": 3.0,
+     "M0_all": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+     ]
+    },
+    {
+     "delta": 0.05,
+     "side": "zero_outside",
+     "radius": 11.768855464886675,
+     "degree": 1,
+     "M0_worst": 36,
+     "M0_median": 32.0,
+     "M0_all": [
+      32,
+      36,
+      32,
+      30,
+      25,
+      36
+     ]
+    },
+    {
+     "delta": 0.05,
+     "side": "zero_inside",
+     "radius": 11.868855464886677,
+     "degree": 0,
+     "M0_worst": 3,
+     "M0_median": 3.0,
+     "M0_all": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+     ]
+    }
+   ],
+   "seconds": null,
+   "source": "rows printed by `ch03_compute.py n0` (compute_n0.log); the job crashed in the old macro writer before saving, the rows were re-read from its log",
+   "fit_exponent_zero_outside": -0.5114939049171937,
+   "ratio_to_pi_sqrt_R_over_delta_zero_outside": [
+    1.382132771955172,
+    0.910685709690476,
+    0.8619576767604389,
+    0.8709675554165979,
+    0.8028143345699316,
+    0.842262449686886,
+    0.882122263279018,
+    0.7469138551532386
+   ],
+   "max_M0_zero_inside": 3
+  },
+  "velocity_vs_point_vortex": {
+   "r_ge_3": {
+    "rel_rms_with_sector_flow": 0.20067607808488436,
+    "rel_rms_without_sector_flow": 0.3536581120795071,
+    "abs_rms_diff_with_sector_flow": 0.01316601121193647,
+    "rms_point_vortex_speed": 0.06560827447687788,
+    "n_points": 64630
+   },
+   "r_1p5_to_3": {
+    "rel_rms_with_sector_flow": 0.016768465148150728,
+    "rel_rms_without_sector_flow": 0.044172946054499826,
+    "abs_rms_diff_with_sector_flow": 0.007780349665363615,
+    "rms_point_vortex_speed": 0.4639869896632521,
+    "n_points": 682
+   },
+   "r_3_to_6": {
+    "rel_rms_with_sector_flow": 0.021729824059513004,
+    "rel_rms_without_sector_flow": 0.08055552073834123,
+    "abs_rms_diff_with_sector_flow": 0.005383006056631408,
+    "rms_point_vortex_speed": 0.247724327720675,
+    "n_points": 2715
+   },
+   "r_ge_6": {
+    "rel_rms_with_sector_flow": 0.31574763968560277,
+    "rel_rms_without_sector_flow": 0.5575642336422272,
+    "abs_rms_diff_with_sector_flow": 0.013404268423761618,
+    "rms_point_vortex_speed": 0.04245247387156578,
+    "n_points": 61915
+   },
+   "r_0p5_to_1p5": {
+    "rel_rms_with_sector_flow": 0.01773241666491036,
+    "rel_rms_without_sector_flow": 0.025319644447574917,
+    "abs_rms_diff_with_sector_flow": 0.01863370237869374,
+    "rms_point_vortex_speed": 1.0508270096972672,
+    "n_points": 198
+   }
+  },
+  "velocity_difference_is_sound": {
+   "curl_free_fraction_r_gt_3": 0.9996503894710951,
+   "curl_free_fraction_r_gt_6": 0.9991324734369403,
+   "rms_difference_r_gt_6": 0.013404268423761618,
+   "rms_density_fluctuation_r_gt_6": 0.012492015045353766
+  },
+  "energy": {
+   "coarse": {
+    "E_kin": 17.757223480297007,
+    "E_q": 1.9010391821766914,
+    "E_flow": 15.856184298120318,
+    "pointwise_max": 3.504707049293353e-16
+   },
+   "refined": {
+    "E_kin": 17.757223480297007,
+    "E_q": 1.9009536829146634,
+    "E_flow": 15.856269797382346,
+    "pointwise_max": 5.236802092883172e-16
+   },
+   "E_kin_parseval": 17.75722348029701,
+   "E_gp_total": 2069.120127007812,
+   "E_int": 2051.362903527504,
+   "E_uniform": 2048.0,
+   "E_excess": 21.12012700781179,
+   "fraction_flow": 0.892947583555283,
+   "fraction_quantum_pressure": 0.10705241644471707,
+   "flow_decomposition_plus": {
+    "self": {
+     "slope": 3.0062936565115312,
+     "within_3": 3.3819947288301386,
+     "within_6": 5.49873489508922
+    },
+    "cross": {
+     "slope": -0.0013327636204390184,
+     "within_3": -0.001476008229268337,
+     "within_6": -0.004186624493002957
+    },
+    "partner": {
+     "slope": 0.3913279048002024,
+     "within_3": 0.09911979546745858,
+     "within_6": 0.5247293422419766
+    },
+    "sum_of_slopes": 3.3962887976912945
+   },
+   "flow_slope_per_lnR_plus": 3.3962887976913247,
+   "flow_slope_per_lnR_minus": 3.395159931512345,
+   "slope_window": [
+    2.5,
+    5.0
+   ],
+   "pi_times_mean_density_at_R3p75": 3.0354146501615222,
+   "mean_density_R3p75": 0.966202491813525,
+   "q_within_3": 0.8982033559651589,
+   "q_within_6": 0.9034437804959753,
+   "q_total_over_cum_6": 0.9052611529061806,
+   "flow_within_3": 3.4796385160683285,
+   "flow_within_6": 6.0192776128382235
+  },
+  "profile": {
+   "max_abs_diff_r_le_8": 0.010404467881906299,
+   "max_abs_diff_r_ge_2": 0.007996506247765045,
+   "max_abs_diff_r_ge_1": 0.010404467881906299,
+   "n_at_r1_solver": 0.4474762661780187,
+   "n_at_r1_exact": 0.44510394540751647,
+   "slope_at_origin_exact": 0.8247540821010015,
+   "far_deficit_times_2r2_at_10_exact": 1.0105336251685637
+  },
+  "grid_phase_refined": {
+   "n_plus": 1,
+   "n_minus": 1,
+   "n_other": 0,
+   "max_step_over_pi": 0.7130912579344963
+  },
+  "zeros_of_psi": [
+   {
+    "detected": [
+     26.22483616097112,
+     32.58473448167287
+    ],
+    "exact_zero": [
+     26.221133220038844,
+     32.58185416964065
+    ],
+    "psi2_at_zero": 2.4279813622901e-29,
+    "offset": 0.004691265175926074
+   },
+   {
+    "detected": [
+     38.04368988709993,
+     32.57832353378989
+    ],
+    "exact_zero": [
+     38.04751780034569,
+     32.58157102944831
+    ],
+    "psi2_at_zero": 7.310830068893949e-31,
+    "offset": 0.005019875284158829
+   }
+  ],
+  "dynamics": {
+   "continuity_rel_rms_r_ge_1.5": 0.07042131313595441,
+   "continuity_max_over_max_nt_r_ge_1.5": 0.13003984110844177,
+   "continuity_rel_rms_r_ge_3": 0.06808037188904088,
+   "continuity_max_over_max_nt_r_ge_3": 0.11476397330506659,
+   "max_abs_nt": 0.08803598693993908,
+   "max_abs_divj": 0.0869516935044193,
+   "max_abs_residual": 0.011866606685620253,
+   "projector_identity_max_abs_diff": 8.288638872477883e-14,
+   "pattern_velocity_fit_r_ge_2.5": {
+    "vx": 0.0006183050270207063,
+    "vy": 0.08747008730326591,
+    "mu": 1.0044298699874112,
+    "speed": 0.08747227260079277,
+    "rel_residual": 0.018602934078733282
+   },
+   "pattern_velocity_fit_r_ge_4": {
+    "vx": 0.0010826233127017564,
+    "vy": 0.0876659736015265,
+    "mu": 1.0044692262016657,
+    "speed": 0.08767265822786913,
+    "rel_residual": 0.018696966358727148
+   },
+   "tracked_velocity_t20": [
+    -0.00017639814876648784,
+    0.09364979803233311
+   ],
+   "tracked_speed_t20": 0.09364996416338701,
+   "point_vortex_velocity_t20": [
+    5.131923042162653e-05,
+    0.09336492210596464
+   ],
+   "point_vortex_speed_t20": 0.09336493621010114
+  },
+  "invariants": {
+   "energy_t0": 2069.120126941509,
+   "energy_t40": 2069.1201270644224,
+   "energy_rel_drift": 5.940361080216106e-11,
+   "norm_t0": 4095.9999999999836,
+   "norm_t40": 4096.000000119528,
+   "norm_rel_drift": 2.918554287134623e-11,
+   "momentum_y_t0": 72.99910079947587,
+   "momentum_y_t40": 72.99910080234446
+  },
+  "separation_t0": 11.965447166411865,
+  "separation_t40": 11.77187489620939,
+  "dipole_moment_y_t0_t40": [
+   -0.0183547660676194,
+   -0.018057824673697553
+  ]
+ },
+ "macros": {
+  "fourierDiff": "6\\times10^{-15}",
+  "kappaHeFour": "9.969",
+  "feynmanDens": "2.0\\times10^{3}",
+  "mHeU": "4.002603254",
+  "scanFourRatioPvz": "1.06",
+  "scanFourRatioPv": "1.038",
+  "scanFourMeas": "0.2778",
+  "scanFourD": "3.8",
+  "scanSixRatioPvz": "1.06",
+  "scanSixRatioPv": "1.006",
+  "scanSixMeas": "0.1781",
+  "scanSixD": "5.8",
+  "scanEightRatioPvz": "1.10",
+  "scanEightRatioPv": "1.001",
+  "scanEightMeas": "0.1342",
+  "scanEightD": "7.8",
+  "scanTwelveRatioPvz": "1.25",
+  "scanTwelveRatioPv": "1.006",
+  "scanTwelveMeas": "0.0940",
+  "scanTwelveD": "11.8",
+  "scanSixteenRatioPvz": "1.49",
+  "scanSixteenRatioPv": "1.005",
+  "scanSixteenMeas": "0.0750",
+  "scanSixteenD": "15.8",
+  "scanTwentyRatioPvz": "1.91",
+  "scanTwentyRatioPv": "1.005",
+  "scanTwentyMeas": "0.0645",
+  "scanTwentyD": "19.8",
+  "pctPlaneMin": "3.2",
+  "pctPlane8": "4.9",
+  "pctPlane12": "11",
+  "pctPlane16": "19",
+  "pctPlane20": "28",
+  "pctPvFour": "3.8",
+  "scanSixPctPv": "0.6",
+  "runLoadLo": "14",
+  "runLoadHi": "21",
+  "runWallLo": "41",
+  "runWallHi": "77",
+  "ubarOverV20": "61",
+  "pairD": "11.8",
+  "maxStepOverPi": "0.81",
+  "nPlus": "1",
+  "nMinus": "1",
+  "nOther": "0",
+  "plaqDev": "2\\times10^{-16}",
+  "maxStepRefined": "0.71",
+  "velRelInner": "1.7",
+  "velRelThreeSix": "2.2",
+  "velRelThreeSixNoSector": "8.1",
+  "velFarRms": "0.013",
+  "velFarPV": "0.042",
+  "curlFree": "99.9",
+  "rmsDn": "0.012",
+  "contRel": "6.8",
+  "projIdentity": "8\\times10^{-14}",
+  "projResidualMax": "0.012",
+  "energyDrift": "6\\times10^{-11}",
+  "normDrift": "3\\times10^{-11}",
+  "momDrift": "4\\times10^{-11}",
+  "sepTzero": "12.0",
+  "sepTforty": "11.8",
+  "dipoleMomRelShrink": "1.6",
+  "circRmax": "27.8",
+  "circLoops": "39",
+  "circRlo": "0.15",
+  "circRhi": "10.3",
+  "circInnerDev": "4\\times10^{-16}",
+  "circOuterDev": "3\\times10^{-16}",
+  "devDelta02": "5\\times10^{-12}",
+  "devDelta01": "3\\times10^{-6}",
+  "devDelta005": "2\\times10^{-3}",
+  "n0Mmax": "7200",
+  "n0OutFar": "3",
+  "n0OutNear": "36",
+  "n0DeltaNear": "0.05",
+  "n0DeltaFar": "8",
+  "n0InMax": "3",
+  "n0OutExp": "-0.51",
+  "n0RatioLo": "0.75",
+  "n0RatioHi": "0.91",
+  "torusDev": "7\\times10^{-16}",
+  "nColsNonzero": "24",
+  "ubarWinding": "0.0184",
+  "ubarFormula": "0.0181",
+  "ubarOverV": "21",
+  "momPy": "73.00",
+  "momImpulse": "74.26",
+  "momRatio": "98.3",
+  "ubarBox": "0.0182",
+  "momDeficitPct": "2.0",
+  "pointwiseErr": "5\\times10^{-16}",
+  "pointwiseErrCoarse": "4\\times10^{-16}",
+  "eKin": "17.76",
+  "eKinParseval": "17.76",
+  "eFlow": "15.86",
+  "eQ": "1.90",
+  "fracFlow": "89.3",
+  "fracQ": "10.7",
+  "eExcess": "21.12",
+  "qWithinThree": "0.90",
+  "qWithinSix": "0.90",
+  "flowWithinThree": "3.48",
+  "flowWithinSix": "6.02",
+  "slopePlus": "3.40",
+  "slopeMinus": "3.40",
+  "slopeSelf": "3.01",
+  "slopePartner": "0.39",
+  "slopeCross": "-0.001",
+  "nbarR": "0.966",
+  "slopePredicted": "3.04",
+  "profMaxDiff": "0.010",
+  "nAtR1Solver": "0.447",
+  "nAtR1Exact": "0.445",
+  "fSlope": "0.825",
+  "zeroPsiMax": "2\\times10^{-29}",
+  "zeroOffset": "0.005",
+  "quadT": "120",
+  "cvodeCalls": "5\\,028",
+  "cvodeSeconds": "16",
+  "staleCalls": "269\\,733",
+  "staleVsDop": "8\\times10^{-4}",
+  "cvodeVsDop": "4\\times10^{-7}",
+  "cvodeDipole": "1\\times10^{-13}",
+  "quadErr10": "0.21",
+  "quadErr20": "0.29",
+  "quadErr30": "0.37",
+  "quadErr40": "0.45",
+  "quadErr60": "1.29",
+  "quadErr80": "0.44",
+  "quadErr100": "0.39",
+  "quadErr120": "0.57",
+  "quadErrMax": "1.29",
+  "passGP": "61.9",
+  "passODE": "58.2",
+  "passDiffPct": "6",
+  "passDiff": "3.8",
+  "quadWidth0": "10.2",
+  "quadRearMin": "4.44",
+  "quadRearMinODE": "4.30",
+  "quadFrontMax": "15.8",
+  "quadFrontMaxODE": "16.1",
+  "quadMinSepGP": "4.44",
+  "quadDipoleChange": "4.3",
+  "quadEnergyDrift": "2\\times10^{-10}",
+  "quadMomDrift": "1\\times10^{-10}",
+  "quadYLead": "10.5",
+  "restartPass0": "58.2",
+  "restartErrTen0": "0.21",
+  "restartErrMax0": "1.29",
+  "restartPass5": "58.1",
+  "restartErrTen5": "0.19",
+  "restartErrMax5": "1.57",
+  "restartPass10": "59.4",
+  "restartErrTen10": "0.10",
+  "restartErrMax10": "1.17",
+  "restartPass20": "60.7",
+  "restartErrTen20": "0.04",
+  "restartErrMax20": "0.68",
+  "restartPass30": "61.2",
+  "restartErrTen30": "0.07",
+  "restartErrMax30": "0.53",
+  "restartPass40": "61.5",
+  "restartErrTen40": "0.09",
+  "restartErrMax40": "0.40",
+  "exLBox": "96",
+  "exVmeas": "0.0889",
+  "exVplane": "0.0845",
+  "exVpvz": "0.0804",
+  "exVpv": "0.0885",
+  "exRatio": "1.004",
+  "exRatioPvz": "1.105",
+  "exUbar": "0.0082",
+  "exWall": "61",
+  "exLoad": "15"
+ },
+ "scan": {
+  "window": "t in [10, 40], linear fit of the pair centre; predictions from the instantaneous tracked positions, averaged over the window",
+  "rows": [
+   {
+    "d_imprint": 4.0,
+    "d_t0": 3.901663958090143,
+    "d_mean": 3.776218774101172,
+    "d_t40": 3.787843060975666,
+    "v_meas": 0.2777766784463915,
+    "v_meas_vec": [
+     1.583828310786121e-06,
+     0.27777667844187615
+    ],
+    "v_plane_1_over_d": 0.26482110843765544,
+    "v_pv_zero_mean_flow": 0.2619137515173174,
+    "v_pv_with_sector_flow": 0.26770637820406323,
+    "sector_flow_t0": 0.005985077552496126,
+    "ratio_to_plane": 1.0489219688157376,
+    "ratio_to_pv_zero_mean": 1.0605654542090481,
+    "ratio_to_pv_with_sector": 1.0376169544510592,
+    "momentum_y_t0": 21.571108668684523,
+    "momentum_y_t40": 21.57110866996911,
+    "energy_rel_drift": 5.945095739150855e-11,
+    "wall_s": 48.252371072769165,
+    "load_at_start": 14.13330078125
+   },
+   {
+    "d_imprint": 6.0,
+    "d_t0": 5.934034194712654,
+    "d_mean": 5.793361231568853,
+    "d_t40": 5.774204122921379,
+    "v_meas": 0.1780889623734095,
+    "v_meas_vec": [
+     8.135458909159882e-06,
+     0.1780889621875875
+    ],
+    "v_plane_1_over_d": 0.17261264943311083,
+    "v_pv_zero_mean_flow": 0.16813253317653243,
+    "v_pv_with_sector_flow": 0.17701943066943746,
+    "sector_flow_t0": 0.009102694449345652,
+    "ratio_to_plane": 1.0317260233145358,
+    "ratio_to_pv_zero_mean": 1.0592177398104532,
+    "ratio_to_pv_with_sector": 1.0060418853737758,
+    "momentum_y_t0": 34.43295080670868,
+    "momentum_y_t40": 34.432950808304966,
+    "energy_rel_drift": 5.920334328989722e-11,
+    "wall_s": 41.46416902542114,
+    "load_at_start": 13.8173828125
+   },
+   {
+    "d_imprint": 8.0,
+    "d_t0": 7.949519021496295,
+    "d_mean": 7.80035238844012,
+    "d_t40": 7.798380402778672,
+    "v_meas": 0.13419742577398394,
+    "v_meas_vec": [
+     -4.9671406984946675e-06,
+     0.13419742568205786
+    ],
+    "v_plane_1_over_d": 0.1281998941892715,
+    "v_pv_zero_mean_flow": 0.12212788402667314,
+    "v_pv_with_sector_flow": 0.13409347064618649,
+    "sector_flow_t0": 0.012194409451906777,
+    "ratio_to_plane": 1.0467826562778424,
+    "ratio_to_pv_zero_mean": 1.0988270765408632,
+    "ratio_to_pv_with_sector": 1.0007752437340611,
+    "momentum_y_t0": 47.33209418075028,
+    "momentum_y_t40": 47.332094182765836,
+    "energy_rel_drift": 5.940584853853048e-11,
+    "wall_s": 74.96107339859009,
+    "load_at_start": 15.9921875
+   },
+   {
+    "d_imprint": 12.0,
+    "d_t0": 11.965447166411865,
+    "d_mean": 11.812159801157092,
+    "d_t40": 11.77187489620939,
+    "v_meas": 0.09400813158750966,
+    "v_meas_vec": [
+     -2.4274741670478286e-05,
+     0.09400812845340263
+    ],
+    "v_plane_1_over_d": 0.08465866989330292,
+    "v_pv_zero_mean_flow": 0.07528880211881282,
+    "v_pv_with_sector_flow": 0.09340842661984908,
+    "sector_flow_t0": 0.018354766071736483,
+    "ratio_to_plane": 1.1104371437206615,
+    "ratio_to_pv_zero_mean": 1.2486336168851713,
+    "ratio_to_pv_with_sector": 1.006420220308704,
+    "momentum_y_t0": 72.99910079947587,
+    "momentum_y_t40": 72.99910080234446,
+    "energy_rel_drift": 5.940361080216106e-11,
+    "wall_s": 44.199315309524536,
+    "load_at_start": 16.72900390625
+   },
+   {
+    "d_imprint": 16.0,
+    "d_t0": 15.971975986339649,
+    "d_mean": 15.80915428543187,
+    "d_t40": 15.810571222668086,
+    "v_meas": 0.07497141142886718,
+    "v_meas_vec": [
+     -1.1442609937361636e-05,
+     0.0749714105556455
+    ],
+    "v_plane_1_over_d": 0.06325472115969384,
+    "v_pv_zero_mean_flow": 0.05038336055888878,
+    "v_pv_with_sector_flow": 0.07463429842391053,
+    "sector_flow_t0": 0.024500704307615834,
+    "ratio_to_plane": 1.1852302888126438,
+    "ratio_to_pv_zero_mean": 1.4880192548929412,
+    "ratio_to_pv_with_sector": 1.0045168537728437,
+    "momentum_y_t0": 98.51151456629538,
+    "momentum_y_t40": 98.51151456988323,
+    "energy_rel_drift": 5.944736346506482e-11,
+    "wall_s": 45.85256052017212,
+    "load_at_start": 15.12060546875
+   },
+   {
+    "d_imprint": 20.0,
+    "d_t0": 19.976295831734884,
+    "d_mean": 19.807147656715422,
+    "d_t40": 19.76889095422719,
+    "v_meas": 0.06453129924806618,
+    "v_meas_vec": [
+     2.883006884949225e-05,
+     0.06453129280799043
+    ],
+    "v_plane_1_over_d": 0.050486948153562444,
+    "v_pv_zero_mean_flow": 0.033817239909272004,
+    "v_pv_with_sector_flow": 0.06420102326945003,
+    "sector_flow_t0": 0.030643254019001323,
+    "ratio_to_plane": 1.2781778580037373,
+    "ratio_to_pv_zero_mean": 1.908236523387287,
+    "ratio_to_pv_with_sector": 1.0051442962143977,
+    "momentum_y_t0": 123.93472397894645,
+    "momentum_y_t40": 123.93472398347235,
+    "energy_rel_drift": 5.930506453559409e-11,
+    "wall_s": 76.55640769004822,
+    "load_at_start": 15.31494140625
+   }
+  ]
+ },
+ "quad": {
+  "T": 120.0,
+  "wall_s_run": 259.2557842731476,
+  "load_at_start_of_run": 21.1123046875,
+  "cvode": {
+   "method": "adams",
+   "rtol": 1e-10,
+   "atol": 1e-10,
+   "rhs_calls": 5028,
+   "seconds": 16.095990896224976,
+   "segments": 120,
+   "rusty_sundials_file": "/mnt/data/xdev-cache/rs_py_5db8041/rusty_sundials.so",
+   "rusty_sundials_build": "5db8041fd2e3840defcff2b4a8c26c1cbb2467fd"
+  },
+  "dop853_check": {
+   "max_abs_diff_cvode_vs_dop853": 3.9637946969151017e-07,
+   "seconds": 5.1228413581848145
+  },
+  "cvode_dipole_moment_drift": 1.3855583347321954e-13,
+  "gp_dipole_moment_t0_t120": [
+   [
+    -20.395854416408543,
+    0.0
+   ],
+   [
+    -19.511081560906007,
+    7.815970093361102e-14
+   ]
+  ],
+  "gp_dipole_moment_rel_change": 0.04338003387544937,
+  "max_position_error_vs_t": {
+   "10": 0.21062808424937884,
+   "20": 0.2935817427490903,
+   "30": 0.3684513828253131,
+   "40": 0.4480988749490109,
+   "60": 1.2899879940224466,
+   "80": 0.4378182064470266,
+   "100": 0.39161529052548616,
+   "120": 0.5654950219763499
+  },
+  "max_position_error_overall": 1.293469375698514,
+  "pass_times": {
+   "gp": [
+    61.94589066353468
+   ],
+   "reduced_model": [
+    58.18696894693319
+   ]
+  },
+  "pair_widths": {
+   "rear_gp": [
+    10.211827972165356,
+    4.440382403966414
+   ],
+   "front_gp": [
+    10.184026444243187,
+    15.814755867115949
+   ],
+   "rear_ode_min": 4.295770713269903,
+   "front_ode_max": 16.100083703138576
+  },
+  "min_separation_gp": 4.440382403966414,
+  "min_separation_ode": 4.295770713269903,
+  "y_range_gp": [
+   27.277501640371522,
+   60.7609750149815
+  ],
+  "energy_rel_drift_gp": 1.7192984547670233e-10,
+  "norm_rel_drift_gp": 8.825606911955188e-11,
+  "restart": {
+   "integrator": "scipy DOP853, rtol=atol=1e-12",
+   "rows": [
+    {
+     "t_start": 0,
+     "err_after_10": 0.21062808119086185,
+     "err_after_20": 0.29358173171740276,
+     "err_max": 1.2934690249675285,
+     "err_mean": 0.5213212222076861,
+     "pass_time_model": [
+      58.186969972457746
+     ]
+    },
+    {
+     "t_start": 5,
+     "err_after_10": 0.1889486278308894,
+     "err_after_20": 0.2107749985037941,
+     "err_max": 1.574994991480196,
+     "err_mean": 0.61211873287618,
+     "pass_time_model": [
+      58.12848406286561
+     ]
+    },
+    {
+     "t_start": 10,
+     "err_after_10": 0.09513251507691933,
+     "err_after_20": 0.134714824966629,
+     "err_max": 1.171534483635483,
+     "err_mean": 0.49302036465644755,
+     "pass_time_model": [
+      59.38259946516013
+     ]
+    },
+    {
+     "t_start": 20,
+     "err_after_10": 0.03916560111742129,
+     "err_after_20": 0.10343548914844547,
+     "err_max": 0.6819339831966929,
+     "err_mean": 0.32215399515401877,
+     "pass_time_model": [
+      60.73238211599056
+     ]
+    },
+    {
+     "t_start": 30,
+     "err_after_10": 0.06608656772213095,
+     "err_after_20": 0.12900018772637623,
+     "err_max": 0.527679886921085,
+     "err_mean": 0.28320723797083075,
+     "pass_time_model": [
+      61.15186227075134
+     ]
+    },
+    {
+     "t_start": 40,
+     "err_after_10": 0.08934769517377816,
+     "err_after_20": 0.28480080699255694,
+     "err_max": 0.40020336002792334,
+     "err_mean": 0.23531024227823238,
+     "pass_time_model": [
+      61.50658786977976
+     ]
+    }
+   ],
+   "pass_time_solver": [
+    61.94589066353468
+   ]
+  },
+  "stale_first_run": {
+   "note": "first CVODE integration of the same reduced model, run with the module in the shared .venv BEFORE the editor's notice (stale, pre-fix: first-order Adams); superseded by quad.cvode (build 5db8041); kept only because the chapter's honest box quotes it",
+   "module": "/home/xavkal/xdev/SocrateAI-Scientific-QuantumFluids/.venv/lib/python3.12/site-packages/rusty_sundials/__init__.py",
+   "rhs_calls": 269733,
+   "seconds": 297.12665009498596,
+   "max_abs_diff_cvode_vs_dop853": 0.0007761922676650101,
+   "max_position_error_overall": 1.293981646461333,
+   "pass_time_reduced_model": [
+    58.1854000630808
+   ],
+   "test_oscillator_stale_module": "CvodeSolver('adams', 1e-10, 1e-10, 1e6) on x''=-x over 10 periods: RuntimeError 'maximum steps exceeded (1000000)' at t=20.4; fixed build: 4989 rhs calls, error 1.0e-7"
+  }
+ },
+ "exercise3": {
+  "L": 96.0,
+  "N": 192,
+  "d_imprint": 12.0,
+  "d_mean": 11.830741254377175,
+  "v_meas": 0.08888095943450271,
+  "v_plane": 0.08452564239190441,
+  "v_pv_zero_mean_flow": 0.08043126301568201,
+  "v_pv_with_sector_flow": 0.08849709792090116,
+  "sector_flow": 0.008161017077359597,
+  "ratio_to_pv_with_sector": 1.0043375532928611,
+  "ratio_to_pv_zero_mean": 1.1050548688035744,
+  "wall_s": 60.599512338638306,
+  "load_at_start": 14.6171875,
+  "n_modes": 7213
+ },
+ "fourier_check": {
+  "config": {
+   "pos": [
+    [
+     26.3,
+     30.7
+    ],
+    [
+     38.1,
+     31.2
+    ]
+   ],
+   "q": [
+    1,
+    -1
+   ]
+  },
+  "sigma": 0.7,
+  "max_abs_diff": 6.453171330633722e-15,
+  "wm_velocity": [
+   [
+    -0.003240338997301235,
+    0.07523598376642195
+   ],
+   [
+    -0.0032403389973012326,
+    0.07523598376642189
+   ]
+  ],
+  "fourier_velocity": [
+   [
+    -0.0032403389973017357,
+    0.07523598376641549
+   ],
+   [
+    -0.0032403389973017574,
+    0.07523598376641552
+   ]
+  ],
+  "sector_flow": [
+   -0.0007669903939428206,
+   0.018100973297050568
+  ]
+ }
+}

@@ -1,0 +1,3 @@
+NegControlD15121.lean:22:52: error: unsolved goals
+  [... 48 more lines: the goal that `ring` could not close, a polynomial
+   identity in V, kB, T, hbar, c, pi, a2..a6, z7, z9 ...]

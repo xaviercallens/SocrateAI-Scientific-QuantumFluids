@@ -1,0 +1,10 @@
+[package]
+name = "ch08_kinetic"
+version = "0.1.0"
+edition = "2021"
+
+[workspace]
+
+[dependencies]
+cvode = { path = "/home/xavkal/xdev/rusty-SUNDIALS-c3/crates/cvode" }
+nvector = { path = "/home/xavkal/xdev/rusty-SUNDIALS-c3/crates/nvector" }

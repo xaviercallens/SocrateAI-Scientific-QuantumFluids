@@ -1,0 +1,26 @@
+'Mathesis.Duality.sqrt_le_max_of_le_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Mathesis.Duality.min_le_sqrt_of_mul_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Mathesis.Duality.sqrt_between_duals' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Mathesis.Duality.two_sqrt_mul_le_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Mathesis.Duality.self_dual_fixed_point' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Mathesis.Duality.Reff_ge_sqrt_of_selfDual' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Mathesis.Duality.sqrt_le_max_of_le_mul_nat' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Mathesis.Duality.eoq_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Mathesis.Duality.bogoliubov_dual_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Mathesis.Duality.bogoliubov_selfdual_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Mathesis.Duality.sinh_selfDual_coupling' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|25|11|0|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|Mathesis.Duality.two_sqrt_mul_le_add|70|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|Mathesis.Duality.bogoliubov_dual_form|142|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|Mathesis.Duality.sinh_selfDual_coupling|168|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|Mathesis.Duality.Reff_ge_sqrt_of_selfDual|95|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|Mathesis.Duality.sqrt_le_max_of_le_mul_nat|108|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|Mathesis.Duality.eoq_lower_bound|124|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|Mathesis.Duality.bogoliubov_selfdual_bound|151|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|Mathesis.Duality.sqrt_between_duals|64|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|Mathesis.Duality.self_dual_fixed_point|78|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|Mathesis.Duality.min_le_sqrt_of_mul_le|52|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|Mathesis.Duality.sqrt_le_max_of_le_mul|38|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 26.303

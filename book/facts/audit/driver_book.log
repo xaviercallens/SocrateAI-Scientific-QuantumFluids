@@ -1,0 +1,25 @@
+book files: ['Ch01_NeutronWindow', 'Ch02_Galerkin', 'Ch02_Primer', 'Ch03_PointVortexPair', 'Ch05_BogoliubovDispersion', 'Ch06_KTForward', 'Ch07_DissipativePairs', 'Ch08_ZeroSound2D', 'Ch09_FlowPast'] negative controls: ['Ch02_NegativeControl'] placeholders (skipped): ['Ch06_KTEscape'] pending: ['Ch01_NeutronWindow', 'Ch02_Galerkin', 'Ch02_Primer', 'Ch03_PointVortexPair', 'Ch05_BogoliubovDispersion', 'Ch06_KTForward', 'Ch07_DissipativePairs', 'Ch08_ZeroSound2D', 'Ch09_FlowPast', 'Ch02_NegativeControl']
+[lock acquired after 0s]
+book_Ch01_NeutronWindow         exit=0 err=0 thm=3 sorryAx=False user_axioms=0 axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=42.0s
+book_Ch02_Galerkin              exit=0 err=0 thm=26 sorryAx=False user_axioms=0 axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=32.9s
+book_Ch02_Primer                exit=0 err=0 thm=4 sorryAx=False user_axioms=0 axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=21.9s
+book_Ch03_PointVortexPair       exit=0 err=0 thm=8 sorryAx=False user_axioms=0 axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=20.6s
+[lock acquired after 7s]
+book_Ch05_BogoliubovDispersion  exit=0 err=0 thm=27 sorryAx=False user_axioms=0 axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=43.5s
+book_Ch06_KTForward             exit=0 err=0 thm=20 sorryAx=False user_axioms=0 axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=37.8s
+book_Ch07_DissipativePairs      exit=0 err=0 thm=8 sorryAx=False user_axioms=0 axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=36.3s
+[lock acquired after 0s]
+book_Ch08_ZeroSound2D           exit=0 err=0 thm=9 sorryAx=False user_axioms=0 axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=42.0s
+book_Ch09_FlowPast              exit=0 err=0 thm=8 sorryAx=False user_axioms=0 axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=42.3s
+book_Ch02_NegativeControl       NEGATIVE CONTROL, expected to fail: exit=1 errors=2 as_expected=True first_error='ring failed, ring expressions not equal'
+book audit step finished 01:30:17
+book files: ['Ch01_NeutronWindow', 'Ch02_Galerkin', 'Ch02_Primer', 'Ch03_PointVortexPair', 'Ch04_DosLink', 'Ch05_BogoliubovDispersion', 'Ch06_KTForward', 'Ch07_DissipativePairs', 'Ch08_ZeroSound2D', 'Ch09_FlowPast'] negative controls: ['Ch02_NegativeControl', 'Ch04_NegativeControl_D15121', 'Ch04_NegativeControl_L54'] placeholders (skipped): ['Ch06_KTEscape'] pending: ['Ch04_DosLink', 'Ch04_NegativeControl_D15121', 'Ch04_NegativeControl_L54']
+[lock acquired after 0s]
+book_Ch04_DosLink               exit=0 err=0 thm=13 sorryAx=False user_axioms=0 axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=48.4s
+book_Ch04_NegativeControl_D15121 NEGATIVE CONTROL, expected to fail: exit=1 errors=1 as_expected=True first_error='unsolved goals'
+book_Ch04_NegativeControl_L54   NEGATIVE CONTROL, expected to fail: exit=1 errors=1 as_expected=True first_error='ring failed, ring expressions not equal'
+book audit tail finished 01:40:40
+book files: ['Ch01_NeutronWindow', 'Ch02_Galerkin', 'Ch02_Primer', 'Ch03_PointVortexPair', 'Ch04_DosLink', 'Ch05_BogoliubovDispersion', 'Ch06_KTForward', 'Ch07_DissipativePairs', 'Ch08_ZeroSound2D', 'Ch09_FlowPast'] negative controls: ['Ch02_NegativeControl', 'Ch04_NegativeControl_D15121', 'Ch04_NegativeControl_L54'] placeholders (skipped): ['Ch06_KTEscape'] pending: ['Ch04_DosLink']
+[lock acquired after 0s]
+book_Ch04_DosLink               exit=0 err=0 thm=13 sorryAx=False user_axioms=0 axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=39.1s
+book audit tail finished 01:46:34

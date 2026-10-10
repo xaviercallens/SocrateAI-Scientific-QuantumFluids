@@ -1,0 +1,50 @@
+{
+ "metadata": {
+  "title": "Quantum Fluids in Lean 4: a tribute to Henri Godfrin",
+  "upload_type": "publication",
+  "publication_type": "book",
+  "description": "<p>A textbook on the physics of quantum fluids taught through three instruments used together, written as a tribute to the experimental work of Henri Godfrin (Institut Néel, Grenoble) and his collaborators: (i) their inelastic neutron-scattering measurements — the roton-like collective mode of a monolayer of liquid helium-3 (Nature 483, 576 (2012)) and the dispersion relation of superfluid helium-4 with its thermodynamic consequences (Phys. Rev. B 103, 104516 (2021)); (ii) the Lean 4 library QuantumFluids, whose 37 modules and 310 theorems are catalogued in full in Appendix A and were audited for the book (every module compiles with no <code>sorry</code> and depends only on the axioms propext, Classical.choice and Quot.sound); (iii) the rusty-SUNDIALS solver: CVODE and the projected Gross–Pitaevskii engine qf-pgpe.</p><p>Ten chapters: the bench, the proof and the solver; two languages (Lean 4 and rusty-SUNDIALS); circulation and vortices; the specific heat of helium-4 and Godfrin's series (Eq. (22) of the 2021 paper, all six coefficients proved in Lean — a confirmation, not a finding); phonons, rotons and the dispersion relation; the Kosterlitz–Thouless flow; friction, diffusion and the dissipative vortex; two-dimensional Fermi liquids, zero sound and the roton mode; flow past an obstacle (a reproduction of a published solver run of Kwon and Shin); and trust: audit, failure and the road ahead. Each chapter combines a measurement, machine-checked theorems quoted verbatim from the Lean sources, and a solver computation compared quantitatively with the theory, and ends with a box stating what is proved, what is measured or simulated, and what failed; 49 figures and 30 exercises. Ten new Lean files (114 theorems and lemmas, standard axioms only) were written for the book. Every number in the text comes from a file or a recorded computation, and every figure from a script in the source archive.</p><p>Corrections found while writing are stated in the text: the hypotheses of the library's Kosterlitz–Thouless flow theorems admit only trivial trajectories on the superfluid side (a forward-time restatement is proved in the book); in the reproduction of the Kwon–Shin run the force difference begins before the wake forms, contrary to an earlier reading; a stale build of the solver's Python module had a first-order Adams method; several citations were corrected against Crossref and the authors' open-access copies.</p><p>Henri Godfrin has not reviewed this book, and nothing in it speaks for him or for his collaborators. The proofs are proofs of mathematical statements, not of experimental data. The source archive deposited with the book contains the LaTeX sources, every figure script with its number file, the book's Lean files, the per-chapter fact reports and audit logs, and a copy of the Lean library.</p>",
+  "creators": [
+   {
+    "name": "Callens, Xavier",
+    "affiliation": "SocrateAI Research"
+   }
+  ],
+  "keywords": [
+   "quantum fluids",
+   "superfluid helium-4",
+   "helium-3",
+   "neutron scattering",
+   "Lean 4",
+   "formal verification",
+   "Mathlib",
+   "Gross-Pitaevskii equation",
+   "quantized vortices",
+   "Kosterlitz-Thouless",
+   "Landau Fermi liquid",
+   "zero sound",
+   "rotons",
+   "CVODE",
+   "SUNDIALS",
+   "Rust",
+   "textbook"
+  ],
+  "license": "CC-BY-4.0",
+  "access_right": "open",
+  "language": "eng",
+  "version": "1",
+  "related_identifiers": [
+   {"identifier": "10.1038/nature10919", "relation": "cites", "scheme": "doi"},
+   {"identifier": "10.1103/PhysRevB.103.104516", "relation": "cites", "scheme": "doi"},
+   {"identifier": "10.1103/wlft-tc8w", "relation": "cites", "scheme": "doi"},
+   {"identifier": "10.5281/zenodo.20068724", "relation": "cites", "scheme": "doi"},
+   {"identifier": "10.5281/zenodo.22855581", "relation": "cites", "scheme": "doi"},
+   {"identifier": "10.5281/zenodo.23269715", "relation": "cites", "scheme": "doi"},
+   {"identifier": "10.5281/zenodo.23262143", "relation": "cites", "scheme": "doi"},
+   {"identifier": "10.5281/zenodo.23262132", "relation": "cites", "scheme": "doi"},
+   {"identifier": "https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids", "relation": "isSupplementedBy", "scheme": "url"},
+   {"identifier": "https://github.com/xaviercallens/rusty-SUNDIALS", "relation": "isSupplementedBy", "scheme": "url"}
+  ],
+  "notes": "First edition, October 2026. Sources: directory book/ of https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids and the source archive of this record. Lean 4 toolchain v4.34.0-rc2, Mathlib commit 85e3a25; solver rusty-SUNDIALS commit 5db8041 (v11.6.0 line). The text and figures are CC BY 4.0; the Lean, Python and Rust sources are MIT or Apache-2.0."
+ }
+}

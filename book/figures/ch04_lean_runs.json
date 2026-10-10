@@ -1,0 +1,130 @@
+{
+ "BoseIntegral": {
+  "errors": 0,
+  "sorry": false,
+  "axioms": {
+   "QuantumFluids.BoseIntegral.hasSum_bose": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.BoseIntegral.hasSum_mellin_bose": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.BoseIntegral.mellin_bose_four": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.BoseIntegral.bose_integral_nat": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.BoseIntegral.bose_integral_even": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.BoseIntegral.debyeEnergy_eq": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.BoseIntegral.debye_specific_heat": "propext, Classical.choice, Quot.sound"
+  },
+  "exit": 0,
+  "seconds": 28
+ },
+ "PhononSeries": {
+  "errors": 0,
+  "sorry": false,
+  "axioms": {
+   "QuantumFluids.PhononSeries.kPow2_eq": "propext, Quot.sound",
+   "QuantumFluids.PhononSeries.kPow3_eq": "propext, Quot.sound",
+   "QuantumFluids.PhononSeries.kPow4_eq": "propext, Quot.sound",
+   "QuantumFluids.PhononSeries.kPow5_eq": "propext, Quot.sound",
+   "QuantumFluids.PhononSeries.kPow6_eq": "propext, Quot.sound",
+   "QuantumFluids.PhononSeries.kPow7_eq": "propext, Quot.sound",
+   "QuantumFluids.PhononSeries.dispersion_kInv": "propext, Quot.sound",
+   "QuantumFluids.PhononSeries.kSq0_eq": "propext, Quot.sound",
+   "QuantumFluids.PhononSeries.density_of_states": "propext, Quot.sound"
+  },
+  "exit": 0,
+  "seconds": 67
+ },
+ "PhononSpecificHeat": {
+  "errors": 0,
+  "sorry": false,
+  "axioms": {
+   "QuantumFluids.PhononSpecificHeat.bernoulli'_five": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.PhononSpecificHeat.bernoulli'_six": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.PhononSpecificHeat.bernoulli'_seven": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.PhononSpecificHeat.bernoulli'_eight": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.PhononSpecificHeat.bernoulli'_nine": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.PhononSpecificHeat.bernoulli'_ten": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.PhononSpecificHeat.riemannZeta_six": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.PhononSpecificHeat.riemannZeta_eight": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.PhononSpecificHeat.riemannZeta_ten": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.PhononSpecificHeat.thermal_bose_integral": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.PhononSpecificHeat.bose_integral_values": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.PhononSpecificHeat.energyTerm_two": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.PhononSpecificHeat.energyTerm_hasDerivAt": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.PhononSpecificHeat.phonon_specific_heat": "propext, Classical.choice, Quot.sound"
+  },
+  "exit": 0,
+  "seconds": 43
+ },
+ "neg_L54": {
+  "exit": 1,
+  "seconds": 111,
+  "n_lines_total": 6,
+  "n_lines_shown": 6
+ },
+ "neg_D15121": {
+  "exit": 1,
+  "seconds": 225,
+  "n_lines_total": 55,
+  "n_lines_shown": 3
+ },
+ "DosLink2": {
+  "exit": 1,
+  "seconds": 184,
+  "errors": 7,
+  "warnings": 3,
+  "sorry": true,
+  "axioms": {
+   "QuantumFluids.DosLink.kInv0_inverts": "propext, Quot.sound",
+   "QuantumFluids.DosLink.derivative_kPoly": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.DosLink.dos_coeffs": "propext, sorryAx, Classical.choice, Quot.sound",
+   "QuantumFluids.DosLink.phonon_specific_heat_from_dos": "propext,\n sorryAx,\n Classical.choice,\n Quot.sound",
+   "QuantumFluids.DosLink.phonon_specific_heat_end_to_end": "propext,\n sorryAx,\n Classical.choice,\n Quot.sound"
+  }
+ },
+ "DosLink3": {
+  "exit": 1,
+  "seconds": 64,
+  "errors": 1,
+  "warnings": 2,
+  "sorry": true,
+  "axioms": {
+   "QuantumFluids.DosLink.kInv0_inverts": "propext, Quot.sound",
+   "QuantumFluids.DosLink.derivative_kPoly": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.DosLink.dos_coeffs": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.DosLink.phonon_specific_heat_from_dos": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.DosLink.phonon_specific_heat_end_to_end": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.DosLink.energyMonomial_eq": "propext, sorryAx, Classical.choice, Quot.sound",
+   "QuantumFluids.DosLink.phonon_specific_heat_integral": "propext,\n sorryAx,\n Classical.choice,\n Quot.sound"
+  }
+ },
+ "DosLink4": {
+  "exit": 0,
+  "seconds": 62,
+  "errors": 0,
+  "warnings": 6,
+  "sorry": false,
+  "axioms": {
+   "QuantumFluids.DosLink.kInv0_inverts": "propext, Quot.sound",
+   "QuantumFluids.DosLink.derivative_kPoly": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.DosLink.dos_coeffs": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.DosLink.phonon_specific_heat_from_dos": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.DosLink.phonon_specific_heat_end_to_end": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.DosLink.energyMonomial_eq": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.DosLink.phonon_specific_heat_integral": "propext, Classical.choice, Quot.sound"
+  }
+ },
+ "DosLink5": {
+  "exit": 0,
+  "seconds": 49,
+  "errors": 0,
+  "warnings": 0,
+  "sorry": false,
+  "axioms": {
+   "QuantumFluids.DosLink.kInv0_inverts": "propext, Quot.sound",
+   "QuantumFluids.DosLink.derivative_kPoly": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.DosLink.dos_coeffs": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.DosLink.phonon_specific_heat_from_dos": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.DosLink.phonon_specific_heat_end_to_end": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.DosLink.energyMonomial_eq": "propext, Classical.choice, Quot.sound",
+   "QuantumFluids.DosLink.phonon_specific_heat_integral": "propext, Classical.choice, Quot.sound"
+  }
+ }
+}

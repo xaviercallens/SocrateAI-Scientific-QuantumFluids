@@ -1,0 +1,43 @@
+/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/ch10_audit/src/GPGalerkin.lean:70:51: warning: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/ch10_audit/src/GPGalerkin.lean:111:25: warning: Variable name `q` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _q
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+'QuantumFluids.GPGalerkin.pairing_eq_prod' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.GPGalerkin.dens_mul_conj' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.GPGalerkin.pairing_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.GPGalerkin.pairing_eq_ofReal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.GPGalerkin.pairing_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.GPGalerkin.pairing_im_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.GPGalerkin.mass_rate_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.GPGalerkin.kinetic_le_energy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.GPGalerkin.nl_eq_dens' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.GPGalerkin.dens_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.GPGalerkin.sum_densVar' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.GPGalerkin.grad_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.GPGalerkin.energy_rate_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|26|17|7|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.GPGalerkin.energy_rate_zero|244|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.GPGalerkin.pairingRe.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.GPGalerkin.kinetic_le_energy|138|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.GPGalerkin.dens.congr_simp|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.GPGalerkin.pairing_eq_ofReal|102|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.GPGalerkin.mass_rate_zero|117|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.GPGalerkin.dens_neg|167|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.GPGalerkin.pairingRe.congr_simp|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.GPGalerkin.sum_densVar|186|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.GPGalerkin.nl.congr_simp|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.GPGalerkin.pairing_eq_prod|58|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.GPGalerkin.pairing_nonneg|109|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.GPGalerkin.pairing_im_zero|113|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.GPGalerkin.dens_mul_conj|72|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.GPGalerkin.pairing_eq_sum|81|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.GPGalerkin.nl_eq_dens|150|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.GPGalerkin.grad_identity|203|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 25.294

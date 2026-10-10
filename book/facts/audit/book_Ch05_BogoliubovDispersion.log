@@ -1,0 +1,52 @@
+'QuantumFluids.BogoliubovDispersion.bogEps_strictMonoOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.BogoliubovDispersion.bogEps_le_phononDisp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.BogoliubovDispersion.phononDisp_sub_le_bogEps' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.BogoliubovDispersion.sound_speed_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.BogoliubovDispersion.alpha2_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.BogoliubovDispersion.landau_velocity_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.BogoliubovDispersion.landau_velocity_sInf' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.BogoliubovDispersion.bogEps_superadditive' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.BogoliubovDispersion.bogoliubov_lowk_three_phonon_open' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'QuantumFluids.BogoliubovDispersion.abs_bogEps_sub_phononDisp_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'QuantumFluids.BogoliubovDispersion.phase_velocity_universal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.BogoliubovDispersion.bogEps_sub_sound_strictMonoOn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'QuantumFluids.BogoliubovDispersion.bogEps_sq_gp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.BogoliubovDispersion.sound_lt_phase_velocity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.BogoliubovDispersion.sound_line_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|46|27|3|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.bogEps_sq_gp|316|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.landau_velocity_sInf|216|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.bogEps_sq|49|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.bogoliubov_lowk_three_phonon_open|263|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.bogEps_zero|53|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.alpha2_limit|155|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.alpha2_pos|184|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.bogEps.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.abs_bogEps_sub_phononDisp_le|274|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.bogEps_strictMonoOn|71|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.sound_lt_phase_velocity|189|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.bogEps_eq_mul|63|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.aux_t|109|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.bogEps_pos|57|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.bogEps_superadditive|222|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.phase_velocity_universal|304|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.bogEps_neg|60|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.eps_arg|91|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.sound_line_le|85|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.three_phonon_open_iff|248|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.bogEps_sub_sound_strictMonoOn|283|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.bogEps_nonneg|55|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.landau_velocity_eq|199|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.three_phonon_excess|242|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.sound_speed_limit|140|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.phononDisp_sub_le_bogEps|117|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.BogoliubovDispersion.bogEps_le_phononDisp|95|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 43.456

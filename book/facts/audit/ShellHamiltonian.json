@@ -1,0 +1,144 @@
+{
+ "module": "ShellHamiltonian",
+ "exit": 0,
+ "compile_s": 42.9,
+ "request_to_done_s": 42.9,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 17,
+  "named_theorems": 11,
+  "named_defs": 3,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.ShellComplex.dT.eq_1",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.flux4.eq_1",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.im_core",
+   "line": 35,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.dT_zero",
+   "line": 45,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.dT_succ",
+   "line": 51,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.sum_dT",
+   "line": 55,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.hamiltonian_rate_zero",
+   "line": 64,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.weights_ok",
+   "line": 71,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.T_real",
+   "line": 76,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.cubic_bound",
+   "line": 81,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.dispersive_norm_le",
+   "line": 122,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "9c6a3aa0a1a31405",
+  "lines": 149,
+  "imports": [
+   "QuantumFluidsShell"
+  ],
+  "theorem_decls": 9,
+  "print_axioms_lines": 9,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 9,
+  "source_unmatched": [],
+  "env_not_in_source": [
+   "QuantumFluids.ShellComplex.dT.eq_1",
+   "QuantumFluids.ShellComplex.flux4.eq_1"
+  ]
+ },
+ "when": "2026-10-10 00:38:50"
+}

@@ -1,0 +1,96 @@
+{
+ "module": "QuasiPeriodicBound",
+ "exit": 0,
+ "compile_s": 55.4,
+ "request_to_done_s": 55.5,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 7,
+  "named_theorems": 6,
+  "named_defs": 1,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuasiPeriodicBound.trig_sum_bound",
+   "line": 34,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuasiPeriodicBound.increment_bound",
+   "line": 40,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuasiPeriodicBound.msd_bound",
+   "line": 46,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuasiPeriodicBound.random_walk_exceeds",
+   "line": 58,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuasiPeriodicBound.not_qp_of_msd_large",
+   "line": 65,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuasiPeriodicBound.relative_equilibrium_dipole",
+   "line": 76,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "6f6e5bf0fce693eb",
+  "lines": 94,
+  "imports": [
+   "Mathlib"
+  ],
+  "theorem_decls": 6,
+  "print_axioms_lines": 0,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 6,
+  "source_unmatched": [],
+  "env_not_in_source": []
+ },
+ "when": "2026-10-10 00:19:47"
+}

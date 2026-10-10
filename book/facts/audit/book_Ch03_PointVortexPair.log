@@ -1,0 +1,19 @@
+'QuantumFluids.Ch03PointVortexPair.induced_mul_conj' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Ch03PointVortexPair.induced_perp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Ch03PointVortexPair.norm_induced_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Ch03PointVortexPair.norm_induced' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Ch03PointVortexPair.pair_velocities_equal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Ch03PointVortexPair.separation_const' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Ch03PointVortexPair.pair_speed_quantum' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|17|8|1|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.Ch03PointVortexPair.norm_induced_mul|54|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch03PointVortexPair.pair_velocities_equal|75|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch03PointVortexPair.induced_perp|47|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch03PointVortexPair.norm_induced|65|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch03PointVortexPair.separation_const|85|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch03PointVortexPair.induced_mul_conj|35|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch03PointVortexPair.cancel_aux|31|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch03PointVortexPair.pair_speed_quantum|98|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 20.629

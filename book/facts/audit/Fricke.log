@@ -1,0 +1,30 @@
+'QuantumFluids.Fricke.W_mul_W' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Fricke.W_mul_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Fricke.det_conj' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Fricke.conj_apply_one_zero' depends on axioms: [propext, Quot.sound]
+'QuantumFluids.Fricke.conj_conj' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Fricke.mem_Gamma0_iff_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Fricke.fricke_normalizes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Fricke.fricke_on_axis' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Fricke.axis_involutive' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Fricke.axis_eq_dual' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Fricke.ell_axis_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Fricke.axis_fixed_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|25|14|3|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.Fricke.axis_involutive|99|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Fricke.fricke_on_axis|85|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Fricke.mem_Gamma0_iff_dvd|67|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Fricke.fricke_normalizes|72|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Fricke.axis_eq_dual|102|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Fricke.axis_fixed_iff|113|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Fricke.det_conj|53|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Fricke.conj_apply_one_zero|57|propext, Quot.sound
+QFAUDIT|THM|QuantumFluids.Fricke.W.eq_1|-1|propext, Quot.sound
+QFAUDIT|THM|QuantumFluids.Fricke.W_mul_W|40|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Fricke.W_mul_eq|49|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Fricke.ell_axis_invariant|106|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Fricke.conj_conj|62|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Fricke.conj.eq_1|-1|propext, Quot.sound
+
+--- stderr ---
+QF_WALL 185.973

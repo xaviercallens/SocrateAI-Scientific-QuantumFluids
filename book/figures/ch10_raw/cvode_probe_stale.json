@@ -1,0 +1,73 @@
+{
+ "tag": "stale",
+ "module": "/home/xavkal/xdev/SocrateAI-Scientific-QuantumFluids/.venv/lib/python3.12/site-packages/rusty_sundials/__init__.py",
+ "shared_object": "/home/xavkal/xdev/SocrateAI-Scientific-QuantumFluids/.venv/lib/python3.12/site-packages/rusty_sundials/rusty_sundials.cpython-312-x86_64-linux-gnu.so",
+ "sha256": "9fbd09e985c2faf0ae858d8229e2b38eb7ef5b6c7bb2324f948c16f7c7cc81a5",
+ "built": "2026-09-26 15:00",
+ "rows": [
+  {
+   "method": "adams",
+   "rtol": 0.0001,
+   "nfe": 2386,
+   "relerr": 0.06549117654738744,
+   "status": "ok",
+   "wall_s": 0.02
+  },
+  {
+   "method": "adams",
+   "rtol": 1e-06,
+   "nfe": 23750,
+   "relerr": 0.006382317569220481,
+   "status": "ok",
+   "wall_s": 0.27
+  },
+  {
+   "method": "adams",
+   "rtol": 1e-08,
+   "nfe": 237022,
+   "relerr": 0.0006372768761975223,
+   "status": "ok",
+   "wall_s": 2.91
+  },
+  {
+   "method": "adams",
+   "rtol": 1e-10,
+   "nfe": 2214597,
+   "relerr": 6.945557398426851e-05,
+   "status": "ok",
+   "wall_s": 30.16
+  },
+  {
+   "method": "bdf",
+   "rtol": 0.0001,
+   "nfe": 335,
+   "relerr": 0.0009664181199858256,
+   "status": "ok",
+   "wall_s": 0.0
+  },
+  {
+   "method": "bdf",
+   "rtol": 1e-06,
+   "nfe": 759,
+   "relerr": 2.345495315827887e-05,
+   "status": "ok",
+   "wall_s": 0.0
+  },
+  {
+   "method": "bdf",
+   "rtol": 1e-08,
+   "nfe": 1327,
+   "relerr": 4.948070441393389e-07,
+   "status": "ok",
+   "wall_s": 0.0
+  },
+  {
+   "method": "bdf",
+   "rtol": 1e-10,
+   "nfe": 1895,
+   "relerr": 1.1572938762190063e-08,
+   "status": "ok",
+   "wall_s": 0.02
+  }
+ ]
+}

@@ -1,0 +1,34 @@
+'QuantumFluids.ChargeLattice.gram_pp' depends on axioms: [propext, Quot.sound]
+'QuantumFluids.ChargeLattice.gram_pq' depends on axioms: [propext, Quot.sound]
+'QuantumFluids.ChargeLattice.disc_sl2' depends on axioms: [propext, Quot.sound]
+'QuantumFluids.ChargeLattice.disc_sl2_invariant' depends on axioms: [propext, Quot.sound]
+'QuantumFluids.ChargeLattice.disc_electric_magnetic_swap' depends on axioms: [propext, Quot.sound]
+'QuantumFluids.ChargeLattice.disc_scale' depends on axioms: [propext, Quot.sound]
+'QuantumFluids.ChargeLattice.disc_zero_of_parallel' depends on axioms: [propext, Quot.sound]
+'QuantumFluids.ChargeLattice.area_sl2_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ChargeLattice.bp_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ChargeLattice.bp_step_neg_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ChargeLattice.bp_ge_bare' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ChargeLattice.bp_min_at_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ChargeLattice.kaloper_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ChargeLattice.kaloper_min' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ChargeLattice.kaloper_terminates' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|25|15|4|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.ChargeLattice.bp_step|146|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ChargeLattice.disc_scale|112|propext, Quot.sound
+QFAUDIT|THM|QuantumFluids.ChargeLattice.bp_step_neg_iff|162|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ChargeLattice.area_sl2_invariant|127|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ChargeLattice.gram_pp|80|propext, Quot.sound
+QFAUDIT|THM|QuantumFluids.ChargeLattice.bp_ge_bare|182|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ChargeLattice.disc_electric_magnetic_swap|107|propext, Quot.sound
+QFAUDIT|THM|QuantumFluids.ChargeLattice.kaloper_terminates|242|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ChargeLattice.gram_pq|87|propext, Quot.sound
+QFAUDIT|THM|QuantumFluids.ChargeLattice.kaloper_step|216|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ChargeLattice.disc_sl2_invariant|103|propext, Quot.sound
+QFAUDIT|THM|QuantumFluids.ChargeLattice.disc_zero_of_parallel|118|propext, Quot.sound
+QFAUDIT|THM|QuantumFluids.ChargeLattice.kaloper_min|221|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ChargeLattice.disc_sl2|94|propext, Quot.sound
+QFAUDIT|THM|QuantumFluids.ChargeLattice.bp_min_at_zero|191|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 166.735

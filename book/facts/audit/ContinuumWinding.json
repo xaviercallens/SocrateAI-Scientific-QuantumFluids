@@ -1,0 +1,145 @@
+{
+ "module": "ContinuumWinding",
+ "exit": 0,
+ "compile_s": 48.2,
+ "request_to_done_s": 48.2,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 16,
+  "named_theorems": 11,
+  "named_defs": 1,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.ContinuumWinding.sample.eq_1",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ContinuumWinding.pdiff_congr",
+   "line": 40,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ContinuumWinding.sum_pdiff_telescope",
+   "line": 49,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ContinuumWinding.degree_int",
+   "line": 55,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ContinuumWinding.sample_zero",
+   "line": 63,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ContinuumWinding.sample_self",
+   "line": 66,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ContinuumWinding.sample_val",
+   "line": 70,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ContinuumWinding.dist_sample",
+   "line": 78,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ContinuumWinding.instFactLtRealOfNatHMulPi_continuumWinding",
+   "line": 87,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ContinuumWinding.discrete_eq_degree",
+   "line": 89,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ContinuumWinding.detector_correct",
+   "line": 128,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "ced0eecb4550109c",
+  "lines": 154,
+  "imports": [
+   "VortexWinding",
+   "QuantizedCirculation"
+  ],
+  "theorem_decls": 9,
+  "print_axioms_lines": 9,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 9,
+  "source_unmatched": [],
+  "env_not_in_source": [
+   "QuantumFluids.ContinuumWinding.sample.eq_1",
+   "QuantumFluids.ContinuumWinding.instFactLtRealOfNatHMulPi_continuumWinding"
+  ]
+ },
+ "when": "2026-10-10 00:22:18"
+}

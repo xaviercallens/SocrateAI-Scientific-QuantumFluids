@@ -1,0 +1,24 @@
+'QuantumFluids.ShellComplex.im_core' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ShellComplex.dT_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ShellComplex.dT_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ShellComplex.sum_dT' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ShellComplex.hamiltonian_rate_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ShellComplex.weights_ok' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ShellComplex.T_real' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ShellComplex.cubic_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.ShellComplex.dispersive_norm_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|17|11|3|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.ShellComplex.dispersive_norm_le|122|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.cubic_bound|81|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.T_real|76|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.weights_ok|71|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.flux4.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.sum_dT|55|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.im_core|35|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.dT_succ|51|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.dT.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.dT_zero|45|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.ShellComplex.hamiltonian_rate_zero|64|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 42.917

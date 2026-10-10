@@ -1,0 +1,160 @@
+{
+ "module": "TopologicalProtection",
+ "exit": 0,
+ "compile_s": 63.7,
+ "request_to_done_s": 63.7,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 25,
+  "named_theorems": 13,
+  "named_defs": 2,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.TopologicalProtection.pdiff_shift",
+   "line": 41,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.TopologicalProtection.loop_sum_stable",
+   "line": 52,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.TopologicalProtection.loop_sum_stable_of_small",
+   "line": 61,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.TopologicalProtection.circulation_conserved",
+   "line": 72,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.TopologicalProtection.continuousAt_pdiff",
+   "line": 80,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.TopologicalProtection.loop_sum_const_of_no_slip",
+   "line": 98,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.TopologicalProtection.slip_of_winding_change",
+   "line": 157,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.TopologicalProtection.cos_pdiff",
+   "line": 178,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.TopologicalProtection.slip_energy_ge",
+   "line": 183,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.TopologicalProtection.mountain_pass",
+   "line": 202,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.TopologicalProtection.twisted_loopSum",
+   "line": 211,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.TopologicalProtection.twisted_energy",
+   "line": 229,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.TopologicalProtection.barrier_pos",
+   "line": 238,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "6f9974ee4e0aa1b9",
+  "lines": 272,
+  "imports": [
+   "VortexWinding",
+   "QuantizedCirculation"
+  ],
+  "theorem_decls": 13,
+  "print_axioms_lines": 13,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 13,
+  "source_unmatched": [],
+  "env_not_in_source": []
+ },
+ "when": "2026-10-10 00:36:57"
+}

@@ -1,0 +1,9 @@
+/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/74574ea7-7320-4d9f-8911-de38b1699e5e/scratchpad/ch10_audit/src/book_Ch04_NegativeControl_L54.lean:26:2: error: ring failed, ring expressions not equal
+R : Type u_1
+inst✝ : CommRing R
+a2 a3 a4 a5 a6 e : R
+h : e ^ 9 = 0
+⊢ -(a2 ^ 3 * e ^ 8 * 3) = 0
+
+--- stderr ---
+QF_WALL 11.156

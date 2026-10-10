@@ -1,0 +1,40 @@
+'QuantumFluids.Ch02Galerkin.norm_planeWave' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Ch02Galerkin.planeWave_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Ch02Galerkin.nl_single' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Ch02Galerkin.planeState_solves_galerkin' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Ch02Galerkin.weighted_pairing_real' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Ch02Galerkin.momentum_rate_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Ch02Galerkin.additive_map_vanishes_on_torsion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Ch02Galerkin.momentum_rate_zero_lattice' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Ch02Galerkin.no_momentum_on_torus' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.Ch02Galerkin.no_additive_wavenumber' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|32|26|6|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.Ch02Galerkin.planeWave_hasDerivAt|46|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Galerkin.F.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Galerkin.planeState.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Galerkin.no_momentum_on_torus|284|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Galerkin.weighted_pairing_eq_S4|198|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Galerkin.galerkinField.eq_1|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Galerkin.S4_congr|128|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Galerkin.nl.congr_simp|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Galerkin.F_swap_bd|180|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Galerkin.S4_conj|139|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Galerkin.S4_swap_bd|154|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Galerkin.F.congr_simp|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Galerkin.S4_add|134|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Galerkin.S4_swap_ac|144|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Galerkin.S4_swap_pairs|165|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Galerkin.F_conj|187|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Galerkin.planeState_solves_galerkin|82|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Galerkin.weighted_pairing_real|206|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Galerkin.additive_map_vanishes_on_torsion|274|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Galerkin.F_swap_ac|173|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Galerkin.momentum_rate_zero|244|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Galerkin.planeState.congr_simp|-1|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Galerkin.norm_planeWave|40|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Galerkin.momentum_rate_zero_lattice|265|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Galerkin.nl_single|56|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.Ch02Galerkin.no_additive_wavenumber|291|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 32.913

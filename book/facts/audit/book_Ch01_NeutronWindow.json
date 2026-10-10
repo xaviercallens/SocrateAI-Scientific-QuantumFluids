@@ -1,0 +1,64 @@
+{
+ "module": "book_Ch01_NeutronWindow",
+ "exit": 0,
+ "compile_s": 42.0,
+ "request_to_done_s": 42.0,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 12,
+  "named_theorems": 3,
+  "named_defs": 1,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.NeutronWindow.q_bounds",
+   "line": 30,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.NeutronWindow.transfer_le_window",
+   "line": 35,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.NeutronWindow.min_incident_wavevector",
+   "line": 50,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "8fa003fb754902ec",
+  "code_sha256": "bcc54bd11c96339d",
+  "lines": 72,
+  "imports": [
+   "Mathlib"
+  ],
+  "theorem_decls": 3,
+  "print_axioms_lines": 3
+ },
+ "when": "2026-10-10 01:23:40",
+ "kind": "file"
+}

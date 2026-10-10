@@ -1,0 +1,253 @@
+order: ['DissipativeVortexDynamics', 'EinsteinRelation', 'FrictionKinetic', 'KTFlow', 'MatchingScreening', 'PairPolarisation', 'QuasiPeriodicBound', 'VortexWinding', 'QuantizedCirculation', 'ContinuumWinding', 'DualLength', 'Fricke', 'BoseIntegral', 'PhononSeries', 'PhononSpecificHeat', 'ScaleResolvedWinding', 'TopologicalProtection', 'SectorTemperature', 'QuantumFluidsShell', 'ShellHamiltonian', 'SigmaRule', 'ChargeLattice', 'CompactBoson', 'Duality', 'GPGalerkin', 'HeliumKinematics', 'LevelRankDuality', 'MadelungNSE', 'MadelungSplit', 'PhaseMixing', 'QHFricke', 'RCFTDuality', 'RipsFloor', 'SectorDuality', 'Villani', 'WassersteinCertificate', 'ZeroSound']
+DissipativeVortexDynamics    exit=0 err=0 thm=10 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=37.6s total=227s
+EinsteinRelation             exit=0 err=0 thm=7 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=33.1s total=293s
+order: ['DissipativeVortexDynamics', 'EinsteinRelation', 'FrictionKinetic', 'KTFlow', 'MatchingScreening', 'PairPolarisation', 'QuasiPeriodicBound', 'VortexWinding', 'QuantizedCirculation', 'ContinuumWinding', 'DualLength', 'Fricke', 'BoseIntegral', 'PhononSeries', 'PhononSpecificHeat', 'ScaleResolvedWinding', 'TopologicalProtection', 'SectorTemperature', 'QuantumFluidsShell', 'ShellHamiltonian', 'SigmaRule', 'ChargeLattice', 'CompactBoson', 'Duality', 'GPGalerkin', 'HeliumKinematics', 'LevelRankDuality', 'MadelungNSE', 'MadelungSplit', 'PhaseMixing', 'QHFricke', 'RCFTDuality', 'RipsFloor', 'SectorDuality', 'Villani', 'WassersteinCertificate', 'ZeroSound']
+skip DissipativeVortexDynamics
+skip EinsteinRelation
+order: ['DissipativeVortexDynamics', 'EinsteinRelation', 'FrictionKinetic', 'KTFlow', 'MatchingScreening', 'PairPolarisation', 'QuasiPeriodicBound', 'VortexWinding', 'QuantizedCirculation', 'ContinuumWinding', 'DualLength', 'Fricke', 'BoseIntegral', 'PhononSeries', 'PhononSpecificHeat', 'ScaleResolvedWinding', 'TopologicalProtection', 'SectorTemperature', 'QuantumFluidsShell', 'ShellHamiltonian', 'SigmaRule', 'ChargeLattice', 'CompactBoson', 'Duality', 'GPGalerkin', 'HeliumKinematics', 'LevelRankDuality', 'MadelungNSE', 'MadelungSplit', 'PhaseMixing', 'QHFricke', 'RCFTDuality', 'RipsFloor', 'SectorDuality', 'Villani', 'WassersteinCertificate', 'ZeroSound']
+skip DissipativeVortexDynamics
+skip EinsteinRelation
+[lock acquired after 2309s]
+FrictionKinetic              exit=0 err=0 thm=3 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=88.0s
+KTFlow                       exit=0 err=0 thm=10 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=54.5s
+MatchingScreening            exit=0 err=0 thm=12 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=41.4s
+PairPolarisation             exit=0 err=0 thm=8 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=54.8s
+QuasiPeriodicBound           exit=0 err=0 thm=6 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=55.4s
+VortexWinding                exit=0 err=0 thm=17 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=49.6s
+QuantizedCirculation         exit=0 err=0 thm=7 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=53.2s
+ContinuumWinding             exit=0 err=0 thm=11 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=48.2s
+DualLength                   exit=0 err=0 thm=13 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=153.4s
+Fricke                       exit=0 err=0 thm=14 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=186.0s
+BoseIntegral                 exit=0 err=0 thm=8 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=184.1s
+PhononSeries                 exit=0 err=0 thm=9 sorryAx=False axioms=['Quot.sound', 'propext'] compile=180.4s
+PhononSpecificHeat           exit=0 err=0 thm=14 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=84.0s
+ScaleResolvedWinding         exit=0 err=0 thm=14 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=27.1s
+TopologicalProtection        exit=0 err=0 thm=13 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=63.7s
+SectorTemperature            exit=0 err=0 thm=8 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=29.8s
+QuantumFluidsShell           exit=0 err=0 thm=18 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=40.2s
+ShellHamiltonian             exit=0 err=0 thm=11 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=42.9s
+SigmaRule                    exit=0 err=0 thm=6 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=47.3s
+ChargeLattice                exit=0 err=0 thm=15 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=166.7s
+[lock acquired after 0s]
+== policy restart 00:43:56: old driver stopped (it held the lock in 25-minute batches and re-acquired with 0 s wait); now one module per acquisition, 30 s yield
+order: ['DissipativeVortexDynamics', 'EinsteinRelation', 'FrictionKinetic', 'KTFlow', 'MatchingScreening', 'PairPolarisation', 'QuasiPeriodicBound', 'VortexWinding', 'QuantizedCirculation', 'ContinuumWinding', 'DualLength', 'Fricke', 'BoseIntegral', 'PhononSeries', 'PhononSpecificHeat', 'ScaleResolvedWinding', 'TopologicalProtection', 'SectorTemperature', 'QuantumFluidsShell', 'ShellHamiltonian', 'SigmaRule', 'ChargeLattice', 'CompactBoson', 'Duality', 'GPGalerkin', 'HeliumKinematics', 'LevelRankDuality', 'MadelungNSE', 'MadelungSplit', 'PhaseMixing', 'QHFricke', 'RCFTDuality', 'RipsFloor', 'SectorDuality', 'Villani', 'WassersteinCertificate', 'ZeroSound']
+skip DissipativeVortexDynamics
+skip EinsteinRelation
+skip FrictionKinetic
+skip KTFlow
+skip MatchingScreening
+skip PairPolarisation
+skip QuasiPeriodicBound
+skip VortexWinding
+skip QuantizedCirculation
+skip ContinuumWinding
+skip DualLength
+skip Fricke
+skip BoseIntegral
+skip PhononSeries
+skip PhononSpecificHeat
+skip ScaleResolvedWinding
+skip TopologicalProtection
+skip SectorTemperature
+skip QuantumFluidsShell
+skip ShellHamiltonian
+skip SigmaRule
+skip ChargeLattice
+== restart 00:46:16: the driver now re-audits modules whose CODE changed (comment-stripped hash); PhononSeries docstring edit by the editor at 00:41 makes its audit stale
+order: ['DissipativeVortexDynamics', 'EinsteinRelation', 'FrictionKinetic', 'KTFlow', 'MatchingScreening', 'PairPolarisation', 'QuasiPeriodicBound', 'VortexWinding', 'QuantizedCirculation', 'ContinuumWinding', 'DualLength', 'Fricke', 'BoseIntegral', 'PhononSeries', 'PhononSpecificHeat', 'ScaleResolvedWinding', 'TopologicalProtection', 'SectorTemperature', 'QuantumFluidsShell', 'ShellHamiltonian', 'SigmaRule', 'ChargeLattice', 'CompactBoson', 'Duality', 'GPGalerkin', 'HeliumKinematics', 'LevelRankDuality', 'MadelungNSE', 'MadelungSplit', 'PhaseMixing', 'QHFricke', 'RCFTDuality', 'RipsFloor', 'SectorDuality', 'Villani', 'WassersteinCertificate', 'ZeroSound']
+skip DissipativeVortexDynamics
+skip EinsteinRelation
+skip FrictionKinetic
+skip KTFlow
+skip MatchingScreening
+skip PairPolarisation
+skip QuasiPeriodicBound
+skip VortexWinding
+skip QuantizedCirculation
+skip ContinuumWinding
+skip DualLength
+skip Fricke
+skip BoseIntegral
+skip PhononSpecificHeat
+skip ScaleResolvedWinding
+skip TopologicalProtection
+skip SectorTemperature
+skip QuantumFluidsShell
+skip ShellHamiltonian
+skip SigmaRule
+skip ChargeLattice
+== restart 00:50:08: policy = a hold lasts about 100 s (a new module is started only while the hold is younger than 100 s), then 45 s away from the lock
+order: ['DissipativeVortexDynamics', 'EinsteinRelation', 'FrictionKinetic', 'KTFlow', 'MatchingScreening', 'PairPolarisation', 'QuasiPeriodicBound', 'VortexWinding', 'QuantizedCirculation', 'ContinuumWinding', 'DualLength', 'Fricke', 'BoseIntegral', 'PhononSeries', 'PhononSpecificHeat', 'ScaleResolvedWinding', 'TopologicalProtection', 'SectorTemperature', 'QuantumFluidsShell', 'ShellHamiltonian', 'SigmaRule', 'ChargeLattice', 'CompactBoson', 'Duality', 'GPGalerkin', 'HeliumKinematics', 'LevelRankDuality', 'MadelungNSE', 'MadelungSplit', 'PhaseMixing', 'QHFricke', 'RCFTDuality', 'RipsFloor', 'SectorDuality', 'Villani', 'WassersteinCertificate', 'ZeroSound']
+skip DissipativeVortexDynamics
+skip EinsteinRelation
+skip FrictionKinetic
+skip KTFlow
+skip MatchingScreening
+skip PairPolarisation
+skip QuasiPeriodicBound
+skip VortexWinding
+skip QuantizedCirculation
+skip ContinuumWinding
+skip DualLength
+skip Fricke
+skip BoseIntegral
+skip PhononSpecificHeat
+skip ScaleResolvedWinding
+skip TopologicalProtection
+skip SectorTemperature
+skip QuantumFluidsShell
+skip ShellHamiltonian
+skip SigmaRule
+skip ChargeLattice
+== restart 00:54:10: priority list extended (PhononSeries, Villani, ZeroSound, HeliumKinematics, GPGalerkin first among the remaining)
+order: ['DissipativeVortexDynamics', 'EinsteinRelation', 'FrictionKinetic', 'KTFlow', 'MatchingScreening', 'PairPolarisation', 'QuasiPeriodicBound', 'VortexWinding', 'QuantizedCirculation', 'ContinuumWinding', 'DualLength', 'Fricke', 'BoseIntegral', 'PhononSeries', 'PhononSpecificHeat', 'ScaleResolvedWinding', 'TopologicalProtection', 'SectorTemperature', 'QuantumFluidsShell', 'ShellHamiltonian', 'SigmaRule', 'Villani', 'ZeroSound', 'HeliumKinematics', 'GPGalerkin', 'ChargeLattice', 'CompactBoson', 'Duality', 'LevelRankDuality', 'MadelungNSE', 'MadelungSplit', 'PhaseMixing', 'QHFricke', 'RCFTDuality', 'RipsFloor', 'SectorDuality', 'WassersteinCertificate']
+skip DissipativeVortexDynamics
+skip EinsteinRelation
+skip FrictionKinetic
+skip KTFlow
+skip MatchingScreening
+skip PairPolarisation
+skip QuasiPeriodicBound
+skip VortexWinding
+skip QuantizedCirculation
+skip ContinuumWinding
+skip DualLength
+skip Fricke
+skip BoseIntegral
+skip PhononSpecificHeat
+skip ScaleResolvedWinding
+skip TopologicalProtection
+skip SectorTemperature
+skip QuantumFluidsShell
+skip ShellHamiltonian
+skip SigmaRule
+skip ChargeLattice
+[lock acquired after 906s]
+PhononSeries                 exit=0 err=0 thm=9 sorryAx=False axioms=['Quot.sound', 'propext'] compile=461.4s
+== chain 2 starts 01:17:34: PhononSeries re-audited (exit 0, 461 s); order now Villani, the book files + negative control, ZeroSound/HeliumKinematics/GPGalerkin, the rest
+order: ['DissipativeVortexDynamics', 'EinsteinRelation', 'FrictionKinetic', 'KTFlow', 'MatchingScreening', 'PairPolarisation', 'QuasiPeriodicBound', 'VortexWinding', 'QuantizedCirculation', 'ContinuumWinding', 'DualLength', 'Fricke', 'BoseIntegral', 'PhononSeries', 'PhononSpecificHeat', 'ScaleResolvedWinding', 'TopologicalProtection', 'SectorTemperature', 'QuantumFluidsShell', 'ShellHamiltonian', 'SigmaRule', 'Villani', 'ZeroSound', 'HeliumKinematics', 'GPGalerkin', 'ChargeLattice', 'CompactBoson', 'Duality', 'LevelRankDuality', 'MadelungNSE', 'MadelungSplit', 'PhaseMixing', 'QHFricke', 'RCFTDuality', 'RipsFloor', 'SectorDuality', 'WassersteinCertificate']
+skip DissipativeVortexDynamics
+skip EinsteinRelation
+skip FrictionKinetic
+skip KTFlow
+skip MatchingScreening
+skip PairPolarisation
+skip QuasiPeriodicBound
+skip VortexWinding
+skip QuantizedCirculation
+skip ContinuumWinding
+skip DualLength
+skip Fricke
+skip BoseIntegral
+skip PhononSeries
+skip PhononSpecificHeat
+skip ScaleResolvedWinding
+skip TopologicalProtection
+skip SectorTemperature
+skip QuantumFluidsShell
+skip ShellHamiltonian
+skip SigmaRule
+skip ZeroSound
+skip HeliumKinematics
+skip GPGalerkin
+skip ChargeLattice
+skip CompactBoson
+skip Duality
+skip LevelRankDuality
+skip MadelungNSE
+skip MadelungSplit
+skip PhaseMixing
+skip QHFricke
+skip RCFTDuality
+skip RipsFloor
+skip SectorDuality
+skip WassersteinCertificate
+[lock acquired after 287s]
+Villani                      exit=0 err=0 thm=22 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=34.0s
+umbrella skipped: the library is not completely audited yet
+wrote /home/xavkal/xdev/SocrateAI-Scientific-QuantumFluids/book/facts/lean_audit.md
+order: ['DissipativeVortexDynamics', 'EinsteinRelation', 'FrictionKinetic', 'KTFlow', 'MatchingScreening', 'PairPolarisation', 'QuasiPeriodicBound', 'VortexWinding', 'QuantizedCirculation', 'ContinuumWinding', 'DualLength', 'Fricke', 'BoseIntegral', 'PhononSeries', 'PhononSpecificHeat', 'ScaleResolvedWinding', 'TopologicalProtection', 'SectorTemperature', 'QuantumFluidsShell', 'ShellHamiltonian', 'SigmaRule', 'Villani', 'ZeroSound', 'HeliumKinematics', 'GPGalerkin', 'ChargeLattice', 'CompactBoson', 'Duality', 'LevelRankDuality', 'MadelungNSE', 'MadelungSplit', 'PhaseMixing', 'QHFricke', 'RCFTDuality', 'RipsFloor', 'SectorDuality', 'WassersteinCertificate']
+skip DissipativeVortexDynamics
+skip EinsteinRelation
+skip FrictionKinetic
+skip KTFlow
+skip MatchingScreening
+skip PairPolarisation
+skip QuasiPeriodicBound
+skip VortexWinding
+skip QuantizedCirculation
+skip ContinuumWinding
+skip DualLength
+skip Fricke
+skip BoseIntegral
+skip PhononSeries
+skip PhononSpecificHeat
+skip ScaleResolvedWinding
+skip TopologicalProtection
+skip SectorTemperature
+skip QuantumFluidsShell
+skip ShellHamiltonian
+skip SigmaRule
+skip Villani
+skip ChargeLattice
+skip CompactBoson
+skip Duality
+skip LevelRankDuality
+skip MadelungNSE
+skip MadelungSplit
+skip PhaseMixing
+skip QHFricke
+skip RCFTDuality
+skip RipsFloor
+skip SectorDuality
+skip WassersteinCertificate
+[lock acquired after 0s]
+ZeroSound                    exit=0 err=0 thm=7 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=31.3s
+HeliumKinematics             exit=0 err=0 thm=15 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=27.3s
+GPGalerkin                   exit=0 err=0 thm=17 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=25.3s
+umbrella skipped: the library is not completely audited yet
+wrote /home/xavkal/xdev/SocrateAI-Scientific-QuantumFluids/book/facts/lean_audit.md
+order: ['DissipativeVortexDynamics', 'EinsteinRelation', 'FrictionKinetic', 'KTFlow', 'MatchingScreening', 'PairPolarisation', 'QuasiPeriodicBound', 'VortexWinding', 'QuantizedCirculation', 'ContinuumWinding', 'DualLength', 'Fricke', 'BoseIntegral', 'PhononSeries', 'PhononSpecificHeat', 'ScaleResolvedWinding', 'TopologicalProtection', 'SectorTemperature', 'QuantumFluidsShell', 'ShellHamiltonian', 'SigmaRule', 'Villani', 'ZeroSound', 'HeliumKinematics', 'GPGalerkin', 'ChargeLattice', 'CompactBoson', 'Duality', 'LevelRankDuality', 'MadelungNSE', 'MadelungSplit', 'PhaseMixing', 'QHFricke', 'RCFTDuality', 'RipsFloor', 'SectorDuality', 'WassersteinCertificate']
+skip DissipativeVortexDynamics
+skip EinsteinRelation
+skip FrictionKinetic
+skip KTFlow
+skip MatchingScreening
+skip PairPolarisation
+skip QuasiPeriodicBound
+skip VortexWinding
+skip QuantizedCirculation
+skip ContinuumWinding
+skip DualLength
+skip Fricke
+skip BoseIntegral
+skip PhononSeries
+skip PhononSpecificHeat
+skip ScaleResolvedWinding
+skip TopologicalProtection
+skip SectorTemperature
+skip QuantumFluidsShell
+skip ShellHamiltonian
+skip SigmaRule
+skip Villani
+skip ZeroSound
+skip HeliumKinematics
+skip GPGalerkin
+skip ChargeLattice
+[lock acquired after 0s]
+CompactBoson                 exit=0 err=0 thm=13 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=26.6s
+Duality                      exit=0 err=0 thm=11 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=26.3s
+LevelRankDuality             exit=0 err=0 thm=1 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=26.1s
+MadelungNSE                  exit=0 err=0 thm=3 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=28.8s
+[lock acquired after 0s]
+MadelungSplit                exit=0 err=0 thm=6 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=27.6s
+PhaseMixing                  exit=0 err=0 thm=3 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=25.6s
+QHFricke                     exit=0 err=0 thm=7 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=28.0s
+RCFTDuality                  exit=0 err=0 thm=3 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=27.5s
+[lock acquired after 0s]
+RipsFloor                    exit=0 err=0 thm=4 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=34.4s
+SectorDuality                exit=0 err=0 thm=3 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=22.0s
+WassersteinCertificate       exit=0 err=0 thm=14 sorryAx=False axioms=['Classical.choice', 'Quot.sound', 'propext'] compile=29.0s
+umbrella exit 0
+wrote /home/xavkal/xdev/SocrateAI-Scientific-QuantumFluids/book/facts/lean_audit.md
+library audit chain finished 01:38:40

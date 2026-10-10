@@ -1,0 +1,177 @@
+\chapter{Reproducibility: Rebuilding the Figures and Running the Audit}\label{appB}
+\InputIfFileExists{figures/appB_numbers}{}{}
+\noindent The figures of this book are written by scripts in \texttt{book/\allowbreak{}figures/\allowbreak{}}, and the numbers a chapter quotes are meant to come from files named in its numbers file. This appendix says where each piece is, how to rerun it, and what it costs. It is itself partly generated: the figure table, the software versions and the listing of the audit program are written by \texttt{book/\allowbreak{}facts/\allowbreak{}make\_\allowbreak{}appB.\allowbreak{}py} from the files as they are when it runs, so they cannot drift from the code. Appendix~\ref{appA} (the catalogue of the library) is likewise generated, by \texttt{book/\allowbreak{}facts/\allowbreak{}make\_\allowbreak{}appA.\allowbreak{}py}; \emph{both scripts are meant to be rerun} after the last chapter has been written, which refreshes the marks of cited theorems in the catalogue, the citation check (\texttt{facts/\allowbreak{}appA\_\allowbreak{}citation\_\allowbreak{}check.\allowbreak{}md}) and the table of figures below.
+\section{The machine and the software}
+The computations of the book were run on one machine that was shared with other work (load average between about $8$ and $35$ while the audit and the chapter runs were queued), so timings are indications and not benchmarks; the benchmark of chapter~\ref{ch10} carries its own caveats. Table~\ref{appB:tab-versions} lists what was used.
+\begin{table}[h]\centering\small\renewcommand{\arraystretch}{1.1}\begin{tabularx}{\linewidth}{@{}>{\raggedright}p{0.27\linewidth}>{\raggedright\arraybackslash}X@{}}\toprule component & version\\\midrule
+CPU & \texttt{Intel(R) Core(TM) i7-\allowbreak{}4930MX CPU @ 3.\allowbreak{}00GHz,\allowbreak{} 8 hardware threads,\allowbreak{} no GPU} \\
+Python (project venv) & \texttt{3.\allowbreak{}12.\allowbreak{}3; numpy 2.\allowbreak{}5.\allowbreak{}3,\allowbreak{} scipy 1.\allowbreak{}18.\allowbreak{}1,\allowbreak{} matplotlib 3.\allowbreak{}11.\allowbreak{}2} \\
+JAX (benchmark only) & \texttt{0.\allowbreak{}11.\allowbreak{}2} \\
+Lean 4 & \texttt{4.\allowbreak{}34.\allowbreak{}0-\allowbreak{}rc2,\allowbreak{} x86\_\allowbreak{}64-\allowbreak{}unknown-\allowbreak{}linux-\allowbreak{}gnu,\allowbreak{} commit 6a10ac8c22beadecabdbb0919c2b50214762f91d,\allowbreak{} Release} \\
+Mathlib & \texttt{tag v4.\allowbreak{}34.\allowbreak{}0-\allowbreak{}rc2,\allowbreak{} commit 85e3a25e006c} \\
+rusty-\allowbreak{}SUNDIALS (working tree used) & \texttt{v11.\allowbreak{}5.\allowbreak{}0-\allowbreak{}6-\allowbreak{}g5db8041 (5db8041)} \\
+typesetting & \texttt{LuaHBTeX,\allowbreak{} Version 1.\allowbreak{}17.\allowbreak{}0 (TeX Live 2023/\allowbreak{}Debian)} \\
+\bottomrule\end{tabularx}\caption{Software and hardware used. Read from the machine by \texttt{make\_appB.py}. The Lean and Mathlib versions are the ones pinned in \texttt{lean\_\allowbreak{}src/\allowbreak{}lakefile.\allowbreak{}lean} and \texttt{lean-toolchain}; the library is never rebuilt with \texttt{lake update}.}\label{appB:tab-versions}\end{table}
+\section{Rebuilding a figure}
+A figure is written by a Python script in \texttt{book/\allowbreak{}figures/\allowbreak{}}. From the repository root, with the project environment,
+\begin{lstlisting}[style=plainmono]
+.venv/bin/python book/figures/chNN_name.py        # writes book/figures/chNN_name.pdf and .png
+PYTHONPATH=/mnt/data/xdev-cache/qf_ext ...          # only for scripts that call the Rust extension qf_pgpe
+\end{lstlisting}
+The convention of the book is that the scripts of a chapter save the numbers that its figures and its text use in \texttt{figures/\allowbreak{}chNN\_\allowbreak{}numbers.\allowbreak{}json} (a value and its source for each number); the list at the end of this section shows which chapters have such a file. Heavy runs --- more than a minute of computation --- were serialised on the shared machine with \texttt{flock} on one lock file: 9 of the 109 scripts of \texttt{book/\allowbreak{}figures/\allowbreak{}} call it themselves, and the others were launched under it by the command line of their author. Table~\ref{appB:tab-figures} lists, for the chapters present when this appendix was generated, each figure and the script that writes it (matched by the name of the file it saves).
+\begin{center}\captionof{table}{Figures of the chapters present when this appendix was generated, and the scripts that write them (the first line of the docstring of each script, shortened; a script whose name differs from the figure's is named in the last column). The table is set in blocks so that it can break across pages.}\label{appB:tab-figures}\end{center}
+\begin{center}\footnotesize\setlength{\tabcolsep}{3pt}\begin{tabularx}{\linewidth}{@{}r>{\raggedright}p{0.34\linewidth}>{\raggedright\arraybackslash}X@{}}\toprule ch. & figure file (written by the script of the same name) & first line of the script's docstring\\\midrule
+1 & \texttt{ch01\_\allowbreak{}bench} & Chapter 1,\allowbreak{} 'the bench': what a cold neutron can reach on the measured 4He dispersion curve.\allowbreak{} \\
+1 & \texttt{ch01\_\allowbreak{}budget} & Chapter 1,\allowbreak{} 'speed budget': where does the translation speed of a vortex-\allowbreak{}antivortex pair in .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+1 & \texttt{ch01\_\allowbreak{}timeline} & Chapter 1,\allowbreak{} timeline: the landmarks this book revisits.\allowbreak{}  Rows are in chronological order and .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+1 & \texttt{ch01\_\allowbreak{}triptych} & Chapter 1,\allowbreak{} triptych: ONE vortex-\allowbreak{}antivortex pair in a two-\allowbreak{}dimensional superfluid seen by the .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+2 & \texttt{ch02\_\allowbreak{}bridge} & Figures ch02\_\allowbreak{}bridge and ch02\_\allowbreak{}rates: where a theorem about the Galerkin nonlinearity .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+\bottomrule\end{tabularx}\end{center}
+\begin{center}\footnotesize\setlength{\tabcolsep}{3pt}\begin{tabularx}{\linewidth}{@{}r>{\raggedright}p{0.34\linewidth}>{\raggedright\arraybackslash}X@{}}\toprule ch. & figure file (written by the script of the same name) & first line of the script's docstring\\\midrule
+2 & \texttt{ch02\_\allowbreak{}planewave} & Figure ch02\_\allowbreak{}planewave: the exact plane wave of the projected GP equation (Lean: .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+2 & \texttt{ch02\_\allowbreak{}rates} & [script \texttt{ch02\_\allowbreak{}bridge.\allowbreak{}py}] Figures ch02\_\allowbreak{}bridge and ch02\_\allowbreak{}rates: where a theorem about the Galerkin nonlinearity .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+2 & \texttt{ch02\_\allowbreak{}stability} & Figure ch02\_\allowbreak{}stability: regions of absolute stability of the two multistep families of .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+2 & \texttt{ch02\_\allowbreak{}workprecision} & Figure ch02\_\allowbreak{}workprecision: what the Python module rusty\_\allowbreak{}sundials.\allowbreak{}CvodeSolver does on .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+3 & \texttt{ch03\_\allowbreak{}circulation} & Figure ch03\_\allowbreak{}circulation: counting quanta on the solver field (pair d = 12,\allowbreak{} t = 20,\allowbreak{} loops .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+\bottomrule\end{tabularx}\end{center}
+\begin{center}\footnotesize\setlength{\tabcolsep}{3pt}\begin{tabularx}{\linewidth}{@{}r>{\raggedright}p{0.34\linewidth}>{\raggedright\arraybackslash}X@{}}\toprule ch. & figure file (written by the script of the same name) & first line of the script's docstring\\\midrule
+3 & \texttt{ch03\_\allowbreak{}energy} & Figure ch03\_\allowbreak{}energy: the kinetic energy of the field splits into a local quantum-\allowbreak{}pressure .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+3 & \texttt{ch03\_\allowbreak{}leapfrog} & Figure ch03\_\allowbreak{}leapfrog: two vortex pairs of the same sense leapfrog (qf-\allowbreak{}pgpe,\allowbreak{} 120 time units) .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+3 & \texttt{ch03\_\allowbreak{}pairspeed} & Figure ch03\_\allowbreak{}pairspeed: the speed of a vortex pair in the periodic box against its .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+3 & \texttt{ch03\_\allowbreak{}phasefield} & Figure ch03\_\allowbreak{}phasefield: one wave function,\allowbreak{} three faces.\allowbreak{}  A vortex-\allowbreak{}antivortex pair of the .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+4 & \texttt{ch04\_\allowbreak{}asymptotic} & Figure ch04\_\allowbreak{}asymptotic: the series continues to every order and is asymptotic,\allowbreak{} not .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+\bottomrule\end{tabularx}\end{center}
+\begin{center}\footnotesize\setlength{\tabcolsep}{3pt}\begin{tabularx}{\linewidth}{@{}r>{\raggedright}p{0.34\linewidth}>{\raggedright\arraybackslash}X@{}}\toprule ch. & figure file (written by the script of the same name) & first line of the script's docstring\\\midrule
+4 & \texttt{ch04\_\allowbreak{}bose} & Figure ch04\_\allowbreak{}bose: the six Bose integrals of Lean `PhononSpecificHeat.\allowbreak{}bose\_\allowbreak{}integral\_\allowbreak{}values` .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+4 & \texttt{ch04\_\allowbreak{}budget} & Figure ch04\_\allowbreak{}budget: Eq.\allowbreak{} (22) against the numerical integral of the measured dispersion,\allowbreak{} and .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+4 & \texttt{ch04\_\allowbreak{}dispersion} & Figure ch04\_\allowbreak{}dispersion: the measured phonon branch of superfluid 4He (P = 0,\allowbreak{} T < 0.\allowbreak{}1 K) and .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+4 & \texttt{ch04\_\allowbreak{}heatmap} & Figure ch04\_\allowbreak{}heatmap: which excitations carry the heat?  The distribution of the specific .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+4 & \texttt{ch04\_\allowbreak{}ladder} & Figure ch04\_\allowbreak{}ladder: the solver against the proved series.\allowbreak{}  The specific heat of the MODEL .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+\bottomrule\end{tabularx}\end{center}
+\begin{center}\footnotesize\setlength{\tabcolsep}{3pt}\begin{tabularx}{\linewidth}{@{}r>{\raggedright}p{0.34\linewidth}>{\raggedright\arraybackslash}X@{}}\toprule ch. & figure file (written by the script of the same name) & first line of the script's docstring\\\midrule
+5 & \texttt{ch05\_\allowbreak{}curve} & Figure ch05\_\allowbreak{}curve: the dispersion relation of superfluid 4He at saturated vapour pressure,\allowbreak{} .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+5 & \texttt{ch05\_\allowbreak{}rings} & Chapter 5: a localised density pulse in the projected GPE spreads as a *dispersive* ring .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+5 & \texttt{ch05\_\allowbreak{}solver} & [script \texttt{ch05\_\allowbreak{}solver\_\allowbreak{}fig.\allowbreak{}py}] Figures ch05\_\allowbreak{}solver and ch05\_\allowbreak{}universal from the broadband runs of ch05\_\allowbreak{}dispersion\_\allowbreak{}run.\allowbreak{}py .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+5 & \texttt{ch05\_\allowbreak{}thresholds} & Figure ch05\_\allowbreak{}thresholds: where do the three-\allowbreak{}phonon decay channels of 4He close?  .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+5 & \texttt{ch05\_\allowbreak{}universal} & [script \texttt{ch05\_\allowbreak{}solver\_\allowbreak{}fig.\allowbreak{}py}] Figures ch05\_\allowbreak{}solver and ch05\_\allowbreak{}universal from the broadband runs of ch05\_\allowbreak{}dispersion\_\allowbreak{}run.\allowbreak{}py .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+\bottomrule\end{tabularx}\end{center}
+\begin{center}\footnotesize\setlength{\tabcolsep}{3pt}\begin{tabularx}{\linewidth}{@{}r>{\raggedright}p{0.34\linewidth}>{\raggedright\arraybackslash}X@{}}\toprule ch. & figure file (written by the script of the same name) & first line of the script's docstring\\\midrule
+6 & \texttt{ch06\_\allowbreak{}coulomb} & Figure ch06\_\allowbreak{}coulomb: the Coulomb gas inside the solver.\allowbreak{} \\
+6 & \texttt{ch06\_\allowbreak{}field} & Figure ch06\_\allowbreak{}field: the simulated classical Bose field near the Kosterlitz-\allowbreak{}Thouless .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+6 & \texttt{ch06\_\allowbreak{}jump} & Figure ch06\_\allowbreak{}jump: the universal jump of the stiffness and the essential singularity,\allowbreak{} in the .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+6 & \texttt{ch06\_\allowbreak{}portrait} & Figure ch06\_\allowbreak{}portrait: the Kosterlitz flow integrated with CVODE (rusty-\allowbreak{}SUNDIALS) against .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+6 & \texttt{ch06\_\allowbreak{}screening} & Figure ch06\_\allowbreak{}screening: the two Lean statements about vortex positions,\allowbreak{} tested on vortex .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+\bottomrule\end{tabularx}\end{center}
+\begin{center}\footnotesize\setlength{\tabcolsep}{3pt}\begin{tabularx}{\linewidth}{@{}r>{\raggedright}p{0.34\linewidth}>{\raggedright\arraybackslash}X@{}}\toprule ch. & figure file (written by the script of the same name) & first line of the script's docstring\\\midrule
+7 & \texttt{ch07\_\allowbreak{}dipole} & Chapter 7,\allowbreak{} Figure 2: the dissipative point-\allowbreak{}vortex model integrated with CVODE .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+7 & \texttt{ch07\_\allowbreak{}failures} & Chapter 7,\allowbreak{} Figure 7: two theorems that were true and did not describe what they were .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+7 & \texttt{ch07\_\allowbreak{}fields} & Chapter 7,\allowbreak{} Figure 4 (the striking one): two antiparallel vortex pairs imprinted in a .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+7 & \texttt{ch07\_\allowbreak{}friction} & Chapter 7,\allowbreak{} Figure 5: measuring the friction in the field.\allowbreak{} \\
+7 & \texttt{ch07\_\allowbreak{}imprint} & Chapter 7,\allowbreak{} Figure 3: the defective imprint of the first instrument,\allowbreak{} and the T = 0 control .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+\bottomrule\end{tabularx}\end{center}
+\begin{center}\footnotesize\setlength{\tabcolsep}{3pt}\begin{tabularx}{\linewidth}{@{}r>{\raggedright}p{0.34\linewidth}>{\raggedright\arraybackslash}X@{}}\toprule ch. & figure file (written by the script of the same name) & first line of the script's docstring\\\midrule
+8 & \texttt{ch08\_\allowbreak{}fermisurface} & Chapter 8,\allowbreak{} figure (ch08\_\allowbreak{}fermisurface): the Fermi circle as the dynamical variable,\allowbreak{} F = 0 .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+8 & \texttt{ch08\_\allowbreak{}timedomain} & Chapter 8,\allowbreak{} figure (ch08\_\allowbreak{}timedomain): the collisionless Landau kinetic equation of a 2D .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+8 & \texttt{ch08\_\allowbreak{}vlasov} & Chapter 8,\allowbreak{} figure (ch08\_\allowbreak{}vlasov): the plasma cousin of zero sound,\allowbreak{} solved by the crate .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+8 & \texttt{ch08\_\allowbreak{}window} & Chapter 8,\allowbreak{} figure (ch08\_\allowbreak{}window): the (q,\allowbreak{} omega) plane of a Fermi liquid,\allowbreak{} in the units of .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+8 & \texttt{ch08\_\allowbreak{}zerosound} & Chapter 8,\allowbreak{} figure 1 (ch08\_\allowbreak{}zerosound): the zero-\allowbreak{}sound root s(F),\allowbreak{} the weights of the pole and .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+\bottomrule\end{tabularx}\end{center}
+\begin{center}\footnotesize\setlength{\tabcolsep}{3pt}\begin{tabularx}{\linewidth}{@{}r>{\raggedright}p{0.34\linewidth}>{\raggedright\arraybackslash}X@{}}\toprule ch. & figure file (written by the script of the same name) & first line of the script's docstring\\\midrule
+9 & \texttt{ch09\_\allowbreak{}birth} &  \\
+9 & \texttt{ch09\_\allowbreak{}census} &  \\
+9 & \texttt{ch09\_\allowbreak{}force} &  \\
+9 & \texttt{ch09\_\allowbreak{}mach} &  \\
+9 & \texttt{ch09\_\allowbreak{}wake} &  \\
+\bottomrule\end{tabularx}\end{center}
+\begin{center}\footnotesize\setlength{\tabcolsep}{3pt}\begin{tabularx}{\linewidth}{@{}r>{\raggedright}p{0.34\linewidth}>{\raggedright\arraybackslash}X@{}}\toprule ch. & figure file (written by the script of the same name) & first line of the script's docstring\\\midrule
+10 & \texttt{ch10\_\allowbreak{}bench} & Chapter 10,\allowbreak{} benchmark panel: time per IF-\allowbreak{}RK4 step of the PGPE problem (N x N,\allowbreak{} L = N/\allowbreak{}2,\allowbreak{} g = .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+10 & \texttt{ch10\_\allowbreak{}estimator} & Chapter 10,\allowbreak{} figure 'estimator': the registered synthetic gate G0 (known alpha = 0.\allowbreak{}02) run .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+10 & \texttt{ch10\_\allowbreak{}library} & Chapter 10,\allowbreak{} figure 'library': the QuantumFluids Lean library as audited for this book.\allowbreak{} \\
+10 & \texttt{ch10\_\allowbreak{}verdicts} & Chapter 10,\allowbreak{} figure 'verdict map': every criterion that LEDGER.\allowbreak{}md records one by one for the .\allowbreak{}.\allowbreak{}.\allowbreak{} \\
+\bottomrule\end{tabularx}\end{center}
+\paragraph{Other files by chapter.} Besides figure scripts a chapter may own: a numbers file (\texttt{figures/\allowbreak{}chNN\_\allowbreak{}numbers.\allowbreak{}json}), a bibliography file (\texttt{refs\_\allowbreak{}chNN.\allowbreak{}bib}, merged into \texttt{refs\_all.bib} by \texttt{build\_\allowbreak{}refs.\allowbreak{}py}), Lean files written for the book (\texttt{lean/\allowbreak{}ChNN\_\allowbreak{}*.\allowbreak{}lean}, compiled against the same pinned Mathlib and listed in appendix~\ref{appA}), Rust sources (\texttt{rust/}) and a report of what was verified (\texttt{facts/\allowbreak{}chNN\_\allowbreak{}report.\allowbreak{}md}). Present when this appendix was generated:
+\begin{itemize}[nosep]
+\item chapter 1: numbers; bib; Lean: Ch01\_\allowbreak{}NeutronWindow; report
+\item chapter 2: numbers; bib; Lean: Ch02\_\allowbreak{}Galerkin,\allowbreak{} Ch02\_\allowbreak{}Primer; negative control (meant to fail,\allowbreak{} not counted): Ch02\_\allowbreak{}NegativeControl; Rust; report
+\item chapter 3: numbers; bib; Lean: Ch03\_\allowbreak{}PointVortexPair; report
+\item chapter 4: numbers; bib; Lean: Ch04\_\allowbreak{}DosLink; negative control (meant to fail,\allowbreak{} not counted): Ch04\_\allowbreak{}NegativeControl\_\allowbreak{}D15121,\allowbreak{} Ch04\_\allowbreak{}NegativeControl\_\allowbreak{}L54
+\item chapter 5: numbers; bib; Lean: Ch05\_\allowbreak{}BogoliubovDispersion; report
+\item chapter 6: numbers; bib; Lean: Ch06\_\allowbreak{}KTForward; empty placeholder (not counted): Ch06\_\allowbreak{}KTEscape; report
+\item chapter 7: numbers; bib; Lean: Ch07\_\allowbreak{}DissipativePairs
+\item chapter 8: numbers; bib; Lean: Ch08\_\allowbreak{}ZeroSound2D; Rust; report
+\item chapter 9: numbers; bib; Lean: Ch09\_\allowbreak{}FlowPast; report
+\item chapter 10: numbers; bib; report
+\end{itemize}
+\section{CVODE: which build is imported}\label{appB:cvode}
+The solver library has a history that the book's CVODE results depend on. Until the repair of 28~September 2026 its Adams method was, in effect, implicit Euler (\texttt{docs/\allowbreak{}CVODE\_\allowbreak{}ADAMS\_\allowbreak{}FIX.\allowbreak{}md} of rusty-SUNDIALS): the order never rose above one, so the work grew like $\mathrm{rtol}^{-1/2}$. The Python module \texttt{rusty\_\allowbreak{}sundials} that sits in the project's virtual environment was built on 26~September, before the repair, and is \emph{stale}. Every CVODE result of this book must come from rusty-SUNDIALS commit \texttt{5db8041fd2e3840defcff2b4a8c26c1cbb2467fd} (the v11.6.0 line) or later. The recipe:
+\begin{lstlisting}[style=plainmono]
+# 1. build the module from the checkout into a scratch directory (about 3 minutes; nothing is written to the checkout)
+flock /mnt/data/xdev-cache/tmp/qf_heavy.lock nice book/rust/ch02_build_py.sh OUTDIR     # writes OUTDIR/py/rusty_sundials.so, OUTDIR/commit.txt
+# 2. a stable copy of the build used for the book (commit 5db8041fd2e3840defcff2b4a8c26c1cbb2467fd):
+#      /mnt/data/xdev-cache/rs_py_5db8041/rusty_sundials.so   sha256 0bdb1b4a504fb4817738c483f797e6a109b99121b666f1e51ad8e05c2fb996d7
+# 3. run with the repaired module FIRST on the path, then the quantum-fluids extension:
+PYTHONPATH=/mnt/data/xdev-cache/rs_py_5db8041:/mnt/data/xdev-cache/qf_ext  .venv/bin/python book/figures/chNN_script.py
+# 4. check which build a script imports, whenever in doubt:
+.venv/bin/python book/figures/ch10_cvode_probe.py stale        # the module in the virtual environment
+PYTHONPATH=/mnt/data/xdev-cache/rs_py_5db8041:/mnt/data/xdev-cache/qf_ext .venv/bin/python book/figures/ch10_cvode_probe.py fixed
+\end{lstlisting}
+The probe integrates $y'=-y$ on $[0,10]$ with absolute tolerance $10^{-14}$ and counts the right-hand-side calls and the relative error of $y(10)$. It tells the two builds apart at once (table~\ref{appB:tab-cvode}): in the stale one the Adams error falls only as the square root of the tolerance and the cost explodes.
+\begin{table}[h]\centering\small\setlength{\tabcolsep}{4pt}\begin{tabular}{@{}llrrrr@{}}\toprule & & \multicolumn{2}{c}{stale module (built 2026-09-26 15:00)} & \multicolumn{2}{c}{repaired build (commit 5db8041)}\\
+method & rtol & RHS calls & rel. error & RHS calls & rel. error\\\midrule
+adams & $10^{-4}$ & 2\,386 & $6.5\!\times\!10^{-2}$ & 168 & $5.9\!\times\!10^{-4}$ \\
+adams & $10^{-6}$ & 23\,750 & $6.4\!\times\!10^{-3}$ & 359 & $1.9\!\times\!10^{-5}$ \\
+adams & $10^{-8}$ & 237\,022 & $6.4\!\times\!10^{-4}$ & 511 & $2.0\!\times\!10^{-7}$ \\
+adams & $10^{-10}$ & 2\,214\,597 & $6.9\!\times\!10^{-5}$ & 616 & $1.7\!\times\!10^{-9}$ \\
+bdf & $10^{-4}$ & 335 & $9.7\!\times\!10^{-4}$ & 246 & $7.1\!\times\!10^{-4}$ \\
+bdf & $10^{-6}$ & 759 & $2.3\!\times\!10^{-5}$ & 492 & $2.0\!\times\!10^{-5}$ \\
+bdf & $10^{-8}$ & 1\,327 & $4.9\!\times\!10^{-7}$ & 933 & $4.5\!\times\!10^{-7}$ \\
+bdf & $10^{-10}$ & 1\,895 & $1.2\!\times\!10^{-8}$ & 1\,618 & $1.2\!\times\!10^{-8}$ \\
+\bottomrule\end{tabular}\caption{The probe $y'=-y$, $t\in[0,10]$, atol $10^{-14}$, run with the module of the virtual environment (shared object 9fbd09e985c2\ldots) and with the repaired build (0bdb1b4a504f\ldots). The BDF method is shown for comparison; it differs little between the builds.}\label{appB:tab-cvode}\end{table}
+A result obtained with the stale module is wrong in a way that no convergence \emph{within} the module reveals, and no test of the source tree can: the tests ran on the source (chapter~\ref{ch10}, section~\ref{ch10:sec-failures}). The rule for the book's scripts is therefore to check the probe once per session, and to record the commit and the checksum of the module in the numbers file of the chapter.
+\section{Running the Lean audit}\label{appB:audit}
+The audit of chapter~\ref{ch10} has three parts, all driven by \texttt{book/\allowbreak{}facts/\allowbreak{}lean\_\allowbreak{}audit.\allowbreak{}py}; nothing is written into the Lean project trees, and \texttt{lake update} is never run. From the repository root:
+\begin{lstlisting}[style=plainmono]
+python3 book/facts/lean_audit.py            # compile every module in import order, audit its environment; ~1 h on a loaded machine
+python3 book/facts/lean_audit.py --resume   # skip the modules whose facts/audit/<Module>.json exists and was made on the present code
+python3 book/facts/lean_audit.py --book --resume   # the same program on the Lean files written for the book (book/lean/*.lean); a file that is meant to fail is compiled expecting errors
+python3 book/facts/lean_audit.py --report   # only rebuild facts/lean_audit.md from the stored JSON
+python3 book/facts/lean_audit.py --controls # negative control: run the auditor on a file with planted defects (seconds)
+python3 scripts/regen_axiom_audit.py --check # the library's own staleness check of the #print axioms blocks (read-only)
+python3 book/facts/make_appA.py              # regenerate the catalogue, the citation check and the namespace table
+\end{lstlisting}
+The driver copies each module to a scratch directory (\texttt{QF\_\allowbreak{}AUDIT\_\allowbreak{}WORK}, default \texttt{/\allowbreak{}mnt/\allowbreak{}data/\allowbreak{}xdev-cache/\allowbreak{}tmp/\allowbreak{}qf\_\allowbreak{}audit}), appends the program below, and compiles it with \texttt{lake env lean -R <scratch> -o <scratch>/<Module>.olean} inside the pinned Mathlib tree, with the scratch directory on \texttt{LEAN\_PATH} so that a module finds its compiled siblings. It takes the shared lock of the machine (\texttt{QF\_LOCK}) for a short batch only: it starts a new module while the hold is younger than \texttt{QF\_\allowbreak{}BATCH\_\allowbreak{}SECONDS} (the run for this book used $100$~s, so one to three modules per hold), and then stays away from the lock for \texttt{QF\_\allowbreak{}YIELD\_\allowbreak{}SECONDS} ($45$~s) so that a job that is waiting takes it first. An audit counts as current only if it was made on the present \emph{code} of the file: the driver stores a hash of the source with comments and white space removed, so that a corrected docstring does not invalidate an audit and any change of code does (appendix~\ref{appA} then prints \texttt{stale}). Its output is one log and one JSON file per module in \texttt{facts/audit/}, the table \texttt{facts/\allowbreak{}lean\_\allowbreak{}audit.\allowbreak{}md}, and \texttt{facts/\allowbreak{}audit/\allowbreak{}summary.\allowbreak{}json}. The program that is appended --- new for this book, and tested on the file with planted defects before it was trusted --- is:
+\begin{lstlisting}[style=lean]
+/-! ## Book audit (appended by book/facts/lean_audit.py to a scratch copy; not part of the library) -/
+open Lean Elab Command in
+run_cmd do
+  let env ← getEnv
+  let locals := env.checked.get.constants.foldStage2
+    (fun (acc : Array (Name × ConstantInfo)) n ci => acc.push (n, ci)) #[]
+  let userName (n : Name) : Name := (privateToUserName? n).getD n
+  let isNamed (n : Name) : Bool := !(userName n).isInternal
+  let namedThms := locals.filter (fun (n, ci) => ci.isTheorem && isNamed n)
+  let namedDefs := locals.filter (fun (n, ci) => (ci matches .defnInfo _) && isNamed n)
+  let axDecls := locals.filter (fun (_, ci) => ci matches .axiomInfo _)
+  let thmNames : NameSet := namedThms.foldl (fun s (n, _) => s.insert n) {}
+  let mut union : NameSet := {}
+  let mut rows : Array String := #[]
+  for (n, _) in locals do
+    let axs ← collectAxioms n
+    for a in axs do union := union.insert a
+    if thmNames.contains n then
+      let line ← match (← findDeclarationRanges? n) with
+        | some r => pure (toString r.range.pos.line)
+        | none => pure "-1"
+      rows := rows.push s!"QFAUDIT|THM|{userName n}|{line}|{", ".intercalate (axs.toList.map toString)}"
+  IO.println s!"QFAUDIT|SUMMARY|{locals.size}|{namedThms.size}|{namedDefs.size}|{axDecls.size}|{union.contains ``sorryAx}|{", ".intercalate (union.toList.map toString)}"
+  for (n, _) in axDecls do IO.println s!"QFAUDIT|AXIOMDECL|{n}"
+  for r in rows do IO.println r
+\end{lstlisting}
+Reading it: \texttt{foldStage2} lists the constants that this file added to the environment; \texttt{collectAxioms} returns the axioms a constant depends on, through the whole chain of lemmas it uses; the union over all constants is the footprint of the module; a constant whose footprint contains \texttt{sorryAx} contains a \texttt{sorry} somewhere below it, even if its own proof does not. The negative control (\texttt{facts/\allowbreak{}audit\_\allowbreak{}controls/\allowbreak{}AuditControls.\allowbreak{}lean}, output in \texttt{AuditControls.\allowbreak{}out}) plants a \texttt{sorry}, the same \texttt{sorry} inherited, a \texttt{sorry} in a private theorem, an axiom of its own and a \texttt{native\_\allowbreak{}decide}; the auditor reports each.
+\section{Limits of what can be reproduced}
+\begin{itemize}[nosep]
+\item Timings depend on the machine and on its load; the benchmark of chapter~\ref{ch10} was taken on a shared machine and is to be repeated on an idle one.
+\item The long campaign runs behind chapters~\ref{ch06} to~\ref{ch09} (the pre-registered runs of tens of hours) are not rerun by the book's scripts; their saved outputs are under \texttt{data/\allowbreak{}generated/\allowbreak{}pgpe/\allowbreak{}}: 2.8G on the machine of the author; the directory \texttt{data/\allowbreak{}generated/\allowbreak{}} is git-ignored, and only 189 small analysis files of it were committed (measured when this appendix was generated), and the scripts of the chapters read those outputs.
+\item No computation of this book used a GPU or a TPU.
+\item The environment audit trusts Lean's own elaborator and kernel; the second kernel (nanoda) is run through the Comparator, whose recorded results are in \texttt{docs/\allowbreak{}COMPARATOR\_\allowbreak{}SETUP.\allowbreak{}md} and were not rerun for the book.
+\end{itemize}

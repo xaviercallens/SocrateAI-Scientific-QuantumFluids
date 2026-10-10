@@ -1,0 +1,113 @@
+{
+ "tag": "fixed",
+ "module_file": "/mnt/data/xdev-cache/rs_py_5db8041/rusty_sundials.so",
+ "extension_file": "/mnt/data/xdev-cache/rs_py_5db8041/rusty_sundials.so",
+ "sha256": "0bdb1b4a504fb4817738c483f797e6a109b99121b666f1e51ad8e05c2fb996d7",
+ "cap_calls": 60000,
+ "loadavg_start": 15.5830078125,
+ "runs": [
+  {
+   "problem": "decay",
+   "method": "adams",
+   "rtol": 1e-08,
+   "atol": 1e-14,
+   "status": "ok",
+   "rhs_calls": 511,
+   "rel_err": 1.975598302069012e-07,
+   "seconds": 0.003228405024856329
+  },
+  {
+   "problem": "cos",
+   "method": "adams",
+   "rtol": 1e-06,
+   "atol": 1e-09,
+   "status": "ok",
+   "rhs_calls": 1087,
+   "rel_err": null,
+   "seconds": 0.005888364044949412
+  },
+  {
+   "problem": "bose3",
+   "method": "adams",
+   "rtol": 1e-06,
+   "atol": 1e-08,
+   "status": "ok",
+   "rhs_calls": 260,
+   "rel_err": 2.768036165368937e-07,
+   "seconds": 0.0015193959698081017
+  },
+  {
+   "problem": "bose3",
+   "method": "adams",
+   "rtol": 1e-09,
+   "atol": 1e-11,
+   "status": "ok",
+   "rhs_calls": 490,
+   "rel_err": 3.936603646500059e-09,
+   "seconds": 0.0029397509060800076
+  },
+  {
+   "problem": "decay",
+   "method": "bdf",
+   "rtol": 1e-08,
+   "atol": 1e-14,
+   "status": "ok",
+   "rhs_calls": 933,
+   "rel_err": 4.5406224778131344e-07,
+   "seconds": 0.004045181209221482
+  },
+  {
+   "problem": "cos",
+   "method": "bdf",
+   "rtol": 1e-06,
+   "atol": 1e-09,
+   "status": "ok",
+   "rhs_calls": 2790,
+   "rel_err": null,
+   "seconds": 0.01958171185106039
+  },
+  {
+   "problem": "bose3",
+   "method": "bdf",
+   "rtol": 1e-06,
+   "atol": 1e-08,
+   "status": "ok",
+   "rhs_calls": 412,
+   "rel_err": 1.2542963608320876e-06,
+   "seconds": 0.0022490480914711952
+  },
+  {
+   "problem": "bose3",
+   "method": "bdf",
+   "rtol": 1e-09,
+   "atol": 1e-11,
+   "status": "ok",
+   "rhs_calls": 1051,
+   "rel_err": 6.552887662564142e-09,
+   "seconds": 0.005836817901581526
+  }
+ ],
+ "landing": {
+  "adams": {
+   "problem": "y_m' = x^m/(m!(e^x-1)), m = 3,5,6,7,8,9, y(0) = 0, integrated from 0 to each end point",
+   "rtol": 1e-09,
+   "atol": 1e-11,
+   "call_cap": 5000,
+   "n_endpoints": 160,
+   "n_solver_errors": 0,
+   "n_over_cap": 0,
+   "total_rhs_calls": 59677
+  },
+  "bdf": {
+   "problem": "y_m' = x^m/(m!(e^x-1)), m = 3,5,6,7,8,9, y(0) = 0, integrated from 0 to each end point",
+   "rtol": 1e-09,
+   "atol": 1e-11,
+   "call_cap": 5000,
+   "n_endpoints": 160,
+   "n_solver_errors": 0,
+   "n_over_cap": 0,
+   "total_rhs_calls": 154866
+  }
+ },
+ "loadavg_end": 15.65380859375
+}

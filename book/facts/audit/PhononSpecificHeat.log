@@ -1,0 +1,32 @@
+'QuantumFluids.PhononSpecificHeat.bernoulli'_five' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.PhononSpecificHeat.bernoulli'_six' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.PhononSpecificHeat.bernoulli'_seven' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.PhononSpecificHeat.bernoulli'_eight' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.PhononSpecificHeat.bernoulli'_nine' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.PhononSpecificHeat.bernoulli'_ten' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.PhononSpecificHeat.riemannZeta_six' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.PhononSpecificHeat.riemannZeta_eight' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.PhononSpecificHeat.riemannZeta_ten' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.PhononSpecificHeat.thermal_bose_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.PhononSpecificHeat.bose_integral_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.PhononSpecificHeat.energyTerm_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.PhononSpecificHeat.energyTerm_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuantumFluids.PhononSpecificHeat.phonon_specific_heat' depends on axioms: [propext, Classical.choice, Quot.sound]
+QFAUDIT|SUMMARY|23|14|1|0|false|Quot.sound, Classical.choice, propext
+QFAUDIT|THM|QuantumFluids.PhononSpecificHeat.bose_integral_values|97|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.PhononSpecificHeat.bernoulli'_eight|49|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.PhononSpecificHeat.riemannZeta_eight|75|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.PhononSpecificHeat.energyTerm_hasDerivAt|131|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.PhononSpecificHeat.bernoulli'_six|39|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.PhononSpecificHeat.riemannZeta_ten|82|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.PhononSpecificHeat.bernoulli'_nine|54|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.PhononSpecificHeat.riemannZeta_six|68|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.PhononSpecificHeat.energyTerm_two|127|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.PhononSpecificHeat.bernoulli'_ten|60|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.PhononSpecificHeat.thermal_bose_integral|91|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.PhononSpecificHeat.bernoulli'_five|34|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.PhononSpecificHeat.bernoulli'_seven|44|propext, Classical.choice, Quot.sound
+QFAUDIT|THM|QuantumFluids.PhononSpecificHeat.phonon_specific_heat|137|propext, Classical.choice, Quot.sound
+
+--- stderr ---
+QF_WALL 83.994

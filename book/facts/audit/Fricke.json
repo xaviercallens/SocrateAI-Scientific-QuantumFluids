@@ -1,0 +1,169 @@
+{
+ "module": "Fricke",
+ "exit": 0,
+ "compile_s": 186.0,
+ "request_to_done_s": 186.0,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 25,
+  "named_theorems": 14,
+  "named_defs": 3,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.Fricke.W.eq_1",
+   "line": -1,
+   "axioms": [
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Fricke.conj.eq_1",
+   "line": -1,
+   "axioms": [
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Fricke.W_mul_W",
+   "line": 40,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Fricke.W_mul_eq",
+   "line": 49,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Fricke.det_conj",
+   "line": 53,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Fricke.conj_apply_one_zero",
+   "line": 57,
+   "axioms": [
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Fricke.conj_conj",
+   "line": 62,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Fricke.mem_Gamma0_iff_dvd",
+   "line": 67,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Fricke.fricke_normalizes",
+   "line": 72,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Fricke.fricke_on_axis",
+   "line": 85,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Fricke.axis_involutive",
+   "line": 99,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Fricke.axis_eq_dual",
+   "line": 102,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Fricke.ell_axis_invariant",
+   "line": 106,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.Fricke.axis_fixed_iff",
+   "line": 113,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "0136854100abbbe9",
+  "lines": 145,
+  "imports": [
+   "Mathlib",
+   "DualLength"
+  ],
+  "theorem_decls": 12,
+  "print_axioms_lines": 12,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 12,
+  "source_unmatched": [],
+  "env_not_in_source": [
+   "QuantumFluids.Fricke.W.eq_1",
+   "QuantumFluids.Fricke.conj.eq_1"
+  ]
+ },
+ "when": "2026-10-10 00:27:57"
+}

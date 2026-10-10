@@ -1,0 +1,211 @@
+{
+ "module": "QuantumFluidsShell",
+ "exit": 0,
+ "compile_s": 40.2,
+ "request_to_done_s": 40.3,
+ "errors": 0,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": null,
+ "audit": {
+  "constants": 25,
+  "named_theorems": 18,
+  "named_defs": 6,
+  "axiom_decls": 0,
+  "sorryAx": false,
+  "union_axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "theorems": [
+  {
+   "name": "QuantumFluids.ShellComplex.out.eq_1",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.rtrace.eq_1",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.shellBc.eq_1",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.shellBc.eq_2",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.shellBc.match_1.eq_1",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.shellBc.match_1.eq_2",
+   "line": -1,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.re_conj_sq_mul",
+   "line": 52,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.sum_re_conj_mul_shellBc",
+   "line": 65,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.shellBc_energy_conservation",
+   "line": 88,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.shellBc_real",
+   "line": 104,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.rtrace_add",
+   "line": 139,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.rtrace_mulRight",
+   "line": 142,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.rtrace_mul_I",
+   "line": 148,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.rtrace_conj_mul",
+   "line": 155,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.shell_divergence_zero",
+   "line": 163,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.seam_conserves_iff",
+   "line": 187,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.seam_zero_conserves",
+   "line": 202,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
+  {
+   "name": "QuantumFluids.ShellComplex.seam_gpe_conserves",
+   "line": 209,
+   "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  }
+ ],
+ "user_axioms": [],
+ "source": {
+  "sha256": "ffdafb8f3b5269e9",
+  "lines": 242,
+  "imports": [
+   "Mathlib"
+  ],
+  "theorem_decls": 12,
+  "print_axioms_lines": 12,
+  "has_sorry_text": false,
+  "has_axiom_text": false
+ },
+ "match": {
+  "source_theorem_names": 12,
+  "source_unmatched": [],
+  "env_not_in_source": [
+   "QuantumFluids.ShellComplex.out.eq_1",
+   "QuantumFluids.ShellComplex.rtrace.eq_1",
+   "QuantumFluids.ShellComplex.shellBc.eq_1",
+   "QuantumFluids.ShellComplex.shellBc.eq_2",
+   "QuantumFluids.ShellComplex.shellBc.match_1.eq_1",
+   "QuantumFluids.ShellComplex.shellBc.match_1.eq_2"
+  ]
+ },
+ "when": "2026-10-10 00:38:07"
+}

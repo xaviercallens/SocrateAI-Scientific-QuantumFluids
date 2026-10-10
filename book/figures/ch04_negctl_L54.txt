@@ -1,0 +1,6 @@
+NegControlL54.lean:15:2: error: ring failed, ring expressions not equal
+R : Type u_1
+inst : CommRing R
+a2 a3 a4 a5 a6 e : R
+h : e ^ 9 = 0
+⊢ -(a2 ^ 3 * e ^ 8 * 3) = 0

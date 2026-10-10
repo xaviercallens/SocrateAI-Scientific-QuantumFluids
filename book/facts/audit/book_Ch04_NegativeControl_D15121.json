@@ -1,0 +1,27 @@
+{
+ "module": "book_Ch04_NegativeControl_D15121",
+ "exit": 1,
+ "compile_s": 31.2,
+ "request_to_done_s": 31.2,
+ "errors": 1,
+ "warnings": 0,
+ "sorry_warnings": 0,
+ "first_error": "unsolved goals",
+ "audit": null,
+ "theorems": [],
+ "user_axioms": [],
+ "source": {
+  "sha256": "500b84a56a0083fc",
+  "code_sha256": "ba80a66d08da49d4",
+  "lines": 48,
+  "imports": [
+   "PhononSpecificHeat"
+  ],
+  "theorem_decls": 1,
+  "print_axioms_lines": 0
+ },
+ "when": "2026-10-10 01:40:28",
+ "kind": "control",
+ "expect_fail": true,
+ "as_expected": true
+}
