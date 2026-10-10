@@ -1,0 +1,276 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,mathtools,amsthm}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,urlcolor=blue!60!black]{hyperref}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\scriptsize,breaklines=true,columns=fullflexible,keepspaces=true,frame=single,framerule=0.3pt,xleftmargin=4pt}
+\input{exciton_numbers.tex}
+\newcommand{\PENDING}[1]{\textcolor{red!70!black}{[pending: #1]}}
+\newtcolorbox{keybox}[1][]{colback=blue!3,colframe=blue!45!black,boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+\newtcolorbox{failbox}[1][]{colback=red!3,colframe=red!45!black,boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newcommand{\elat}{e_{\mathrm{lat}}}
+\newcommand{\eH}{e_{\mathrm{H}}}
+\DeclareMathOperator{\Adm}{Adm}
+
+\title{\textbf{An optimality theorem and an exciton-fluid interaction:}\\
+kernel-checked lemmas, a four-flavour model theorem, and pre-registered N-particle tests on rusty-SUNDIALS}
+\author{Xavier Callens\\ \small SocrateAI Research\\
+\small \url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}}
+\date{October 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}\noindent
+A planar universal-optimality theorem for completely monotone pair interactions (OpenAI, September 2026: AI-generated, not yet
+refereed, Lean-formalised and accepted by the Comparator tool) says that the triangular lattice minimises the energy per particle among
+all locally finite planar configurations of centred density one. We ask what it says about the interaction between the dipolar interlayer
+excitons of a 2026 equilibrium exciton-condensate experiment. We prove in Lean~4, with standard axioms only, that differencing preserves
+complete monotonicity, so that the direct exciton--exciton kernel built from \emph{any} admissible single-layer potential is covered;
+that the Hartree coefficient is a telescoping integral (the capacitor formula); and that the uniform density minimises a
+positive-semidefinite translation-invariant interaction. The consequence is a classical lower bound on the energy per particle which,
+at the experimental densities, lies $8$--$22$ times below the Hartree energy: it is structural, not predictive. We prove six
+statements about the four-flavour mean-field model of the experiment and reproduce them to \FFworstRel{} with CVODE flows.
+We then test the theorem numerically, in a pre-registered design, with gradient flows of $N=36$ and $64$ particles in tori
+commensurate and incommensurate with the lattice, integrated by rusty-SUNDIALS CVODE, with non-completely-monotone and planted-bug
+controls. \NPARTABSTRACT{} We report what went wrong: a lattice-enumeration slip shared by two implementations and caught only by a
+closed-form constant, a compute-budget amendment, and a registered stopping rule too short for soft modes. Producer and verifier of
+the Lean files are instances of the same model; nothing here has been refereed.
+\end{abstract}
+
+\section{Introduction}
+
+In 2026 Qi \emph{et al.}\ reported evidence for two-component Bose--Einstein condensates of dipolar interlayer excitons in a
+MoSe$_2$/hBN/WSe$_2$ electron--hole bilayer with an interlayer distance $d\approx 2$~nm~\cite{Qi2026}. The excitons are injected
+electrically and are in equilibrium; there are four spin--valley flavours; the evidence is the spin--valley susceptibility, read through a
+four-variable mean-field model; the Berezinskii--Kosterlitz--Thouless temperature reaches about $1.8$~K near the exciton Mott density
+$n\approx 0.75\times10^{12}\,\mathrm{cm}^{-2}$. The authors state that counterflow transport and interferometry are not available.
+
+In September 2026 OpenAI released a proof, with a Lean formalisation, that the triangular lattice minimises the energy per particle among
+\emph{all} locally finite planar configurations of centred density one for \emph{every} smooth completely monotone function of the squared
+distance~\cite{OpenAI2026}. This is the planar case of the Cohn--Kumar universal-optimality conjecture~\cite{CohnKumar2007}, whose
+dimensions $8$ and $24$ were settled in 2022~\cite{CKMRV2022}.
+
+Dipolar excitons repel each other; the interaction is a function of the distance. The question of this note is therefore a
+\emph{dependency check}: which hypotheses of the theorem does the exciton physics meet, which consequences follow, and how large are
+they? Our answers are given in Sections~\ref{sec:kernels} to~\ref{sec:fourflavour}; their kernel-checked parts are listed in
+Section~\ref{sec:lean}, and numerical tests with the rusty-SUNDIALS solver~\cite{Hindmarsh2005} are in Section~\ref{sec:numerics}.
+
+\begin{keybox}[title={What this note claims and what it does not}]
+\textbf{Claims.} (i) A lemma, proved in Lean, that makes the theorem applicable to the exciton--exciton direct kernel; (ii) the size of the
+resulting lower bound relative to the Hartree upper bound at the experimental densities; (iii) six statements about the experiment's own
+model, proved in Lean and reproduced numerically; (iv) pre-registered numerical tests of the theorem on small tori, with controls.\\
+\textbf{Does not claim.} The theorem is AI-generated and unrefereed; we use it as a hypothesis and test it only on finite systems, which
+can fail to falsify it but cannot prove it. The Lean files were produced and checked by instances of the same model (producer
+$\neq$ verifier, not human review). Nothing here describes the experiment beyond the authors' own model, whose parameters
+$g_X$ and $\Delta$ are phenomenological; agreement of magnitude with the data is not independent evidence. The bound is not tight in the experimental
+window. No claim is made about the solver being the best of its kind. Neither the experimental group nor the authors of the
+theorem have reviewed this note.
+\end{keybox}
+
+\section{The theorem and its conventions}\label{sec:theorem}
+
+Let $g\colon(0,\infty)\to[0,\infty)$ be smooth with $(-1)^r g^{(r)}(t)\ge0$ for all $r\ge0$, $t>0$ (``admissible'', $g\in\Adm$). For a
+locally finite $C\subset\mathbb R^2$ write $N_R=\#(C\cap B_R)$, with $B_R$ the closed disk about the origin, and
+\begin{equation}
+E_g(C)=\liminf_{R\to\infty}\frac1{N_R}\sum_{\substack{x,y\in C\cap B_R\\ x\ne y}} g(|x-y|^2),
+\end{equation}
+the sum running over \emph{ordered} pairs. If $N_R/(\pi R^2)\to1$ (centred density one), the theorem states
+$E_g(C)\ge\sum_{a\in A\setminus 0}g(|a|^2)=E_g(A)$, with $A$ the triangular lattice of covolume one, in $[0,\infty]$.
+Four features matter for every use.
+\begin{enumerate}[nosep]
+\item \emph{Ordered pairs.} The physical energy per particle is half of $E_g$: $\elat(\rho)=\tfrac12\sum_{a\in A_\rho\setminus0}V(|a|)$,
+with $A_\rho=\rho^{-1/2}A$. A factor-two slip is the likeliest error downstream; Section~\ref{sec:numerics} plants one on purpose.
+\item \emph{Centred disks and a $\liminf$.} The statement is about infinite configurations. A bound for $N$ particles in a
+torus needs a periodic-extension argument (Proposition~\ref{prop:sandwich}), elementary on paper and not formalised here.
+\item \emph{Value, not minimisers.} The minimiser is not unique in this formulation: a single vacancy changes neither the density nor the
+$\liminf$. Uniqueness of the triangular lattice is not part of the theorem.
+\item \emph{Class, not each potential.} The proof constructs sharp Fourier minorants for every Gaussian and integrates; a sharp auxiliary
+function for each completely monotone potential is not claimed~\cite{OpenAI2026}.
+\end{enumerate}
+The Lean statement is \texttt{OAI.AtomicTriangular.universal\_energy\_minimum}; the Comparator tool accepted its proof with
+axioms $\{\text{propext},\text{Quot.sound},\text{Classical.choice}\}$ in a 140-minute run on another machine (nanoda not run; statement
+adequacy not audited by a human; a statement-fidelity audit against the definitions of~\cite{CKMRV2022} was done by an AI
+instance)~\cite{LeanMaster2026}. Predecessors are Montgomery's theorem among lattices~\cite{Montgomery1988} and the dimension-$8$ and
+$24$ results~\cite{CKMRV2022}.
+
+\section{Kernels, a lemma, and a lower bound}\label{sec:kernels}
+
+\paragraph{The lemma.} Two interlayer excitons, each with its electron in one layer and its hole in the other at distance $d$,
+interact directly through $V_{xx}(r)=2[V(r)-V(\sqrt{r^2+d^2})]$ in terms of the single-layer electron--electron potential $V$
+(the electron--hole term is the second). In the variable $t=r^2$ this is $2[g(t)-g(t+d^2)]$.
+
+\begin{lemma}[differencing]\label{lem:diff}
+If $g\in\Adm$ and $c>0$ then $t\mapsto g(t)-g(t+c)\in\Adm$.
+\end{lemma}
+\begin{proof}
+Put $h_r=(-1)^rg^{(r)}\ge0$. Then $h_r'=-h_{r+1}\le0$, so each $h_r$ is non-increasing. Hence
+$(-1)^r\big(g-g(\cdot+c)\big)^{(r)}(t)=h_r(t)-h_r(t+c)\ge0$ for all $r\ge0$ (for $r=0$ this is non-negativity).
+\end{proof}
+
+No Bernstein-type theorem is needed. With $g(t)=t^{-1/2}$ (the Coulomb case of the Riesz family, admissible by an explicit formula for the
+derivatives) the lemma gives the bilayer dipole kernel $2[t^{-1/2}-(t+d^2)^{-1/2}]$, which decays as $d^2t^{-3/2}$ and has a finite lattice
+energy. The same lemma covers every exciton--exciton kernel built from an admissible single-layer potential, in particular the
+Keldysh--Rytova potential, which is a positive mixture of exponentials $e^{-ur/r_0}/\sqrt{1+u^2}$ by the integral representation
+of $H_0-Y_0$~\cite{DLMF} (verified numerically here to $3\times10^{-31}$, not proved in Lean) and each exponential is completely monotone in
+$r^2$; and a Yukawa potential. The potential of a dual-gated device is a sum of image charges with alternating signs; its complete monotonicity
+is \emph{not} established here: we checked the sign pattern numerically up to order $5$ for gate distances $5$, $7.5$ and $10$~nm,
+which is evidence and not a proof.
+
+\paragraph{Kernel-checked.} In Lean~4 (Section~\ref{sec:lean}): Lemma~\ref{lem:diff}; that the bilayer kernel is admissible given the
+Riesz case $s=1$ (which is a corollary proved by the LeanMaster contribution~\cite{LeanMaster2026}); and the negative control that
+$e^{-t^2}$ (the cluster-crystal kernel of the generalised exponential model) is \emph{not} admissible.
+
+\paragraph{The Hartree coefficient.} For admissible $g$ with $g\to0$ at infinity,
+\begin{equation}\label{eq:hartree}
+\int_{\mathbb R^2}\!\big[g(|x|^2)-g(|x|^2+d^2)\big]\,d^2x=\pi\!\int_0^{d^2}\!g(t)\,dt
+\end{equation}
+(telescoping; Lean: \texttt{telescoping\_integral}). For $g=2t^{-1/2}$ this is $4\pi d$, in units $e^2/4\pi\varepsilon_0\varepsilon=1$:
+the capacitor formula $\tilde U(0)=e^2d/\varepsilon_0\varepsilon$, and the authors' $g_H=8\pi d$ in Rydberg units
+(Lean: \texttt{bilayer\_hartree}).
+
+\paragraph{Mean field.} A completely monotone function of $r^2$ is positive definite in every dimension~\cite{Schoenberg1938}, so its Fourier
+transform is non-negative. For a positive-semidefinite translation-invariant interaction on a finite abelian group, the uniform density
+minimises $\sum_{x,y}n(x)n(y)U(x-y)$ at fixed mass (Lean: \texttt{uniform\_minimises}, with positive semidefiniteness as a hypothesis).
+Consequently a Gross--Pitaevskii calculation with such a kernel cannot crystallise: the uniform state is its ground state, and the
+Bogoliubov spectrum has no roton. That is a statement about mean-field theory, not about the quantum fluid.
+
+\begin{proposition}[sandwich, on paper]\label{prop:sandwich}
+For $N$ bosons on a torus with the periodised completely monotone kernel $V_L$, the ground-state energy per particle satisfies
+$\elat(\rho)\le e_0(\rho)\le\eH(\rho)(1-1/N)$, with $\eH=\tfrac12\rho\tilde U(0)$.
+\end{proposition}
+\begin{proof}[Sketch]
+The periodic extension of any $N$-point configuration has centred density $\rho$ and $E_g$ equal to the per-cell average; the theorem
+and the non-negativity of the kinetic energy give the lower bound; the constant orbital gives the upper bound. The periodic-extension
+step is elementary and is not formalised here.
+\end{proof}
+
+\begin{table}[ht]\centering
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+$\rho d^2$ & $10^{-3}$ & $10^{-2}$ & $0.1$ & $0.3$ & $1$ & $3$\\
+$\eH/\elat$ & \SandA & \SandB & \SandC & \SandD & \SandE & \SandF\\
+\bottomrule
+\end{tabular}\\[4pt]
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+$n$ ($10^{12}$~cm$^{-2}$), $d=2$~nm & $0.1$ & $0.3$ & $0.5$ & $0.75$\\
+$\eH/\elat$ & \SandNA & \SandNB & \SandNC & \SandND\\
+\bottomrule
+\end{tabular}
+\caption{Hartree energy over classical lattice energy for the undamped bilayer kernel (independent numpy and Rust sums agree to
+$9\times10^{-14}$). In the experimental window the lower bound sits one decade below the Hartree energy: the fluid is deep in the quantum
+regime, the bound is tight only in the crystal limit, which the Mott transition pre-empts.}
+\end{table}
+
+\section{The experiment's own model}\label{sec:fourflavour}
+
+With flavours $1,2=\mathrm{KK},\mathrm{K'K'}$ (intravalley) and $3,4=\mathrm{KK'},\mathrm{K'K}$ (intervalley), the authors' energy is
+\begin{equation}
+H(n)=\sum_i(E_i-\mu)n_i+\tfrac12(g_H+g_X)\Big(\sum_in_i\Big)^2-g_X(n_1n_2+n_3n_4),\qquad n_i\ge0,
+\end{equation}
+with $E_{1,2}=\pm(g_v-g_c)\mu_BB-\Delta$, $E_{3,4}=\mp(g_c+g_v)\mu_BB$, $g_H=8\pi d$, $g_c\approx3$, $g_v\approx6$ and the
+phenomenological $g_X=1$, $\Delta=1~\mu$eV (Rydberg and Bohr-radius units; arXiv version 1). A four-variable quadratic energy is exactly what a
+proof assistant handles. We proved, in Lean, for $g_X>0$:
+\begin{enumerate}[nosep,label=\textbf{T\arabic*.}]
+\item a minimiser condenses at most one exchange pair, $\{1,2\}$ or $\{3,4\}$, except on the degenerate set $E_i=E_j$;
+\item on $\{1,2\}$: $n_2-n_1=2(g_v-g_c)\mu_BB/g_X$ and $N=2(\mu+\Delta)/(2g_H+g_X)$;
+\item on $\{3,4\}$: $n_3-n_4=2(g_c+g_v)\mu_BB/g_X$ and $N=2\mu/(2g_H+g_X)$;
+\item the grand potentials $\Omega_A=-(\mu+\Delta)^2/(2g_H+g_X)-\beta_A^2/g_X$ and
+$\Omega_B=-\mu^2/(2g_H+g_X)-\beta_B^2/g_X$, $\beta_A=(g_v-g_c)\mu_BB$, $\beta_B=(g_c+g_v)\mu_BB$;
+\item the first-order transition between them at $(\mu_BB_c)^2=g_X\Delta(2\mu+\Delta)/\big(4g_cg_v(2g_H+g_X)\big)$;
+\item for $g_X<0$ every minimiser is single-component (the Hartree--Fock ferromagnet; the negative control).
+\end{enumerate}
+T2 and T3 are the authors' printed formulas (a confirmation); T1 and T4--T6 are not printed in the main text of the arXiv version. With the
+quoted parameters at $n_x=0.5\times10^{12}\,\mathrm{cm}^{-2}$ the closed form gives $B_c=\FFBcmT$~mT; the authors' windows are
+$|B|<30$~mT (II$_A$) and $30$--$70$~mT (II$_B$) at that density. The agreement of magnitude is expected, since $g_X$ and $\Delta$ were chosen
+to describe the data. The statement $B_c\propto\sqrt n$ at fixed $\Delta$ reproduces the trend they report.
+
+\section{Lean formalisation}\label{sec:lean}
+
+\begin{table}[ht]\centering\small
+\begin{tabular}{@{}llp{7.2cm}@{}}
+\toprule
+file & role & named results\\
+\midrule
+\texttt{ExcitonX1.lean} & Lemma~\ref{lem:diff} & \texttt{admissible\_sub\_shift}, \texttt{admissible\_const\_mul}, \texttt{bilayerDipole\_admissible} (given $s=1$), \texttt{gem4\_not\_admissible}\\
+\texttt{FourFlavour.lean} & T1--T6 & \texttt{support\_in\_one\_pair}, \texttt{IIA\_polarisation}, \texttt{IIB\_polarisation}, \texttt{intravalley\_density}, \texttt{grand\_potential\_gap}, \texttt{critical\_field}, \texttt{single\_component\_of\_neg\_gX}\\
+\texttt{MeanField.lean} & Eq.~\eqref{eq:hartree}, mean field & \texttt{uniform\_minimises}, \texttt{telescoping\_integral}, \texttt{bilayer\_hartree}, \texttt{variational\_lower\_bound}\\
+\texttt{GradientFlow.lean} & energy monitor & \texttt{energy\_antitone}, \texttt{energy\_monotone\_ascent} (control)\\
+\texttt{FourFlavourNegativeControl.lean} & control & wrong-sign polarisation, \emph{fails to compile by design}\\
+\bottomrule
+\end{tabular}
+\caption{The Lean files (\texttt{exploration/exciton/lean/}). Every named result depends only on
+\{propext, Classical.choice, Quot.sound\}; no \texttt{sorry}. Compiled under Lean 4.34.0-rc2 / Mathlib 85e3a25 (the pin of the
+QuantumFluids library) and under \LEANNEW{} (Lean 4.34.1, Mathlib tag v4.34.1 = d13f23b7, the pin of the upstream project).}
+\end{table}
+\VERIFYSTATUS{}
+
+\section{Numerical tests on rusty-SUNDIALS}\label{sec:numerics}
+
+All experiments were \emph{pre-registered} before they ran (\texttt{docs/designs/EXCITON\_FLUID\_PHASE1\_PREREG.md}, committed with
+independent reference numbers produced by a separate numpy/mpmath script before the Rust code existed); gates are fixed there and two
+amendments, with their reasons and dates, are recorded in the same file and below. Results are read as registered, failures included.
+
+\subsection{Instrument}
+
+The code is a small Rust crate on rusty-SUNDIALS tree \texttt{996aaf0706e1} (release v11.6.0, commit \texttt{5db8041}), using the
+\texttt{cvode} crate with the BDF method (orders 1--5), relative tolerance $10^{-10}$ and an analytic Jacobian. Gate S0: the crate's own
+tests pass ($22$ of $22$, including the Adams-order and tight-tolerance tests); on $y'=-y$ to $t=10$ the Adams method at $\mathrm{rtol}=10^{-10}$
+needs \SzeroAdamsRhs{} right-hand-side evaluations for a maximum relative error \SzeroAdamsErr{} (the pre-fix first-order build of the
+shared Python environment needed about $2\times10^{6}$), and BDF at $\mathrm{rtol}=10^{-8}$ reaches \SzeroBdfErr.
+
+\subsection{Known answers, and the first failure}
+
+The energy per particle of $N$ points in a rectangular torus, with periodic images summed and the images of a point with itself included
+(as in the periodic extension the theorem is applied to), is $E=\frac1{2N}\sum_{(i,j,m)\ne(i,i,0)}g(|x_i-x_j+L\!\circ\! m|^2)$; the
+lattice energy is $\elat(\rho)=\tfrac12\sum_{a\ne0}g(|a|^2)$. The gates were: (KA-1a) $\sum' r^{-3}$ over the unit-spacing triangular
+lattice against $6\zeta(3/2)L(3/2,\chi_{-3})=11.0341757349\ldots$; (KA-1b) the Gaussian lattice energy against the Jacobi-theta closed form;
+(KA-1c) the lattice energies of all exactly summable kernels against an independent numpy sum; (KA-2) the Hartree integral
+$\int V\,d^2r=4\pi d$ by quadrature; (KA-3) the Rust energy and force against an independent numpy implementation at $35$ random
+configurations and the analytic Hessian against a finite difference of the force; (KA-4) the table of $\eH/\elat$.
+
+\begin{failbox}[title={KA-1a failed as registered, first}]
+The relative errors were $1.8\times10^{-4}$, $1.0\times10^{-4}$, $5.4\times10^{-5}$ at cutoffs $R=200,400,800$, halving with $R$. The lattice
+enumeration of both the numpy reference and the Rust code looped over $|m|,|k|\le R/a+3$ and missed the caps $|y|>\tfrac{\sqrt3}2R$ of
+the disk. Two implementations by the same author shared the slip; only the closed-form constant exposed it. Both were corrected, the
+references regenerated and the gates re-run unchanged (amendment A1). The exactly summable references changed by less than $2\times10^{-16}$,
+the sandwich table by at most $3\times10^{-4}$.
+\end{failbox}
+
+After the correction the gates read: KA-1a \KAaRel{} at $R=800$ (gate $10^{-6}$); KA-1b \KAbRel{}; KA-1c \KAcRel{} (and \KAcAtwoRel{} at the
+reduced cutoffs of amendment A2); KA-2 \KAtwoRel{}; KA-4 \KAfourRel{}; KA-3 energy \KAthreeE{}, force \KAthreeF{} (max-norm, relative),
+Hessian against finite differences \KAthreeHess{}; a Hessian with the sign flipped (planted) is detected.
+
+\subsection{The four-flavour flow}
+
+The imaginary-time flow $\dot\psi_i=-\psi_i\,\partial H/\partial n_i$, $n_i=\psi_i^2$, was integrated with CVODE (BDF, $\mathrm{rtol}=10^{-12}$)
+from \FFstarts{} random positive starts at $B=0.01$, $0.04$ and $0.2$~T. Every converged final state has its support inside one exchange
+pair (T1: no cross-pair supports among $\FFstarts{}$); the polarisations and total densities of T2, T3 are reproduced to
+\FFworstRel{} (gate $10^{-9}$); the field at which the grand potentials of the converged II$_A$ and II$_B$ states are equal is
+$B_c=\FFBcmT$~mT, equal to the closed form to \FFBcRel{} (gate $10^{-8}$); and starting from II$_A$ with a seed in flavour~2 the state
+leaves the intravalley pair at \FFspinNum{}~T against the closed-form spinodal \FFspinCF{}~T (gate $5\,\%$). The large metastability window
+is a property of the mean-field model, not a prediction of the experiment. The grand potential decreases along every flow.
+
+\subsection{N-particle gradient flows}
+\PENDING{results of the N-particle experiments}
+
+\section{Limitations and what we do not know}
+\PENDING{limitations}
+
+\section*{Reproducibility}
+\PENDING{reproducibility}
+
+\bibliographystyle{unsrt}
+\bibliography{refs_exciton}
+\end{document}
