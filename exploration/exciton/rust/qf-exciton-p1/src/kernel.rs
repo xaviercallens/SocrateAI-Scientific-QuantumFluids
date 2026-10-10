@@ -114,3 +114,29 @@ pub fn by_id(id: &str) -> Option<(Kernel, f64)> {
         _ => return None,
     })
 }
+
+/// Amendment A2 (compute budget): reduced cutoffs for the long-range exactly summable kernels, chosen so that the
+/// neglected terms stay below `1e-13` of `e_lat`.  `K2`: 30 (was 42); `K3`, `K4`: 34 (was 46).
+pub fn by_id_amended(id: &str) -> Option<(Kernel, f64)> {
+    let (k, rc) = by_id(id)?;
+    let rc = match id {
+        "K2" => 30.0,
+        "K3" | "K4" => 34.0,
+        _ => rc,
+    };
+    Some((k, rc))
+}
+
+/// `true` when the environment asks for amendment A2 (`QF_AMEND=A2`).
+pub fn amended() -> bool {
+    std::env::var("QF_AMEND").map(|v| v == "A2").unwrap_or(false)
+}
+
+/// Kernel and cutoff under the active amendment.
+pub fn active(id: &str) -> Option<(Kernel, f64)> {
+    if amended() {
+        by_id_amended(id)
+    } else {
+        by_id(id)
+    }
+}

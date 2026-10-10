@@ -152,3 +152,20 @@ relative (`ρd² = 10⁻³`: unchanged, 44.71; 0.01: 14.19 → 14.19; 0.1: 4.643
 3: 1.444 → 1.444). The plan's Appendix B table used a short cutoff; its `10⁻³` entry (43.8) is corrected to 44.7 there.
 Gates, tolerances and procedures are unchanged. Lesson recorded: two implementations by one author are not independent
 of that author's blind spots; a closed-form known answer is.
+
+**A2 (2026-10-10, 23:10 local; after K1 and K2@0.5/T36c had completed, before any other K2–K6 result was read).**
+Compute budget. Measured on a loaded 8-core machine, one run costs 27–54 s (K2), 38–131 s (K3) and 34–87 s (K4) of one
+core at the registered cutoffs; the registered design for K2–K4 (5 batches each, 200 starts and up to 200 hops) would
+take about 25 CPU-hours, and `K2@0.5/T36c` alone took 45 minutes on 2.7 cores. Changes, applied to the remaining K2–K4
+batches only:
+
+1. cutoffs reduced to `r_c = 30` (K2) and `34` (K3, K4), so that the neglected terms stay below `1e-13` of `e_lat`;
+   KA-1c re-run at these cutoffs (`ka_report_A2.json`): worst relative difference to `reference.json` is `2.3e-13`
+   (gate `1e-12`), and KA-3 is unchanged;
+2. 60 random starts per batch and up to 60 basin-hopping trials (was 200 and 200);
+3. no T64c for K2–K4 (it was run for K1 at `ρ = 0.5`);
+4. K5 and K6 (secondary) are not run in this session.
+
+K1, N1 and `K2@0.5/T36c` keep the registered design. Gates, tolerances and procedures are otherwise unchanged. The
+statements that can be made about K2–K4 are limited accordingly: 60 starts per batch, `r_c` as above. The environment
+variable `QF_AMEND=A2` switches the binaries to these settings (default: as registered).

@@ -1,7 +1,7 @@
 //! Known-answer gates KA-1a/b/c, KA-2, KA-3 (Rust side), KA-4 of the Phase 1 pre-registration.
 //!
 //!     ka <reference.json> <out_dir>
-use qf_exciton_p1::kernel::{by_id, Kernel};
+use qf_exciton_p1::kernel::{active as by_id, amended, Kernel};
 use qf_exciton_p1::lattice::{e_lat, lattice_t, random_start, spacing};
 use qf_exciton_p1::torus::Torus;
 use qf_exciton_p1::util::{json_f64, json_f64_from, json_pos, rel_err};
@@ -168,9 +168,12 @@ fn main() {
         }
     }
     dump.push_str("\n]\n");
-    fs::write(format!("{out_dir}/ka3_configs.json"), dump).unwrap();
+    if !amended() {
+        fs::write(format!("{out_dir}/ka3_configs.json"), dump).unwrap();
+    }
     writeln!(report, " \"KA3_rust_side\":{{\"rows\":[{}],\"pass\":{pass_3},\"planted_sign_flip_detected\":{all_neg_detected}}}", ka3.join(",\n")).unwrap();
     writeln!(report, "}}").unwrap();
-    fs::write(format!("{out_dir}/ka_report.json"), &report).unwrap();
+    let name = if amended() { "ka_report_A2.json" } else { "ka_report.json" };
+    fs::write(format!("{out_dir}/{name}"), &report).unwrap();
     println!("{report}");
 }

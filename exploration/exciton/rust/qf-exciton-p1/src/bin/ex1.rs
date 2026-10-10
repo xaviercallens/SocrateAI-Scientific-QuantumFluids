@@ -2,7 +2,7 @@
 //!
 //!     ex1 <out_dir> [case-id-substring] ...      env QF_THREADS (default 4)
 use qf_exciton_p1::flow::{relax, FlowOpts, FlowResult};
-use qf_exciton_p1::kernel::by_id;
+use qf_exciton_p1::kernel::{active, amended};
 use qf_exciton_p1::lattice::{e_lat, perturb, random_start, spacing, triangular_config};
 use qf_exciton_p1::torus::Torus;
 use std::fs;
@@ -60,7 +60,7 @@ fn registered_cases() -> Vec<Case> {
 }
 
 fn build_torus(c: &Case) -> (Torus, f64, usize, usize, bool) {
-    let (k, rc) = by_id(c.kernel).unwrap();
+    let (k, rc) = active(c.kernel).unwrap();
     let a = spacing(c.rho);
     let (lx, ly, n, nx, ny, comm) = match c.torus {
         "T36c" => (6.0 * a, 3.0 * 3.0f64.sqrt() * a, 36, 6, 3, true),
@@ -96,11 +96,15 @@ fn main() {
     let nthreads: usize = std::env::var("QF_THREADS").ok().and_then(|s| s.parse().ok()).unwrap_or(4);
     let opts = FlowOpts::default();
     for c in registered_cases() {
+        let long_range = matches!(c.kernel, "K2" | "K3" | "K4");
+        if amended() && long_range && c.torus == "T64c" {
+            continue; // amendment A2
+        }
         if !filters.is_empty() && !filters.iter().any(|f| c.id().contains(f.as_str())) {
             continue;
         }
         let (torus, a, nx, ny, commensurate) = build_torus(&c);
-        let (k, rc) = by_id(c.kernel).unwrap();
+        let (k, rc) = active(c.kernel).unwrap();
         let elat = e_lat(&k, c.rho, rc);
         let n = torus.n;
         let torus = Arc::new(torus);
@@ -116,7 +120,10 @@ fn main() {
         eprintln!("[{}] N={n} a={a:.4} e_lat={elat:.10} selftest={selftest:e}", c.id());
         let lines: Arc<Mutex<Vec<String>>> = Arc::new(Mutex::new(Vec::new()));
         let best: Arc<Mutex<(f64, Vec<f64>)>> = Arc::new(Mutex::new((f64::INFINITY, Vec::new())));
-        let nstart = 200u64;
+        // QF_NSTART overrides the registered 200 starts (timing tests only; never used for registered runs)
+        let default_start: u64 = if amended() && long_range { 60 } else { 200 };
+        let nstart: u64 = std::env::var("QF_NSTART").ok().and_then(|v| v.parse().ok()).unwrap_or(default_start);
+        let max_hops: u64 = if amended() && long_range { 60 } else { 200 };
         let next = Arc::new(Mutex::new(0u64));
         std::thread::scope(|sc| {
             for _ in 0..nthreads {
@@ -152,12 +159,12 @@ fn main() {
         // basin hopping on commensurate tori until attained (up to 200 trials), in rounds of `nthreads`
         let mut hops = 0u64;
         if commensurate {
-            while hops < 200 {
+            while hops < max_hops {
                 let (be, bx) = best.lock().unwrap().clone();
                 if be / elat - 1.0 <= tol_attain {
                     break;
                 }
-                let round: Vec<u64> = (0..nthreads as u64).map(|j| hops + j).filter(|&h| h < 200).collect();
+                let round: Vec<u64> = (0..nthreads as u64).map(|j| hops + j).filter(|&h| h < max_hops).collect();
                 std::thread::scope(|sc| {
                     for &h in &round {
                         let (torus, lines, best, opts, c, bx) =
@@ -189,8 +196,8 @@ fn main() {
         fs::write(
             format!("{out}/case_{}.json", c.id()),
             format!(
-                "{{\"case\":\"{}\",\"kernel\":\"{}\",\"rho\":{},\"torus\":\"{}\",\"n\":{n},\"a\":{a:.16},\"lx\":{:.16},\"ly\":{:.16},\"rc\":{rc},\"tail\":{:.16e},\"e_lat\":{elat:.16e},\"selftest_rel\":{selftest:e},\"best_e\":{be:.16e},\"best_ratio\":{:.16e},\"hops\":{hops},\"best_x\":[{}]}}\n",
-                c.id(), c.kernel, c.rho, c.torus, torus.lx, torus.ly, torus.tail, be / elat, xs.join(",")
+                "{{\"case\":\"{}\",\"kernel\":\"{}\",\"rho\":{},\"torus\":\"{}\",\"n\":{n},\"a\":{a:.16},\"lx\":{:.16},\"ly\":{:.16},\"rc\":{rc},\"tail\":{:.16e},\"e_lat\":{elat:.16e},\"selftest_rel\":{selftest:e},\"best_e\":{be:.16e},\"best_ratio\":{:.16e},\"hops\":{hops},\"amendment\":\"{}\",\"nstart\":{nstart},\"best_x\":[{}]}}\n",
+                c.id(), c.kernel, c.rho, c.torus, torus.lx, torus.ly, torus.tail, be / elat, if amended() { "A2" } else { "none" }, xs.join(",")
             ),
         )
         .unwrap();
