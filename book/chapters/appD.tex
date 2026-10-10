@@ -1,0 +1,50 @@
+\chapter{Constants, Units and Notation}\label{appD}
+
+\noindent This appendix collects what a reader needs in order to move between the chapters: the physical constants and where their values come from (\cref{appD:sec-constants}), the units in which each part of the book computes and the factors that convert between them (\cref{appD:sec-units}), the symbols, with the chapters that use them and the places where one letter carries two meanings (\cref{appD:sec-notation}), and a glossary (\cref{appD:sec-glossary}).
+Every number printed here is computed by the script \texttt{figures/\allowbreak{}appD\_\allowbreak{}numbers.\allowbreak{}py} from the sources named below and stored in \texttt{figures/\allowbreak{}appD\_\allowbreak{}numbers.\allowbreak{}json}; the script also checks each of its values against the value the chapters themselves used, where a chapter computed the same quantity.
+
+%% ====================================================================================================================
+\section{Physical constants}\label{appD:sec-constants}
+
+The fundamental constants are the CODATA 2022 recommended values (P.~J. Mohr, D.~B. Newell, B.~N. Taylor and E.~Tiesinga, Rev.\ Mod.\ Phys.\ \textbf{97}, 025002 (2025), doi:\href{https://doi.org/10.1103/RevModPhys.97.025002}{10.1103/RevModPhys.97.025002}), read through \texttt{scipy.constants} of SciPy~1.18.1, the version in the book's Python environment.
+That this version carries the 2022 set and not an earlier one was checked twice: the module itself names its current set ``CODATA 2022'', and the values it returns for the atomic mass constant and the neutron mass are the ones printed on the NIST pages of these two constants, which are labelled ``2022 CODATA recommended values'' (consulted 10 October 2026).
+Since the revision of the SI in 2019, $h$, $k_{\rm B}$, $e$ and $N_{\rm A}$ have exact defined values, and so has $\hbar=h/2\pi$, although its decimal expansion does not end; the masses are measured and carry an uncertainty, given in parentheses in units of the last digits.
+The atomic masses of the two helium isotopes are not CODATA quantities.
+They were taken from the NIST database \emph{Atomic Weights and Isotopic Compositions} (page for helium, consulted 10 October 2026), which gives relative atomic masses, that is, masses in units of $m_{\rm u}$; the masses in kilograms of \cref{appD:tab-constants} are those numbers multiplied by $m_{\rm u}$.%
+\footnote{As a check, the script adds two electron masses to the CODATA masses of the bare nuclei (the $\alpha$ particle and the helion) and subtracts the NIST atomic masses: the difference is \num{79.0}~eV for helium-4 and \num{80.7}~eV for helium-3, the binding energy of the two electrons of a helium atom (about \num{79.0}~eV), within the uncertainty of the NIST helium-3 value (\num{2.3}~eV).}
+
+\begin{table}[tbp]\centering\small\renewcommand{\arraystretch}{1.18}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright}X l l l@{}}\toprule
+quantity & symbol & value & unit\\\midrule
+Planck constant & $h$ & \num{6.62607015e-34} (exact) & J\,s\\
+reduced Planck constant & $\hbar=h/2\pi$ & \num{1.054571817}\ldots${}\times10^{-34}$ (exact) & J\,s\\
+Boltzmann constant & $k_{\rm B}$ & \num{1.380649e-23} (exact) & J\,K$^{-1}$\\
+elementary charge & $e$ & \num{1.602176634e-19} (exact) & C\\
+Avogadro constant & $N_{\rm A}$ & \num{6.02214076e23} (exact) & mol$^{-1}$\\
+speed of light in vacuum\textsuperscript{a} & $c_0$ & \num{299792458} (exact) & m\,s$^{-1}$\\
+atomic mass constant & $m_{\rm u}$ & \num{1.66053906892(52)e-27} & kg\\
+neutron mass & $m_n$ & \num{1.67492750056(85)e-27} & kg\\\midrule
+relative atomic mass of $^3$He & $A_{\rm r}(^3\mathrm{He})$ & \num{3.0160293201(25)} & ---\\
+relative atomic mass of $^4$He & $A_{\rm r}(^4\mathrm{He})$ & \num{4.00260325413(6)} & ---\\
+mass of a $^3$He atom & $m_3$ & \num{5.00823452e-27} & kg\\
+mass of a $^4$He atom & $m_4$ & \num{6.64647908e-27} & kg\\\bottomrule
+\end{tabularx}
+\caption[Physical constants]{Physical constants used in the book. Upper block: CODATA 2022 through \texttt{scipy.constants} (SciPy~1.18.1). Lower block: NIST relative atomic masses of the helium atoms (neutral atoms, electrons included) and the masses $m_3=A_{\rm r}m_{\rm u}$, $m_4=A_{\rm r}m_{\rm u}$ derived from them. \textsuperscript{a}Used once, for the energy of a photon in \cref{ch01}; the letter $c$ is kept for the speeds of sound.}\label{appD:tab-constants}
+\end{table}
+
+Three chapters use the helium-4 mass, and two values of it occur.
+\Cref{ch03,ch06} use the NIST value of \cref{appD:tab-constants}; \cref{ch05} uses $m_4=\num{4.0026032}\,m_{\rm u}$, the molar mass in grams per mole quoted by Godfrin and collaborators~\cite{Godfrin2021}.
+The two differ by one part in $10^{8}$, far below every other uncertainty of those chapters.
+
+%% ====================================================================================================================
+\section{Units}\label{appD:sec-units}
+
+The book computes in two systems of units, and the reader moves between them more often than the chapters say.
+The measurements of helium are reported in the units of the neutron spectrometer and the cryostat: energies in meV (or in kelvin, through $k_{\rm B}$), wave numbers in \AA$^{-1}$, temperatures in kelvin, speeds in m\,s$^{-1}$.
+The solvers of the Gross--Pitaevskii field work in dimensionless units in which $\hbar$, the mass and the interaction energy are all equal to one.
+A few chapters use further reduced variables of their own; they are listed at the end of this section.
+
+\subsection{The laboratory: kelvin, meV and inverse ångström}\label{appD:sec-lab}
+
+A neutron of wave vector $\mathbf k_i$ that leaves the sample with $\mathbf k_f$ has given it the energy $\hbar\omega=E_i-E_f$ at the wave-vector transfer $\mathbf Q=\mathbf k_i-\mathbf k_f$; spectrometers report $\hbar\omega$ in meV and $Q=|\mathbf Q|$ in \AA$^{-1}$, and the dispersion relation of an excitation, $\varepsilon(k)$, is read from the line along which the scattered intensity concentrates.
+Energies are converted to kelvin with $k_{\rm B}$, wave numbers into speeds with $\hbar$; \cref{appD:tab-lab} gives the factors that the chapters use, and a few that complete them.

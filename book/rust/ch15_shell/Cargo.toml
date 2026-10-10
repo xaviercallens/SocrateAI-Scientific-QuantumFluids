@@ -1,0 +1,13 @@
+[package]
+name = "ch15_shell"
+version = "0.1.0"
+edition = "2021"
+description = "Book chapter ch15 (quantum turbulence): CVODE and qf-shell-cascade on the dyadic shell model"
+
+[workspace]
+
+[dependencies]
+cvode = { path = "/home/xavkal/xdev/rusty-SUNDIALS-c3/crates/cvode" }
+nvector = { path = "/home/xavkal/xdev/rusty-SUNDIALS-c3/crates/nvector" }
+qf-shell-cascade = { path = "/home/xavkal/xdev/rusty-SUNDIALS-c3/crates/qf-shell-cascade" }
+num-complex = "0.4"

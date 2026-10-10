@@ -31,6 +31,11 @@ AUD = HERE / "audit"
 CH = BOOK / "chapters"
 BL = BOOK / "lean"
 
+def _git_ignored(path) -> bool:
+    """True if git ignores the file (superseded stubs that could not be deleted are ignored, so the book must not list them)."""
+    import subprocess
+    return subprocess.run(["git", "check-ignore", "-q", str(path)], cwd=str(Path(__file__).resolve().parent), capture_output=True).returncode == 0
+
 DECL = re.compile(r"^(?:noncomputable\s+)?(?:@\[[^\]]*\]\s*)?(theorem|lemma|def|structure|abbrev|inductive|instance)\s+([^\s:({\[]+)")
 OPEN, CLOSE = "([{⟨⦃⌊⌈", ")]}⟩⦄⌋⌉"
 STD = ("propext", "Classical.choice", "Quot.sound")
@@ -522,7 +527,7 @@ def main() -> int:
     allfiles = sorted(BL.glob("*.lean"))
     newfiles = [f for f in allfiles if not is_negative_control(f) and not is_placeholder(f)]       # theorem files: the only ones that are counted
     ctrlfiles = [f for f in allfiles if is_negative_control(f)]                                     # deliberate negative controls: expected to fail
-    phfiles = [f for f in allfiles if is_placeholder(f) and not is_negative_control(f)]
+    phfiles = [f for f in allfiles if is_placeholder(f) and not is_negative_control(f) and not _git_ignored(f)]
     A(r"\section{Lean written for this book}\label{appA:new}")
     A(r"The files below are \emph{new}: they were written for the book, are not part of the \lean{QuantumFluids} library, and live in \texttt{book/lean/}. "
       r"Each is compiled by its chapter author against the same pinned Mathlib (Lean 4.34.0-rc2), together with the library modules it imports when it says so, and, as the book's rules require, ends with \texttt{\#print axioms} lines. "

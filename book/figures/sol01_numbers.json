@@ -1,0 +1,252 @@
+{
+ "script": "book/figures/sol01_numbers.py",
+ "chapter_numbers_file": "book/figures/ch01_numbers.json",
+ "exercise1": {
+  "constants": {
+   "hbar2_over_2m_n_exact_meV_A2": 2.0721248519893347,
+   "hbar2_over_2m_n_exercise": 2.072,
+   "hbar_over_m_n_ms_per_invA": 629.6223671135424,
+   "h_over_m_n_ms_A": 3956.034006119441
+  },
+  "roton_rounded": {
+   "Q": 1.92,
+   "eps_meV": 0.741,
+   "hbar2_over_2m": 2.072,
+   "k_min": 1.0531316361003862,
+   "recoil_term_invA": 0.96,
+   "price_term_invA": 0.0931316361003861,
+   "lam_max_A": 5.96619177679006,
+   "E_i_min_meV": 2.2980266954037467,
+   "v_min_ms": 663.035281251432,
+   "v_recoil_ms": 604.4010531848663,
+   "v_phase_ms": 58.634228066565704
+  },
+  "roton_exact_constants_table_values": {
+   "Q": 1.92,
+   "eps_meV": 0.7413,
+   "hbar2_over_2m": 2.0721248519893347,
+   "k_min": 1.0531637274726309,
+   "recoil_term_invA": 0.96,
+   "price_term_invA": 0.0931637274726309,
+   "lam_max_A": 5.966009978579395,
+   "E_i_min_meV": 2.298305230045314,
+   "v_min_ms": 663.0954390494394,
+   "v_recoil_ms": 604.4374724290005,
+   "v_phase_ms": 58.65796662043881
+  },
+  "Q3_rounded": {
+   "Q": 3.0,
+   "eps_meV": 1.478,
+   "hbar2_over_2m": 2.072,
+   "k_min": 1.6188867438867438,
+   "recoil_term_invA": 1.5,
+   "price_term_invA": 0.11888674388674388,
+   "lam_max_A": 3.881176574523334,
+   "E_i_min_meV": 5.4302857679107674,
+   "v_min_ms": 1019.2258885335071,
+   "v_recoil_ms": 944.3766456013536,
+   "v_phase_ms": 74.84924293215362
+  },
+  "Q3_exact_constants_table_values": {
+   "Q": 3.0,
+   "eps_meV": 1.4784,
+   "hbar2_over_2m": 2.0721248519893347,
+   "k_min": 1.6189117536829138,
+   "recoil_term_invA": 1.5,
+   "price_term_invA": 0.1189117536829138,
+   "lam_max_A": 3.8811166160760573,
+   "E_i_min_meV": 5.430780773083473,
+   "v_min_ms": 1019.3030505017721,
+   "v_recoil_ms": 944.4335506703135,
+   "v_phase_ms": 74.86949983145867
+  },
+  "Q_to_0_c_fit_ch01": {
+   "c_ms": 238.7038976740969,
+   "lam_max_A": 16.572976162796575,
+   "E_i_min_meV": 0.2978342541023717
+  },
+  "Q_to_0_c_ultrasound_paper": {
+   "c_ms": 238.3,
+   "lam_max_A": 16.601065909019894,
+   "E_i_min_meV": 0.2968272090412838
+  },
+  "lam_max_small_Q_from_table": [
+   {
+    "Q": 0.02,
+    "eps_meV": 0.0314,
+    "v_phase_ms": 238.52498931694421,
+    "v_recoil_ms": 6.296223671135423,
+    "v_min_ms": 244.82121298807962,
+    "lam_max_A": 16.158869396305377
+   },
+   {
+    "Q": 0.05,
+    "eps_meV": 0.0787,
+    "v_phase_ms": 239.13269629609567,
+    "v_recoil_ms": 15.740559177838557,
+    "v_min_ms": 254.87325547393422,
+    "lam_max_A": 15.521573649472304
+   },
+   {
+    "Q": 0.1,
+    "eps_meV": 0.1587,
+    "v_phase_ms": 241.10774397833788,
+    "v_recoil_ms": 31.481118355677115,
+    "v_min_ms": 272.588862334015,
+    "lam_max_A": 14.512823349590638
+   },
+   {
+    "Q": 0.2,
+    "eps_meV": 0.3244,
+    "v_phase_ms": 246.42518004591307,
+    "v_recoil_ms": 62.96223671135423,
+    "v_min_ms": 309.38741675726726,
+    "lam_max_A": 12.78666743328861
+   },
+   {
+    "Q": 0.4,
+    "eps_meV": 0.6581,
+    "v_phase_ms": 249.95747686223086,
+    "v_recoil_ms": 125.92447342270846,
+    "v_min_ms": 375.8819502849393,
+    "lam_max_A": 10.5246713845146
+   }
+  ]
+ },
+ "exercise2": {
+  "theta": [
+   0.0,
+   3.141592653589793,
+   0.0,
+   3.141592653589793,
+   0.0
+  ],
+  "steps_over_pi": [
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "sum_over_2pi": 2.0,
+  "reversed_steps_over_pi": [
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "reversed_sum_over_2pi": 2.0,
+  "round_trip_per_edge_over_pi": 2.0,
+  "smooth_loops_through_the_samples": [
+   {
+    "loop": "theta = 2 phi",
+    "samples_mod_2pi_over_pi": [
+     0.0,
+     1.0,
+     0.0,
+     1.0
+    ],
+    "winding_fine": 2.0,
+    "detector_on_4_samples": 2.0
+   },
+   {
+    "loop": "theta = -2 phi",
+    "samples_mod_2pi_over_pi": [
+     0.0,
+     1.0,
+     0.0,
+     1.0
+    ],
+    "winding_fine": -2.0,
+    "detector_on_4_samples": 2.0
+   },
+   {
+    "loop": "theta = pi sin^2 phi",
+    "samples_mod_2pi_over_pi": [
+     0.0,
+     1.0,
+     0.0,
+     1.0
+    ],
+    "winding_fine": 0.0,
+    "detector_on_4_samples": 2.0
+   },
+   {
+    "loop": "theta = phi + 3pi/4 - (pi/2)(cos phi + sin phi) - (pi/4) cos 2phi",
+    "samples_mod_2pi_over_pi": [
+     0.0,
+     1.0,
+     0.0,
+     1.0
+    ],
+    "winding_fine": 1.0,
+    "detector_on_4_samples": 2.0
+   }
+  ]
+ },
+ "exercise3": {
+  "L": 64.0,
+  "d": 11.75,
+  "u_min": 0.018024274257656285,
+  "u_next_sector_magnitude": 0.08015049616702476,
+  "table_of_sectors": [
+   {
+    "n_out": -2,
+    "n_in": -1,
+    "mean_vy": -0.17832526659170578
+   },
+   {
+    "n_out": -1,
+    "n_in": 0,
+    "mean_vy": -0.08015049616702476
+   },
+   {
+    "n_out": 0,
+    "n_in": 1,
+    "mean_vy": 0.018024274257656285
+   },
+   {
+    "n_out": 1,
+    "n_in": 2,
+    "mean_vy": 0.11619904468233731
+   }
+  ],
+  "v_rows_box_sector00": [
+   0.0,
+   0.09381335288324819
+  ],
+  "v_torus_zero_mean_WM": [
+   -0.0,
+   0.07578907862559818
+  ],
+  "v_rows_minus_WM_over_u": 0.9999999999996516,
+  "v_plane": 0.0851063829787234,
+  "images_correction": -0.009317304353125222,
+  "at_d_fit20": {
+   "d": 11.761588596685407,
+   "v_torus_WM": 0.07569542998954677,
+   "v_rows": 0.09373748093187054,
+   "chapter_v_pv_torus": 0.07569580935059825
+  },
+  "leading_order_torus": 0.07609424584989526,
+  "chapter": {
+   "v_meas": 0.09319820019541832,
+   "v_meas_half_range": 0.00040631107991521975,
+   "v_torus": 0.07569580935059825,
+   "u_P_over_N": 0.017749372644982737,
+   "u_from_windings": 0.018030126408654968,
+   "x_separation_t10": 11.753815009316913,
+   "cycle_windings_t10": {
+    "vertical x=10": 2.760898160992636e-17,
+    "vertical x=32": 1.0000000000000517,
+    "vertical x=54": 2.5400263081132252e-17,
+    "horizontal y=10": 4.831571781737114e-19,
+    "horizontal y=54": -1.6496366511931e-17
+   }
+  },
+  "meas_minus_torus": 0.017502390844820068,
+  "meas_minus_torus_over_u_min": 0.9710455241983164,
+  "pred_torus_plus_u_windings": 0.09372593575925321,
+  "rel_dev_meas_vs_torus_plus_u_windings": -0.005630624645780569,
+  "u_windings_t10_check": 0.01803012640865403
+ }
+}

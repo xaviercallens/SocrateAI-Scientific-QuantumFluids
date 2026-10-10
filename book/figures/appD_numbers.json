@@ -1,0 +1,573 @@
+{
+ "meta": {
+  "python": "3.12.3",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "scipy_current_codata": "CODATA 2022",
+  "codata_reference": "P. J. Mohr, D. B. Newell, B. N. Taylor, E. Tiesinga, CODATA recommended values of the fundamental physical constants: 2022, Rev. Mod. Phys. 97, 025002 (2025), doi:10.1103/RevModPhys.97.025002 (Crossref record checked 2026-10-10)",
+  "nist_codata_pages_checked_2026_10_10": {
+   "atomic mass constant (https://physics.nist.gov/cgi-bin/cuu/Value?ukg)": "1.660 539 068 92(52) x 10^-27 kg, Source: 2022 CODATA",
+   "neutron mass (https://physics.nist.gov/cgi-bin/cuu/Value?mn)": "1.674 927 500 56(85) x 10^-27 kg, Source: 2022 CODATA"
+  },
+  "nist_helium_page": "https://physics.nist.gov/cgi-bin/Compositions/stand_alone.pl?ele=He (consulted 2026-10-10)"
+ },
+ "codata": {
+  "h": {
+   "scipy_key": "Planck constant",
+   "value": 6.62607015e-34,
+   "unit": "J Hz^-1",
+   "uncertainty": 0.0,
+   "exact": true,
+   "name": "Planck constant",
+   "tex": "6.62607015e-34",
+   "tex_unit": "J Hz^-1"
+  },
+  "hbar": {
+   "scipy_key": "reduced Planck constant",
+   "value": 1.0545718176461565e-34,
+   "unit": "J s",
+   "uncertainty": 0.0,
+   "exact": true,
+   "name": "reduced Planck constant",
+   "tex": "1.054571817e-34",
+   "tex_unit": "J s",
+   "note": "exact (h/2pi); CODATA prints 1.054 571 817... x 10^-34 J s"
+  },
+  "kB": {
+   "scipy_key": "Boltzmann constant",
+   "value": 1.380649e-23,
+   "unit": "J K^-1",
+   "uncertainty": 0.0,
+   "exact": true,
+   "name": "Boltzmann constant",
+   "tex": "1.380649e-23",
+   "tex_unit": "J K^-1"
+  },
+  "e": {
+   "scipy_key": "elementary charge",
+   "value": 1.602176634e-19,
+   "unit": "C",
+   "uncertainty": 0.0,
+   "exact": true,
+   "name": "elementary charge",
+   "tex": "1.602176634e-19",
+   "tex_unit": "C"
+  },
+  "NA": {
+   "scipy_key": "Avogadro constant",
+   "value": 6.02214076e+23,
+   "unit": "mol^-1",
+   "uncertainty": 0.0,
+   "exact": true,
+   "name": "Avogadro constant",
+   "tex": "6.02214076e23",
+   "tex_unit": "mol^-1"
+  },
+  "c0": {
+   "scipy_key": "speed of light in vacuum",
+   "value": 299792458.0,
+   "unit": "m s^-1",
+   "uncertainty": 0.0,
+   "exact": true,
+   "name": "speed of light in vacuum",
+   "tex": "2.99792458e8",
+   "tex_unit": "m s^-1"
+  },
+  "mu": {
+   "scipy_key": "atomic mass constant",
+   "value": 1.66053906892e-27,
+   "unit": "kg",
+   "uncertainty": 5.2e-37,
+   "exact": false,
+   "name": "atomic mass constant",
+   "tex": "1.66053906892(52)e-27",
+   "tex_unit": "kg"
+  },
+  "mn": {
+   "scipy_key": "neutron mass",
+   "value": 1.67492750056e-27,
+   "unit": "kg",
+   "uncertainty": 8.5e-37,
+   "exact": false,
+   "name": "neutron mass",
+   "tex": "1.67492750056(85)e-27",
+   "tex_unit": "kg"
+  }
+ },
+ "helium_masses": {
+  "source": "NIST Atomic Weights and Isotopic Compositions for Helium, physics.nist.gov/cgi-bin/Compositions/stand_alone.pl?ele=He, consulted 2026-10-10",
+  "A_r_He3": {
+   "value": 3.0160293201,
+   "uncertainty": 2.5e-09,
+   "tex": "3.0160293201(25)"
+  },
+  "A_r_He4": {
+   "value": 4.00260325413,
+   "uncertainty": 6e-11,
+   "tex": "4.00260325413(6)"
+  },
+  "standard_atomic_weight_He": "4.002602(2) (same page)",
+  "isotopic_composition": "3He 0.000 001 34(3), 4He 0.999 998 66(3) (same page)",
+  "m3_kg": {
+   "value": 5.008234519034274e-27,
+   "tex": "5.00823452e-27"
+  },
+  "m4_kg": {
+   "value": 6.646479080869192e-27,
+   "tex": "6.64647908e-27"
+  },
+  "crosscheck_binding_energy_eV": {
+   "He4": 79.00661697134886,
+   "He3": 80.71404646660727,
+   "He3_uncertainty_eV": 2.3287352593,
+   "He_ionisation_sum_eV": 79.00515453919999,
+   "tex": [
+    "79.0",
+    "80.7",
+    "79.0",
+    "2.3"
+   ],
+   "note": "(A_r(nucleus, CODATA 2022) + 2 A_r(e) - A_r(atom, NIST)) m_u c^2 against the sum of the two ionisation energies of helium (NIST ASD: 24.587389011 + 54.4177655282 eV); He-3 agrees within the 2.3 eV that the NIST uncertainty (25 in the last digits) allows"
+  },
+  "ch05_rounded_value": {
+   "value": 4.0026032,
+   "relative_difference_to_NIST": -1.35236986034005e-08,
+   "note": "Chapter ch05 uses 4.0026032 (the molar mass quoted by Godfrin et al. 2021); ch03 and ch06 use the NIST value"
+  }
+ },
+ "conversions": {
+  "meV_in_K": {
+   "value": 11.60451812155008,
+   "tex": "11.60452",
+   "unit": "K",
+   "used_in": [
+    "ch01",
+    "ch04",
+    "ch05"
+   ],
+   "how": "1e-3 e / k_B"
+  },
+  "K_in_meV": {
+   "value": 0.08617333262145178,
+   "tex": "0.08617333",
+   "unit": "meV",
+   "used_in": [],
+   "how": "k_B / (1e-3 e)"
+  },
+  "meV_in_THz": {
+   "value": 0.24179892420849178,
+   "tex": "0.2417989",
+   "unit": "THz",
+   "used_in": [],
+   "how": "1e-3 e / h  (frequency nu = E/h)"
+  },
+  "hbar2_2mn_meV_A2": {
+   "value": 2.0721248519893347,
+   "tex": "2.07212",
+   "unit": "meV A^2",
+   "used_in": [
+    "ch01"
+   ],
+   "how": "hbar^2/(2 m_n): neutron E = 2.0721 meV A^2 k^2"
+  },
+  "h2_2mn_meV_A2": {
+   "value": 81.80421023520228,
+   "tex": "81.8042",
+   "unit": "meV A^2",
+   "used_in": [
+    "ch01"
+   ],
+   "how": "h^2/(2 m_n): neutron E lambda^2"
+  },
+  "h_over_mn_ms_A": {
+   "value": 3956.034006119441,
+   "tex": "3956.03",
+   "unit": "m s^-1 A",
+   "used_in": [
+    "ch01"
+   ],
+   "how": "h/m_n: neutron v lambda"
+  },
+  "hbar2_2m4_meV_A2": {
+   "value": 0.5221800681176418,
+   "tex": "0.52218",
+   "unit": "meV A^2",
+   "used_in": [
+    "ch05"
+   ],
+   "how": "hbar^2/(2 m_4), free 4He atom"
+  },
+  "hbar2_2m4_K_A2": {
+   "value": 6.05964806318343,
+   "tex": "6.0596",
+   "unit": "K A^2",
+   "used_in": [],
+   "how": "hbar^2/(2 m_4 k_B)"
+  },
+  "hbar2_2m3_meV_A2": {
+   "value": 0.6929904911601454,
+   "tex": "0.69299",
+   "unit": "meV A^2",
+   "used_in": [],
+   "how": "hbar^2/(2 m_3), free 3He atom"
+  },
+  "hbar2_2m3_K_A2": {
+   "value": 8.041820712729798,
+   "tex": "8.0418",
+   "unit": "K A^2",
+   "used_in": [],
+   "how": "hbar^2/(2 m_3 k_B)"
+  },
+  "meVA_over_hbar_ms": {
+   "value": 151.92674478786262,
+   "tex": "151.927",
+   "unit": "m s^-1",
+   "used_in": [
+    "ch05"
+   ],
+   "how": "a slope d eps/dk of 1 meV A is a group velocity of 151.93 m/s"
+  },
+  "kappa4_m2_s": {
+   "value": 9.969293620545747e-08,
+   "tex": "9.9693e-8",
+   "unit": "m^2 s^-1",
+   "used_in": [
+    "ch03"
+   ],
+   "how": "h/m_4, quantum of circulation in 4He"
+  },
+  "kappa3pair_m2_s": {
+   "value": 6.615175592134301e-08,
+   "tex": "6.6152e-8",
+   "unit": "m^2 s^-1",
+   "used_in": [],
+   "how": "h/(2 m_3), circulation quantum of a Cooper-paired 3He superfluid (pair mass 2 m_3)"
+  },
+  "universal_jump_SI": {
+   "value": 3.4913578770496594e-08,
+   "tex": "3.4914e-8",
+   "unit": "kg m^-2 K^-1",
+   "used_in": [
+    "ch06"
+   ],
+   "how": "rho_s(T_c^-)/T_c = 8 pi k_B (m_4/h)^2"
+  },
+  "universal_jump_cgs": {
+   "value": 3.4913578770496592e-09,
+   "tex": "3.4914e-9",
+   "unit": "g cm^-2 K^-1",
+   "used_in": [
+    "ch06"
+   ],
+   "how": "same in g cm^-2 K^-1"
+  },
+  "hbar_c_meV_A": {
+   "value": 1.5685190934140107,
+   "tex": "1.5685",
+   "unit": "meV A",
+   "used_in": [
+    "ch05"
+   ],
+   "how": "hbar c with c = 238.3 m/s: the slope of the phonon branch"
+  },
+  "theta_K_A": {
+   "value": 18.201908243520194,
+   "tex": "18.202",
+   "unit": "K A",
+   "used_in": [
+    "ch04"
+   ],
+   "how": "hbar c / k_B with c = 238.3 m/s"
+  },
+  "kT_per_K": {
+   "value": 0.05493929463994502,
+   "tex": "0.05494",
+   "unit": "A^-1 K^-1",
+   "used_in": [
+    "ch04"
+   ],
+   "how": "k_B T/(hbar c) per kelvin: the thermal phonon wave number"
+  },
+  "kstar_A": {
+   "value": 3.003789667936232,
+   "tex": "3.00",
+   "unit": "A^-1",
+   "used_in": [
+    "ch05"
+   ],
+   "how": "2 m_4 c / hbar: the one Bogoliubov wave number of 4He parameters"
+  },
+  "n_from_Vm_A3": {
+   "value": 0.021835727375241573,
+   "tex": "0.021836",
+   "unit": "A^-3",
+   "used_in": [],
+   "how": "N_A / V_m: number density at the molar volume of ch04"
+  },
+  "rho_from_Vm_g_cm3": {
+   "value": 0.14513070506249254,
+   "tex": "0.14513",
+   "unit": "g cm^-3",
+   "used_in": [],
+   "how": "A_r(4He) g/mol / V_m: mass density at the molar volume of ch04"
+  }
+ },
+ "he4": {
+  "c": {
+   "value": 238.3,
+   "tex": "238.3",
+   "unit": "m s^-1",
+   "chapters": [
+    "ch04",
+    "ch05"
+   ],
+   "source": "Godfrin et al., Phys. Rev. B 103, 104516 (2021), arXiv:2012.09067 (the chapters read the arXiv v1 source); ultrasound value 238.3 +- 0.1 m/s quoted there",
+   "numbers_file_key": "ch04_numbers.json constants.c_m_per_s; ch05_numbers.json c; ch05 paper_quotes_used_literally.c_ultrasound_ms = 238.3 +- 0.1"
+  },
+  "Vm": {
+   "value": 27.5793,
+   "tex": "27.5793",
+   "unit": "cm^3 mol^-1",
+   "chapters": [
+    "ch04"
+   ],
+   "source": "Godfrin et al., Phys. Rev. B 103, 104516 (2021), arXiv:2012.09067 (the chapters read the arXiv v1 source) (molar volume at saturated vapour pressure quoted there)",
+   "numbers_file_key": "ch04_numbers.json constants.V_cm3_per_mol"
+  },
+  "alpha2": {
+   "value": 1.55,
+   "tex": "1.55",
+   "unit": "A^2",
+   "chapters": [
+    "ch04",
+    "ch05"
+   ],
+   "source": "Godfrin et al., Phys. Rev. B 103, 104516 (2021), arXiv:2012.09067 (the chapters read the arXiv v1 source); alpha2 = 1.55(1) A^2 from Rugar & Foster (1984), alpha1 = 0",
+   "numbers_file_key": "ch04 constants.alpha_A_powers.a2; ch05 paper_quotes_used_literally.alpha2_Rugar_Foster_A2 = 1.55 +- 0.01 (alpha1 = 0)"
+  },
+  "alpha3": {
+   "value": -4.04,
+   "tex": "-4.04",
+   "unit": "A^3",
+   "chapters": [
+    "ch04",
+    "ch05"
+   ],
+   "source": "Godfrin et al., Phys. Rev. B 103, 104516 (2021), arXiv:2012.09067 (the chapters read the arXiv v1 source) (series set for saturated vapour pressure, 'valid k < 0.5 A^-1')",
+   "numbers_file_key": "ch04 constants.alpha_A_powers.a3"
+  },
+  "alpha4": {
+   "value": 2.3,
+   "tex": "2.30",
+   "unit": "A^4",
+   "chapters": [
+    "ch04",
+    "ch05"
+   ],
+   "source": "Godfrin et al., Phys. Rev. B 103, 104516 (2021), arXiv:2012.09067 (the chapters read the arXiv v1 source)",
+   "numbers_file_key": "ch04 constants.alpha_A_powers.a4"
+  },
+  "roton_E_table": {
+   "value": 0.741,
+   "tex": "0.741",
+   "unit": "meV",
+   "chapters": [
+    "ch05"
+   ],
+   "source": "minimum of the authors' ancillary table DispersionP0allRange.txt",
+   "numbers_file_key": "ch05 rotonE"
+  },
+  "roton_E_table_K": {
+   "value": 8.6,
+   "tex": "8.60",
+   "unit": "K",
+   "chapters": [
+    "ch05"
+   ],
+   "source": "same, times 11.6045 K/meV",
+   "numbers_file_key": "ch05 rotonGapK"
+  },
+  "roton_k_table": {
+   "value": 1.92,
+   "tex": "1.92",
+   "unit": "A^-1",
+   "chapters": [
+    "ch05"
+   ],
+   "source": "same table",
+   "numbers_file_key": "ch05 rotonKshort"
+  },
+  "maxon_E_table": {
+   "value": 1.19,
+   "tex": "1.19",
+   "unit": "meV",
+   "chapters": [
+    "ch05"
+   ],
+   "source": "maximum of the same table",
+   "numbers_file_key": "ch05 maxonE"
+  },
+  "maxon_k_table": {
+   "value": 1.1,
+   "tex": "1.1",
+   "unit": "A^-1",
+   "chapters": [
+    "ch05"
+   ],
+   "source": "same table",
+   "numbers_file_key": "ch05 maxonKshort"
+  },
+  "landau_v": {
+   "value": 57.9,
+   "tex": "57.9",
+   "unit": "m s^-1",
+   "chapters": [
+    "ch05"
+   ],
+   "source": "min of eps/(hbar k) over the same table",
+   "numbers_file_key": "ch05 landauV"
+  },
+  "landau_k": {
+   "value": 1.97,
+   "tex": "1.97",
+   "unit": "A^-1",
+   "chapters": [
+    "ch05"
+   ],
+   "source": "same",
+   "numbers_file_key": "ch05 landauK"
+  },
+  "landau_over_c": {
+   "value": 0.243,
+   "tex": "0.243",
+   "unit": "",
+   "chapters": [
+    "ch05"
+   ],
+   "source": "v_L / c with c = 238.3 m/s",
+   "numbers_file_key": "ch05 landauOverC"
+  },
+  "Delta_R_paper": {
+   "value": 0.7418,
+   "tex": "0.7418",
+   "unit": "meV",
+   "chapters": [
+    "ch05"
+   ],
+   "source": "Godfrin et al., Phys. Rev. B 103, 104516 (2021), arXiv:2012.09067 (the chapters read the arXiv v1 source), Table III (energy scale calibrated on Delta_R = 0.7418(10) meV measured by Stirling, triple axis)",
+   "numbers_file_key": "ch05 paper_quotes_used_literally.exercise1_roton / Delta_R_calibration_meV = 0.7418 +- 0.001 (Stirling, triple axis; used to calibrate the energy scale)"
+  },
+  "k_R_paper": {
+   "value": 1.918,
+   "tex": "1.918",
+   "unit": "A^-1",
+   "chapters": [
+    "ch05"
+   ],
+   "source": "Godfrin et al., Phys. Rev. B 103, 104516 (2021), arXiv:2012.09067 (the chapters read the arXiv v1 source), Table III",
+   "numbers_file_key": "ch05 paper_quotes_used_literally.exercise1_roton"
+  },
+  "mu_R_paper": {
+   "value": 0.141,
+   "tex": "0.141",
+   "unit": "m_4",
+   "chapters": [
+    "ch05"
+   ],
+   "source": "Godfrin et al., Phys. Rev. B 103, 104516 (2021), arXiv:2012.09067 (the chapters read the arXiv v1 source), Table III",
+   "numbers_file_key": "ch05 paper_quotes_used_literally.exercise1_roton"
+  }
+ },
+ "gp_units": {
+  "mu": {
+   "expression": "g*n",
+   "value_in_gp_units": 1.0,
+   "tex": "1"
+  },
+  "xi": {
+   "expression": "hbar/(sqrt(g)*sqrt(m)*sqrt(n))",
+   "value_in_gp_units": 1.0,
+   "tex": "1"
+  },
+  "tau": {
+   "expression": "hbar/(g*n)",
+   "value_in_gp_units": 1.0,
+   "tex": "1"
+  },
+  "c": {
+   "expression": "sqrt(g)*sqrt(n)/sqrt(m)",
+   "value_in_gp_units": 1.0,
+   "tex": "1"
+  },
+  "kstar": {
+   "expression": "2*sqrt(g)*sqrt(m)*sqrt(n)/hbar",
+   "value_in_gp_units": 2.0,
+   "tex": "2"
+  },
+  "kappa": {
+   "expression": "2*pi*hbar/m",
+   "value_in_gp_units": 6.283185307179586,
+   "tex": "6.2832"
+  },
+  "xi_alt": {
+   "expression": "sqrt(2)*hbar/(2*sqrt(g)*sqrt(m)*sqrt(n))",
+   "value_in_gp_units": 0.7071067811865476,
+   "tex": "0.70711"
+  },
+  "xi_over_xi_alt": {
+   "expression": "sqrt(2)",
+   "value_in_gp_units": 1.4142135623730951,
+   "tex": "1.4142"
+  },
+  "lambdaT2": {
+   "expression": "2*pi*hbar**2/(T*m)",
+   "value_in_gp_units": "2*pi/T"
+  },
+  "bogoliubov": {
+   "expression": "sqrt(2)*hbar*k*sqrt(2*g*n + hbar**2*k**2/(2*m))/(2*sqrt(m))",
+   "value_in_gp_units": "k*sqrt(1+k^2/4)"
+  }
+ },
+ "crosschecks_with_chapters": {
+  "ch01 meV_in_K": {
+   "chapter": 11.60451812155008,
+   "appendix": 11.60451812155008,
+   "rel_diff": 0.0
+  },
+  "ch01 hbar2/2m_n": {
+   "chapter": 2.0721248519893347,
+   "appendix": 2.0721248519893347,
+   "rel_diff": 0.0
+  },
+  "ch01 E lambda^2": {
+   "chapter": 81.80421023520229,
+   "appendix": 81.80421023520228,
+   "rel_diff": 1.7371788902237624e-16
+  },
+  "ch01 v lambda": {
+   "chapter": 3956.034006119441,
+   "appendix": 3956.034006119441,
+   "rel_diff": 0.0
+  },
+  "ch03 kappa_He4": {
+   "chapter": 9.969293620545747e-08,
+   "appendix": 9.969293620545747e-08,
+   "rel_diff": 0.0
+  },
+  "ch06 universal jump SI": {
+   "chapter": 3.4913578770496594e-08,
+   "appendix": 3.4913578770496594e-08,
+   "rel_diff": 0.0
+  },
+  "ch04 theta = hbar c/k_B": {
+   "chapter": 18.20190824352019,
+   "appendix": 18.201908243520194,
+   "rel_diff": 1.9518358357098371e-16
+  },
+  "ch04 k_T per kelvin": {
+   "chapter": 0.05493929463994503,
+   "appendix": 0.05493929463994502,
+   "rel_diff": 1.26301110150441e-16
+  }
+ }
+}

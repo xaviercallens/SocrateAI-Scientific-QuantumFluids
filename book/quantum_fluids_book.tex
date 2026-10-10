@@ -22,7 +22,7 @@
 {\large Xavier Callens}\\[0.3em]
 {\small SocrateAI Research}\\[1.5em]
 {\small\color{qfgrey} with the Lean~4 library \texttt{QuantumFluids}\\ and the rusty-SUNDIALS solver (\texttt{qf-pgpe}, CVODE)}\\[0.9em]
-{\small\color{qfgrey} October 2026 \enspace $\cdot$ \enspace first edition}
+{\small\color{qfgrey} October 2026 \enspace $\cdot$ \enspace second edition}
 \end{center}
 \end{titlepage}
 % ------------------------------------------------------------------ colophon (verso of the title page)
@@ -30,7 +30,7 @@
 \vspace*{\fill}
 \begingroup\small\setlength{\parindent}{0pt}\setlength{\parskip}{0.7em}
 \textbf{Quantum Fluids in Lean~4: a tribute to Henri Godfrin.}\\
-Xavier Callens, SocrateAI Research. First edition, October 2026.
+Xavier Callens, SocrateAI Research. Second edition, October 2026; the first edition (October 2026, ten chapters) remains available under doi:\href{https://doi.org/10.5281/zenodo.23272154}{10.5281/zenodo.23272154}.
 
 \textbf{How to cite.} X.~Callens, \emph{Quantum Fluids in Lean~4: a tribute to Henri Godfrin}, SocrateAI Research (2026), doi:\href{https://doi.org/\BookConceptDOI}{\BookConceptDOI}. This is the concept DOI of the book; it always resolves to the latest edition.
 
@@ -54,19 +54,32 @@ Xavier Callens, SocrateAI Research. First edition, October 2026.
 \tableofcontents
 \listoffigures
 \mainmatter
+% ------------------------------------------------------------------ second edition: five parts, chapters in teaching order (file names unchanged)
+\part{Foundations}
 \IfCh{ch01}{\input{chapters/ch01}}
 \IfCh{ch02}{\input{chapters/ch02}}
+\part{Bose Superfluids}
+\IfCh{ch11}{\input{chapters/ch11}}
 \IfCh{ch03}{\input{chapters/ch03}}
 \IfCh{ch04}{\input{chapters/ch04}}
 \IfCh{ch05}{\input{chapters/ch05}}
+\IfCh{ch12}{\input{chapters/ch12}}
+\part{Vortex Matter and Flow}
 \IfCh{ch06}{\input{chapters/ch06}}
 \IfCh{ch07}{\input{chapters/ch07}}
-\IfCh{ch08}{\input{chapters/ch08}}
+\IfCh{ch13}{\input{chapters/ch13}}
 \IfCh{ch09}{\input{chapters/ch09}}
+\IfCh{ch15}{\input{chapters/ch15}}
+\part{Fermi Fluids}
+\IfCh{ch08}{\input{chapters/ch08}}
+\IfCh{ch14}{\input{chapters/ch14}}
+\part{Trust}
 \IfCh{ch10}{\input{chapters/ch10}}
 \appendix
 \IfCh{appA}{\input{chapters/appA}}
 \IfCh{appB}{\input{chapters/appB}}
+\IfCh{appC}{\input{chapters/appC}}
+\IfCh{appD}{\input{chapters/appD}}
 \backmatter
 \bibliographystyle{unsrtnat}
 \bibliography{refs_all}

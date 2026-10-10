@@ -1,0 +1,485 @@
+{
+ "note": "Every number quoted by chapters/sol06.tex: macro \\sSix<key> = tex; value and source. Written by the scripts named in each entry (figures/sol_common.py).",
+ "macros": {
+  "AcvHundred": {
+   "tex": "1.96187",
+   "value": 1.9618652705461592,
+   "source": "CVODE at l = 100",
+   "script": "figures/sol06_kt.py"
+  },
+  "AcvTen": {
+   "tex": "1.7825",
+   "value": 1.782520692750511,
+   "source": "CVODE at l = 10",
+   "script": "figures/sol06_kt.py"
+  },
+  "AcvTenThousand": {
+   "tex": "1.9993380",
+   "value": 1.9993379745475437,
+   "source": "CVODE at l = 10^4",
+   "script": "figures/sol06_kt.py"
+  },
+  "AdirTenThousand": {
+   "tex": "1.9993060",
+   "value": 1.9993060258517374,
+   "source": "direct quadrature (no regularisation) at l = 10^4",
+   "script": "figures/sol06_kt.py"
+  },
+  "AdopTenThousand": {
+   "tex": "1.9993060",
+   "value": 1.999305967510523,
+   "source": "scipy DOP853 rtol 1e-13 on u' = 2(f(u) - f(pi/2)) at l = 10^4",
+   "script": "figures/sol06_kt.py"
+  },
+  "AexHundred": {
+   "tex": "1.96187",
+   "value": 1.9618652672589354,
+   "source": "same at l = 100",
+   "script": "figures/sol06_kt.py"
+  },
+  "AexTen": {
+   "tex": "1.7825",
+   "value": 1.7825206927127348,
+   "source": "exact (quadrature) l (n_s lambda^2 - 4) at l = 10",
+   "script": "figures/sol06_kt.py"
+  },
+  "AexTenThousand": {
+   "tex": "1.9993060",
+   "value": 1.9993060258517374,
+   "source": "same at l = 10^4",
+   "script": "figures/sol06_kt.py"
+  },
+  "ChapterVsOurs": {
+   "tex": "0",
+   "value": 0.0,
+   "source": "max |chapter CVODE value - our CVODE value| of l (n_s lambda^2 - 4)",
+   "script": "figures/sol06_kt.py"
+  },
+  "Cone": {
+   "tex": "-0.8017",
+   "value": -0.8016614953211335,
+   "source": "C1 = 2K' + 1: coefficient of 1/l in l (n_s lambda^2 - 4) for this trajectory",
+   "script": "figures/sol06_kt.py"
+  },
+  "CvDevTenThousand": {
+   "tex": "-4.8\\times10^{-5}",
+   "value": -4.800276099126144e-05,
+   "source": "CVODE value minus 2 - (2/3) ln l/l at l = 10^4 (the chapter's 5e-5)",
+   "script": "figures/sol06_kt.py"
+  },
+  "CvEx": {
+   "tex": "3.2\\times10^{-5}",
+   "value": 3.1948695806249816e-05,
+   "source": "max |CVODE - quadrature| of l (n_s lambda^2 - 4), l = 10 ... 10^4",
+   "script": "figures/sol06_kt.py"
+  },
+  "CvHundredErr": {
+   "tex": "3.3\\times10^{-9}",
+   "value": 3.287223826475838e-09,
+   "source": "CVODE minus exact, l = 100",
+   "script": "figures/sol06_kt.py"
+  },
+  "CvTenThousandErr": {
+   "tex": "3.2\\times10^{-5}",
+   "value": 3.1948695806249816e-05,
+   "source": "CVODE minus exact, l (n_s lambda^2 - 4), l = 10^4",
+   "script": "figures/sol06_kt.py"
+  },
+  "DevFourHundred": {
+   "tex": "1.1\\times10^{-4}",
+   "value": 0.00011173695335808809,
+   "source": "exact minus (three terms + (2/9) ln^2 l / l^2) at l = 100",
+   "script": "figures/sol06_kt.py"
+  },
+  "DevFourHundredThousand": {
+   "tex": "3.3\\times10^{-10}",
+   "value": 3.341911192222824e-10,
+   "source": "same at l = 10^5 (quadrature only)",
+   "script": "figures/sol06_kt.py"
+  },
+  "DevFourTenThousand": {
+   "tex": "2.6\\times10^{-8}",
+   "value": 2.6180801970809853e-08,
+   "source": "same at l = 10^4",
+   "script": "figures/sol06_kt.py"
+  },
+  "DevThreeHundred": {
+   "tex": "5.8\\times10^{-4}",
+   "value": 0.0005830167854006252,
+   "source": "exact minus (two terms + C1/l) at l = 100",
+   "script": "figures/sol06_kt.py"
+  },
+  "DevThreeTenThousand": {
+   "tex": "2.1\\times10^{-7}",
+   "value": 2.146927347013161e-07,
+   "source": "same at l = 10^4",
+   "script": "figures/sol06_kt.py"
+  },
+  "DevTwoHundred": {
+   "tex": "-0.0074",
+   "value": -0.00743359816781064,
+   "source": "exact minus 2 - (2/3) ln l/l at l = 100",
+   "script": "figures/sol06_kt.py"
+  },
+  "DevTwoTenThousand": {
+   "tex": "-8.0\\times10^{-5}",
+   "value": -7.995145679751126e-05,
+   "source": "same at l = 10^4",
+   "script": "figures/sol06_kt.py"
+  },
+  "DuCvode": {
+   "tex": "1.3\\times10^{-9}",
+   "value": 1.2546223504586182e-09,
+   "source": "|error of u| of CVODE at l = 10^4, from the error of l (n_s lambda^2 - 4): du = u^2 dn / (2 pi l)",
+   "script": "figures/sol06_kt.py"
+  },
+  "Fc": {
+   "tex": "1.7229",
+   "value": 1.7229037441642372,
+   "source": "f(pi/2) = pi - pi ln(pi/2)",
+   "script": "figures/sol06_kt.py"
+  },
+  "GasMeanA": {
+   "tex": "0.128",
+   "value": 0.12826809471208933,
+   "source": "mean tau, 25 random pairs of size 1 in L = 64 (200 draws)",
+   "script": "figures/sol06_kt.py"
+  },
+  "GasMeanB": {
+   "tex": "0.063",
+   "value": 0.06264998480478229,
+   "source": "mean tau, 100 random pairs of size 1",
+   "script": "figures/sol06_kt.py"
+  },
+  "GasMeanC": {
+   "tex": "0.068",
+   "value": 0.06792178784619038,
+   "source": "mean tau, 100 random pairs of size 3",
+   "script": "figures/sol06_kt.py"
+  },
+  "GasPredA": {
+   "tex": "0.125",
+   "value": 0.12533141373155002,
+   "source": "sqrt(pi/(8N)) (random phases, small k d), N = 25",
+   "script": "figures/sol06_kt.py"
+  },
+  "GasPredB": {
+   "tex": "0.063",
+   "value": 0.06266570686577501,
+   "source": "sqrt(pi/(8N)), N = 100",
+   "script": "figures/sol06_kt.py"
+  },
+  "GoldRho": {
+   "tex": "20.3718",
+   "value": 20.371832715762604,
+   "source": "ch06_cert_numbers.json synthetic_dipoles_L64 d=32: |rho(k1)|/k1",
+   "script": "figures/sol06_kt.py"
+  },
+  "GoldTau": {
+   "tex": "0.63662",
+   "value": 0.6366197723675814,
+   "source": "same: tau",
+   "script": "figures/sol06_kt.py"
+  },
+  "HdriftCvode": {
+   "tex": "1.9\\times10^{-13}",
+   "value": 1.8807178037150152e-13,
+   "source": "|H - f(pi/2)| of the CVODE state at l = 10^4",
+   "script": "figures/sol06_kt.py"
+  },
+  "Kconst": {
+   "tex": "-0.82031",
+   "value": -0.8203092559037366,
+   "source": "K = lim [l(X) - pi/(4X) - (1/3) ln X], u0 = 0.6 on the separatrix, mpmath quadrature (40 digits)",
+   "script": "figures/sol06_kt.py"
+  },
+  "KdNinety": {
+   "tex": "1.573",
+   "value": 1.5733661440982996,
+   "source": "k d at which tau = 0.9 (k parallel to d)",
+   "script": "figures/sol06_kt.py"
+  },
+  "Kprime": {
+   "tex": "-0.90083",
+   "value": -0.9008307476605668,
+   "source": "K' = K + (1/3) ln(pi/4)",
+   "script": "figures/sol06_kt.py"
+  },
+  "ResHone": {
+   "tex": "1.1\\times10^{-11}",
+   "value": 1.0649703341414352e-11,
+   "source": "max drift of H_1 = f(u) - y^2/2 along the c = 1 trajectory",
+   "script": "figures/sol06_kt.py"
+  },
+  "ResHonezero": {
+   "tex": "2.0060",
+   "value": 2.0059998219690596,
+   "source": "H_1(0.9, 0.5)",
+   "script": "figures/sol06_kt.py"
+  },
+  "ResU": {
+   "tex": "6.9\\times10^{-13}",
+   "value": 6.856737400084967e-13,
+   "source": "max |u_{c=1}(l) - u_{c=4pi^3}(l)| over 120 outputs, l <= 30, Adams rtol 1e-11 (chain)",
+   "script": "figures/sol06_kt.py"
+  },
+  "ResUend": {
+   "tex": "0.9948",
+   "value": 0.994781936743827,
+   "source": "u(30) of the c = 1 trajectory",
+   "script": "figures/sol06_kt.py"
+  },
+  "ResUmax": {
+   "tex": "0.9948",
+   "value": 0.994781936743827,
+   "source": "largest u on the c = 1 trajectory (stays below pi/2)",
+   "script": "figures/sol06_kt.py"
+  },
+  "ResUstar": {
+   "tex": "0.9948",
+   "value": 0.9947819367530234,
+   "source": "root of f(u*) = H_1, the end point of the c = 1 trajectory",
+   "script": "figures/sol06_kt.py"
+  },
+  "RhoHalf": {
+   "tex": "20.37",
+   "value": 20.371832715762604,
+   "source": "|rho(k1)|/k1 = 2 sin(k1 d/2)/k1 = L/pi for d = L/2 = 32, L = 64",
+   "script": "figures/sol06_kt.py"
+  },
+  "RhoPerp": {
+   "tex": "0",
+   "value": 0.0,
+   "source": "|rho(k1)| for a pair of size L/2 perpendicular to k1",
+   "script": "figures/sol06_kt.py"
+  },
+  "RhoTwo": {
+   "tex": "2\\times10^{-16}",
+   "value": 1.5700924586837752e-16,
+   "source": "|rho(k1)| for two parallel pairs (d = 8) half a box apart",
+   "script": "figures/sol06_kt.py"
+  },
+  "TauHalf": {
+   "tex": "0.6366",
+   "value": 0.6366197723675814,
+   "source": "tau = sin(pi/2)/(pi/2) = 2/pi for d = L/2, k = k1",
+   "script": "figures/sol06_kt.py"
+  },
+  "TauQuarter": {
+   "tex": "0.9003",
+   "value": 0.9003163161571061,
+   "source": "tau for d = L/4: 2 sqrt 2 / pi",
+   "script": "figures/sol06_kt.py"
+  },
+  "WPerp": {
+   "tex": "32",
+   "value": 32.0,
+   "source": "its matching cost",
+   "script": "figures/sol06_kt.py"
+  },
+  "WTwo": {
+   "tex": "16",
+   "value": 16.0,
+   "source": "their matching cost",
+   "script": "figures/sol06_kt.py"
+  },
+  "Xzero": {
+   "tex": "0.9708",
+   "value": 0.9707963267948966,
+   "source": "X0 = pi/2 - 0.6",
+   "script": "figures/sol06_kt.py"
+  }
+ },
+ "data": {
+  "figures/sol06_kt.py": {
+   "cvode_env": {
+    "module": "/mnt/data/xdev-cache/rs_py_5db8041/rusty_sundials.so",
+    "sha256": "0bdb1b4a504fb4817738c483f797e6a109b99121b666f1e51ad8e05c2fb996d7",
+    "commit": "5db8041fd2e3840defcff2b4a8c26c1cbb2467fd",
+    "adams_probe_rhs_calls": 511,
+    "adams_probe_relerr": 1.975598302069012e-07,
+    "date": "2026-10-10 07:46"
+   },
+   "ex1_sympy": {
+    "dH_dl": "0 (simplified)",
+    "f2_at_pi_over_2": "4/pi",
+    "f3_at_pi_over_2": "-16/pi^2",
+    "series": "4*x**4/pi**3 - 8*x**3/(3*pi**2) + 2*x**2/pi",
+    "level_sets": "x^2 - (pi c/4) y^2 = const",
+    "separatrix_slope": "2/sqrt(pi c), = 1/pi^2 at c = 4 pi^3"
+   },
+   "ex1_rescaling": {
+    "u0": 0.9,
+    "y0_c1": 0.5,
+    "y0_c4pi3": 0.04489678053129165,
+    "l_max": 30.0,
+    "n_outputs": 120,
+    "max_abs_du": 6.856737400084967e-13,
+    "H1": 2.0059998219690596,
+    "H1_drift": 1.0649703341414352e-11,
+    "u_end": 0.994781936743827,
+    "u_star": 0.9947819367530234
+   },
+   "ex2_sympy": {
+    "xprime_series": "-64*x**5/(5*pi**4) + 8*x**4/pi**3 - 16*x**3/(3*pi**2) + 4*x**2/pi",
+    "inverse_series": "-1/(18*pi) + 1/(3*x) + pi/(4*x**2)",
+    "note": "1/x' = pi/(4x^2) + 1/(3x) - 1/(18 pi) + O(x): the logarithm comes from the 1/(3x) term"
+   },
+   "ex2_table": [
+    {
+     "l": 10,
+     "A_exact": 1.7825206927127348,
+     "two_term": 1.8464943271337302,
+     "three_term": 1.7663281776016169,
+     "four_term": 1.77811017340268,
+     "dev_two": -0.06397363442099535,
+     "dev_three": 0.016192515111117967,
+     "dev_four": 0.004410519310054761,
+     "A_cvode": 1.782520692750511,
+     "cvode_minus_exact": 3.777622659129065e-11,
+     "rhs_calls": 690,
+     "H_drift": 1.8851586958135158e-13
+    },
+    {
+     "l": 30,
+     "A_exact": 1.901368044722591,
+     "two_term": 1.9244178359630633,
+     "three_term": 1.8976957861190256,
+     "four_term": 1.9005521178792788,
+     "dev_two": -0.02304979124047235,
+     "dev_three": 0.003672258603565348,
+     "dev_four": 0.0008159268433121092,
+     "A_cvode": 1.901368045032461,
+     "cvode_minus_exact": 3.0987012955563387e-10,
+     "rhs_calls": 839,
+     "H_drift": 1.8895995879120164e-13
+    },
+    {
+     "l": 100,
+     "A_exact": 1.9618652672589354,
+     "two_term": 1.969298865426746,
+     "three_term": 1.9612822504735348,
+     "four_term": 1.9617535303055773,
+     "dev_two": -0.00743359816781064,
+     "dev_three": 0.0005830167854006252,
+     "dev_four": 0.00011173695335808809,
+     "A_cvode": 1.9618652705461592,
+     "cvode_minus_exact": 3.287223826475838e-09,
+     "rhs_calls": 1161,
+     "H_drift": 1.8784973576657649e-13
+    },
+    {
+     "l": 300,
+     "A_exact": 1.9847495284198147,
+     "two_term": 1.9873249278340974,
+     "three_term": 1.9846527228496937,
+     "four_term": 1.984733051576899,
+     "dev_two": -0.002575399414282753,
+     "dev_three": 9.680557012092805e-05,
+     "dev_four": 1.6476842915613688e-05,
+     "A_cvode": 1.9847495574648377,
+     "cvode_minus_exact": 2.9045023053342334e-08,
+     "rhs_calls": 1396,
+     "H_drift": 1.8829382497642655e-13
+    },
+    {
+     "l": 1000,
+     "A_exact": 1.9946056519587498,
+     "two_term": 1.9953948298140118,
+     "three_term": 1.9945931683186906,
+     "four_term": 1.9946037721149115,
+     "dev_two": -0.0007891778552620021,
+     "dev_three": 1.2483640059235412e-05,
+     "dev_four": 1.8798438383704763e-06,
+     "A_cvode": 1.9946059724462728,
+     "cvode_minus_exact": 3.2048752296454097e-07,
+     "rhs_calls": 1566,
+     "H_drift": 1.8807178037150152e-13
+    },
+    {
+     "l": 3000,
+     "A_exact": 1.9979554178006647,
+     "two_term": 1.9982208072071888,
+     "three_term": 1.9979535867087483,
+     "four_term": 1.9979551694722453,
+     "dev_two": -0.0002653894065240969,
+     "dev_three": 1.8310919163155859e-06,
+     "dev_four": 2.483284193832702e-07,
+     "A_cvode": 1.9979582956715092,
+     "cvode_minus_exact": 2.8778708445198475e-06,
+     "rhs_calls": 1933,
+     "H_drift": 1.8829382497642655e-13
+    },
+    {
+     "l": 10000,
+     "A_exact": 1.9993060258517374,
+     "two_term": 1.999385977308535,
+     "three_term": 1.9993058111590027,
+     "four_term": 1.9993059996709355,
+     "dev_two": -7.995145679751126e-05,
+     "dev_three": 2.146927347013161e-07,
+     "dev_four": 2.6180801970809853e-08,
+     "A_cvode": 1.9993379745475437,
+     "cvode_minus_exact": 3.1948695806249816e-05,
+     "rhs_calls": 2154,
+     "H_drift": 1.8807178037150152e-13
+    },
+    {
+     "l": 100000,
+     "A_exact": 1.9999152338283037,
+     "two_term": 1.9999232471635668,
+     "three_term": 1.9999152305486136,
+     "four_term": 1.9999152334941126,
+     "dev_two": -8.013335263123977e-06,
+     "dev_three": 3.2796900750753366e-09,
+     "dev_four": 3.341911192222824e-10
+    }
+   ],
+   "ex2_independent_checks_l1e4": {
+    "direct_quadrature": 1.9993060258517374,
+    "dop853": 1.999305967510523,
+    "dop853_nfev": 1670,
+    "regularised": 1.9993060258517374
+   },
+   "ex2_remainder_scaling": {
+    "10": 0.191546419868452,
+    "30": 0.21590459963897515,
+    "100": 0.24263371134049339,
+    "300": 0.25998815154580657,
+    "1000": 0.27213526861470877,
+    "3000": 0.27914728565295677,
+    "10000": 0.2842544456931125,
+    "100000": 0.290274717958618
+   },
+   "chapter_values": {
+    "10": 1.782520692750511,
+    "30": 1.901368045032461,
+    "100": 1.9618652705461592,
+    "300": 1.9847495574648377,
+    "1000": 1.9946059724462728,
+    "3000": 1.9979582956715092,
+    "10000": 1.9993379745475437
+   },
+   "ex3_gas": {
+    "N25_d1": {
+     "mean": 0.12826809471208933,
+     "median": 0.11722308146252977,
+     "p95": 0.25016656781699004,
+     "mean_prediction": 0.12533141373155002
+    },
+    "N100_d1": {
+     "mean": 0.06264998480478229,
+     "median": 0.05616549255099676,
+     "p95": 0.13137945148322164,
+     "mean_prediction": 0.06266570686577501
+    },
+    "N100_d3": {
+     "mean": 0.06792178784619038,
+     "median": 0.0644244763227454,
+     "p95": 0.12825186916394105,
+     "mean_prediction": 0.06266570686577501
+    }
+   }
+  }
+ }
+}

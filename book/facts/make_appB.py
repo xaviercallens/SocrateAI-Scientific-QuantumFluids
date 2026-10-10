@@ -19,6 +19,11 @@ spec = importlib.util.spec_from_file_location("ma", HERE / "make_appA.py"); ma =
 lspec = importlib.util.spec_from_file_location("la", HERE / "lean_audit.py"); la = importlib.util.module_from_spec(lspec); lspec.loader.exec_module(la)
 tt = ma.tt
 
+def _git_ignored(path) -> bool:
+    """True if git ignores the file (superseded stubs that could not be deleted are ignored, so the book must not list them)."""
+    import subprocess
+    return subprocess.run(["git", "check-ignore", "-q", str(path)], cwd=str(Path(__file__).resolve().parent), capture_output=True).returncode == 0
+
 def sh(cmd, cwd=None):
     try:
         return subprocess.run(cmd, shell=True, capture_output=True, text=True, cwd=cwd, timeout=60).stdout.strip()
@@ -37,13 +42,17 @@ ver = dict(
     jax=(lambda d: d["results"][0]["jax"] if d.get("results") else "?")(json.load(open(ROOT / "data/generated/pgpe/bench/jax_cpu.json"))) if (ROOT / "data/generated/pgpe/bench/jax_cpu.json").exists() else "?",
 )
 
+# ---- print order of the chapters (second edition: read from the master file; file names are not print numbers) ----------------------------------
+ORDER = re.findall(r"\\IfCh\{(ch\d\d)\}", (BOOK / "quantum_fluids_book.tex").read_text())
+POS = {c: i for i, c in enumerate(ORDER)}
+
 # ---- figures of the chapters present ----------------------------------------------------------------------------------------------------------
 scripts = {p: p.read_text() for p in sorted(FIG.glob("*.py"))}
 rows = []
 for chp in sorted(CH.glob("ch*.tex")):
     m = re.fullmatch(r"ch(\d+)", chp.stem)                 # ch03_part1.tex (a draft of ch03) and chtest.tex are not chapters
     if not m: continue
-    num = int(m.group(1))
+    num = POS.get(chp.stem, 99)
     for im in re.finditer(r"\\includegraphics(?:\[[^\]]*\])?\{figures/([A-Za-z0-9_\-]+)\.(?:pdf|png)\}", chp.read_text()):
         name = im.group(1)
         cand = [p for p, t in scripts.items() if re.search(r"""save\(\s*\w+\s*,\s*["']""" + re.escape(name) + r"""["']""", t) or f'"{name}.pdf"' in t or f"'{name}.pdf'" in t]
@@ -54,7 +63,7 @@ for chp in sorted(CH.glob("ch*.tex")):
             d = re.match(r'\s*"""(.*?)"""', scripts[cand[0]], re.S)
             doc = " ".join((d.group(1) if d else "").strip().split("\n")[0:1])
             if len(doc) > 92: doc = doc[:92].rsplit(" ", 1)[0] + " ..."
-        rows.append((num, name, script, doc))
+        rows.append((num, chp.stem, name, script, doc))
 rows = sorted(set(rows))
 
 T = []
@@ -102,9 +111,9 @@ if not rows:
     A(r"\emph{No chapter with a figure was present when this appendix was generated.}")
 for k in range(0, len(rows), 5):
     A(r"\begin{center}\footnotesize\setlength{\tabcolsep}{3pt}\begin{tabularx}{\linewidth}" + SPEC + HDR)
-    for num, name, script, doc in rows[k:k + 5]:
+    for num, chs, name, script, doc in rows[k:k + 5]:
         note = "" if script == f"{name}.py" else (r"\textbf{script not found} " if not script else rf"[script \texttt{{{tt(script)}}}] ")
-        A(rf"{num} & \texttt{{{tt(name)}}} & {note}{tt(doc) if doc else ''} \\")
+        A(rf"\ref{{{chs}}} & \texttt{{{tt(name)}}} & {note}{tt(doc) if doc else ''} \\")
     A(r"\bottomrule\end{tabularx}\end{center}")
 
 # per-chapter artefacts
@@ -113,21 +122,24 @@ A(r"\paragraph{Other files by chapter.} Besides figure scripts a chapter may own
   r"(\texttt{lean/ChNN\_*.lean}, compiled against the same pinned Mathlib and listed in appendix~\ref{appA}), Rust sources (\texttt{rust/}) and "
   r"a report of what was verified (\texttt{facts/chNN\_report.md}). Present when this appendix was generated:")
 items = []
-for n in range(1, 11):
-    nn = f"{n:02d}"
+for chs in ORDER:
+    nn = chs[2:]
     have = []
     if list(FIG.glob(f"ch{nn}*numbers*.json")): have.append("numbers")
     if (BOOK / f"refs_ch{nn}.bib").exists(): have.append("bib")
     ls = sorted((BOOK / "lean").glob(f"Ch{nn}_*.lean"))
     real = [p for p in ls if not la.is_negative_control(p) and not la.is_placeholder(p)]
     ctl = [p for p in ls if la.is_negative_control(p)]
-    ph = [p for p in ls if la.is_placeholder(p) and not la.is_negative_control(p)]
+    ph = [p for p in ls if la.is_placeholder(p) and not la.is_negative_control(p) and not _git_ignored(p)]
     if real: have.append("Lean: " + ", ".join(p.stem for p in real))
     if ctl: have.append("negative control (meant to fail, not counted): " + ", ".join(p.stem for p in ctl))
     if ph: have.append("empty placeholder (not counted): " + ", ".join(p.stem for p in ph))
     if (BOOK / "rust").exists() and list((BOOK / "rust").glob(f"ch{nn}*")): have.append("Rust")
     if (HERE / f"ch{nn}_report.md").exists(): have.append("report")
-    items.append(rf"\item chapter {n}: " + ("; ".join(tt(h) if h.startswith(("Lean", "negative", "empty")) else h for h in have) if have else r"\emph{nothing yet}"))
+    if (CH / f"sol{nn}.tex").exists(): have.append("solutions (appendix~\\ref{appC})")
+    sl = sorted((BOOK / "lean").glob(f"Sol{nn}_*.lean"))
+    if sl: have.append("Lean of the solutions: " + ", ".join(p.stem for p in sl))
+    items.append(rf"\item chapter~\ref{{{chs}}} (file \texttt{{{chs}}}): " + ("; ".join(tt(h) if h.startswith(("Lean", "negative", "empty")) else h for h in have) if have else r"\emph{nothing yet}"))
 A(r"\begin{itemize}[nosep]" + "\n" + "\n".join(items) + "\n" + r"\end{itemize}")
 
 # ---- CVODE: which build is imported -------------------------------------------------------------------------------------------------------------
@@ -197,7 +209,7 @@ gen_desc = (f"{_size} on the machine of the author; the directory \\texttt{{data
 A(r"\section{Limits of what can be reproduced}")
 A(r"\begin{itemize}[nosep]")
 A(r"\item Timings depend on the machine and on its load; the benchmark of chapter~\ref{ch10} was taken on a shared machine and is to be repeated on an idle one.")
-A(r"\item The long campaign runs behind chapters~\ref{ch06} to~\ref{ch09} (the pre-registered runs of tens of hours) are not rerun by the book's scripts; "
+A(r"\item The long campaign runs behind chapters~\ref{ch06}, \ref{ch07} and~\ref{ch09} (the pre-registered runs of tens of hours) are not rerun by the book's scripts; "
   + r"their saved outputs are under \texttt{data/generated/pgpe/}: " + gen_desc + r", and the scripts of the chapters read those outputs.")
 A(r"\item No computation of this book used a GPU or a TPU.")
 A(r"\item The environment audit trusts Lean's own elaborator and kernel; the second kernel (nanoda) is run through the Comparator, whose recorded results are in "
