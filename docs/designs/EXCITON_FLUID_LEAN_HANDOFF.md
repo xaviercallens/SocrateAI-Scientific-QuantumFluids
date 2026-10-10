@@ -26,13 +26,14 @@ this brief):
 | `ExcitonX1.lean` | `antitone_signed_iteratedDeriv`; **`admissible_sub_shift`** (g admissible, c > 0 ⇒ `t ↦ g t − g (t + c)` admissible); `admissible_const_mul`; `bilayerDipole_admissible` (given `riesz 1` admissible); `gem4_not_admissible` (`exp (−t²)`, negative control). Uses a local verbatim copy of `AdmissiblePotential`. |
 | `FourFlavour.lean` | the four-flavour model of Qi et al. (Nature 654, 2026), Eqs. 2–3, as a quadratic energy on four non-negative densities; `support_in_one_pair` (T1), `intravalley_polarisation`, `IIA_polarisation`, `IIB_polarisation`, `intravalley_density` (T2, T3), `grand_potential_gap`, `critical_field` (T5), `single_component_of_neg_gX` (T6). Mathlib-only. |
 | `FourFlavourNegativeControl.lean` | `IIA_polarisation_wrong_sign`: **meant to fail** (`ring` leaves `−g_c` against `+g_c`). |
+| `GradientFlow.lean` | `energy_antitone`: `γ' = −∇f(γ)` ⇒ `t ↦ f (γ t)` antitone (Mathlib only; the invariant the Phase 1 solver monitors); `energy_monotone_ascent` is the sign-reversed control. |
 
 Mathlib naming churn I met: `ENat.natCast_lt_top` (here) vs `ENat.coe_lt_top` (other versions); `push_neg` is deprecated
 in favour of `push Not` in the QuantumFluids pin.
 
 ## 2. Tasks, in order
 
-**H1 — port and re-verify (S).** Compile `ExcitonX1.lean` and `FourFlavour.lean` under your pinned stack
+**H1 — port and re-verify (S).** Compile `ExcitonX1.lean`, `FourFlavour.lean` and `GradientFlow.lean` under your pinned stack
 (`scripts/lean_pinned.py`). In `ExcitonX1.lean` replace the local `AdmissiblePotential` by
 `OAI.TriangularUniversal.AdmissiblePotential` (it is a verbatim copy; add `example : ExcitonX1.AdmissiblePotential g ↔
 OAI.TriangularUniversal.AdmissiblePotential g := Iff.rfl` first, as a guard). Record `#print axioms`, runtime, and that

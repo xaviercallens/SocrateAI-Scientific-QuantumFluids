@@ -9,6 +9,7 @@ verified until a separate instance has re-checked it (handoff H1: `docs/designs/
 | `ExcitonX1.lean` | X1 `admissible_sub_shift` (differencing preserves complete monotonicity); `admissible_const_mul`; `bilayerDipole_admissible` (given the Riesz s = 1 case); control `gem4_not_admissible` | standard three |
 | `FourFlavour.lean` | the four-flavour mean-field model of Qi et al. (Nature 654, 2026) Eqs. 2–3: T1 `support_in_one_pair`, T2/T3 `IIA_polarisation`, `IIB_polarisation`, `intravalley_density`, T5 `grand_potential_gap`, `critical_field`, T6 `single_component_of_neg_gX` | standard three |
 | `FourFlavourNegativeControl.lean` | wrong-sign polarisation; **meant to fail** | — |
+| `GradientFlow.lean` | the energy is non-increasing along a gradient flow `γ' = −∇f(γ)` (`energy_antitone`); the ascent control `energy_monotone_ascent`. The invariant monitored as "L2" in Phase 1 | standard three |
 
 Re-run (read-only use of a built Mathlib at the pin; this machine: the OpenAI Navier–Stokes tree, which holds
 `85e3a25`), one file at a time, under the heavy lock:
@@ -17,6 +18,7 @@ Re-run (read-only use of a built Mathlib at the pin; this machine: the OpenAI Na
 cd ~/xdev/OpenAINavierStokesEuler/NavierStokesAndEuler
 flock /mnt/data/xdev-cache/tmp/qf_heavy.lock nice lake env lean <abs path>/ExcitonX1.lean      # ~20 s
 flock /mnt/data/xdev-cache/tmp/qf_heavy.lock nice lake env lean <abs path>/FourFlavour.lean    # ~2 min
+flock /mnt/data/xdev-cache/tmp/qf_heavy.lock nice lake env lean <abs path>/GradientFlow.lean   # ~20 s
 ```
 
 `ExcitonX1.lean` uses a verbatim local copy of upstream's `OAI.TriangularUniversal.AdmissiblePotential`. The files
