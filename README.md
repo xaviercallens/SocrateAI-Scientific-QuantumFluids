@@ -174,6 +174,8 @@ The companion paper on the friction law, `paper/friction_law.tex` ("*The frictio
 
 The software paper on the quantum-fluids engine, `paper/qf_pgpe_software.tex` ("*qf-pgpe: a verified pure-Rust projected Gross–Pitaevskii engine for quantum-fluid experiments, with a Python extension*"; the crate `qf-pgpe` of rusty-SUNDIALS, merged as PR #69), has its own DOI (concept **[10.5281/zenodo.23266976](https://doi.org/10.5281/zenodo.23266976)**; version 1 10.5281/zenodo.23266977; **version 2, with the external reproduction of the Kwon–Shin run, the JAX row and the threading mode: [10.5281/zenodo.23269715](https://doi.org/10.5281/zenodo.23269715)**; PR #71, rusty-SUNDIALS v11.6.0).
 
+The technical note on the exciton-fluid study, `paper/exciton_fluid_phase1.tex` ("*Testing a planar lattice-optimality theorem against an exciton-fluid interaction: kernel-checked lemmas, a four-flavour model theorem, and N-particle tests on rusty-SUNDIALS*"; Lean files, pre-registered numerical tests and their failures, two independent verification reports and an adversarial review in `exploration/exciton/`; repository state: git tag `exciton-note-1`), has its own DOI: **[10.5281/zenodo.23289027](https://doi.org/10.5281/zenodo.23289027)** (concept 10.5281/zenodo.23289026). It was produced by an AI system and has not been reviewed by a human.
+
 The theory itself has a standalone foundational paper, `paper/sector_thesis.tex`
 ("*When does self-duality cause physics?*"), archived separately on its **own dedicated DOI**:
 **[10.5281/zenodo.22985863](https://doi.org/10.5281/zenodo.22985863)** (concept DOI, resolves to the
