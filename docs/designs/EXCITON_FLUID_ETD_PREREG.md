@@ -153,3 +153,19 @@ and not replacing the gates: (D1) `hsweep`: `G8`, seed 1, `V0 in {0.5, 1.0}`, `t
 state converged in `h`, and does it approach the record?). (D2) `stat8`: `G8`, seed 1, `V0 in {0.25, 0.5, 1.0}`, `ETD` `h = 0.05`
 run to residual `1e-12` (cap `t = 100000`): its stationary state against the CVODE records at `t = 16000` (how far is the
 record from the fixed point; the fixed point itself is solver independent). (D3) `G16` T-d(iii) is run as registered.
+
+**A3 (2026-10-11, after all registered gates had produced a first number and before the additional runs below).** Seen so far,
+as recorded in the results note: T-c scans with `hmin = 0.01` (at `n0 = 1000` every scanned step failed, so the limit lies below
+the scan range), T-d(iii) (`G16`: three of three pass), T-e (i) and (ii), T-f(i) (B1, B2, B3 each fail the named gate),
+T-f(ii) (empty at `n0 = 1000` because every registered `h` is above the limit), T-g. Two observations require additional,
+clearly labelled runs: (i) T-b fails for the correct code, so "B2 fails T-b" does not discriminate by itself; the control with
+`gamma_R = 2` (A1), where the correct code gives ratios near 16-20, is also run with B2. (ii) The stationary-state diagnostic
+D2 showed that the `ETD` residual stops decreasing at `3e-9 ... 1.3e-8` for `h = 0.05` (it is a discrete relative equilibrium whose
+profile differs from the continuous one by a time-step error); D2 is repeated at `h = 0.0125` for `V0 = 0.5` to see whether the
+floor and the difference to the CVODE record shrink. Further additions: (iii) T-c at `n0 = 1000` with `hmin = 0.001` and at
+`n0 = 200` with `hmin = 0.002` for `ETD`, and `KROG`, `LAWK` at `n0 = 1000` (`hmin = 0.001`) and `n0 = 200` (`hmin = 0.002`);
+(iv) T-f(ii) and T-g repeated at `n0 = 1000` with `h in {0.0025, 0.00125, 0.000625}` (T-g also at `n0 = 10` with `h` down to
+`0.0015625`, to compare the cost at equal error with CVODE at its tightest tolerance). (v) The Krylov package's committed result
+files (`exploration/exciton/krylov/results/ke.jsonl`, `kc.jsonl`, read only) are quoted for the stationarity and scaling comparison
+because they exist; they use a pseudo-transient tolerance regime and a frame-tracking option documented in that package's
+pre-registration (A1), so the comparison is of wall time to a residual, not of trajectories.
