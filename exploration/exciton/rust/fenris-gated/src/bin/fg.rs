@@ -28,6 +28,29 @@ fn flat(p: &[[f64; 2]]) -> Vec<f64> {
     p.iter().flat_map(|q| [q[0], q[1]]).collect()
 }
 
+/// Cholesky of a dense symmetric row-major matrix: true iff positive definite (a stationary point that is a minimum).
+fn chol_ok(mut h: Vec<f64>, m: usize) -> bool {
+    for j in 0..m {
+        let mut d = h[j * m + j];
+        for k in 0..j {
+            d -= h[j * m + k] * h[j * m + k];
+        }
+        if !(d > 0.0) {
+            return false;
+        }
+        let d = d.sqrt();
+        h[j * m + j] = d;
+        for i in (j + 1)..m {
+            let mut s = h[i * m + j];
+            for k in 0..j {
+                s -= h[i * m + k] * h[j * m + k];
+            }
+            h[i * m + j] = s / d;
+        }
+    }
+    true
+}
+
 fn main() {
     let a: Vec<String> = std::env::args().collect();
     if a[1] == "bessel" {
@@ -49,7 +72,7 @@ fn main() {
                 if let KernelSpec::Gated { d, dd } = spec {
                     let g = Gated::new(d, dd, true);
                     let s = g.series(r);
-                    let tb = g.eval(r);
+                    let tb = (g.v(r), g.dv(r), g.d2v(r));
                     write!(line, " series {:.17e} {:.17e} {:.17e} table {:.17e} {:.17e} {:.17e}", s.0, s.1, s.2, tb.0, tb.1, tb.2).unwrap();
                     let _ = g.v(r);
                 }
@@ -91,6 +114,8 @@ fn main() {
         "run" => {
             let fixed_xy = read_xy(&a[3]);
             let ftol: f64 = a.get(6).map_or(1e-9, |s| s.parse().unwrap());
+            let rtol: f64 = a.get(7).map_or(1e-6, |s| s.parse().unwrap());
+            let atol: f64 = a.get(8).map_or(1e-9, |s| s.parse().unwrap());
             let text = fs::read_to_string(&a[4]).unwrap();
             let mut lines = text.lines();
             let hdr: Vec<usize> = lines.next().unwrap().split_whitespace().map(|t| t.parse().unwrap()).collect();
@@ -105,7 +130,7 @@ fn main() {
                     pos.push([v[0], v[1]]);
                     st.push(NodeStatus::InternalFree);
                 }
-                let params = Params { ftol_rel: ftol, ..Params::new(1.0) };
+                let params = Params { ftol_rel: ftol, rtol, atol, ..Params::new(1.0) };
                 let t0 = Instant::now();
                 let rep = optimize_kernel(&mut pos, &st, &params, &move |ell| spec.build(ell, true));
                 let secs = t0.elapsed().as_secs_f64();
@@ -113,9 +138,10 @@ fn main() {
                     Ok(r) => {
                         let free = flat(&pos[fixed_xy.len()..]);
                         let e = model.energy(&free);
+                        let pd = chol_ok(model.hessian(&free), free.len());
                         writeln!(
                             out,
-                            "start {s} converged {} fmax_rel {:.6e} unclump {} cvode_steps {} rhs {} fallback {} ell {:.12} secs {:.2} energy {:.17e}",
+                            "start {s} converged {} fmax_rel {:.6e} unclump {} cvode_steps {} rhs {} fallback {} ell {:.12} secs {:.2} pd {} energy {:.17e}",
                             (r.outcome == Outcome::Converged) as u8,
                             r.max_free_force_rel,
                             r.unclump_steps,
@@ -124,6 +150,7 @@ fn main() {
                             r.cvode_order1_fallback as u8,
                             r.length_scale,
                             secs,
+                            pd as u8,
                             e
                         )
                         .unwrap();

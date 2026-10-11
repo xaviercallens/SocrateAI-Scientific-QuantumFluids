@@ -21,18 +21,18 @@ def case_list(which):
     if which in ("primary", "all"):
         for si, sh in enumerate(G.SHAPES):
             for ki, sp in enumerate(SPECS):
-                cases.append(dict(idx=si * 4 + ki, shape=sh, n_target=200, spec=sp, group="primary"))
+                cases.append(dict(idx=si * 4 + ki, shape=sh, n_target=100, spec=sp, group="primary"))
     if which in ("size", "all"):
         k = 0
         for sh in ("square", "hexagon", "disc"):
-            for n in (100, 400, 600):
+            for n in (200, 400):
                 for sp in SPECS:
-                    cases.append(dict(idx=100 + k, shape=sh, n_target=n, spec=sp, group="size", nstart=20 if n >= 600 else NSTART)); k += 1
+                    cases.append(dict(idx=100 + k, shape=sh, n_target=n, spec=sp, group="size", nstart=20)); k += 1
     if which in ("sens", "all"):
         k = 0
         for sh in ("square", "hexagon"):
             for sp in SENS_SPECS:
-                cases.append(dict(idx=200 + k, shape=sh, n_target=200, spec=sp, group="sens")); k += 1
+                cases.append(dict(idx=200 + k, shape=sh, n_target=100, spec=sp, group="sens")); k += 1
     return cases
 
 
@@ -121,7 +121,7 @@ def parse_out(path, nf):
             out.append(dict(error=" ".join(h[3:]))); k += 1; continue
         P = np.array([[float(t) for t in l.split()] for l in lines[k + 1:k + 1 + nf]]); k += 1 + nf
         g = lambda key: h[h.index(key) + 1]
-        out.append(dict(P=P, converged=int(g("converged")), fmax_rel=float(g("fmax_rel")), steps=int(g("cvode_steps")),
+        out.append(dict(P=P, pd=int(g("pd")), converged=int(g("converged")), fmax_rel=float(g("fmax_rel")), steps=int(g("cvode_steps")),
                         fallback=int(g("fallback")), secs=float(g("secs")), energy=float(g("energy")), ell=float(g("ell"))))
     return out
 
@@ -141,7 +141,7 @@ def run_case(c, fg=FG):
             P = shape.sample(nf, np.random.default_rng(sd))
             f.writelines(f"{x!r} {y!r}\n" for x, y in P)
     env = dict(os.environ, RAYON_NUM_THREADS="1")
-    subprocess.run([fg, "run", c["spec"], d + "/fixed.txt", d + "/starts.txt", d + "/out.txt"], env=env, capture_output=True)
+    subprocess.run([fg, "run", c["spec"], d + "/fixed.txt", d + "/starts.txt", d + "/out.txt", "1e-9", "1e-2", "1e-5"], env=env, capture_output=True)
     runs = parse_out(d + "/out.txt", nf)
     fixed = shape.boundary
     e_bb = pair_matrix_energy(c["spec"], fixed)
@@ -156,10 +156,10 @@ def run_case(c, fg=FG):
         P = r["P"]
         inside = bool(shape.inside(P).all())
         n_out = int((~shape.inside(P)).sum())
-        rec = dict(start=s, seed=seeds[s], converged=r["converged"], fmax_rel=r["fmax_rel"], cvode_steps=r["steps"],
+        rec = dict(start=s, seed=seeds[s], converged=r["converged"], hessian_pd=r["pd"], fmax_rel=r["fmax_rel"], cvode_steps=r["steps"],
                    order1_fallback=r["fallback"], secs=r["secs"], ell=r["ell"], E_free=r["energy"], n_outside=n_out,
                    escaped=not inside)
-        if inside and r["converged"]:
+        if inside and r["fmax_rel"] <= 1e-6 and r["pd"]:
             a = analyse_state(shape, fixed, P)
             c6 = a["c"]
             wd = shape.wall_distance(P)
@@ -177,6 +177,7 @@ def run_case(c, fg=FG):
     summary = dict(case=name, group=c["group"], shape=c["shape"], spec=c["spec"], s=shape.s, B=shape.B, N_free=nf,
                    area=shape.area, perimeter=shape.perimeter, chi=shape.chi, n_ref=n_ref, a_ref=a_ref, e_bulk=e_bulk,
                    E_bb=e_bb, nstart=nstart, n_converged=sum(1 for p in per if p.get("converged") == 1),
+                   n_loose=sum(1 for p in per if p.get("fmax_rel", 1) <= 1e-6), n_pd=sum(1 for p in per if p.get("hessian_pd") == 1),
                    n_escaped=sum(1 for p in per if p.get("escaped")), n_good=len(good), idx=c["idx"],
                    seeds=seeds)
     if good:

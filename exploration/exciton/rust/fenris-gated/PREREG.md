@@ -126,3 +126,26 @@ image sum has an absolute rounding/truncation floor of about 5e-13, which made t
 `U ~ 6e-8` (relative 7.2e-6, absolute 4.6e-13). The a4 criterion is now `|U_series - U_image| <= 1e-8 (|U_image| + 1e-3)`
 i.e. a 1e-8 relative criterion with a 1e-11 absolute floor. Bessel gate a5 passed unchanged (max relative 1.5e-14).
 The kernel agrees with the image sum to 1e-13 absolute in all 24 test points.
+
+### A2 (2026-10-11, after engineering smoke runs, before any production run or L-c/L-d/L-e result)
+Smoke runs (one container, 3 starts, N_free 30-100; no observable was inspected for tuning) showed that the engine
+defaults (CVODE rtol 1e-6, atol 1e-9) need 4000-6000 BDF steps per relaxation (several seconds at N = 30, estimated hours
+per case at N = 200 on the shared machine) because the trajectory is integrated to 1e-6 although only the end state
+matters. Changes, all in the driver/parameters, none in the physics:
+1. CVODE tolerances rtol 1e-2, atol 1e-5 (engine `Params` fields, no code change). New gate **L-f**: final energies for 4
+   starts x 4 kernels at N_free ~ 30 agree between (1e-6, 1e-9) and (1e-2, 1e-5) to relative 1e-6.
+2. Primary size N_free ~ 100 (the lower end of the requested 100-600) instead of 200: cost. Size series at N_free ~ 200 and
+   ~ 400 for square/hexagon/disc, 20 starts, as far as the time budget allows; whatever is not run is listed as not run.
+   Sensitivity group also at N_free ~ 100.
+3. Convergence classes: strict `max|F| <= 1e-9 |V'(ell)|` (engine criterion); a state is *accepted* if
+   `max|F| <= 1e-6 |V'(ell)|` **and** the free-node Hessian is positive definite (Cholesky succeeds, i.e. a strict local
+   minimum rather than a saddle). Both counts, and the count of accepted-but-not-strict states, are reported.
+4. Kernel evaluation: the Hermite table now covers `[0.02, rc]` (rc = 6D) instead of `[0.02, 3D]`, and `val/d1/d2` are
+   evaluated separately (engine patch regenerated: `Pair::val`, `Pair::d1`). Gate a3 range extended to `[0.02, 6D]`
+   (max relative errors unchanged: U 9e-14, U' 7e-12, U'' 8e-10).
+5. Gate a1 criterion gets an absolute floor: `|fd - an| <= 1e-6 |an| + 1e-10`. At r = 5 and D = 1.5 the kernel is
+   ~1e-9 and the central difference of the table has noise ~2e-12 (the table stores `U - 1/r`); the relative-only criterion
+   failed there at the first run after change 4. Not a kernel fault: a3 compares the same points with the series directly.
+6. Observed at the first L-b3 run: the original CMRR suite on the pinned rusty-SUNDIALS passes 5 of 6; the 6th
+   (`order1_restart_rescues_tight_high_order_bdf`) fails because the order-1 fallback is no longer needed on v11.6.0
+   (the solve converges at max order 5 with 1e-10/1e-12, 641 steps, force 7e-12). This is the benign direction.

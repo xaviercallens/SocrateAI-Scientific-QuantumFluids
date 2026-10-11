@@ -24,8 +24,8 @@ fn a1_kernel_derivatives_match_finite_differences() {
             let _ = u;
             let fd1 = (k.pair(r + h).0 - k.pair(r - h).0) / (2.0 * h);
             let fd2 = (k.pair(r + h).1 - k.pair(r - h).1) / (2.0 * h);
-            assert!((fd1 - du).abs() <= 1e-6 * du.abs().max(1e-12), "{spec:?} r={r} U': {fd1} vs {du}");
-            assert!((fd2 - d2u).abs() <= 1e-6 * d2u.abs().max(1e-12), "{spec:?} r={r} U'': {fd2} vs {d2u}");
+            assert!((fd1 - du).abs() <= 1e-6 * du.abs() + 1e-10, "{spec:?} r={r} U': {fd1} vs {du}");
+            assert!((fd2 - d2u).abs() <= 1e-6 * d2u.abs() + 1e-10, "{spec:?} r={r} U'': {fd2} vs {d2u}");
         }
     }
 }
@@ -79,9 +79,9 @@ fn a3_table_matches_series() {
         let mut s = 99u64;
         let (mut e0, mut e1, mut e2) = (0.0f64, 0.0f64, 0.0f64);
         for _ in 0..2000 {
-            let r = 0.02 + (0.5 * (lcg(&mut s) + 1.0)) * (3.0 * dd - 0.02);
+            let r = 0.02 + (0.5 * (lcg(&mut s) + 1.0)) * (6.0 * dd - 0.02);
             let a = g.series(r);
-            let b = g.eval(r);
+            let b = (g.v(r), g.dv(r), g.d2v(r));
             e0 = e0.max((a.0 - b.0).abs() / (1.0 + a.0.abs()));
             e1 = e1.max((a.1 - b.1).abs() / (1.0 + a.1.abs()));
             e2 = e2.max((a.2 - b.2).abs() / (1.0 + a.2.abs()));

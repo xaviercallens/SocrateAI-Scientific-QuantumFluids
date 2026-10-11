@@ -79,7 +79,7 @@ const H_TAB: f64 = 0.01;
 impl Gated {
     pub fn new(d: f64, dd: f64, use_table: bool) -> Gated {
         assert!(d > 0.0 && dd > d, "need 0 < d < D");
-        let r_tab = 3.0 * dd;
+        let r_tab = 6.0 * dd;
         let mut g = Gated { d, dd, r_tab, table: Vec::new(), use_table: false };
         if use_table {
             let n = ((r_tab - R_LO) / H_TAB).ceil() as usize + 1;
@@ -173,15 +173,73 @@ impl Gated {
     }
 }
 
+impl Gated {
+    #[inline]
+    fn locate(&self, r: f64) -> Option<(usize, f64)> {
+        if !self.use_table || r < R_LO || r >= self.r_tab {
+            return None;
+        }
+        let x = (r - R_LO) / H_TAB;
+        let i = (x.floor() as usize).min(self.table.len() - 2);
+        Some((i, x - i as f64))
+    }
+}
+
 impl Raw for Gated {
     fn v(&self, r: f64) -> f64 {
-        self.eval(r).0
+        match self.locate(r) {
+            None => self.series(r).0,
+            Some((i, s)) => {
+                let (a, b) = (&self.table[i], &self.table[i + 1]);
+                let h = H_TAB;
+                let (s2, s3) = (s * s, s * s * s);
+                let (s4, s5) = (s3 * s, s3 * s * s);
+                let h0 = 1.0 - 10.0 * s3 + 15.0 * s4 - 6.0 * s5;
+                let h1 = s - 6.0 * s3 + 8.0 * s4 - 3.0 * s5;
+                let h2 = 0.5 * s2 - 1.5 * s3 + 1.5 * s4 - 0.5 * s5;
+                let h3 = 10.0 * s3 - 15.0 * s4 + 6.0 * s5;
+                let h4 = -4.0 * s3 + 7.0 * s4 - 3.0 * s5;
+                let h5 = 0.5 * s3 - s4 + 0.5 * s5;
+                a[0] * h0 + h * a[1] * h1 + h * h * a[2] * h2 + b[0] * h3 + h * b[1] * h4 + h * h * b[2] * h5 + 1.0 / r
+            }
+        }
     }
     fn dv(&self, r: f64) -> f64 {
-        self.eval(r).1
+        match self.locate(r) {
+            None => self.series(r).1,
+            Some((i, s)) => {
+                let (a, b) = (&self.table[i], &self.table[i + 1]);
+                let h = H_TAB;
+                let (s2, s3) = (s * s, s * s * s);
+                let s4 = s3 * s;
+                let g0 = -30.0 * s2 + 60.0 * s3 - 30.0 * s4;
+                let g1 = 1.0 - 18.0 * s2 + 32.0 * s3 - 15.0 * s4;
+                let g2 = s - 4.5 * s2 + 6.0 * s3 - 2.5 * s4;
+                let g3 = 30.0 * s2 - 60.0 * s3 + 30.0 * s4;
+                let g4 = -12.0 * s2 + 28.0 * s3 - 15.0 * s4;
+                let g5 = 1.5 * s2 - 4.0 * s3 + 2.5 * s4;
+                (a[0] * g0 + h * a[1] * g1 + h * h * a[2] * g2 + b[0] * g3 + h * b[1] * g4 + h * h * b[2] * g5) / h
+                    - 1.0 / (r * r)
+            }
+        }
     }
     fn d2v(&self, r: f64) -> f64 {
-        self.eval(r).2
+        match self.locate(r) {
+            None => self.series(r).2,
+            Some((i, s)) => {
+                let (a, b) = (&self.table[i], &self.table[i + 1]);
+                let h = H_TAB;
+                let (s2, s3) = (s * s, s * s * s);
+                let c0 = -60.0 * s + 180.0 * s2 - 120.0 * s3;
+                let c1 = -36.0 * s + 96.0 * s2 - 60.0 * s3;
+                let c2 = 1.0 - 9.0 * s + 18.0 * s2 - 10.0 * s3;
+                let c3 = 60.0 * s - 180.0 * s2 + 120.0 * s3;
+                let c4 = -24.0 * s + 84.0 * s2 - 60.0 * s3;
+                let c5 = 3.0 * s - 12.0 * s2 + 10.0 * s3;
+                (a[0] * c0 + h * a[1] * c1 + h * h * a[2] * c2 + b[0] * c3 + h * b[1] * c4 + h * h * b[2] * c5) / (h * h)
+                    + 2.0 / (r * r * r)
+            }
+        }
     }
 }
 
@@ -215,6 +273,22 @@ impl<K: Raw> Pair for Phys<K> {
     }
     fn cutoff(&self) -> f64 {
         self.rc / self.ell
+    }
+    fn val(&self, r: f64) -> f64 {
+        let rp = r * self.ell;
+        if rp >= self.rc {
+            0.0
+        } else {
+            self.k.v(rp) - self.vc - (rp - self.rc) * self.dvc
+        }
+    }
+    fn d1(&self, r: f64) -> f64 {
+        let rp = r * self.ell;
+        if rp >= self.rc {
+            0.0
+        } else {
+            (self.k.dv(rp) - self.dvc) * self.ell
+        }
     }
     fn dv_ref(&self, r: f64) -> f64 {
         self.k.dv(r * self.ell) * self.ell

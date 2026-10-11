@@ -213,6 +213,28 @@ def gate_c(fg=FG, nstart=60, nnp=400):
     return out
 
 
+def gate_f(fg=FG):
+    """L-f (amendment A2): final energies independent of the CVODE tolerances (1e-6/1e-9 vs 1e-2/1e-5), N_free ~ 30."""
+    sh = G.fit_shape("square", 30)
+    d = SCR + "/f"; os.makedirs(d, exist_ok=True)
+    np.savetxt(d + "/fixed.txt", sh.boundary)
+    ns = 4
+    with open(d + "/starts.txt", "w") as f:
+        f.write(f"{ns} {sh.n_free}\n")
+        for s in range(ns):
+            f.writelines(f"{x!r} {y!r}\n" for x, y in sh.sample(sh.n_free, np.random.default_rng(31000 + s)))
+    out = {}
+    for spec in SPECS:
+        E = {}
+        for tag, rt, at in (("tight", "1e-6", "1e-9"), ("loose", "1e-2", "1e-5")):
+            run([fg, "run", spec, d + "/fixed.txt", d + "/starts.txt", d + "/o.txt", "1e-9", rt, at])
+            E[tag] = [float(l.split()[l.split().index("energy") + 1]) for l in open(d + "/o.txt") if l.startswith("start")]
+        rel = [abs(a - b) / abs(a) for a, b in zip(E["tight"], E["loose"])]
+        out[spec] = dict(E_tight=E["tight"], E_loose=E["loose"], max_rel_diff=max(rel))
+    out["pass_"] = bool(all(v["max_rel_diff"] <= 1e-6 for v in out.values() if isinstance(v, dict)))
+    return out
+
+
 if __name__ == "__main__":
     which = sys.argv[1] if len(sys.argv) > 1 else "all"
     fg = FG
@@ -221,6 +243,7 @@ if __name__ == "__main__":
     if which in ("all", "a"): res["L-a_a4_a5"] = gate_a(fg)
     if which in ("all", "b"): res["L-b1"] = gate_b1(fg)
     if which in ("all", "c"): res["L-c"] = gate_c(fg)
+    if which in ("all", "f"): res["L-f"] = gate_f(fg)
     tag = os.path.basename(os.path.dirname(os.path.dirname(fg))) if "--fg" in sys.argv else "main"
     json.dump(res, open(f"{RES}/gates_{which}_{tag}.json", "w"), indent=1, default=float)
     print(json.dumps(res, indent=1, default=float))

@@ -56,7 +56,7 @@ diff -ruN '--exclude=target' '--exclude=Cargo.lock' a/src/lib.rs b/src/lib.rs
 +pub use potential::{Pair, Yukawa};
 diff -ruN '--exclude=target' '--exclude=Cargo.lock' a/src/model.rs b/src/model.rs
 --- a/src/model.rs	2026-10-11 11:33:08.209920569 +0200
-+++ b/src/model.rs	2026-10-11 11:35:20.414411387 +0200
++++ b/src/model.rs	2026-10-11 12:05:43.159399493 +0200
 @@ -5,11 +5,13 @@
  
  use rayon::prelude::*;
@@ -79,12 +79,12 @@ diff -ruN '--exclude=target' '--exclude=Cargo.lock' a/src/model.rs b/src/model.r
              for j in (i + 1)..n {
                  let (dx, dy) = (xi - y[2 * j], yi - y[2 * j + 1]);
 -                e += self.pot.pair((dx * dx + dy * dy).sqrt()).0;
-+                e += { let r = (dx * dx + dy * dy).sqrt(); if r >= self.pot.cutoff() { 0.0 } else { self.pot.pair(r).0 } };
++                e += { let r = (dx * dx + dy * dy).sqrt(); if r >= self.pot.cutoff() { 0.0 } else { self.pot.val(r) } };
              }
              for k in 0..self.n_fixed() {
                  let (dx, dy) = (xi - self.fixed[2 * k], yi - self.fixed[2 * k + 1]);
 -                e += self.pot.pair((dx * dx + dy * dy).sqrt()).0;
-+                e += { let r = (dx * dx + dy * dy).sqrt(); if r >= self.pot.cutoff() { 0.0 } else { self.pot.pair(r).0 } };
++                e += { let r = (dx * dx + dy * dy).sqrt(); if r >= self.pot.cutoff() { 0.0 } else { self.pot.val(r) } };
              }
          }
          e
@@ -124,8 +124,8 @@ diff -ruN '--exclude=target' '--exclude=Cargo.lock' a/src/model.rs b/src/model.r
                              rows[a * m + 2 * i + b] += k[a][b];
 diff -ruN '--exclude=target' '--exclude=Cargo.lock' a/src/potential.rs b/src/potential.rs
 --- a/src/potential.rs	2026-10-11 11:33:08.209920569 +0200
-+++ b/src/potential.rs	2026-10-11 11:35:20.413411345 +0200
-@@ -66,3 +66,63 @@
++++ b/src/potential.rs	2026-10-11 12:05:43.159399493 +0200
+@@ -66,3 +66,71 @@
          Some(k)
      }
  }
@@ -137,6 +137,14 @@ diff -ruN '--exclude=target' '--exclude=Cargo.lock' a/src/potential.rs b/src/pot
 +    fn pair(&self, r: f64) -> (f64, f64, f64);
 +    /// Cutoff radius (`f64::INFINITY` if none).
 +    fn cutoff(&self) -> f64;
++    /// `U(r)` only (override when cheaper than `pair`).
++    fn val(&self, r: f64) -> f64 {
++        self.pair(r).0
++    }
++    /// `U'(r)` only (override when cheaper than `pair`).
++    fn d1(&self, r: f64) -> f64 {
++        self.pair(r).1
++    }
 +    /// `U'(r)` used only to set the force scale (untruncated if that differs).
 +    fn dv_ref(&self, r: f64) -> f64 {
 +        self.pair(r).1
@@ -168,7 +176,7 @@ diff -ruN '--exclude=target' '--exclude=Cargo.lock' a/src/potential.rs b/src/pot
 +    if r == 0.0 || r >= k.cutoff() {
 +        return (0.0, 0.0);
 +    }
-+    let dv = k.pair(r).1;
++    let dv = k.d1(r);
 +    (-dv * dx / r, -dv * dy / r)
 +}
 +
