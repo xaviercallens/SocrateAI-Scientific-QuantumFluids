@@ -144,6 +144,20 @@ fn mode_test() {
     }
     println!("jloc + kinetic vs jv: max abs diff {dj:.3e}");
     ok &= dj < 1e-12;
+    // 3b. the planted Jacobian bug of K-d3 must be caught by the same finite-difference test
+    let mut mb = Model::new(16, 16.0, 3.0, 0.5, par);
+    mb.jac_bug = true;
+    let mut jvb = vec![0.0; mb.ny];
+    mb.jv(&y, &dv, &mut jvb, 0.5);
+    let (mut nb, mut db) = (0.0, 0.0);
+    for i in 0..mb.ny {
+        let fd = (fp[i] - fm[i]) / (2.0 * eps);
+        nb += (fd - jvb[i]).powi(2);
+        db += jvb[i].powi(2);
+    }
+    let relb = (nb / db).sqrt();
+    println!("planted Jacobian bug (K-d3): jv vs central FD relative L2 difference {relb:.3e} (must be > 1e-4)");
+    ok &= relb > 1e-4;
     // 4. preconditioner: M^-1 (I - s J) v  with J = kinetic only (gate-free, psi = 0, nR = 0, om = 0) must be exact in Kin mode on psi
     println!("{}", if ok { "TEST PASS" } else { "TEST FAIL" });
     if !ok {
