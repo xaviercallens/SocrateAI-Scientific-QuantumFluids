@@ -27,6 +27,10 @@ interaction U(r) built from the Dirichlet Green function is completely monotone 
 μ ≥ 0 bounded.* The proof in the note uses the product structure of the slab's Dirichlet heat kernel and the positive definiteness of the
 transverse factor (a sum of squares), and extends to any laterally homogeneous layered dielectric.
 
+One unconditional consequence (Proposition 3 of the note): since U is a non-negative mixture of Gaussians, the classical minimality of
+the triangular lattice for theta functions among Bravais lattices (Montgomery 1988; Rankin, Cassels, Ennola, Diananda) gives that the
+triangular lattice minimises the U-energy among lattices, for all geometries. I would be grateful if you could confirm that reduction.
+
 Why I ask: complete monotonicity in r² is the hypothesis of the Cohn–Kumar universal-optimality framework. A planar statement
 (triangular lattice) is claimed in an AI-generated, unrefereed repository; I do not treat it as proved, and the note says so. Our result is
 only the hypothesis check.

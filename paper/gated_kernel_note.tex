@@ -56,10 +56,11 @@ $r$-independent self-image terms, is
 \begin{equation}\label{eq:U}
 U(r)=K_{ee}(r)+K_{hh}(r)-2K_{eh}(r),\qquad K_{ab}(r)=K\big((x,z_a),(x',z_b)\big),
 \end{equation}
-which is a kernel in $r$ with $U(r)\sim 2/r$ at $0$ for $z_e\ne z_h$.
+which has $U(r)\sim 2/r$ at $0$ when $z_e\ne z_h$ lie in the open slab (and $U\equiv0$ for $z_e=z_h$). The formula \eqref{eq:images} makes sense
+for all real $z,z'$ as the odd periodic extension; the Lean file proves the statement in that generality.
 
 \begin{theorem}\label{thm:main}
-For all real $z_e,z_h$ and all $h_1,h_2>0$ there is a measurable function $\mu:(0,\infty)\to[0,\infty)$, continuous and bounded, with
+For all $z_e,z_h\in[-h_2,h_1]$ and all $h_1,h_2>0$ there is a measurable function $\mu:(0,\infty)\to[0,\infty)$, continuous and bounded, with
 \[
 U(r)=\int_0^\infty e^{-r^2\sigma}\,\mu(\sigma)\,d\sigma\qquad(r>0).
 \]
@@ -98,36 +99,46 @@ $q_s(z,z')=\int q_{s/2}(z,w)\,q_{s/2}(w,z')\,dw$, hence
 S_s=\int_{-h_2}^{h_1}\big(q_{s/2}(z_e,w)-q_{s/2}(z_h,w)\big)^2\,dw\ \ge0 .
 \]
 In the eigenfunction expansion this is $S_s=\frac2\ell\sum_me^{-s\lambda_m}(\varphi_m(z_e)-\varphi_m(z_h))^2$, which with
-$s=1/4\sigma$ gives \eqref{eq:mu}. (Numerically, \eqref{eq:images}--\eqref{eq:mu} agree to $10^{-12}$ at $r=0.3,1,2.5$ for $h_1=1,h_2=1.5,z_e=0.3,z_h=-0.4$: \texttt{python/gated\_note\_check.py}.) (Neutrality of the exciton is what makes \eqref{eq:S} a square: the non-neutral combination
+$s=1/4\sigma$ gives \eqref{eq:mu}. (Numerically, \eqref{eq:images}--\eqref{eq:mu} agree to $10^{-12}$ at $r=0.3,1,2.5$ (symmetric truncation $|n|\le2\times10^5$) for $h_1=1,h_2=1.5,z_e=0.3,z_h=-0.4$: \texttt{python/gated\_note\_check.py}.) (Neutrality of the exciton is what makes \eqref{eq:S} a square: the non-neutral combination
 $K_{ee}-2K_{eh}$ can be negative mode by mode; the Lean file contains this as a negative control.)
 
-\textbf{Step 4 (regularity, boundedness).} As $\sigma\to0$ every term of \eqref{eq:mu} carries $e^{-\lambda_m/4\sigma}$, so $\mu(\sigma)\to0$;
-as $\sigma\to\infty$ the sum over $m$ is a Riemann sum with spacing proportional to $\sigma^{-1/2}$ and $\mu(\sigma)\sim 2(\pi\sigma)^{-1/2}$ (the
-$2/r$ singularity of $U$ at $0$), integrable against $e^{-r^2\sigma}$ for every $r>0$; $\mu$ is continuous and bounded on $(0,\infty)$
-(the Lean file proves a bound by the Poisson form for $\sigma\ge1$ and by the first term of the series for $\sigma\le1$). Differentiation under the integral, justified by $\sigma^ke^{-t\sigma}\le C_{k,t_0}e^{-t_0\sigma/2}$ for
+\textbf{Step 4 (regularity, boundedness).} Take $z_e\ne z_h$. As $\sigma\to0$ every term of \eqref{eq:mu} carries $e^{-\lambda_m/4\sigma}$, so
+$\mu(\sigma)\to0$. As $\sigma\to\infty$ ($s\to0$), $S_s=2g_s(0)+O(e^{-c/s})$ because the cross terms $q_s(z_e,z_h)$ and the image terms are
+exponentially small in $1/s$ for points at positive distance from each other and from the planes (for points on a plane the image terms
+vanish with the Dirichlet condition), hence $\mu(\sigma)\sim 2(\pi\sigma)^{-1/2}$: this is the $2/r$ singularity of $U$ at $0$, and it is
+integrable against $e^{-r^2\sigma}$ for every $r>0$. $\mu$ is continuous and bounded on $(0,\infty)$ (the Lean file proves a bound by the
+Poisson form for $\sigma\ge1$ and by the first term of the series for $\sigma\le1$). Differentiation under the integral, justified by $\sigma^ke^{-t\sigma}\le C_{k,t_0}e^{-t_0\sigma/2}$ for
 $t\ge t_0$, gives $(-1)^k\frac{d^k}{dt^k}\int e^{-t\sigma}\mu=\int\sigma^ke^{-t\sigma}\mu\ge0$ (the easy direction of Bernstein's theorem).
 \hfill$\square$
 
 \begin{remark}
-Because $e^{-r^2\sigma}$ is a Gaussian in $x\in\R^d$ for every $d$, the representation shows that $U$ is a positive-definite function
-on $\R^2$ and, as a function of $r$, extends as a positive-definite radial kernel to all $\R^d$ (Schoenberg); it is the interaction of
-a Gaussian mixture with non-negative weights.
+Since $e^{-r^2\sigma}$ is a Gaussian in $x\in\R^d$ for every $d$, the representation exhibits $U$ as a non-negative mixture of Gaussians. It is
+not a positive-definite \emph{function} ($U(0)=\infty$), but it is a positive-definite distribution on $\R^d$ for $d\ge2$ (its Fourier transform
+is positive and finite for $k\ne0$; for $d=1$, $2/|x|$ is not locally integrable). This is Bernstein's easy direction combined with Gaussians,
+not Schoenberg's theorem.
 \end{remark}
 
 \section{Layered dielectrics (not formalised)}\label{sec:diel}
 
 \begin{proposition}\label{prop:diel}
-Let $\varepsilon:(-h_2,h_1)\to[\varepsilon_{\min},\varepsilon_{\max}]\subset(0,\infty)$ be measurable (a stack of homogeneous layers),
+Let $\varepsilon:(-h_2,h_1)\to[\varepsilon_{\min},\varepsilon_{\max}]\subset(0,\infty)$ be measurable (a stack of homogeneous layers, or a uniaxial pair $\varepsilon_\parallel(z),\varepsilon_\perp(z)$, for which the lateral Laplacian carries $\varepsilon_\parallel/\varepsilon_\perp$ and the argument below is unchanged up to a rescaling of $r$),
 with grounded conductors at the two ends. Then \eqref{eq:U} (with $K=4\pi G$, $G$ the Green function of $-\nabla\!\cdot\varepsilon\nabla$) satisfies
-$U(r)=\sum_{m\ge1}c_m\,(\varphi_m(z_e)-\varphi_m(z_h))^2K_0(\sqrt{\lambda_m}\,r)$ with $c_m\ge0$, where $(\lambda_m,\varphi_m)$ are the Dirichlet
+$U(r)=\sum_{m\ge1}c_m\,(\psi_m(z_e)-\psi_m(z_h))^2K_0(\sqrt{\lambda_m}\,r)$ with $c_m\ge0$ (in units of $e^2$), where $(\lambda_m,\psi_m)$, $\psi_m$ normalised in $L^2(\varepsilon\,dz)$, are the Dirichlet
 eigenpairs of $-\varepsilon^{-1}\partial_z\varepsilon\partial_z$ in $L^2(\varepsilon\,dz)$. Since $K_0(\sqrt{\lambda t})=\tfrac12\int_0^\infty
 e^{-ts}e^{-\lambda/4s}\,ds/s$, $U$ is completely monotone in $r^2$.
 \end{proposition}
 
-\emph{Proof.} The operator $\varepsilon^{-1}(-\nabla\!\cdot\varepsilon\nabla)=-\Delta_x\otimes 1+1\otimes A$ with
-$A=-\varepsilon^{-1}\partial_z\varepsilon\partial_z$ self-adjoint and non-negative on $L^2(\varepsilon\,dz)$ has again a product heat semigroup; the kernel
-$q_s$ of $e^{-sA}$ with respect to the measure $\varepsilon\,dz$ is symmetric and satisfies the semigroup identity, so Steps 2--3
-apply verbatim. Compactness of the resolvent gives the discrete expansion. \hfill$\square$
+\emph{Proof.} (i) The form $a(u,v)=\int\varepsilon u'v'\,dz$ on $H^1_0(-h_2,h_1)$ is closed, non-negative and has compact resolvent on
+$L^2(\varepsilon\,dz)$ (bounded $\varepsilon$, bounded below by $\varepsilon_{\min}$); its operator is $A=-\varepsilon^{-1}\partial_z\varepsilon\partial_z$, with discrete spectrum
+$0<\lambda_1\le\lambda_2\le\dots$ and eigenfunctions $\psi_m$ orthonormal in $L^2(\varepsilon\,dz)$. (ii) The potential of a unit charge at $(0,z')$ solves $-\nabla\!\cdot\varepsilon\nabla G=\delta$,
+i.e. $(-\Delta_x+A)G=\delta_x\otimes\delta_{z'}/\varepsilon(z')$; since $e^{-sA}$ has a kernel $q_s(z,w)$ with respect to $\varepsilon\,dw$, and
+$\int q_s(z,w)\,\delta_{z'}(w)\varepsilon(w)^{-1}\varepsilon(w)\,dw=q_s(z,z')$, we get $G=\int_0^\infty p^{\R^2}_s(x)\,q_s(z,z')\,ds$ exactly as before (the
+heat semigroup is a tensor product because the two operators act on different variables). (iii) $q_s(z,z')=\sum_me^{-s\lambda_m}\psi_m(z)\psi_m(z')$ is symmetric
+and satisfies $q_s=\int q_{s/2}\,q_{s/2}\,\varepsilon\,dw$, so $S_s=\int(q_{s/2}(z_e,w)-q_{s/2}(z_h,w))^2\varepsilon\,dw=\sum_me^{-s\lambda_m}(\psi_m(z_e)-\psi_m(z_h))^2\ge0$.
+(iv) Integrability of $s^{-1}e^{-r^2/4s}S_s$ at $s\to0$ follows from $q_s(z,z)\le Cs^{-1/2}$ (Nash/ultracontractivity in one dimension),
+and at $s\to\infty$ from $q_s\le Ce^{-\lambda_1s}$. All terms are non-negative, so by Tonelli the sum and the $s$-integral commute, and
+$\int_0^\infty s^{-1}e^{-r^2/4s}e^{-s\lambda}\,ds=2K_0(\sqrt\lambda\,r)$ gives the expansion with $c_m=2$ (the factor $4\pi$ of $K=4\pi G$ cancels the $1/4\pi s$ of the lateral heat kernel); for the grounded
+planes with constant $\varepsilon$, $\psi_m=\sqrt{2/\ell}\,\varphi_m$ and this is $U=\frac4\ell\sum_m(\varphi_m(z_e)-\varphi_m(z_h))^2K_0(\sqrt{\lambda_m}\,r)$, which agrees with the image series numerically. \hfill$\square$
 
 \textbf{What this does not cover.} Finite screening by the gates (non-ideal metals), lateral inhomogeneity, and quantum or
 polarisation effects are outside the statement; for them the product structure fails.
@@ -146,7 +157,7 @@ $(\varphi_m(z_e)-\varphi_m(z_h))^2$ in \eqref{eq:mu}.
 declaration & content \\ \midrule
 \texttt{trig\_core\_sq} & $2-\cos2a-\cos2b-2\cos(b-a)+2\cos(a+b)=2(\sin a-\sin b)^2$ \\
 \texttt{gGreen\_top}, \texttt{gGreen\_bottom} & the Gaussian lattice Green function vanishes on both planes (bijective re-indexing of image offsets) \\
-\texttt{gsum\_poisson} & $\sum_ne^{-s(c-Pn)^2}=\frac{\sqrt{\pi/s}}P\sum_me^{-\pi^2m^2/(P^2s)}\cos(2\pi mc/P)$, \emph{derived} from Mathlib's Gaussian/Jacobi-theta results \\
+\texttt{gsum\_poisson} & (sum over $m\in\Z$) $\sum_ne^{-s(c-Pn)^2}=\frac{\sqrt{\pi/s}}P\sum_me^{-\pi^2m^2/(P^2s)}\cos(2\pi mc/P)$, \emph{derived} from Mathlib's Gaussian/Jacobi-theta results \\
 \texttt{Sexc\_nonneg} & $S(s)\ge0$ for all $s>0$, $h_1+h_2>0$, all real $z_e,z_h$ \\
 \texttt{muExc\_bounded}, \texttt{muExc\_continuousOn} & $\mu$ is bounded and continuous on $(0,\infty)$ \\
 \texttt{lap\_admissible} & Laplace transform of a non-negative density with finite $\int e^{-st}\mu$ is smooth with $(-1)^rg^{(r)}\ge0$ (easy Bernstein) \\
@@ -161,17 +172,28 @@ All 17 \texttt{\#print axioms} outputs are \texttt{[propext, Classical.choice, Q
 kernel by a direct signed image sum with $N=4000$ (agreement $10^{-9}$ at three radii, and with the Laplace integral to $10^{-12}$).
 Definition used: \texttt{AdmissiblePotential g} $:=$ $g$ is $C^\infty$ on $(0,\infty)$, $g\ge0$, and $(-1)^r\,g^{(r)}\ge0$ for all $r$ (a
 verbatim copy of the definition in the upstream repository~\cite{OpenAI2026}). It is satisfied by $g=0$, so non-triviality is a separate statement
-($U>0$ is proved as a consequence of $\mu\ge0$ but strict positivity is not stated in the file). The Mathlib version pinned here has
+($U\ge0$ follows from $\mu\ge0$; strict positivity for $z_e\ne z_h$ is not stated in the file). The Mathlib version pinned here has
 \texttt{AbsolutelyMonotoneOn} but no completely monotone class and no Laplace transform of measures, so the file carries its own.
 
 \section{Relation to universal optimality}
 
-Cohn and Kumar defined universally optimal configurations as those minimising the energy for \emph{every} completely monotone function
-of squared distance~\cite{CohnKumar2007}; $E_8$ and the Leech lattice were proved universally optimal in dimensions 8 and 24
+Cohn and Kumar defined universally optimal configurations on spheres as those minimising the energy for \emph{every} completely monotone function
+of squared distance~\cite{CohnKumar2007}, with the Euclidean version as their conjecture; $E_8$ and the Leech lattice were proved universally optimal in dimensions 8 and 24
 by Cohn, Kumar, Miller, Radchenko and Viazovska~\cite{CKMRV2022}. The triangular lattice in dimension 2 is conjectured to be
 universally optimal in the same sense. A claimed proof of that planar statement is publicly available~\cite{OpenAI2026}, but it is
 AI-generated and \textbf{has not been refereed to our knowledge}; we do not use it as a proved fact. What Theorem~\ref{thm:main}
 supplies is exactly the hypothesis of that statement:
+
+\begin{proposition}[unconditional, lattices]\label{prop:lat}
+Among Bravais lattices $\Lambda\subset\R^2$ of fixed density, the triangular lattice minimises $\sum_{0\ne v\in\Lambda}U(|v|)$ for every
+$z_e,z_h,h_1,h_2$.
+\end{proposition}
+\emph{Proof.} By Theorem~\ref{thm:main} and Tonelli, $\sum_vU(|v|)=\int_0^\infty\mu(\sigma)\,\Theta_\Lambda(\sigma)\,d\sigma$ with
+$\Theta_\Lambda(\sigma)=\sum_{v\ne0}e^{-\sigma|v|^2}$, and $\mu\ge0$. For every $\sigma>0$ and every fixed density the triangular lattice minimises
+$\Theta_\Lambda(\sigma)$ among lattices (Rankin, Cassels, Ennola, Diananda; see Montgomery, Glasgow Math.\ J.\ \textbf{30} (1988) 75--85;
+references from memory). Integrate. \hfill$\square$
+
+This uses no AI-generated input. What remains conditional is the extension from lattices to \emph{all} periodic configurations.
 
 \begin{proposition}[conditional]
 \emph{If} the triangular lattice minimises, among periodic configurations of given density in $\R^2$, the energy per particle for every
@@ -181,13 +203,13 @@ $U$ of Theorem~\ref{thm:main} for every $z_e,z_h,h_1,h_2$, since $U(\sqrt t)$ is
 
 This is a statement about periodic, bulk, classical configurations of the ideal-metal model. It says nothing about open boundaries,
 quantum states, or driven-dissipative dynamics, and a hexagonal pattern in an experiment does not single out complete monotonicity
-(a triangular lattice is the ground state of nearly every monotone repulsion in 2D).
+(the triangular lattice is the ground state of the Coulomb, Yukawa, dipolar and Gaussian-mixture potentials of this type, but not of all monotone repulsions, e.g. soft-core ones).
 
 \section{What we ask the reader}
 
 \begin{enumerate}[itemsep=2pt]
 \item Is Theorem~\ref{thm:main} known? It looks like the statement that a Dirichlet Green function in a product domain is a
-non-negative mixture of 2D heat kernels, applied to a neutral charge combination; a pointer to the literature would settle priority.
+non-negative mixture of 2D heat kernels, applied to a neutral charge combination; a pointer to the literature would settle priority. (The modal expansion of Proposition~\ref{prop:diel} in $K_0$ modes is the classical parallel-plate expansion; what we believe is new is only the neutral-square positivity argument, the lattice proposition and the formalisation.)
 \item Is Proposition~\ref{prop:diel} correct as stated (measurability/regularity of $\varepsilon$, endpoints, the weight $\varepsilon\,dz$)?
 \item Is the status of the planar universal-optimality statement known to the reader, and is the conditional form above the right way to
 state the consequence?
