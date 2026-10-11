@@ -98,6 +98,12 @@ Link: repository path above.
 conventional naming). The generic pieces are in lines 363–525 of the file (`AdmissiblePotential`, `pow_exp_le`, `LaplaceData`,
 `LaplaceData.int_pow`, `.hasDerivAt`, `lap_iteratedDeriv`, `lap_contDiffOn`, `lap_admissible`).
 
+**Update 2026-10-11 (checked via the GitHub API, then compiled): see `exploration/exciton/lean/mathlib_pr/README.md`.**
+`AbsolutelyMonotoneOn` was merged in PR #38026 (AI-assisted, disclosed); there is still no `CompletelyMonotone` on master, no
+issue or PR for it, and an open one-sided Laplace transform PR #40582 (no CM result) that PR B should coordinate with. The two Lean
+files of the kit (`CompletelyMonotone/Basic.lean`, `CompletelyMonotone/ExpIntegral.lean`) compile against Mathlib v4.34.1 with
+standard axioms only; they have NOT been tested on master or linted.
+
 Steps (do 0 first; it decides whether anything else is useful):
 
 0. **Duplicate check.** Search Mathlib master and the open PRs/Zulip for `CompletelyMonotone`, `LaplaceTransform`,
