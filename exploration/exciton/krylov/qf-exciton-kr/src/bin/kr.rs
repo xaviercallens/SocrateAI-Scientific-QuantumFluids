@@ -159,8 +159,8 @@ fn mode_run(a: &Args) {
     let seed: u64 = a.get("SEED", 1);
     let tend: f64 = a.get("TEND", 20.0);
     let solver = a.s("SOLVER", "kr");
-    let rtol: f64 = a.get("RTOL", 1e-6);
-    let atol: f64 = a.get("ATOL", 1e-9);
+    let rtol: f64 = a.get("RTOL", 1e-7);
+    let atol: f64 = a.get("ATOL", 1e-10);
     let noise: f64 = a.get("NOISE", 1e-3);
     let n0: f64 = a.get("N0", 10.0);
     let nr0: f64 = a.get("NR0", 0.1);

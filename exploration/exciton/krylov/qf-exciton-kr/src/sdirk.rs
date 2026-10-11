@@ -280,6 +280,11 @@ impl Stepper {
             }
             let e: Vec<f64> = (0..ny).map(|i| y2[i] - y[i] - h * f1[i]).collect();
             let err = wrms(&e, &ewt);
+            if std::env::var("QF_DEBUG").is_ok() && self.stats.steps % 2000 == 0 {
+                let nn = model.nn;
+                let part = |lo: usize, hi: usize| (e[lo..hi].iter().zip(&ewt[lo..hi]).map(|(x, w)| (x * w).powi(2)).sum::<f64>() / ny as f64).sqrt();
+                eprintln!("t={:.4} h={:.3e} err={:.3e} a={:.3e} b={:.3e} r={:.3e}", self.t, h, err, part(0, nn), part(nn, 2 * nn), part(2 * nn, ny));
+            }
             let fac = (0.9 * err.max(1e-10).powf(-0.5)).clamp(0.2, 4.0);
             if err <= 1.0 {
                 y.copy_from_slice(&y2);

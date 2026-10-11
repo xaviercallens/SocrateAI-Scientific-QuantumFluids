@@ -106,4 +106,13 @@ tree is untouched.
 
 ## Amendments
 
-(none yet)
+**A1 (2026-10-11, after the first smoke runs and the start of K-a1 t = 4000, before any K-a/K-b/K-c/K-d/K-e number was
+produced).** Measured cost of the registered tolerance: with the first-order embedded estimate and rtol = 1e-7 the step is limited by
+the neutral high-wavenumber noise (omega up to k^2/2 ~ 10 at h = 1) to h ~ 1e-3 .. 3e-3, i.e. about 1000 steps per unit time, 0.4 ms per step on G8
+(t = 4000 takes about 25 min, t = 16000 on G16 would take hours). Two smoke runs of G8 and G16 with t = 20 at rtol = 1e-6/atol = 1e-9 (the
+accidental first default of the driver; not the registered one) were discarded and are not used anywhere. Changes: (1) K-a1 t = 4000, K-a2, K-b, K-c, K-d
+stay at rtol 1e-7/atol 1e-10 as registered. (2) The stationary-state runs (K-a1 at t = 16000, K-a3, all of K-e) use pseudo-transient
+tolerances rtol = 1e-4, atol = 1e-7, `TRACK=1`: an implicit scheme has the exact fixed points of the right-hand side, so the stationary state does not depend on
+the time accuracy of the approach; this is a hypothesis and is tested, not assumed: G16, V0 = 0.5, seed 1 is also run at rtol = 1e-6/atol = 1e-9
+and the final states must agree to |d shift| <= 1e-7, |d n_center| <= 1e-6 (gate K-e0). (3) The wall-time limit of K-c M = 64 becomes 2 h CPU
+(the same 1 h gate was a guess made before any step had been timed).
