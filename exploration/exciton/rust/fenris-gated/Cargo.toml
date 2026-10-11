@@ -6,6 +6,12 @@ rust-version = "1.85"
 publish = false
 description = "L6 edge/frustration design target: the fenris-cmrr relaxation engine with the gated-bilayer dipole kernel (Laplace/K0 mode sum), the ungated dipole kernel and the Yukawa control."
 
+[features]
+# Planted bugs for gate L-d (never enabled in production).
+bug1 = []
+bug2 = []
+bug3 = []
+
 [lib]
 name = "fenris_gated"
 

@@ -107,11 +107,29 @@ impl Gated {
             if x > 40.0 {
                 break;
             }
-            let w = 1.0 - (two_pi_over_d * self.d * k as f64).cos();
+            let c = (two_pi_over_d * self.d * k as f64).cos();
+            #[cfg(feature = "bug2")]
+            let w = 1.0 + c; // planted bug 2: wrong sign of the cosine in the mode weight
+            #[cfg(not(feature = "bug2"))]
+            let w = 1.0 - c;
             let (k0, k1) = k01(x);
             u += w * k0;
-            du -= w * q * k1;
-            d2u += w * q * q * (k0 + k1 / x);
+            #[cfg(feature = "bug3")]
+            {
+                du -= 0.5 * w * q * k1; // planted bug 3: first derivative halved
+            }
+            #[cfg(not(feature = "bug3"))]
+            {
+                du -= w * q * k1;
+            }
+            #[cfg(feature = "bug1")]
+            {
+                d2u += w * q * q * (k0 - k1 / x); // planted bug 1: sign of the K1/(qr) term
+            }
+            #[cfg(not(feature = "bug1"))]
+            {
+                d2u += w * q * q * (k0 + k1 / x);
+            }
             k += 1;
         }
         let pref = 4.0 / self.dd;

@@ -119,4 +119,10 @@ Negative and partial results are deliverables. Claims about excitons are not mad
 without waiting. Deviations after seeing results are dated amendments appended below.
 
 ## Amendments
-(none yet)
+### A1 (2026-10-11, after the first run of gate L-a4/a5, before any production run)
+First run of a4: harness faults, no kernel fault. (i) the quadrature for `int U d^2r` started at r = 1e-6 and omitted the
+piece `2 pi * 1e-6` (relative error 3.0e-6 = exactly that piece); the piece is now added analytically. (ii) the direct
+image sum has an absolute rounding/truncation floor of about 5e-13, which made the pure relative criterion fail at
+`U ~ 6e-8` (relative 7.2e-6, absolute 4.6e-13). The a4 criterion is now `|U_series - U_image| <= 1e-8 (|U_image| + 1e-3)`
+i.e. a 1e-8 relative criterion with a 1e-11 absolute floor. Bessel gate a5 passed unchanged (max relative 1.5e-14).
+The kernel agrees with the image sum to 1e-13 absolute in all 24 test points.

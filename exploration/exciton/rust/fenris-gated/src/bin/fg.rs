@@ -30,6 +30,14 @@ fn flat(p: &[[f64; 2]]) -> Vec<f64> {
 
 fn main() {
     let a: Vec<String> = std::env::args().collect();
+    if a[1] == "bessel" {
+        for t in &a[2..] {
+            let x: f64 = t.parse().unwrap();
+            let (k0, k1) = fenris_gated::bessel::k01(x);
+            println!("{x:.17e} {k0:.17e} {k1:.17e}");
+        }
+        return;
+    }
     let spec = KernelSpec::parse(&a[2]).expect("kernel spec");
     match a[1].as_str() {
         "kern" => {
@@ -47,6 +55,32 @@ fn main() {
                 }
                 println!("{line}");
             }
+        }
+        "lattice" => {
+            // per-node energy 1/2 sum_j U(|R_j|) of the triangular lattice with nearest-neighbour distance a
+            let a_nn: f64 = a[3].parse().unwrap();
+            let k = spec.build(1.0, true);
+            let rmax = spec.rc().min(400.0 * a_nn);
+            let nmax = (rmax / (a_nn * 0.866)).ceil() as i64 + 2;
+            let mut e = 0.0;
+            for i in -nmax..=nmax {
+                for j in -nmax..=nmax {
+                    if i == 0 && j == 0 {
+                        continue;
+                    }
+                    let x = a_nn * (i as f64 + 0.5 * j as f64);
+                    let y = a_nn * 0.5 * 3f64.sqrt() * j as f64;
+                    let r = (x * x + y * y).sqrt();
+                    if r < rmax {
+                        e += 0.5 * k.pair(r).0;
+                    }
+                }
+            }
+            let n = 2.0 / (3f64.sqrt() * a_nn * a_nn);
+            if let KernelSpec::Ungated { d } = spec {
+                e += 0.5 * n * std::f64::consts::PI * d * d / rmax; // tail of d^2/(2 r^3)
+            }
+            println!("{e:.17e}");
         }
         "energy" => {
             let fixed = flat(&read_xy(&a[3]));
