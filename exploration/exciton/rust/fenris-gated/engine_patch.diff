@@ -1,0 +1,211 @@
+diff -ruN '--exclude=target' '--exclude=Cargo.lock' a/src/engine.rs b/src/engine.rs
+--- a/src/engine.rs	2026-10-11 11:33:08.209920569 +0200
++++ b/src/engine.rs	2026-10-11 11:35:20.414411387 +0200
+@@ -11,7 +11,7 @@
+ use nvector::SerialVector;
+ 
+ use crate::model::{max_abs, Model};
+-use crate::potential::Yukawa;
++use crate::potential::{Pair, Yukawa};
+ 
+ #[derive(Clone, Copy, Debug, PartialEq, Eq)]
+ pub enum NodeStatus {
+@@ -122,6 +122,18 @@
+ 
+ /// Relax the free nodes in place. Fixed nodes are never written.
+ pub fn optimize(positions: &mut [[f64; 2]], status: &[NodeStatus], params: &Params) -> Result<Report, CmrrError> {
++    let (kappa, rc) = (params.kappa, params.rc);
++    optimize_kernel(positions, status, params, &move |ell| Arc::new(Yukawa { kappa: kappa * ell, rc: rc / ell }))
++}
++
++/// As [`optimize`] with an arbitrary pair kernel. `build(ell)` returns the kernel in nondimensional units
++/// (distances divided by `ell`, the mean spacing `sqrt(bbox area / N)`); `Params::kappa` and `rc` are only validated.
++pub fn optimize_kernel(
++    positions: &mut [[f64; 2]],
++    status: &[NodeStatus],
++    params: &Params,
++    build: &dyn Fn(f64) -> Arc<dyn Pair>,
++) -> Result<Report, CmrrError> {
+     let n = positions.len();
+     if n == 0 || status.len() != n {
+         return Err(CmrrError::InvalidInput(format!(
+@@ -163,9 +175,9 @@
+     let fixed_xy: Vec<f64> = fixed.iter().flat_map(|&i| to_unit(positions[i])).collect();
+     report.n_jittered = separate_coincident(&mut y, &fixed_xy);
+ 
+-    let pot = Yukawa { kappa: params.kappa * ell, rc: params.rc / ell };
+-    let force_scale = pot.dv(1.0).abs();
+-    let tau = 1.0 / pot.d2v(1.0);
++    let pot = build(ell);
++    let force_scale = pot.dv_ref(1.0).abs();
++    let tau = 1.0 / pot.d2v_ref(1.0);
+     let model = Arc::new(Model { pot, fixed: fixed_xy });
+ 
+     report.unclump_steps = unclump(&model, &mut y, UNCLUMP_SWITCH * force_scale, params.unclump_max_steps);
+diff -ruN '--exclude=target' '--exclude=Cargo.lock' a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs	2026-10-11 11:33:08.209920569 +0200
++++ b/src/lib.rs	2026-10-11 11:35:20.415411428 +0200
+@@ -29,6 +29,6 @@
+ pub mod potential;
+ pub mod vtk;
+ 
+-pub use engine::{optimize, CmrrError, NodeStatus, Outcome, Params, Report};
++pub use engine::{optimize, optimize_kernel, CmrrError, NodeStatus, Outcome, Params, Report};
+ pub use model::Model;
+-pub use potential::Yukawa;
++pub use potential::{Pair, Yukawa};
+diff -ruN '--exclude=target' '--exclude=Cargo.lock' a/src/model.rs b/src/model.rs
+--- a/src/model.rs	2026-10-11 11:33:08.209920569 +0200
++++ b/src/model.rs	2026-10-11 12:05:43.159399493 +0200
+@@ -5,11 +5,13 @@
+ 
+ use rayon::prelude::*;
+ 
+-use crate::potential::Yukawa;
++use std::sync::Arc;
+ 
+-#[derive(Clone, Debug)]
++use crate::potential::{block, pair_force, Pair};
++
++#[derive(Clone)]
+ pub struct Model {
+-    pub pot: Yukawa,
++    pub pot: Arc<dyn Pair>,
+     /// Fixed node coordinates, interleaved.
+     pub fixed: Vec<f64>,
+ }
+@@ -27,11 +29,11 @@
+             let (xi, yi) = (y[2 * i], y[2 * i + 1]);
+             for j in (i + 1)..n {
+                 let (dx, dy) = (xi - y[2 * j], yi - y[2 * j + 1]);
+-                e += self.pot.pair((dx * dx + dy * dy).sqrt()).0;
++                e += { let r = (dx * dx + dy * dy).sqrt(); if r >= self.pot.cutoff() { 0.0 } else { self.pot.val(r) } };
+             }
+             for k in 0..self.n_fixed() {
+                 let (dx, dy) = (xi - self.fixed[2 * k], yi - self.fixed[2 * k + 1]);
+-                e += self.pot.pair((dx * dx + dy * dy).sqrt()).0;
++                e += { let r = (dx * dx + dy * dy).sqrt(); if r >= self.pot.cutoff() { 0.0 } else { self.pot.val(r) } };
+             }
+         }
+         e
+@@ -45,13 +47,13 @@
+             let (mut fx, mut fy) = (0.0, 0.0);
+             for j in 0..n {
+                 if j != i {
+-                    let (gx, gy) = self.pot.pair_force(xi - y[2 * j], yi - y[2 * j + 1]);
++                    let (gx, gy) = pair_force(&*self.pot, xi - y[2 * j], yi - y[2 * j + 1]);
+                     fx += gx;
+                     fy += gy;
+                 }
+             }
+             for k in 0..self.n_fixed() {
+-                let (gx, gy) = self.pot.pair_force(xi - self.fixed[2 * k], yi - self.fixed[2 * k + 1]);
++                let (gx, gy) = pair_force(&*self.pot, xi - self.fixed[2 * k], yi - self.fixed[2 * k + 1]);
+                 fx += gx;
+                 fy += gy;
+             }
+@@ -72,7 +74,7 @@
+                 if j == i {
+                     continue;
+                 }
+-                if let Some(k) = self.pot.block(xi - y[2 * j], yi - y[2 * j + 1]) {
++                if let Some(k) = block(&*self.pot, xi - y[2 * j], yi - y[2 * j + 1]) {
+                     for a in 0..2 {
+                         for b in 0..2 {
+                             rows[a * m + 2 * i + b] += k[a][b];
+@@ -82,7 +84,7 @@
+                 }
+             }
+             for q in 0..self.n_fixed() {
+-                if let Some(k) = self.pot.block(xi - self.fixed[2 * q], yi - self.fixed[2 * q + 1]) {
++                if let Some(k) = block(&*self.pot, xi - self.fixed[2 * q], yi - self.fixed[2 * q + 1]) {
+                     for a in 0..2 {
+                         for b in 0..2 {
+                             rows[a * m + 2 * i + b] += k[a][b];
+diff -ruN '--exclude=target' '--exclude=Cargo.lock' a/src/potential.rs b/src/potential.rs
+--- a/src/potential.rs	2026-10-11 11:33:08.209920569 +0200
++++ b/src/potential.rs	2026-10-11 12:05:43.159399493 +0200
+@@ -66,3 +66,71 @@
+         Some(k)
+     }
+ }
++
++/// A radially symmetric pair kernel in the engine's nondimensional units. All three values are those of the
++/// (possibly truncated) potential that is actually used for energy, force and Hessian.
++pub trait Pair: Send + Sync {
++    /// `(U(r), U'(r), U''(r))`, zero beyond the cutoff.
++    fn pair(&self, r: f64) -> (f64, f64, f64);
++    /// Cutoff radius (`f64::INFINITY` if none).
++    fn cutoff(&self) -> f64;
++    /// `U(r)` only (override when cheaper than `pair`).
++    fn val(&self, r: f64) -> f64 {
++        self.pair(r).0
++    }
++    /// `U'(r)` only (override when cheaper than `pair`).
++    fn d1(&self, r: f64) -> f64 {
++        self.pair(r).1
++    }
++    /// `U'(r)` used only to set the force scale (untruncated if that differs).
++    fn dv_ref(&self, r: f64) -> f64 {
++        self.pair(r).1
++    }
++    /// `U''(r)` used only to set the time scale.
++    fn d2v_ref(&self, r: f64) -> f64 {
++        self.pair(r).2
++    }
++}
++
++impl Pair for Yukawa {
++    fn pair(&self, r: f64) -> (f64, f64, f64) {
++        Yukawa::pair(self, r)
++    }
++    fn cutoff(&self) -> f64 {
++        self.rc
++    }
++    fn dv_ref(&self, r: f64) -> f64 {
++        self.dv(r)
++    }
++    fn d2v_ref(&self, r: f64) -> f64 {
++        self.d2v(r)
++    }
++}
++
++/// Force on the first point of a pair separated by `d = x_first - x_second`.
++pub fn pair_force(k: &dyn Pair, dx: f64, dy: f64) -> (f64, f64) {
++    let r = (dx * dx + dy * dy).sqrt();
++    if r == 0.0 || r >= k.cutoff() {
++        return (0.0, 0.0);
++    }
++    let dv = k.d1(r);
++    (-dv * dx / r, -dv * dy / r)
++}
++
++/// Hessian block `d^2 U(|d|) / dx_first^2` (2 x 2), or `None` outside the cutoff.
++pub fn block(k: &dyn Pair, dx: f64, dy: f64) -> Option<[[f64; 2]; 2]> {
++    let r = (dx * dx + dy * dy).sqrt();
++    if r == 0.0 || r >= k.cutoff() {
++        return None;
++    }
++    let (_, dv, d2v) = k.pair(r);
++    let u = [dx / r, dy / r];
++    let mut m = [[0.0; 2]; 2];
++    for a in 0..2 {
++        for b in 0..2 {
++            let id = if a == b { 1.0 } else { 0.0 };
++            m[a][b] = d2v * u[a] * u[b] + dv / r * (id - u[a] * u[b]);
++        }
++    }
++    Some(m)
++}
+diff -ruN '--exclude=target' '--exclude=Cargo.lock' a/tests/engine.rs b/tests/engine.rs
+--- a/tests/engine.rs	2026-10-11 11:33:08.210920611 +0200
++++ b/tests/engine.rs	2026-10-11 11:35:20.415411428 +0200
+@@ -32,7 +32,7 @@
+     let y: Vec<f64> = (0..8)
+         .flat_map(|k| [(k % 4) as f64 + 0.3 * lcg(&mut s), (k / 4) as f64 + 0.3 * lcg(&mut s)])
+         .collect();
+-    (Model { pot: Yukawa { kappa: 1.3, rc: 4.0 }, fixed }, y)
++    (Model { pot: std::sync::Arc::new(Yukawa { kappa: 1.3, rc: 4.0 }), fixed }, y)
+ }
+ 
+ #[test]

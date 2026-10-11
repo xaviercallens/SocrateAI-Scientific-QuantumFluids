@@ -1,0 +1,49 @@
+=== bug1: cargo test (a1,a2,a3) ===
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test b2_chain_closed_form_yukawa ... ok
+test bessel_spot_values ... ok
+test a1_kernel_derivatives_match_finite_differences ... FAILED
+test raw_kernels_positive_and_decreasing ... ok
+test a3_table_matches_series ... FAILED
+test a2_model_force_and_hessian_match_finite_differences ... ok
+test result: FAILED. 4 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+=== bug1: python a4/a5 (independent image sum) ===
+    Finished `release` profile [optimized] target(s) in 0.12s
+  "a5_pass": true,
+  "a4_image_sum_max_rel_err": 4.629894308489191e-10,
+  "a4_integral_max_rel_err": 3.2949198924825396e-12,
+  "a4_pass": true
+=== bug2: cargo test (a1,a2,a3) ===
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test bessel_spot_values ... ok
+test b2_chain_closed_form_yukawa ... ok
+test raw_kernels_positive_and_decreasing ... ok
+test a3_table_matches_series ... FAILED
+test a1_kernel_derivatives_match_finite_differences ... ok
+test a2_model_force_and_hessian_match_finite_differences ... ok
+test result: FAILED. 5 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.32s
+=== bug2: python a4/a5 (independent image sum) ===
+    Finished `release` profile [optimized] target(s) in 0.16s
+  "a5_pass": true,
+  "a4_image_sum_max_rel_err": 6.416430026642777,
+  "a4_integral_max_rel_err": 3.2949198924825396e-12,
+  "a4_pass": false
+=== bug3: cargo test (a1,a2,a3) ===
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test bessel_spot_values ... ok
+test b2_chain_closed_form_yukawa ... ok
+test raw_kernels_positive_and_decreasing ... ok
+test a1_kernel_derivatives_match_finite_differences ... FAILED
+test a3_table_matches_series ... FAILED
+test a2_model_force_and_hessian_match_finite_differences ... ok
+test result: FAILED. 4 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+=== bug3: python a4/a5 (independent image sum) ===
+    Finished `release` profile [optimized] target(s) in 0.08s
+  "a5_pass": true,
+  "a4_image_sum_max_rel_err": 4.629894308489191e-10,
+  "a4_integral_max_rel_err": 3.2949198924825396e-12,
+  "a4_pass": true
+DONE

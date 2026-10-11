@@ -1,0 +1,17 @@
+[package]
+name = "qf-exciton-kr"
+version = "0.1.0"
+edition = "2021"
+description = "Matrix-free Newton-Krylov (SDIRK2 + GMRES) solver for the driven-dissipative exciton GPE; pinned rusty-SUNDIALS v11.6.0 (5db8041), unmodified"
+publish = false
+
+[workspace]
+
+[dependencies]
+cvode = { path = "/home/xavkal/xdev/rusty-SUNDIALS-c3/crates/cvode" }
+nvector = { path = "/home/xavkal/xdev/rusty-SUNDIALS-c3/crates/nvector" }
+sundials-core = { path = "/home/xavkal/xdev/rusty-SUNDIALS-c3/crates/sundials-core" }
+
+[profile.release]
+opt-level = 3
+debug = false

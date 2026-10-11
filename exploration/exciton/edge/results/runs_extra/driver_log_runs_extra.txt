@@ -1,0 +1,16 @@
+dip disk N=91 extra finished (driver stopped by hand, order switched to N=61 first, A6 note)
+dip disk N=61 rc=0 wall=107.8s extra_random=44 offset=16
+dip hex N=61 rc=0 wall=86.7s extra_random=44 offset=16
+dip square N=61 rc=0 wall=91.8s extra_random=44 offset=16
+dip rect21 N=61 rc=0 wall=132.6s extra_random=44 offset=16
+dip tri N=61 rc=0 wall=214.1s extra_random=44 offset=16
+dip trap N=61 rc=0 wall=46.0s extra_random=44 offset=16
+dip rect32 N=61 rc=0 wall=230.3s extra_random=44 offset=16
+dip rect31 N=61 rc=0 wall=113.4s extra_random=44 offset=16
+dip hex N=91 rc=0 wall=273.9s extra_random=32 offset=8
+budget exhausted before dip square 91
+budget exhausted before dip rect21 91
+budget exhausted before dip tri 91
+budget exhausted before dip trap 91
+budget exhausted before dip rect32 91
+budget exhausted before dip rect31 91

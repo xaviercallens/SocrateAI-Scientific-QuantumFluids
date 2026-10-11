@@ -1,0 +1,2 @@
+{"gate":"T-e(ii)","solver":"etd","geom":"G8","h":0.1,"t_1e-7":7400,"seconds_1e-7":7.71,"t_1e-8":null,"seconds_1e-8":0.00}
+{"gate":"T-e(ii)","solver":"etd","geom":"G16","h":0.05,"t_1e-7":11450,"seconds_1e-7":104.65,"t_1e-8":13800,"seconds_1e-8":124.96}

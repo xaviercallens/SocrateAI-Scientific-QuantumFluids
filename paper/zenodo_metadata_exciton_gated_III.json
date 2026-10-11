@@ -1,0 +1,103 @@
+{
+ "metadata": {
+  "title": "Gated exciton fluids III: a matrix-free Newton-Krylov solver and a 64x64 case it does not converge, and a classical node-arrangement study of shaped containers with the Fenris-CMRR engine",
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "description": "<p>Third paper of the gated-exciton line (I: doi:10.5281/zenodo.23294615; II: doi:10.5281/zenodo.23297479). Two pre-registered work packages, each with a failed or partly failed gate, each re-checked by an independent hostile verifier. <b>(1) A matrix-free Newton-Krylov solver</b> (L-stable SDIRK2, GMRES, Fourier-diagonal block preconditioner, analytic Jacobian-vector products) for the driven-dissipative exciton Gross-Pitaevskii model with an incoherent reservoir: reproduces the dense-CVODE records and an independent reviewer's printed digits, second order in time, CPU cost per transient time unit growing like M^2.15 between 8x8 and 64x64 grids; slower than dense CVODE at 8x8 and faster at 16x16 (one transient, one seed). The registered 64x64 stationary-state gate at gate amplitude V0=0.5 is NOT MET: the run does not converge and shows a persistent pulsation of period about 970 at three resolutions, not tested with an independent integrator. The preconditioner planted-bug gate passed only in a regime where it could not fail, and a regime test failed for two of six variants. <b>(2) A classical relaxation study</b> with the Fenris-CMRR engine and the gated kernel in eleven shaped containers: the registered design (wall nodes at the mean spacing, uniform starts) did not confine the free nodes and was replaced by a half-spaced wall and random-sequential-addition starts; with that wall model the defect count depends strongly on the container shape (about 6 to about 30 non-sixfold nodes at N about 100) and less, but not negligibly in mid-range shapes, on the kernel; a concentration of defects at the wall was not demonstrated against a density null, and the statistics are thin. A classical design target, not an exciton prediction. No comparison with experimental data. Written by an AI system; checked by independent instances; not refereed.</p>",
+  "creators": [
+   {
+    "name": "Callens, Xavier",
+    "affiliation": "SocrateAI Research"
+   }
+  ],
+  "keywords": [
+   "Newton-Krylov",
+   "GMRES",
+   "driven-dissipative Gross-Pitaevskii",
+   "image charges",
+   "topological defects",
+   "node arrangements",
+   "pre-registration",
+   "negative results",
+   "rusty-SUNDIALS",
+   "Fenris-CMRR"
+  ],
+  "license": "CC-BY-4.0",
+  "access_right": "open",
+  "language": "eng",
+  "related_identifiers": [
+   {
+    "identifier": "https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids",
+    "relation": "isSupplementedBy",
+    "scheme": "url"
+   },
+   {
+    "identifier": "https://github.com/xaviercallens/rusty-SUNDIALS",
+    "relation": "isSupplementedBy",
+    "scheme": "url"
+   },
+   {
+    "identifier": "https://github.com/openai/math",
+    "relation": "cites",
+    "scheme": "url"
+   },
+   {
+    "identifier": "10.1038/s41586-026-10636-y",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "arXiv:2603.15443",
+    "relation": "cites",
+    "scheme": "arxiv"
+   },
+   {
+    "identifier": "10.5281/zenodo.23286893",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23269715",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23272153",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23285631",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23292863",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23289027",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23294615",
+    "relation": "isSupplementTo",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23297479",
+    "relation": "isSupplementTo",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "https://github.com/xaviercallens/rusty-Fenris-CMRR",
+    "relation": "cites",
+    "scheme": "url"
+   }
+  ],
+  "version": "1",
+  "notes": "Standalone paper of the SocrateAI-Scientific-QuantumFluids programme, written by an AI system under the author's standing instructions. Source archive: the exploration/exciton tree as committed. rusty-SUNDIALS tag v11.6.0 (tree 996aaf0706e1, commit 5db8041). Repository state: git tag exciton-gated-3."
+ }
+}

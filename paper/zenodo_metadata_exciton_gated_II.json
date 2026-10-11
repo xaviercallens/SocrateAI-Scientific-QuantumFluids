@@ -1,0 +1,94 @@
+{
+ "metadata": {
+  "title": "Gated exciton fluids II: a machine-checked kernel theorem, a harmonic crystallisation estimate, open-boundary energies, a validity gate for materials-data inputs, and an exponential integrator that did not meet its gate",
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "description": "<p>Second paper of the gated-exciton line (first: doi:10.5281/zenodo.23294615). Five pre-registered work packages, each re-checked by an independent hostile verifier before deposit. <b>(1) Lean 4 / Mathlib formalisation</b> (52 theorems, no sorry, standard axioms only) that the image-charge kernel of a dual-gated bilayer is the Laplace transform of a non-negative bounded density, hence completely monotone in r^2, with the Poisson summation derived rather than assumed; the verifier compiled it and recomputed the kernel by an independent image sum. It does not prove the (unrefereed, AI-generated) lattice-optimality theorem. <b>(2) A harmonic Lindemann estimate</b> of the crystallisation threshold calibrated on a quantum-Monte-Carlo control: a negative result (a rigid-exciton crystal needs d/a_M of about 49 or more; gates only raise it; two registered predictions on the control failed). <b>(3) An open-boundary study</b> of 65 classical N-particle configurations of three completely monotone kernels: negative, aspect-ratio-dependent edge energy, no clean boundary law, reduced numbers of starts, one earlier hexagon claim withdrawn. <b>(4) A validity gate for Hugging Face / neural-network inputs</b> that fails for the electron-hole separation and binding energy. <b>(5) An ETDRK4 exponential integrator</b> that fails its registered order-4 gate at the registered stiffness (stiff-order reduction), is 29 times faster than dense BDF to a stationary state, and has a step limit below the IMEX module's at high density. Two packages (matrix-free Newton-Krylov at 64x64, and a classical node-arrangement study with the Fenris-CMRR engine) were still running and are not reported. No comparison with experimental data; no claim about exciton Bose-Einstein condensation. Written by an AI system; checked by independent instances; not refereed.</p>",
+  "creators": [
+   {
+    "name": "Callens, Xavier",
+    "affiliation": "SocrateAI Research"
+   }
+  ],
+  "keywords": [
+   "completely monotone functions",
+   "image charges",
+   "dual-gated devices",
+   "dipolar excitons",
+   "Lean 4",
+   "Wigner crystallisation",
+   "harmonic Lindemann criterion",
+   "exponential time differencing",
+   "pre-registration",
+   "negative results",
+   "rusty-SUNDIALS"
+  ],
+  "license": "CC-BY-4.0",
+  "access_right": "open",
+  "language": "eng",
+  "related_identifiers": [
+   {
+    "identifier": "https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids",
+    "relation": "isSupplementedBy",
+    "scheme": "url"
+   },
+   {
+    "identifier": "https://github.com/xaviercallens/rusty-SUNDIALS",
+    "relation": "isSupplementedBy",
+    "scheme": "url"
+   },
+   {
+    "identifier": "https://github.com/openai/math",
+    "relation": "cites",
+    "scheme": "url"
+   },
+   {
+    "identifier": "10.1038/s41586-026-10636-y",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "arXiv:2603.15443",
+    "relation": "cites",
+    "scheme": "arxiv"
+   },
+   {
+    "identifier": "10.5281/zenodo.23286893",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23269715",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23272153",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23285631",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23292863",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23294615",
+    "relation": "isSupplementTo",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23289027",
+    "relation": "cites",
+    "scheme": "doi"
+   }
+  ],
+  "version": "1",
+  "notes": "Standalone paper of the SocrateAI-Scientific-QuantumFluids programme, written by an AI system under the author's standing instructions. The source archive contains the whole exploration/exciton tree as committed, including the in-progress Krylov and Fenris-gated work packages, whose results are NOT claimed in the paper. rusty-SUNDIALS tag v11.6.0 (tree 996aaf0706e1, commit 5db8041). Repository state: git tag exciton-gated-2."
+ }
+}

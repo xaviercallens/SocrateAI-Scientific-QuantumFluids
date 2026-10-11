@@ -1,0 +1,18 @@
+[package]
+name = "qf-exciton-edge"
+version = "0.1.0"
+edition = "2021"
+description = "Edge and frustration study: classical N-particle ground states of completely monotone kernels in open geometries, gradient flows on rusty-SUNDIALS CVODE (BDF)"
+publish = false
+
+[workspace]
+
+# rusty-SUNDIALS v11.6.0 (tree 996aaf0706e1 = commit 5db8041), as in ../../../rust/qf-exciton-p1.
+[dependencies]
+cvode = { path = "/home/xavkal/xdev/rusty-SUNDIALS-c3/crates/cvode" }
+nvector = { path = "/home/xavkal/xdev/rusty-SUNDIALS-c3/crates/nvector" }
+sundials-core = { path = "/home/xavkal/xdev/rusty-SUNDIALS-c3/crates/sundials-core" }
+
+[profile.release]
+opt-level = 3
+debug = false

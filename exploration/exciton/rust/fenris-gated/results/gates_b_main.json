@@ -1,0 +1,9 @@
+{
+ "L-b1": {
+  "max_abs_coordinate_difference": 4.134470543704083e-13,
+  "fmax_rel_patched": 4.119436e-11,
+  "converged": 1,
+  "n_free": 121,
+  "pass_": true
+ }
+}

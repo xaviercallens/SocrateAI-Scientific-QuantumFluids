@@ -1,0 +1,5 @@
+{"gate":"T-e(i)","M":8,"h":0.05,"seconds_per_step":1.0913e-4,"seconds_per_unit_time":2.1826e-3,"ratio_to_NlogN":1.000,"finite":true}
+{"gate":"T-e(i)","M":16,"h":0.05,"seconds_per_step":4.7216e-4,"seconds_per_unit_time":9.4431e-3,"ratio_to_NlogN":0.811,"finite":true}
+{"gate":"T-e(i)","M":32,"h":0.05,"seconds_per_step":2.1241e-3,"seconds_per_unit_time":4.2483e-2,"ratio_to_NlogN":0.730,"finite":true}
+{"gate":"T-e(i)","M":64,"h":0.05,"seconds_per_step":9.9014e-3,"seconds_per_unit_time":1.9803e-1,"ratio_to_NlogN":0.709,"finite":true}
+{"gate":"T-e(i)","M":128,"h":0.05,"seconds_per_step":5.0274e-2,"seconds_per_unit_time":1.0055e0,"ratio_to_NlogN":0.771,"finite":true}

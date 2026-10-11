@@ -1,0 +1,8 @@
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test force_matches_energy_gradient ... ok
+test hessian_matches_force_jacobian ... ok
+test patch_converges_and_fixed_nodes_do_not_move ... ok
+test order1_restart_rescues_tight_high_order_bdf ... FAILED
+test ffi_round_trip_and_rejects_bad_status ... ok
+test near_coincident_and_coincident_nodes_are_separated ... ok
+test result: FAILED. 5 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.69s

@@ -1,0 +1,2 @@
+{"gate":"unit","fft_vs_naive":2.665e-15,"ifft_roundtrip":1.110e-16,"plane_wave_kinetic":2.243e-16,"phi_contour_vs_direct":1.041e-17,"phi_z0":2.082e-17,"rhs_consistency_abs":2.105e-4,"rhs_scale":2.989e0,"uniform_fixed_point_100":2.131e-12}
+{"gate":"unit","fft_vs_naive":2.665e-15,"ifft_roundtrip":1.110e-16,"plane_wave_kinetic":2.243e-16,"phi_contour_vs_direct":1.041e-17,"phi_z0":2.082e-17,"rhs_consistency_abs_h1e-5":2.105e-4,"rhs_consistency_abs_h1e-6":2.106e-5,"rhs_scale":2.989e0,"uniform_fixed_point_100":2.131e-12}
