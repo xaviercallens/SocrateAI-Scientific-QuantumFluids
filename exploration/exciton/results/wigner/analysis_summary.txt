@@ -1,0 +1,83 @@
+gamma_B = 0.2630; c = 0.5342
+D/d=dip: Lambda_min=1.2 at nu=200 edge=True; monotone_dec=True n_minima=0
+D/d=inf: Lambda_min=48.7 at nu=0.398 edge=False; monotone_dec=False n_minima=1
+D/d=20.0: Lambda_min=48.7 at nu=0.398 edge=False; monotone_dec=False n_minima=1
+D/d=10.0: Lambda_min=48.8 at nu=0.398 edge=False; monotone_dec=False n_minima=1
+D/d=5.0: Lambda_min=49.4 at nu=0.398 edge=False; monotone_dec=False n_minima=1
+D/d=3.0: Lambda_min=51.9 at nu=0.515 edge=False; monotone_dec=False n_minima=1
+D/d=2.0: Lambda_min=64.8 at nu=0.865 edge=False; monotone_dec=False n_minima=1
+D/d=1.5: Lambda_min=104 at nu=1.88 edge=False; monotone_dec=False n_minima=1
+D/d=1.2: Lambda_min=246 at nu=11.6 edge=False; monotone_dec=False n_minima=1
+central Lambda = 4.20
+--- dip
+  Lambda=0.5: no harmonic crystal on grid
+  Lambda=1: no harmonic crystal on grid
+  Lambda=2: nu in [72.49999999999103, None]  n r0^2 in [289.99999999996413, None]
+  Lambda=5: nu in [11.599999999999893, None]  n r0^2 in [289.9999999999973, None]
+  Lambda=10: nu in [2.8999999999997446, None]  n r0^2 in [289.9999999999745, None]
+  Lambda=30: nu in [0.32222222222218144, None]  n r0^2 in [289.9999999999633, None]
+  Lambda=100: nu in [None, None]  n r0^2 in [None, None]
+--- inf
+  Lambda=0.5: no harmonic crystal on grid
+  Lambda=1: no harmonic crystal on grid
+  Lambda=2: no harmonic crystal on grid
+  Lambda=5: no harmonic crystal on grid
+  Lambda=10: no harmonic crystal on grid
+  Lambda=30: no harmonic crystal on grid
+  Lambda=100: nu in [None, 4.282780557258275]  n r0^2 in [None, 42827.80557258275]
+--- 20.0
+  Lambda=0.5: no harmonic crystal on grid
+  Lambda=1: no harmonic crystal on grid
+  Lambda=2: no harmonic crystal on grid
+  Lambda=5: no harmonic crystal on grid
+  Lambda=10: no harmonic crystal on grid
+  Lambda=30: no harmonic crystal on grid
+  Lambda=100: nu in [None, 4.258638548375144]  n r0^2 in [None, 42586.38548375144]
+--- 10.0
+  Lambda=0.5: no harmonic crystal on grid
+  Lambda=1: no harmonic crystal on grid
+  Lambda=2: no harmonic crystal on grid
+  Lambda=5: no harmonic crystal on grid
+  Lambda=10: no harmonic crystal on grid
+  Lambda=30: no harmonic crystal on grid
+  Lambda=100: nu in [None, 4.245578838035581]  n r0^2 in [None, 42455.78838035581]
+--- 5.0
+  Lambda=0.5: no harmonic crystal on grid
+  Lambda=1: no harmonic crystal on grid
+  Lambda=2: no harmonic crystal on grid
+  Lambda=5: no harmonic crystal on grid
+  Lambda=10: no harmonic crystal on grid
+  Lambda=30: no harmonic crystal on grid
+  Lambda=100: nu in [0.06397220434158965, 4.234597221130622]  n r0^2 in [639.7220434158965, 42345.97221130622]
+--- 3.0
+  Lambda=0.5: no harmonic crystal on grid
+  Lambda=1: no harmonic crystal on grid
+  Lambda=2: no harmonic crystal on grid
+  Lambda=5: no harmonic crystal on grid
+  Lambda=10: no harmonic crystal on grid
+  Lambda=30: no harmonic crystal on grid
+  Lambda=100: nu in [0.14076924483139927, 4.196372533133258]  n r0^2 in [1407.6924483139926, 41963.72533133258]
+--- 2.0
+  Lambda=0.5: no harmonic crystal on grid
+  Lambda=1: no harmonic crystal on grid
+  Lambda=2: no harmonic crystal on grid
+  Lambda=5: no harmonic crystal on grid
+  Lambda=10: no harmonic crystal on grid
+  Lambda=30: no harmonic crystal on grid
+  Lambda=100: nu in [0.35937561402078444, 4.039299569296235]  n r0^2 in [3593.7561402078445, 40392.99569296235]
+--- 1.5
+  Lambda=0.5: no harmonic crystal on grid
+  Lambda=1: no harmonic crystal on grid
+  Lambda=2: no harmonic crystal on grid
+  Lambda=5: no harmonic crystal on grid
+  Lambda=10: no harmonic crystal on grid
+  Lambda=30: no harmonic crystal on grid
+  Lambda=100: no harmonic crystal on grid
+--- 1.2
+  Lambda=0.5: no harmonic crystal on grid
+  Lambda=1: no harmonic crystal on grid
+  Lambda=2: no harmonic crystal on grid
+  Lambda=5: no harmonic crystal on grid
+  Lambda=10: no harmonic crystal on grid
+  Lambda=30: no harmonic crystal on grid
+  Lambda=100: no harmonic crystal on grid

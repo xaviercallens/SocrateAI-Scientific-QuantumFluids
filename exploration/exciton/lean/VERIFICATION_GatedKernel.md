@@ -126,3 +126,17 @@ Each is proved as `¬ ∀ ...` by instantiation and `norm_num`; the three `#prin
 * Mathlib name churn met: `tsum_le_tsum` is now `Summable.tsum_le_tsum`; `push_neg` is deprecated (not used in the final file).
 * Intermediate pieces were compiled as separate scratch modules (in the session scratchpad, outside the repository); the
   final file was compiled whole, once after each edit, as in section 2.
+
+## Addendum 2026-10-11: independent verification (supersedes the 'no independent verifier' line above)
+
+An independent hostile verifier (a separate Claude instance) read the file in full and ran the checks below; its report, verbatim:
+
+# Verifier report: GatedKernel.lean (2026-10-11)
+Verdict: ACCEPT. No blocking problem found.
+- sha256 3ef8152e... matches report; 1083 lines, 52 theorems, read in full.
+- Compiled with lake env lean in qfenv: exit 0, no warnings/errors, 17 #print axioms all [propext, Classical.choice, Quot.sound]; 56 s.
+- grep: no sorry/axiom/native_decide/unsafe/set_option in file.
+- AdmissiblePotential identical to ExcitonX1.lean definition (same text).
+- Statement fidelity: Uimg = 2k(0)-k(2ze-2h1)-k(2zh-2h1)-2k(zh-ze)+2k(zh-2h1+ze), P=2(h1+h2); matches V_ee+V_hh-2V_eh with images at 2h1-z0 and period P.
+- Independent Python (own 3D image sum with signs, N=4000, h1=1,h2=1.5,ze=.3,zh=-.4): direct image sum equals Uimg to 1e-9 at r=0.3,1,2.5; Laplace integral of (pi s)^-1/2 S(s) (Poisson form, quad) equals Uimg to 1e-12 at t=0.1,1,4.
+- Minor: non-triviality (0 is admissible), Green-function uniqueness, Cohn-Kumar not covered; all disclosed in the report. Report states itself producer-only; this verification is the independent read.
