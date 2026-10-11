@@ -223,7 +223,35 @@ for name, lst in (("fixed_sigma_3", fixed_sigma), ("fixed_sigma_over_L", fixed_r
         fam[name] = {"L": [p[0] for p in pts], "shift": [p[1]["shift"] for p in pts], "n_center": [p[1]["n_center"] for p in pts],
                      "box_avg": [p[1]["V0"] * 2 * math.pi * p[1]["sigma"] ** 2 / p[0] ** 2 for p in pts],
                      "slope_loglog": slope([p[0] for p in pts], [p[1]["shift"] for p in pts])}
+v25 = [(8, g("Ke_G8_V0.25_s1")), (16, g("Ke_G16_V0.25_s1")), (64, g("Ke_G64a_V0.25_s1"))]
+pts = [(L, d) for L, d in v25 if d]
+fam["fixed_sigma_over_L_V0.25"] = {"L": [p[0] for p in pts], "shift": [p[1]["shift"] for p in pts], "n_center": [p[1]["n_center"] for p in pts],
+                                   "box_avg": [p[1]["V0"] * 2 * math.pi * p[1]["sigma"] ** 2 / p[0] ** 2 for p in pts]}
 out["K-e4"] = fam
+
+
+def logsummary(name, t_from=0.0):
+    pth = os.path.join(R, name)
+    if not os.path.exists(pth):
+        return None
+    L = [json.loads(l) for l in open(pth)]
+    L = [d for d in L if d["t"] >= t_from]
+    if not L:
+        return None
+    t = [d["t"] for d in L]
+    nc = [d["n_center"] for d in L]
+    pk = [t[i] for i in range(1, len(nc) - 1) if nc[i] > nc[i - 1] and nc[i] >= nc[i + 1] and nc[i] > 0.5 * max(nc)]
+    per = [pk[i + 1] - pk[i] for i in range(len(pk) - 1)]
+    return {"t_last": t[-1], "n_entries": len(L), "resid_min": min(d["resid"] for d in L), "resid_max": max(d["resid"] for d in L),
+            "omega_min": min(d["omega"] for d in L), "omega_max": max(d["omega"] for d in L), "n_center_min": min(nc), "n_center_max": max(nc),
+            "n_peaks": len(pk), "mean_period": (sum(per) / len(per)) if per else None, "cpu_s": L[-1]["cpu"]}
+
+out["K-e2_G64a_V0.5"] = {"gate_met": False, "log_summary_t_ge_2000": logsummary("ke_Ke_G64a_V0.5_s1.log", 2000.0),
+                         "stopped_by_hand_at_t": 15000.0}
+out["diagnostics_A3"] = {"D1_M32": logsummary("diag_D1_M32.log", 2000.0), "D1_M16": logsummary("diag_D1_M16.log", 2000.0),
+                         "D2_M32_rtol1e-6": logsummary("diag_D2_M32.log", 2000.0)}
+out["diag_rows"] = [{k: d[k] for k in ("tag", "M", "t_reached", "rtol", "resid_rel", "omega", "n_center", "steps", "cpu_s", "error")} for d in rows("diag.jsonl")]
+
 
 json.dump(out, open(os.path.join(R, "summary.json"), "w"), indent=1)
 print(json.dumps(out, indent=1)[:20000])

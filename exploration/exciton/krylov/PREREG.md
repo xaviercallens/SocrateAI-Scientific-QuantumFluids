@@ -146,3 +146,7 @@ about 975 time units and an amplitude that does not decay (peaks at t = 1400, 23
 pulsation is present at M = 32 and rtol 1e-4 (diagnostic D1, t = 10200: residual 1.1e-2). A process killed at the CPU cap writes no final record, and more cycles would not
 change the reading, so the 4 h CPU cap of A3 is replaced by: the run is stopped by me at t >= 15000 (about 14 cycles); its record is the progress log
 (t, residual, omega, n_center every 100 time units), no final state file exists. K-e2 is reported as NOT MET.
+
+**A5 (2026-10-11, D2 at t = 100 after 141 CPU s).** The tolerance diagnostic D2 (M = 32, rtol 1e-6) costs about 1.4 CPU s per time unit at the start, so its t
+cap of 2e4 is not affordable; it is stopped by me at t >= 2500 (two pulsation periods of the rtol-1e-4 runs: peaks at t ~ 1400 and 2300), and its record is the
+progress log. Reading: the pulsation is counted as tolerance independent if the central density again peaks within +-150 time units of 1400 and 2300 with a similar range.
