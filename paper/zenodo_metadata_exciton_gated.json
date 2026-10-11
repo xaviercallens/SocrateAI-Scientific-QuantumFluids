@@ -1,0 +1,89 @@
+{
+ "metadata": {
+  "title": "Gated exciton fluids: a proof that image charges preserve complete monotonicity, a driven-dissipative solver test on rusty-SUNDIALS, and a laboratory protocol",
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "description": "<p>Follow-up to the author's first note on a planar lattice-optimality theorem and an exciton-fluid interaction (doi:10.5281/zenodo.23289027). <b>(1) A proof</b> (paper and pencil; not formalised in Lean) that for grounded perfect-conductor gates at arbitrary distances and arbitrary layer positions, the dipolar exciton-exciton kernel built from the image-charge series is completely monotone in r^2: its Laplace measure is a sum of terms 2(1-cos(b-a))(1+cos(a+b)) &gt;= 0 after Poisson summation. Within that model the gates cannot be engineered to break the hypothesis of the (unrefereed, AI-generated) lattice theorem. The independent review of this note supplied a spectral argument extending the statement to layered dielectrics, reported as a remark, not a full proof. The zero-wavevector coefficient 4 pi d (1 - d/D) is a textbook capacitor formula. <b>(2) A pre-registered numerical test</b> on the author's Rust implementation of CVODE (rusty-SUNDIALS) of a generic driven-dissipative Gross-Pitaevskii model with an incoherent reservoir and a gate potential: steady states, the 768x768 linearisation, the conservative limit, the ARKode-style IMEX module (a fixed-point implicit stage that errors where h*gamma_R*a_ii exceeds 1; second order below) and a planted bug passed as registered; the stationarity and pump-budget gates of the gate sweep <b>failed as registered</b> at t = 4000 (the horizon was too short) and pass in an exploratory continuation to t = 16000, one seed per amplitude. The gate sweep ran on an 8x8 grid because the registered cost was misjudged by two orders of magnitude; in that small periodic box the emission shift is only the area average of the gate. Three amendments preceded the numbers they affect, a fourth was recorded while the last run was in progress, and one registered comparison (sorted eigenvalue lists) was replaced by a nearest-neighbour matching without an amendment; all are disclosed. <b>(3) A laboratory protocol</b> (L1-L6) with expected outcomes, pass/fail rules and confounders, stating which items can fail (only the dependence of the interaction strength on gate separation) and which are calibrations or controls. Not done: Lean formalisation, the Wigner-crystallisation transition, edges and frustration, any Hugging Face data or neural-network surrogate, any comparison with data; no claim about exciton Bose-Einstein condensation; the model parameters are dimensionless and chosen for solver stiffness. Written by an AI system; reviewed by another instance of the same model family and briefly by the author; not refereed; no experimental group has seen it.</p>",
+  "creators": [
+   {
+    "name": "Callens, Xavier",
+    "affiliation": "SocrateAI Research"
+   }
+  ],
+  "keywords": [
+   "completely monotone functions",
+   "image charges",
+   "dual-gated devices",
+   "dipolar excitons",
+   "driven-dissipative Gross-Pitaevskii",
+   "exciton-polariton",
+   "pre-registration",
+   "rusty-SUNDIALS",
+   "CVODE",
+   "negative results",
+   "laboratory protocol"
+  ],
+  "license": "CC-BY-4.0",
+  "access_right": "open",
+  "language": "eng",
+  "related_identifiers": [
+   {
+    "identifier": "https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids",
+    "relation": "isSupplementedBy",
+    "scheme": "url"
+   },
+   {
+    "identifier": "https://github.com/xaviercallens/rusty-SUNDIALS",
+    "relation": "isSupplementedBy",
+    "scheme": "url"
+   },
+   {
+    "identifier": "https://github.com/openai/math",
+    "relation": "cites",
+    "scheme": "url"
+   },
+   {
+    "identifier": "10.1038/s41586-026-10636-y",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "arXiv:2603.15443",
+    "relation": "cites",
+    "scheme": "arxiv"
+   },
+   {
+    "identifier": "10.5281/zenodo.23286893",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23269715",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23272153",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23285631",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23289027",
+    "relation": "isSupplementTo",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23292863",
+    "relation": "cites",
+    "scheme": "doi"
+   }
+  ],
+  "version": "1",
+  "notes": "Standalone paper of the SocrateAI-Scientific-QuantumFluids programme, written by an AI system under the author's standing instructions. Source archive attached (paper sources, figures, pre-registration with amendments, run records, independent review, Rust crate, Python references). rusty-SUNDIALS tag v11.6.0 (tree 996aaf0706e1, commit 5db8041). Repository state: git tag exciton-gated-1."
+ }
+}
