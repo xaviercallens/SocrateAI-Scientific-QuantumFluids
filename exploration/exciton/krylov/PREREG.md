@@ -129,3 +129,14 @@ hardly fail and that is disclosed here. Extra test K-d' (new gates, same seed an
 non-null error; `BUG=rhs` ends at a state with |d shift| >= 1e-3 relative to the reference or reports an error. Reported (no gate): Newton
 iterations, GMRES iterations per Newton iteration, CPU seconds, step counts for each variant, which show whether the structured
 preconditioner matters at large steps.
+
+**A3 (2026-10-11, written while G64a V0 = 0.5 was running, after 8000 of its time units, before it finished and before the diagnostics below were run).**
+G64a, V0 = 0.5 (K-e2) shows no approach to a stationary state over t = 8000: the relative residual stays between 4e-3 and 1.7e-2 and the central
+density oscillates between 0.01 and 2.4 with a period of about 1000 time units (log `results/ke_Ke_G64a_V0.5_s1.log`). The gate
+"residual < 1e-7 within 2e5 time units" cannot be reached inside any CPU budget at this rate (about 800 time units per 10 minutes). Changes: (1) the 2e5 time
+cap is replaced by a CPU cap of 4 h for this run; if the residual criterion is not met by then the K-e2 gate is reported as NOT MET, with the
+oscillation described, not as a stationary state; (2) the extra G64a runs for V0 = 0.25 (finished, stationary) and V0 = 1.0 (started, stopped
+by me at t ~ 100 to free a CPU slot, no result) were launched outside the "if the first finishes" condition of K-e2 and are reported as extras;
+(3) diagnostics to separate physics from numerics, run with the G64a physical geometry (L = 64, sigma = 12, V0 = 0.5, seed 1, rtol 1e-4/atol 1e-7, TRACK=1,
+stop at residual 1e-8 or t = 4e4): D1 on M = 32 (h = 2) and M = 16 (h = 4), D2 on M = 32 at rtol 1e-6/atol 1e-9 (t cap 2e4). No gate is attached; what is
+read from them is only whether the slow oscillation of the central density and the non-decaying residual are present at other resolutions and tolerances.

@@ -150,5 +150,80 @@ if len(s) == 3:
     out["K-e1_seed_independence"] = {"shifts": s, "spread": max(s) - min(s), "pass": max(s) - min(s) <= 1e-6}
 out["K-e1_resid_gate"] = {t: d["resid_rel"] < 1e-7 for t, d in ke.items()}
 
+# K-c
+def slope(xs, ys):
+    lx = [math.log(x) for x in xs]
+    ly = [math.log(y) for y in ys]
+    n = len(xs)
+    mx, my = sum(lx) / n, sum(ly) / n
+    return sum((a - mx) * (b - my) for a, b in zip(lx, ly)) / sum((a - mx) ** 2 for a in lx)
+
+kc = rows("kc.jsonl")
+import statistics
+def med(prefix):
+    v = [d for d in kc if d["tag"].startswith(prefix)]
+    if not v:
+        return None
+    return {"cpu_median": statistics.median(d["cpu_s"] for d in v), "wall_median": statistics.median(d["wall_s"] for d in v),
+            "cpu_all": [d["cpu_s"] for d in v], "steps": v[0].get("steps", v[0].get("cvode_steps")), "newton": v[0].get("newton"),
+            "gmres": v[0].get("gmres"), "n": len(v)}
+kcres = {"kr": {}, "cvode_rtol1e-10": {}, "cvode_rtol1e-7": {}}
+for M in (8, 16, 32, 64):
+    kcres["kr"][M] = med(f"Kc_kr_M{M}_r")
+for M in (8, 16):
+    kcres["cvode_rtol1e-10"][M] = med(f"Kc_cvode_M{M}_rtol1e-10_r")
+    kcres["cvode_rtol1e-7"][M] = med(f"Kc_cvode_M{M}_rtol1e-7_r")
+Ms = [M for M in (8, 16, 32, 64) if kcres["kr"].get(M)]
+if len(Ms) >= 3:
+    kcres["exponent_kr_8_64"] = slope(Ms, [kcres["kr"][M]["cpu_median"] for M in Ms])
+    kcres["exponent_kr_16_64"] = slope(Ms[1:], [kcres["kr"][M]["cpu_median"] for M in Ms[1:]])
+    kcres["per_step_ms"] = {M: 1e3 * kcres["kr"][M]["cpu_median"] / kcres["kr"][M]["steps"] for M in Ms}
+    kcres["gate_M64_under_2h"] = bool(kcres["kr"].get(64) and kcres["kr"][64]["cpu_median"] < 7200)
+out["K-c"] = kcres
+
+# K-d' (A2)
+kd2 = by_tag("kd2.jsonl")
+ref = ke.get("Ke_G16_V0.5_s1")
+if ref and kd2:
+    d2 = {}
+    for tag, d in kd2.items():
+        row = {"shift": d["shift"], "n_center": d["n_center"], "resid": d["resid_rel"], "t_reached": d["t_reached"], "steps": d["steps"],
+               "newton": d["newton"], "gmres": d["gmres"], "gmres_per_newton": d["gmres"] / d["newton"], "rej_newton": d["rej_newton"],
+               "cpu_s": d["cpu_s"], "error": d["error"], "d_shift": abs(d["shift"] - ref["shift"]), "d_nc": abs(d["n_center"] - ref["n_center"])}
+        if tag == "Kd2_bugrhs":
+            row["pass"] = row["d_shift"] >= 1e-3 or d["error"] is not None
+        else:
+            row["pass"] = (row["d_shift"] <= 1e-7 and row["d_nc"] <= 1e-6) or d["error"] is not None
+        d2[tag] = row
+    d2["reference_Ke_G16_V0.5_s1"] = {"newton": ref["newton"], "gmres": ref["gmres"], "cpu_s": ref["cpu_s"], "steps": ref["steps"]}
+    out["K-d_prime"] = d2
+
+# K-e2 / K-e3 / K-e4
+def g(t):
+    return ke.get(t)
+
+e3 = {}
+r = [g("Ke_G16_V0.5_s1"), g("Ke_R32_V0.5_s1"), g("Ke_R64_V0.5_s1")]
+if all(r):
+    s16, s32, s64 = (x["shift"] for x in r)
+    e3 = {"shift_h1": s16, "shift_h0.5": s32, "shift_h0.25": s64, "d_32_16": abs(s32 - s16), "d_64_32": abs(s64 - s32),
+          "nc": [x["n_center"] for x in r], "pass": abs(s64 - s32) < abs(s32 - s16)}
+    w = g("Ke_R32white_V0.5_s1")
+    if w:
+        e3["white_noise_R32_d_shift"] = abs(w["shift"] - s32)
+        e3["white_noise_pass"] = abs(w["shift"] - s32) <= 1e-6
+out["K-e3"] = e3
+
+fam = {}
+fixed_sigma = [(16, g("Ke_G16_V0.5_s1")), (32, g("Ke_F32_V0.5_s1")), (64, g("Ke_F64_V0.5_s1"))]
+fixed_ratio = [(8, g("Ke_G8_V0.5_s1")), (16, g("Ke_G16_V0.5_s1")), (32, g("Ke_G32_V0.5_s1")), (64, g("Ke_G64a_V0.5_s1"))]
+for name, lst in (("fixed_sigma_3", fixed_sigma), ("fixed_sigma_over_L", fixed_ratio)):
+    pts = [(L, d) for L, d in lst if d]
+    if len(pts) >= 2:
+        fam[name] = {"L": [p[0] for p in pts], "shift": [p[1]["shift"] for p in pts], "n_center": [p[1]["n_center"] for p in pts],
+                     "box_avg": [p[1]["V0"] * 2 * math.pi * p[1]["sigma"] ** 2 / p[0] ** 2 for p in pts],
+                     "slope_loglog": slope([p[0] for p in pts], [p[1]["shift"] for p in pts])}
+out["K-e4"] = fam
+
 json.dump(out, open(os.path.join(R, "summary.json"), "w"), indent=1)
 print(json.dumps(out, indent=1)[:20000])
