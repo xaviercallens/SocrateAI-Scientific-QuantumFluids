@@ -122,4 +122,20 @@ result.
 
 ## 4. Amendments
 
-(none yet; every deviation after a result is seen is a dated amendment below)
+**A1 (2026-10-11, after the first T-a, T-b results and before any T-c, T-d, T-e, T-f, T-g number existed).** What had been seen:
+T-a passed (above: all 13 runs at `1e-13` level; below: 10 of 10). T-b **failed** as registered, at both geometries, for
+`ETD`: successive error ratios `E(2h)/E(h)` = 2.2, 2.9, 4.5, 7.2 (`G8`) and 2.0, 2.8, 4.5, 7.2 (`G16`) for `h = 0.2 ... 0.0125`,
+not in `[12, 20]`; `LAW` (full linear part) blew up at `h = 0.2` and had `E ~ 0.6` at `h = 0.1`. The kinetic-only variants
+`LAWK`/`ETDK` reached `E ~ 1e-9` at `h = 0.01` and then sit on the reference floor (`~7e-11`, the registered `e_ref` of `G8` is
+`3.8e-10`), so they give no order measurement at the registered `h` values. The T-b gate result stands as FAIL; nothing below changes it.
+Hypothesis stated now, before the control is run: the failure is the *stiff order reduction* of the Cox-Matthews scheme (the
+error depends on `h gamma_R`, which is 2.5 at `h = 0.0125`), not a coding error; the evidence for a correct implementation
+is T-a, the unit test, and the kinetic-only variants. Controls added (reported, not new gates): (i) T-b protocol, geometry `G8`,
+`t = 10`, with the reservoir decay `gamma_R in {2, 20, 200}` and `P = gamma (10 + gamma_R)` (so `n = 10`, `n_R = 0.1`
+and the frame 0.5 are unchanged), for `ETD` and for `KROG`, with `h in {0.2, ..., 0.0125}`; prediction: the ratios approach 16 at
+`gamma_R = 2` and fall toward 2-4 as `gamma_R` grows. (ii) `KROG` = Krogstad's four-stage exponential RK4 (stages
+`a = E2 u + (h/2) phi1(hL/2) N0`, `b = a + h phi2(hL/2)(Na - N0)`, `c = E u + h phi1 N0 + 2h phi2 (Nb - N0)`, final
+`E u + h phi1 N0 + h phi2(-3N0 + 2(Na+Nb) - Nc) + h phi3(4N0 - 4(Na+Nb) + 4Nc)`, coefficients by the same contour mean), added as
+an exploratory scheme because it is the standard remedy for the reduction; it is run in T-b, T-c and T-g next to `ETD`, labelled
+exploratory, and does not replace `ETD` anywhere in the gates. Its order-three-or-four behaviour is a measurement here, not a
+quotation.
