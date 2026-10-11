@@ -1,0 +1,203 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,urlcolor=blue!60!black]{hyperref}
+\usepackage{microtype}
+\usepackage{xurl}
+\usepackage{enumitem}
+\setlength{\emergencystretch}{3em}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\hypersetup{pdftitle={Complete monotonicity of the image-charge interaction in a grounded slab},pdfauthor={Xavier Callens}}
+
+\title{\textbf{Complete monotonicity of the image-charge interaction\\ in a grounded slab:
+a heat-kernel proof and a Lean~4 formalisation}}
+\author{Xavier Callens\\ \small SocrateAI Research \\
+\small \url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}}
+\date{October 2026 \\ \small Draft for expert reading; not refereed; written with an AI system}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}\noindent
+Two pairs of opposite charges (two ``excitons'') interact, inside a slab bounded by two grounded perfect conductors, through the
+Dirichlet Green function of the Laplacian. We show that the resulting pair interaction $U(r)$, with $r$ the lateral distance, is
+\emph{completely monotone in $r^2$}: $U(r)=\int_0^\infty e^{-r^2\sigma}\mu(\sigma)\,d\sigma$ with a bounded non-negative density
+$\mu$. The proof is a one-line consequence of the product structure of the Dirichlet heat kernel of the slab and of the positive
+definiteness of its transverse factor; the same argument covers any laterally homogeneous layered dielectric. A Lean~4/Mathlib
+formalisation (52 theorems, no \texttt{sorry}, standard axioms) proves the grounded-plane case by a different route, via Poisson
+summation. The statement is elementary and may well be known; we ask for that to be checked. We say precisely how it connects to
+universal-optimality theorems, and that the planar statement we would need there is not available in a refereed form.
+\end{abstract}
+
+\section{Setting and statement}
+
+Let $h_1,h_2>0$, $\ell=h_1+h_2$, $P=2\ell$, and let $\Omega=\R^2\times(-h_2,h_1)$ be the slab between grounded perfect conductors
+at $z=h_1$ and $z=-h_2$ (vacuum inside; layered media in \S\ref{sec:diel}). Write $G(x,z;x',z')$ for the Dirichlet Green function of
+$-\Delta$ on $\Omega$, and $K=4\pi G$, so that $K=1/R$ in free space. By the method of images, with $R_\pm$ the distances to the
+charge and image charges,
+\begin{equation}\label{eq:images}
+K\big((x,z),(x',z')\big)=\sum_{n\in\Z}\Big[\frac1{\sqrt{r^2+(z-z'-Pn)^2}}-\frac1{\sqrt{r^2+(z+z'-2h_1-Pn)^2}}\Big],
+\qquad r=|x-x'|,
+\end{equation}
+where the series converges absolutely, the two terms of each pair cancelling to $O(n^{-2})$.
+
+An exciton consists of an electron (charge $-1$) in the plane $z=z_e$ and a hole ($+1$) in the plane $z=z_h$ at the same lateral
+position; the interaction energy of two excitons at lateral distance $r$, in units of $e^2/\varepsilon$ and without
+$r$-independent self-image terms, is
+\begin{equation}\label{eq:U}
+U(r)=K_{ee}(r)+K_{hh}(r)-2K_{eh}(r),\qquad K_{ab}(r)=K\big((x,z_a),(x',z_b)\big),
+\end{equation}
+which is a kernel in $r$ with $U(r)\sim 2/r$ at $0$ for $z_e\ne z_h$.
+
+\begin{theorem}\label{thm:main}
+For all real $z_e,z_h$ and all $h_1,h_2>0$ there is a measurable function $\mu:(0,\infty)\to[0,\infty)$, continuous and bounded, with
+\[
+U(r)=\int_0^\infty e^{-r^2\sigma}\,\mu(\sigma)\,d\sigma\qquad(r>0).
+\]
+In particular $t\mapsto U(\sqrt t)$ is completely monotone on $(0,\infty)$: it is $C^\infty$ and $(-1)^k\frac{d^k}{dt^k}U(\sqrt t)\ge0$ for all $k$.
+Explicitly, with $\lambda_m=(m\pi/\ell)^2$ and $\varphi_m(z)=\sin\!\big(m\pi(z+h_2)/\ell\big)$,
+\begin{equation}\label{eq:mu}
+\mu(\sigma)=\frac{4}{P\sigma}\sum_{m\ge1}e^{-\lambda_m/(4\sigma)}\,\big(\varphi_m(z_e)-\varphi_m(z_h)\big)^2\ \ge0 .
+\end{equation}
+\end{theorem}
+
+\section{Proof via the Dirichlet heat kernel}
+
+\textbf{Step 1 (product structure).} The Dirichlet Laplacian on $\Omega$ is $-\Delta_x\otimes1+1\otimes A$ with $A=-\partial_z^2$ on
+$(-h_2,h_1)$ with Dirichlet conditions; the two summands act on different variables and commute, so the heat kernel of $\Omega$ is
+$p_s(x,z;x',z')=(4\pi s)^{-1}e^{-|x-x'|^2/4s}\,q_s(z,z')$, where $q_s$ is the kernel of $e^{-sA}$. By the method of images
+\[
+q_s(z,z')=\sum_{n\in\Z}\big[g_s(z-z'-Pn)-g_s(z+z'-2h_1-Pn)\big],\qquad g_s(u)=(4\pi s)^{-1/2}e^{-u^2/4s},
+\]
+and also $q_s(z,z')=\frac{2}{\ell}\sum_{m\ge1}e^{-s\lambda_m}\varphi_m(z)\varphi_m(z')$.
+
+\textbf{Step 2 (Laplace representation).} $(-\Delta)^{-1}=\int_0^\infty e^{s\Delta}\,ds$ on $L^2$ with Dirichlet conditions, so
+$G=\int_0^\infty p_s\,ds$ and
+\[
+K(r;z,z')=4\pi G=\int_0^\infty \frac1s\,e^{-r^2/4s}\,q_s(z,z')\,ds=\int_0^\infty e^{-r^2\sigma}\,\frac{q_{1/4\sigma}(z,z')}{\sigma}\,d\sigma
+\qquad(\sigma=1/4s).
+\]
+(The integral converges for $r>0$ because $q_s$ is bounded by $g_s(0)$ and decays like $e^{-s\lambda_1}$ as $s\to\infty$.)
+Hence $U(r)=\int_0^\infty e^{-r^2\sigma}\mu(\sigma)\,d\sigma$ with $\mu(\sigma)=\sigma^{-1}S_{1/4\sigma}$ and
+\begin{equation}\label{eq:S}
+S_s:=q_s(z_e,z_e)+q_s(z_h,z_h)-2\,q_s(z_e,z_h).
+\end{equation}
+
+\textbf{Step 3 (positivity, the only point).} By the semigroup property and symmetry of $q$,
+$q_s(z,z')=\int q_{s/2}(z,w)\,q_{s/2}(w,z')\,dw$, hence
+\[
+S_s=\int_{-h_2}^{h_1}\big(q_{s/2}(z_e,w)-q_{s/2}(z_h,w)\big)^2\,dw\ \ge0 .
+\]
+In the eigenfunction expansion this is $S_s=\frac2\ell\sum_me^{-s\lambda_m}(\varphi_m(z_e)-\varphi_m(z_h))^2$, which with
+$s=1/4\sigma$ gives \eqref{eq:mu}. (Numerically, \eqref{eq:images}--\eqref{eq:mu} agree to $10^{-12}$ at $r=0.3,1,2.5$ for $h_1=1,h_2=1.5,z_e=0.3,z_h=-0.4$: \texttt{python/gated\_note\_check.py}.) (Neutrality of the exciton is what makes \eqref{eq:S} a square: the non-neutral combination
+$K_{ee}-2K_{eh}$ can be negative mode by mode; the Lean file contains this as a negative control.)
+
+\textbf{Step 4 (regularity, boundedness).} As $\sigma\to0$ every term of \eqref{eq:mu} carries $e^{-\lambda_m/4\sigma}$, so $\mu(\sigma)\to0$;
+as $\sigma\to\infty$ the sum over $m$ is a Riemann sum with spacing proportional to $\sigma^{-1/2}$ and $\mu(\sigma)\sim 2(\pi\sigma)^{-1/2}$ (the
+$2/r$ singularity of $U$ at $0$), integrable against $e^{-r^2\sigma}$ for every $r>0$; $\mu$ is continuous and bounded on $(0,\infty)$
+(the Lean file proves a bound by the Poisson form for $\sigma\ge1$ and by the first term of the series for $\sigma\le1$). Differentiation under the integral, justified by $\sigma^ke^{-t\sigma}\le C_{k,t_0}e^{-t_0\sigma/2}$ for
+$t\ge t_0$, gives $(-1)^k\frac{d^k}{dt^k}\int e^{-t\sigma}\mu=\int\sigma^ke^{-t\sigma}\mu\ge0$ (the easy direction of Bernstein's theorem).
+\hfill$\square$
+
+\begin{remark}
+Because $e^{-r^2\sigma}$ is a Gaussian in $x\in\R^d$ for every $d$, the representation shows that $U$ is a positive-definite function
+on $\R^2$ and, as a function of $r$, extends as a positive-definite radial kernel to all $\R^d$ (Schoenberg); it is the interaction of
+a Gaussian mixture with non-negative weights.
+\end{remark}
+
+\section{Layered dielectrics (not formalised)}\label{sec:diel}
+
+\begin{proposition}\label{prop:diel}
+Let $\varepsilon:(-h_2,h_1)\to[\varepsilon_{\min},\varepsilon_{\max}]\subset(0,\infty)$ be measurable (a stack of homogeneous layers),
+with grounded conductors at the two ends. Then \eqref{eq:U} (with $K=4\pi G$, $G$ the Green function of $-\nabla\!\cdot\varepsilon\nabla$) satisfies
+$U(r)=\sum_{m\ge1}c_m\,(\varphi_m(z_e)-\varphi_m(z_h))^2K_0(\sqrt{\lambda_m}\,r)$ with $c_m\ge0$, where $(\lambda_m,\varphi_m)$ are the Dirichlet
+eigenpairs of $-\varepsilon^{-1}\partial_z\varepsilon\partial_z$ in $L^2(\varepsilon\,dz)$. Since $K_0(\sqrt{\lambda t})=\tfrac12\int_0^\infty
+e^{-ts}e^{-\lambda/4s}\,ds/s$, $U$ is completely monotone in $r^2$.
+\end{proposition}
+
+\emph{Proof.} The operator $\varepsilon^{-1}(-\nabla\!\cdot\varepsilon\nabla)=-\Delta_x\otimes 1+1\otimes A$ with
+$A=-\varepsilon^{-1}\partial_z\varepsilon\partial_z$ self-adjoint and non-negative on $L^2(\varepsilon\,dz)$ has again a product heat semigroup; the kernel
+$q_s$ of $e^{-sA}$ with respect to the measure $\varepsilon\,dz$ is symmetric and satisfies the semigroup identity, so Steps 2--3
+apply verbatim. Compactness of the resolvent gives the discrete expansion. \hfill$\square$
+
+\textbf{What this does not cover.} Finite screening by the gates (non-ideal metals), lateral inhomogeneity, and quantum or
+polarisation effects are outside the statement; for them the product structure fails.
+
+\section{The Lean~4 formalisation}
+
+\texttt{exploration/exciton/lean/GatedKernel.lean} (1083 lines, 52 theorems; Lean 4.34.1, Mathlib v4.34.1; \texttt{import Mathlib}
+only). It proves Theorem~\ref{thm:main} for the grounded planes by the \emph{Fourier} route, not by the heat-kernel argument above:
+the image sums are Gaussian lattice sums, Poisson summation turns them into $\sum_me^{-\pi^2m^2/(P^2s)}\cos(\cdot)$, and the combination
+\eqref{eq:S} becomes a sum of $S_m=2(1-\cos(b-a))(1+\cos(a+b))=2(\sin a-\sin b)^2$, which is the same quantity as
+$(\varphi_m(z_e)-\varphi_m(z_h))^2$ in \eqref{eq:mu}.
+
+\begin{center}\small
+\begin{tabular}{@{}p{0.28\textwidth}p{0.66\textwidth}@{}}
+\toprule
+declaration & content \\ \midrule
+\texttt{trig\_core\_sq} & $2-\cos2a-\cos2b-2\cos(b-a)+2\cos(a+b)=2(\sin a-\sin b)^2$ \\
+\texttt{gGreen\_top}, \texttt{gGreen\_bottom} & the Gaussian lattice Green function vanishes on both planes (bijective re-indexing of image offsets) \\
+\texttt{gsum\_poisson} & $\sum_ne^{-s(c-Pn)^2}=\frac{\sqrt{\pi/s}}P\sum_me^{-\pi^2m^2/(P^2s)}\cos(2\pi mc/P)$, \emph{derived} from Mathlib's Gaussian/Jacobi-theta results \\
+\texttt{Sexc\_nonneg} & $S(s)\ge0$ for all $s>0$, $h_1+h_2>0$, all real $z_e,z_h$ \\
+\texttt{muExc\_bounded}, \texttt{muExc\_continuousOn} & $\mu$ is bounded and continuous on $(0,\infty)$ \\
+\texttt{lap\_admissible} & Laplace transform of a non-negative density with finite $\int e^{-st}\mu$ is smooth with $(-1)^rg^{(r)}\ge0$ (easy Bernstein) \\
+\texttt{Uimg\_eq\_lap}, \texttt{imageSeries\_admissible} & the image series equals the Laplace transform, hence is \texttt{AdmissiblePotential} \\
+\texttt{unneutral\_not\_nonneg} & negative control: dropping $V_{hh}$ breaks positivity \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+All 17 \texttt{\#print axioms} outputs are \texttt{[propext, Classical.choice, Quot.sound]}; there is no \texttt{sorry}, \texttt{axiom}, or
+\texttt{native\_decide}. The only hypotheses are $0<s,t$ and $0<h_1+h_2$. An independent verification (separate instance) compiled the file and recomputed the
+kernel by a direct signed image sum with $N=4000$ (agreement $10^{-9}$ at three radii, and with the Laplace integral to $10^{-12}$).
+Definition used: \texttt{AdmissiblePotential g} $:=$ $g$ is $C^\infty$ on $(0,\infty)$, $g\ge0$, and $(-1)^r\,g^{(r)}\ge0$ for all $r$ (a
+verbatim copy of the definition in the upstream repository~\cite{OpenAI2026}). It is satisfied by $g=0$, so non-triviality is a separate statement
+($U>0$ is proved as a consequence of $\mu\ge0$ but strict positivity is not stated in the file). The Mathlib version pinned here has
+\texttt{AbsolutelyMonotoneOn} but no completely monotone class and no Laplace transform of measures, so the file carries its own.
+
+\section{Relation to universal optimality}
+
+Cohn and Kumar defined universally optimal configurations as those minimising the energy for \emph{every} completely monotone function
+of squared distance~\cite{CohnKumar2007}; $E_8$ and the Leech lattice were proved universally optimal in dimensions 8 and 24
+by Cohn, Kumar, Miller, Radchenko and Viazovska~\cite{CKMRV2022}. The triangular lattice in dimension 2 is conjectured to be
+universally optimal in the same sense. A claimed proof of that planar statement is publicly available~\cite{OpenAI2026}, but it is
+AI-generated and \textbf{has not been refereed to our knowledge}; we do not use it as a proved fact. What Theorem~\ref{thm:main}
+supplies is exactly the hypothesis of that statement:
+
+\begin{proposition}[conditional]
+\emph{If} the triangular lattice minimises, among periodic configurations of given density in $\R^2$, the energy per particle for every
+$f(r^2)$ with $f$ completely monotone (and a convergence condition at $0$ and $\infty$), \emph{then} it does so for the gated kernel
+$U$ of Theorem~\ref{thm:main} for every $z_e,z_h,h_1,h_2$, since $U(\sqrt t)$ is completely monotone and decays exponentially.
+\end{proposition}
+
+This is a statement about periodic, bulk, classical configurations of the ideal-metal model. It says nothing about open boundaries,
+quantum states, or driven-dissipative dynamics, and a hexagonal pattern in an experiment does not single out complete monotonicity
+(a triangular lattice is the ground state of nearly every monotone repulsion in 2D).
+
+\section{What we ask the reader}
+
+\begin{enumerate}[itemsep=2pt]
+\item Is Theorem~\ref{thm:main} known? It looks like the statement that a Dirichlet Green function in a product domain is a
+non-negative mixture of 2D heat kernels, applied to a neutral charge combination; a pointer to the literature would settle priority.
+\item Is Proposition~\ref{prop:diel} correct as stated (measurability/regularity of $\varepsilon$, endpoints, the weight $\varepsilon\,dz$)?
+\item Is the status of the planar universal-optimality statement known to the reader, and is the conditional form above the right way to
+state the consequence?
+\item Is the Lean statement a faithful encoding of \eqref{eq:images}--\eqref{eq:U}? (The kernel is the combination of six lattice sums
+\texttt{Uimg}; the verifier checked it numerically, not by a second formal proof.)
+\end{enumerate}
+
+\begin{thebibliography}{9}\small
+\bibitem{OpenAI2026} OpenAI, \emph{Universal optimality of the triangular lattice}, \url{https://github.com/openai/math}, family 090 (2026); AI-generated, unrefereed.
+\bibitem{CohnKumar2007} H.~Cohn and A.~Kumar, \emph{Universally optimal distribution of points on spheres}, J. Amer. Math. Soc. \textbf{20} (2007), 99--148.
+\bibitem{CKMRV2022} H.~Cohn, A.~Kumar, S.~D.~Miller, D.~Radchenko, M.~Viazovska, \emph{Universal optimality of the $E_8$ and Leech lattices and interpolation formulas}, Ann. of Math. \textbf{196} (2022), 983--1082.
+\end{thebibliography}
+\end{document}
