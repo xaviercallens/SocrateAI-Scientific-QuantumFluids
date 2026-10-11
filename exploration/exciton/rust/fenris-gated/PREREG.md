@@ -197,3 +197,23 @@ all 96 Hessians positive definite.
    six cases `edgecmp_*` are run. The sibling's interior-defect definition (non-hull vertices of the Delaunay
    triangulation of the particles alone) is not meaningful for these states (the free nodes sit in rows inside a wall of
    nodes and are not on the convex hull), see `edge_overlap.json`; no agreement claim is made.
+
+## Gate outcomes as run (2026-10-11; data in `results/`)
+
+| gate | outcome |
+|---|---|
+| L-a a1 (kernel derivatives vs FD) | pass (after amendment A2.5: absolute floor 1e-10) |
+| L-a a2 (Model force and Hessian vs FD, 4 kernels) | pass |
+| L-a a3 (table vs series, `[0.02, 6D]`) | pass; max rel. errors U 9e-14, U' 7e-12, U'' 8e-10 |
+| L-a a4 (series vs direct image sum; zero-wavevector integral) | pass after amendment A1; image-sum agreement 4.6e-13 absolute; integral 3.3e-12 relative (numpy series) |
+| L-a a5 (K0, K1 vs scipy) | pass; max rel. 1.5e-14 |
+| L-b b1 (patched engine == unpatched on the 12x12 patch) | pass; max coordinate difference 4.1e-13; patched max abs force 4.1e-11 |V'(ell)| (README of the engine: 1.7e-11, not gated) |
+| L-b b2 (1D chain closed form, Yukawa) | pass; relative 8.8e-8 (threshold 1e-7; the shifted-force truncation at rc = 13.3 and the finite chain account for it) |
+| L-b b3 (original CMRR suite on pinned rusty-SUNDIALS) | 5 of 6 pass; the order-1-fallback test fails because the fallback is no longer needed (converged, force 7e-12) |
+| L-c (N_free = 3, 7 in a side-5 square; 4 kernels) | 8 of 8 pass; the best inside energy equals the independent numpy/scipy search to <= 1.3e-14 relative; **but** every case has a single inside minimum (engine 1 distinct, numpy 1 (2 for gated D=1.5, N=3)), so this tests the energy and the stationary point, not a multi-minimum landscape |
+| L-d (planted bugs) | each bug fails at least one gate: bug1 by a1 and a3 (not by a2: the Hessian is taken from the smooth table interpolant, which is self-consistent), bug2 by a3 and a4 (passes the FD checks, as expected), bug3 by a1 and a3 |
+| L-e (Euler bookkeeping) | identity holds for all 1031 accepted wallhalfrsa states and all accepted states of the other groups (0 failures, 0 non-conforming) after the triangulation repair of amendment A5; before it, the 94 kagome-cut states were all flagged |
+| L-f (tolerance independence, A2) | pass; max relative energy difference 2.9e-9 (ungated), others <= 1.3e-10 |
+
+Not run: N_free ~ 400 and ~ 600; sensitivity of the wall spacing below 0.5; any comparison of energies with the sibling
+edge study (different boundary model, see A5.4).
