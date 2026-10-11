@@ -64,6 +64,18 @@ def energy_grad(X, W, g, lam=0.0):
     return E, gradX
 
 
+def _nearest_on_edges(Q, e0, e1):
+    """Nearest point of the polygon edges (e0[k] -> e1[k]) to each row of Q, vectorised over edges."""
+    v = e1 - e0                                   # (E,2)
+    vv = np.maximum((v * v).sum(1), 1e-300)       # (E,)
+    t = np.clip(((Q[:, None, :] - e0[None, :, :]) * v[None, :, :]).sum(-1) / vv[None, :], 0.0, 1.0)   # (m,E)
+    pr = e0[None, :, :] + t[:, :, None] * v[None, :, :]                                           # (m,E,2)
+    d = np.linalg.norm(Q[:, None, :] - pr, axis=-1)                                               # (m,E)
+    k = np.argmin(d, axis=1)
+    idx = np.arange(len(Q))
+    return d[idx, k], pr[idx, k]
+
+
 def make_container_penalty(shape, kappa=2000.0):
     """Quadratic penalty on the in-plane distance outside the container (first two coordinates only).
     The wall of the lifted problem is container x R^k: a point wall would leak into the extra dimensions."""
@@ -74,14 +86,7 @@ def make_container_penalty(shape, kappa=2000.0):
         E = 0.0; gr = np.zeros_like(X)
         if out.any():
             Q = P[out]
-            best = np.full(len(Q), np.inf); proj = np.zeros_like(Q)
-            for p, q in zip(e0, e1):
-                v = q - p
-                t = np.clip(((Q - p) @ v) / (v @ v), 0, 1)
-                pr = p + t[:, None] * v
-                d = np.linalg.norm(Q - pr, axis=1)
-                m = d < best
-                best[m] = d[m]; proj[m] = pr[m]
+            best, proj = _nearest_on_edges(Q, e0, e1)
             diff = Q - proj
             E = kappa * (diff ** 2).sum()
             tmp = np.zeros((len(P), 2)); tmp[out] = 2 * kappa * diff
@@ -96,14 +101,7 @@ def project_inside(X, shape, margin=0.08):
     out = ~shape.inside(P)
     if out.any():
         Q = P[out]
-        best = np.full(len(Q), np.inf); proj = np.zeros_like(Q)
-        for p0, q0 in zip(shape._e0, shape._e1):
-            v = q0 - p0
-            t = np.clip(((Q - p0) @ v) / (v @ v), 0, 1)
-            pr = p0 + t[:, None] * v
-            d = np.linalg.norm(Q - pr, axis=1)
-            m = d < best
-            best[m] = d[m]; proj[m] = pr[m]
+        best, proj = _nearest_on_edges(Q, shape._e0, shape._e1)
         dirn = (proj - Q) / np.maximum(best, 1e-12)[:, None]
         newp = proj + margin * dirn
         Pn = P.copy(); Pn[out] = newp

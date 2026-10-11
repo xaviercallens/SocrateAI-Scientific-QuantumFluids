@@ -51,3 +51,10 @@ counts are function+gradient evaluations. Seeds 0..NS-1 are shared across method
 E3 uses N = 216 (not 432) because one seed took 95 s on a machine shared with an unrelated build; the 30 starts, the CM kernel,
 the CVT iterations and the gate are unchanged. The development seed 0 (N = 216) showed radius-ratio 5th percentiles 0.61 (CM) and
 0.64 (CVT); it is part of the registered 30 (seeds 0..29), i.e. it was seen before registration of this amendment.
+
+## Amendment A3 (2026-10-11, during E1/E2; speed only)
+On the disc the nearest-edge search of the container penalty looped over the 2000 polygon edges in Python (about 330 s per lifted
+run). It was vectorised over edges (`_nearest_on_edges`); the results are the same function (a two-seed check on the disc
+reproduced the same energies as before to the printed digits). The partial disc records produced with the slow code (76 runs,
+kept in `results/partial_disc_slow_harness.jsonl`) are not used; the disc is rerun from scratch with the vectorised code. Square
+and hexagon records (produced before the change) are kept: the change does not alter any value the algorithm computes.
