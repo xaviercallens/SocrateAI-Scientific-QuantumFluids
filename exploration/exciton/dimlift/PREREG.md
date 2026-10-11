@@ -46,3 +46,8 @@ escaped in-plane points to just inside the boundary after every stage, (iii) ini
 the constant wall-wall term of the fixed wall (sliding includes its own). **A run with any free node outside the container
 after the final polish is a failed run: counted as a failure, its energy excluded from means and from "best energy".** Eval
 counts are function+gradient evaluations. Seeds 0..NS-1 are shared across methods. The registered gates are unchanged.
+
+## Amendment A2 (2026-10-11, after one development run of `mesh3d.py` on seed 0 with N = 216, before the registered E3 runs)
+E3 uses N = 216 (not 432) because one seed took 95 s on a machine shared with an unrelated build; the 30 starts, the CM kernel,
+the CVT iterations and the gate are unchanged. The development seed 0 (N = 216) showed radius-ratio 5th percentiles 0.61 (CM) and
+0.64 (CVT); it is part of the registered 30 (seeds 0..29), i.e. it was seen before registration of this amendment.
