@@ -166,3 +166,34 @@ node) so that coordination numbers remain comparable with the lattice; the energ
 Energy bookkeeping for this group (and recorded for all): `E_ff` and `E_fb` separately and
 `dE' = E_ff + E_fb/2 - N_free e_bulk` (a pair with a fixed node is shared half-and-half), per perimeter.
 Whether the denser wall confines the short-range gated kernel (D = 1.5, screening length ~0.24) is not known in advance.
+
+### A4 (2026-10-11, after 2 uniform-start wallhalf cases and 4 square cases with the new start)
+With the spacing-0.5 wall and uniform random starts, 10 to 11 of 24 starts still escaped (square: ungated 11/24, gated
+D=1.5 10/24; 13 and 14 survivors). The escape happens in the first, violent part of the flow (uniform random starts contain
+pairs at tiny separations, whose force throws a node through the wall); inside-the-container minima exist (the survivors
+converge into them). Design change: **random-sequential-addition starts**: uniform in the domain, mutual distance >= 0.6,
+distance to the wall >= 0.35 (`Shape.sample_rsa`), seeds as before. Group **wallhalfrsa** (w = 0.5, RSA starts, all 44
+cases, N_free ~ 100, 24 starts) is the production group; the uniform-start groups `primary` (12 of 44 cases, w = 1) and
+`wallhalf` (2 cases) are kept as data and as the evidence for the leakage statement. Not a physics change: the start
+distribution only selects among basins; it is recorded in each case file. The first four wallhalfrsa cases (square, all
+four kernels) were run as a test of this change: 0 of 96 starts escaped, 95 of 96 reached 1e-6 (one ungated start did not),
+all 96 Hessians positive definite.
+
+### A5 (2026-10-11, during the wallhalfrsa analysis; no new relaxation involved)
+1. The first-pass analysis flagged every state of the "kagome cut" container as non-conforming and its Euler identity as
+   failed (n = 23-24 of 24 in each of the four cases). Cause (reproduced on a synthetic filled lattice): three exactly
+   collinear wall nodes give a zero-area Delaunay triangle whose centroid lies on the wall and is classed "outside", so two
+   wall edges are lost and the identity is applied to a complex that is not a triangulation of the domain. Not a
+   property of the states. Fix in `study.triangulate`: zero-area triangles are removed and the triangle across the
+   resulting bridging wall edge is split along the intermediate wall nodes; the conformity check (boundary edges of the
+   complex = consecutive wall sites, V - E + F = chi, every free node used) is unchanged. All states are re-analysed from the
+   stored relaxation output (`REANALYSE=1`); the numbers of the first pass are superseded.
+2. The first production code did not record `E_ff`, `E_fb`, `dE'` (added during the run); the 44 wallhalfrsa cases are
+   re-analysed with it from the same relaxations.
+3. Size series: only N_free ~ 200 (square, hexagon, disc; 4 kernels; 20 starts; w = 0.5; RSA starts) is run; N_free ~ 400
+   is not run (cost: an N = 200 relaxation is ~ 25 s per start at the shared load, N = 400 would be several minutes).
+   N_free ~ 600 is not run. The sensitivity group (d = 1, kappa = 3) is run at w = 0.5 with RSA starts.
+4. Overlap with the sibling edge study (square, N = 37, 61, d = 1/sqrt(2) spacing so that their rho0 = 0.5 d^-2 holds):
+   six cases `edgecmp_*` are run. The sibling's interior-defect definition (non-hull vertices of the Delaunay
+   triangulation of the particles alone) is not meaningful for these states (the free nodes sit in rows inside a wall of
+   nodes and are not on the convex hull), see `edge_overlap.json`; no agreement claim is made.

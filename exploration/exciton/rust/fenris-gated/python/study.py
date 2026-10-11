@@ -25,24 +25,36 @@ def case_list(which):
     if which in ("size", "all"):
         k = 0
         for sh in ("square", "hexagon", "disc"):
-            for n in (200, 400):
+            for n in (200,):   # N ~ 400 not run (cost); amendment A4/A5
                 for sp in SPECS:
-                    cases.append(dict(idx=100 + k, shape=sh, n_target=n, spec=sp, group="size", nstart=20)); k += 1
+                    cases.append(dict(idx=100 + k, shape=sh, n_target=n, spec=sp, group="size", nstart=20, w=0.5, start="rsa")); k += 1
     if which in ("sens", "all"):
         k = 0
         for sh in ("square", "hexagon"):
             for sp in SENS_SPECS:
-                cases.append(dict(idx=200 + k, shape=sh, n_target=100, spec=sp, group="sens")); k += 1
+                cases.append(dict(idx=200 + k, shape=sh, n_target=100, spec=sp, group="sens", w=0.5, start="rsa")); k += 1
     if which in ("wall", "all"):
         # amendment A3: denser wall (spacing 0.5), same shapes/N/seeds as the primary group
         for si, sh in enumerate(G.SHAPES):
             for ki, sp in enumerate(SPECS):
                 cases.append(dict(idx=si * 4 + ki, shape=sh, n_target=100, spec=sp, group="wallhalf", w=0.5))
+    if which in ("wallrsa", "all"):
+        # amendment A4: same as wallhalf but random-sequential-addition starts (no violent initial forces)
+        for si, sh in enumerate(G.SHAPES):
+            for ki, sp in enumerate(SPECS):
+                cases.append(dict(idx=si * 4 + ki, shape=sh, n_target=100, spec=sp, group="wallhalfrsa", w=0.5, start="rsa"))
+    if which in ("edgecmp", "all"):
+        # overlap with the sibling edge study: square, N_free 37 and 61, d = 1/sqrt(2) spacing (their rho0 = 0.5 d^-2)
+        d = 2 ** -0.5
+        k = 0
+        for n in (37, 61):
+            for sp in (f"ungated:{d:.6f}", f"gated:{d:.6f}:{3 * d:.6f}", f"gated:{d:.6f}:{10 * d:.6f}"):
+                cases.append(dict(idx=300 + k, shape="square", n_target=n, spec=sp, group="edgecmp", w=0.5, start="rsa")); k += 1
     return cases
 
 
 def cid(c):
-    return f"{c['group']}_{c['shape']}_N{c['n_target']}_{c['spec'].replace(':', '-')}" + (f"_w{c['w']}" if c.get("w", 1.0) != 1.0 else "")
+    return f"{c['group']}_{c['shape']}_N{c['n_target']}_{c['spec'].replace(':', '-')}" + (f"_w{c['w']}" if c.get("w", 1.0) != 1.0 else "") + ("_rsa" if c.get("start") == "rsa" else "")
 
 
 def bulk_energy(spec, n_ref, fg=FG):
@@ -62,13 +74,49 @@ def pair_matrix_energy(spec, A, B=None):
 
 
 def triangulate(shape, fixed, free):
+    """Delaunay of all nodes; triangles outside the domain removed; zero-area triangles (three collinear wall nodes)
+    removed and the triangle across them split along the wall nodes between its end points (Delaunay of exactly
+    collinear points is degenerate; this restores a proper triangulation of the domain)."""
     pts = np.vstack([fixed, free])
+    nb = len(fixed)
     tri = Delaunay(pts)
     S = tri.simplices
-    cen = pts[S].mean(axis=1)
-    keep = shape.inside(cen)
-    S = S[keep]
-    return pts, S
+    a, b, c = pts[S[:, 0]], pts[S[:, 1]], pts[S[:, 2]]
+    area = 0.5 * np.abs((b[:, 0] - a[:, 0]) * (c[:, 1] - a[:, 1]) - (b[:, 1] - a[:, 1]) * (c[:, 0] - a[:, 0]))
+    S = S[area > 1e-9]
+    keep = shape.inside(pts[S].mean(axis=1))
+    S = [tuple(t) for t in S[keep]]
+    ring_nodes = {r: np.where(shape.ring_of == r)[0] for r in np.unique(shape.ring_of)}
+    pos = {}
+    for r, idx in ring_nodes.items():
+        for k, v in enumerate(idx):
+            pos[v] = (r, k)
+    expect = set()
+    for r, idx in ring_nodes.items():
+        for k in range(len(idx)):
+            u, v = idx[k], idx[(k + 1) % len(idx)]
+            expect.add((min(u, v), max(u, v)))
+    for _ in range(4 * nb):
+        cnt = {}
+        for t in S:
+            for u, v in ((t[0], t[1]), (t[1], t[2]), (t[2], t[0])):
+                cnt.setdefault((min(u, v), max(u, v)), []).append(t)
+        bad = [(e, ts[0]) for e, ts in cnt.items() if len(ts) == 1 and e not in expect and e[0] < nb and e[1] < nb
+               and pos[e[0]][0] == pos[e[1]][0]]
+        if not bad:
+            break
+        (u, v), t = bad[0]
+        r, iu = pos[u]; _, iv = pos[v]
+        idx = ring_nodes[r]; n = len(idx)
+        fwd = (iv - iu) % n
+        if fwd <= n - fwd:
+            chain = [idx[(iu + k) % n] for k in range(fwd + 1)]
+        else:
+            chain = [idx[(iu - k) % n] for k in range(n - fwd + 1)]
+        X = [w for w in t if w != u and w != v][0]
+        S.remove(t)
+        S += [(chain[j], chain[j + 1], X) for j in range(len(chain) - 1)]
+    return pts, np.array(S)
 
 
 def analyse_state(shape, fixed, free):
@@ -144,10 +192,14 @@ def run_case(c, fg=FG):
     with open(d + "/starts.txt", "w") as f:
         f.write(f"{nstart} {nf}\n")
         for sd in seeds:
-            P = shape.sample(nf, np.random.default_rng(sd))
+            rng = np.random.default_rng(sd)
+            P = shape.sample_rsa(nf, rng) if c.get("start") == "rsa" else shape.sample(nf, rng)
             f.writelines(f"{x!r} {y!r}\n" for x, y in P)
     env = dict(os.environ, RAYON_NUM_THREADS="1")
-    subprocess.run([fg, "run", c["spec"], d + "/fixed.txt", d + "/starts.txt", d + "/out.txt", "1e-9", "1e-2", "1e-5"], env=env, capture_output=True)
+    if os.environ.get("REANALYSE") == "1" and os.path.exists(d + "/out.txt"):
+        pass  # reuse the relaxation output already on disk (same starts/seeds); only the analysis is recomputed
+    else:
+      subprocess.run([fg, "run", c["spec"], d + "/fixed.txt", d + "/starts.txt", d + "/out.txt", "1e-9", "1e-2", "1e-5"], env=env, capture_output=True)
     runs = parse_out(d + "/out.txt", nf)
     fixed_all = shape.boundary
     fixed = shape.sites            # triangulation sites (w = 1 subset)
@@ -272,7 +324,7 @@ if __name__ == "__main__":
     cases = [c for c in case_list(which) if only is None or only in cid(c)]
     done = []
     from multiprocessing import Pool
-    todo = [c for c in cases if not os.path.exists(f"{RES}/case_{cid(c)}.json")]
+    todo = [c for c in cases if os.environ.get("REANALYSE") == "1" or not os.path.exists(f"{RES}/case_{cid(c)}.json")]
     print(f"{len(todo)} cases to run of {len(cases)}", flush=True)
     with Pool(nw) as pool:
         for s in pool.imap_unordered(run_case, todo):

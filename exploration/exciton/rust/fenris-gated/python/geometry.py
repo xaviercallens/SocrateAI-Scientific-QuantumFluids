@@ -154,6 +154,24 @@ class Shape:
         allp = np.vstack([np.asarray(p) for e in self.edges for p in e])
         return allp.min(0), allp.max(0)
 
+    def sample_rsa(self, n, rng, dmin=0.6, wall=0.35, max_tries=400000):
+        """Random sequential addition: uniform in the domain, mutual distance >= dmin, wall distance >= wall."""
+        lo, hi = self.bbox()
+        P = np.empty((n, 2)); k = 0; tries = 0
+        while k < n:
+            if tries > max_tries:
+                raise RuntimeError("RSA failed")
+            c = lo + (hi - lo) * rng.random((256, 2))
+            c = c[self.inside(c)]
+            c = c[self.wall_distance(c) >= wall] if len(c) else c
+            for p in c:
+                tries += 1
+                if k == 0 or np.min(np.hypot(*(P[:k] - p).T)) >= dmin:
+                    P[k] = p; k += 1
+                    if k == n:
+                        break
+        return P
+
     def sample(self, n, rng):
         lo, hi = self.bbox()
         out = []
