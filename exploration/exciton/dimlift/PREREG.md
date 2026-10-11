@@ -36,3 +36,13 @@ Not claimed under any outcome: anything about conforming meshes of CAD domains, 
 
 ## Reporting
 All three outcomes are reported whatever they are, with raw jsonl in `results/`. Deviations are dated amendments below.
+
+## Amendment A1 (2026-10-11, after three small development runs of `dimlift.py` on the square, before any registered run)
+Development runs (square, dip, seeds 0-5, not used in any result) showed that a point wall leaks in the lifted problem
+(15 of 60 nodes ended outside the container), so the lifted runs additionally use (i) a quadratic container penalty
+(kappa = 2000) on the in-plane coordinates during every lifted stage and in the first 2D polish, (ii) a projection of
+escaped in-plane points to just inside the boundary after every stage, (iii) initial extra coordinates N(0, 0.1^2) (was
+0.3^2), and a final unpenalised 2D polish. `direct` and `slide` are unchanged. Energies are reported as total energy including
+the constant wall-wall term of the fixed wall (sliding includes its own). **A run with any free node outside the container
+after the final polish is a failed run: counted as a failure, its energy excluded from means and from "best energy".** Eval
+counts are function+gradient evaluations. Seeds 0..NS-1 are shared across methods. The registered gates are unchanged.
