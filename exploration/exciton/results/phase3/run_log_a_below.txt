@@ -1,0 +1,10 @@
+below seed 1: n=0.00000000 nR=0.08000000 omega=9.94960440 budget=0.00e0 err=None
+below seed 2: n=0.00000000 nR=0.08000000 omega=9.94960440 budget=0.00e0 err=None
+below seed 3: n=0.00000000 nR=0.08000000 omega=9.94960440 budget=0.00e0 err=None
+below seed 4: n=0.00000000 nR=0.08000000 omega=9.94960440 budget=0.00e0 err=None
+below seed 5: n=0.00000000 nR=0.08000000 omega=9.94960440 budget=0.00e0 err=None
+below seed 6: n=0.00000000 nR=0.08000000 omega=9.94960440 budget=0.00e0 err=None
+below seed 7: n=0.00000000 nR=0.08000000 omega=9.94960440 budget=0.00e0 err=None
+below seed 8: n=0.00000000 nR=0.08000000 omega=9.94960440 budget=0.00e0 err=None
+below seed 9: n=0.00000000 nR=0.08000000 omega=9.94960440 budget=0.00e0 err=None
+below seed 10: n=0.00000000 nR=0.08000000 omega=9.94960440 budget=0.00e0 err=None

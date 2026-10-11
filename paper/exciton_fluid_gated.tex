@@ -1,0 +1,268 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,mathtools,amsthm}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,urlcolor=blue!60!black]{hyperref}
+\usepackage{microtype}
+\usepackage{xurl}
+\setlength{\emergencystretch}{3em}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage{longtable}
+\usepackage{float}
+\newtcolorbox{keybox}[1][]{colback=blue!3,colframe=blue!45!black,boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+\newtcolorbox{failbox}[1][]{colback=red!3,colframe=red!45!black,boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newcommand{\elat}{e_{\mathrm{lat}}}
+\input{exciton_numbers.tex}
+\input{exciton3_numbers.tex}
+
+\title{\textbf{Gated exciton fluids:}\\
+a proof that image charges preserve complete monotonicity, a driven-dissipative solver test on rusty-SUNDIALS,\\
+and a laboratory protocol}
+\author{Xavier Callens\\ \small SocrateAI Research\\
+\small \url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}}
+\date{October 2026}
+\hypersetup{pdftitle={Gated exciton fluids},pdfauthor={Xavier Callens},pdfsubject={Image-charge kernels, driven-dissipative GPE, laboratory protocol}}
+
+\begin{document}
+\begin{center}
+\includegraphics[width=0.97\textwidth]{figs_exciton3/fig_cover.pdf}
+\end{center}
+\vspace{-0.8em}
+\begin{center}
+{\Large\textbf{Gated exciton fluids:}\\[2pt]
+\large a proof that image charges preserve complete monotonicity, a driven-dissipative solver test\\ on rusty-SUNDIALS, and a laboratory protocol}\\[8pt]
+Xavier Callens\\ {\small SocrateAI Research \quad\url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}}\\[2pt]
+{\small October 2026}
+\end{center}
+\vspace{-0.4em}
+
+\begin{abstract}\small\noindent
+A planar universal-optimality theorem for completely monotone interactions (OpenAI, September 2026; AI-generated, unrefereed) was
+used in a first note~\cite{CallensExciton1} as a dependency check on the exciton--exciton interaction of a 2026 bilayer experiment.
+That note left open whether the \emph{dual-gated} device kernel, a sum of image charges of alternating sign, is completely monotone
+in $r^2$ (numerical evidence only), and whether gates could be engineered to break it. Here we \textbf{prove} (Theorem~1, paper
+and pencil, not in Lean) that for ideal grounded metal gates at arbitrary distances and arbitrary layer positions, the
+Laplace measure of the kernel in $r^2$ is a sum of manifestly non-negative terms,
+$S_m=2\bigl(1-\cos(b-a)\bigr)\bigl(1+\cos(a+b)\bigr)$; the gates therefore cannot break complete monotonicity in this model. A
+by-product is the zero-wavevector coefficient $\tilde U(0)=4\pi d\,(1-d/D)$ for a gate separation $D$ (a capacitor formula,
+not new, which fixes the experimental protocol). Second, we test the solver stack on the model the experiment's community
+would use for short-lived excitons or polaritons, a driven-dissipative Gross--Pitaevskii equation with an incoherent reservoir
+and a gate potential, in a pre-registered design with known answers: \NPARTABSTRACTTHREE{} We report what failed or had to be
+changed (a registered cost was misjudged by two orders of magnitude and four amendments were written before the affected
+numbers existed). Third, we give a laboratory protocol with pass/fail criteria for the predictions that survive. We do not use
+Hugging Face materials data or neural-network surrogates, do not compare with data, and make no claim about exciton
+Bose--Einstein condensation. Written by an AI system; not refereed.
+\end{abstract}
+
+\section{Why this note, and what it is not}
+
+The brief that prompted it asked for a driven-dissipative exciton fluid on rusty-SUNDIALS with materials data from Hugging Face.
+The first note~\cite{CallensExciton1} did something else (conservative gradient flows, a lattice theorem). We say so
+because the two are easily confused: that note did \emph{not} contain a driven-dissipative model, an ARKode-type integrator, a
+gate, a defect, or any materials input. This one adds the first three in a minimal form (Section~\ref{sec:dd}) and tests the
+ARKode-style module that exists in the library; it does not add the last (Section~\ref{sec:notdone}).
+
+\begin{keybox}
+\textbf{What is established here.} (i) Theorem~1 below, a short exact argument (checked numerically on 300 random geometries).
+(ii) Registered numerical gates on a standard open-dissipative model: which passed, which failed, in
+Section~\ref{sec:results}. \textbf{What is not.} No quantum phase transition is located; no experiment is
+reproduced; the model parameters are dimensionless and not those of any device; the protocol of Section~\ref{sec:protocol} is a
+proposal that nobody has run.
+\end{keybox}
+
+\section{Gated kernels are completely monotone}\label{sec:cm}
+
+\paragraph{Setting.} Grounded perfect-conductor planes at $z=+h_1$ and $z=-h_2$; a homogeneous dielectric between them (a uniform
+$\varepsilon$ is a prefactor, an anisotropic one rescales $z$ by a constant); an electron layer at $z_e$ and a hole layer at
+$z_h=z_e+d$. The exciton--exciton kernel is $U=V_{ee}+V_{hh}-2V_{eh}$, $V$ the Green function of the box. With
+$P=2(h_1+h_2)$ a unit charge at $z_0$ produces at $(z,r)$
+\[
+V(z,z_0;r)=\sum_{n\in\mathbb Z}\Bigl[\bigl(r^2+(z-z_0-Pn)^2\bigr)^{-1/2}-\bigl(r^2+(z-2h_1+z_0-Pn)^2\bigr)^{-1/2}\Bigr].
+\]
+
+\begin{theorem}\label{thm:cm}
+$U$ is completely monotone as a function of $t=r^2$ on $(0,\infty)$: $U=\int_0^\infty e^{-st}\mu(s)\,ds$ with $\mu\geq0$.
+\end{theorem}
+
+\begin{proof}
+Write each term as $(t+a^2)^{-1/2}=\pi^{-1/2}\int_0^\infty e^{-s(t+a^2)}s^{-1/2}ds$. Then $\mu(s)=(\pi s)^{-1/2}S(s)$ where $S(s)$ is
+the sum over images of $e^{-sa^2}$ with the signs of $V_{ee}+V_{hh}-2V_{eh}$. Poisson summation,
+$\sum_n e^{-s(c+Pn)^2}=(\pi/s)^{1/2}P^{-1}\sum_{m\in\mathbb Z}e^{-\pi^2m^2/(P^2s)}\cos(2\pi mc/P)$, gives
+$S(s)=(\pi/s)^{1/2}P^{-1}\sum_m e^{-\pi^2m^2/(P^2s)}S_m$ with, for $\alpha=2\pi m/P$, $a=\alpha(z_e-h_1)$, $b=\alpha(z_h-h_1)$
+(so $\alpha d=b-a$),
+\[
+S_m=2-\cos2a-\cos2b-2\cos(b-a)+2\cos(a+b)=2\bigl(1-\cos(b-a)\bigr)\bigl(1+\cos(a+b)\bigr)\geq0,
+\]
+using $\cos2a+\cos2b=2\cos(a+b)\cos(a-b)$; and $S_0=0$ by neutrality. Hence $S(s)\ge0$ termwise.
+\end{proof}
+
+\begin{figure}[ht]
+\centering\includegraphics[width=\textwidth]{figs_exciton3/fig_cm_gates.pdf}
+\caption{(a) The device and its image series. (b) $S(s)/2(1-e^{-sd^2})$ from the exact Poisson form for three symmetric gate
+distances: non-negative everywhere, as Theorem~1 states. (c) The kernel with and without gates: the gates remove the dipolar
+$r^{-3}$ tail (exponential screening at $r\gg h$) without leaving the completely monotone class. All three panels are generated
+from the formulas of the text by \texttt{phase3\_figures.py}.}
+\end{figure}
+
+\paragraph{Consequences, and limits of the claim.} The single-gate and gate-free limits are pointwise limits of completely
+monotone functions and so are completely monotone. Within \emph{this} model the gates cannot be engineered to violate the
+hypothesis of the lattice theorem: Kagome or stripe ground states, if observed in a gated device, must come from something the
+model leaves out, which includes dielectric image charges of weight $\kappa^n$ with $|\kappa|<1$ (the Poisson form is then not a
+pure cosine series; \emph{not proved, not tested}), the finite screening of real gates, disorder, and quantum fluctuations.
+The lattice theorem itself is imported and was not refereed. A Lean formalisation needs the Poisson summation of Mathlib's
+Jacobi theta; we did not do it. The zero-wavevector coefficient follows from the same series (and from Gauss's law for three
+capacitors in series):
+\begin{equation}\label{eq:u0}
+\tilde U(0)=\int U\,d^2r=4\pi d\,\Bigl(1-\frac dD\Bigr),\qquad D=h_1+h_2 .
+\end{equation}
+We checked it against the numerical integral of the image series (agreement to $3\times10^{-3}$ relative at $D=3d$ and $D=20d$, limited by the integration cutoff).
+It is a capacitor formula, textbook; we use it because it is a quantitative, device-geometry-dependent prediction (Section~\ref{sec:protocol}).
+
+\section{A driven-dissipative model with a gate, tested on rusty-SUNDIALS}\label{sec:dd}
+
+\paragraph{Model.} Dimensionless units $\hbar=m=1$,
+\begin{align}
+i\,\partial_t\psi &= \Bigl[-\tfrac12\nabla^2+V(\mathbf x)+g|\psi|^2+g_Rn_R+\tfrac i2\bigl(Rn_R-\gamma\bigr)\Bigr]\psi,\\
+\partial_tn_R&=P(\mathbf x)-(\gamma_R+R|\psi|^2)n_R,
+\end{align}
+the standard open-dissipative (Wouters--Carusotto) form with $g=0.04$, $g_R=1$, $\gamma=0.1$, $\gamma_R=200$, $R=1$ (stiff ratio
+$\gamma_R/\gamma=2000$), uniform pump $P$ and gate $V=V_0e^{-d^2/2\sigma^2}$. Above threshold $P_{th}=\gamma\gamma_R/R=20$ the
+uniform state is $n=P/\gamma-\gamma_R/R$, $n_R=\gamma/R$, $\omega=gn+g_Rn_R+V$ (we use $P=21$: $n=10$, $n_R=0.1$, $\omega=0.5$).
+The model is generic; it is the model one would write for short-lived excitons or polaritons. It is \emph{not} the model of the
+equilibrium experiment of Qi \emph{et al.}, whose dipolar excitons live microseconds.
+
+\paragraph{Design.} Pre-registered in \path{docs/designs/EXCITON_FLUID_PHASE3_PREREG.md} (commit \texttt{335caa5}, before any run of the
+Rust program), independent Python reference first (\path{phase3_reference.py}). Gates: D-a steady states above and below threshold;
+D-b the 768$\times$768 linearisation of the solver against the reference $3\times3$ per-$k$ spectrum; D-c conservative limit
+(norm and energy); D-d gate sweep ($V_0\in\{0,0.25,0.5,1\}$): pump budget $\sum P=\sum(\gamma_Rn_R+\gamma|\psi|^2)$, single locked
+frequency, and the hypothesis $0<\omega(V_0)-\omega(0)<V_0$; D-e the ARKode-style IMEX module, whose implicit stage is a fixed-point
+iteration and so must fail exactly when $h\gamma_Ra_{ii}\geq1$; D-f its temporal order; D-g a planted bug. A deliberately
+\emph{wrong} prediction is excluded by construction: the intuitive local-density guess that the gate leaves the density pinned at
+$P/\gamma-\gamma_R/R$ is incompatible with a single locked frequency (the gate shifts the local frequency, so currents must flow),
+and was not registered.
+
+\paragraph{Amendments, all before the numbers they affect.} (A4, on the number of seeds of D-g, is in the pre-registration.) A1: the IMEX module's fixed-point test squares the tolerance
+(effective absolute tolerance $\mathrm{rtol}\,(\mathrm{atol}+\mathrm{rtol}|z|)$), so $10^{-12}$ cannot converge in floating point;
+set to $10^{-6}$. A2: integrating D-a/D-d/D-g in the laboratory frame needed more than 23 minutes for one run (the phase rotates
+at $\omega=0.5$ and BDF must resolve it for $t=4000$); the flow is integrated in the frame rotating at the registered value of
+$\omega$ with all gate quantities evaluated gauge-covariantly. A3: even then the pinned CVODE refactors a dense matrix
+every few steps (43 ms per step at 768 unknowns, hours per run, about 70 runs), so \textbf{D-a, D-d, D-g were run on an
+$8\times8$ grid with $\sigma=1.5$} (same $\sigma/L$), not $16\times16$; D-b, D-c, D-e, D-f ran on $16\times16$ as registered. The
+consequence is that the gate-sweep results describe a very small box.
+
+\input{exciton3_results.tex}
+
+\section{What was not done}\label{sec:notdone}
+
+\paragraph{Materials data and surrogates (Hugging Face, GNNs).} Not used. The gate is a Gaussian of chosen amplitude, the
+parameters are dimensionless. Predicting exciton binding energies from a graph neural network trained on bulk or monolayer data
+for a twisted bilayer with defects would require a validity check that has not been made (the training distributions of
+MACE/ALIGNN-type models are not heterostructures with interlayer excitons); the output of such a model would be an input
+parameter with an uncontrolled error, not a result.
+
+\paragraph{The Wigner transition.} The classical statement of the lattice theorem is a zero-temperature, zero-fluctuation
+statement; where the quantum fluid freezes needs quantum Monte Carlo (the literature on two-dimensional dipolar bosons has such
+calculations; we did not read them in this session and quote no number). What
+can be computed with the present tools is a harmonic-phonon (Lindemann) estimate for the gated kernel from the Hessian code of
+the first note: a crude order-of-magnitude, to be labelled as such and compared with the QMC literature before use. Not done.
+
+\paragraph{Frustration and edges.} The first note found frustration energies of \NFrusMin{}--\NFrusMax{} above the lattice energy on
+incommensurate tori. Open boundaries, domain walls and edge currents are not in that note and not here. A design (disks of
+$N$ particles, boundary shapes, count of 5--7 disclinations against the registered lattice energy) is a straightforward
+extension of the first note's $N$-particle flows; it is the cheapest next numerical study and has not been started.
+
+\section{Laboratory protocol}\label{sec:protocol}
+
+The aim is to turn the statements that survived into measurements that can fail. Each item gives the quantity, the
+prediction, the pass/fail rule and the confounders. None has been performed; the model parameters of Section~\ref{sec:dd} must be
+\emph{measured} on the device (items L1--L3) before the later items are meaningful.
+
+\paragraph{Platform and regime.} A dual-gated transition-metal-dichalcogenide bilayer or heterobilayer with hBN spacers, graphite
+(or metal) top and bottom gates, device series with gate separations $D$ spanning at least $5d$ to $50d$ ($d$ the electron--hole
+layer separation), one-gate and two-gate versions. L4 and L5 need a regime in which the dipolar excitons are cold and degenerate
+or crystalline ($T$ below the sample's melting or degeneracy temperature, to be established by L2); L6 needs a driven regime with
+excitons or polaritons of lifetime short compared with the observation time (a microcavity, or intralayer excitons under
+continuous pumping). The two regimes are different samples or different conditions; the model of Section~\ref{sec:dd} does not
+apply to long-lived interlayer excitons.
+
+\paragraph{Common controls.} Gates grounded and floating; a device without the second gate; a detuned pump; temperature series;
+at least three devices per geometry; blind analysis (fits fixed before the data of the discriminating series are read); raw data
+and analysis code deposited with the preregistration of the series. Density is calibrated independently of the quantity
+tested (capacitance or absorption), not from the photoluminescence blueshift itself.
+
+\begin{longtable}{@{}p{0.06\textwidth}p{0.25\textwidth}p{0.29\textwidth}p{0.29\textwidth}@{}}
+\toprule
+ & \textbf{Measurement} & \textbf{Prediction (from this note)} & \textbf{Pass / fail, confounders} \\ \midrule
+\endhead
+L1 & Interaction strength: PL peak shift versus calibrated exciton density $n$, device series in $D$, low $T$, below degeneracy.
+ & $dE/dn=\tilde U(0)=(4\pi e^2d/\varepsilon)\,(1-d/D)$ (Eq.~\ref{eq:u0}): increases with $D$ and saturates at the ungated value. Dielectric
+ mismatch and finite gate screening are outside the model, so the \emph{trend} is the test.
+ & Fit slope vs $D$ per device; fail if the slope is independent of $D$ within $10\%$ over $D/d\in[3,20]$, or has the opposite
+ trend. Confounders: exchange and correlation corrections (a $D$-independent offset), density calibration, heating. \\
+L2 & Phase diagram: structure factor $S(\mathbf k)$ (momentum-resolved emission or interferometry) versus $n$ and $T$ at fixed $D$.
+ & No claim of a number. The classical lattice has a hexagonal Bragg ring at $k_0=4\pi/(\sqrt3a)$ with $n=2/(\sqrt3a^2)$, $a$ its constant.
+ & Establishes where L3 applies (fluid, solid). A ring of the wrong $k_0$ for the measured $n$ is a calibration failure, not a result. \\
+L3 & Lattice symmetry versus gate geometry in the solid regime: classify peaks of $S(\mathbf k)$ (six-fold or other) over the series in $D$,
+ one and two gates.
+ & Within the ideal-metal model, Theorem~1 and the lattice theorem (conditional) give a triangular lattice at every $D$ in the
+ classical limit.
+ & A non-hexagonal pattern at some $D$ is \emph{not} a refutation of the theorem (quantum fluctuations, disorder, finite size and
+ non-ideal gates are outside it); it is evidence for one of those, to be separated by the temperature and disorder series. A hexagonal
+ pattern at all $D$ is the null result. \\
+L4 & Gate-voltage tuning of the local emission energy: nanofabricated finger gate, DC bias $V_g$, pump fixed above
+ condensation threshold, spatially resolved spectroscopy.
+ & Locked single frequency; shift $\Delta\omega$ increasing with the gate amplitude but smaller than the local energy shift
+ (Section~\ref{sec:results}; qualitative, small-box numerics).
+ & Fail if the line splits into two frequencies at the gate centre and outside at all $V_g$ (no locking) or if $\Delta\omega$
+ exceeds the independently measured local Stark shift. Confounders: Stark shift calibration, heating at the gate. \\
+L5 & Threshold and clamp: condensate-peak intensity and reservoir (high-energy tail) intensity versus pump $P$.
+ & Condensate density linear in $P$ above $P_{th}$ with slope $1/\gamma$; reservoir density clamped at $\gamma/R$ (Section~\ref{sec:dd}).
+ & Fail if reservoir emission keeps growing linearly above $P_{th}$ within error. Confounders: detection saturation, multimode
+ condensation, thermal tail. \\
+L6 & Edge/frustration (exploratory): boundary-shaped trap arrays with $N$ excitons.
+ & No numerical prediction yet (Section~\ref{sec:notdone}).
+ & Do not run before the numerical design exists. \\
+\bottomrule
+\end{longtable}
+
+\paragraph{Decision rule.} L1 and L5 are the first experiments: they need no new fabrication beyond a device series and they can
+fail cleanly. A failure of L1's trend invalidates the use of ideal-metal image kernels for that platform and with it the
+applicability of Theorem~1 there. L2 must come before L3 and L4; without L2 a lattice claim is unfalsifiable.
+
+\section{Limitations}
+
+\begin{itemize}[nosep]
+\item Theorem~1 is for ideal grounded metals and a homogeneous dielectric; it is not in Lean; the lattice theorem it feeds is
+unrefereed and conditional in the first note's Lean files.
+\item The numerical model is generic and dimensionless; one parameter set; D-a, D-d, D-g on an $8\times8$ grid; no
+finite-size or resolution study; the solver (dense CVODE, $\leq768$ unknowns) is not claimed to be the best of its kind.
+\item The ARKode-style module tested is a fixed-step ARS222 with a fixed-point implicit stage; it is not SUNDIALS' ARKode. Its
+failure at $h\gamma_Ra_{ii}\ge1$ is its design, not a defect of the library; a Newton--Krylov implicit stage would be the
+replacement.
+\item No experimental data; no Hugging Face data; no contact with any experimental group; written by an AI system and not
+reviewed by a human.
+\end{itemize}
+
+\section*{Reproducibility}
+Pre-registration, amendments, run records and summary: \path{docs/designs/EXCITON_FLUID_PHASE3_PREREG.md},
+\path{exploration/exciton/results/phase3/}; instrument \path{exploration/exciton/rust/qf-exciton-p1/src/bin/dd.rs} (rusty-SUNDIALS
+tag v11.6.0; \texttt{--features m8} for the $8\times8$ runs); reference \path{phase3_reference.py}; gate evaluator
+\path{phase3_summarise.py}; the numbers of this note \path{phase3_paper_numbers.py}; figures \path{phase3_figures.py}; proof check
+\path{gate_image_cm_*.py}. First note: concept DOI \href{https://doi.org/10.5281/zenodo.23289026}{10.5281/zenodo.23289026}.
+
+\begin{thebibliography}{9}
+\bibitem{CallensExciton1} X. Callens, \emph{Testing a planar lattice-optimality theorem against an exciton-fluid interaction},
+Zenodo, doi:10.5281/zenodo.23289027 (2026).
+\bibitem{OpenAI2026} OpenAI, \emph{Universal optimality of the triangular lattice}, \url{https://github.com/openai/math}, family 090 (2026).
+\bibitem{CohnKumar2007} H. Cohn and A. Kumar, J. Amer. Math. Soc. \textbf{20}, 99 (2007).
+\bibitem{WoutersCarusotto2007} M. Wouters and I. Carusotto, Phys. Rev. Lett. \textbf{99}, 140402 (2007).
+\bibitem{Qi2026} R. Qi \emph{et al.}, Nature \textbf{654}, 629 (2026).
+\bibitem{Hindmarsh2005} A. C. Hindmarsh \emph{et al.}, ACM Trans. Math. Softw. \textbf{31}, 363 (2005).
+\end{thebibliography}
+\end{document}

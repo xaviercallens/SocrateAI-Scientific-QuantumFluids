@@ -1,0 +1,1 @@
+V0=0.25 seed 1: omega=0.54877640 nc=7.06825 resid=6.03e-8 budget=2.35e-14 err=None

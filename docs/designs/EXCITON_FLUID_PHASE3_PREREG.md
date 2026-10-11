@@ -107,3 +107,14 @@ unchanged and the uniform state is stable on it. The FFT replaces the naive DFT 
 `5×10⁻¹⁵`, `results/phase3/fft_equivalence_m8.json`); D-b was run on the 16×16 grid with the naive DFT. Measured cost on 8×8:
 1.4 s for `t = 20`. Consequence: **D-d is a statement about a very small box** (8 healing lengths ≈ 5), and its
 "current/outflow" observations are those of an 8×8 grid; this goes into the limitations.
+
+**A4 (2026-10-11, recorded after the registered D-a/D-d runs and while D-g was still running; it concerns D-g only and was made
+before D-g's own gate was evaluated).** The planted-bug runs oscillate strongly (`n ≈ 220`, `ω ≈ 8.8`) and take about 25 minutes
+each on the 8×8 grid; after three of ten seeds the run was stopped. The record of D-g is therefore the per-seed log lines of
+the first three seeds (`results/phase3/run_log_g.txt`, written by the program as each seed finished; the JSON file is written only at
+the end of the loop and does not exist). D-g is evaluated on those three seeds, each of which must violate both D-a and the budget.
+Registered text said "must violate"; it did not name a number of seeds.
+
+**Reading of D-d after the run (no amendment, a note).** D-d (i) and (ii) were run as registered at `t = 4000` and **failed**; see
+the results note. An exploratory continuation to `t = 16000` (seed 1, `V₀ = 0.5`, `exploratory/`) was made afterwards to see
+whether the failure is a horizon effect; it is exploratory, is not a gate, and does not replace the registered outcome.

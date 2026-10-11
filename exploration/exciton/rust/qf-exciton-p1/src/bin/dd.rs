@@ -500,18 +500,22 @@ fn mode_d(out: &str) {
                 continue;
             }
         }
-        for seed in 1..=10u64 {
+        // exploratory overrides (never used for the registered gates): DD_SEEDMAX, DD_TEND, DD_RTOL
+        let seed_max: u64 = std::env::var("DD_SEEDMAX").ok().and_then(|v| v.parse().ok()).unwrap_or(10);
+        let t_end: f64 = std::env::var("DD_TEND").ok().and_then(|v| v.parse().ok()).unwrap_or(4000.0);
+        let rtol_env: f64 = std::env::var("DD_RTOL").ok().and_then(|v| v.parse().ok()).unwrap_or(1e-10);
+        for seed in 1..=seed_max {
             let m = arc(Model::new(Par::reg(), gate(v0, SIGMA), 0.5)); // amendment A2: rotating frame
             let y0 = state_uniform(10.0, 0.1, 1e-3, seed);
             let t0 = std::time::Instant::now();
-            let f = flow(&m, &y0, 4000.0, 1e-10, 1e-12);
+            let f = flow(&m, &y0, t_end, rtol_env, rtol_env * 1e-2);
             let o = observe(&m, &f.y);
             writeln!(lines, "{{\"gate\":\"D-d\",\"V0\":{v0},\"seed\":{seed},{},\"steps\":{},\"seconds\":{:.2},\"error\":{}}}", obs_json(&o), f.steps, t0.elapsed().as_secs_f64(), jstr(&f.error)).unwrap();
             eprintln!("V0={v0} seed {seed}: omega={:.8} nc={:.5} resid={:.2e} budget={:.2e} err={:?}", o.omega, o.n_center, o.resid, o.budget_rel, f.error);
             if seed == 1 {
                 // rotating-frame Jacobian about the numerical steady state
                 let mr = Model::new(Par::reg(), gate(v0, SIGMA), o.omega);
-                write_jac(&mr, &f.y, &format!("{out}/jac_V{}.f64", (v0 * 100.0).round() as i32));
+                write_jac(&mr, &f.y, &format!("{out}/jac_V{}{}.f64", (v0 * 100.0).round() as i32, std::env::var("DD_TAG").unwrap_or_default()));
             }
         }
     }

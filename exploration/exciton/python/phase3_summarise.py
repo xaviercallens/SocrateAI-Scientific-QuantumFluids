@@ -5,9 +5,14 @@ import json, sys, os
 import numpy as np
 R = sys.argv[1]; out = sys.argv[2]
 ref = json.load(open(f"{R}/reference.json"))
+import glob
 def jl(name):
-    p = f"{R}/{name}"
-    return [json.loads(l) for l in open(p)] if os.path.exists(p) else []
+    """name like 'a.jsonl': reads a.jsonl and every a_*.jsonl (parallel shards)"""
+    stem = name[:-6]
+    out = []
+    for p in sorted(glob.glob(f"{R}/{stem}.jsonl") + glob.glob(f"{R}/{stem}_*.jsonl")):
+        out += [json.loads(l) for l in open(p) if l.strip()]
+    return out
 res = {}; N = 768
 def rel(a, b): return abs(a - b) / abs(b)
 
@@ -57,7 +62,8 @@ lam = {}
 for v0 in sweep:
     p = f"{R}/jac_V{int(round(v0*100))}.f64"
     if os.path.exists(p):
-        Jv = np.fromfile(p, dtype="<f8").reshape(N, N).T
+        raw = np.fromfile(p, dtype="<f8"); Nv = int(round(np.sqrt(raw.size)))
+        Jv = raw.reshape(Nv, Nv).T
         e = np.linalg.eigvals(Jv); lam[v0] = float(max(x.real for x in e if abs(x) > 1e-9 or True))
 res["D-d"] = dict(sweep={str(k): v for k, v in sweep.items()}, budget_ok=okI, stationary_ok=okII, omega_median={str(k): float(v) for k, v in om.items()},
                   hypothesis_iii=hyp, max_re_lambda=lam, PASS_i_ii=bool(okI and okII and all(not s["errors"] for s in sweep.values())), PASS_iii=hyp)
@@ -74,11 +80,23 @@ res["D-e"] = dict(one_step={str(h): (r["status"], r["finite"]) for h, r in one.i
 f = jl("f.jsonl"); er = [r.get("err") for r in f]
 ratios = [er[i] / er[i + 1] for i in range(len(er) - 1)] if len(er) == 3 and None not in er else None
 res["D-f"] = dict(errors=er, ratios=ratios, PASS=bool(ratios and all(3 <= r_ <= 5 for r_ in ratios)))
-# D-g
-g = jl("g.jsonl")
-res["D-g"] = dict(n_runs=len(g), mean_n=[r["mean_n"] for r in g][:3], budget_rel=[r["budget_rel"] for r in g][:3],
-                  violates_D_a=bool(g) and all(rel(r["mean_n"], 10.0) > 1e-6 for r in g), violates_budget=bool(g) and all(r["budget_rel"] > 1e-8 for r in g))
+# D-g (amendment A4: per-seed log lines of the first three seeds)
+import re
+gl = []
+lp = f"{R}/run_log_g.txt"
+if os.path.exists(lp):
+    for l in open(lp):
+        m = re.match(r"above seed (\d+): n=([0-9.eE+-]+) nR=([0-9.eE+-]+) omega=([0-9.eE+-]+) budget=([0-9.eE+-]+)", l)
+        if m: gl.append(dict(seed=int(m[1]), n=float(m[2]), nr=float(m[3]), omega=float(m[4]), budget=float(m[5])))
+res["D-g"] = dict(n_seeds=len(gl), runs=gl, violates_D_a=bool(gl) and all(rel(r["n"], 10.0) > 1e-6 for r in gl),
+                  violates_budget=bool(gl) and all(r["budget"] > 1e-8 for r in gl))
 res["D-g"]["PASS"] = bool(res["D-g"]["violates_D_a"] and res["D-g"]["violates_budget"])
+# exploratory (not gates): continuation and tolerance variants of D-d, seed 1, V0 = 0.5
+ex = []
+for p_ in sorted(glob.glob(f"{R}/exploratory/d_*.jsonl")):
+    for l in open(p_):
+        r = json.loads(l); ex.append(dict(file=os.path.basename(p_), omega=r["omega"], resid_rel=r["resid_rel"], budget_rel=r["budget_rel"], n_center=r["n_center"], steps=r["steps"]))
+res["exploratory"] = ex
 json.dump(res, open(out, "w"), indent=1, default=float)
 for k, v in res.items():
-    print(k, {kk: vv for kk, vv in v.items() if kk.startswith("PASS")})
+    if isinstance(v, dict): print(k, {kk: vv for kk, vv in v.items() if kk.startswith("PASS")})

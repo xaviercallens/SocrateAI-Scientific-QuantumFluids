@@ -1,0 +1,10 @@
+V0=0.25 seed 1: omega=0.54877714 nc=7.06789 resid=1.12e-5 budget=8.01e-9 err=None
+V0=0.25 seed 2: omega=0.54877714 nc=7.06789 resid=1.12e-5 budget=8.01e-9 err=None
+V0=0.25 seed 3: omega=0.54877714 nc=7.06789 resid=1.12e-5 budget=8.03e-9 err=None
+V0=0.25 seed 4: omega=0.54877713 nc=7.06789 resid=1.12e-5 budget=8.00e-9 err=None
+V0=0.25 seed 5: omega=0.54877714 nc=7.06789 resid=1.12e-5 budget=8.01e-9 err=None
+V0=0.25 seed 6: omega=0.54877714 nc=7.06789 resid=1.12e-5 budget=8.04e-9 err=None
+V0=0.25 seed 7: omega=0.54877714 nc=7.06789 resid=1.12e-5 budget=8.01e-9 err=None
+V0=0.25 seed 8: omega=0.54877714 nc=7.06789 resid=1.12e-5 budget=8.03e-9 err=None
+V0=0.25 seed 9: omega=0.54877714 nc=7.06789 resid=1.12e-5 budget=8.02e-9 err=None
+V0=0.25 seed 10: omega=0.54877713 nc=7.06789 resid=1.12e-5 budget=8.00e-9 err=None

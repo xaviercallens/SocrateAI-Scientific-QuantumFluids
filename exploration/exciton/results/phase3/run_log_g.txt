@@ -1,0 +1,3 @@
+above seed 1: n=219.99992279 nR=0.05000001 omega=8.84999692 budget=5.24e-1 err=None
+above seed 2: n=219.99992280 nR=0.05000001 omega=8.84999692 budget=5.24e-1 err=None
+above seed 3: n=219.99992281 nR=0.05000001 omega=8.84999692 budget=5.24e-1 err=None
