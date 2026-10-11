@@ -251,3 +251,8 @@ and the aligned stage (A5) for `N = 61, 91`, an **extra random stage** is run fo
 count), separate files (`results/runs_extra/`), screened and polished as in section 3, best-of-all reported with the stage
 contributions shown. Budget 1500 s. `g3`, `g10` are not extended. The total production wall time will therefore exceed the
 nominal 90 minutes by about the duration of the A5 + A6 stages; it is reported.
+
+**A6b (2026-10-11 11:42).** The extra stage was started with `N = 91` first; after the first case (`dip` disk N = 91, 32 extra
+random starts, about 3 min) it was stopped by hand and restarted with `N = 61` first (about 70 s per case) so that both sizes
+receive extra starts within the budget; the budget of the restarted stage is 1250 s (the stage total stays near the 1500 s of A6).
+Cases of `N = 91` not reached are NOT RUN in the extra stage.
