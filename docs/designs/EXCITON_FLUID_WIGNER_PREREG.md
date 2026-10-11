@@ -78,4 +78,12 @@ that criterion on the one case where quantum Monte Carlo exists (bare 1/r^3, S1/
 
 ## Amendments
 
-(none yet)
+**A1 (2026-10-11, before any registered run; found while debugging the lattice code).** The scaling sentence in
+"Model" is wrong in its exponent. Dimensional analysis: eigenvalues of D scale as `Lambda/a^5`, so
+`<u^2> ~ a^{5/2} Lambda^{-1/2}` and `gamma_h ~ (a/Lambda)^{1/4} ~ Lambda^{-1/4} nu^{-1/8}`; for the bare 1/r^3 kernel
+`gamma_h = c (n r_0^2)^{-1/8}` (not `-1/4`), hence `n_c ~ gamma_c^{-8}`: a 2.6% uncertainty in gamma_c (S1's 0.006 on 0.230)
+is a 21% uncertainty in `n_c`. The `Lambda^{-1/4}` statement and all criterion definitions are unchanged. P3 ("collapse
+in `n r_0^2`") is exact by scale invariance for the 1/r^3 kernel; it is kept as a numerical-convergence check (lattice
+cut, BZ grid), with the pass level 1e-3. Numerical method: BZ midpoint error is `O(1/N_q)` because of the `1/omega ~ 1/q`
+acoustic singularity; the reported value is the Richardson extrapolation `2 g(2N) - g(N)` with N = 32, 64; lattice cut
+`R_c = 40 a_L` plus the continuum tail. No registered number had been computed when this was written.
