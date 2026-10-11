@@ -11,6 +11,7 @@ publish = false
 [dependencies]
 cvode = { path = "/home/xavkal/xdev/rusty-SUNDIALS-c3/crates/cvode" }
 nvector = { path = "/home/xavkal/xdev/rusty-SUNDIALS-c3/crates/nvector" }
+sundials-core = { path = "/home/xavkal/xdev/rusty-SUNDIALS-c3/crates/sundials-core" }
 
 [profile.release]
 opt-level = 3
