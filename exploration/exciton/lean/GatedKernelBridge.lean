@@ -26,7 +26,7 @@ Lean there).  Their `AdmissiblePotential` and ours are definitionally the same p
 * Ideal grounded metal planes, point charges, classical configurations; no boundaries, no quantum effects.
 -/
 
-open OAI
+open OAI GatedKernel
 
 /-- **The triangular lattice minimises the gated-kernel energy among all locally finite density-one configurations**,
 conditional only on upstream's `universal_energy_minimum` (and the axioms it uses). -/
