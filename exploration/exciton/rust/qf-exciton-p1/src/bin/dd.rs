@@ -11,10 +11,15 @@ use std::fs;
 use std::io::Write as _;
 use sundials_core::arkode::imex::{ImexSolver, ImexTableau};
 
+#[cfg(not(feature = "m8"))]
 const M: usize = 16;
+#[cfg(feature = "m8")]
+const M: usize = 8; // amendment A3 of the Phase 3 pre-registration: compute-budget grid for D-a, D-d, D-g
+const LOGM: u32 = M.trailing_zeros();
 const NN: usize = M * M;
 const NY: usize = 3 * NN;
-const L: f64 = 16.0;
+const L: f64 = M as f64;
+const SIGMA: f64 = if M == 16 { 3.0 } else { 1.5 };
 
 #[derive(Clone, Copy)]
 struct Par {
@@ -50,12 +55,71 @@ fn mfreq(i: usize) -> i32 {
     }
 }
 
+
+/// Radix-2 FFT of length 16 on interleaved complex arrays (in place), forward `e^{-i}` or inverse `e^{+i}` (unnormalised).
+fn fft16(re: &mut [f64; M], im: &mut [f64; M], inverse: bool) {
+    // bit reversal
+    for i in 0..M {
+        let j = (i as u32).reverse_bits() as usize >> (32 - LOGM);
+        if j > i {
+            re.swap(i, j);
+            im.swap(i, j);
+        }
+    }
+    let mut len = 2;
+    while len <= M {
+        let ang = if inverse { 2.0 * PI } else { -2.0 * PI } / len as f64;
+        for k in (0..M).step_by(len) {
+            for j in 0..len / 2 {
+                let (wr, wi) = ((ang * j as f64).cos(), (ang * j as f64).sin());
+                let (a, b) = (k + j, k + j + len / 2);
+                let (tr, ti) = (re[b] * wr - im[b] * wi, re[b] * wi + im[b] * wr);
+                re[b] = re[a] - tr;
+                im[b] = im[a] - ti;
+                re[a] += tr;
+                im[a] += ti;
+            }
+        }
+        len <<= 1;
+    }
+}
+
+fn fft2(re: &[f64], im: &[f64], inverse: bool) -> ([f64; NN], [f64; NN]) {
+    let mut or = [0.0; NN];
+    let mut oi = [0.0; NN];
+    let (mut r, mut i_) = ([0.0; M], [0.0; M]);
+    for x in 0..M {
+        r.copy_from_slice(&re[x * M..(x + 1) * M]);
+        i_.copy_from_slice(&im[x * M..(x + 1) * M]);
+        fft16(&mut r, &mut i_, inverse);
+        or[x * M..(x + 1) * M].copy_from_slice(&r);
+        oi[x * M..(x + 1) * M].copy_from_slice(&i_);
+    }
+    for y in 0..M {
+        for x in 0..M {
+            r[x] = or[x * M + y];
+            i_[x] = oi[x * M + y];
+        }
+        fft16(&mut r, &mut i_, inverse);
+        for x in 0..M {
+            or[x * M + y] = r[x];
+            oi[x * M + y] = i_[x];
+        }
+    }
+    if inverse {
+        let f = 1.0 / NN as f64;
+        or.iter_mut().for_each(|v| *v *= f);
+        oi.iter_mut().for_each(|v| *v *= f);
+    }
+    (or, oi)
+}
+
 fn gate(v0: f64, sigma: f64) -> Vec<f64> {
     let mut v = vec![0.0; NN];
     for x in 0..M {
         for y in 0..M {
-            let dx = (x as f64 - 8.0).abs().min(M as f64 - (x as f64 - 8.0).abs());
-            let dy = (y as f64 - 8.0).abs().min(M as f64 - (y as f64 - 8.0).abs());
+            let dx = (x as f64 - M as f64 / 2.0).abs().min(M as f64 - (x as f64 - M as f64 / 2.0).abs());
+            let dy = (y as f64 - M as f64 / 2.0).abs().min(M as f64 - (y as f64 - M as f64 / 2.0).abs());
             v[x * M + y] = v0 * (-(dx * dx + dy * dy) / (2.0 * sigma * sigma)).exp();
         }
     }
@@ -126,8 +190,17 @@ impl Model {
         (or, oi)
     }
 
-    /// kinetic part `-1/2 lap psi`
-    fn kin(&self, re: &[f64], im: &[f64]) -> (Vec<f64>, Vec<f64>) {
+    /// kinetic part `-1/2 lap psi` (FFT; `dft2_kin` is the original naive DFT version, kept for the equivalence test)
+    fn kin(&self, re: &[f64], im: &[f64]) -> ([f64; NN], [f64; NN]) {
+        let (mut pr, mut pi) = fft2(re, im, false);
+        for i in 0..NN {
+            pr[i] *= 0.5 * self.k2[i];
+            pi[i] *= 0.5 * self.k2[i];
+        }
+        fft2(&pr, &pi, true)
+    }
+
+    fn kin_naive(&self, re: &[f64], im: &[f64]) -> (Vec<f64>, Vec<f64>) {
         let (pr, pi) = self.dft2(re, im, false);
         let tr: Vec<f64> = (0..NN).map(|i| 0.5 * self.k2[i] * pr[i]).collect();
         let ti: Vec<f64> = (0..NN).map(|i| 0.5 * self.k2[i] * pi[i]).collect();
@@ -281,7 +354,7 @@ fn observe(model: &Model, y: &[f64]) -> Obs {
         resid: r2.sqrt() / norm2.sqrt(),
         norm2,
         budget_rel: (gain_budget - loss).abs() / gain_budget,
-        n_center: n[8 * M + 8],
+        n_center: n[(M / 2) * M + M / 2],
         n_corner: n[0],
         max_j,
     }
@@ -333,6 +406,11 @@ fn mode_a(out: &str, bug: bool) {
         if bug && label == "below" {
             continue;
         }
+        if let Ok(c) = std::env::var("DD_CASE") {
+            if c != label {
+                continue;
+            }
+        }
         for seed in 1..=10u64 {
             let mut pp = par;
             pp.p = p;
@@ -356,7 +434,8 @@ fn mode_a(out: &str, bug: bool) {
             eprintln!("{label} seed {seed}: n={:.8} nR={:.8} omega={:.8} budget={:.2e} err={:?}", o.mean_n, o.mean_nr, o.omega, o.budget_rel, f.error);
         }
     }
-    fs::write(format!("{out}/{}.jsonl", if bug { "g" } else { "a" }), lines).unwrap();
+    let tag = std::env::var("DD_TAG").unwrap_or_default();
+    fs::write(format!("{out}/{}{tag}.jsonl", if bug { "g" } else { "a" }), lines).unwrap();
 }
 
 fn mode_b(out: &str) {
@@ -380,7 +459,7 @@ fn mode_c(out: &str) {
     par.r = 0.0;
     par.r_psi = 0.0;
     par.p = 0.0;
-    let m = arc(Model::new(par, gate(0.5, 3.0), 0.0));
+    let m = arc(Model::new(par, gate(0.5, SIGMA), 0.0));
     let y0 = state_uniform(10.0, 0.0, 1e-2, 1);
     let mut y0 = y0;
     for i in 0..NN {
@@ -416,8 +495,13 @@ fn mode_c(out: &str) {
 fn mode_d(out: &str) {
     let mut lines = String::new();
     for v0 in [0.0, 0.25, 0.5, 1.0] {
+        if let Ok(v) = std::env::var("DD_V0") {
+            if (v.parse::<f64>().unwrap() - v0).abs() > 1e-9 {
+                continue;
+            }
+        }
         for seed in 1..=10u64 {
-            let m = arc(Model::new(Par::reg(), gate(v0, 3.0), 0.5)); // amendment A2: rotating frame
+            let m = arc(Model::new(Par::reg(), gate(v0, SIGMA), 0.5)); // amendment A2: rotating frame
             let y0 = state_uniform(10.0, 0.1, 1e-3, seed);
             let t0 = std::time::Instant::now();
             let f = flow(&m, &y0, 4000.0, 1e-10, 1e-12);
@@ -426,17 +510,18 @@ fn mode_d(out: &str) {
             eprintln!("V0={v0} seed {seed}: omega={:.8} nc={:.5} resid={:.2e} budget={:.2e} err={:?}", o.omega, o.n_center, o.resid, o.budget_rel, f.error);
             if seed == 1 {
                 // rotating-frame Jacobian about the numerical steady state
-                let mr = Model::new(Par::reg(), gate(v0, 3.0), o.omega);
+                let mr = Model::new(Par::reg(), gate(v0, SIGMA), o.omega);
                 write_jac(&mr, &f.y, &format!("{out}/jac_V{}.f64", (v0 * 100.0).round() as i32));
             }
         }
     }
-    fs::write(format!("{out}/d.jsonl"), lines).unwrap();
+    let tag = std::env::var("DD_TAG").unwrap_or_default();
+    fs::write(format!("{out}/d{tag}.jsonl"), lines).unwrap();
 }
 
 /// one IMEX step sequence; returns Err(message) if a step fails, or the final state
 fn imex_run(par: Par, v0: f64, y0: &[f64], h: f64, t_end: f64) -> Result<Vec<f64>, String> {
-    let m = Model::new(par, gate(v0, 3.0), 0.5);
+    let m = Model::new(par, gate(v0, SIGMA), 0.5);
     let fe = |_t: f64, y: &[f64], yd: &mut [f64]| -> Result<(), String> {
         m.rhs(y, yd, false);
         Ok(())
@@ -482,7 +567,7 @@ fn mode_e(out: &str) {
         eprintln!("h={h}: {status} finite={finite}");
     }
     // trajectory to t = 20 with h = 0.01 vs CVODE
-    let mrot = arc(Model::new(par, gate(0.5, 3.0), 0.5));
+    let mrot = arc(Model::new(par, gate(0.5, SIGMA), 0.5));
     let reference = flow(&mrot, &y0, 20.0, 1e-12, 1e-14);
     let traj = imex_run(par, 0.5, &y0, 0.01, 20.0);
     match traj {
@@ -503,7 +588,7 @@ fn mode_f(out: &str) {
     par.gamma_r = 2.0;
     par.p = 0.2;
     let y0 = state_uniform(10.0, 0.1, 1e-3, 1);
-    let mrot = arc(Model::new(par, gate(0.5, 3.0), 0.5));
+    let mrot = arc(Model::new(par, gate(0.5, SIGMA), 0.5));
     let reference = flow(&mrot, &y0, 2.0, 1e-12, 1e-14);
     let mut errs = Vec::new();
     let mut lines = String::new();
@@ -523,6 +608,54 @@ fn mode_f(out: &str) {
     fs::write(format!("{out}/f.jsonl"), lines).unwrap();
 }
 
+/// Visualisation dump (not a gate): fields of seed 1 at several times, V0 in {0, 0.5, 1.0}; rotating frame 0.5.
+fn mode_v(out: &str) {
+    for v0 in [0.0, 0.5, 1.0] {
+        let m = arc(Model::new(Par::reg(), gate(v0, SIGMA), 0.5));
+        let mut y = state_uniform(10.0, 0.1, 1e-3, 1);
+        let mut t_prev = 0.0;
+        for t in [0.0, 10.0, 40.0, 150.0, 600.0, 4000.0] {
+            if t > t_prev {
+                let f = flow(&m, &y, t - t_prev, 1e-10, 1e-12);
+                y = f.y;
+            }
+            t_prev = t;
+            let mut fh = std::io::BufWriter::new(fs::File::create(format!("{out}/field_V{}_t{}.f64", (v0 * 100.0).round() as i32, t as i32)).unwrap());
+            for v in &y {
+                fh.write_all(&v.to_le_bytes()).unwrap();
+            }
+            eprintln!("V0={v0} t={t} done");
+        }
+    }
+}
+
+/// Equivalence of the FFT path and the original naive DFT path; timing of one right-hand side.
+fn mode_t(out: &str) {
+    let m = Model::new(Par::reg(), gate(0.5, SIGMA), 0.5);
+    let y = state_uniform(10.0, 0.1, 1e-1, 7);
+    let (re, rest) = y.split_at(NN);
+    let (im, _) = rest.split_at(NN);
+    let (a, b) = m.kin(re, im);
+    let (c, d) = m.kin_naive(re, im);
+    let diff = (0..NN).map(|i| (a[i] - c[i]).abs().max((b[i] - d[i]).abs())).fold(0.0f64, f64::max);
+    let t0 = std::time::Instant::now();
+    let mut acc = 0.0;
+    for _ in 0..2000 {
+        let f = m.rhs_vec(&y);
+        acc += f[0];
+    }
+    let us = t0.elapsed().as_secs_f64() / 2000.0 * 1e6;
+    let line = format!("{{\"gate\":\"fft_equivalence\",\"max_abs_diff\":{diff:.3e},\"rhs_microseconds\":{us:.1},\"acc\":{acc:.3e}}}");
+    eprintln!("{line}");
+    fs::write(format!("{out}/fft_equivalence.json"), line).unwrap();
+    for (rtol, atol) in [(1e-10, 1e-12), (1e-8, 1e-10)] {
+        let mm = arc(Model::new(Par::reg(), gate(0.5, SIGMA), 0.5));
+        let t1 = std::time::Instant::now();
+        let f = flow(&mm, &state_uniform(10.0, 0.1, 1e-3, 1), 20.0, rtol, atol);
+        eprintln!("flow t=20 rtol={rtol:e}: steps={} seconds={:.2} error={:?}", f.steps, t1.elapsed().as_secs_f64(), f.error);
+    }
+}
+
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     let (mode, out) = (args[1].as_str(), args[2].as_str());
@@ -535,6 +668,8 @@ fn main() {
         "e" => mode_e(out),
         "f" => mode_f(out),
         "g" => mode_a(out, true),
+        "v" => mode_v(out),
+        "t" => mode_t(out),
         _ => panic!("mode"),
     }
 }

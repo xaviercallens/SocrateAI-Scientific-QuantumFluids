@@ -13,6 +13,9 @@ cvode = { path = "/home/xavkal/xdev/rusty-SUNDIALS-c3/crates/cvode" }
 nvector = { path = "/home/xavkal/xdev/rusty-SUNDIALS-c3/crates/nvector" }
 sundials-core = { path = "/home/xavkal/xdev/rusty-SUNDIALS-c3/crates/sundials-core" }
 
+[features]
+m8 = []
+
 [profile.release]
 opt-level = 3
 debug = false

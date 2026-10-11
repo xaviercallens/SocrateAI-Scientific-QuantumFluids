@@ -95,3 +95,15 @@ integrated in the frame rotating at `ω_f = 0.5` (the registered reference value
 quantities (`ω`, the stationarity residual, the budget) are evaluated with the laboratory-frame equation on the state, which is
 gauge covariant, so the gate definitions are unchanged. Tolerances and horizon unchanged. The first attempt's log is kept as
 `results/phase3/run_log_attempt1.txt`.
+
+**A3 (2026-10-11, before any D-a, D-d or D-g number existed; A2 was applied and these runs started, then stopped by me).** Even
+in the rotating frame the registered cost is prohibitive: the pinned CVODE refactors a dense 768×768 matrix every few steps,
+measured at 43 ms per step (2854 steps for `t = 20` at `rtol = 1e-10`, 123 s), i.e. several hours per run and about 70 runs
+(D-a 20, D-g 10, D-d 40). Left unchanged: model, parameters, tolerances, horizon `t = 4000`, seeds 1..10, all gate thresholds.
+Changed for **D-a, D-d, D-g only** (D-b, D-c, D-e, D-f ran on the registered 16×16 grid and are not repeated): the grid is
+**8×8, `L = 8`** (`h = 1`, 192 unknowns), and the gate width is **`σ = 1.5`** (the same `σ/L` as `3/16`). The uniform
+steady state is grid independent; the 8×8 wavevectors are a subset of the 16×16 ones, so the linearisation reference is
+unchanged and the uniform state is stable on it. The FFT replaces the naive DFT in the right-hand side (equivalent to
+`5×10⁻¹⁵`, `results/phase3/fft_equivalence_m8.json`); D-b was run on the 16×16 grid with the naive DFT. Measured cost on 8×8:
+1.4 s for `t = 20`. Consequence: **D-d is a statement about a very small box** (8 healing lengths ≈ 5), and its
+"current/outflow" observations are those of an 8×8 grid; this goes into the limitations.
