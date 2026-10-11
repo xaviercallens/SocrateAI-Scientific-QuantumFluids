@@ -1,0 +1,6 @@
+{"gate":"D-e","kind":"one_step","h":0.005,"status":"ok","finite":true,"message":null}
+{"gate":"D-e","kind":"one_step","h":0.01,"status":"ok","finite":true,"message":null}
+{"gate":"D-e","kind":"one_step","h":0.0125,"status":"ok","finite":true,"message":null}
+{"gate":"D-e","kind":"one_step","h":0.02,"status":"error","finite":true,"message":"IMEX fixed-point solver failed to converge at stage 1"}
+{"gate":"D-e","kind":"one_step","h":0.05,"status":"error","finite":true,"message":"IMEX fixed-point solver failed to converge at stage 1"}
+{"gate":"D-e","kind":"trajectory","h":0.01,"t":20,"diff_rel":7.336773e-6,"finite":true,"cvode_error":null}

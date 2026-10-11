@@ -1,0 +1,16 @@
+== b 07:49:57
+max|rhs| at exact uniform state, rotating frame: 7.105e-15
+== c 07:49:57
+{"gate":"D-c","norm0":2.55896732074443298e3,"norm1":2.55896732070470944e3,"energy0":7.90095560846605736e2,"energy1":7.90095560525813198e2,"norm_rel":1.552327e-11,"energy_rel":4.060174e-10,"steps":6464,"error":null}
+== e 07:53:54
+h=0.005: ok finite=true
+h=0.01: ok finite=true
+h=0.0125: ok finite=true
+h=0.02: error finite=true
+h=0.05: error finite=true
+trajectory diff 7.337e-6
+== f 07:55:28
+h=0.04 err=1.621e-5
+h=0.02 err=3.857e-6
+h=0.01 err=9.474e-7
+== a 07:55:47

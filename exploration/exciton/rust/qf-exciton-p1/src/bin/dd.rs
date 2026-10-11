@@ -328,7 +328,7 @@ fn mode_a(out: &str, bug: bool) {
     if bug {
         par.r_psi = 2.0 * par.r;
     }
-    let om = 0.0;
+    let om = 0.5; // amendment A2: flow integrated in the frame rotating at the registered reference frequency
     for (label, p, n0, nr0) in [("above", 21.0, 10.0, 0.1), ("below", 16.0, 0.25, 0.0)] {
         if bug && label == "below" {
             continue;
@@ -417,7 +417,7 @@ fn mode_d(out: &str) {
     let mut lines = String::new();
     for v0 in [0.0, 0.25, 0.5, 1.0] {
         for seed in 1..=10u64 {
-            let m = arc(Model::new(Par::reg(), gate(v0, 3.0), 0.0));
+            let m = arc(Model::new(Par::reg(), gate(v0, 3.0), 0.5)); // amendment A2: rotating frame
             let y0 = state_uniform(10.0, 0.1, 1e-3, seed);
             let t0 = std::time::Instant::now();
             let f = flow(&m, &y0, 4000.0, 1e-10, 1e-12);

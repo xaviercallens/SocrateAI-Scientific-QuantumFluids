@@ -86,3 +86,12 @@ below floating-point resolution and no step would converge for any `h`. The tole
 (effective absolute tolerance `≈ 1e-12`); the predicted success/failure threshold `h < 0.017071` is unchanged. (ii) D-f did not
 state the pump of the non-stiff variant: `P = 0.2`, all other parameters as in the model except `γ_R = 2`, initial state
 `ψ = √10(1 + 10⁻³ξ)`, `n_R = 0.1`, `V₀ = 0.5`, rotating frame `ω = 0.5`, seed 1.
+
+**A2 (2026-10-11, after the runs of D-b, D-c, D-e, D-f and before any D-a, D-d or D-g number existed).** D-a, D-d and D-g were first
+launched with the flow integrated in the laboratory frame; one run (D-a above, seed 1) had not finished after 23 minutes and the
+batch was killed with no output. Cause: at `rtol = 1e-10` BDF must resolve the phase rotation at `ω = 0.5` for `t = 4000`
+(D-c needed 6464 steps for `t = 20` at `rtol = 1e-11`); this is a cost issue, not a result. The flow of D-a, D-d, D-g is now
+integrated in the frame rotating at `ω_f = 0.5` (the registered reference value, `ψ_lab = ψ_rot e^{−iω_f t}`); all gate
+quantities (`ω`, the stationarity residual, the budget) are evaluated with the laboratory-frame equation on the state, which is
+gauge covariant, so the gate definitions are unchanged. Tolerances and horizon unchanged. The first attempt's log is kept as
+`results/phase3/run_log_attempt1.txt`.
