@@ -116,3 +116,16 @@ tolerances rtol = 1e-4, atol = 1e-7, `TRACK=1`: an implicit scheme has the exact
 the time accuracy of the approach; this is a hypothesis and is tested, not assumed: G16, V0 = 0.5, seed 1 is also run at rtol = 1e-6/atol = 1e-9
 and the final states must agree to |d shift| <= 1e-7, |d n_center| <= 1e-6 (gate K-e0). (3) The wall-time limit of K-c M = 64 becomes 2 h CPU
 (the same 1 h gate was a guess made before any step had been timed).
+
+**A2 (2026-10-11, after the K-d results at t = 20 were evaluated, before any run of the extra tests below).** The registered K-d runs at
+t = 20, rtol 1e-7 passed all four gates (d1: GMRES 168490 vs 111740 = 1.508x, just above the 1.5x threshold; d2: relative L2 to CVODE
+2.58; d3: identical state, 7e-12; d4: 3e-14), but they do not test the preconditioner or the Jacobian action in the regime they are
+for: with steps h ~ 1e-3 the Newton matrix I - s J is within 1e-3 of the identity and GMRES needs one iteration for every Newton iteration
+with any preconditioner (GMRES iterations equal Newton iterations for `none`, `kin` and `block`), and the wrong-sign Jacobian
+(`BUG=jac`) gave bit-for-bit the same counts as the correct one. Those four gates were therefore passed in a regime where they could
+hardly fail and that is disclosed here. Extra test K-d' (new gates, same seed and parameters as the reference stationary run
+`Ke_G16_V0.5_s1`, rtol 1e-4, atol 1e-7, `TRACK=1`, stop at residual 1e-8, steps grow to h ~ 10): variants `PREC=none`, `kin`, `badsign`, `BUG=jac`, `JV=fd`,
+`BUG=rhs`. Gates: every variant except `BUG=rhs` ends at the reference state (|d shift| <= 1e-7, |d n_center| <= 1e-6) or reports a
+non-null error; `BUG=rhs` ends at a state with |d shift| >= 1e-3 relative to the reference or reports an error. Reported (no gate): Newton
+iterations, GMRES iterations per Newton iteration, CPU seconds, step counts for each variant, which show whether the structured
+preconditioner matters at large steps.
