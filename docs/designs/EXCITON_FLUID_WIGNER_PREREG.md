@@ -87,3 +87,15 @@ in `n r_0^2`") is exact by scale invariance for the 1/r^3 kernel; it is kept as 
 cut, BZ grid), with the pass level 1e-3. Numerical method: BZ midpoint error is `O(1/N_q)` because of the `1/omega ~ 1/q`
 acoustic singularity; the reported value is the Richardson extrapolation `2 g(2N) - g(N)` with N = 32, 64; lattice cut
 `R_c = 40 a_L` plus the continuum tail. No registered number had been computed when this was written.
+
+**A2 (2026-10-11, written after the registered grid scan, calibration and P0 had been run; a deviation, not a
+pre-registered step).** What was seen: P0 and P3 passed; P1 (direction) was refuted (`gamma_h(290) = 0.263` is larger
+than the DMC `0.230`, so `n_c^h(A) = 847`, ratio 2.9 to 290, P2 failed); on the registered grid (`nu` 0.05-200,
+`Lambda` <= 100) the ungated and gated bilayer kernels show a harmonic-stable window only for `Lambda = 100`, and
+`gamma_h(nu)` has an interior minimum (not monotone) because of the `2/x` core. Added after seeing this, exploratory:
+(i) `wigner_refine.py` finds by root-finding (brentq on log nu, Richardson with N = 16, 32, lattice cut 40 a) the
+window edges `nu_lo, nu_hi` of criterion B for `D/d in {2, 3, 5, 10, 20, inf}` and `Lambda in {50, 100, 300, 1000}`,
+beyond the registered `nu` grid (down to 1e-3, up to 1e3); (ii) a post-hoc comparison with S4's `d_c = 9.1 a_B*`
+using S4's text (`a_B* = hbar^2/(e^2 m_qe)`, `m_h/m_e = 2.46`, hence `Lambda = d (m_qe + m_qh)/(m_qe a_B*) = 3.46 d/a_B*`),
+which is not a registered comparison and compares different models (S4: composite excitons, finite T).
+Results from these two items are labelled exploratory in the report.
