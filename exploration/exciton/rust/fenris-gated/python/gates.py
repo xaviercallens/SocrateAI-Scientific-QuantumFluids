@@ -35,18 +35,22 @@ def np_raw(spec, r):
         k = float(p[1]); e = np.exp(-k * r)
         return e / r, -e * (k * r + 1) / r**2, e * (k * k * r * r + 2 * k * r + 2) / r**3
     d, D = float(p[1]), float(p[2])
-    u = np.zeros_like(r); du = np.zeros_like(r); d2u = np.zeros_like(r)
-    kmax = int(np.ceil(45 * D / (2 * np.pi * r.min()))) + 2
-    for k in range(1, kmax + 1):
-        q = 2 * np.pi * k / D
-        x = q * r
+    shape = r.shape
+    rf = r.ravel()
+    kmax = int(np.ceil(45 * D / (2 * np.pi * rf.min()))) + 2
+    ks = np.arange(1, kmax + 1)[:, None]
+    q = 2 * np.pi * ks / D
+    w = 1 - np.cos(2 * np.pi * ks * d / D)
+    u = np.zeros_like(rf); du = np.zeros_like(rf); d2u = np.zeros_like(rf)
+    for lo in range(0, len(rf), 4000):           # chunk to bound memory
+        x = q * rf[None, lo:lo + 4000]
         m = x < 45
-        if not m.any():
-            break
-        w = 1 - np.cos(2 * np.pi * k * d / D)
-        k0, k1 = special.k0(x[m]), special.k1(x[m])
-        u[m] += w * k0; du[m] -= w * q * k1; d2u[m] += w * q * q * (k0 + k1 / x[m])
-    return 4 / D * u, 4 / D * du, 4 / D * d2u
+        xs = np.where(m, x, 1.0)
+        k0, k1 = special.k0(xs) * m, special.k1(xs) * m
+        u[lo:lo + 4000] = (w * k0).sum(0)
+        du[lo:lo + 4000] = -(w * q * k1).sum(0)
+        d2u[lo:lo + 4000] = (w * q * q * (k0 + k1 / xs)).sum(0)
+    return (4 / D * u).reshape(shape), (4 / D * du).reshape(shape), (4 / D * d2u).reshape(shape)
 
 
 def rc_of(spec):

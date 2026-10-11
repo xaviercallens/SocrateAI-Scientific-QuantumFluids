@@ -80,16 +80,20 @@ def unit_rings(name, s):
 
 
 class Shape:
-    def __init__(self, name, s):
-        self.name, self.s = name, s
+    """w = wall node spacing. N_free and B_ref (= node count of the w = 1 wall, the 'lattice sites') are independent of w;
+    for w = 1/m (m even) the extra nodes are midpoints and `sites` is the w = 1 subset used for the triangulation."""
+    def __init__(self, name, s, w=1.0):
+        self.name, self.s, self.w = name, s, w
+        mult = int(round(1.0 / w))
+        assert abs(mult * w - 1.0) < 1e-12 and (mult == 1 or mult % 2 == 0)
         self.rings = unit_rings(name, s)
         self.membership = []   # (Path, hole)
         self.edges = []        # all polygon edges (p, q) for wall distance
-        nodes, ring_of = [], []
+        nodes, ring_of, site = [], [], []
         self.area = 0.0
         for k, r in enumerate(self.rings):
             if r["kind"] == "circle":
-                n = max(3, int(round(2 * np.pi * r["R"])))
+                n = max(3, int(round(2 * np.pi * r["R"]))) * mult
                 t = 2 * np.pi * np.arange(n) / n
                 pts = np.c_[r["R"] * np.cos(t), r["R"] * np.sin(t)]
                 poly = _circle_poly(r["R"], 2000)
@@ -99,18 +103,27 @@ class Shape:
                 m = len(poly)
                 for i in range(m):
                     p, q = poly[i], poly[(i + 1) % m]
-                    ne = max(1, int(round(np.linalg.norm(q - p))))
+                    ne = max(1, int(round(np.linalg.norm(q - p)))) * mult
                     for j in range(ne):
                         pts.append(p + (q - p) * (j / ne))
                 pts = np.array(pts)
             nodes.append(pts); ring_of += [k] * len(pts)
+            if r["kind"] == "circle":
+                site += [(i % mult == 0) for i in range(len(pts))]
+            else:
+                idx = 0
+                for i in range(len(poly)):
+                    ne = max(1, int(round(np.linalg.norm(poly[(i + 1) % len(poly)] - poly[i])))) * mult
+                    site += [(j % mult == 0) for j in range(ne)]
             self.membership.append((Path(np.vstack([poly, poly[:1]]), closed=True), r["hole"]))
             self.area += (-1 if r["hole"] else 1) * abs(_shoelace(poly))
             for i in range(len(poly)):
                 self.edges.append((poly[i], poly[(i + 1) % len(poly)]))
-        self.boundary = np.vstack(nodes)
-        self.ring_of = np.array(ring_of)
-        self.B = len(self.boundary)
+        self.boundary = np.vstack(nodes)             # every fixed node (what the engine sees)
+        site = np.array(site)
+        self.sites = self.boundary[site]             # w = 1 subset (triangulation / bookkeeping)
+        self.ring_of = np.array(ring_of)[site]
+        self.B = len(self.sites)
         self.n_holes = sum(1 for r in self.rings if r["hole"])
         self.chi = 1 - self.n_holes
         self.n_free = int(round(self.area - 0.5 * self.B))
@@ -150,17 +163,17 @@ class Shape:
         return np.array(out[:n])
 
 
-def fit_shape(name, n_free_target, lo=3.0, hi=60.0, steps=4000):
+def fit_shape(name, n_free_target, lo=3.0, hi=60.0, steps=4000, w=1.0):
     """Scale parameter s whose N_free = round(A - B/2) is closest to the target (ties: smaller s)."""
     best = None
     for s in np.linspace(lo, hi, steps):
-        sh = Shape(name, float(s))
+        sh = Shape(name, float(s))   # fit always with w = 1: N_free = round(A - B/2) is independent of w
         err = abs(sh.n_free - n_free_target)
         if best is None or err < best[0]:
             best = (err, float(s))
         if sh.n_free > n_free_target + 40:
             break
-    return Shape(name, best[1])
+    return Shape(name, best[1], w)
 
 
 SHAPES = ["square", "rect1.25", "rect1.5", "rect2", "hexagon", "triangle", "disc", "annulus", "lshape", "maze", "kagomecut"]

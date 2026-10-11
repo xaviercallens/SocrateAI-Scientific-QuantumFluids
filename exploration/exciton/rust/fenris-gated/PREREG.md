@@ -149,3 +149,20 @@ matters. Changes, all in the driver/parameters, none in the physics:
 6. Observed at the first L-b3 run: the original CMRR suite on the pinned rusty-SUNDIALS passes 5 of 6; the 6th
    (`order1_restart_rescues_tight_high_order_bdf`) fails because the order-1 fallback is no longer needed on v11.6.0
    (the solve converges at max order 5 with 1e-10/1e-12, 641 steps, force 7e-12). This is the benign direction.
+
+### A3 (2026-10-11, after 12 of the 44 primary cases; the primary run was then stopped)
+Result of the primary (wall spacing 1) cases square, rect1.25, rect1.5 x 4 kernels (24 starts each): between 0 and 5
+of 24 starts per case stayed inside the container (23/24 escaped for the ungated kernel in the square). The bare
+fixed-node wall at the mean spacing does **not** confine the free nodes: at the midpoint between two wall nodes the
+transverse potential is a saddle, and the interior pressure pushes a node through; there is no confining potential in this
+model. The pre-registered contingency applies (> 25 % escape). The primary run was stopped after 12 cases (the remaining
+32 would have been ~45 more minutes of the 2-thread budget for the same conclusion); the 12 cases are kept as data
+(`case_primary_*.json`, with the survivor-bias warning: statistics of the 0-5 survivors are not representative).
+New group **wallhalf**: identical shapes, `N_free`, seeds and kernels, with the fixed wall at spacing 0.5
+(`w = 0.5`: every edge divided into 2 round(length) segments). Bookkeeping: `N_free = round(A - B/2)` with `B` the node
+count of the spacing-1 wall (so `N_free` is the same as in the primary group); the Delaunay triangulation, coordination,
+defect counts and the Euler identity use the spacing-1 subset of the wall nodes ("sites", the corners and every second
+node) so that coordination numbers remain comparable with the lattice; the energy, force and Hessian use all wall nodes.
+Energy bookkeeping for this group (and recorded for all): `E_ff` and `E_fb` separately and
+`dE' = E_ff + E_fb/2 - N_free e_bulk` (a pair with a fixed node is shared half-and-half), per perimeter.
+Whether the denser wall confines the short-range gated kernel (D = 1.5, screening length ~0.24) is not known in advance.

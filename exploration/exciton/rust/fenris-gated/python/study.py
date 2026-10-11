@@ -33,11 +33,16 @@ def case_list(which):
         for sh in ("square", "hexagon"):
             for sp in SENS_SPECS:
                 cases.append(dict(idx=200 + k, shape=sh, n_target=100, spec=sp, group="sens")); k += 1
+    if which in ("wall", "all"):
+        # amendment A3: denser wall (spacing 0.5), same shapes/N/seeds as the primary group
+        for si, sh in enumerate(G.SHAPES):
+            for ki, sp in enumerate(SPECS):
+                cases.append(dict(idx=si * 4 + ki, shape=sh, n_target=100, spec=sp, group="wallhalf", w=0.5))
     return cases
 
 
 def cid(c):
-    return f"{c['group']}_{c['shape']}_N{c['n_target']}_{c['spec'].replace(':', '-')}"
+    return f"{c['group']}_{c['shape']}_N{c['n_target']}_{c['spec'].replace(':', '-')}" + (f"_w{c['w']}" if c.get("w", 1.0) != 1.0 else "")
 
 
 def bulk_energy(spec, n_ref, fg=FG):
@@ -129,7 +134,8 @@ def parse_out(path, nf):
 def run_case(c, fg=FG):
     name = cid(c)
     t0 = time.time()
-    shape = G.fit_shape(c["shape"], c["n_target"])
+    w = c.get("w", 1.0)
+    shape = G.fit_shape(c["shape"], c["n_target"], w=w)
     nf = shape.n_free
     nstart = c.get("nstart", NSTART)
     d = f"{SCR}/prod/{name}"; os.makedirs(d, exist_ok=True)
@@ -143,8 +149,9 @@ def run_case(c, fg=FG):
     env = dict(os.environ, RAYON_NUM_THREADS="1")
     subprocess.run([fg, "run", c["spec"], d + "/fixed.txt", d + "/starts.txt", d + "/out.txt", "1e-9", "1e-2", "1e-5"], env=env, capture_output=True)
     runs = parse_out(d + "/out.txt", nf)
-    fixed = shape.boundary
-    e_bb = pair_matrix_energy(c["spec"], fixed)
+    fixed_all = shape.boundary
+    fixed = shape.sites            # triangulation sites (w = 1 subset)
+    e_bb = pair_matrix_energy(c["spec"], fixed_all)
     n_ref = (nf + 0.5 * shape.B) / shape.area
     e_bulk, a_ref = bulk_energy(c["spec"], n_ref, fg)
     n_tot = nf + shape.B
@@ -163,7 +170,9 @@ def run_case(c, fg=FG):
             a = analyse_state(shape, fixed, P)
             c6 = a["c"]
             wd = shape.wall_distance(P)
-            rec.update(E_tot=r["energy"] + e_bb, E_per_node=(r["energy"] + e_bb) / n_tot,
+            e_ff = pair_matrix_energy(c["spec"], P)
+            rec.update(E_ff=e_ff, E_fb=r["energy"] - e_ff, dE_prime=e_ff + 0.5 * (r["energy"] - e_ff) - nf * e_bulk,
+                       E_tot=r["energy"] + e_bb, E_per_node=(r["energy"] + e_bb) / n_tot,
                        dE=(r["energy"] + e_bb) - n_tot * e_bulk, euler_ok=a["euler_ok"], conforming=a["conforming"],
                        Q=a["Q"], rhs=a["rhs"], n5=int((c6 == 5).sum()), n7=int((c6 == 7).sum()),
                        n_other=int(((c6 != 5) & (c6 != 6) & (c6 != 7)).sum()),
@@ -175,7 +184,7 @@ def run_case(c, fg=FG):
         per.append(rec)
     good = [p for p in per if "E_tot" in p]
     summary = dict(case=name, group=c["group"], shape=c["shape"], spec=c["spec"], s=shape.s, B=shape.B, N_free=nf,
-                   area=shape.area, perimeter=shape.perimeter, chi=shape.chi, n_ref=n_ref, a_ref=a_ref, e_bulk=e_bulk,
+                   w=w, B_all=len(shape.boundary), area=shape.area, perimeter=shape.perimeter, chi=shape.chi, n_ref=n_ref, a_ref=a_ref, e_bulk=e_bulk,
                    E_bb=e_bb, nstart=nstart, n_converged=sum(1 for p in per if p.get("converged") == 1),
                    n_loose=sum(1 for p in per if p.get("fmax_rel", 1) <= 1e-6), n_pd=sum(1 for p in per if p.get("hessian_pd") == 1),
                    n_escaped=sum(1 for p in per if p.get("escaped")), n_good=len(good), idx=c["idx"],
@@ -183,7 +192,9 @@ def run_case(c, fg=FG):
     if good:
         E = np.array([p["E_tot"] for p in good])
         Eb = E.min()
-        summary.update(E_best=float(Eb), E_per_node_best=float(Eb / n_tot), dE_best=float(Eb - n_tot * e_bulk),
+        dp = np.array([p["dE_prime"] for p in good])
+        summary.update(dE_prime_best=float(dp[int(np.argmin(E))]), dE_prime_per_perimeter_best=float(dp[int(np.argmin(E))] / shape.perimeter),
+                       E_best=float(Eb), E_per_node_best=float(Eb / n_tot), dE_best=float(Eb - n_tot * e_bulk),
                        dE_per_perimeter_best=float((Eb - n_tot * e_bulk) / shape.perimeter),
                        E_mean=float(E.mean()), E_std=float(E.std()), E_median=float(np.median(E)),
                        frac_best={str(t): float(np.mean(np.abs(E - Eb) <= t * abs(Eb))) for t in TOL_SAME},
@@ -209,7 +220,7 @@ def run_case(c, fg=FG):
         ib = int(np.argmin([p["E_tot"] for p in good]))
         sb = good[ib]["start"]
         s_, P, a, wd = [t for t in states if t[0] == sb][0]
-        eloc = local_energy(c["spec"], fixed, P)
+        eloc = local_energy(c["spec"], fixed_all, P)
         arr = dict(x=P[:, 0], y=P[:, 1], coordination=a["c"], psi6_abs=np.abs(a["psi"]), psi6_arg=np.angle(a["psi"]), e_local=eloc, wall_distance=wd)
         os.makedirs(f"{RES}/states", exist_ok=True)
         np.savez_compressed(f"{RES}/states/{name}_best.npz", **arr, fixed=fixed, edges=a["edges"], start=sb)
