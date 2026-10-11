@@ -1,0 +1,18 @@
+[package]
+name = "fenris-gated"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.85"
+publish = false
+description = "L6 edge/frustration design target: the fenris-cmrr relaxation engine with the gated-bilayer dipole kernel (Laplace/K0 mode sum), the ungated dipole kernel and the Yukawa control."
+
+[lib]
+name = "fenris_gated"
+
+[dependencies]
+# Scratch copy of rusty-Fenris-CMRR v0.1 with (a) Cargo.toml pointed at the pinned rusty-SUNDIALS-c3 and (b) the
+# kernel-generalisation patch engine_patch.diff in this directory. See README.md for how to rebuild it.
+cmrr = { package = "fenris-cmrr", path = "/mnt/data/xdev-cache/tmp/claude-1000/-home-xavkal-xdev-SocrateAI-Scientific-QuantumFluids/a734ac20-b6c3-453c-b3fa-99d9526d3488/scratchpad/fenris-cmrr" }
+
+# Standalone: never become part of an enclosing workspace.
+[workspace]
