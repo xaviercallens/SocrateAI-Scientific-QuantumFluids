@@ -98,7 +98,8 @@ class LDA:
     mu = f'(rho_c) fixes the centre density rho_c; N = (2 pi / k)(rho_c f' - f)(rho_c); E = (2 pi / k) int_0^rho_c f''(f + (mu - f') rho) d rho.
     (r^2 = 2 (mu - f'(rho)) / k is a monotone change of variables.)  The LDA is a reference, not a bound."""
     def __init__(self, kid):
-        rhos = np.geomspace(1e-5, 0.8, 120)
+        self.rlo = 1e-5 if kid in ('dip', 'r3') else 0.02   # gated kernels vanish beyond 36 d: below this density e_lat underflows
+        rhos = np.geomspace(self.rlo, 0.8, 120)
         e = np.array([e_lat(kid, r) for r in rhos])
         self.spl = CubicSpline(np.log(rhos), np.log(rhos * e))
         self.kid = kid
@@ -114,6 +115,6 @@ class LDA:
         def integrand(rho):
             ff, f1, f2 = self._d(rho)
             return f2 * (ff + (mu - f1) * rho)
-        E = 2 * np.pi / k * quad(integrand, 1e-5, rho_c, epsabs=1e-12, epsrel=1e-10, limit=200)[0]
+        E = 2 * np.pi / k * quad(integrand, self.rlo, rho_c, epsabs=1e-12, epsrel=1e-10, limit=200)[0]
         rmax = np.sqrt(2 * (mu - 0.0) / k)
         return k, E, rmax

@@ -104,7 +104,9 @@ Per case (kernel, container, N):
 
 Defect analysis (python, `scipy.spatial.Delaunay` of the best polished configuration): neighbours are Delaunay edges of
 length `<= 1.4 x` the median Delaunay edge length of the configuration; `z_i` the number of neighbours; a vertex is
-**interior** if it is not on the convex hull of the point set; reported per case: counts of interior `z = 5`, `z = 7`,
+**interior** if it is farther than `0.25 x` the median nearest-neighbour distance from the boundary of the convex hull of
+the point set (amendment A1: the first formulation, "not a hull vertex", is wrong for straight walls because Qhull drops
+collinear points; found on the first analysis of the N = 19 results, before any defect count was read); reported per case: counts of interior `z = 5`, `z = 7`,
 other `z != 6`, and the total interior topological charge `sum (6 - z)`. Known limitation, stated now: near-square
 arrangements have four co-circular points and the Delaunay triangulation is degenerate there, so `z = 5, 7` counts in
 square-like regions are not reliable; they are flagged when more than 30 % of interior vertices have a Delaunay-edge
@@ -207,4 +209,45 @@ only. The missing cases are listed in the report; **no number is extrapolated fo
 
 ## 9. Amendments
 
-(none yet)
+**A1 (2026-10-11, analysis only, before any defect count was interpreted).** The definition of "interior" in section 3 is
+replaced by the 0.25 x nearest-neighbour distance from the convex-hull boundary (see there). No run, gate or energy is
+affected.
+
+**A2 (2026-10-11, driver only).** The production driver crashed once at `g3`/trap/N = 19 (the LDA spline of a gated kernel
+took the log of an underflowed `e_lat` at `rho = 1e-5`); the lower density limit of the LDA grid for gated kernels was set to
+0.02 (`python/edge_ref.py`) and the driver restarted; finished cases (`dip` x 8 shapes, `g3` x 5 shapes at N = 19)
+were not re-run. The restart gives the driver a fresh 5400 s budget; total production wall time is reported.
+
+**A3 (2026-10-11, a statement of fact).** Gate E-b is evaluated on 200 configurations (the grid of section 6 has 4 kernels x 5
+containers x 2 sizes x 5 configurations = 200), E-a2 on three kernels; both as registered.
+
+**A4 (2026-10-11 10:48, order of work only; no result of N >= 61 had been produced).** Development timing of the production
+runs showed that `N = 37` costs 12-31 s per case for `dip` and 60 s for `g3`, i.e. `N = 61` cases would cost about 3 and 6 minutes, so
+the registered order ("`N` ascending over the whole grid") would exhaust the budget inside `N = 61` and never reach `N = 91`.
+The order from `N = 37` (g3, g10 remaining) on is replaced by an explicit plan (`python/run_study.py`, `PLAN`):
+`dip` N = 61 (8 shapes); `dip` N = 91 (disk, hex, square, rect21, tri, trap); `g3` N = 61 (disk, hex, square, rect21, tri, trap);
+`g10` N = 61 (disk, rect21, trap); `dip` N = 91 (rect32, rect31); `g3` N = 61 (rect32, rect31). The numbers of starts of
+section 3 are unchanged. The driver budget of this phase is 4300 s (total production wall time about 90 minutes from 10:34).
+Cases the plan does not reach are NOT RUN. The first `N = 37` cases of `g3` finished before the change.
+
+**A5 (2026-10-11 10:54, an addition of starts; written after the `N = 19, 37` main-stage energies of `dip` had been looked at
+for success rates, before any aligned start was run).** The registered patch starts use a *random* lattice orientation,
+so the perfect, symmetry-aligned patch (e.g. the 37-point centred-hexagonal patch in the hexagon container) is essentially
+never generated, and the success rates at `N = 37` are 0.02-0.15 (the best is found once or twice in 52 starts).
+An *aligned* stage is added: starts with orientation 0 or 30 degrees, lattice offset at one of the six high-symmetry
+points (site, the two triangle centres, the three bond midpoints), spacing `x 1.0` or `x 0.94`: 24 starts for `N <= 37`, 12
+for `N >= 61` (`edge ... n_aligned`, `python/run_aligned.py`), no random starts, screened and polished exactly as in section
+3. The best polished configuration of a case is then the best over the main and the aligned stage; **both are reported**,
+so that the reader sees how much the aligned stage changed. This does not make the search exhaustive: the registered
+language "upper bound on the ground-state energy" stands. Done after the main plan for `N <= 37` first (in the pause of the
+main driver), then for `N = 61, 91` as the budget allows (budget of this stage 1500 s).
+
+**A6 (2026-10-11 11:05, an addition of starts; after the registered `N = 61` `dip` cases had finished and been timed, before any
+extra start was run).** The production cost is far below the development estimate of section 3 (`dip`: N = 61 about 40 s per
+case for 22 starts, N = 91 about 77 s per case for 12 starts; `g3` about twice that), so the registered 16 + 6 and 8 + 4 starts leave
+the larger `N` badly under-searched (success rates of a few per cent at N = 37 already). After the main plan has finished
+and the aligned stage (A5) for `N = 61, 91`, an **extra random stage** is run for `dip` only: 44 further random starts at
+`N = 61` (60 random + 6 patch in total) and 32 at `N = 91` (40 random + 4 patch), new seeds (index offset = the registered
+count), separate files (`results/runs_extra/`), screened and polished as in section 3, best-of-all reported with the stage
+contributions shown. Budget 1500 s. `g3`, `g10` are not extended. The total production wall time will therefore exceed the
+nominal 90 minutes by about the duration of the A5 + A6 stages; it is reported.

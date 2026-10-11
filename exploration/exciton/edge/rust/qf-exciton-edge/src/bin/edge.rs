@@ -40,6 +40,20 @@ fn random_start(cont: &Cont, n: usize, a: f64, rng: &mut SplitMix64) -> Vec<f64>
 fn patch_start(cont: &Cont, n: usize, a: f64, rng: &mut SplitMix64) -> Vec<f64> {
     let th = 2.0 * std::f64::consts::PI * rng.uniform();
     let (u, v) = (rng.uniform(), rng.uniform());
+    patch_from(cont, n, a, th, u, v)
+}
+
+/// aligned patch start (amendment A5): orientation 0 or 30 degrees, offset at a high-symmetry point of the lattice
+/// (site, two triangle centres, three bond midpoints), spacing x 1.0 or 0.94
+fn aligned_start(cont: &Cont, n: usize, a: f64, i: usize) -> Vec<f64> {
+    const OFF: [(f64, f64); 6] = [(0.0, 0.0), (1.0 / 3.0, 1.0 / 3.0), (2.0 / 3.0, 2.0 / 3.0), (0.5, 0.0), (0.0, 0.5), (0.5, 0.5)];
+    let th = if i % 2 == 0 { 0.0 } else { std::f64::consts::PI / 6.0 };
+    let (u, v) = OFF[(i / 2) % 6];
+    let sc = if (i / 12) % 2 == 0 { 1.0 } else { 0.94 };
+    patch_from(cont, n, a * sc, th, u, v)
+}
+
+fn patch_from(cont: &Cont, n: usize, a: f64, th: f64, u: f64, v: f64) -> Vec<f64> {
     let (c, s) = (th.cos(), th.sin());
     let h = 3.0f64.sqrt() / 2.0;
     let m = (6.0 * (n as f64).sqrt()) as i32 + 6;
@@ -82,6 +96,8 @@ fn main() {
     let out_path = a[8].clone();
     let ktrap: f64 = a.get(9).map(|s| s.parse().unwrap()).unwrap_or(0.0);
     let threads: usize = a.get(10).map(|s| s.parse().unwrap()).unwrap_or(2);
+    let n_aligned: usize = a.get(11).map(|s| s.parse().unwrap()).unwrap_or(0);
+    let rand_offset: usize = a.get(12).map(|s| s.parse().unwrap()).unwrap_or(0); // extra random batches (A6): run index offset
     let kappa: f64 = std::env::var("QF_KAPPA").ok().map(|s| s.parse().unwrap()).unwrap_or(1e5);
     let area = n as f64 / rho;
     let pair = kernel::by_id(&kid).unwrap();
@@ -90,7 +106,7 @@ fn main() {
     let a0 = spacing(rho);
     let opts = FlowOpts { chunk: 10.0, tau_max: 2000.0, fmax_tol: 1e-4, de_tol: 1e-9, rtol: 1e-8, atol: 1e-10 };
     let popts = FlowOpts::default();
-    let total = n_rand + n_patch;
+    let total = n_rand + n_patch + n_aligned;
     let next = AtomicUsize::new(0);
     let recs: Mutex<Vec<Rec>> = Mutex::new(Vec::new());
     std::thread::scope(|sc| {
@@ -101,12 +117,18 @@ fn main() {
                     break;
                 }
                 let (kind, run, seed) = if r < n_rand {
-                    ("rand", r, case_idx * 1_000_003 + r as u64)
-                } else {
+                    ("rand", r + rand_offset, case_idx * 1_000_003 + (r + rand_offset) as u64)
+                } else if r < n_rand + n_patch {
                     ("patch", r - n_rand, case_idx * 1_000_003 + 500_000 + (r - n_rand) as u64)
+                } else {
+                    ("aligned", r - n_rand - n_patch, case_idx * 1_000_003 + 900_000 + (r - n_rand - n_patch) as u64)
                 };
                 let mut rng = SplitMix64::new(seed);
-                let x0 = if kind == "rand" { random_start(&sys.cont, n, a0, &mut rng) } else { patch_start(&sys.cont, n, a0, &mut rng) };
+                let x0 = match kind {
+                    "rand" => random_start(&sys.cont, n, a0, &mut rng),
+                    "patch" => patch_start(&sys.cont, n, a0, &mut rng),
+                    _ => aligned_start(&sys.cont, n, a0, run),
+                };
                 let res = relax(&sys, &x0, &opts);
                 let (e_int, e_wall, viol) = match &res {
                     Ok(f) => (sys.e_int(&f.x), sys.e_wall(&f.x), sys.cont.max_violation(&f.x)),

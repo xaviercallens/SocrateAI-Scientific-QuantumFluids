@@ -17,17 +17,42 @@ def case_index(k, c, n):
     return (KERNELS.index(k) * len(CONTS) + CONTS.index(c)) * len(NS) + NS.index(n)
 
 
+# Amendment A4 of PREREG.md: explicit job order (kernel, [shapes], N), used with `plan` as 4th argument
+PLAN = [
+    ("dip", CONTS, 19), ("g3", CONTS, 19), ("g10", ["disk", "rect21", "trap"], 19),
+    ("dip", CONTS, 37), ("g3", CONTS, 37), ("g10", ["disk", "rect21", "trap"], 37),
+    ("dip", CONTS, 61),
+    ("dip", ["disk", "hex", "square", "rect21", "tri", "trap"], 91),
+    ("g3", ["disk", "hex", "square", "rect21", "tri", "trap"], 61),
+    ("g10", ["disk", "rect21", "trap"], 61),
+    ("dip", ["rect32", "rect31"], 91),
+    ("g3", ["rect32", "rect31"], 61),
+]
+
+
 def main():
     binary, runs, budget = sys.argv[1], sys.argv[2], float(sys.argv[3])
-    kernels = sys.argv[4:] or KERNELS
+    use_plan = len(sys.argv) > 4 and sys.argv[4] == "plan"
+    kernels = [] if use_plan else (sys.argv[4:] or KERNELS)
     os.makedirs(runs, exist_ok=True)
     t0 = time.time()
     trap_path = os.path.join(runs, "trap_k.json")
     trap = json.load(open(trap_path)) if os.path.exists(trap_path) else {}
     log = open(os.path.join(runs, "driver_log.txt"), "a")
-    for n in NS:                      # N ascending over all kernels of this call (so that every shape gets small N first)
-        for k in kernels:
-            for c in GRID[k]:
+    jobs = []
+    if use_plan:
+        for k, shapes, n in PLAN:
+            for c in shapes:
+                jobs.append((k, c, n))
+    else:
+        for n in NS:                  # N ascending over all kernels of this call (so that every shape gets small N first)
+            for k in kernels:
+                for c in GRID[k]:
+                    jobs.append((k, c, n))
+    ldas = {}
+    if True:
+        for k, c, n in jobs:
+            if True:
                 out = os.path.join(runs, f"{k}_{c}_N{n}.jsonl")
                 if os.path.exists(out):
                     continue
