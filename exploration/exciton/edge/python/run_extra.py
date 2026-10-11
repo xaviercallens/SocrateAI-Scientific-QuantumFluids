@@ -12,7 +12,7 @@ def main():
     trap = json.load(open(os.path.join(runs, "trap_k.json")))
     t0 = time.time()
     log = open(os.path.join(outd, "driver_log.txt"), "a")
-    for n in (91, 61):
+    for n in (61, 91):
         for c in SHAPES:
             k = "dip"
             if not os.path.exists(os.path.join(runs, f"{k}_{c}_N{n}.jsonl")):
