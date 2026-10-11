@@ -139,3 +139,17 @@ and the frame 0.5 are unchanged), for `ETD` and for `KROG`, with `h in {0.2, ...
 an exploratory scheme because it is the standard remedy for the reduction; it is run in T-b, T-c and T-g next to `ETD`, labelled
 exploratory, and does not replace `ETD` anywhere in the gates. Its order-three-or-four behaviour is a measurement here, not a
 quotation.
+
+**A2 (2026-10-11, after T-d(i) and T-d(ii) results and before the diagnostics below were run; T-c, T-e, T-f, T-g not yet seen
+except the T-c summaries listed in the results note).** T-d(i), as registered, `h = 0.05`: `V0 = 0` and `0.25` pass for all ten
+seeds; `V0 = 0.5` fails for all ten seeds on the single criterion `|d std_n| <= 1e-5` (measured `2.3e-5`; `|d omega| = 1.3e-7`,
+`|d n_corner| = 7.7e-5` pass); `V0 = 1.0` fails for all ten seeds (`|d omega| = 3.9e-6`, `|d n_corner| = 1.1e-3`, `|d std_n| = 2.7e-4`).
+The differences are the same for every seed (so not noise). T-d(ii) at `t = 16000`: `V0 = 0` and `0.25` pass; `V0 = 0.5` fails on
+relative `d mean_n = 1.9e-7` (> 1e-7) with `|d omega| = 6e-8`, `|d n_center| = 1.3e-6` inside tolerance. These FAIL outcomes stand.
+Both the ETD state and the CVODE record are non-stationary at these horizons (residual `1e-5 ... 1e-8`), so a difference can be
+the time-stepping error of either solver or the slightly different slow-mode amplitude they carry. Diagnostics, reported as such
+and not replacing the gates: (D1) `hsweep`: `G8`, seed 1, `V0 in {0.5, 1.0}`, `t = 4000`, `ETD` and `KROG` with
+`h in {0.1, 0.05, 0.025, 0.0125}`: the differences to the record and to the finest-`h` run of the same scheme (is the `ETD`
+state converged in `h`, and does it approach the record?). (D2) `stat8`: `G8`, seed 1, `V0 in {0.25, 0.5, 1.0}`, `ETD` `h = 0.05`
+run to residual `1e-12` (cap `t = 100000`): its stationary state against the CVODE records at `t = 16000` (how far is the
+record from the fixed point; the fixed point itself is solver independent). (D3) `G16` T-d(iii) is run as registered.
