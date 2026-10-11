@@ -1,0 +1,310 @@
+{
+ "gates": {
+  "G1_source": {
+   "license": "CC-BY-4.0",
+   "files": {
+    "co_0.parquet": {
+     "bytes": 1976979,
+     "sha256": "b3daf88861342e3132661d25a73e396fe379314236e752c472be7f285dce04f3",
+     "sha256_matches_first_download": true
+    },
+    "ds.parquet": {
+     "bytes": 18924,
+     "sha256": "8cd046837601470b034dd65bb5e13fd8e8629c2c415deb3fbec0f691468c5a01",
+     "sha256_matches_first_download": true
+    }
+   },
+   "doi": "10.60732/37c26dae",
+   "source_publication": "{'source-publication': 'https://doi.org/10.1088/2053-1583/aacfc1', 'source-data': 'https://ndownloader.figshare.com/files/28682010', 'other': ['https://jarvis.nist.gov/']}",
+   "total_bytes": 1995903,
+   "pass": true
+  },
+  "G2_content": {
+   "pass": true,
+   "n_2H": {
+    "MoSe2": 1,
+    "WSe2": 1
+   }
+  },
+  "G3_stack": {
+   "pass": false,
+   "n_Mo/W-Se_entries_scanned": 60,
+   "n_multi_metal_plane_entries": 0,
+   "examples": []
+  },
+  "G4_lattice_constant": {
+   "pass": true,
+   "per_material": {
+    "MoSe2": {
+     "a_HF": 3.3197487878576672,
+     "deviations_percent": [
+      [
+       "Kormanyos 2015 Table 1, FLEUR PBE (theory)",
+       3.319,
+       0.02
+      ],
+      [
+       "Kormanyos 2015 Table 1, VASP HSE06 (theory)",
+       3.289,
+       0.93
+      ],
+      [
+       "Kormanyos 2015 Table 1, bulk experiment (ref a)",
+       3.288,
+       0.97
+      ],
+      [
+       "Kormanyos 2015 Table 1, bulk experiment (ref c)",
+       3.299,
+       0.63
+      ],
+      [
+       "Kormanyos 2015 Table 1, bulk experiment (ref e)",
+       3.289,
+       0.93
+      ],
+      [
+       "Kormanyos 2015 Table 1, bulk experiment (ref g)",
+       3.29,
+       0.9
+      ]
+     ],
+     "max_abs_dev_percent": 0.97,
+     "spread_A_all_values": 0.0317,
+     "spread_A_experiment_only": 0.011,
+     "dXX_HF": 3.33805895352641,
+     "dXX_literature": [
+      [
+       "Kormanyos 2015 HSE06",
+       3.307
+      ],
+      [
+       "Kormanyos 2015 PBE (FLEUR)",
+       3.4371
+      ],
+      [
+       "Kormanyos 2015 Exp (ref e)",
+       3.335
+      ]
+     ]
+    },
+    "WSe2": {
+     "a_HF": 3.3190066244679373,
+     "deviations_percent": [
+      [
+       "Kormanyos 2015 Table 1, FLEUR PBE (theory)",
+       3.316,
+       0.09
+      ],
+      [
+       "Kormanyos 2015 Table 1, VASP HSE06 (theory)",
+       3.291,
+       0.85
+      ],
+      [
+       "Kormanyos 2015 Table 1, bulk experiment (ref a)",
+       3.286,
+       1.0
+      ],
+      [
+       "Kormanyos 2015 Table 1, bulk experiment (ref c)",
+       3.282,
+       1.13
+      ],
+      [
+       "Kormanyos 2015 Table 1, bulk experiment (ref d)",
+       3.282,
+       1.13
+      ]
+     ],
+     "max_abs_dev_percent": 1.13,
+     "spread_A_all_values": 0.037,
+     "spread_A_experiment_only": 0.004,
+     "dXX_HF": 3.3585528043928186,
+     "dXX_literature": [
+      [
+       "Kormanyos 2015 HSE06",
+       3.327
+      ],
+      [
+       "Kormanyos 2015 PBE (FLEUR)",
+       3.471
+      ],
+      [
+       "Kormanyos 2015 Exp (ref d)",
+       3.34
+      ]
+     ]
+    }
+   }
+  },
+  "G5_excitonic_content": {
+   "pass": false,
+   "reason": "columns present and non-empty: energy, electronic_band_gap (GPAW PBE, type 'unknown'); no GW, no BSE, no optical gap, no dielectric tensor, no effective mass in this dataset",
+   "software_methods": [
+    [
+     "GPAW",
+     "DFT-PBE"
+    ]
+   ]
+  }
+ },
+ "n_entries": 3520,
+ "nsites_max": 12,
+ "software_methods": [
+  [
+   "GPAW",
+   "DFT-PBE"
+  ]
+ ],
+ "monolayers_2H": {
+  "MoSe2": [
+   {
+    "a": 3.3197487878576672,
+    "angle": 120.00000000000001,
+    "dXX": 3.33805895352641,
+    "phase": "2H",
+    "Lz": 18.33805895352641,
+    "name": "c2db_atoms_3150",
+    "gap_PBE": 1.3214381859138422
+   }
+  ],
+  "WSe2": [
+   {
+    "a": 3.3190066244679373,
+    "angle": 120.00000000000001,
+    "dXX": 3.3585528043928186,
+    "phase": "2H",
+    "Lz": 18.35855280439282,
+    "name": "c2db_atoms_3118",
+    "gap_PBE": 1.237876337239032
+   }
+  ]
+ },
+ "literature_d_table": {
+  "NOTE": "LITERATURE values, hand-entered from papers read in session; NOT output of the HF dataset (G3 fails)",
+  "rows": [
+   {
+    "label": "Gillen-Maultzsch AA'",
+    "d_A": 6.512,
+    "a_A": 3.29,
+    "d_over_a": 1.979,
+    "method": "PBE+D3 relaxed (theory)",
+    "source": "10.1103/PhysRevB.97.165306, Fig. 1"
+   },
+   {
+    "label": "Gillen-Maultzsch AB",
+    "d_A": 6.473,
+    "a_A": 3.29,
+    "d_over_a": 1.967,
+    "method": "PBE+D3 relaxed (theory)",
+    "source": "10.1103/PhysRevB.97.165306, Fig. 1"
+   },
+   {
+    "label": "Gillen-Maultzsch AA",
+    "d_A": 7.097,
+    "a_A": 3.29,
+    "d_over_a": 2.157,
+    "method": "PBE+D3 relaxed (theory)",
+    "source": "10.1103/PhysRevB.97.165306, Fig. 1"
+   },
+   {
+    "label": "Torun et al. A-A'",
+    "d_A": 6.42,
+    "a_A": 3.288,
+    "d_over_a": 1.953,
+    "method": "LDA relaxed at experimental a (theory)",
+    "source": "10.1103/PhysRevB.97.245427, Fig. 1b"
+   }
+  ],
+  "d_range_A_all": [
+   6.42,
+   7.097
+  ],
+  "d_range_A_commensurate_stackings_AA'_AB_Torun": [
+   6.42,
+   6.512
+  ],
+  "relative_spread_commensurate_percent": 1.42
+ },
+ "conversion_example": {
+  "inputs": {
+   "d_A (Gillen AA' metal-metal + spacer)": 6.512,
+   "spacer_A": 0.0,
+   "a_A (Gillen AA')": 3.29,
+   "d_over_a": 1.979,
+   "D_over_d": 10.0,
+   "D_A": 65.11999999999999,
+   "epsilon (uniform; kappa_hBN of Stier 2018)": 4.5,
+   "e2_eV_A": 14.399645
+  },
+  "U0_eV_A2": 235.67094158264965,
+  "U0_in_units_of_e2_over_eps_A": 73.64898489663624,
+  "caveats": [
+   "uniform-epsilon formula; for hBN/TMD stacks the factor is 1-(d/eps_m)/sum(t_i/eps_i) (paper Sec. cm, review M2)",
+   "d is the metal-plane separation of a relaxed heterobilayer in vacuum from DFT-D3/LDA, not a measured quantity",
+   "epsilon=4.5 is the in-plane-averaged IR value Stier et al. use for hBN in a Keldysh model; it is not the epsilon of the stack, and the exciton itself screens (Keldysh r0 not included in the gated kernel)"
+  ]
+ },
+ "exciton_binding_energy_literature": {
+  "NOTE": "LITERATURE; spread is environment/method, not noise",
+  "rows": [
+   {
+    "label": "MoSe2 monolayer, on bilayer graphene, STS + PL (experiment)",
+    "Eb_eV": 0.55,
+    "source": "arXiv:1404.2331 / 10.1038/nmat4061"
+   },
+   {
+    "label": "MoSe2 monolayer, isolated, as quoted by Gillen-Maultzsch (theory)",
+    "Eb_eV": 0.48,
+    "source": "10.1103/PhysRevB.97.165306"
+   },
+   {
+    "label": "WSe2 monolayer, isolated, as quoted by Gillen-Maultzsch (theory)",
+    "Eb_eV": 0.46,
+    "source": "10.1103/PhysRevB.97.165306"
+   },
+   {
+    "label": "MoSe2/WSe2 intralayer exciton, vacuum, GW-BSE (theory)",
+    "Eb_eV": 0.41,
+    "source": "10.1103/PhysRevB.97.245427"
+   },
+   {
+    "label": "MoSe2/WSe2 interlayer exciton, vacuum, GW-BSE (theory)",
+    "Eb_eV": 0.32,
+    "source": "10.1103/PhysRevB.97.245427"
+   },
+   {
+    "label": "MoSe2/WSe2 interlayer exciton X0/Y0, vacuum, GW-BSE (theory)",
+    "Eb_eV": 0.25,
+    "source": "10.1103/PhysRevB.97.165306 (order of 250 meV)"
+   },
+   {
+    "label": "WSe2 1s exciton, hBN-encapsulated, Keldysh fit kappa=4.5 (model calc. vs. magneto-optics)",
+    "Eb_eV": 0.161,
+    "source": "arXiv:1709.00123 / 10.1103/PhysRevLett.120.057405"
+   }
+  ],
+  "min_eV": 0.161,
+  "max_eV": 0.55,
+  "ratio_max_over_min": 3.42,
+  "reduced_mass": {
+   "label": "WSe2 reduced mass m_r (magneto-optics, hBN-encapsulated)",
+   "m_r_over_m0": 0.2,
+   "err": 0.01,
+   "source": "arXiv:1709.00123 / 10.1103/PhysRevLett.120.057405"
+  }
+ },
+ "summary": {
+  "gates": {
+   "G1_source": true,
+   "G2_content": true,
+   "G3_stack": false,
+   "G4_lattice_constant": true,
+   "G5_excitonic_content": false
+  },
+  "supplies_d_from_HF": false,
+  "supplies_Eb_from_HF": false,
+  "verdict": "FAIL"
+ }
+}

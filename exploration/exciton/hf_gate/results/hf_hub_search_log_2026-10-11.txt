@@ -1,0 +1,199 @@
+== models: mace
+anon-submission-mk/bert-base-macedonian-bulgarian-cased | 27 | fill-mask | transformers
+anon-submission-mk/bert-base-macedonian-cased | 45 | fill-mask | transformers
+anon-submission-mk/distilbert-base-macedonian-cased | 14 | None | transformers
+anon-submission-mk/electra-base-macedonian-bulgarian-cased-discriminator | 21 | None | transformers
+anon-submission-mk/electra-base-macedonian-cased-discriminator | 18 | None | transformers
+anon-submission-mk/electra-base-macedonian-cased-generator | 48 | fill-mask | transformers
+huggingtweets/macegrunow | 16 | text-generation | transformers
+macedonizer/al-gpt2 | 23 | text-generation | transformers
+macedonizer/al-roberta-base | 8 | fill-mask | transformers
+macedonizer/ba-roberta-base | 7 | fill-mask | transformers
+macedonizer/blaze-koneski | 19 | text-generation | transformers
+macedonizer/gr-gpt2 | 33 | text-generation | transformers
+macedonizer/gr-roberta-base | 13 | fill-mask | transformers
+macedonizer/hr-gpt2 | 28 | text-generation | transformers
+macedonizer/hr-roberta-base | 16 | fill-mask | transformers
+== datasets: mace
+isaacchung/macedonian-tweet-sentiment-classification | 21 | None | None
+DGurgurov/macedonian_sa | 17 | None | None
+saillab/alpaca_macedonian_taco | 33 | None | None
+saillab/alpaca-macedonian-cleaned | 17 | None | None
+jharrymoore/maceoff_r6_l1_128ch | 73 | None | None
+LVSTCK/macedonian-corpus-raw | 77 | None | None
+LVSTCK/macedonian-corpus-cleaned | 44 | None | None
+LVSTCK/macedonian-llm-eval | 149 | None | None
+LVSTCK/macedonian-corpus-cleaned-dedup | 56 | None | None
+AngstromAI/maceoff_24_preprocessed | 19 | None | None
+mteb/MacedonianTweetSentimentClassification | 140 | None | None
+lucaporte/record-maceo6 | 27 | None | None
+lucaporte/record-maceo7 | 25 | None | None
+lucaporte/record-maceo10 | 27 | None | None
+lucaporte/record-maceo11 | 28 | None | None
+== models: alignn
+quynhu-d/align_no_aug | 0 | None | None
+shreyaspullehf/supervision-alignn-tc-prediction | 13 | None | None
+STFC-SCD/kpoints-goldilocks-ALIGNNd | 0 | None | None
+monaaaaaa/MS2-SMILES-AlignNet | 0 | image-to-text | None
+Naho07/ALiGN-NET | 0 | None | None
+Suimai/alignn-ferroelectric-phase-transition | 0 | None | None
+DreamLufei/invDesMobility-alignn-bandgap-nonmetal | 8 | graph-ml | pytorch
+DreamLufei/invDesMobility-alignn-mobility-ranker | 0 | graph-ml | pytorch
+crhysc/alignn-csp-angular-ablations | 0 | None | alignn
+== datasets: alignn
+colabfit/JARVIS_ALIGNN_FF | 24 | None | None
+crhysc/alignn-csp-ablation-dvc | 12 | None | None
+crhysc/alignn-csp-ablation-datasets | 26 | None | None
+== models: matbench
+== datasets: matbench
+nimashoghi/matbench_jdft2d_fold0 | 27 | None | None
+nimashoghi/matbench_jdft2d_fold1 | 18 | None | None
+nimashoghi/matbench_jdft2d_fold2 | 19 | None | None
+nimashoghi/matbench_jdft2d_fold3 | 23 | None | None
+nimashoghi/matbench_jdft2d_fold4 | 17 | None | None
+nimashoghi/matbench_phonons_fold0 | 31 | None | None
+nimashoghi/matbench_phonons_fold1 | 26 | None | None
+nimashoghi/matbench_phonons_fold2 | 30 | None | None
+nimashoghi/matbench_phonons_fold3 | 26 | None | None
+nimashoghi/matbench_phonons_fold4 | 24 | None | None
+nimashoghi/matbench_dielectric_fold0 | 67 | None | None
+nimashoghi/matbench_dielectric_fold1 | 32 | None | None
+nimashoghi/matbench_dielectric_fold2 | 22 | None | None
+nimashoghi/matbench_dielectric_fold3 | 25 | None | None
+nimashoghi/matbench_dielectric_fold4 | 17 | None | None
+== models: alexandria
+laion/Alexandria-Gemma-4-12B-it-Ornith9-Summaries-LoRA-r128 | 14 | text-generation | peft
+DarqueDante/Alexandria_64kitr | 0 | None | None
+DarqueDante/Alexandria_353M_itr95k | 0 | None | None
+DarqueDante/Alexandria_itr105k | 0 | None | None
+DarqueDante/Alexandria_itr141k_353M | 0 | None | None
+DarqueDante/Alexandria_itr146k_353M | 0 | None | None
+DarqueDante/Alexandria_itr190k_353M | 0 | None | None
+DarqueDante/Alexandria_itr207k_353M | 0 | None | None
+DarqueDante/Alexandria_itr211k_353M | 0 | None | None
+DarqueDante/Alexandria_itr265k_353M | 0 | None | None
+DarqueDante/Alexandria_itr295k_353M | 0 | None | None
+DarqueDante/Alexandria_itr402k_353M | 0 | None | None
+DarqueDante/Alexandria_itr408k_353M | 0 | None | None
+DarqueDante/Alexandria_itr511k_353M | 0 | None | None
+DarqueDante/Alexandria_itr539k_353M | 0 | None | None
+== datasets: alexandria
+alexandreteles/alexandria | 81 | None | None
+DarqueDante/Alexandria | 30 | None | None
+ChristophSchuhmann/alexandria-test | 91 | None | None
+TearGosling/alexandria-jsonls | 3 | None | None
+tourist800/ORKG-Alexandria_KG | 12 | None | None
+atomind/alexandria | 335 | None | None
+laion/alexandria | 6 | None | None
+nimashoghi/alexandria-pbe-geo-opt-paths-raw | 235 | None | None
+nimashoghi/alexandria-pbe-geo-opt-paths-raw-filtered | 293 | None | None
+nimashoghi/alexandria-pbe-geo-opt-paths-sampled | 344 | None | None
+laion/alexandria_datasets_preview | 2 | None | None
+ChristophSchuhmann/alexandria-mqa | 14 | None | None
+laion/projejct-alexandria | 1 | None | None
+colabfit/Alexandria_geometry_optimization_paths_PBE_1D | 67 | None | None
+ashabrawy/did-Alexandria | 5 | None | None
+== models: omat
+facebook/OMAT24 | 0 | None | None
+OutisLi/DPA4-OMat24-v20260627 | 0 | None | None
+oMateos2020/t5-small_adafactor | 19 | None | transformers
+oMateos2020/XSum_t5-small_800_adafactor | 8 | None | transformers
+oMateos2020/pegasus-newsroom-cnn1_50k | 8 | None | transformers
+oMateos2020/pegasus-newsroom-cnn_full-adam8bit | 7 | None | transformers
+oMateos2020/pegasus-newsroom-cnn_full-adafactor-bs6 | 24 | None | transformers
+oMateos2020/pegasus-newsroom-cnn-adam8bit-bs16x64acc | 6 | None | transformers
+oMateos2020/pegasus-newsroom-cnn-adam8bit-bs4x64acc | 7 | None | transformers
+oMateos2020/pegasus-newsroom-cnn-adam8bit-bs4x64acc_2 | 8 | None | transformers
+oMateos2020/pegasus-newsroom-cnn-adam8bit-bs4x64acc_3 | 7 | None | transformers
+oMateos2020/en_pipeline | 3 | None | spacy
+oMateos2020/bertopic_distilbert_comp_sector | 0 | None | None
+oMateos2020/BERTopic-paraphrase-MiniLM-L3-v2-30topics-model1 | 0 | None | None
+oMateos2020/BERTopic-paraphrase-MiniLM-L3-v2-51topics-guided-model3 | 0 | None | None
+== datasets: omat
+facebook/OMAT24 | 314 | None | None
+nimashoghi/omat24 | 350 | None | None
+colabfit/OMat24_validation_rattled_1000_subsampled | 33 | None | None
+colabfit/OMat24_validation_rattled_300 | 51 | None | None
+colabfit/OMat24_validation_rattled_300_subsampled | 42 | None | None
+colabfit/OMat24_validation_rattled_500 | 30 | None | None
+colabfit/OMat24_validation_rattled_500_subsampled | 30 | None | None
+colabfit/OMat24_validation_rattled_relax | 42 | None | None
+colabfit/OMat24_validation_aimd-from-PBE-3000-nvt | 48 | None | None
+colabfit/OMat24_validation_aimd-from-PBE-1000-npt | 46 | None | None
+colabfit/OMat24_validation_aimd-from-PBE-1000-nvt | 48 | None | None
+colabfit/OMat24_validation_rattled_1000 | 33 | None | None
+OMatG/Alex-MP-20 | 176 | None | None
+colabfit/OMat24_validation_aimd-from-PBE-3000-npt | 36 | None | None
+colabfit/OMat24_train_rattled_1000_subsampled | 46 | None | None
+== models: materials-project
+== datasets: materials-project
+materials-toolkits/materials-project | 385 | None | None
+kwamepuni/materials-project-documentation | 12 | None | None
+colabfit/JARVIS_Materials_Project_2020 | 99 | None | None
+colabfit/JARVIS_Materials_Project_84K | 89 | None | None
+colabfit/Materials_Project | 561 | None | None
+xpanceo-team/materials-project | 481 | None | None
+== models: MoSe2
+jzone/mose22 | 0 | None | None
+== datasets: MoSe2
+== models: WSe2
+== datasets: WSe2
+== models: transition metal dichalcogenide
+== datasets: transition metal dichalcogenide
+== models: 2D-materials
+== datasets: 2D-materials
+foundry-ml/atomvison_atomistic_stm_images_2d_materials_unique_chemical_compositions_structure_v1-1 | 4 | None | None
+foundry-ml/atomvison_simulated_atomistic_stem_images_2d_materials_unique_chemical_compositions_structure_ba | 5 | None | None
+== models: C2DB
+Kromtao/1580c87e-1590-45f8-a380-c2dbba59bd0e | 0 | None | None
+== datasets: C2DB
+Chakshu/test-7fc14b13-c2db-4706-9fe2-494d2db987fe | 14 | None | None
+colabfit/JARVIS_C2DB | 37 | None | None
+HZPM/C2DBench | 12 | None | None
+electricsheepafrica/africa-eswatini-eswatini-languages-c2db0118 | 6 | None | None
+== models: exciton
+== datasets: exciton
+== models: chgnet
+4everStudent/chgnet_ft | 0 | None | None
+materialyze/CHGNet-PES-MatPES-PBE-2025.2.10 | 0 | None | matgl
+materialyze/CHGNet-PES-MatPES-r2SCAN-2025.2.10 | 0 | None | matgl
+BowenD-UCB/CHGNet-PyG-MatPES-PBE-2025.2.10 | 0 | None | matgl
+BowenD-UCB/CHGNet-PyG-MatPES-r2SCAN-2025.2.10 | 0 | None | matgl
+BowenD-UCB/CHGNet-PES-MatPES-PBE-1M-2026.9 | 0 | None | matgl
+BowenD-UCB/CHGNet-PES-MatPES-r2SCAN-1M-2026.9 | 0 | None | matgl
+materialyze/CHGNet-PES-MatPES-PBE-1M-2026.9 | 0 | None | matgl
+materialyze/CHGNet-PES-MatPES-r2SCAN-1M-2026.9 | 0 | None | matgl
+LostDecimal/chgnet-0.3.0-mirror | 0 | None | None
+== datasets: chgnet
+SII-minxiyu/chgnet | 16 | None | None
+== models: m3gnet
+materialyze/M3GNet-PES-MatPES-PBE-2025.2 | 0 | None | matgl
+materialyze/M3GNet-PES-MatPES-r2SCAN-2025.2 | 0 | None | matgl
+materialyze/M3GNet-Eform-MP-2018.6.1 | 0 | None | matgl
+materialyze/M3GNet-PES-ANI-1x-Subset | 0 | None | matgl
+materialyze/M3GNet-Eform-MP-2019.4.1 | 0 | None | matgl
+== datasets: m3gnet
+== models: matgl
+== datasets: matgl
+== models: orb-v
+ML-Intern-lab/Qwen-Image-2.1-viewpoint-orbit-LoRA | 0 | None | None
+OrbitalWitness/distilbert-finetuned-headings-v2 | 5 | text-classification | transformers
+Orbina/Orbita-v0.1 | 69 | text-generation | transformers
+NikolayKozloff/Orbita-v0.1-GGUF | 22 | None | None
+tezcan/Orbita-v0.1-Q4_K_M-GGUF | 11 | None | None
+orby-yanan/llava-v1.6-mistral-7b-high-resolution | 0 | None | transformers
+orby-yanan/llava-v1.6-mistral-7b-3x3 | 9 | image-text-to-text | transformers
+orbis-marianne/deberta-v3-rel-class | 63606 | text-classification | transformers
+orbis-marianne/deberta-v3-seq-tag | 63572 | token-classification | transformers
+orbis-marianne/deberta-v3-sta-class | 63654 | text-classification | transformers
+orbis-marianne/deberta-v3-sta-rel | 63644 | text-classification | transformers
+DavidAU/L3-Dark-Planet-8B-V2-Eight-Orbs-Of-Power-GGUF | 796 | text-generation | None
+Orbitol/speecht5_finetuned_voxpopuli_nl | 0 | None | None
+mradermacher/L3-Dark-Planet-8B-V2-Eight-Orbs-Of-Power-GGUF | 2136 | None | transformers
+mradermacher/L3-Dark-Planet-8B-V2-Eight-Orbs-Of-Power-i1-GGUF | 379 | None | transformers
+== datasets: orb-v
+== models: mattersim
+CuspAI/kUPS-mattersim-jax | 0 | None | kups
+OneScience-Group/MatterSim | 12 | None | None
+== datasets: mattersim
+introvoyz041/mattersim | 16 | None | None
