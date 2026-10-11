@@ -164,16 +164,17 @@ refers to (`openai/math`) is AI-generated and **not refereed**, so statements us
 | Paper I | image charges preserve complete monotonicity; driven-dissipative GPE on rusty-SUNDIALS; lab protocol L1-L6 | `paper/exciton_fluid_gated.tex` | [10.5281/zenodo.23294615](https://doi.org/10.5281/zenodo.23294615) |
 | Paper II | Lean theorem, harmonic Wigner estimate, edge energies, HF/GNN gate (fails), ETDRK4 | `paper/exciton_fluid_gated_II.tex` | [10.5281/zenodo.23297479](https://doi.org/10.5281/zenodo.23297479) |
 | Paper III | Newton-Krylov solver (64x64 gate not met), Fenris-CMRR node arrangements | `paper/exciton_fluid_gated_III.tex` | [10.5281/zenodo.23298292](https://doi.org/10.5281/zenodo.23298292) |
+| Paper IV | dimensional lifting, sliding walls and CM relaxation as 3D mesh: all three registered gates not met | `paper/exciton_fluid_gated_IV.tex` | [10.5281/zenodo.23302787](https://doi.org/10.5281/zenodo.23302787) |
 | Math note | heat-kernel proof, layered dielectrics, unconditional lattice proposition (draft for expert reading) | `paper/gated_kernel_note.tex` | not deposited |
-| Lean | `GatedKernel.lean` (52 theorems, standard axioms, independently verified); `GatedKernelBridge.lean` (upstream theorem, build pending) | `exploration/exciton/lean/` | verification notes in the same folder |
+| Lean | `GatedKernel.lean` (52 theorems, standard axioms, independently verified); `GatedKernelBridge.lean` (upstream theorem rebuilt from source, 227 files, standard axioms; see `BRIDGE_VERIFICATION.md`) | `exploration/exciton/lean/` | verification notes in the same folder |
 | Mathlib kit | `CompletelyMonotoneOn`, Laplace-type integrals (compiled against v4.34.1; not linted, not on master) | `exploration/exciton/lean/mathlib_pr/` | PR not opened |
-| Experiments | dimensional lifting, flexible wall, 3D mesh baseline (pre-registered) | `exploration/exciton/dimlift/` | in progress; E3 gate not met |
+| Experiments | dimensional lifting, flexible wall, 3D mesh baseline (pre-registered) | `exploration/exciton/dimlift/` | finished: E1, E2, E3 gates all not met (paper IV) |
 | Project plan | work packages, criteria, calendar | `docs/designs/PROJET_DIMENSION_ET_FRUSTRATION_2026-10.md` | proposal |
 | Server plan | running the plan on a larger CPU/GPU machine | `docs/designs/PROJET_EXECUTION_SERVEUR.md`, `deploy/` | untested kit |
 | Outreach | texts for a mathematician, Lean Zulip, r/lean4, Mathlib, an experimental group | `docs/designs/EXCITON_FLUID_OUTREACH_DRAFTS.md` | drafts, nothing sent |
 
-Ledger rows CLAIM-119 to CLAIM-122; hostile-review and verifier notes in `docs/designs/EXCITON_FLUID_*REVIEW*` and
-`EXCITON_FLUID_VERIFIER_NOTES_*`. Git tags `exciton-note-1`, `exciton-gated-1`, `-2`, `-3`.
+Ledger rows CLAIM-119 to CLAIM-123; hostile-review and verifier notes in `docs/designs/EXCITON_FLUID_*REVIEW*` and
+`EXCITON_FLUID_VERIFIER_NOTES_*`. Git tags `exciton-note-1`, `exciton-gated-1`, `-2`, `-3`, `-4`.
 
 ### Sister repositories and upstream projects
 
