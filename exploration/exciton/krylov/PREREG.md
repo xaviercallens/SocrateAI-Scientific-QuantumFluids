@@ -140,3 +140,9 @@ by me at t ~ 100 to free a CPU slot, no result) were launched outside the "if th
 (3) diagnostics to separate physics from numerics, run with the G64a physical geometry (L = 64, sigma = 12, V0 = 0.5, seed 1, rtol 1e-4/atol 1e-7, TRACK=1,
 stop at residual 1e-8 or t = 4e4): D1 on M = 32 (h = 2) and M = 16 (h = 4), D2 on M = 32 at rtol 1e-6/atol 1e-9 (t cap 2e4). No gate is attached; what is
 read from them is only whether the slow oscillation of the central density and the non-decaying residual are present at other resolutions and tolerances.
+
+**A4 (2026-10-11, G64a V0 = 0.5 at t = 12000, CPU 6945 s).** The central density of G64a V0 = 0.5 has now peaked 11 times with a period of
+about 975 time units and an amplitude that does not decay (peaks at t = 1400, 2300, 3300, ..., 11100; residual 4e-3..1.5e-2 throughout). The same
+pulsation is present at M = 32 and rtol 1e-4 (diagnostic D1, t = 10200: residual 1.1e-2). A process killed at the CPU cap writes no final record, and more cycles would not
+change the reading, so the 4 h CPU cap of A3 is replaced by: the run is stopped by me at t >= 15000 (about 14 cycles); its record is the progress log
+(t, residual, omega, n_center every 100 time units), no final state file exists. K-e2 is reported as NOT MET.
