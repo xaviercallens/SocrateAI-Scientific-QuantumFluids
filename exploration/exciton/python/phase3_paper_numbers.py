@@ -41,6 +41,6 @@ mac("NPARTABSTRACTTHREE",
     "the steady states, the $768\\times768$ linearisation (matched to " + sci(s["D-b"]["max_match_error"]) + "), the conservative limit and the IMEX threshold and "
     "order passed as registered; the stationarity and pump-budget gates of the gate sweep \\emph{failed} as registered at $t=4000$ "
     "(residual up to " + sci(max(x["resid_max"] for x in sw.values())) + "; the horizon was too short for the slow relaxation) and pass in an exploratory continuation to $t=16000$, one seed per amplitude; the "
-    "hypothesis that the emission shift lies between $0$ and $V_0$ held at all three gate amplitudes.")
+    "expected shift of the locked emission frequency lay between $0$ and $V_0$, which in this small periodic box is only the area average of the gate.")
 open(out, "w").write("\n".join(L) + "\n")
 print(len(L), "macros")

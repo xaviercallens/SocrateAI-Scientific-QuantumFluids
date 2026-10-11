@@ -43,7 +43,7 @@ Xavier Callens\\ {\small SocrateAI Research \quad\url{https://github.com/xavierc
 \vspace{-0.4em}
 
 \begin{abstract}\small\noindent
-A planar universal-optimality theorem for completely monotone interactions (OpenAI, September 2026; AI-generated, unrefereed) was
+A planar universal-optimality theorem for completely monotone interactions (OpenAI, September 2026~\cite{OpenAI2026}; AI-generated, unrefereed) was
 used in a first note~\cite{CallensExciton1} as a dependency check on the exciton--exciton interaction of a 2026 bilayer experiment.
 That note left open whether the \emph{dual-gated} device kernel, a sum of image charges of alternating sign, is completely monotone
 in $r^2$ (numerical evidence only), and whether gates could be engineered to break it. Here we \textbf{prove} (Theorem~1, paper
@@ -51,18 +51,19 @@ and pencil, not in Lean) that for ideal grounded metal gates at arbitrary distan
 Laplace measure of the kernel in $r^2$ is a sum of manifestly non-negative terms,
 $S_m=2\bigl(1-\cos(b-a)\bigr)\bigl(1+\cos(a+b)\bigr)$; the gates therefore cannot break complete monotonicity in this model. A
 by-product is the zero-wavevector coefficient $\tilde U(0)=4\pi d\,(1-d/D)$ for a gate separation $D$ (a capacitor formula,
-not new, which fixes the experimental protocol). Second, we test the solver stack on the model the experiment's community
+not new; the mean-field baseline of the protocol). A spectral argument supplied by an independent reviewer extends the theorem to any
+laterally homogeneous layered dielectric between grounded planes (Section~\ref{sec:cm}). Second, we test the solver stack on the model the experiment's community
 would use for short-lived excitons or polaritons, a driven-dissipative Gross--Pitaevskii equation with an incoherent reservoir
 and a gate potential, in a pre-registered design with known answers: \NPARTABSTRACTTHREE{} We report what failed or had to be
-changed (a registered cost was misjudged by two orders of magnitude and four amendments were written before the affected
-numbers existed). Third, we give a laboratory protocol with pass/fail criteria for the predictions that survive. We do not use
+changed (a registered cost was misjudged by two orders of magnitude; three amendments were written before the numbers they affect, a
+fourth while the last run was in progress, and one registered comparison was replaced by a better-posed one). Third, we give a laboratory protocol, and say which of its items can fail and which are controls. We do not use
 Hugging Face materials data or neural-network surrogates, do not compare with data, and make no claim about exciton
 Bose--Einstein condensation. Written by an AI system; not refereed.
 \end{abstract}
 
 \section{Why this note, and what it is not}
 
-The brief that prompted it asked for a driven-dissipative exciton fluid on rusty-SUNDIALS with materials data from Hugging Face.
+The request that prompted this note asked for a driven-dissipative exciton fluid on rusty-SUNDIALS with materials data from Hugging Face.
 The first note~\cite{CallensExciton1} did something else (conservative gradient flows, a lattice theorem). We say so
 because the two are easily confused: that note did \emph{not} contain a driven-dissipative model, an ARKode-type integrator, a
 gate, a defect, or any materials input. This one adds the first three in a minimal form (Section~\ref{sec:dd}) and tests the
@@ -112,17 +113,24 @@ from the formulas of the text by \texttt{phase3\_figures.py}.}
 
 \paragraph{Consequences, and limits of the claim.} The single-gate and gate-free limits are pointwise limits of completely
 monotone functions and so are completely monotone. Within \emph{this} model the gates cannot be engineered to violate the
-hypothesis of the lattice theorem: Kagome or stripe ground states, if observed in a gated device, must come from something the
-model leaves out, which includes dielectric image charges of weight $\kappa^n$ with $|\kappa|<1$ (the Poisson form is then not a
-pure cosine series; \emph{not proved, not tested}), the finite screening of real gates, disorder, and quantum fluctuations.
-The lattice theorem itself is imported and was not refereed. A Lean formalisation needs the Poisson summation of Mathlib's
-Jacobi theta; we did not do it. The zero-wavevector coefficient follows from the same series (and from Gauss's law for three
-capacitors in series):
+hypothesis of the lattice theorem; if Kagome or stripe ground states are observed in a gated device, then, \emph{conditionally on the
+unrefereed lattice theorem}, they come from something the model leaves out: lateral inhomogeneity, finite screening of real gates,
+disorder, or quantum fluctuations.
+
+\paragraph{Remark (layered dielectrics; due to the independent review of this note, not proved here in detail).} For a laterally
+homogeneous layered dielectric $\varepsilon(z)$ between the grounded planes, expanding the Green function in the Dirichlet
+Sturm--Liouville modes $-(\varepsilon\phi')'=\lambda\varepsilon\phi$ gives
+$U(r)=2\sum_m\bigl(\phi_m(z_e)-\phi_m(z_h)\bigr)^2K_0(\sqrt{\lambda_m}\,r)$, a positive combination of $K_0(\kappa r)=\tfrac12\int_0^\infty
+e^{-u-\kappa^2r^2/4u}\,du/u$, each completely monotone in $r^2$. So dielectric image charges of weight $\kappa^n$ do not break the property
+either; the reviewer checked the expansion numerically on one four-layer stack. We have not repeated that check and have not written the full argument.
+The same sum-of-squares structure is behind $S_m=2(\sin a-\sin b)^2$. The lattice theorem itself is imported and was not refereed.
+A Lean formalisation needs the Poisson summation of Mathlib's Jacobi theta; we did not do it. The zero-wavevector coefficient
+follows from the same series (and from Gauss's law for three capacitors in series), for a uniform $\varepsilon$ in units $e^2/\varepsilon=1$:
 \begin{equation}\label{eq:u0}
 \tilde U(0)=\int U\,d^2r=4\pi d\,\Bigl(1-\frac dD\Bigr),\qquad D=h_1+h_2 .
 \end{equation}
 We checked it against the numerical integral of the image series (agreement to $3\times10^{-3}$ relative at $D=3d$ and $D=20d$, limited by the integration cutoff).
-It is a capacitor formula, textbook; we use it because it is a quantitative, device-geometry-dependent prediction (Section~\ref{sec:protocol}).
+It is a capacitor formula, textbook. For piecewise $\varepsilon$ the factor $1-d/D$ becomes $1-(d/\varepsilon_m)/\sum_it_i/\varepsilon_i$ (Gauss's law with layers $t_i$ of permittivity $\varepsilon_i$ between the gates, $\varepsilon_m$ between the exciton layers), which changes the size of the $D$-dependence for hBN-encapsulated stacks. It is the \emph{mean-field} coefficient: valid at densities where correlations are weak (Section~\ref{sec:protocol}, L1).
 
 \section{A driven-dissipative model with a gate, tested on rusty-SUNDIALS}\label{sec:dd}
 
@@ -131,30 +139,39 @@ It is a capacitor formula, textbook; we use it because it is a quantitative, dev
 i\,\partial_t\psi &= \Bigl[-\tfrac12\nabla^2+V(\mathbf x)+g|\psi|^2+g_Rn_R+\tfrac i2\bigl(Rn_R-\gamma\bigr)\Bigr]\psi,\\
 \partial_tn_R&=P(\mathbf x)-(\gamma_R+R|\psi|^2)n_R,
 \end{align}
-the standard open-dissipative (Wouters--Carusotto) form with $g=0.04$, $g_R=1$, $\gamma=0.1$, $\gamma_R=200$, $R=1$ (stiff ratio
+the standard open-dissipative (Wouters--Carusotto~\cite{WoutersCarusotto2007}) form with $g=0.04$, $g_R=1$, $\gamma=0.1$, $\gamma_R=200$, $R=1$ (stiff ratio
 $\gamma_R/\gamma=2000$), uniform pump $P$ and gate $V=V_0e^{-d^2/2\sigma^2}$. Above threshold $P_{th}=\gamma\gamma_R/R=20$ the
 uniform state is $n=P/\gamma-\gamma_R/R$, $n_R=\gamma/R$, $\omega=gn+g_Rn_R+V$ (we use $P=21$: $n=10$, $n_R=0.1$, $\omega=0.5$).
-The model is generic; it is the model one would write for short-lived excitons or polaritons. It is \emph{not} the model of the
-equilibrium experiment of Qi \emph{et al.}, whose dipolar excitons live microseconds.
+The model is generic; it is the form one would write for short-lived excitons or polaritons, but with reservoir parameters chosen for solver stiffness (a reservoir $2000$ times faster than the condensate, $g_R/g=25$), not measured ones; real reservoirs are typically slower than the condensate. It is \emph{not} the model of the
+equilibrium experiment of Qi \emph{et al.}~\cite{Qi2026}, whose dipolar excitons live microseconds.
 
 \paragraph{Design.} Pre-registered in \path{docs/designs/EXCITON_FLUID_PHASE3_PREREG.md} (commit \texttt{335caa5}, before any run of the
 Rust program), independent Python reference first (\path{phase3_reference.py}). Gates: D-a steady states above and below threshold;
 D-b the 768$\times$768 linearisation of the solver against the reference $3\times3$ per-$k$ spectrum; D-c conservative limit
 (norm and energy); D-d gate sweep ($V_0\in\{0,0.25,0.5,1\}$): pump budget $\sum P=\sum(\gamma_Rn_R+\gamma|\psi|^2)$, single locked
 frequency, and the hypothesis $0<\omega(V_0)-\omega(0)<V_0$; D-e the ARKode-style IMEX module, whose implicit stage is a fixed-point
-iteration and so must fail exactly when $h\gamma_Ra_{ii}\geq1$; D-f its temporal order; D-g a planted bug. A deliberately
+iteration and so must fail when $h\gamma_Ra_{ii}\geq1$ (bracketed by five step sizes only); D-f its temporal order; D-g a planted bug. A deliberately
 \emph{wrong} prediction is excluded by construction: the intuitive local-density guess that the gate leaves the density pinned at
 $P/\gamma-\gamma_R/R$ is incompatible with a single locked frequency (the gate shifts the local frequency, so currents must flow),
 and was not registered.
 
-\paragraph{Amendments, all before the numbers they affect.} (A4, on the number of seeds of D-g, is in the pre-registration.) A1: the IMEX module's fixed-point test squares the tolerance
+\paragraph{Amendments and disclosures.} A1--A3 were written before the numbers they affect; A4 (D-g was evaluated on three
+of ten seeds, from the per-seed log lines, because the planted-bug runs take about 25 minutes each) was recorded while D-g was
+running and committed with the results. A1: the IMEX module's fixed-point test squares the tolerance
 (effective absolute tolerance $\mathrm{rtol}\,(\mathrm{atol}+\mathrm{rtol}|z|)$), so $10^{-12}$ cannot converge in floating point;
 set to $10^{-6}$. A2: integrating D-a/D-d/D-g in the laboratory frame needed more than 23 minutes for one run (the phase rotates
 at $\omega=0.5$ and BDF must resolve it for $t=4000$); the flow is integrated in the frame rotating at the registered value of
 $\omega$ with all gate quantities evaluated gauge-covariantly. A3: even then the pinned CVODE refactors a dense matrix
 every few steps (43 ms per step at 768 unknowns, hours per run, about 70 runs), so \textbf{D-a, D-d, D-g were run on an
-$8\times8$ grid with $\sigma=1.5$} (same $\sigma/L$), not $16\times16$; D-b, D-c, D-e, D-f ran on $16\times16$ as registered. The
-consequence is that the gate-sweep results describe a very small box.
+$8\times8$ grid with $\sigma=1.5$} (same $\sigma/L$), not $16\times16$; D-b, D-c, D-e, D-f ran on $16\times16$ as registered.
+\emph{The $8\times8$, $\sigma=1.5$ problem is not equivalent to the registered $16\times16$, $\sigma=3$ one} (Section~\ref{sec:results}):
+the consequence is that the gate-sweep results describe a very small box. Further disclosures: (i) D-b was registered as a comparison of the two
+\emph{sorted} eigenvalue lists; as implemented it gives a maximum difference $18.2$ because sorting by (real, imaginary) is unstable
+for nearly degenerate pairs, and the reported $2.7\times10^{-9}$ is from a nearest-neighbour matching introduced in the summariser
+without an amendment, which should have been one; the Jacobian itself was reconstructed independently by the reviewer and agrees.
+(ii) Exploratory runs launched to test the horizon were first made with a stale binary that ignored the overrides (results identical to
+$t=4000$); they are kept under \path{results/phase3/exploratory_invalid/} and were not used. (iii) The first, laboratory-frame attempt
+and the stopped $16\times16$ rotating-frame attempt are kept as logs under \path{results/phase3/}.
 
 \input{exciton3_results.tex}
 
@@ -184,69 +201,79 @@ prediction, the pass/fail rule and the confounders. None has been performed; the
 \emph{measured} on the device (items L1--L3) before the later items are meaningful.
 
 \paragraph{Platform and regime.} A dual-gated transition-metal-dichalcogenide bilayer or heterobilayer with hBN spacers, graphite
-(or metal) top and bottom gates, device series with gate separations $D$ spanning at least $5d$ to $50d$ ($d$ the electron--hole
-layer separation), one-gate and two-gate versions. L4 and L5 need a regime in which the dipolar excitons are cold and degenerate
-or crystalline ($T$ below the sample's melting or degeneracy temperature, to be established by L2); L6 needs a driven regime with
-excitons or polaritons of lifetime short compared with the observation time (a microcavity, or intralayer excitons under
-continuous pumping). The two regimes are different samples or different conditions; the model of Section~\ref{sec:dd} does not
-apply to long-lived interlayer excitons.
+(or metal) top and bottom gates, a device series with gate separations $D$ spanning at least $5d$ to $50d$ ($d$ the electron--hole
+layer separation), one-gate and two-gate versions. L2--L3 need a regime in which the dipolar excitons are cold and degenerate
+or crystalline; L5 needs a driven regime with excitons or polaritons of lifetime short compared with the observation time (a
+microcavity, or intralayer excitons under continuous pumping), and L4 only makes sense in that second regime. These are different
+samples or conditions; the model of Section~\ref{sec:dd} does not apply to long-lived interlayer excitons.
 
-\paragraph{Common controls.} Gates grounded and floating; a device without the second gate; a detuned pump; temperature series;
+\paragraph{Common controls.} Gates grounded and floating; a device without the second gate; a detuned pump; a temperature series;
 at least three devices per geometry; blind analysis (fits fixed before the data of the discriminating series are read); raw data
 and analysis code deposited with the preregistration of the series. Density is calibrated independently of the quantity
 tested (capacitance or absorption), not from the photoluminescence blueshift itself.
 
+\paragraph{What can fail.} Of the six items, only \textbf{L1} is a prediction that depends on the mathematics of this note and can
+be falsified by a measurement; L2 is a calibration, L3 and L4 are consistency checks that cannot falsify the theorem, L5 is a
+textbook control for the driven model, and L6 has no prediction yet.
+
 \begin{longtable}{@{}p{0.06\textwidth}p{0.25\textwidth}p{0.29\textwidth}p{0.29\textwidth}@{}}
 \toprule
- & \textbf{Measurement} & \textbf{Prediction (from this note)} & \textbf{Pass / fail, confounders} \\ \midrule
+ & \textbf{Measurement} & \textbf{Expected outcome} & \textbf{Pass / fail, confounders} \\ \midrule
 \endhead
-L1 & Interaction strength: PL peak shift versus calibrated exciton density $n$, device series in $D$, low $T$, below degeneracy.
- & $dE/dn=\tilde U(0)=(4\pi e^2d/\varepsilon)\,(1-d/D)$ (Eq.~\ref{eq:u0}): increases with $D$ and saturates at the ungated value. Dielectric
- mismatch and finite gate screening are outside the model, so the \emph{trend} is the test.
- & Fit slope vs $D$ per device; fail if the slope is independent of $D$ within $10\%$ over $D/d\in[3,20]$, or has the opposite
- trend. Confounders: exchange and correlation corrections (a $D$-independent offset), density calibration, heating. \\
+L1 & Interaction strength: PL peak shift versus calibrated exciton density $n$, device series in $D$, low $T$.
+ & Weak-correlation (mean-field) regime: $dE/dn=\tilde U(0)=(4\pi e^2d/\varepsilon)(1-d/D)$ (Eq.~\ref{eq:u0}), increasing with
+ $D$; the single-gate device approaches the ungated $4\pi d$ (null control). In the strongly correlated, lattice-like regime the slope is
+ the classical lattice value, which for the exact gated kernel is $0$--$0.6$ of $\tilde U(0)$ over $nd^2=0.003$--$0.3$,
+ $D/d=3$--$50$ (independent reviewer's mode sum), \emph{not} equal to it.
+ & Compare the trend with $D$ and the null control, not the absolute value: fail if the slope is independent of $D$ within $10\%$ over
+ $D/d\in[3,20]$ in the weak-correlation regime, or the trend is opposite. For hBN stacks use the piecewise-$\varepsilon$ factor of Section~\ref{sec:cm}.
+ Confounders: correlation corrections that depend on $D$ and $n$, density calibration, heating. \\
 L2 & Phase diagram: structure factor $S(\mathbf k)$ (momentum-resolved emission or interferometry) versus $n$ and $T$ at fixed $D$.
- & No claim of a number. The classical lattice has a hexagonal Bragg ring at $k_0=4\pi/(\sqrt3a)$ with $n=2/(\sqrt3a^2)$, $a$ its constant.
- & Establishes where L3 applies (fluid, solid). A ring of the wrong $k_0$ for the measured $n$ is a calibration failure, not a result. \\
-L3 & Lattice symmetry versus gate geometry in the solid regime: classify peaks of $S(\mathbf k)$ (six-fold or other) over the series in $D$,
- one and two gates.
- & Within the ideal-metal model, Theorem~1 and the lattice theorem (conditional) give a triangular lattice at every $D$ in the
- classical limit.
- & A non-hexagonal pattern at some $D$ is \emph{not} a refutation of the theorem (quantum fluctuations, disorder, finite size and
- non-ideal gates are outside it); it is evidence for one of those, to be separated by the temperature and disorder series. A hexagonal
- pattern at all $D$ is the null result. \\
-L4 & Gate-voltage tuning of the local emission energy: nanofabricated finger gate, DC bias $V_g$, pump fixed above
- condensation threshold, spatially resolved spectroscopy.
- & Locked single frequency; shift $\Delta\omega$ increasing with the gate amplitude but smaller than the local energy shift
- (Section~\ref{sec:results}; qualitative, small-box numerics).
- & Fail if the line splits into two frequencies at the gate centre and outside at all $V_g$ (no locking) or if $\Delta\omega$
- exceeds the independently measured local Stark shift. Confounders: Stark shift calibration, heating at the gate. \\
-L5 & Threshold and clamp: condensate-peak intensity and reservoir (high-energy tail) intensity versus pump $P$.
- & Condensate density linear in $P$ above $P_{th}$ with slope $1/\gamma$; reservoir density clamped at $\gamma/R$ (Section~\ref{sec:dd}).
- & Fail if reservoir emission keeps growing linearly above $P_{th}$ within error. Confounders: detection saturation, multimode
- condensation, thermal tail. \\
+ & No number is predicted. The classical lattice has a hexagonal Bragg ring at $k_0=4\pi/(\sqrt3a)$ with $n=2/(\sqrt3a^2)$.
+ & Calibration: it says where L1 (weak versus strong correlation) and L3 apply. A ring at the wrong $k_0$ for the measured $n$ is a
+ calibration failure, not a result. \\
+L3 & Lattice symmetry versus $D$ in the solid regime: classify the peaks of $S(\mathbf k)$.
+ & Triangular at every $D$ in the classical limit, within the model.
+ & \emph{Consistency check, not a test of Theorem 1}: a triangular lattice is the ground state of essentially every repulsive monotone
+ 2D interaction, so hexagonal order does not single out complete monotonicity. A non-hexagonal pattern points to lateral inhomogeneity,
+ finite gate screening, disorder or quantum fluctuations; the experiment cannot tell the theorem from these. \\
+L4 & Gate-voltage spectroscopy: nanofabricated finger gate, DC bias, pump above threshold, spatially resolved spectroscopy
+ (driven regime only).
+ & A single locked emission frequency. The size of the shift is set by the gate area relative to the condensate area (at small $V_0$,
+ the area average of the gate), a property of the geometry, not a test of the model.
+ & Only the absence of locking (two lines at all biases) would count against the driven model. Confounders: Stark-shift calibration,
+ heating, multimode condensation. \\
+L5 & Threshold and clamp: condensate-peak and reservoir (high-energy tail) intensities versus pump $P$ (driven regime).
+ & Textbook open-dissipative behaviour: linear growth above $P_{th}$ with slope $1/\gamma$ (an absolute slope, needing absolute calibration
+ of $P$ and $n$), reservoir density clamped at $\gamma/R$.
+ & A \emph{control} for the applicability of the driven model, not a prediction of this note. Fail if the reservoir keeps growing
+ linearly above $P_{th}$. Confounders: detector saturation, multimode condensation, thermal tail. \\
 L6 & Edge/frustration (exploratory): boundary-shaped trap arrays with $N$ excitons.
  & No numerical prediction yet (Section~\ref{sec:notdone}).
  & Do not run before the numerical design exists. \\
 \bottomrule
 \end{longtable}
 
-\paragraph{Decision rule.} L1 and L5 are the first experiments: they need no new fabrication beyond a device series and they can
-fail cleanly. A failure of L1's trend invalidates the use of ideal-metal image kernels for that platform and with it the
-applicability of Theorem~1 there. L2 must come before L3 and L4; without L2 a lattice claim is unfalsifiable.
+\paragraph{Decision rule.} L2 comes first (it fixes the regime); L1 is then the only falsifiable test and needs only a device series
+in $D$; L5 tells whether the driven model applies to a given driven sample at all. A failure of L1's trend with $D$ would
+invalidate the use of ideal-metal image kernels, with their completely monotone structure, for that platform.
 
 \section{Limitations}
 
 \begin{itemize}[nosep]
-\item Theorem~1 is for ideal grounded metals and a homogeneous dielectric; it is not in Lean; the lattice theorem it feeds is
-unrefereed and conditional in the first note's Lean files.
-\item The numerical model is generic and dimensionless; one parameter set; D-a, D-d, D-g on an $8\times8$ grid; no
-finite-size or resolution study; the solver (dense CVODE, $\leq768$ unknowns) is not claimed to be the best of its kind.
-\item The ARKode-style module tested is a fixed-step ARS222 with a fixed-point implicit stage; it is not SUNDIALS' ARKode. Its
-failure at $h\gamma_Ra_{ii}\ge1$ is its design, not a defect of the library; a Newton--Krylov implicit stage would be the
-replacement.
-\item No experimental data; no Hugging Face data; no contact with any experimental group; written by an AI system and not
-reviewed by a human.
+\item Theorem~1 is proved for ideal grounded metals and a homogeneous dielectric; the extension to layered dielectrics rests on a
+reviewer's argument, not on a full proof here; neither is in Lean; the lattice theorem they feed is unrefereed and conditional in the
+first note's Lean files.
+\item The numerical model is generic and dimensionless, with reservoir parameters chosen for stiffness; one parameter set; D-a, D-d,
+D-g on an $8\times8$ grid in which the gate shift is dominated by the box size (Section~\ref{sec:results}); no finite-size or
+resolution scan beyond the reviewer's; the solver (dense CVODE, $\leq768$ unknowns) is not claimed to be the best of its kind.
+\item The ARKode-style module tested is a fixed-step ARS222 with a fixed-point implicit stage on a linear diagonal stiff term; it is
+not SUNDIALS' ARKode, and D-e is a unit test of a known contraction condition, not evidence about nonlinear stiff stages.
+\item The D-b registered comparison was replaced without an amendment (Section~\ref{sec:dd}); the D-d (i,ii) failure was predictable
+from the registered numbers (the ungated noise alone gives about $7\times10^{-8}$ times an $O(1)$ factor at $t=4000$).
+\item No experimental data; no Hugging Face data; no contact with any experimental group; the citations to Qi \emph{et al.} and to
+the OpenAI release are as in the first note and were not re-verified here; written by an AI system and reviewed only by another
+instance of the same model family and by the author's brief check.
 \end{itemize}
 
 \section*{Reproducibility}
