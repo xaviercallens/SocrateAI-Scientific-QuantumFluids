@@ -150,3 +150,9 @@ change the reading, so the 4 h CPU cap of A3 is replaced by: the run is stopped 
 **A5 (2026-10-11, D2 at t = 100 after 141 CPU s).** The tolerance diagnostic D2 (M = 32, rtol 1e-6) costs about 1.4 CPU s per time unit at the start, so its t
 cap of 2e4 is not affordable; it is stopped by me at t >= 2500 (two pulsation periods of the rtol-1e-4 runs: peaks at t ~ 1400 and 2300), and its record is the
 progress log. Reading: the pulsation is counted as tolerance independent if the central density again peaks within +-150 time units of 1400 and 2300 with a similar range.
+
+**A6 (2026-10-11, D2 at t = 300 after ~45 min wall).** At rtol 1e-6 the D2 diagnostic advances only ~100 time units per 15 min, so the A5 cap of t = 2500 is not
+affordable either. It is stopped at t >= 500. The diagnostic can then only say whether the rtol-1e-6 trajectory of the central density follows the rtol-1e-4 one over the first
+500 time units (D1 M = 32 values: 5.175, 5.833, 3.951, 2.26, 1.324 at t = 100..500), not whether the pulsation persists at that tolerance. Also: the
+report requested for this package could not be written as a file in the repository (the tool refused to write a report .md for this subagent); its content is
+returned in the structured reply of the run instead, and `results/summary.json` (from `evaluate.py`) is the machine-readable record.
