@@ -1,2 +1,10 @@
 done dip square
 done dip hexagon
+done dip disc
+done dip rect2
+done dip lshape
+done dip annulus
+done g3 square
+done g3 hexagon
+done g3 disc
+ALLDONE

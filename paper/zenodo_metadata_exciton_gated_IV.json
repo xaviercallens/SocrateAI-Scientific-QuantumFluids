@@ -1,0 +1,105 @@
+{
+ "metadata": {
+  "title": "Gated exciton fluids IV: three heuristics tested and not confirmed: dimensional lifting, sliding walls, and completely monotone relaxation as a 3D mesh generator",
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "description": "<p>Fourth paper of the gated-exciton line (I: 10.5281/zenodo.23294615; II: 10.5281/zenodo.23297479; III: 10.5281/zenodo.23298292). Three heuristics suggested for the classical node-arrangement problem were pre-registered and tested with a plain numpy L-BFGS engine on the container geometries of the Fenris study. <b>E1, dimensional annealing:</b> lifting particles to 2+k dimensions and annealing the extra coordinates away shows no benefit at equal compute in any of nine shape-kernel cases (30 starts each); lifted runs are 6-17 times more expensive and some leave the container (counted as failures). <b>E2, sliding walls:</b> the registered gate (a decrease of at least two in the number of non-sixfold nodes on at least three of six shapes) is not met: it is met on one shape and the disc gets significantly worse. <b>E3, completely monotone relaxation as a 3D mesh generator:</b> in a periodic cube (N=216, 30 paired starts) it is far better than Poisson points but slightly worse than Lloyd/CVT in the 5th-percentile tetrahedron radius ratio (0.63 vs 0.68; gate not met). All results are small-scale and classical; no claim about excitons, string theory or the universal-optimality theorem. Three dated amendments are disclosed, including a discarded partial run made with a slow code path. Written by an AI system; checked by independent instances; not refereed.</p>",
+  "creators": [
+   {
+    "name": "Callens, Xavier",
+    "affiliation": "SocrateAI Research"
+   }
+  ],
+  "keywords": [
+   "dimensional lifting",
+   "negative results",
+   "pre-registration",
+   "node arrangements",
+   "centroidal Voronoi",
+   "completely monotone kernels",
+   "L-BFGS"
+  ],
+  "license": "CC-BY-4.0",
+  "access_right": "open",
+  "language": "eng",
+  "related_identifiers": [
+   {
+    "identifier": "https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids",
+    "relation": "isSupplementedBy",
+    "scheme": "url"
+   },
+   {
+    "identifier": "https://github.com/xaviercallens/rusty-SUNDIALS",
+    "relation": "isSupplementedBy",
+    "scheme": "url"
+   },
+   {
+    "identifier": "https://github.com/openai/math",
+    "relation": "cites",
+    "scheme": "url"
+   },
+   {
+    "identifier": "10.1038/s41586-026-10636-y",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "arXiv:2603.15443",
+    "relation": "cites",
+    "scheme": "arxiv"
+   },
+   {
+    "identifier": "10.5281/zenodo.23286893",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23269715",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23272153",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23285631",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23292863",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23289027",
+    "relation": "cites",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "https://github.com/xaviercallens/rusty-Fenris-CMRR",
+    "relation": "cites",
+    "scheme": "url"
+   },
+   {
+    "identifier": "10.5281/zenodo.23294615",
+    "relation": "isSupplementTo",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23297479",
+    "relation": "isSupplementTo",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23298292",
+    "relation": "isSupplementTo",
+    "scheme": "doi"
+   }
+  ],
+  "version": "1",
+  "notes": "Standalone paper of the SocrateAI-Scientific-QuantumFluids programme, written by an AI system under the author's standing instructions. Source archive: exploration/exciton and paper sources as committed. Repository state: git tag exciton-gated-4."
+ }
+}

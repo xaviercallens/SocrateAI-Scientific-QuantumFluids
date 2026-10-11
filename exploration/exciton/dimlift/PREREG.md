@@ -58,3 +58,16 @@ run). It was vectorised over edges (`_nearest_on_edges`); the results are the sa
 reproduced the same energies as before to the printed digits). The partial disc records produced with the slow code (76 runs,
 kept in `results/partial_disc_slow_harness.jsonl`) are not used; the disc is rerun from scratch with the vectorised code. Square
 and hexagon records (produced before the change) are kept: the change does not alter any value the algorithm computes.
+
+## Erratum to A3 and notes (2026-10-11, after the independent review of paper IV)
+* A3 stated that the vectorised nearest-edge search "does not alter any value the algorithm computes". This is true up to
+  floating-point reordering and was verified bit-identical on the square (18 runs, seeds 0-5), but **not** on the disc: comparing
+  the 76 slow-harness disc records with the rerun, `direct` and `slide` are bit-identical, while every lifted run differs in
+  evaluation count and 15 of 37 lifted runs differ in final energy by up to 0.12 (a different local minimum). The two harnesses are
+  numerically equivalent, not identical; the 76 discarded records are a usable replicate and are kept.
+* A2 said the CVT keeps its registered settings; in fact the code uses 1.5e5 Monte-Carlo samples per Lloyd iteration, the
+  registration said 2e5. Not amended before the runs; disclosed here.
+* The "fraction reaching the best energy" of the registered E1 gate was computed with a best that includes the sliding-wall
+  runs, which are lower by construction; paper IV reports it over the fixed-wall methods only (direct, lift1, lift2).
+* The development runs used square seeds 0-5 and E3 seed 0; both are inside the registered sets and A1 tuned the lifted-run
+  parameters on them.

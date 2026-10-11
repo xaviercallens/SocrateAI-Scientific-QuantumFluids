@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+"""Pack the source archive that accompanies the fourth paper (paper/exciton_fluid_gated_IV.tex) on Zenodo.
+
+    python3 scripts/pack_exciton_gated_IV.py paper/exciton_fluid_gated_IV_sources.tar.gz
+
+Contains the git-tracked files of: the paper (tex, generated numbers and results, figures, PDF), the exciton-fluid design/result/review
+documents, and the whole `exploration/exciton/` tree (Lean files, Python references, summarisers and figure scripts, the Rust crate,
+the run records of all three phases). Run it after committing, so that the
+archive and the repository agree; the commit hash is written to MANIFEST.txt inside the archive.
+"""
+import hashlib, io, subprocess, sys, tarfile
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+PREFIXES = [
+    "paper/exciton_fluid_gated_IV.tex", "paper/exciton_fluid_gated_IV.pdf", "paper/exciton_fluid_gated.tex", "paper/exciton_fluid_gated.pdf",
+    "paper/figs_companion/", "paper/figs_companion3/", "paper/figs_companion4/", "paper/exciton_fluid_gated_II.tex", "paper/exciton_fluid_gated_II.pdf", "paper/figs_exciton3/", "paper/exciton3_numbers.tex", "paper/exciton3_results.tex", "paper/exciton_numbers.tex",
+    "docs/designs/EXCITON_FLUID_", "exploration/exciton/", "lean-toolchain",
+    "scripts/pack_exciton_gated_IV.py",
+]
+
+def git(*a):
+    return subprocess.run(["git", *a], cwd=ROOT, capture_output=True, text=True, check=True).stdout
+
+def main():
+    out = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "paper/exciton_fluid_note_sources.tar.gz"
+    files = [f for f in git("ls-files").splitlines() if any(f == p or f.startswith(p) for p in PREFIXES)]
+    head = git("rev-parse", "HEAD").strip()
+    dirty = git("status", "--short", "--", *PREFIXES).strip()
+    lines = [f"repository: https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids", f"commit: {head}",
+             f"files: {len(files)}", ""]
+    for f in files:
+        data = (ROOT / f).read_bytes()
+        lines.append(f"{hashlib.sha256(data).hexdigest()}  {f}")
+    if dirty:
+        lines += ["", "WARNING: uncommitted changes in the packed paths at packing time:", dirty]
+    manifest = "\n".join(lines) + "\n"
+    with tarfile.open(out, "w:gz") as tar:
+        ti = tarfile.TarInfo("MANIFEST.txt"); ti.size = len(manifest.encode()); ti.mtime = 0
+        tar.addfile(ti, io.BytesIO(manifest.encode()))
+        for f in files:
+            tar.add(ROOT / f, arcname=f, recursive=False)
+    print(f"{out}: {len(files)} files, {out.stat().st_size / 1e6:.2f} MB, commit {head[:12]}" + (" (DIRTY)" if dirty else ""))
+
+if __name__ == "__main__":
+    main()
