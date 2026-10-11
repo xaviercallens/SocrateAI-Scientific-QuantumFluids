@@ -1,0 +1,15 @@
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+1D chain increment 0.252482436801396 vs closed form 0.252482458925454, rel 8.76e-8
+test b2_chain_closed_form_yukawa ... ok
+test bessel_spot_values ... ok
+test raw_kernels_positive_and_decreasing ... ok
+table-vs-series d=0.5 D=1.5: max rel err U 9.36e-14 U' 6.76e-12 U'' 8.30e-10
+test a1_kernel_derivatives_match_finite_differences ... ok
+test a2_model_force_and_hessian_match_finite_differences ... ok
+table-vs-series d=0.5 D=5: max rel err U 9.26e-14 U' 6.87e-12 U'' 6.66e-10
+table-vs-series d=1 D=3: max rel err U 2.42e-15 U' 1.67e-13 U'' 3.61e-11
+table-vs-series d=1 D=10: max rel err U 2.84e-15 U' 1.70e-13 U'' 3.29e-11
+test a3_table_matches_series ... ok
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.20s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

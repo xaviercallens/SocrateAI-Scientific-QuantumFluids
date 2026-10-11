@@ -324,7 +324,10 @@ if __name__ == "__main__":
     cases = [c for c in case_list(which) if only is None or only in cid(c)]
     done = []
     from multiprocessing import Pool
-    todo = [c for c in cases if os.environ.get("REANALYSE") == "1" or not os.path.exists(f"{RES}/case_{cid(c)}.json")]
+    if os.environ.get("REANALYSE") == "1":
+        todo = [c for c in cases if os.path.exists(f"{SCR}/prod/{cid(c)}/out.txt")]
+    else:
+        todo = [c for c in cases if not os.path.exists(f"{RES}/case_{cid(c)}.json")]
     print(f"{len(todo)} cases to run of {len(cases)}", flush=True)
     with Pool(nw) as pool:
         for s in pool.imap_unordered(run_case, todo):
