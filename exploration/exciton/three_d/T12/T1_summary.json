@@ -1,0 +1,27 @@
+{
+ "per_N": {
+  "2": {
+   "starts": 60,
+   "accepted": 0,
+   "min_mismatch": 19.848933854808454,
+   "min_surrogate": 3.8406488659572165e-15,
+   "n_below_1e6": 0
+  },
+  "4": {
+   "starts": 60,
+   "accepted": 0,
+   "min_mismatch": 7.693117799171591,
+   "min_surrogate": 6.408816041352677e-15,
+   "n_below_1e6": 0
+  },
+  "8": {
+   "starts": 40,
+   "accepted": 0,
+   "min_mismatch": 1.263569611279113,
+   "min_surrogate": 7.402384209793573e-13,
+   "n_below_1e6": 0
+  }
+ },
+ "accepted": [],
+ "gate_T1_candidates": []
+}

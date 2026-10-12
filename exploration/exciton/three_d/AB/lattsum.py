@@ -317,6 +317,34 @@ class Kernel:
         return f"{self.name}_{self.param:.6g}"
 
 
+class MixKernel:
+    """Gaussian mixture f(r) = e^{-a1 r^2} + lam e^{-a2 r^2} (round 2, T2; added 2026-10-12).
+
+    Implemented as the sum of two independent Gaussian `Kernel` objects (energy and gradients are linear in
+    the kernel), so nothing in the existing kernels or the numba engine is changed.  `force` = (f1, f2) with
+    fi in {None, 'real', 'recip'} overrides the real/reciprocal branch of each component (verification only);
+    `xcg` is the dimensionless Gaussian cutoff (default 45 as in round 1)."""
+    def __init__(self, a1, a2, lam, xcg=45.0, force=(None, None)):
+        self.name = 'mix'
+        self.a1, self.a2, self.lam = float(a1), float(a2), float(lam)
+        self.param = (self.a1, self.a2, self.lam)
+        self.k1 = Kernel('gauss', a1, xcg=xcg)
+        self.k2 = Kernel('gauss', a2, xcg=xcg)
+        for k, f in ((self.k1, force[0]), (self.k2, force[1])):
+            if f == 'real':
+                k.use_real, k.use_recip, k.rc2, k.gc2 = True, False, xcg / k.param, 1.0
+            elif f == 'recip':
+                k.use_real, k.use_recip, k.rc2, k.gc2 = False, True, 1.0, 4.0 * k.param * xcg
+
+    def eg(self, A0, S):
+        E1, gA1, gS1 = self.k1.eg(A0, S)
+        E2, gA2, gS2 = self.k2.eg(A0, S)
+        return E1 + self.lam * E2, gA1 + self.lam * gA2, gS1 + self.lam * gS2
+
+    def label(self):
+        return f"mix_{self.a1:.6g}_{self.a2:.6g}_{self.lam:.9g}"
+
+
 def grid_kernels(**kw):
     out = []
     for a in np.logspace(-1, 1, 13):

@@ -1,0 +1,8 @@
+N=2: starts=60 accepted(mismatch<1e-10)=0 below1e-6=0 min_mismatch=1.985e+01 min_surrogate=3.841e-15
+N=4: starts=60 accepted(mismatch<1e-10)=0 below1e-6=0 min_mismatch=7.693e+00 min_surrogate=6.409e-15
+N=8: starts=40 accepted(mismatch<1e-10)=0 below1e-6=0 min_mismatch=1.264e+00 min_surrogate=7.402e-13
+
+Distinct accepted structures (grouped by 2E(pi) to 1e-9):
+N count identity lattice 2E(pi) rel_vs_0.231536266184 E_half rel_vs_CKS_coex first_shells(r,w)
+
+Gate T1 candidates (non-lattice, 2E(pi) below registered by >1e-8): 0

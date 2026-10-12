@@ -1,0 +1,37 @@
+{
+ "date": "2026-10-12 08:36",
+ "K": 30,
+ "solver": "scipy.optimize.linprog method=highs (cvxpy not installed)",
+ "scipy_version": "1.18.1",
+ "H0": {
+  "d1_alpha1": {
+   "alpha": 1.0,
+   "E_Z": 0.7726372048266521,
+   "E_Z_direct": 0.7726372048266521,
+   "tail_est": 1.3134766144044687e-24,
+   "LP_bound": 0.7726372068319629,
+   "bound_minus_EZ": 2.005310806296734e-09,
+   "pass_1e-8": true,
+   "beta_best": 0.13315857891029445,
+   "verification_random": {
+    "n_random": 100000,
+    "max_f_minus_g": 9.8886659039621e-10,
+    "argmax_r": 6.997814905668575,
+    "max_neg_fhat": 1.6772257007808418e-11,
+    "argmax_y": 1.4565614219671685
+   }
+  },
+  "d1_alpha3.14159": {
+   "alpha": 3.141592653589793,
+   "E_Z": 0.08643481121330804,
+   "E_Z_direct": 0.08643481121330804,
+   "tail_est": 2.097248636924487e-65,
+   "LP_bound": null,
+   "bound_minus_EZ": null,
+   "pass_1e-8": false,
+   "beta_best": null,
+   "verification_random": null
+  },
+  "pass": false
+ }
+}
