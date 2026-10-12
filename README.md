@@ -2,7 +2,7 @@
 
 **A machine-checked Lean 4 library of quantum-fluid structure — with a record of what formalization caught, and what it could not**
 
-[![Tests](https://img.shields.io/badge/tests-183%20passing-brightgreen)]() [![Lean](https://img.shields.io/badge/Lean-4.34.1-blue)]() [![Theorems](https://img.shields.io/badge/theorems-257%20kernel--checked-blue)]() [![Comparator](https://img.shields.io/badge/Comparator-two%20kernels-success)]() [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23304330.svg)](https://doi.org/10.5281/zenodo.23304330) [![Release](https://img.shields.io/badge/release-v1.22.2-orange)](https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids/releases)
+[![Tests](https://img.shields.io/badge/tests-183%20passing-brightgreen)]() [![Lean](https://img.shields.io/badge/Lean-4.34.1-blue)]() [![Theorems](https://img.shields.io/badge/theorems-257%20kernel--checked-blue)]() [![Comparator](https://img.shields.io/badge/Comparator-two%20kernels-success)]() [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23319576.svg)](https://doi.org/10.5281/zenodo.23319576) [![Release](https://img.shields.io/badge/release-v1.23.0-orange)](https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids/releases)
 
 > **The Sector Causality Theory has moved to its own repository:**
 > **[SocrateAI-Scientific-SectorCausalityTheory](https://github.com/xaviercallens/SocrateAI-Scientific-SectorCausalityTheory)**
@@ -174,7 +174,7 @@ refers to (`openai/math`) is AI-generated and **not refereed**, so statements us
 | Server plan | running the plan on a larger CPU/GPU machine | `docs/designs/PROJET_EXECUTION_SERVEUR.md`, `deploy/` | untested kit |
 | Outreach | texts for a mathematician, Lean Zulip, r/lean4, Mathlib, an experimental group | `docs/designs/EXCITON_FLUID_OUTREACH_DRAFTS.md` | drafts, nothing sent |
 
-Ledger rows CLAIM-119 to CLAIM-125; hostile-review and verifier notes in `docs/designs/EXCITON_FLUID_*REVIEW*` and
+Ledger rows CLAIM-119 to CLAIM-126; hostile-review and verifier notes in `docs/designs/EXCITON_FLUID_*REVIEW*` and
 `EXCITON_FLUID_VERIFIER_NOTES_*`. Git tags `exciton-note-1`, `exciton-gated-1`, `-2`, `-3`, `-4`, `-5`. 3D experiments
 (pre-registrations, records, RESULTS files): `exploration/exciton/three_d/`.
 
@@ -197,7 +197,7 @@ from 2026-09-19 (releases up to v1.20.0 were checked under rc2) — for cross-in
 ## Citing
 
 The software (this library, its numerical experiments, and every companion paper) is archived on
-Zenodo: **[10.5281/zenodo.23304330](https://doi.org/10.5281/zenodo.23304330)** (`v1.22.2`; includes exciton-fluid papers I–IV, the Lean bridge and the Mathlib kit). Cite the
+Zenodo: **[10.5281/zenodo.23319576](https://doi.org/10.5281/zenodo.23319576)** (`v1.23.0`; includes exciton-fluid papers I–V, the 3D experiments, the Lean bridge and the Mathlib kit). Cite the
 concept DOI **10.5281/zenodo.22855581** for all versions.
 
 The textbook *Quantum Fluids in Lean 4: a tribute to Henri Godfrin* (`book/`: ten chapters, each pairing a measurement, machine-checked theorems and a solver computation; Appendix A, the complete catalogue of this library; Appendix B, how to rebuild every figure and rerun the audit) has its own DOI: **[10.5281/zenodo.23272153](https://doi.org/10.5281/zenodo.23272153)** (concept; first edition 10.5281/zenodo.23272154, with the source archive).
