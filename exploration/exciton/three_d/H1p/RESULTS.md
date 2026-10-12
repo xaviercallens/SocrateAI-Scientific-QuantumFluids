@@ -50,7 +50,7 @@ reading assumes no non-lattice state lies more than about 0.4 % below BCC, which
 - Our LP code, run as in H1 but accepted at a looser, stated tolerance, reproduces the three published α = π values
   (d = 1, 2, 3) within the registered windows: d = 1 and d = 3 agree to the printed 8 digits, d = 2 does not
   (0.159595270 vs printed 0.15959526...; it passes only because A2's window is ±1e-8 around the truncated value).
-  At K = 30 the d = 3 value (0.2232173547) would fail V3 by 4.7e-7; the pass relies on K = 40, the registered gate value. That repairs H1's sanity-gate failure *numerically*; it does not certify.
+  At K = 30 the d = 3 value (0.2232173547) would fail V3 by 4.6e-7 (below the window's lower edge 0.22321781); the pass relies on K = 40, the registered gate value. That repairs H1's sanity-gate failure *numerically*; it does not certify.
 - H1's registered question at α = π was already answered in print (3.6 % gap); at α = 2, 4, 8 the gaps are 0.48 %,
   6.7 % and 21.6 % — numbers we did not find published (search not exhaustive). The two-point bound does not settle the
   3D Gaussian-core conjecture at any α tested; this is expected from the literature and is not a new kind of result.

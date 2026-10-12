@@ -30,7 +30,7 @@ sliding walls in the Fenris container study.}
 {\Large\textbf{Gated exciton fluids V:}\\[2pt]
 \large three dimensions --- what the T-duality, holography and projection analogies\\ do and do not give, measured}\\[8pt]
 Xavier Callens\\ {\small SocrateAI Research \quad\url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}}\\[2pt]
-{\small October 2026}
+{\small October 2026 \quad (version 2: adds H1$'$)}
 \end{center}
 \vspace{-0.4em}
 
@@ -55,7 +55,11 @@ registered rule our 3D searches are declared unreliable; Gaussian mixtures strad
 FCC/BCC/HCP in 5\,100 restarts; a search for formally self-dual configurations accepts nothing, but its objective cannot tell the
 known one (diamond) from configurations $10^{-3}$ away, so the negative is uninformative; and the two-point linear-programming
 code failed its own one-dimensional sanity gate (under an admissibility tolerance fixed in code, not registered) and was therefore
-not run in $d=3$. Everything is small-scale, classical and
+not run in $d=3$. \emph{Version~2} adds H1$'$: the $\alpha=\pi$ question of H1 turned out to be answered in the literature
+(two-point bound $0.2232$ against $0.2315$ in $d=3$); after an attempt at rigorous certificates was abandoned in development, a
+re-registered \emph{numerical, not certified} run reproduces the published $d=1,2,3$ values within the registered windows and
+gives gaps of $0.48\%$, $6.7\%$ and $21.6\%$ below the best lattice in $d=3$ at $\alpha=2,4,8$: numerically, at polynomial
+degree $\le40$ and with the best lattice as reference, two-point bounds do not settle the 3D question at any $\alpha$ tested. Everything is small-scale, classical and
 single-engine; nothing uses the unrefereed planar lattice theorem; written with an AI system and not refereed.
 \end{abstract}
 
@@ -82,6 +86,8 @@ linear-programming bounds --- not answers. The experiments below give each analo
 \textbf{What was pre-registered.} Round~1 (\texttt{exploration/exciton/three\_d/PREREG.md}, commit \texttt{357ee6d}): A (Bravais),
 B (non-Bravais cells), C ($S^3$), D (hybrid mesh); L3 (\texttt{fenris-gated/L3\_PREREG.md}, see the caveat in \S\ref{sec:L3});
 L1 (\texttt{exploration/exciton/kk/PREREG.md}). Round~2 (\texttt{PREREG\_round2.md}, commit \texttt{51a85b1}): F1, T2, T1, H1.
+Version~2: H1$'$ (\texttt{three\_d/H1p/PREREG.md}, \texttt{d668109}; amendments A1 \texttt{83a3500}, A2 \texttt{968dd32}, both before
+any gate run, but A2's acceptance tolerance and windows were set after H1's outcomes were known).
 All gates, restart counts and thresholds were fixed before the runs; deviations are dated in each \texttt{RESULTS.md} and
 summarised in \S\ref{sec:process}. An independent adversarial review preceded this write-up; its corrections are applied and
 listed.
@@ -193,10 +199,51 @@ one. In $d=3$ a radial function is an odd function of the line, and the interpol
 norms of $\mathbb Z^3$ --- self-dual, but a poor minimiser. \emph{Does a radial Fourier interpolation formula exist in $d=3$ with the
 FCC norms as nodes for $f$ and the BCC norms as nodes for $\hat f$?} We have not found this question in the literature and leave it
 to specialists; even if it exists it cannot prove universal optimality (false), but it could certify FCC at a given $\alpha$ through
-the linear-programming bound. What we can compute is the size of the two-point LP gap in $d=3$ (H1, \S\ref{sec:round2}).
+the linear-programming bound. What we can compute is the size of the two-point LP gap in $d=3$ (H1, \S\ref{sec:round2}; numerical values in version~2, \S\ref{sec:h1p}).
 
 \section{Round 2}\label{sec:round2}
 \input{exciton_fluid_gated_V_round2}
+
+\section{Version 2: H1$'$, two-point LP values reproduced numerically}\label{sec:h1p}
+\emph{Added in version~2 (\texttt{exploration/exciton/three\_d/H1p/}, pre-registration \texttt{d668109}, amendments A1
+\texttt{83a3500} and A2 \texttt{968dd32}, code frozen at \texttt{91b1a97}, results \texttt{350bc74}, after review \texttt{6f5a1cb}).}
+A literature check before re-registering found that H1's $\alpha=\pi$ question is answered in~\cite{CdCI16} (Table~1.1: two-point
+bound $0.08643481\ldots$, $0.15959526\ldots$, $0.22321782\ldots$ in $d=1,2,3$; record $0.23153532\ldots$ in $d=3$). H1$'$ was
+registered to reproduce these values with \emph{rigorous} certificates (exact rational positivity of $\hat f$, interval
+arithmetic for $f\le(1+\tau)g$, bound $(\hat f(0)-f(0))/(1+\tau)$ by the Cohn--Kumar proposition as stated
+in~\cite{CdCI16} for arbitrary configurations). Development at non-gate parameters showed this does not work with our LP: the
+double-precision optimum is a degenerate face resolved only at its first few contacts (at $d=1$, $\alpha=2$ the LP controls $f$ only up to
+$x\approx3$; beyond, $(f-g)/g$ reaches $3\times10^{43}$ at $x=8$), an exchange step chosen in amendment~A1 is
+ill-posed for such a face, and a high-precision Newton polish stalled. Amendment A2, committed before any gate run, replaced certification by a \textbf{numerical, non-rigorous}
+reproduction: H1's code unchanged, $K=30$ and $K=40$ (gate on $K=40$), solutions accepted if residual violations are
+$\le10^{-7}$, two-sided windows.
+\begin{center}\small
+\begin{tabular}{llllll}\toprule
+gate & $d$ & $\alpha$ & value ($K=40$) & reference & verdict\\\midrule
+V1 & 1 & 1 & $0.7726372059$ & $E_{\mathbb Z}=0.7726372048$ ($+1.4\times10^{-9}$ rel.) & pass\\
+V1 & 1 & $\pi$ & $0.0864348114$ & $E_{\mathbb Z}=0.0864348112$ ($+2.7\times10^{-9}$ rel.) & pass\\
+V2 & 2 & $\pi$ & $0.1595952701$ & published $0.15959526\ldots$, window $[0.15959525, 0.15959528]$ & pass\\
+V3 & 3 & $\pi$ & $0.2232178249$ & published $0.22321782\ldots$, window $[0.22321781, 0.22321784]$ & pass\\\bottomrule
+\end{tabular}\\[4pt]
+\begin{tabular}{lllll}\toprule
+$\alpha$ & value ($K=40$) & $E_{\rm FCC}$ & $E_{\rm BCC}$ & gap to the best lattice\\\midrule
+2 & $1.011018287$ & $1.017616896$ & $1.015862816$ & $4.8\times10^{-3}$\\
+4 & $0.07275645512$ & $0.07796767103$ & $0.07889601371$ & $6.7\times10^{-2}$\\
+8 & $0.0003947635566$ & $0.0005032413016$ & $0.0006026980499$ & $0.216$\\\bottomrule
+\end{tabular}
+\end{center}
+\textbf{Reading.} The values are LP objectives, not bounds: they can exceed the true optimum by far more than the residual
+violations (the $d=2$ value is $3.1\times10^{-9}$ above the triangular-lattice energy, which no valid bound can be, with a residual
+of $9\times10^{-11}$). $d=1$ and $d=3$ match the printed 8 digits (for $d=3$, with the observed slack of up to $35\times$ the residual, an excess
+of order $2\times10^{-8}$ cannot be excluded, comparable to the window); $d=2$ passes only through the registered window. At $K=30$ the
+$d=3$ value would miss V3 by $4.6\times10^{-7}$; $K=50$ was not run. The gaps exceed the registered $10^{-3}$ at all three $\alpha$, as predicted: numerically,
+at $K\le40$ and with the best lattice as reference, two-point bounds do not settle the three-dimensional Gaussian-core question at
+$\alpha=2,\pi,4,8$; at $\alpha=2$ the reading assumes no non-lattice state lies more than about $0.4\%$ below BCC, which we did not check.
+Choosing $\beta$ by the largest value favours the most-violating accepted solution, and at $\alpha=8$ the $\beta$ optimum is not
+bracketed (irrelevant at a $22\%$ gap). This is what the literature value at $\alpha=\pi$ led us to expect, and the $\alpha=2,4,8$ numbers are new only
+in the sense that we did not find them published. Rigorous certification at $10^{-8}$ remains open. The hostile review found no
+blocking item; its corrections (a residual, the ``8 digits'' claim for $d=2$, the size of the slack, prior knowledge of the $K=30$
+$d=1$ outcomes from H1, the $\alpha=2$ reference caveat) are applied here and in \texttt{H1p/RESULTS.md}.
 
 \section{What this does and does not show}
 \begin{itemize}[leftmargin=1.2em,itemsep=1pt]
@@ -209,8 +256,10 @@ measurement (papers IV, this paper); the ``KK tower'' picture is a real and mode
 correct explanation of a negative fact.
 \item Round~2 adds no positive result. Its main product is a measured limit: with our optimisers, a homotopy in the kernel does
 not find a proved optimum on $S^3$ (the 600-cell) that plain restarts find at $a=4$, the formal-duality search cannot distinguish a known
-formally self-dual structure from nearby non-self-dual ones, and our LP code is not yet certified at the $10^{-8}$ level. These are statements about our methods,
-not about the Gaussian-core conjecture.
+formally self-dual structure from nearby non-self-dual ones, and our LP code is not certified at the $10^{-8}$ level (version~2: it reproduces published values numerically, Sec.~\ref{sec:h1p}).
+These are statements about our methods, not about the Gaussian-core conjecture.
+\item Version~2 (H1$'$) adds a reproduction, not a result: our LP code matches published two-point values numerically, and
+the $d=3$ gaps at $\alpha=2,4,8$ are of the size the literature led us to expect; nothing is certified.
 \item Nothing here involves the planar lattice theorem of \texttt{openai/math}, which remains AI-generated and unrefereed, nor any
 claim about excitons.
 \end{itemize}
@@ -220,15 +269,16 @@ Round~1 deviations: B restart counts reduced (100/100/60/40/40); A reruns after 
 $\ge45/50$ and the $a=1$ rerun added after review; D's comparator defined by the run's author before running but not registered;
 L3's pre-registration untracked at run time; L3 annulus G2 cases run twice with the second overwriting the first; a timing check on
 an uncounted seed. L1: mpmath reference at 10 of 160 points; first run discarded for a reference bug. Round~2 deviations are listed
-with the results. All raw records, analysis scripts and the two reviews are in the repository; the independent review of round~1
+with the results. All raw records, analysis scripts and the reviews (round~1, round~2, F1, and in version~2 H1$'$) are in the repository; the independent review of round~1
 (\texttt{docs/designs/EXCITON\_FLUID\_VERIFIER\_NOTES\_review\_3d.md}) recomputed every headline number from the records and asked for
 the wording changes applied here (D ``not met at matched cost'', B1 ``strictest reading'', C $a=1$ resolved by rerun).
 
-\begin{thebibliography}{9}\small
+\begin{thebibliography}{99}\small
 \bibitem{CallensI} X. Callens, \emph{Gated exciton fluids}, Zenodo, \url{https://doi.org/10.5281/zenodo.23294615} (2026).
 \bibitem{CallensII} X. Callens, \emph{Gated exciton fluids II}, Zenodo, \url{https://doi.org/10.5281/zenodo.23297479} (2026).
 \bibitem{CallensIII} X. Callens, \emph{Gated exciton fluids III}, Zenodo, \url{https://doi.org/10.5281/zenodo.23298292} (2026).
 \bibitem{CallensIV} X. Callens, \emph{Gated exciton fluids IV}, Zenodo, \url{https://doi.org/10.5281/zenodo.23302787} (2026).
+\bibitem{CdCI16} H. Cohn, M. de Courcy-Ireland, The Gaussian core model in high dimensions, arXiv:1603.09684 (v6, 2018).
 \bibitem{CK07} H. Cohn, A. Kumar, Universally optimal distribution of points on spheres, \emph{J. Amer. Math. Soc.} 20 (2007) 99--148.
 \bibitem{CKS09} H. Cohn, A. Kumar, A. Sch\"urmann, Ground states and formal duality relations in the Gaussian core model, arXiv:0911.2169 (2009).
 \bibitem{CK08} H. Cohn, A. Kumar, Counterintuitive ground states in soft-core models, \emph{Phys. Rev. E} 78 (2008) 061113, arXiv:0811.1236.

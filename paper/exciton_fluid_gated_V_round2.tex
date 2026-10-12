@@ -6,7 +6,7 @@ searches of this programme are declared unreliable. T2: no structure below FCC/B
 self-dual point (0 candidates in 75 cells, 5\,100 restarts). T1: no formally self-dual configuration accepted --- but the search
 cannot distinguish the known one (diamond) from configurations $10^{-3}$ away, so this negative carries no information. H1: the
 linear-programming code failed its own sanity gate in $d=1$ at $\alpha=\pi$ (under an admissibility tolerance fixed in code,
-not registered) and was therefore not run in $d=3$.
+not registered) and was therefore not run in $d=3$ (version~2: numerical $d=3$ values in Sec.~\ref{sec:h1p}).
 \end{failbox}
 
 \begin{center}
@@ -127,12 +127,15 @@ at $\alpha=1$ the bound is $0.7726372068$ against $E_{\mathbb Z}=0.7726372048$ (
 and also a measure of the discretisation error, since a valid bound cannot exceed $E_{\mathbb Z}$); at $\alpha=\pi$ the
 full-setting values are $+1.6$ to $+2.8\times10^{-10}$ from $E_{\mathbb Z}$, inside the registered $10^{-8}$, but none meets the
 code's admissibility tolerance (violations $2$--$5\times10^{-8}$). \textbf{H0 failed under the code's admissibility tolerance
-(not registered); the stop then followed the registered rule}, and the $d=3$ gap has no value in this paper. The registered
+(not registered); the stop then followed the registered rule}, and H1 gives no $d=3$ value (see Sec.~\ref{sec:h1p}, added in version~2). The registered
 $10^{-8}$ and the code's $5\times10^{-9}$ measure the same discretisation error from two sides (the $\alpha=1$ value is itself
 $2\times10^{-9}$ \emph{above} $E_{\mathbb Z}$); part of the failure may also be a limit of the $K=30$ ansatz rather than of
 certification. The H1
 thresholds ($10^{-6}$, $10^{-3}$) lie far above this $10^{-8}$ level, so a re-registered run with exact (rational or
-sum-of-squares) non-negativity certificates would probably be informative; it is left open.
+sum-of-squares) non-negativity certificates would probably be informative; it is left open. \emph{Note added in version~2.} At $\alpha=\pi$ the question H1 asked
+was already answered in print: Cohn and de Courcy-Ireland~\cite{CdCI16} report the numerically optimised two-point bound in
+$d=3$ as $0.22321782\ldots$ against a record of $0.23153532\ldots$, a gap of $3.6\%$; we had not found this before
+registering H1. The follow-up H1$'$ (Sec.~\ref{sec:h1p}) reproduces it and extends it to $\alpha=2,4,8$.
 
 \subsection{Round 2 deviations}
 F1: the run was interrupted after 6 of 50 seeds when the launching session was compacted and resumed for seeds 6--49 with the
