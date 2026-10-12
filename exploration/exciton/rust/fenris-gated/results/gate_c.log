@@ -1,0 +1,141 @@
+{
+ "L-c": {
+  "ungated:0.5|N3": {
+   "engine_converged_inside": 60,
+   "engine_distinct": [
+    0.5075871394180811
+   ],
+   "n_engine_distinct": 1,
+   "numpy_inside": 366,
+   "numpy_distinct": [
+    0.5075871394180804
+   ],
+   "n_numpy_distinct": 1,
+   "best_engine": 0.5075871394180811,
+   "best_numpy": 0.5075871394180804,
+   "best_equal": true,
+   "every_engine_minimum_matched": true,
+   "pass_": true
+  },
+  "ungated:0.5|N7": {
+   "engine_converged_inside": 53,
+   "engine_distinct": [
+    1.8962513223541095
+   ],
+   "n_engine_distinct": 1,
+   "numpy_inside": 297,
+   "numpy_distinct": [
+    1.8962513223541095
+   ],
+   "n_numpy_distinct": 1,
+   "best_engine": 1.8962513223541095,
+   "best_numpy": 1.8962513223541095,
+   "best_equal": true,
+   "every_engine_minimum_matched": true,
+   "pass_": true
+  },
+  "gated:0.5:1.5|N3": {
+   "engine_converged_inside": 60,
+   "engine_distinct": [
+    0.015721331479380974
+   ],
+   "n_engine_distinct": 1,
+   "numpy_inside": 373,
+   "numpy_distinct": [
+    0.015721331479381213,
+    0.01572752355989393
+   ],
+   "n_numpy_distinct": 2,
+   "best_engine": 0.015721331479380974,
+   "best_numpy": 0.015721331479381213,
+   "best_equal": true,
+   "every_engine_minimum_matched": true,
+   "pass_": true
+  },
+  "gated:0.5:1.5|N7": {
+   "engine_converged_inside": 57,
+   "engine_distinct": [
+    0.17845377064148696
+   ],
+   "n_engine_distinct": 1,
+   "numpy_inside": 322,
+   "numpy_distinct": [
+    0.17845377064148427
+   ],
+   "n_numpy_distinct": 1,
+   "best_engine": 0.17845377064148696,
+   "best_numpy": 0.17845377064148427,
+   "best_equal": true,
+   "every_engine_minimum_matched": true,
+   "pass_": true
+  },
+  "gated:0.5:5.0|N3": {
+   "engine_converged_inside": 60,
+   "engine_distinct": [
+    0.3586432635722157
+   ],
+   "n_engine_distinct": 1,
+   "numpy_inside": 367,
+   "numpy_distinct": [
+    0.35864326357221765
+   ],
+   "n_numpy_distinct": 1,
+   "best_engine": 0.3586432635722157,
+   "best_numpy": 0.35864326357221765,
+   "best_equal": true,
+   "every_engine_minimum_matched": true,
+   "pass_": true
+  },
+  "gated:0.5:5.0|N7": {
+   "engine_converged_inside": 53,
+   "engine_distinct": [
+    1.5068607123173736
+   ],
+   "n_engine_distinct": 1,
+   "numpy_inside": 310,
+   "numpy_distinct": [
+    1.506860712317375
+   ],
+   "n_numpy_distinct": 1,
+   "best_engine": 1.5068607123173736,
+   "best_numpy": 1.506860712317375,
+   "best_equal": true,
+   "every_engine_minimum_matched": true,
+   "pass_": true
+  },
+  "yukawa:1.5|N3": {
+   "engine_converged_inside": 60,
+   "engine_distinct": [
+    0.7386848499694078
+   ],
+   "n_engine_distinct": 1,
+   "numpy_inside": 356,
+   "numpy_distinct": [
+    0.7386848499694079
+   ],
+   "n_numpy_distinct": 1,
+   "best_engine": 0.7386848499694078,
+   "best_numpy": 0.7386848499694079,
+   "best_equal": true,
+   "every_engine_minimum_matched": true,
+   "pass_": true
+  },
+  "yukawa:1.5|N7": {
+   "engine_converged_inside": 51,
+   "engine_distinct": [
+    3.2998358979409192
+   ],
+   "n_engine_distinct": 1,
+   "numpy_inside": 262,
+   "numpy_distinct": [
+    3.2998358979409206
+   ],
+   "n_numpy_distinct": 1,
+   "best_engine": 3.2998358979409192,
+   "best_numpy": 3.2998358979409206,
+   "best_equal": true,
+   "every_engine_minimum_matched": true,
+   "pass_": true
+  }
+ }
+}

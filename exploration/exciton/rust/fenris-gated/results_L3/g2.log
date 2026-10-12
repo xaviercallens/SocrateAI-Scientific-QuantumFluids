@@ -1,0 +1,85 @@
+12 cases to run of 12
+g2_square_N60_ungated-0.5_w0.5 start 5/30 37s
+g2_square_N60_ungated-0.5_w0.5 start 10/30 71s
+g2_square_N60_ungated-0.5_w0.5 start 15/30 106s
+g2_square_N60_ungated-0.5_w0.5 start 20/30 177s
+g2_square_N60_ungated-0.5_w0.5 start 25/30 243s
+g2_square_N60_ungated-0.5_w0.5 start 30/30 303s
+DONE g2_square_N60_ungated-0.5_w0.5 {'n_target': 60, 'n_corner': 4, 'secs_total': 303.416405916214}
+g2_square_N60_gated-0.5-1.5_w0.5 start 5/30 91s
+g2_square_N60_gated-0.5-1.5_w0.5 start 10/30 166s
+g2_square_N60_gated-0.5-1.5_w0.5 start 15/30 263s
+g2_square_N60_gated-0.5-1.5_w0.5 start 20/30 375s
+g2_square_N60_gated-0.5-1.5_w0.5 start 25/30 487s
+g2_square_N60_gated-0.5-1.5_w0.5 start 30/30 589s
+DONE g2_square_N60_gated-0.5-1.5_w0.5 {'n_target': 60, 'n_corner': 4, 'secs_total': 588.8573610782623}
+g2_hexagon_N60_ungated-0.5_w0.5 start 5/30 30s
+g2_hexagon_N60_ungated-0.5_w0.5 start 10/30 65s
+g2_hexagon_N60_ungated-0.5_w0.5 start 15/30 103s
+g2_hexagon_N60_ungated-0.5_w0.5 start 20/30 138s
+g2_hexagon_N60_ungated-0.5_w0.5 start 25/30 172s
+g2_hexagon_N60_ungated-0.5_w0.5 start 30/30 208s
+DONE g2_hexagon_N60_ungated-0.5_w0.5 {'n_target': 60, 'n_corner': 6, 'secs_total': 208.14333415031433}
+g2_hexagon_N60_gated-0.5-1.5_w0.5 start 5/30 58s
+g2_hexagon_N60_gated-0.5-1.5_w0.5 start 10/30 124s
+g2_hexagon_N60_gated-0.5-1.5_w0.5 start 15/30 197s
+g2_hexagon_N60_gated-0.5-1.5_w0.5 start 20/30 264s
+g2_hexagon_N60_gated-0.5-1.5_w0.5 start 25/30 328s
+g2_hexagon_N60_gated-0.5-1.5_w0.5 start 30/30 388s
+DONE g2_hexagon_N60_gated-0.5-1.5_w0.5 {'n_target': 60, 'n_corner': 6, 'secs_total': 387.9298861026764}
+g2_disc_N60_ungated-0.5_w0.5 start 5/30 65s
+g2_disc_N60_ungated-0.5_w0.5 start 10/30 105s
+g2_disc_N60_ungated-0.5_w0.5 start 15/30 161s
+g2_disc_N60_ungated-0.5_w0.5 start 20/30 213s
+g2_disc_N60_ungated-0.5_w0.5 start 25/30 268s
+g2_disc_N60_ungated-0.5_w0.5 start 30/30 319s
+DONE g2_disc_N60_ungated-0.5_w0.5 {'n_target': 60, 'n_corner': 0, 'secs_total': 319.17018246650696}
+g2_disc_N60_gated-0.5-1.5_w0.5 start 5/30 119s
+g2_disc_N60_gated-0.5-1.5_w0.5 start 10/30 211s
+g2_disc_N60_gated-0.5-1.5_w0.5 start 15/30 296s
+g2_disc_N60_gated-0.5-1.5_w0.5 start 20/30 387s
+g2_disc_N60_gated-0.5-1.5_w0.5 start 25/30 467s
+g2_disc_N60_gated-0.5-1.5_w0.5 start 30/30 527s
+DONE g2_disc_N60_gated-0.5-1.5_w0.5 {'n_target': 60, 'n_corner': 0, 'secs_total': 527.4075231552124}
+g2_rect2_N60_ungated-0.5_w0.5 start 5/30 38s
+g2_rect2_N60_ungated-0.5_w0.5 start 10/30 74s
+g2_rect2_N60_ungated-0.5_w0.5 start 15/30 112s
+g2_rect2_N60_ungated-0.5_w0.5 start 20/30 148s
+g2_rect2_N60_ungated-0.5_w0.5 start 25/30 184s
+g2_rect2_N60_ungated-0.5_w0.5 start 30/30 222s
+DONE g2_rect2_N60_ungated-0.5_w0.5 {'n_target': 60, 'n_corner': 4, 'secs_total': 222.1024134159088}
+g2_rect2_N60_gated-0.5-1.5_w0.5 start 5/30 83s
+g2_rect2_N60_gated-0.5-1.5_w0.5 start 10/30 160s
+g2_rect2_N60_gated-0.5-1.5_w0.5 start 15/30 236s
+g2_rect2_N60_gated-0.5-1.5_w0.5 start 20/30 314s
+g2_rect2_N60_gated-0.5-1.5_w0.5 start 25/30 396s
+g2_rect2_N60_gated-0.5-1.5_w0.5 start 30/30 474s
+DONE g2_rect2_N60_gated-0.5-1.5_w0.5 {'n_target': 60, 'n_corner': 4, 'secs_total': 473.5989203453064}
+g2_lshape_N60_ungated-0.5_w0.5 start 5/30 38s
+g2_lshape_N60_ungated-0.5_w0.5 start 10/30 75s
+g2_lshape_N60_ungated-0.5_w0.5 start 15/30 108s
+g2_lshape_N60_ungated-0.5_w0.5 start 20/30 138s
+g2_lshape_N60_ungated-0.5_w0.5 start 25/30 172s
+g2_lshape_N60_ungated-0.5_w0.5 start 30/30 206s
+DONE g2_lshape_N60_ungated-0.5_w0.5 {'n_target': 60, 'n_corner': 6, 'secs_total': 205.9873650074005}
+g2_lshape_N60_gated-0.5-1.5_w0.5 start 5/30 84s
+g2_lshape_N60_gated-0.5-1.5_w0.5 start 10/30 163s
+g2_lshape_N60_gated-0.5-1.5_w0.5 start 15/30 243s
+g2_lshape_N60_gated-0.5-1.5_w0.5 start 20/30 320s
+g2_lshape_N60_gated-0.5-1.5_w0.5 start 25/30 390s
+g2_lshape_N60_gated-0.5-1.5_w0.5 start 30/30 451s
+DONE g2_lshape_N60_gated-0.5-1.5_w0.5 {'n_target': 60, 'n_corner': 6, 'secs_total': 450.82401609420776}
+g2_annulus_N60_ungated-0.5_w0.5 start 5/30 42s
+g2_annulus_N60_ungated-0.5_w0.5 start 10/30 69s
+g2_annulus_N60_ungated-0.5_w0.5 start 15/30 83s
+g2_annulus_N60_ungated-0.5_w0.5 start 20/30 98s
+g2_annulus_N60_ungated-0.5_w0.5 start 25/30 114s
+g2_annulus_N60_ungated-0.5_w0.5 start 30/30 129s
+DONE g2_annulus_N60_ungated-0.5_w0.5 {'n_target': 60, 'n_corner': 0, 'secs_total': 129.24848246574402}
+g2_annulus_N60_gated-0.5-1.5_w0.5 start 5/30 69s
+g2_annulus_N60_gated-0.5-1.5_w0.5 start 10/30 107s
+g2_annulus_N60_gated-0.5-1.5_w0.5 start 15/30 151s
+g2_annulus_N60_gated-0.5-1.5_w0.5 start 20/30 183s
+g2_annulus_N60_gated-0.5-1.5_w0.5 start 25/30 228s
+g2_annulus_N60_gated-0.5-1.5_w0.5 start 30/30 270s
+DONE g2_annulus_N60_gated-0.5-1.5_w0.5 {'n_target': 60, 'n_corner': 0, 'secs_total': 269.7012867927551}

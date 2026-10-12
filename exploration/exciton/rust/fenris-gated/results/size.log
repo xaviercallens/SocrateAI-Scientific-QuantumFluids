@@ -1,0 +1,13 @@
+12 cases to run of 12
+size_square_N200_ungated-0.5_w0.5_rsa: N_free=200 good=20/20 escaped=0 E/node=0.7886424026063437 5/7=13.0/12.35 euler_ok=True secs=316
+size_square_N200_gated-0.5-1.5_w0.5_rsa: N_free=200 good=20/20 escaped=0 E/node=0.2939006267312137 5/7=12.65/12.55 euler_ok=True secs=331
+size_square_N200_yukawa-1.5_w0.5_rsa: N_free=200 good=20/20 escaped=0 E/node=1.3095441846373934 5/7=13.0/13.05 euler_ok=True secs=337
+size_square_N200_gated-0.5-5.0_w0.5_rsa: N_free=200 good=20/20 escaped=0 E/node=0.6713506594802552 5/7=11.6/11.65 euler_ok=True secs=426
+size_hexagon_N200_ungated-0.5_w0.5_rsa: N_free=200 good=20/20 escaped=0 E/node=0.7412909866691799 5/7=0.85/2.6 euler_ok=True secs=362
+size_hexagon_N200_gated-0.5-1.5_w0.5_rsa: N_free=200 good=19/20 escaped=0 E/node=0.2606633946470579 5/7=1.7894736842105263/3.3684210526315788 euler_ok=True secs=360
+size_hexagon_N200_gated-0.5-5.0_w0.5_rsa: N_free=200 good=18/20 escaped=0 E/node=0.6258856879096635 5/7=0.6666666666666666/2.611111111111111 euler_ok=True secs=416
+size_hexagon_N200_yukawa-1.5_w0.5_rsa: N_free=200 good=20/20 escaped=0 E/node=1.2358905404861729 5/7=1.4/3.15 euler_ok=True secs=363
+size_disc_N200_ungated-0.5_w0.5_rsa: N_free=200 good=20/20 escaped=0 E/node=0.7573548479916397 5/7=15.8/17.6 euler_ok=True secs=365
+size_disc_N200_gated-0.5-1.5_w0.5_rsa: N_free=200 good=20/20 escaped=0 E/node=0.27534622630169825 5/7=15.55/17.35 euler_ok=True secs=376
+size_disc_N200_yukawa-1.5_w0.5_rsa: N_free=200 good=20/20 escaped=0 E/node=1.2573861456473014 5/7=14.8/16.8 euler_ok=True secs=430
+size_disc_N200_gated-0.5-5.0_w0.5_rsa: N_free=200 good=20/20 escaped=0 E/node=0.6420674827831003 5/7=13.6/15.35 euler_ok=True secs=492

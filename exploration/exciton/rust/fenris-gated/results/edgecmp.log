@@ -1,0 +1,7 @@
+6 cases to run of 6
+edgecmp_square_N37_ungated-0.707107_w0.5_rsa: N_free=37 good=24/24 escaped=0 E/node=1.7070096874116145 5/7=7.5/6.125 euler_ok=True secs=9
+edgecmp_square_N37_gated-0.707107-2.121320_w0.5_rsa: N_free=37 good=24/24 escaped=0 E/node=0.9653281894334563 5/7=8.0/6.583333333333333 euler_ok=True secs=13
+edgecmp_square_N37_gated-0.707107-7.071068_w0.5_rsa: N_free=37 good=24/24 escaped=0 E/node=1.6026206957054285 5/7=8.0/6.416666666666667 euler_ok=True secs=13
+edgecmp_square_N61_ungated-0.707107_w0.5_rsa: N_free=61 good=24/24 escaped=0 E/node=1.6537562877417347 5/7=5.208333333333333/4.708333333333333 euler_ok=True secs=17
+edgecmp_square_N61_gated-0.707107-2.121320_w0.5_rsa: N_free=61 good=24/24 escaped=0 E/node=0.9136616249310953 5/7=6.041666666666667/5.833333333333333 euler_ok=True secs=27
+edgecmp_square_N61_gated-0.707107-7.071068_w0.5_rsa: N_free=61 good=24/24 escaped=0 E/node=1.5370552721235529 5/7=5.791666666666667/5.75 euler_ok=True secs=27

@@ -1,0 +1,3 @@
+2 cases to run of 4
+wallhalfrsa_square_N100_yukawa-1.5_w0.5_rsa: N_free=100 good=24/24 escaped=0 E/node=1.5005325863603793 5/7=10.083333333333334/10.041666666666666 euler_ok=True secs=92
+wallhalfrsa_square_N100_gated-0.5-5.0_w0.5_rsa: N_free=100 good=24/24 escaped=0 E/node=0.7831004237928453 5/7=8.25/8.0 euler_ok=True secs=115

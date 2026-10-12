@@ -1,0 +1,9 @@
+8 cases to run of 8
+sens_square_N100_ungated-1.0_w0.5_rsa: N_free=100 good=23/24 escaped=0 E/node=2.3858893532471015 5/7=10.08695652173913/9.478260869565217 euler_ok=True secs=59
+sens_square_N100_gated-1.0-3.0_w0.5_rsa: N_free=100 good=24/24 escaped=0 E/node=1.4508704727262456 5/7=9.416666666666666/9.166666666666666 euler_ok=True secs=80
+sens_square_N100_yukawa-3.0_w0.5_rsa: N_free=100 good=23/24 escaped=0 E/node=0.4213998376596155 5/7=9.130434782608695/8.869565217391305 euler_ok=True secs=51
+sens_square_N100_gated-1.0-10.0_w0.5_rsa: N_free=100 good=24/24 escaped=0 E/node=2.2543514064344703 5/7=10.0/8.875 euler_ok=True secs=85
+sens_hexagon_N100_ungated-1.0_w0.5_rsa: N_free=100 good=22/24 escaped=0 E/node=2.3895513852160075 5/7=1.8181818181818181/5.7272727272727275 euler_ok=True secs=49
+sens_hexagon_N100_gated-1.0-3.0_w0.5_rsa: N_free=100 good=24/24 escaped=0 E/node=1.4582003404044959 5/7=2.6666666666666665/6.166666666666667 euler_ok=True secs=75
+sens_hexagon_N100_gated-1.0-10.0_w0.5_rsa: N_free=100 good=24/24 escaped=0 E/node=2.258869690782066 5/7=2.0416666666666665/5.958333333333333 euler_ok=True secs=80
+sens_hexagon_N100_yukawa-3.0_w0.5_rsa: N_free=100 good=24/24 escaped=0 E/node=0.43068692580742013 5/7=2.2916666666666665/6.291666666666667 euler_ok=True secs=52

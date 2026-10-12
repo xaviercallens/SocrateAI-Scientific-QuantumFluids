@@ -1,0 +1,13 @@
+44 cases to run of 44
+primary_square_N100_ungated-0.5: N_free=100 good=1/24 escaped=23 E/node=0.3750950396278159 5/7=10.0/9.0 euler_ok=True secs=114
+primary_square_N100_gated-0.5-1.5: N_free=100 good=4/24 escaped=20 E/node=0.07438369482367743 5/7=9.75/10.25 euler_ok=True secs=120
+primary_square_N100_yukawa-1.5: N_free=100 good=1/24 escaped=23 E/node=0.6595675588358618 5/7=10.0/10.0 euler_ok=True secs=139
+primary_square_N100_gated-0.5-5.0: N_free=100 good=2/24 escaped=22 E/node=0.30460028632442365 5/7=9.0/8.5 euler_ok=True secs=154
+primary_rect1.25_N100_ungated-0.5: N_free=100 good=1/24 escaped=23 E/node=0.3732514697217799 5/7=10.0/10.0 euler_ok=True secs=102
+primary_rect1.25_N100_gated-0.5-1.5: N_free=100 good=2/24 escaped=22 E/node=0.07398102605779316 5/7=10.0/10.5 euler_ok=True secs=125
+primary_rect1.25_N100_gated-0.5-5.0: N_free=100 good=0/24 escaped=24 E/node=None 5/7=None/None euler_ok=None secs=124
+primary_rect1.25_N100_yukawa-1.5: N_free=100 good=0/24 escaped=24 E/node=None 5/7=None/None euler_ok=None secs=97
+primary_rect1.5_N100_ungated-0.5: N_free=100 good=0/24 escaped=24 E/node=None 5/7=None/None euler_ok=None secs=106
+primary_rect1.5_N100_gated-0.5-1.5: N_free=100 good=0/24 escaped=24 E/node=None 5/7=None/None euler_ok=None secs=120
+primary_rect1.5_N100_yukawa-1.5: N_free=100 good=0/24 escaped=24 E/node=None 5/7=None/None euler_ok=None secs=101
+primary_rect1.5_N100_gated-0.5-5.0: N_free=100 good=5/24 escaped=19 E/node=0.3044743319845056 5/7=8.4/10.2 euler_ok=True secs=129

@@ -59,7 +59,8 @@ def main() -> None:
                  ROOT / "paper" / "astro_topological_measurement.pdf", ROOT / "paper" / "sector_temperature.pdf", ROOT / "paper" / "duality_sector.pdf", ROOT / "paper" / "cosmology_sectors.pdf",
                  ROOT / "paper" / "vortex_transport.pdf", ROOT / "paper" / "friction_law.pdf", ROOT / "paper" / "qf_pgpe_software.pdf",
                  ROOT / "paper" / "exciton_fluid_phase1.pdf", ROOT / "paper" / "exciton_fluid_gated.pdf", ROOT / "paper" / "exciton_fluid_gated_II.pdf",
-                 ROOT / "paper" / "exciton_fluid_gated_III.pdf", ROOT / "paper" / "exciton_fluid_gated_IV.pdf"]
+                 ROOT / "paper" / "exciton_fluid_gated_III.pdf", ROOT / "paper" / "exciton_fluid_gated_IV.pdf",
+                 ROOT / "paper" / "exciton_fluid_gated_V.pdf"]
         if a.draft:
             dep = requests.get(f"{API}/deposit/depositions/{a.draft}", headers=auth, timeout=60).json()
             if dep.get("submitted"):
