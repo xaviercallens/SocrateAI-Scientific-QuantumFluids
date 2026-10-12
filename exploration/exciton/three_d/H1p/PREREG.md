@@ -118,3 +118,28 @@ derivative), which is still a rigorous enclosure.
 **Development discipline.** Code is developed and tested only at parameters that are not gate cases: d = 1, α = 2;
 d = 2, α = 2. The gate cases (d = 1, α ∈ {1, π}; d = 2, 3 at α = π; d = 3 at α ∈ {2, 4, 8}) are run once each with the
 code frozen at a commit recorded in the results. K = 30 is used for development; K ∈ {30, 40, 50} for the gate runs.
+
+## Amendment A2 (2026-10-12, before any registered run): non-rigorous reproduction (owner's choice)
+
+**Why.** Development at non-gate parameters (`DEV_NOTES.md`, commit 1ec3fe7) showed that neither the registered
+certification nor amendment A1's polish works: the double LP's optimum is a degenerate face resolved only at a few
+contacts, and the high-precision polish does not converge. Building a rigorous certifier is a separate project. The owner
+chose (2026-10-12) a **numerical, explicitly non-rigorous** reproduction instead. Everything below replaces the
+certificate sections; the reference values, the order of the gates and the stop rule are kept.
+
+**Method.** `../H1/lp_bound.py` unchanged; scan as `../H1/run_h1.py` (`REL_BETAS`, COARSE then FULL settings, best β by
+value among accepted solutions), driver `run_h1p.py`. Each case is run with K = 30 and K = 40; **the gate uses K = 40**,
+K = 30 is reported. A solution is *accepted as numerical* if the tail checks of `lp_bound.tail_certificates` pass and the
+polished residual violations max(f − g, −f̂) are <= 1e-7 (absolute) at FULL settings (H1 used 5e-9, which none of its
+α = π solutions met). The registered 10^5-point random verification is reported. **Nothing here is a certified bound**;
+values can exceed the true LP optimum by about the residual violations, so the gates below are two-sided.
+
+**Gates (numerical):**
+- V1 (d = 1, α ∈ {1, π}): |B − E_Z(α)| <= 1e-8 · E_Z(α).
+- V2 (d = 2, α = π): B ∈ [0.15959526 − 1e-8, 0.15959527 + 1e-8] (the published value is printed truncated to 8 digits).
+- V3 (d = 3, α = π): B ∈ [0.22321782 − 1e-8, 0.22321783 + 1e-8].
+- H1' (d = 3, α ∈ {2, 4, 8}), only if V1–V3 pass: B, and G = (min(E_FCC, E_BCC) − B)/min(E_FCC, E_BCC), read as
+  registered (G < 1e-6 / G > 1e-3 at all α / inconclusive); prediction G > 1e-3 at all three α. B > min(E_FCC, E_BCC)
+  by more than 1e-8 relative voids the run.
+Lattice energies by direct sums (`lp_bound.theta_sum`), A₂ and Z included. The code is frozen at the commit that adds
+this amendment and `run_h1p.py`; records go to `records/`, the log to `run.log` (force-added).
