@@ -12,7 +12,7 @@ Registered in `../PREREG.md`. Code: `run_C.py`, `analyse.py`. Records: `records.
 | kernel | E_600 | success | lowest found | max rel dev of lowest from E_600 |
 |---|---|---|---|---|
 | gauss0.5 | 2933.909981 | 50/50 | 2933.909982 | 2.3e-10 |
-| gauss1 | 1489.938885 | 0/50 (INCONCLUSIVE: all 50 hit the iteration cap; see supplementary run) | 1489.938915 | 2.0e-08 |
+| gauss1 | 1489.938885 | 0/50 (confirmed by the raised-cap rerun: converged to distinct local minima, see below) | 1489.938915 | 2.0e-08 |
 | gauss2 | 583.5045188 | 0/50 | 583.5085428 | 6.9e-06 |
 | gauss4 | 181.7114008 | 6/50 | 181.7114008 | 3.1e-16 |
 | coulomb | 5796.576456 | 46/50 | 5796.576456 | 0.0e+00 |
@@ -93,3 +93,12 @@ Smallest N (in 12..48 even) with more than one distinct minimum found by 50 rand
 * gauss1 at N = 120 is INCONCLUSIVE, not a search failure: all 50 runs were cap-limited (8000 iterations), 2.0e-8..3.1e-8 above E_600 against a 1e-8 threshold. The overall C1 FAIL stands on gauss2 (0/50, converged, 7e-6 above) and gauss4 (6/50). Supplementary run: `polish_gauss1.py` (cap 150000), results below once complete.
 * Seed formula 1000*N + start + 100000*kernel_index makes (N=120, kernel 0) and (N=20, kernel 1) share seeds: correlated, not independent, streams across kernels (harmless for the claims).
 * gauss4 N=24: whether the 24-cell is a local minimum at a=4 was not tested.
+
+## Supplementary run, resolved (2026-10-12)
+* `polish_gauss1.py` (cap 150000, same 50 seeds): all 50 converge (ftol; 16640-66673 iterations, |grad|max <= 1.4e-6) to
+  E in [1489.938908, 1489.938917], i.e. 1.5e-8..2.1e-8 relative above E_600 = 1489.938885. Still 0/50 within 1e-8.
+* `polish_gauss1_coords.py` (starts 0 and 1, coordinates kept): minimum chord 0.497 and 0.504 against 0.618 for the 600-cell;
+  maximum deviation of the sorted distance spectrum from the 600-cell's 0.22. **These are distinct local minima, not the
+  600-cell with residual error.** gauss1 is therefore a genuine search failure, but with an energy landscape so flat that the
+  best local minima lie within 2e-8 of the proved optimum: for a = 1 the kernel barely distinguishes configurations at N = 120.
+* Verdict table updated accordingly; the earlier 'INCONCLUSIVE' label is withdrawn.

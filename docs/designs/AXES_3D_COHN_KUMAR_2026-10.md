@@ -155,8 +155,9 @@ Décisions demandées : (1) valider l'ordre 1 → 2 → 3 ; (2) autoriser que §
 place du relèvement (clos négativement) ; (3) choisir à qui poser la question §3.2 (proposition : D. Radchenko ou
 L. Bétermin, avec la note sur le noyau gated en pièce jointe, après relecture humaine).
 
-## Annexe : état du rerun gauss1 (S³, N = 120)
-Plafond d'itérations relevé de 8 000 à 150 000 (`three_d/C/polish_gauss1.py`) : les 50 départs convergent (critère ftol,
-16 640 à 66 673 itérations, |grad|max ≤ 1,4e-6) entre 1489,938908 et 1489,938917, soit 1,5e-8 à 2,1e-8 relatif au-dessus
-de E₆₀₀ = 1489,938885 — toujours au-dessus du seuil 1e-8, mais à sa limite. Une vérification des coordonnées (spectre des
-distances contre celui du 600-cell) est en cours ; tant qu'elle n'est pas rendue, gauss 1 reste **non concluant**.
+## Annexe : rerun gauss1 (S³, N = 120), résolu
+Plafond relevé à 150 000 (`three_d/C/polish_gauss1.py`) : les 50 départs convergent entre 1,5e-8 et 2,1e-8 relatif
+au-dessus de E₆₀₀ ; les coordonnées de deux départs (`polish_gauss1_coords.py`) montrent une corde minimale de 0,50 contre
+0,618 pour le 600-cell et un écart de spectre de distances de 0,22 : **ce sont de vrais minima locaux distincts**, pas le
+600-cell mal convergé. gauss 1 passe de « non concluant » à « échec de recherche », avec un paysage si plat que les
+meilleurs minima locaux sont à 2e-8 de l'optimum prouvé. Cela renforce la priorité 1 (homotopie en α avec contrôle prouvé).
