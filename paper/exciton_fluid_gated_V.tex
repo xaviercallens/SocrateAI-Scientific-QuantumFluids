@@ -1,0 +1,233 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,urlcolor=blue!60!black]{hyperref}
+\usepackage{microtype}
+\usepackage{xurl}
+\setlength{\emergencystretch}{3em}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\newtcolorbox{keybox}[1][]{colback=blue!3,colframe=blue!45!black,boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+\newtcolorbox{failbox}[1][]{colback=red!3,colframe=red!45!black,boxrule=0.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,#1}
+\hypersetup{pdftitle={Gated exciton fluids V},pdfauthor={Xavier Callens},pdfsubject={Three dimensions: what the T-duality, holography and projection analogies do and do not give}}
+
+\begin{document}
+\begin{center}
+\includegraphics[width=0.98\textwidth]{figs_companion5/fig_round1.pdf}\\[2pt]
+{\footnotesize (a) Which Bravais lattice wins in 3D for Gaussian and Yukawa kernels at unit density; the crossovers are $a^*=\pi$
+(exact, Poisson duality) and $k^*=1.718$. (b) Gaussian energy along the Bain path between BCC and FCC: at the self-dual point
+$\alpha=\pi$ the self-dual (isodual) lattice is the \emph{maximum}. (c) Fraction of 50 random starts that a local optimiser brings
+to the proved optimum on $S^3$ (600-cell, $N=120$) and to the 24-cell energy ($N=24$). (d) Fraction of starts reaching the lowest
+minimum found, $N\le 48$ on $S^3$. (e) Hybrid CM$+$CVT mesh against CVT alone, paired over 30 seeds. (f) Wall-spacing scan and
+sliding walls in the Fenris container study.}
+\end{center}
+\vspace{-0.6em}
+\begin{center}
+{\Large\textbf{Gated exciton fluids V:}\\[2pt]
+\large three dimensions --- what the T-duality, holography and projection analogies\\ do and do not give, measured}\\[8pt]
+Xavier Callens\\ {\small SocrateAI Research \quad\url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}}\\[2pt]
+{\small October 2026}
+\end{center}
+\vspace{-0.4em}
+
+\begin{abstract}\small\noindent
+Papers~I--IV~\cite{CallensI,CallensII,CallensIII,CallensIV} proved that the gated dipole kernel is completely monotone in $r^2$ and
+tested, negatively, three heuristics for the two-dimensional node problem. This paper turns to three dimensions, where the owner
+asked whether ideas borrowed from string theory --- lifting to 8 or 24 dimensions, holography, projection, T-duality --- could
+``solve'' the problem. We first state the known fact that reframes the question: in $\mathbb R^3$ no configuration is universally
+optimal, because the Poisson dual of FCC is BCC and the two exchange roles at the self-dual Gaussian parameter $\alpha=\pi$; the
+open problems are the Gaussian-core conjecture (FCC/BCC among \emph{all} configurations), crystallisation, and mixed kernels.
+We then report pre-registered experiments. Round~1: among 3D Bravais lattices the minimiser is always FCC or BCC (29/29 kernel
+points; crossovers $a^*=\pi$ to $3\times10^{-14}$ and $k^*=1.7179$ for Yukawa); random-restart searches over non-Bravais cells with
+up to 16 points find nothing below $\min(\mathrm{FCC},\mathrm{BCC},\mathrm{HCP},\mathrm{A15})$ in 9\,860 restarts; on $S^3$, where the
+600-cell is a \emph{proved} optimum, a local optimiser reaches it in 46--50 of 50 starts for Coulomb, logarithmic and soft Gaussian
+kernels but in 0 and 6 of 50 for stiffer Gaussians; a completely-monotone pre-relaxation improves a CVT mesh only when the CVT is
+given less work; sliding container walls reduce the defect count in 0 of 6 shapes. A direct computation along the Bain path shows
+that at $\alpha=\pi$ the self-dual (isodual) 3D lattice is the energy \emph{maximum} between the two degenerate minima: the
+T-duality analogy explains why no universal optimum exists in 3D rather than pointing to one. The mode-sum (``Kaluza--Klein tower'')
+evaluator of the gated kernel is 4--7 times cheaper than a tail-corrected image sum. Round~2 (an $\alpha$-homotopy against the
+proved $S^3$ control, Gaussian mixtures straddling the self-dual point, a search for formally self-dual configurations, and the
+two-point linear-programming gap in $d=3$) is reported in \S\ref{sec:round2}. Everything is small-scale, classical and
+single-engine; nothing uses the unrefereed planar lattice theorem; written with an AI system and not refereed.
+\end{abstract}
+
+\section{The question, restated}\label{sec:restate}
+
+For a unit-density lattice $L\subset\mathbb R^3$ and the Gaussian kernel $e^{-\alpha r^2}$, Poisson summation gives
+$\theta_L(\alpha)=\sum_{v\in L\setminus0}e^{-\alpha|v|^2}$ and $1+\theta_L(\alpha)=(\pi/\alpha)^{3/2}\,(1+\theta_{L^*}(\pi^2/\alpha))$.
+The dual of FCC is BCC. Hence $\theta_{\rm FCC}(\pi)=\theta_{\rm BCC}(\pi)$ exactly, BCC is lower for $\alpha<\pi$ and FCC for
+$\alpha>\pi$ (Fig.~(a); our lattice search finds the crossover at $a^*=3.14159265358987$). By Bernstein's theorem every completely
+monotone kernel is a positive mixture of Gaussians, so no single configuration can minimise all of them: \textbf{universal
+optimality is false in $\mathbb R^3$ for every configuration}. This is known~\cite{CK07,CKS09}; we state it because it voids the
+phrase ``solve the Cohn--Kumar conjecture in 3D''. What is open in three dimensions is
+\begin{enumerate}[leftmargin=1.6em,itemsep=1pt]
+\item[Q1] the Gaussian-core conjecture: BCC ($\alpha<\pi$) and FCC ($\alpha>\pi$) minimise among \emph{all} periodic configurations
+(``no proof is known''~\cite{CKS09}); at $\alpha=\pi$ itself the ground state is a Maxwell coexistence of the two at densities
+$0.99899854\le\rho\le1.00100312$, about $4\times10^{-6}$ below either pure lattice~\cite{CKS09};
+\item[Q2] crystallisation (periodicity of minimisers) for soft repulsions;
+\item[Q3] kernels whose Bernstein measure charges both sides of $\pi$, for which nothing excludes a non-Bravais minimiser.
+\end{enumerate}
+``Borrowing from 8D/24D'' can therefore only mean borrowing \emph{proof mechanisms} --- self-duality, Fourier interpolation,
+linear-programming bounds --- not answers. The experiments below give each analogy a falsifiable form.
+
+\begin{keybox}
+\textbf{What was pre-registered.} Round~1 (\texttt{exploration/exciton/three\_d/PREREG.md}, commit \texttt{357ee6d}): A (Bravais),
+B (non-Bravais cells), C ($S^3$), D (hybrid mesh); L3 (\texttt{fenris-gated/L3\_PREREG.md}, see the caveat in \S\ref{sec:L3});
+L1 (\texttt{exploration/exciton/kk/PREREG.md}). Round~2 (\texttt{PREREG\_round2.md}, commit \texttt{51a85b1}): F1, T2, T1, H1.
+All gates, restart counts and thresholds were fixed before the runs; deviations are dated in each \texttt{RESULTS.md} and
+summarised in \S\ref{sec:process}. An independent adversarial review preceded this write-up; its corrections are applied and
+listed.
+\end{keybox}
+
+\section{Round 1}
+
+\subsection{A: Bravais lattices}
+Free 9-parameter unit-volume cell with periodic Minkowski re-reduction, 300 random starts per kernel point, Ewald energies with
+tails $\le8\times10^{-16}|E|$; kernels Gaussian ($a\in$ 13 log-spaced points in $[0.1,10]$), Yukawa ($k$, same grid), Riesz
+($s\in\{4,6,12\}$). Gate A1 (global Bravais minimiser $=$ lower of FCC/BCC at $\ge95\%$ of points): \textbf{met, 29/29}. Five Gaussian
+points ($a\le0.46$) are degenerate in double precision (FCC, BCC, A15, C15 and diamond agree to $10^{-9}$), so the pass is
+vacuous there; 24/29 non-degenerate points still exceed 95\%. Crossovers: Gaussian $a^*=\pi$ (exact by duality), Yukawa
+$k^*=1.7179$ with a relative gap of only $10^{-7}$--$10^{-5}$ around it, Riesz FCC throughout $s\in[3.05,30]$. Verification:
+analytic gradients against finite differences ($2\times10^{-9}$), Gaussian energies against closed-form theta functions
+($\le3\times10^{-13}$), Yukawa/Riesz against brute-force sums with continuum tails and an independent Ewald code ($10^{-15}$).
+
+\subsection{B: non-Bravais cells}
+$N\in\{2,4,8,12,16\}$ points per free cell; 100 restarts for $N\le4$, 60 for $N=8$, 40 for $N=12,16$ (reduced from the registered
+100 for time; disclosed). References FCC, BCC, HCP, diamond, A15 (all representable at the relevant $N$), C15 ($N=12$ only).
+Gate B1 (restarts reach the best reference in $\ge50\%$ of cases for $N\le4$, $\ge10\%$ for $N=16$): \textbf{not met for
+$N\le4$ under the strictest reading} (49/58 gated cells pass; the 9 failures sit at 39--49\%, all near the FCC/BCC crossovers
+where the two basins compete; the median hit fraction, 0.76 at $N=2$ and 0.66 at $N=4$, would pass a pooled reading); met for
+$N=16$ (29/29, minimum 25\%). Gate B2 (discovery): \textbf{nothing} below $\min(\mathrm{FCC},\mathrm{BCC},\mathrm{HCP},\mathrm{A15})$
+by more than $10^{-8}$ in 9\,860 restarts over 145 cells. A relaxed HCP/DHCP stacking scan is never below FCC/BCC by more than
+$10^{-9}$, consistent with the statement that FCC is the best Barlow packing for the low-density Gaussian core~\cite{CK08}.
+The first A runs were invalid (a determinant-sign bug, two overlapping runs, a hang on skewed cells); their records are kept in
+\texttt{run0\_buggy/} and the reported numbers are the fourth run.
+
+\subsection{C: a proved control on $S^3$}\label{sec:C}
+$N$ points on the unit $S^3$, chordal kernels $e^{-a d^2}$ ($a\in\{0.5,1,2,4\}$), $1/d$ and $\log(1/d)$; L-BFGS-B from 50 random
+starts per kernel. The 600-cell is universally optimal for $N=120$~\cite{CK07}, a \emph{proved} target. Gate C1 ($\ge45/50$ starts
+within $10^{-8}$ of $E_{600}$ for every kernel): \textbf{not met}. Success 50/50 ($a=0.5$), 46/50 (Coulomb), 48/50 (log), 6/50
+($a=4$, 44 starts end $10^{-3}$ above), 0/50 ($a=2$, all converge to a family of local minima $7\times10^{-6}$ above). For $a=1$ all
+50 starts hit the registered 8\,000-iteration cap $2$--$3\times10^{-8}$ above $E_{600}$; the review asked for a rerun with the cap
+raised to 150\,000: all converge ($16\,640$--$66\,673$ iterations) at $1.5$--$2.1\times10^{-8}$ above, and two polished configurations
+have minimum chord $0.50$ against $0.618$ for the 600-cell with a distance-spectrum deviation of $0.22$ --- \emph{distinct local
+minima}, not the 600-cell with residual error, in a landscape so flat that the best local minima lie within $2\times10^{-8}$ of
+the proved optimum. No start went below $E_{600}$. For $N=24$ the 24-cell energy is reached in 50, 25, 7, 0, 5, 6 of 50 starts
+(same kernel order); the 24-cell is known \emph{not} to be universally optimal and to have a small basin of attraction~\cite{CCEK07},
+and our Coulomb and log runs reproduce the latter qualitatively with a different potential. Frustration scan: a second
+distinct minimum appears at $N=12$ (stiff Gaussians, Coulomb, log), 16 ($a=0.5$), 18 ($a=1$); non-uniqueness is common from
+$N=22$ and non-monotone in $N$ (Fig.~(d)). Seeds for $(N=120,\ \text{kernel }0)$ and $(N=20,\ \text{kernel }1)$ coincide (a formula
+artefact; correlated, not independent, streams).
+
+\begin{failbox}
+\textbf{Reading.} Where the optimum is proved and the kernel is long-ranged or soft, a plain local optimiser finds it; where the
+kernel is stiffer it is trapped. The obstacle of the three-dimensional problem in our hands is the landscape, not the dimension.
+Any method that claims to help in 3D must first pass this control; round~2 (F1) is built on it.
+\end{failbox}
+
+\subsection{D: a CM pre-relaxation as a mesh accelerator}
+Continuation of E3 of paper~IV with the same $N=216$ periodic cube and the registered 30 seeds: CM relaxation followed by 20 Lloyd
+iterations against CVT alone. ``Equal total iterations'' had not been defined in the pre-registration; the run's author fixed
+CVT-40 as primary before running and added CVT-20 and CVT-80 as sensitivity arms. Hybrid median 5th-percentile radius ratio
+$0.7057$: against CVT-40 (the E3 protocol) $+0.0370\pm0.0063$, wins 25/30; against CVT-20 $+0.113\pm0.007$, 30/30; against
+CVT-80, the \emph{cost-matched} arm (CM stage $\approx60$\,s, hybrid $\approx82$\,s, CVT-80 $\approx88$\,s), $-0.0055\pm0.0045$,
+wins 10/30. \textbf{Verdict: met against CVT-20/40, not met at matched cost}; the hybrid is a convergence accelerator at best. It
+does not improve the worst element (worst $\rho$ 0.014 vs 0.029, worst minimum dihedral $0.73^\circ$ vs $1.44^\circ$). Seed 0 was a
+development seed inside the registered set; without it, $+0.0371\pm0.0065$, 24/29.
+
+\subsection{L3: wall spacing and sliding walls in the Fenris study}\label{sec:L3}
+A fresh clone of \texttt{rusty-Fenris-CMRR} (commit \texttt{6d0df125}, never pushed) with the kernel patch of paper~III. G1
+(wall-spacing scan $w\in\{0.5,0.75,1,1.25\}$, random-sequential-addition starts, 6 shapes $\times$ 2 kernels $\times$ 24 starts):
+0/288 escapes at $w\le1$, 14/288 at $w=1.25$. \textbf{The registered $w=1$ wall confines with RSA starts}, so the ``did not confine''
+finding of paper~III came from the uniform starts, not from the spacing; the saddle mechanism was not tested. Defect concentration
+$R(w)=1.37,1.80,1.41,1.17$; the registered threshold $1.5$ is met only at $w=0.75$ and that value is confounded by the
+triangulation-site rule (all wall nodes used as sites at $w\ne0.5$). G2 (engine-level sliding walls, $w=0.5$, 30 paired starts per
+shape): \textbf{0 of 6 shapes} reach a decrease of 2 defects for either kernel (square $-0.13\pm0.09$, rect $-0.14\pm0.17$,
+L-shape $+0.23\pm0.23$, others $\approx0$); the wall moves by at most $0.05$; the wall-coordinate L-BFGS hit its 40-iteration cap in
+25--30 of 30 starts for two shapes, so this is weak evidence for those shapes. Compared with E2 of paper~IV (joint minimisation from
+the start) the square has the same sign and a 15 times smaller magnitude. \emph{Caveat:} \texttt{L3\_PREREG.md} was untracked when
+the runs were made; its registration time rests on the author's attestation, not on git.
+
+\subsection{L1: the Kaluza--Klein tower as an evaluator}
+The gated kernel of paper~I is $U(r)=\frac{4}{\ell}\sum_{m\ge1}(\varphi_m(z_e)-\varphi_m(z_h))^2K_0(m\pi r/\ell)$, a mode sum with
+exponentially decaying terms, or an image sum with algebraic tails. On four parameter sets and $10^4$ random $r\in[0.3d,6\ell]$ the
+adaptive mode sum (binned in $r$) costs $0.028$--$0.036$\,s against $0.148$--$0.191$\,s for the image sum with an Euler--Maclaurin
+tail ($N=60$), i.e. $4.1$--$6.7\times$ ($\ge5\times$ on 2 of 4 sets, the registered target); the image sum is accurate to $10^{-12}$
+only for $r\lesssim1.1$--$1.9\,\ell$ because of cancellation. Gate G1 met with a disclosed caveat (mpmath reference at 10 points per
+set, float modal sum as reference elsewhere, $7.8\times10^{-16}$ agreement), G2 partial; the Rust crate was therefore not built. The
+``KK tower'' is real and useful, and it is exactly Prop.~2 of the mathematical note.
+
+\section{The T-duality analogy, computed}\label{sec:bain}
+In the three cases where universal optimality is known or conjectured ($A_2$ up to similarity, $E_8$, $\Lambda_{24}$) the
+minimiser is a fixed point of Poisson duality. Along the body-centred-tetragonal (Bain) path $\mathrm{bct}(t)$, $c/a=t$, unit
+density, $t=1$ is BCC, $t=\sqrt2$ is FCC, and the dual of $\mathrm{bct}(t)$ is similar to $\mathrm{bct}(\sqrt2/t)$; the fixed point
+$t=2^{1/4}$ is isodual. Direct summation (tails $<10^{-30}$; \texttt{AB/bain\_selfdual.py}):
+\begin{center}\small
+\begin{tabular}{lcccc}\toprule
+$\alpha$ & $E(\mathrm{BCC})$ & $E(\mathrm{FCC})$ & $E(\text{isodual})$ & extremum on the path\\\midrule
+$\pi$ & 0.231536266184 & 0.231536266184 & 0.231925337063 & \textbf{maximum at $t=2^{1/4}$}\\
+2.5 & 0.526007 & 0.527283 & 0.527031 & minimum at BCC\\
+4 & 0.078896 & 0.077968 & 0.078697 & minimum at FCC\\\bottomrule
+\end{tabular}
+\end{center}
+The symmetry $t\leftrightarrow\sqrt2/t$ holds to $10^{-16}$. \textbf{At the self-dual point the self-dual lattice is the worst
+point of the path}: the duality symmetry is broken into two degenerate minima exchanged by it, the opposite of dimensions 8 and
+24. T-duality thus explains the absence of a universal optimum in 3D; it designates no candidate. What survives of the analogy is
+\emph{formal duality} in the sense of~\cite{CKS09}: the diamond structure $D_3^+$ is formally self-dual, and the question whether
+any formally self-dual configuration beats FCC/BCC at $\alpha=\pi$ is the content of T1 (\S\ref{sec:round2}). Averaged holography
+over the Narain moduli space gives, by the Siegel mean-value theorem, the \emph{average} Gaussian energy over unimodular lattices,
+$(\pi/\alpha)^{3/2}-1$, never the minimum; it is not a tool for this problem.
+
+\section{The holography analogy, stated as a question}
+The proof of universal optimality in dimensions 8 and 24~\cite{CKMRV22} is holographic in a precise sense: a radial Schwartz function
+is reconstructed from its values and Fourier values (and derivatives) at the radii $\sqrt{2n}$, through modular forms of level
+one. In $d=3$ a radial function is an odd function of the line, and the interpolation nodes $\pm\sqrt n$ of~\cite{RV19} are the
+norms of $\mathbb Z^3$ --- self-dual, but a poor minimiser. \emph{Does a radial Fourier interpolation formula exist in $d=3$ with the
+FCC norms as nodes for $f$ and the BCC norms as nodes for $\hat f$?} We have not found this question in the literature and leave it
+to specialists; even if it exists it cannot prove universal optimality (false), but it could certify FCC at a given $\alpha$ through
+the linear-programming bound. What we can compute is the size of the two-point LP gap in $d=3$ (H1, \S\ref{sec:round2}).
+
+\section{Round 2}\label{sec:round2}
+\emph{Results are inserted here as the pre-registered runs close (F1 $\alpha$-homotopy; T2 Gaussian mixtures across $\alpha=\pi$;
+T1 formally self-dual configurations with the diamond as positive control; H1 two-point LP gap with the $d=1$ sharpness check).}
+\input{exciton_fluid_gated_V_round2}
+
+\section{What this does and does not show}
+\begin{itemize}[leftmargin=1.2em,itemsep=1pt]
+\item The 3D Bravais problem for completely monotone kernels is settled numerically on our grids (FCC or BCC, exact Gaussian
+crossover at $\pi$); nothing new is claimed there.
+\item No non-Bravais structure beats the references for pure kernels up to 16 points per cell; this is an absence of counterexample
+with a search whose reliability is itself measured (B1 near-misses, C failures).
+\item The ``lift and project'', ``branes as walls'' and ``curved space'' pictures are now each attached to a negative or marginal
+measurement (papers IV, this paper); the ``KK tower'' picture is a real and modest evaluator gain; the ``T-duality'' picture is a
+correct explanation of a negative fact.
+\item Nothing here involves the planar lattice theorem of \texttt{openai/math}, which remains AI-generated and unrefereed, nor any
+claim about excitons.
+\end{itemize}
+
+\section{Process and deviations}\label{sec:process}
+Round~1 deviations: B restart counts reduced (100/100/60/40/40); A reruns after bugs with records kept; C1 operationalised as
+$\ge45/50$ and the $a=1$ rerun added after review; D's comparator defined by the run's author before running but not registered;
+L3's pre-registration untracked at run time; L3 annulus G2 cases run twice with the second overwriting the first; a timing check on
+an uncounted seed. L1: mpmath reference at 10 of 160 points; first run discarded for a reference bug. Round~2 deviations are listed
+with the results. All raw records, analysis scripts and the two reviews are in the repository; the independent review of round~1
+(\texttt{docs/designs/EXCITON\_FLUID\_VERIFIER\_NOTES\_review\_3d.md}) recomputed every headline number from the records and asked for
+the wording changes applied here (D ``not met at matched cost'', B1 ``strictest reading'', C $a=1$ resolved by rerun).
+
+\begin{thebibliography}{9}\small
+\bibitem{CallensI} X. Callens, \emph{Gated exciton fluids}, Zenodo, \url{https://doi.org/10.5281/zenodo.23294615} (2026).
+\bibitem{CallensII} X. Callens, \emph{Gated exciton fluids II}, Zenodo, \url{https://doi.org/10.5281/zenodo.23297479} (2026).
+\bibitem{CallensIII} X. Callens, \emph{Gated exciton fluids III}, Zenodo, \url{https://doi.org/10.5281/zenodo.23298292} (2026).
+\bibitem{CallensIV} X. Callens, \emph{Gated exciton fluids IV}, Zenodo, \url{https://doi.org/10.5281/zenodo.23302787} (2026).
+\bibitem{CK07} H. Cohn, A. Kumar, Universally optimal distribution of points on spheres, \emph{J. Amer. Math. Soc.} 20 (2007) 99--148.
+\bibitem{CKS09} H. Cohn, A. Kumar, A. Sch\"urmann, Ground states and formal duality relations in the Gaussian core model, arXiv:0911.2169 (2009).
+\bibitem{CK08} H. Cohn, A. Kumar, Counterintuitive ground states in soft-core models, \emph{Phys. Rev. E} 78 (2008) 061113, arXiv:0811.1236.
+\bibitem{CCEK07} H. Cohn, J. H. Conway, N. D. Elkies, A. Kumar, The $D_4$ root system is not universally optimal, \emph{Exp. Math.} 16 (2007) 313--320.
+\bibitem{CKMRV22} H. Cohn, A. Kumar, S. D. Miller, D. Radchenko, M. Viazovska, Universal optimality of the $E_8$ and Leech lattices and interpolation formulas, \emph{Ann. of Math.} 196 (2022) 983--1082.
+\bibitem{RV19} D. Radchenko, M. Viazovska, Fourier interpolation on the real line, arXiv:1701.00265.
+\end{thebibliography}
+\end{document}
