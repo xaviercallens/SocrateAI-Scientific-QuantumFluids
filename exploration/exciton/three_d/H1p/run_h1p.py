@@ -17,6 +17,8 @@ def main():
     d, alpha = CASES[case]
     RH.K = K
     RH.VIOL_FULL = VIOL_NUM
+    _adm = RH.admissible                     # its default viol_tol was bound at definition time (5e-9)
+    RH.admissible = lambda res, viol_tol=VIOL_NUM: _adm(res, viol_tol)
     RH.SOL = os.path.join(HERE, "records", "solutions")
     os.makedirs(RH.SOL, exist_ok=True)
     t0 = time.time()
