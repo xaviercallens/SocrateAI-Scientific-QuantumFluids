@@ -96,7 +96,7 @@ E_Z(α) = 2 Σ_{n≥1} e^{−α n²}. A₂ (triangular) at unit density has basi
 | α | E_Z(α) (direct sum) | best admissible LP bound | bound − E_Z | best β | max polished violation (f − g / −f̂) | verdict |
 |---|---|---|---|---|---|---|
 | 1 | 0.7726372048267 | 0.7726372068320 | +2.0e-9 | 0.1332 | 9.9e-10 / 1.7e-11 | within 1e-8 (registered) |
-| π | 0.0864348112133 | none admissible | (full-setting bounds 0.08643481138–0.08643481149, i.e. +2e-10 to +3e-10) | — | 6.7e-10 / 2.1e-8 ; 4.6e-8 / 2.2e-9 ; 4.1e-8 / 5.7e-9 (three full β) | **no admissible solution** |
+| π | 0.0864348112133 | none admissible | (full-setting bounds 0.08643481138–0.08643481149, i.e. +1.6e-10 to +2.8e-10, inside the registered 1e-8) | — | 6.7e-10 / 2.1e-8 ; 4.6e-8 / 2.2e-9 ; 4.1e-8 / 5.7e-9 (three full β) | **no admissible solution** |
 
 **H0 FAILED → H1 was stopped as registered.** The d = 3 bounds for α ∈ {2, π, 4, 8} and the d = 2 extra were **not
 computed**; gate H1 has no verdict.
@@ -105,7 +105,7 @@ Reading of the failure (not a re-interpretation of the gate). At α = 1 the "bou
 valid certificate cannot do: this is the discretisation error of pointwise constraints described in §2, here of order 1e-9.
 At α = π all three full-setting LPs produce bound values within 3e-10 of E_Z, but their polished constraint violations
 (2e-8 to 5e-8) exceed the 5e-9 admissibility tolerance fixed in the code before the run; the coarse scan's solutions
-(violations ~1e-7, accepted only under the looser coarse tolerance) lie 4e-8 *above* E_Z(π), again an invalid-by-value
+(violations ~1e-7, accepted only under the looser coarse tolerance) lie 3.4e-7 to 4.3e-7 *above* E_Z(π) (3.9e-6 to 5.0e-6 relative), again an invalid-by-value
 discretisation artefact, and were never admissible at the full tolerance. So the code reproduces E_Z(π) in value but cannot
 certify it at the required precision with K = 30 and the registered grids. Since the H1 gate thresholds (1e-6, 1e-3) are
 far above this 1e-8 level, a d = 3 run would probably have been informative; it was nevertheless not run, because the
@@ -119,11 +119,17 @@ Runtime: H0 α = 1, 357 s; α = π about 11 min; total about 17 min (single proc
 ## 5. Deviations (dated 2026-10-12)
 
 1. The admissibility tolerance (polished violation ≤ 5e-9) and the coarse tolerance were fixed in `run_h1.py` before the
-   run but were not written in the pre-registration; they are what made H0 fail at α = π.
+   run (evidence: file timestamps only, mtime 08:36:51, run start ~08:36:57; no commit precedes the run) but were not written
+   in the pre-registration; they, not the registered 1e-8, are what made H0 fail at α = π. `lp_bound` was compiled at 08:34,
+   i.e. imported ~3 min before the run, possibly in a pilot whose output was not kept.
 2. The registered verification "10^5 random points for f ≤ potential" was extended to f̂ ≥ 0 as well.
 3. Tail grids (600 points on (6, 24], f̂ grid to |y| = 12) and the 40-digit tail certificates are additions to the
    registered grid; they only make admissibility harder.
 4. The run itself completed (it stopped on the H0 rule at 08:53); the session that launched it was cut by a context
-   compaction before writing this section, which was written afterwards from `run.log` and `summary.json` only; no code
-   was changed and nothing was rerun.
+   compaction before writing this section, which was written afterwards from `run.log` and `summary.json` only; nothing was rerun. `lp_bound.py` has mtime 08:38:16, ~80 s into the
+   run: the reviewer compared the cached bytecode with the current file and only the module docstring differs.
+5. The registered transcription of the bound from Cohn–Kumar 2007 Prop. 9.3 / CKMRV 2022 §1 was not made; the proposition
+   in §1 was derived and its proof sketch checked (by the reviewer as well), and its sign/normalisation tested on d = 1.
+6. The d = 1 bound is sharp over all admissible f, but that does not guarantee that the K = 30 ansatz reaches 1e-8; part of
+   the H0 failure may be an ansatz limit, not only certification.
 

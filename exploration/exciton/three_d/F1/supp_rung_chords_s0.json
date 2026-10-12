@@ -1,0 +1,176 @@
+{
+ "seed": 420000,
+ "start": 0,
+ "rungs": [
+  {
+   "a": 0.25,
+   "E": 4444.919131890791,
+   "rel_excess_over_E600": 3.745508505671149e-11,
+   "nit": 6013,
+   "nfev": 6394,
+   "min_chord": 0.23746025603746534,
+   "spectrum_max_dev_from_600cell": 0.38057373271242867,
+   "msg": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"
+  },
+  {
+   "a": 0.29730177875068026,
+   "E": 4091.006494881617,
+   "rel_excess_over_E600": 1.7867062857231625e-11,
+   "nit": 8000,
+   "nfev": 8477,
+   "min_chord": 0.38489226372097557,
+   "spectrum_max_dev_from_600cell": 0.23314172502891845,
+   "msg": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT"
+  },
+  {
+   "a": 0.3535533905932738,
+   "E": 3716.6464617193124,
+   "rel_excess_over_E600": 3.270417980878934e-11,
+   "nit": 4978,
+   "nfev": 5263,
+   "min_chord": 0.3913278188644176,
+   "spectrum_max_dev_from_600cell": 0.22670616988547643,
+   "msg": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"
+  },
+  {
+   "a": 0.42044820762685725,
+   "E": 3328.230916904862,
+   "rel_excess_over_E600": 6.470573041494743e-11,
+   "nit": 8000,
+   "nfev": 8395,
+   "min_chord": 0.43540101207050036,
+   "spectrum_max_dev_from_600cell": 0.2088036409020494,
+   "msg": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT"
+  },
+  {
+   "a": 0.5,
+   "E": 2933.909981479993,
+   "rel_excess_over_E600": 1.5093053374189253e-10,
+   "nit": 8000,
+   "nfev": 8332,
+   "min_chord": 0.4594619365662021,
+   "spectrum_max_dev_from_600cell": 0.21143130584191594,
+   "msg": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT"
+  },
+  {
+   "a": 0.5946035575013605,
+   "E": 2543.1676106339028,
+   "rel_excess_over_E600": 3.722381205387426e-10,
+   "nit": 8000,
+   "nfev": 8315,
+   "min_chord": 0.47947109678115274,
+   "spectrum_max_dev_from_600cell": 0.21410988816569487,
+   "msg": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT"
+  },
+  {
+   "a": 0.7071067811865476,
+   "E": 2166.07623013812,
+   "rel_excess_over_E600": 1.248596547739957e-09,
+   "nit": 8000,
+   "nfev": 8284,
+   "min_chord": 0.4894675074803802,
+   "spectrum_max_dev_from_600cell": 0.21701643997828746,
+   "msg": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT"
+  },
+  {
+   "a": 0.8408964152537145,
+   "E": 1812.289742071193,
+   "rel_excess_over_E600": 4.658459707215039e-09,
+   "nit": 8000,
+   "nfev": 8268,
+   "min_chord": 0.49943073195132515,
+   "spectrum_max_dev_from_600cell": 0.22308229247456468,
+   "msg": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT"
+  },
+  {
+   "a": 1.0,
+   "E": 1489.9389145158789,
+   "rel_excess_over_E600": 1.9959890511503913e-08,
+   "nit": 8000,
+   "nfev": 8235,
+   "min_chord": 0.49699196222339537,
+   "spectrum_max_dev_from_600cell": 0.22219317761077317,
+   "msg": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT"
+  },
+  {
+   "a": 1.189207115002721,
+   "E": 1204.6787467399813,
+   "rel_excess_over_E600": 8.187757021864073e-08,
+   "nit": 8000,
+   "nfev": 8231,
+   "min_chord": 0.5071549269975415,
+   "spectrum_max_dev_from_600cell": 0.2240294917828266,
+   "msg": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT"
+  },
+  {
+   "a": 1.4142135623730951,
+   "E": 959.1489051197002,
+   "rel_excess_over_E600": 3.882200494209343e-07,
+   "nit": 2023,
+   "nfev": 2091,
+   "min_chord": 0.5086722923884285,
+   "spectrum_max_dev_from_600cell": 0.22371995532894484,
+   "msg": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"
+  },
+  {
+   "a": 1.681792830507429,
+   "E": 753.0077140839408,
+   "rel_excess_over_E600": 1.755142633735864e-06,
+   "nit": 3297,
+   "nfev": 3377,
+   "min_chord": 0.5056510117168423,
+   "spectrum_max_dev_from_600cell": 0.22426450902288708,
+   "msg": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"
+  },
+  {
+   "a": 2.0,
+   "E": 583.508880280531,
+   "rel_excess_over_E600": 7.4746064560233045e-06,
+   "nit": 1903,
+   "nfev": 1958,
+   "min_chord": 0.5083205289915135,
+   "spectrum_max_dev_from_600cell": 0.2267404626231756,
+   "msg": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"
+  },
+  {
+   "a": 2.378414230005442,
+   "E": 446.39860600118914,
+   "rel_excess_over_E600": 2.9681548916406303e-05,
+   "nit": 950,
+   "nfev": 975,
+   "min_chord": 0.5124999919268758,
+   "spectrum_max_dev_from_600cell": 0.2267980481498919,
+   "msg": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"
+  },
+  {
+   "a": 2.8284271247461903,
+   "E": 336.83077153747274,
+   "rel_excess_over_E600": 0.00010865082321072117,
+   "nit": 542,
+   "nfev": 556,
+   "min_chord": 0.5158906447843159,
+   "spectrum_max_dev_from_600cell": 0.22707561567100432,
+   "msg": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"
+  },
+  {
+   "a": 3.363585661014858,
+   "E": 250.07026889855348,
+   "rel_excess_over_E600": 0.0003625752117172884,
+   "nit": 398,
+   "nfev": 422,
+   "min_chord": 0.518541904970929,
+   "spectrum_max_dev_from_600cell": 0.22440134411612078,
+   "msg": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"
+  },
+  {
+   "a": 4.0,
+   "E": 181.90992813702965,
+   "rel_excess_over_E600": 0.0010925417942023352,
+   "nit": 286,
+   "nfev": 296,
+   "min_chord": 0.5231131742180108,
+   "spectrum_max_dev_from_600cell": 0.22088443243657796,
+   "msg": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"
+  }
+ ]
+}

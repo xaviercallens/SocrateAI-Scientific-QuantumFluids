@@ -49,9 +49,13 @@ kernels but in 0 and 6 of 50 for stiffer Gaussians; a completely-monotone pre-re
 given less work; sliding container walls reduce the defect count in 0 of 6 shapes. A direct computation along the Bain path shows
 that at $\alpha=\pi$ the self-dual (isodual) 3D lattice is the energy \emph{maximum} between the two degenerate minima: the
 T-duality analogy explains why no universal optimum exists in 3D rather than pointing to one. The mode-sum (``Kaluza--Klein tower'')
-evaluator of the gated kernel is 4--7 times cheaper than a tail-corrected image sum. Round~2 (an $\alpha$-homotopy against the
-proved $S^3$ control, Gaussian mixtures straddling the self-dual point, a search for formally self-dual configurations, and the
-two-point linear-programming gap in $d=3$) is reported in \S\ref{sec:round2}. Everything is small-scale, classical and
+evaluator of the gated kernel is 4--7 times cheaper than a tail-corrected image sum. Round~2 is negative throughout: an
+$\alpha$-homotopy from a soft kernel reaches the proved 600-cell in F1HOMA of 50 seeds (it does help for the 24-cell), so by the
+registered rule our 3D searches are declared unreliable; Gaussian mixtures straddling the self-dual point produce nothing below
+FCC/BCC/HCP in 5\,100 restarts; a search for formally self-dual configurations accepts nothing, but its objective cannot tell the
+known one (diamond) from configurations $10^{-3}$ away, so the negative is uninformative; and the two-point linear-programming
+code failed its own one-dimensional sanity gate (under an admissibility tolerance fixed in code, not registered) and was therefore
+not run in $d=3$. Everything is small-scale, classical and
 single-engine; nothing uses the unrefereed planar lattice theorem; written with an AI system and not refereed.
 \end{abstract}
 
@@ -66,7 +70,7 @@ optimality is false in $\mathbb R^3$ for every configuration}. This is known~\ci
 phrase ``solve the Cohn--Kumar conjecture in 3D''. What is open in three dimensions is
 \begin{enumerate}[leftmargin=1.6em,itemsep=1pt]
 \item[Q1] the Gaussian-core conjecture: BCC ($\alpha<\pi$) and FCC ($\alpha>\pi$) minimise among \emph{all} periodic configurations
-(``no proof is known''~\cite{CKS09}); at $\alpha=\pi$ itself the ground state is a Maxwell coexistence of the two at densities
+(``no proof is known''~\cite{CKS09}); at $\alpha=\pi$ itself the lowest known energy (``putative ground state'') is a Maxwell coexistence of the two at densities
 $0.99899854\le\rho\le1.00100312$, about $4\times10^{-6}$ below either pure lattice~\cite{CKS09};
 \item[Q2] crystallisation (periodicity of minimisers) for soft repulsions;
 \item[Q3] kernels whose Bernstein measure charges both sides of $\pi$, for which nothing excludes a non-Bravais minimiser.
@@ -192,8 +196,6 @@ to specialists; even if it exists it cannot prove universal optimality (false), 
 the linear-programming bound. What we can compute is the size of the two-point LP gap in $d=3$ (H1, \S\ref{sec:round2}).
 
 \section{Round 2}\label{sec:round2}
-\emph{Results are inserted here as the pre-registered runs close (F1 $\alpha$-homotopy; T2 Gaussian mixtures across $\alpha=\pi$;
-T1 formally self-dual configurations with the diamond as positive control; H1 two-point LP gap with the $d=1$ sharpness check).}
 \input{exciton_fluid_gated_V_round2}
 
 \section{What this does and does not show}
@@ -205,6 +207,10 @@ with a search whose reliability is itself measured (B1 near-misses, C failures).
 \item The ``lift and project'', ``branes as walls'' and ``curved space'' pictures are now each attached to a negative or marginal
 measurement (papers IV, this paper); the ``KK tower'' picture is a real and modest evaluator gain; the ``T-duality'' picture is a
 correct explanation of a negative fact.
+\item Round~2 adds no positive result. Its main product is a measured limit: with our optimisers, a homotopy in the kernel does
+not find a proved optimum on $S^3$ (the 600-cell) that plain restarts find at $a=4$, the formal-duality search cannot distinguish a known
+formally self-dual structure from nearby non-self-dual ones, and our LP code is not yet certified at the $10^{-8}$ level. These are statements about our methods,
+not about the Gaussian-core conjecture.
 \item Nothing here involves the planar lattice theorem of \texttt{openai/math}, which remains AI-generated and unrefereed, nor any
 claim about excitons.
 \end{itemize}

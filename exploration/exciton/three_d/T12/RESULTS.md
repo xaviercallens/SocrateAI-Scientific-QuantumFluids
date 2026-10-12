@@ -38,9 +38,10 @@ two facts from it were communicated by the parent session (marked as such below)
 Remarks. (i) E(lambda) is linear in lambda, so the bisection is only a check of the closed form; they agree to 1e-12 (pair 1,
 3) and to 2e-12 (pair 2). (ii) For a1 a2 = pi^2 the 3D Fourier transform of e^{-a1 r^2} is (pi/a1)^{3/2} e^{-a2 r^2}, so at
 lambda = (pi/a1)^{3/2} the mixture kernel is exactly self-dual (f-hat = f) and E_FCC = E_BCC follows from FCC* = BCC; the
-numbers reproduce this. Pair 2's lambda* deviates from 8 by 2.3e-10 relative: the a2 = 4pi component contributes only
-~1e-9 to the energy (E(4pi) ~ 1e-9 for FCC/BCC), so dE(a2) is resolved to ~10 digits only; this is a double-precision
-artefact, not a physical deviation. (iii) Consequence for pair 2: the FCC/BCC splitting at lambda*(1 +/- 0.03) is only
+numbers reproduce this. Pair 2's lambda* deviates from 8 by 2.3e-10 relative. *Corrected after review:* the cause is
+double-precision cancellation -- the FCC-BCC difference of the a2 = 4pi term is only 4.8e-7 (E_FCC(4pi) = 8.0e-7,
+E_BCC(4pi) = 1.28e-6, reviewer's independent sum) against total energies of order 3.5 -- not a 1e-9 size of that term as an
+earlier draft said; it is a numerical artefact, not a physical deviation. Pair 1's bisection agrees with 2 sqrt 2 to 1.9e-12. (iii) Consequence for pair 2: the FCC/BCC splitting at lambda*(1 +/- 0.03) is only
 ~1e-7 relative (`T2_refs.json`), so pair 2 is a weak discriminator between structures (every structure within 1e-6 of the
 best reference; the 1e-8 gate is still well resolved, at 1e-15).
 
@@ -67,19 +68,21 @@ Per-cell table in `T2_analysis.txt` (75 rows). Summary:
 * **T2 candidates (below min(FCC, BCC, HCP) by > 1e-8 relative): 0** (`T2_candidates.json` empty). Independent
   re-minimisation (`verifyT2.py`: x_cg = 70, swapped real/reciprocal splitting, brute-force sum, perturbed restart,
   Voronoi-volume coexistence test) was therefore not exercised on data.
-* The lowest energy in every cell is the best reference lattice to <= 2e-15 relative, i.e. the FCC/BCC crossover of the
+* Nothing in any cell is below the best reference lattice (most negative relative difference -1.9e-15, ties); in 14 cells
+  (pair (pi/4, 4pi), N >= 8) the lowest energy found is above it by up to 3.7e-13 relative (corrected after review; an earlier
+  draft said "<= 2e-15 in every cell"). So the FCC/BCC crossover of the
   mixture kernel is crossed without any intermediate non-lattice structure for N <= 16, including at the exactly
   self-dual kernels (pairs 1, 2 at lambda*).
 * Hit fractions at the degenerate point lambda* are high (0.75-1.00) because FCC and BCC are then one target; away from it
-  they drop to 0.33-0.6 as in round 1 (near-degenerate stacking variants/HCP absorb the rest; `n_distinct` column).
-* For pair 3 at lambda*/1.1 HCP (0.53336458) is below BCC (0.53336865) but above FCC (0.53328095).
+  they drop to 0.33-0.72 as in round 1 (near-degenerate stacking variants/HCP absorb the rest; `n_distinct` column).
+* For pair 3 at lambda* x 1.1 HCP (0.53336458) is below BCC (0.53336865) but above FCC (0.53328095).
 * **Coexistence remark (communicated by the parent from CKS 2009)**: at the single-Gaussian self-dual point alpha = pi the
   3D Gaussian-core ground state at rho = 1 is reported to be a Maxwell coexistence of D3 and D3* over
   0.99899854 <= rho <= 1.00100312, with per-particle energy 0.11576766 (half-sum convention), about 4e-6 relative below
   pure FCC/BCC. Our engine's half-sum E_FCC(pi) = E_BCC(pi) = 0.115768133092; (0.115768133 - 0.11576766)/0.115768133 =
   +4.1e-6, consistent with that statement. A fixed-density periodic cell with N <= 16 points cannot represent a
   two-density coexistence (the density contrast is 1e-3 and the interfacial cost is paid per cell), so **no coexistence
-  approximant appeared in T2 and none could have**; nothing in T2 bears on the CKS coexistence claim. The analogous
+  approximant appeared in T2, and none is expected to** (an argument, bulk gain 4e-6 against interface cost, not a demonstration); nothing in T2 bears on the CKS coexistence claim. The analogous
   question for the exactly self-dual mixture kernels (pairs 1, 2 at lambda*) is open and not addressed by this search.
 
 ## T1: formally self-dual periodic configurations at alpha = pi
@@ -100,12 +103,12 @@ is what the controls below confirm.
 
 | P | Q | shell mismatch (40 shells) | surrogate M | comment |
 |---|---|---|---|---|
-| diamond (D3+, unit density) | diamond | 1.1e-26 | 4.8e-30 | **positive control passes** (CKS Prop. 1: D_n^+ formally self-dual for n odd; D3+ = diamond, communicated by the parent); first shells (0.866, 4), (1.414, 12), (1.658, 12), (2, 6) on both sides |
+| diamond (D3+, unit density) | diamond | 1.1e-26 | 2.6e-29 | **positive control passes** (CKS Prop. 1: D_n^+ formally self-dual for n odd; D3+ = diamond, communicated by the parent); first shells (0.866, 4), (1.414, 12), (1.658, 12), (2, 6) on both sides |
 | FCC | BCC | 0.0 | - | FCC and BCC are formal duals of each other (expected: FCC* = BCC at unit covolume) |
 | BCC | FCC | 0.0 | - | idem |
-| HCP | HCP | 3.2e3 | 4.4e-6 | negative control fails as required |
-| FCC | FCC | 3.5e4 | 3.7e-6 | not self-dual (first shell 1.1225 x12 vs 1.0911 x8) |
-| SC (Z^3) | SC | 0.0 | 1.9e-30 | self-dual lattice (sanity) |
+| HCP | HCP | 3.2e3 | 8.1e-5 | negative control fails as required |
+| FCC | FCC | 3.5e4 | 7.1e-5 | not self-dual (first shell 1.1225 x12 vs 1.0911 x8) |
+| SC (Z^3) | SC | 0.0 | 3.5e-29 | self-dual lattice (sanity) |
 | bct c/a = 2^{1/4} | itself | 8.8e-30 | 1.4e-29 | isodual fixed point of the Bain path (`../AB/bain_selfdual.py`); 2E(pi) = 0.231925337063, the Bain-path maximum |
 
 Energies at alpha = pi (half-sum convention of the engine): FCC = BCC = 0.115768133092, diamond = 0.201839614314,
@@ -140,15 +143,22 @@ The polish stage (`polishT1.py`, least-squares on the shell residuals directly, 
    distributions on [0, 2.2] (`diagW1T1.py`), is 1.39 (N = 2), 2.40 (N = 4), 0.70 (N = 8) for the best records and 0 for exact
    diamond. So the Gaussian-family identity on this range of exponents is satisfied to 1e-15 by configurations that are not
    formally self-dual: the surrogate does not identify the property (the restricted Laplace transform is ill-conditioned).
-2. *The search cannot return to a known solution* (`basinT1.py`, `T1_basin.jsonl`). From diamond and from the simple cubic
+2. *The surrogate cannot resolve the known solution's neighbourhood* (`basinT1.py`, `T1_basin.jsonl`). From diamond and from the simple cubic
    lattice written as a 2-point cell, perturbed by eps in {1e-3, 1e-2, 5e-2, 1e-1, 2e-1} (5 draws each), the same minimiser
-   ends at M <= 9e-11 in all 50 cases and is accepted in **0/50** (shell mismatch 28-73). Example (eps = 1e-3): the CDF
-   distance goes from 0.027 at the start to 0.0088 at the end, i.e. the minimiser stays near diamond but on a different
-   point of the surrogate's near-zero set, and the shell-by-shell mismatch of that point is 30 because the degenerate shells
-   of diamond are split by more than the 1e-6 grouping tolerance and the index-by-index comparison then misaligns.
-3. *The registered detector is correct but discontinuous.* It returns 1e-26 on the exact controls and O(10) for any
-   configuration whose degenerate shells are split, however slightly; acceptance at 1e-10 therefore requires an exact
+   ends at M <= 9e-11 in all 50 cases and is accepted in **0/50** (shell mismatch 28-73). *Qualified after review:* at
+   eps = 1e-3 the unminimised perturbed start already has M = 3.6e-11 (shell mismatch 30.5), so M <= 1e-10 is not an
+   achievement of the minimiser; the surrogate simply cannot resolve a 1e-3 displacement from diamond. Example (eps = 1e-3):
+   the CDF distance goes from 0.027 at the start to 0.0088 at the end; the end state is genuinely not self-dual (relative
+   residual 1.5e-5 at alpha = 30, reviewer's check). Its shell mismatch is 30 because diamond's systematically absent
+   reflections reappear in nu with weights < 5e-5 (above the weight floor 1e-8), have no counterpart in mu, and shift every
+   later nu index by 3 (reviewer's diagnosis; splitting of degenerate shells alone does not misalign, since both measures split).
+3. *The registered detector is correct but discontinuous.* It returns 1e-26 on the exact controls and O(10) once
+   extinct reflections or split shells appear on one side only; the grouping tolerance (1e-6) and weight floor (1e-8) are
+   implementation choices, not registered; acceptance at 1e-10 therefore requires an exact
    formally self-dual configuration, which a smooth minimiser of a non-identifying surrogate does not deliver.
+
+Also stale: the comment at `selfdual.py:135-138` ("s in [0.1, 1]"); the defaults actually used are smin = 0.3, smax = 1
+(run 3 reproduction). Code left as run.
 
 Reading: T1 is a method failure, not an absence of formally self-dual configurations below FCC/BCC. It is reported as "no
 counterexample found with a search shown unable to find the known example". A usable T1 needs either an identifying
