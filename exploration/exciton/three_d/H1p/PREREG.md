@@ -1,4 +1,4 @@
-# H1' — certified two-point LP bounds for the Gaussian energy, validated on published values (pre-registration, 2026-10-12)
+# H1' — two-point LP bounds (registered as certified; amendment A2 made the run numerical, NOT certified) for the Gaussian energy, validated on published values (pre-registration, 2026-10-12)
 
 Directory `three_d/H1p/`. Successor of H1 (`../PREREG_round2.md`, results `../H1/RESULTS.md`), which stopped at its sanity
 gate because sampled constraints cannot certify f <= g and f̂ >= 0 at the 1e-8 level. Owner's choice (2026-10-12):
