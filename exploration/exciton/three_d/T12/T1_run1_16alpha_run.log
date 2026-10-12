@@ -1,0 +1,35 @@
+{"P": "diamond", "Q": "diamond", "shell_mismatch": 1.0504126687276959e-26, "first_shells_mu": [[0.8660254037844386, 4.0], [1.4142135623730951, 12.0], [1.6583123951777, 12.0], [2.0, 6.0]], "first_shells_nu": [[0.8660254037844386, 4.0], [1.4142135623730951, 12.0], [1.6583123951776997, 12.0], [2.0, 6.0]], "surrogate_M": 4.782469237902384e-30, "E_pi": 0.20183961431414454, "is_lattice": false}
+{"P": "FCC", "Q": "BCC", "shell_mismatch": 0.0, "first_shells_mu": [[1.1224620483093728, 12.0], [1.5874010519681994, 6.0], [1.9441612972396654, 24.0], [2.2449240966187456, 12.0]], "first_shells_nu": [[1.1224620483093728, 12.0], [1.5874010519681994, 6.0], [1.9441612972396654, 24.0], [2.2449240966187456, 12.0]]}
+{"P": "BCC", "Q": "FCC", "shell_mismatch": 0.0, "first_shells_mu": [[1.0911236359717216, 8.0], [1.2599210498948732, 6.0], [1.7817974362806792, 12.0], [2.0893426939859694, 24.0]], "first_shells_nu": [[1.0911236359717216, 8.0], [1.2599210498948732, 6.0], [1.7817974362806792, 12.0], [2.0893426939859694, 24.0]]}
+{"P": "HCP", "Q": "HCP", "shell_mismatch": 3225.6221229020766, "first_shells_mu": [[1.122462048309373, 12.0], [1.5874010519681996, 6.0], [1.8329728493314703, 2.0], [1.9441612972396654, 18.0]], "first_shells_nu": [[1.0287212294780348, 1.5], [1.0911236359717214, 2.0], [1.164433366587731, 9.0], [1.4996060005731333, 3.000000000000001]], "surrogate_M": 4.397578963226305e-06, "E_pi": 0.11577586872229649, "is_lattice": false}
+{"P": "FCC", "Q": "FCC", "shell_mismatch": 35474.31205255449, "first_shells_mu": [[1.1224620483093728, 12.0], [1.5874010519681994, 6.0], [1.9441612972396654, 24.0], [2.2449240966187456, 12.0]], "first_shells_nu": [[1.0911236359717216, 8.0], [1.2599210498948732, 6.0], [1.7817974362806792, 12.0], [2.0893426939859694, 24.0]], "surrogate_M": 3.7058450503401726e-06, "E_pi": 0.11576813309207398, "is_lattice": true}
+{"P": "BCC", "Q": "BCC", "shell_mismatch": 35474.31205255449, "first_shells_mu": [[1.0911236359717216, 8.0], [1.2599210498948732, 6.0], [1.7817974362806792, 12.0], [2.0893426939859694, 24.0]], "first_shells_nu": [[1.1224620483093728, 12.0], [1.5874010519681994, 6.0], [1.9441612972396654, 24.0], [2.2449240966187456, 12.0]], "surrogate_M": 3.7058450503431363e-06, "E_pi": 0.11576813309207393, "is_lattice": true}
+{"P": "SC", "Q": "SC", "shell_mismatch": 0.0, "first_shells_mu": [[1.0, 6.0], [1.4142135623730951, 12.0], [1.7320508075688772, 8.0], [2.0, 6.0]], "first_shells_nu": [[1.0, 6.0], [1.4142135623730951, 12.0], [1.7320508075688772, 8.0], [2.0, 6.0]], "surrogate_M": 1.9228484564762163e-30, "E_pi": 0.1411815579297275, "is_lattice": true}
+{"P": "bct_isodual", "Q": "bct_isodual", "shell_mismatch": 1993.2504420823461, "first_shells_mu": [[0.9438743126816935, 4.0], [1.305898314940732, 8.0], [1.3348398541700344, 4.0], [1.8673960065411197, 16.0]], "first_shells_nu": [[0.8908987181403393, 2.0], [1.1492985599074759, 8.0], [1.4983070768766815, 4.0], [1.7053704089650428, 8.0]], "surrogate_M": 1.7888279130453566e-06, "E_pi": 0.1481942504169134, "is_lattice": true}
+done N=8 chunk starts 0-9 accepted=0 minM=6.470e-12 min_mismatch=1.303e+00 31s
+done N=8 chunk starts 10-19 accepted=0 minM=5.205e-13 min_mismatch=1.431e+00 51s
+done N=8 chunk starts 20-29 accepted=0 minM=1.770e-12 min_mismatch=1.546e+00 43s
+done N=8 chunk starts 30-39 accepted=0 minM=3.497e-12 min_mismatch=1.348e+00 40s
+done N=8 chunk starts 40-49 accepted=0 minM=1.433e-12 min_mismatch=1.370e+00 58s
+done N=8 chunk starts 50-59 accepted=0 minM=2.922e-12 min_mismatch=1.388e+00 49s
+done N=4 chunk starts 0-9 accepted=0 minM=2.866e-12 min_mismatch=9.953e+00 17s
+done N=4 chunk starts 10-19 accepted=0 minM=8.172e-13 min_mismatch=6.101e+00 29s
+done N=4 chunk starts 20-29 accepted=0 minM=1.196e-12 min_mismatch=8.227e+00 28s
+done N=4 chunk starts 40-49 accepted=0 minM=2.823e-12 min_mismatch=8.805e+00 26s
+done N=4 chunk starts 30-39 accepted=0 minM=5.509e-13 min_mismatch=1.026e+01 40s
+done N=4 chunk starts 60-69 accepted=0 minM=1.670e-13 min_mismatch=6.863e+00 20s
+done N=4 chunk starts 50-59 accepted=0 minM=3.705e-13 min_mismatch=7.687e+00 37s
+done N=4 chunk starts 70-79 accepted=0 minM=2.306e-12 min_mismatch=1.213e+01 39s
+done N=4 chunk starts 80-89 accepted=0 minM=9.876e-13 min_mismatch=8.550e+00 33s
+done N=2 chunk starts 0-9 accepted=0 minM=2.213e-14 min_mismatch=2.450e+01 6s
+done N=2 chunk starts 10-19 accepted=0 minM=2.045e-13 min_mismatch=2.673e+01 14s
+done N=2 chunk starts 20-29 accepted=0 minM=3.344e-13 min_mismatch=2.716e+01 15s
+done N=4 chunk starts 90-99 accepted=0 minM=3.590e-13 min_mismatch=5.155e+00 41s
+done N=2 chunk starts 30-39 accepted=0 minM=1.275e-12 min_mismatch=2.532e+01 10s
+done N=2 chunk starts 50-59 accepted=0 minM=2.783e-12 min_mismatch=2.820e+01 12s
+done N=2 chunk starts 40-49 accepted=0 minM=3.179e-13 min_mismatch=2.425e+01 24s
+done N=2 chunk starts 60-69 accepted=0 minM=2.690e-13 min_mismatch=2.105e+01 15s
+done N=2 chunk starts 70-79 accepted=0 minM=3.757e-14 min_mismatch=3.117e+01 13s
+done N=2 chunk starts 80-89 accepted=0 minM=1.105e-14 min_mismatch=3.113e+01 13s
+done N=2 chunk starts 90-99 accepted=0 minM=5.351e-14 min_mismatch=2.678e+01 14s
+FINISHED

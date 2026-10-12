@@ -1,0 +1,77 @@
+{
+ "metadata": {
+  "title": "Gated exciton fluids V: three dimensions - what the T-duality, holography and projection analogies do and do not give, measured",
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "description": "<p>Fifth paper of the gated-exciton line (I: 10.5281/zenodo.23294615; II: 10.5281/zenodo.23297479; III: 10.5281/zenodo.23298292; IV: 10.5281/zenodo.23302787). It asks whether ideas borrowed from string theory (lifting to 8 or 24 dimensions, holography, projection, T-duality) help with the three-dimensional node-arrangement problem. Known fact first: in R^3 no configuration is universally optimal, because the Poisson dual of FCC is BCC and the two exchange roles at the self-dual Gaussian parameter alpha=pi. Two pre-registered rounds of experiments follow.</p><p><b>Round 1:</b> among 3D Bravais lattices the minimiser is always FCC or BCC (29/29 kernel points; Gaussian crossover a*=pi to 3e-14); random-restart searches over non-Bravais cells with up to 16 points find nothing below min(FCC, BCC, HCP, A15) in 9,860 restarts; on S^3, where the 600-cell is a proved optimum, a local optimiser reaches it for long-range and soft kernels but not for stiffer Gaussians; along the Bain path the self-dual (isodual) lattice at alpha=pi is the energy maximum between the two degenerate minima, so the T-duality analogy explains why no 3D universal optimum exists rather than pointing to one.</p><p><b>Round 2 (negative throughout):</b> F1, an alpha-homotopy from a soft kernel, reaches the proved 600-cell in 0, 0 and 6 of 50 seeds at a=1, 2, 4, while plain restarts at equal compute reach it in 50/50 at a=4; by the registered stop rule our 3D searches are declared unreliable. T2: Gaussian mixtures straddling the self-dual point give nothing below FCC/BCC/HCP in 5,100 restarts. T1: a search for formally self-dual configurations accepts nothing, but its objective cannot tell the known one (diamond) from configurations 1e-3 away, so the negative is uninformative. H1: the two-point linear-programming code failed its own one-dimensional sanity gate (under an admissibility tolerance fixed in code, not registered) and was not run in d=3. Deviations from the registrations are listed; two adversarial reviews and their resolutions are in the source archive.</p><p>Everything is small-scale, classical and single-engine; nothing uses the unrefereed planar lattice theorem; no claim about excitons. Written by an AI system; checked by independent instances; not refereed.</p>",
+  "creators": [
+   {
+    "name": "Callens, Xavier",
+    "affiliation": "SocrateAI Research"
+   }
+  ],
+  "keywords": [
+   "negative results",
+   "pre-registration",
+   "universal optimality",
+   "Gaussian core model",
+   "formal duality",
+   "Poisson summation",
+   "600-cell",
+   "linear programming bounds",
+   "homotopy"
+  ],
+  "license": "CC-BY-4.0",
+  "access_right": "open",
+  "language": "eng",
+  "related_identifiers": [
+   {
+    "identifier": "https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids",
+    "relation": "isSupplementedBy",
+    "scheme": "url"
+   },
+   {
+    "identifier": "https://github.com/openai/math",
+    "relation": "cites",
+    "scheme": "url"
+   },
+   {
+    "identifier": "arXiv:0911.2169",
+    "relation": "cites",
+    "scheme": "arxiv"
+   },
+   {
+    "identifier": "arXiv:0811.1236",
+    "relation": "cites",
+    "scheme": "arxiv"
+   },
+   {
+    "identifier": "arXiv:1701.00265",
+    "relation": "cites",
+    "scheme": "arxiv"
+   },
+   {
+    "identifier": "10.5281/zenodo.23294615",
+    "relation": "isSupplementTo",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23297479",
+    "relation": "isSupplementTo",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23298292",
+    "relation": "isSupplementTo",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "10.5281/zenodo.23302787",
+    "relation": "isSupplementTo",
+    "scheme": "doi"
+   }
+  ],
+  "version": "1",
+  "notes": "Standalone paper of the SocrateAI-Scientific-QuantumFluids programme, written by an AI system under the author's standing instructions. Source archive: exploration/exciton and paper sources as committed. Repository state: git tag exciton-gated-5."
+ }
+}
