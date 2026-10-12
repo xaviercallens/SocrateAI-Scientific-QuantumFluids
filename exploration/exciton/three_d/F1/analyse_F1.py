@@ -78,6 +78,7 @@ def report_N120(recs):
     # plain equal-compute: restart statistics and reproduction of C's record by the first run
     out += ["", "Plain equal-compute control: restarts and per-run outcomes (E-only hits among all restart runs); first run reproduces C's record at the same seed?", "",
             "| a | runs total | runs at E_600 (E-only, 1e-8) | mean nit per completed run | first-run E minus C's E at same seed (max abs over seeds) |", "|---|---|---|---|---|"]
+    repro = []
     for a in (1.0, 2.0, 4.0):
         rs = [r for r in recs if r["a_target"] == a]
         if not rs: continue
@@ -89,6 +90,14 @@ def report_N120(recs):
             x = r["plain_equal_compute"]["runs"][0]
             if c and x["E_end"] is not None: dev.append(abs(x["E_end"] - c[0]["E"]))
         out.append(f"| {a:g} | {len(runs)} | {hits} | {np.mean([x['nit'] for x in runs]):.0f} | {max(dev) if dev else float('nan'):.1e} |")
+        agree = sum((abs(r["plain_equal_compute"]["runs"][0]["E_end"] - E600[a]) / E600[a] <= TOL_E) ==
+                    any(abs(c["E"] - E600[a]) / E600[a] <= TOL_E for c in Crec if c["N"] == 120 and c["kernel"] == r["kernel"] and c["start"] == r["start"])
+                    for r in rs)
+        ds = np.sort(dev)
+        repro.append(f"- a = {a:g}: first-run outcome (at E_600 or not) equals C's at {agree}/{len(rs)} seeds; |first-run E - C's E| "
+                     f"sorted: largest three {', '.join(f'{x:.1e}' for x in ds[-3:])}; max over the {len(ds) - 2} closest seeds "
+                     f"{ds[-3]:.1e} absolute ({ds[-3] / E600[a]:.1e} relative); seeds within 1.4e-12: {(ds <= 1.4e-12).sum()}")
+    out += [""] + repro
     return out, verdict
 
 

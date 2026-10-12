@@ -30,7 +30,7 @@ for r in F120:
     for rg in r["homotopy"]["rungs"]:
         byA.setdefault(rg["a"], []).append(rg["E"])
 aa = np.array(sorted(byA)); ex = [np.array(byA[a]) / E6(a) - 1 for a in aa]
-med = np.array([np.median(e) for e in ex]); lo = np.array([e.min() for e in ex]); hi = np.array([e.max() for e in ex])
+med = np.array([np.median(e) for e in ex]); lo = np.maximum([e.min() for e in ex], 1e-13); hi = np.array([e.max() for e in ex])
 ax[0, 0].fill_between(aa, lo, hi, color=B, alpha=0.18, lw=0)
 ax[0, 0].plot(aa, med, "-o", color=B, ms=4, lw=2, label=f"homotopy ladders, median and range ({len(F120)} ladders)")
 for a, k in ((1.0, "gauss1"), (2.0, "gauss2"), (4.0, "gauss4")):
@@ -60,6 +60,8 @@ for N, recs, cell, kmap in ((24, F24, C24, None), (120, F120, C6, None)):
 x = np.arange(len(groups)); w = 0.26
 for i, (lab, col, hatch) in enumerate((("homotopy", B, None), ("plain, equal compute", O, "//"), ("C plain", A, ".."))):
     ax[0, 1].bar(x + (i - 1) * w, np.maximum(vals[lab], 0.004), w * 0.9, color=col, hatch=hatch, edgecolor="white", lw=0.5, label=lab)
+    for xi, v in zip(x + (i - 1) * w, vals[lab]):
+        if v == 0: ax[0, 1].text(xi, 0.012, "0", ha="center", fontsize=7.5, color=INK2)
 ax[0, 1].axhline(0.9, color=INK2, ls="--", lw=0.8); ax[0, 1].text(3.55, 0.92, "gate F1a: 45/50", fontsize=8, color=INK2)
 ax[0, 1].set_xticks(x); ax[0, 1].set_xticklabels(groups, fontsize=8); ax[0, 1].set_ylim(0, 1.08)
 ax[0, 1].set_ylabel("fraction of seeds at the target energy ($10^{-8}$)")

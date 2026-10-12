@@ -1,7 +1,7 @@
 % Round 2 of paper V. Sources: exploration/exciton/three_d/{F1,T12,H1}/RESULTS.md (pre-registration PREREG_round2.md, 51a85b1).
 \begin{failbox}
 \textbf{Round 2 in one paragraph.} F1: the $\alpha$-homotopy reaches the proved $S^3$ optimum (600-cell, $N=120$) in
-\textbf{F1HOMA} of 50 seeds at $a=1,2,4$, so gate F1a fails at every $a$ and the registered stop rule applies: the structure
+\textbf{0, 0 and 6} of 50 seeds at $a=1,2,4$, so gate F1a fails at every $a$ and the registered stop rule applies: the structure
 searches of this programme are declared unreliable. T2: no structure below FCC/BCC/HCP for Gaussian mixtures straddling the
 self-dual point (0 candidates in 75 cells, 5\,100 restarts). T1: no formally self-dual configuration accepted --- but the search
 cannot distinguish the known one (diamond) from configurations $10^{-3}$ away, so this negative carries no information. H1: the
@@ -11,35 +11,58 @@ not registered) and was therefore not run in $d=3$.
 
 \begin{center}
 \includegraphics[width=0.98\textwidth]{figs_companion5/fig_round2.pdf}\\[2pt]
-{\footnotesize Round~2. (a) F1, $N=120$: relative energy above the 600-cell along the $\alpha$-ladders (line: median; band: range)
+{\footnotesize Round~2. (a) F1, $N=120$: relative energy above the 600-cell along the $\alpha$-ladders (line: median; band: range, floored at $10^{-13}$; the band reaches the floor at $a=3.36$, where 2 of the 6 ladders that end at the 600-cell are already there; the other 4 get there at $a=4$)
 and C's plain endpoints at $a=1,2,4$ (squares; runs that reach the 600-cell are drawn at $10^{-13}$). (b) Fraction of seeds reaching
-the target energy: homotopy, plain L-BFGS with restarts at equal compute, and C's plain runs at the same seeds. (c) T1: surrogate
+the target energy (energy test only; F1a also requires the chord test, which removes 6 homotopy runs at $N=24$, $a=1$, and none elsewhere): homotopy, plain L-BFGS with restarts at equal compute, and C's plain runs at the same seeds. (c) T1: surrogate
 value against the registered shell mismatch for random starts, perturbed positive controls and the exact controls. (d) H1 sanity
 gate in $d=1$: LP value minus $E_{\mathbb Z}$ (a valid bound is $\le0$) over the $\beta$ scan; crosses are full-setting solutions
 that miss the admissibility tolerance.}
 \end{center}
-\subsection{F1: homotopy in $\alpha$ against the proved control}
-Same $N=120$ points on $S^3$ and kernels $e^{-ad^2}$ as in C; from C's random start at the same seed, L-BFGS to convergence at
-$a_0=0.25$, then a geometric ladder of ratio $2^{1/4}$ to the target (rungs 8, 12, 16 for $a=1,2,4$), warm-started and with C's
-optimiser settings. Gate F1a: $\ge45/50$ seeds within $10^{-8}$ (relative) of $E_{600}$ \emph{and} minimum chord within $10^{-6}$ of
+\subsection{F1: homotopy in $\alpha$ against the proved control}\label{sec:F1}
+Same $N=120$ points on $S^3$ and kernels $e^{-ad^2}$ as in C; from C's random start at the same seed, L-BFGS ``to convergence'' at
+$a_0=0.25$, then a geometric ladder of ratio $2^{1/4}$ to the target (rungs 8, 12, 16 for $a=1,2,4$), warm-started. The registration
+says ``re-converged at each rung'' and sets no iteration cap; we used C's optimiser settings, including its 8\,000-iteration cap
+(an unregistered choice, listed in the deviations), so the F1a verdict is for the homotopy as implemented with that cap. Gate F1a: $\ge45/50$ seeds within $10^{-8}$ (relative) of $E_{600}$ \emph{and} minimum chord within $10^{-6}$ of
 $2\sin(\pi/10)$. Gate F1b: plain L-BFGS from the same start with restarts, hard-capped at the homotopy's number of gradient
-evaluations ($\approx7$--$9.5\times10^4$), must \emph{not} also reach $\ge45/50$ at $a\in\{2,4\}$.
+evaluations ($6.2$--$10.1\times10^4$), must \emph{not} also reach $\ge45/50$ at $a\in\{2,4\}$.
 \begin{center}\small
 \begin{tabular}{lccccc}\toprule
 $a$ & homotopy at 600-cell & plain, equal compute & C plain (same seeds) & homotopy end, rel.\ excess & gradient evaluations\\\midrule
-1 & F1H1 & F1P1 & F1C1 & F1X1 & F1N1\\
-2 & F1H2 & F1P2 & F1C2 & F1X2 & F1N2\\
-4 & F1H4 & F1P4 & F1C4 & F1X4 & F1N4\\\bottomrule
+1 & 0/50 & 0/50 & 0/50 & $(1.7$--$2.4)\times10^{-8}$ & $6.2$--$7.3\times10^4$\\
+2 & 0/50 & 0/50 & 0/50 & $(7.0$--$8.2)\times10^{-6}$ & $7.8$--$9.5\times10^4$\\
+4 & 6/50 & 50/50 & 6/50 & $(0.8$--$1.1)\times10^{-3}$ & $8.0$--$10.1\times10^4$\\\bottomrule
 \end{tabular}
 \end{center}
-\textbf{F1a fails at every $a$.} The rung-by-rung record locates the failure: already at $a_0=0.25$ the converged state is
-$3\times10^{-11}$ above $E_{600}$ and yet is not the 600-cell (one ladder re-run with chords recorded, \texttt{F1/supp\_rung\_chords.py}, seed 0: converged, minimum chord $0.237$ against $0.618$, distance-spectrum deviation $0.38$), and the excess then grows smoothly along the ladder
-($2\times10^{-8}$ at $a=1$, $7\times10^{-6}$ at $a=2$, $10^{-3}$ at $a=4$) --- the same excesses as C's trapped plain runs. The soft
-kernel does not select the 600-cell; it selects a family of nearby minima that the ladder then follows. Seven to nine of the 17
-rungs stop at C's 8\,000-iteration cap, so the soft rungs are not fully converged; the registered settings were kept. At $a=4$
-plain L-BFGS \emph{with restarts} at equal compute finds the 600-cell in F1P4 seeds: the per-run success rate of fresh restarts is
-F1RATE (completed runs only; the budget-truncated last run of each seed is dropped, a small survivorship bias), against 6/50
-in C. A separate unregistered check with 40 fresh seeds (\texttt{F1/fresh\_plain\_a4.py}) gives F1FRESH. F1PTEST; F1CREPRO.
+\textbf{F1a fails at every $a$.} The rung-by-rung record locates the failure: already at $a_0=0.25$ the state where L-BFGS stops is
+$3\times10^{-11}$ above $E_{600}$ and is not the 600-cell (one ladder re-run with chords recorded, \texttt{F1/supp\_rung\_chords.py},
+seed 0: minimum chord $0.237$ against $0.618$, distance-spectrum deviation $0.38$). It is not a local minimum either: the reviewer
+found 74 negative eigenvalues of its Hessian on $(S^3)^{120}$, and our own check (\texttt{F1/supp\_hessian.py}, central differences,
+$h=10^{-4}$ and $10^{-5}$) finds 83, the lowest $-1.8\times10^{-6}$, with tangent gradient $1.2\times10^{-5}$; a fresh L-BFGS
+restart from it stops after 17 iterations, having lowered $E\approx4445$ by $7\times10^{-11}$. The remaining descent is near the
+floating-point resolution of $E$, so the registered ``convergence at $a_0$'' is not reachable in double precision with this
+energy, and L-BFGS stops on its relative-reduction test at a stall point. The excess then grows smoothly along the ladder
+($2\times10^{-8}$ at $a=1$, $7\times10^{-6}$ at $a=2$, $10^{-3}$ at $a=4$), of the same order as C's trapped plain runs
+($2$--$3\times10^{-8}$, $7\times10^{-6}$, $10^{-3}$). By contrast, the trapped plain endpoint at $a=4$ (seed 0) is a strict local
+minimum: no negative eigenvalue and exactly six zero modes, the rotations of $S^3$. So the soft kernel does not select the
+600-cell: the soft-kernel landscape is so flat that L-BFGS stops away from it, and the ladder carries that state to stiffer
+kernels, where it lands on a trapped branch. Six to ten of the 17 rungs (mean 7.8) stop at the 8\,000-iteration cap, at every
+rung from $a=0.5$ to $1$ in every ladder. The relative-excess column is over the seeds that miss. At $a=4$ the homotopy
+reaches the 600-cell at 6 seeds (9, 10, 17, 20, 46, 49), none of them among C's six; at each, the ladder sits on the trapped
+branch ($\approx10^{-4}$ above at $a=2.83$) and drops to the 600-cell only at the last one or two rungs ($a\ge3.36$), so these are
+late escapes, not branch-following. \textbf{F1b} (registered meaning: if plain L-BFGS at equal compute also reaches $\ge45/50$,
+the homotopy has no merit): plain L-BFGS with restarts reaches 0/50 at $a=2$ (where the homotopy also has 0/50) and
+\textbf{50/50 at $a=4$}, so at $a=4$ the homotopy has no merit by the registered criterion. The restart runs at $a=4$ succeed in
+1\,916 of 5\,790 completed runs (33\%; the budget-truncated last run of each seed is dropped; counting those 50 as misses gives 1\,916/5\,840, also 33\%, so the survivorship bias is small),
+against 6/50 in C. Two unregistered checks with the same optimiser and fresh starts give 12/40 (\texttt{F1/fresh\_plain\_a4.py})
+and 26/100 (\texttt{F1/cseeds\_plain\_a4.py}, C's seed formula at indices 50--149, never used by C). Fisher's exact test,
+two-sided, for C's 6/50: $p=0.0012$ against the restart runs, $0.061$ against 12/40, $0.058$ against 26/100, $0.032$ against
+the two fresh checks pooled (38/140). C itself reproduces: the first run of each F1b control starts from C's point and reaches
+the 600-cell at exactly C's six seeds (12, 15, 21, 32, 34, 42); its final energy agrees with C's to $5.5\times10^{-12}$ (absolute; $3\times10^{-14}$ relative)
+at 48 seeds, and the other two (seeds 11, 44) end in different trapped minima. The cause is the evaluator: C's own code re-run at
+seeds 11, 44 and 16 reproduces C's records exactly (\texttt{F1/supp\_C\_evaluator.py}), so the equivalent Gram-matrix form only
+changes floating-point paths. So C's 6/50 is a correct record that is very probably a low draw (the 26/100 check was added after
+seeing 12/40; only the restart comparison and the pooled one are below 0.05): the per-start success rate at $a=4$ is nearer 0.3
+than 0.12.
 
 Control $N=24$ (50 seeds): the homotopy ends at the 24-cell energy in 50/50 starts at every $a$ (44/50 also match the chord at
 $a=1$, where six end at the 24-cell energy to $10^{-8}$ with a minimum chord $1$--$2\times10^{-6}$ from 1, just outside the
@@ -47,8 +70,9 @@ $10^{-6}$ tolerance --- incomplete convergence, not a different configuration), 
 with restarts at equal compute 50, 47, 27 of 50; it never goes below the 24-cell. So the homotopy \emph{does} help at $N=24$, a
 configuration known not to be universally optimal, and does not at $N=120$, where the target is proved.
 
-\textbf{Consequence (registered stop rule).} F1a failed at every $a$; the three-dimensional structure searches of this programme
-(B, T2, T1) are declared unreliable, and their negatives are read only as ``no counterexample found with an unreliable search''.
+\textbf{Consequence (registered stop rule).} F1a failed at every $a$; the registered rule names T1 and T2, and we extend it, as our
+reading, to round~1's Experiment B, which used the same kind of local search: the three-dimensional structure searches of this
+programme (B, T2, T1) are declared unreliable, and their negatives are read only as ``no counterexample found with an unreliable search''.
 
 \subsection{T2: Gaussian mixtures across the self-dual point}
 Kernel $e^{-a_1r^2}+\lambda e^{-a_2r^2}$, $(a_1,a_2)\in\{(\pi/2,2\pi),(\pi/4,4\pi),(2,5)\}$; $\lambda^*$ (where $E_{\rm FCC}=E_{\rm BCC}$)
@@ -113,7 +137,8 @@ sum-of-squares) non-negativity certificates would probably be informative; it is
 \subsection{Round 2 deviations}
 F1: the run was interrupted after 6 of 50 seeds when the launching session was compacted and resumed for seeds 6--49 with the
 same code and single-threaded BLAS; \texttt{run\_F1.py} replaces C's energy evaluator by an equivalent
-Gram-matrix form, asserted equal to $10^{-12}$ before every run (an oversubscribed first resume was stopped after 8 minutes, before any record). By then F1a
+Gram-matrix form, asserted equal to $10^{-12}$ before every run (an oversubscribed first resume was stopped after 8 minutes, before any record); C's 8\,000-iteration cap was used at every
+rung although the registration sets none (``re-converged at each rung''); the chord re-run, the Hessian check, the C-evaluator re-run, the two fresh-start checks and the reproduction comparison with C are unregistered. By then F1a
 had already failed at every $a$ (6 misses each, more than the 5 allowed). The N$=24$ control completed in the first session.
 T2: mixture class appended; diamond and A15 added for information. T1: the $N^2$ normalisation; surrogate run~1 (16 Gaussians,
 absolute residuals) uninformative and discarded with records kept; run~2 start counts not registered (60/60/40); a typo in the

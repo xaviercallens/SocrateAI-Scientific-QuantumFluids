@@ -1,0 +1,7 @@
+a0 state seed 0: E=4444.919131868293 nit=5738 msg=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+a0 state a=0.25 h=0.0001: |tangent grad|=1.2e-05; eigenvalues < -1e-8: 83, |w| <= 1e-8: 2, lowest -1.80e-06, 7th -1.33e-06
+a0 state a=0.25 h=1e-05: |tangent grad|=1.2e-05; eigenvalues < -1e-8: 83, |w| <= 1e-8: 1, lowest -1.79e-06, 7th -1.33e-06
+restart from a0 state: nit=17 dE=-7.00e-11 max|dy|=2.0e-05 msg=CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+plain a=4 seed 0 endpoint: rel excess 1.04e-03 nit=738
+plain a=4 endpoint a=4 h=0.0001: |tangent grad|=8.1e-07; eigenvalues < -1e-8: 6, |w| <= 1e-8: 0, lowest -8.42e-08, 7th 5.17e-03
+plain a=4 endpoint a=4 h=1e-05: |tangent grad|=8.1e-07; eigenvalues < -1e-8: 0, |w| <= 1e-8: 6, lowest -8.31e-09, 7th 5.17e-03

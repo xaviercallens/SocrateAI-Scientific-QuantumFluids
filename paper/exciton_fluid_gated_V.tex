@@ -50,7 +50,7 @@ given less work; sliding container walls reduce the defect count in 0 of 6 shape
 that at $\alpha=\pi$ the self-dual (isodual) 3D lattice is the energy \emph{maximum} between the two degenerate minima: the
 T-duality analogy explains why no universal optimum exists in 3D rather than pointing to one. The mode-sum (``Kaluza--Klein tower'')
 evaluator of the gated kernel is 4--7 times cheaper than a tail-corrected image sum. Round~2 is negative throughout: an
-$\alpha$-homotopy from a soft kernel reaches the proved 600-cell in F1HOMA of 50 seeds (it does help for the 24-cell), so by the
+$\alpha$-homotopy from a soft kernel reaches the proved 600-cell in 0, 0 and 6 of 50 seeds at $a=1,2,4$, while plain restarts at equal compute reach it in 50/50 at $a=4$ (it does help for the 24-cell), so by the
 registered rule our 3D searches are declared unreliable; Gaussian mixtures straddling the self-dual point produce nothing below
 FCC/BCC/HCP in 5\,100 restarts; a search for formally self-dual configurations accepts nothing, but its objective cannot tell the
 known one (diamond) from configurations $10^{-3}$ away, so the negative is uninformative; and the two-point linear-programming
@@ -115,7 +115,7 @@ The first A runs were invalid (a determinant-sign bug, two overlapping runs, a h
 $N$ points on the unit $S^3$, chordal kernels $e^{-a d^2}$ ($a\in\{0.5,1,2,4\}$), $1/d$ and $\log(1/d)$; L-BFGS-B from 50 random
 starts per kernel. The 600-cell is universally optimal for $N=120$~\cite{CK07}, a \emph{proved} target. Gate C1 ($\ge45/50$ starts
 within $10^{-8}$ of $E_{600}$ for every kernel): \textbf{not met}. Success 50/50 ($a=0.5$), 46/50 (Coulomb), 48/50 (log), 6/50
-($a=4$, 44 starts end $10^{-3}$ above), 0/50 ($a=2$, all converge to a family of local minima $7\times10^{-6}$ above). For $a=1$ all
+($a=4$, 44 starts end $10^{-3}$ above; round~2 indicates a low draw: restarts of the same optimiser succeed in 1\,916 of 5\,790 runs, fresh starts in 38/140, Sec.~\ref{sec:F1}), 0/50 ($a=2$, all converge to a family of local minima $7\times10^{-6}$ above). For $a=1$ all
 50 starts hit the registered 8\,000-iteration cap $2$--$3\times10^{-8}$ above $E_{600}$; the review asked for a rerun with the cap
 raised to 150\,000: all converge ($16\,640$--$66\,673$ iterations) at $1.5$--$2.1\times10^{-8}$ above, and two polished configurations
 have minimum chord $0.50$ against $0.618$ for the 600-cell with a distance-spectrum deviation of $0.22$ --- \emph{distinct local
@@ -203,7 +203,7 @@ the linear-programming bound. What we can compute is the size of the two-point L
 \item The 3D Bravais problem for completely monotone kernels is settled numerically on our grids (FCC or BCC, exact Gaussian
 crossover at $\pi$); nothing new is claimed there.
 \item No non-Bravais structure beats the references for pure kernels up to 16 points per cell; this is an absence of counterexample
-with a search whose reliability is itself measured (B1 near-misses, C failures).
+with a search whose reliability is itself measured (B1 near-misses, C failures) and that round~2's stop rule, as we read it, declares unreliable.
 \item The ``lift and project'', ``branes as walls'' and ``curved space'' pictures are now each attached to a negative or marginal
 measurement (papers IV, this paper); the ``KK tower'' picture is a real and modest evaluator gain; the ``T-duality'' picture is a
 correct explanation of a negative fact.
