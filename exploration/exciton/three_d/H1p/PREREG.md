@@ -88,3 +88,33 @@ is run. Every run, including failures, is kept (`records/`, logs committed with 
 No new mathematics: the bound is Cohn–Kumar's, the α = π values are published. The certificates are computer-assisted
 (sympy exact arithmetic, mpmath interval arithmetic); neither library is formally verified. Hostile review before any
 deposit.
+
+## Amendment A1 (2026-10-12, before any registered run; gates V1, V2, V3, H1' and their thresholds unchanged)
+
+**Why.** A pre-check on the committed H1 solution `../H1/solutions/d1_alpha1.json` (not a registered run) shows that step 4
+cannot succeed as written: the double-precision LP enforces f <= g with an absolute tolerance, so at x ~ 7 f exceeds g by
+9.8e-10 where g = e^{-49}, a relative excess ~ 1e12; and f̂ has dips of -1.7e-11 at |y| = 1.46 where e^{-t/2} ~ e^{-50},
+i.e. Q is negative by ~1e11 in its own units. Neither a multiplicative τ <= 1e-6 nor a lift δ can repair this. The
+standard remedy (as in rigorous Cohn–Elkies-type numerics) is to polish the solution in high precision so that contacts are
+exact, and only then certify.
+
+**Replacement of steps 1–3 (step 4 and 5 and the void condition unchanged):**
+1'. Double-precision LP exactly as registered (H1 code), giving c, β (b snapped as registered).
+2'. Contact identification: local maxima of (f − g)/g on x ∈ (0, 24] and local minima of Q(t)/(Σ_k |c_k L_k(t)|) on
+    t >= 0, both evaluated in 60-digit arithmetic; the K + 1 most active contacts (largest values) are kept, each as a
+    double contact (value and derivative), with x = 0 / t = 0 allowed as a simple contact.
+3'. Remez-type exchange in 60-digit arithmetic (mpmath): solve the square linear system "f(x_i) = g(x_i), f̂(y_j) = 0"
+    (K + 1 equations, unknowns c) for the current contact locations; move each location to the nearby local extremum
+    of (f − g)/g resp. of the normalised Q; repeat until locations move by < 1e-40 or 200 iterations. If the exchange
+    does not converge, or the polished f has an objective lower than the double LP's by more than 1e-6 relative, the
+    double LP solution is certified directly by steps 3–5 as registered (and will be reported "not certified" if τ > 1e-6).
+4'. Exact positivity of f̂: c rationalised exactly (the 60-digit binary values are rationals); Q's minimum on [0, ∞) found
+    from the real roots of Q' (mpmath polyroots, 60 digits), δ = max(0, −min Q) · 2 + 1e-50, c_0 ← c_0 + δ, and then
+    **verified exactly**: sympy Sturm count of real roots of Q + δ on [0, ∞) must be 0 and Q(0) + δ > 0.
+Step 4 (interval verification of β^{d/2} R(u) <= (1 + τ) e^{κu}, τ ladder from 1e-12, give up at 1e-6) and step 5 as
+registered, using the second-order centred form near contacts (value + derivative at midpoint + interval second
+derivative), which is still a rigorous enclosure.
+
+**Development discipline.** Code is developed and tested only at parameters that are not gate cases: d = 1, α = 2;
+d = 2, α = 2. The gate cases (d = 1, α ∈ {1, π}; d = 2, 3 at α = π; d = 3 at α ∈ {2, 4, 8}) are run once each with the
+code frozen at a commit recorded in the results. K = 30 is used for development; K ∈ {30, 40, 50} for the gate runs.
