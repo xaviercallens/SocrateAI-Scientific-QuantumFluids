@@ -161,3 +161,35 @@ au-dessus de E₆₀₀ ; les coordonnées de deux départs (`polish_gauss1_coor
 0,618 pour le 600-cell et un écart de spectre de distances de 0,22 : **ce sont de vrais minima locaux distincts**, pas le
 600-cell mal convergé. gauss 1 passe de « non concluant » à « échec de recherche », avec un paysage si plat que les
 meilleurs minima locaux sont à 2e-8 de l'optimum prouvé. Cela renforce la priorité 1 (homotopie en α avec contrôle prouvé).
+
+## Compléments après lecture des sources (2026-10-12, après-midi)
+
+Trois articles lus en entier ou en grande partie dans la session (textes arXiv) ; ils corrigent ou précisent le mémo.
+
+* **Cohn–Kumar–Schürmann, « Ground states and formal duality relations in the Gaussian core model », arXiv:0911.2169 (2009-2010),
+  lu en entier.** (i) Définition exacte de la dualité formelle : P (densité δ) et Q (densité 1/δ) sont formellement duaux si,
+  pour toute fonction de Schwartz f, la *somme de paires moyenne* de f sur P vaut δ fois celle de f̂ sur Q ; la version radiale
+  (seule utile ici) ne dépend que des corrélations de paires. (ii) **Proposition 1 : D_n^+ est formellement auto-dual pour n
+  impair** ; en n = 3, D_3^+ = D_3 ∪ (D_3 + (½,½,½)) est la structure diamant. Il existe donc déjà une configuration non-réseau
+  formellement auto-duale de R³, et notre recherche B l'a déjà classée : jamais sous FCC/BCC (elle est bien moins dense). Elle
+  sert de **contrôle positif** au détecteur d'auto-dualité de T1. (iii) **Au point auto-dual ρ = 1 le fondamental 3D n'est pas un
+  réseau pur mais une coexistence de phases D_3/D_3*** (construction de Maxwell, 0.99899854 ≤ ρ ≤ 1.00100312) ; énergie
+  0.11576766 (leur normalisation ½ Σ V, V = e^{-π r²}), soit θ = 0.2315353 contre 0.2315363 pour le réseau pur : **4e-6 relatif
+  sous FCC/BCC**, bien au-dessus du seuil 1e-8 de T2. Conséquence pour T2 : un approximant périodique de coexistence à grand N
+  passerait la porte sans être une structure nouvelle ; le critère T2 doit vérifier la convexité de E(1/ρ) et exclure les
+  approximants de coexistence. (iv) « Aucune preuve n'est connue » pour le fondamental 3D (Q1 confirmée ouverte) ; D_4
+  probablement universellement optimal ; D_9^+ peut-être.
+* **Cohn–Kumar, « Counterintuitive ground states in soft-core models », arXiv:0811.1236 (Phys. Rev. E 78, 061113, 2008), lu en
+  entier.** En R³ tous les empilements « tight » sont des empilements de Barlow (couches triangulaires) et FCC minimise l'énergie
+  parmi eux à basse densité ; en d = 5 et 7 des non-Bravais (Λ₅², Λ₇³) battent les réseaux. Cela borne l'axe « sections et
+  laminations » (§4) : en 3D la lamination ne produit que Barlow, question close pour le gaussien à basse densité.
+* **Cohn–Conway–Elkies–Kumar, « The D₄ root system is not universally optimal », Exp. Math. 16 (2007) 313–320, arXiv:math/0607447,
+  lu en entier.** Confirmé : le 24-cell n'est pas universellement optimal sur S³ ; la famille C_θ le bat pour f = (1+t)^k,
+  8 ≤ k ≤ 13 (et e^{6t}) ; pour f = (1−t)^{-1} les simulations convergent dans plus de 90 % des cas vers C_θ (668.19 contre 668) et
+  non vers le 24-cell. **Notre expérience C retrouve ce comportement** (Coulomb : 5/50 au 24-cell, log : 6/50) avec un autre
+  potentiel ; c'est un contrôle de plus pour F1. Les 24-cell est néanmoins un minimum local strict pour tout potentiel absolument
+  monotone non polynomial de degré ≤ 5 (leur §6).
+* **Radchenko–Viazovska, « Fourier interpolation on the real line », arXiv:1701.00265** : titre et résumé vérifiés (nœuds
+  {0, ±√n}, formes faiblement holomorphes pour le groupe thêta) ; le reste du mémo §3.2 reste une question, non une affirmation.
+* Les références encore « (mémoire) » : Conway–Sloane isodual (1994), Flatley–Theil (2015), Bétermin–Petrache (2017),
+  Sarnak–Strömbergsson (2006), Bondarenko–Radchenko–Seip, Cohn–de Laat–Salmon (2022), Afkhami-Jeddi et al. (2020).
