@@ -1,0 +1,88 @@
+{
+ "rows": [
+  {
+   "case": "V1a",
+   "d": 1,
+   "alpha": "1",
+   "B_K40": "0.772637204826132",
+   "B_K30": "0.772637204826369",
+   "certified_K40": true,
+   "E_Z": "0.772637204826652",
+   "E_Z_minus_B_rel": "6.73e-13",
+   "verdict": "pass"
+  },
+  {
+   "case": "V1b",
+   "d": 1,
+   "alpha": "pi",
+   "B_K40": "0.0864348112113391",
+   "B_K30": "0.0864348112115828",
+   "certified_K40": true,
+   "E_Z": "0.086434811213308",
+   "E_Z_minus_B_rel": "2.278e-11",
+   "verdict": "pass"
+  },
+  {
+   "case": "V2",
+   "d": 2,
+   "alpha": "pi",
+   "B_K40": "0.159595266956366",
+   "B_K30": "0.159595266738398",
+   "certified_K40": true,
+   "E_A2": "0.1595952669639284",
+   "E_A2_minus_B": "7.5625e-12",
+   "verdict": "pass"
+  },
+  {
+   "case": "V3",
+   "d": 3,
+   "alpha": "pi",
+   "B_K40": "0.2232177894732",
+   "B_K30": "0.223217006536709",
+   "certified_K40": true,
+   "min_FCC_BCC": "0.2315362661841478",
+   "B_minus_published": "-3.0527e-8",
+   "B_minus_CdCI_Thm1.4": "0.0058571",
+   "verdict": "FAIL"
+  },
+  {
+   "case": "H2",
+   "d": 3,
+   "alpha": "2",
+   "B_K40": "1.01101822912758",
+   "B_K30": "1.01101776361921",
+   "certified_K40": true,
+   "E_FCC": "1.0176168959089922",
+   "E_BCC": "1.0158628160347178",
+   "G": "0.00476894",
+   "note": "gated: an earlier gate failed (reported, not a registered result)",
+   "verdict": "G > 1e-3"
+  },
+  {
+   "case": "H4",
+   "d": 3,
+   "alpha": "4",
+   "B_K40": "0.0727564374393514",
+   "B_K30": "0.0727561087066191",
+   "certified_K40": true,
+   "E_FCC": "0.0779676710307026",
+   "E_BCC": "0.07889601370735756",
+   "G": "0.0668384",
+   "note": "gated: an earlier gate failed (reported, not a registered result)",
+   "verdict": "G > 1e-3"
+  },
+  {
+   "case": "H8",
+   "d": 3,
+   "alpha": "8",
+   "B_K40": "0.000394759853257321",
+   "B_K30": "0.000394751467959396",
+   "certified_K40": true,
+   "E_FCC": "0.0005032413015592795",
+   "E_BCC": "0.0006026980498848327",
+   "G": "0.215565",
+   "note": "gated: an earlier gate failed (reported, not a registered result)",
+   "verdict": "G > 1e-3"
+  }
+ ]
+}
