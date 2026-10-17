@@ -41,8 +41,9 @@ Fix rational s > 1, integer m ≥ 2. For x ∈ Z_m^d put G(x) = Σ_{n∈Z^d, n�
    x ≠ 0. Then for every G, s^{-d} Σ_x G(x) − G(0) = Σ_{x≠0} μ(x) G(x) − Σ_y λ(y) Ĝ(y) (coefficient of G(0): s^{-d} − 1 =
    −Σλ; of G(x), x ≠ 0: s^{-d} = μ(x) − Σ_y λ(y)cos(…)). With G ≤ Γ off 0, μ ≥ 0, λ ≥ 0, Ĝ ≥ 0:
    **LP(α) ≤ UB := Γ(0) + Σ_{x≠0} μ(x) Γ(x).**
-Sanity: λ = (1 − s^{-d})δ_0 gives μ ≡ 1 and UB = energy of (1/s)Z^d (density s^d); λ = the normalised indicator of the dual
-group of a density-1 sublattice L ⊂ (1/s)Z^d gives UB = E(L).
+Sanity: λ = (1 − s^{-d})δ_0 gives μ ≡ 1 and UB = energy of (1/s)Z^d (density s^d). (Corrected 2026-10-17 after the
+pre-run review, minor 1: for a density-1 sublattice L ⊂ (1/s)Z^d with s^d integer and mZ^d ⊆ sL, the choice is λ = s^{-d} on
+the dual group *minus 0*, giving UB = E(L); the earlier wording "normalised indicator" was wrong. The code does not use this.)
 
 Computation (`dual.py`): signed-permutation orbits; float LP (HiGHS) for λ with μ ≥ ε = 1e-8; then certify: λ → rationals
 (clip at 0, exact renormalisation), μ and UB in arb (cosine matrix contraction; theta sums Γ = Π θ(x_i) − [x = 0] with a rigorous

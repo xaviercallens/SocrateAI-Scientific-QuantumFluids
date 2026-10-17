@@ -70,15 +70,20 @@ def main():
                         "sandwich_width_rel": None if B is None else mp.nstr((best[0] - B) / B, 5)})
             if case == "D3pi":
                 row["UB_star_minus_CdCI_record"] = mp.nstr(best[0] - mp.mpf("0.23153532"), 5)
-            verdict = "UB < min(FCC,BCC)" if best[0] < ml else "not shown at this resolution"
+            # margin quoted: the comparison is an arb upper end vs float lattice sums (safe only if margin >> 1e-13)
+            row["margin_rel"] = mp.nstr((ml - best[0]) / ml, 6)
+            verdict = "UB < min(FCC,BCC)" if best[0] < ml * (1 - mp.mpf("1e-12")) else "not shown at this resolution"
         row["verdict"] = "VOID (bug)" if void else verdict
         if case.startswith("V") and row["verdict"] not in ("pass", "pass (consistency)"):
             gates_ok = False
-        if not case.startswith("V") and not gates_ok:
-            row["note"] = "gated: a validation gate failed (reported, not a registered result)"
-        if not case.startswith("V") and void:
+        if void:
             gates_ok = False
         out["cases"].append(row)
+    # PREREG: any VOID or failed validation gate gates ALL D3 results (applied after every case is evaluated)
+    if not gates_ok:
+        for row in out["cases"]:
+            if not row["case"].startswith("V"):
+                row["note"] = "gated: a validation gate failed or a VOID occurred (reported, not a registered result)"
     out["validation_gates_pass"] = gates_ok
     json.dump(out, open(os.path.join(HERE, "summary.json"), "w"), indent=1)
     for r in out["cases"]:
