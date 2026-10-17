@@ -30,7 +30,7 @@ sliding walls in the Fenris container study.}
 {\Large\textbf{Gated exciton fluids V:}\\[2pt]
 \large three dimensions --- what the T-duality, holography and projection analogies\\ do and do not give, measured}\\[8pt]
 Xavier Callens\\ {\small SocrateAI Research \quad\url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}}\\[2pt]
-{\small October 2026 \quad (version 2: adds H1$'$; version 3: adds H1$''$ and H1$'''$, certified bounds)}
+{\small October 2026 \quad (version 2: adds H1$'$; version 3: adds H1$''$ and H1$'''$, certified bounds; version 4: adds H1d, certified upper bounds)}
 \end{center}
 \vspace{-0.4em}
 
@@ -65,7 +65,11 @@ degree $\le40$ and with the best lattice as reference, two-point bounds do not s
 (H1$'''$, certified $0.2232178194$ against the published $0.22321782$), and the certified lower bounds at $\alpha=2,4,8$ lie
 $0.48\%$, $6.7\%$ and $21.6\%$ below the best lattice. The bound values are rigorous; that two-point bounds cannot do better
 remains numerical. A review found a defect in our certificate code (sub-ulp negative intervals of $\hat f$ not checked); an
-independent re-check confirms every reported bound, one of them ($K=60$, not a gate) only after adding a small lift. Everything is small-scale, classical and
+independent re-check confirms every reported bound, one of them ($K=60$, not a gate) only after adding a small lift.
+\emph{Version~4} adds the missing direction: rigorous \emph{upper} bounds on the two-point bound, by an energy adaptation of
+Li's discrete-reduction dual. They lie below $\min(E_{\rm FCC},E_{\rm BCC})$ by $0.414\%$, $5.82\%$ and $18.3\%$ at $\alpha=2,4,8$,
+so the two-point bound provably cannot prove FCC or BCC optimal there, and at $\alpha=\pi$ the upper bound is below the known
+coexistence record; with version~3 the two-point bound is bracketed, e.g.\ in $[0.2232178,0.2242867]$ at $\alpha=\pi$. Everything is small-scale, classical and
 single-engine; nothing uses the unrefereed planar lattice theorem; written with an AI system and not refereed.
 \end{abstract}
 
@@ -96,6 +100,8 @@ Version~2: H1$'$ (\texttt{three\_d/H1p/PREREG.md}, \texttt{d668109}; amendments 
 any gate run, but A2's acceptance tolerance and windows were set after H1's outcomes were known).
 Version~3: H1$''$ (\texttt{three\_d/H1pp/PREREG.md}, \texttt{b1d2de5}) and H1$'''$ (\texttt{three\_d/H1ppp/PREREG.md},
 \texttt{1e50f4b}; evaluator replaced during the runs, \texttt{162dfc3}, see \texttt{H1ppp/DEVIATIONS.md}).
+Version~4: H1d (\texttt{three\_d/H1d/PREREG.md}, \texttt{4e596f0}; evaluator tightened during the runs, \texttt{1ee1714}, see
+\texttt{H1d/DEVIATIONS.md}).
 All gates, restart counts and thresholds were fixed before the runs; deviations are dated in each \texttt{RESULTS.md} and
 summarised in \S\ref{sec:process}. An independent adversarial review preceded this write-up; its corrections are applied and
 listed.
@@ -256,6 +262,9 @@ $d=1$ outcomes from H1, the $\alpha=2$ reference caveat) are applied here and in
 \section{Version 3: H1$''$ and H1$'''$, certified two-point bounds}\label{sec:h1pp}
 \input{exciton_fluid_gated_V_h1pp}
 
+\section{Version 4: H1d, certified upper bounds on the two-point bound}\label{sec:h1d}
+\input{exciton_fluid_gated_V_h1d}
+
 \section{What this does and does not show}
 \begin{itemize}[leftmargin=1.2em,itemsep=1pt]
 \item The 3D Bravais problem for completely monotone kernels is settled numerically on our grids (FCC or BCC, exact Gaussian
@@ -276,6 +285,9 @@ validated against the published $d=3$, $\alpha=\pi$ value after a failed attempt
 upper estimates of the true two-point gap at this degree; that two-point bounds cannot settle these cases is not certified (it
 would need a dual certificate). Rigour here rests on the frozen certificate plus an independent re-check that closed a defect
 found in review. Nothing here proves or refutes FCC/BCC optimality.
+\item Version~4 (H1d) closes the direction version~3 left open: certified upper bounds show that the two-point bound (in the
+form of CdCI's Prop.~2.2) lies below $\min(E_{\rm FCC},E_{\rm BCC})$ at $\alpha=2,4,8$ and below the coexistence record at
+$\alpha=\pi$. This is a limitation of a proof method, made rigorous; it says nothing about which configuration is optimal.
 \item Nothing here involves the planar lattice theorem of \texttt{openai/math}, which remains AI-generated and unrefereed, nor any
 claim about excitons.
 \end{itemize}
@@ -285,7 +297,7 @@ Round~1 deviations: B restart counts reduced (100/100/60/40/40); A reruns after 
 $\ge45/50$ and the $a=1$ rerun added after review; D's comparator defined by the run's author before running but not registered;
 L3's pre-registration untracked at run time; L3 annulus G2 cases run twice with the second overwriting the first; a timing check on
 an uncounted seed. L1: mpmath reference at 10 of 160 points; first run discarded for a reference bug. Round~2 deviations are listed
-with the results. All raw records, analysis scripts and the reviews (round~1, round~2, F1, in version~2 H1$'$, in version~3 H1$'''$ with its re-check script) are in the repository (the H1$''$ review's corrections were applied in commit \texttt{25eecce}, but the review text itself was not saved); the independent review of round~1
+with the results. All raw records, analysis scripts and the reviews (round~1, round~2, F1, in version~2 H1$'$, in version~3 H1$'''$ with its re-check script, in version~4 H1d before and after the runs) are in the repository (the H1$''$ review's corrections were applied in commit \texttt{25eecce}, but the review text itself was not saved); the independent review of round~1
 (\texttt{docs/designs/EXCITON\_FLUID\_VERIFIER\_NOTES\_review\_3d.md}) recomputed every headline number from the records and asked for
 the wording changes applied here (D ``not met at matched cost'', B1 ``strictest reading'', C $a=1$ resolved by rerun).
 
@@ -300,6 +312,7 @@ the wording changes applied here (D ``not met at matched cost'', B1 ``strictest 
 \bibitem{CK08} H. Cohn, A. Kumar, Counterintuitive ground states in soft-core models, \emph{Phys. Rev. E} 78 (2008) 061113, arXiv:0811.1236.
 \bibitem{CCEK07} H. Cohn, J. H. Conway, N. D. Elkies, A. Kumar, The $D_4$ root system is not universally optimal, \emph{Exp. Math.} 16 (2007) 313--320.
 \bibitem{CKMRV22} H. Cohn, A. Kumar, S. D. Miller, D. Radchenko, M. Viazovska, Universal optimality of the $E_8$ and Leech lattices and interpolation formulas, \emph{Ann. of Math.} 196 (2022) 983--1082.
+\bibitem{Li22} R. Li, Dual linear programming bounds for sphere packing via discrete reductions, arXiv:2206.09876 (v3, 2022).
 \bibitem{RV19} D. Radchenko, M. Viazovska, Fourier interpolation on the real line, arXiv:1701.00265.
 \end{thebibliography}
 \end{document}
