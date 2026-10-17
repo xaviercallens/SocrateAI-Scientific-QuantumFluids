@@ -1,0 +1,14 @@
+[D3a8 s=4 m=24] UB_float=np.float64(0.0004855829067495765) certified=True {"UB_ball": "[0.0004855829067 +/- 9.30e-14]", "UB_upper": "[0.0004855829067929568853938249 +/- 1.74e-29]", "min_mu": "[1.0000e-8 +/- 8.53e-15]"} (6+1s)
+[D3a8 s=5 m=30] UB_float=np.float64(0.0004561165826413027) certified=True {"UB_ball": "[0.000456116583 +/- 4.19e-13]", "UB_upper": "[0.0004561165827014067200399772 +/- 2.83e-29]", "min_mu": "[1.0000e-8 +/- 1.26e-14]"} (36+7s)
+[D3a8 s=6 m=36] UB_float=np.float64(0.0004291788140789454) certified=True {"UB_ball": "[0.000429178814 +/- 1.55e-13]", "UB_upper": "[0.0004291788141546295132396083 +/- 2.62e-29]", "min_mu": "[1.0000e-8 +/- 2.73e-14]"} (117+24s)
+[D3a8 s=5 m=40] UB_float=np.float64(0.00044427588420759) certified=True {"UB_ball": "[0.0004442758842 +/- 6.33e-14]", "UB_upper": "[0.0004442758842632617863159517 +/- 4.87e-29]", "min_mu": "[1.0000e-8 +/- 2.31e-14]"} (138+18s)
+Traceback (most recent call last):
+  File "/home/xavkal/xdev/SocrateAI-Scientific-QuantumFluids/exploration/exciton/three_d/H1d/run_h1d.py", line 58, in <module>
+    main()
+  File "/home/xavkal/xdev/SocrateAI-Scientific-QuantumFluids/exploration/exciton/three_d/H1d/run_h1d.py", line 33, in main
+    sol = solve(d, m, ALPHA_F[al], s)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/xavkal/xdev/SocrateAI-Scientific-QuantumFluids/exploration/exciton/three_d/H1d/dual.py", line 94, in solve
+    raise RuntimeError(res.message)
+RuntimeError: The HiGHS status code was not recognized. (HiGHS Status 15: model_status is Unknown; primal_status is Feasible)
+[D3a8 s=8 m=48] UB_float=np.float64(0.0004109020799662466) certified=True {"UB_ball": "[0.000410902080 +/- 2.27e-13]", "UB_upper": "[0.0004109020801460407817419507 +/- 2.41e-29]", "min_mu": "[9.9999e-9 +/- 3.49e-14]"} (1430+144s)
