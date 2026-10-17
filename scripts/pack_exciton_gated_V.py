@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 PREFIXES = [
-    "paper/exciton_fluid_gated_V.tex", "paper/exciton_fluid_gated_V_round2.tex", "paper/exciton_fluid_gated_V.pdf",
+    "paper/exciton_fluid_gated_V.tex", "paper/exciton_fluid_gated_V_round2.tex", "paper/exciton_fluid_gated_V_h1pp.tex", "paper/exciton_fluid_gated_V.pdf",
     "paper/figs_companion5/",
     "docs/designs/EXCITON_FLUID_", "docs/designs/AXES_3D_COHN_KUMAR_2026-10.md", "exploration/exciton/", "lean-toolchain",
     "scripts/pack_exciton_gated_V.py",

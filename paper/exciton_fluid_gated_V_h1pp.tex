@@ -1,0 +1,56 @@
+% Version 3 section (H1''), included from exciton_fluid_gated_V.tex. Numbers: exploration/exciton/three_d/H1pp/summary.json.
+\emph{Added in version~3 (\texttt{exploration/exciton/three\_d/H1pp/}, pre-registration and frozen code \texttt{b1d2de5}).}
+Version~2 left rigorous certification open. Its obstacle was arithmetic: with the constraint rewritten as $f/g\le1$, the
+$O(1)$ terms of $f$ must cancel to the size of $g$ ($10^{-14}$ at the first contacts), about 23 significant digits, which
+double precision does not have. H1$''$ is the different construction that the version~2 development notes called for.
+
+\textbf{Method.} Same ansatz as H1 ($\hat f=e^{-t/2}Q(t)$, $f=\beta^{d/2}e^{-u/2}R(u)$, Laguerre coefficients $c_k$, odd effective
+degree $39$ at $K=40$). (i)~The LP is solved by a primal--dual interior-point method in 256-bit arithmetic (python-flint arb
+midpoints), with rows $f/g\le1$ up to $g=10^{-12}$, $R\le-10^{-12}$ beyond, $Q\ge0$ on $t\in[0,\infty)$ (log grid far out).
+(ii)~Cutting planes come from \emph{exact} objects: after each round the coefficients are made dyadic-rational and the real roots
+of $R'-\kappa R$ (which contain every local maximum of $f/g$), of $R$ beyond the last contact and of $Q$ are isolated
+rigorously; violated regions receive rows. (iii)~Every round's coefficient vector is \emph{certified} in interval arithmetic:
+$R<0$ beyond its largest real root; $f/g\le1+\tau_0$ on the rest by bisection with Taylor-shift enclosures; $\hat f+\delta
+e^{-\pi|y|^2/(\lambda\beta)}\ge0$ (a Gaussian lift, $\lambda\ge1/b$, which adds at most $\delta(\lambda\beta)^{d/2}$ to $f/g$), so
+that $f_{\rm tot}\le(1+\tau)g$ and the Cohn--Kumar proposition in the form of~\cite[Prop.~2.2]{CdCI16} gives the certified
+bound $B=[\hat f(0)+\delta-f(0)-\delta(\lambda\beta)^{d/2}]/(1+\tau)$, whose lower interval end is reported. The best
+certified $B$ over at most 25 rounds is kept (any certified vector is a valid bound, so the choice cannot invalidate it).
+Development was at non-gate parameters only and found four defects of our own before registration (a real-root filter that
+saw no roots, a $6\times10^{-7}$ spike of $f/g$ at a contact missed by a 20\,000-point grid, row pruning that made violations
+recur, too narrow a lift); they are listed in \texttt{H1pp/DEV\_NOTES.md}.
+
+\textbf{H1$''$ results ($K=40$, gate on V3).} V1 ($d=1$, $\alpha=1$ and $\pi$) certified $B$ within $6.7\times10^{-13}$
+and $2.3\times10^{-11}$ (relative) of $E_{\mathbb Z}$; V2 ($d=2$) within $7.6\times10^{-12}$ of $E_{A_2}$: pass. \textbf{V3
+($d=3$, $\alpha=\pi$) failed}: certified $B=0.2232177894732$, $3.05\times10^{-8}$ below the published $0.22321782$, outside the
+registered $10^{-8}$ window. By the registered stop rule the $\alpha=2,4,8$ runs were reported as gated only, and the cause was left
+undetermined. A machine reboot killed seven running jobs after about $6.5$\,h; the thirteen unfinished runs were relaunched
+unchanged (no result was selected between launches), which is why the next round's driver checkpoints.
+
+\textbf{H1$'''$: larger $K$ only} (\texttt{three\_d/H1ppp/}, pre-registration and frozen code \texttt{1e50f4b}). The method,
+row grids, certificate, $b$ values and gate window of H1$''$ are unchanged; only $K=50$ (gate) and $K=60$ (V3 only, reported).
+The registered evaluator turned out to be an unmodified copy of H1$''$'s, which reads only $K=40/30$ records; a replacement
+applying the same criteria was committed (\texttt{162dfc3}) while the runs were in flight and before any record existed, after
+intermediate per-round values in the logs had been seen (\texttt{H1ppp/DEVIATIONS.md}). The five runs ran uninterrupted
+(10\,h at most). Certificates: $\tau\le1.1\times10^{-13}$, Gaussian lift $\delta\le2\times10^{-28}$.
+\begin{center}\small
+\begin{tabular}{lllll}\toprule
+case & $K$ & certified $B$ & reference & verdict\\\midrule
+V3 ($\alpha=\pi$) & 40 (H1$''$) & $0.2232177894732$ & published $0.22321782$; $-3.05\times10^{-8}$ & fail\\
+V3 ($\alpha=\pi$) & \textbf{50} & $0.2232178193590$ & $-6.4\times10^{-10}$; window edge $0.22321781$ & \textbf{pass (gate)}\\
+V3 ($\alpha=\pi$) & 60 & $0.2232178245495$ & $+4.5\times10^{-9}$ & reported\\\midrule
+$\alpha=2$ & 50 & $1.011018246684$ & $E_{\rm BCC}=1.015862816$ & $G=4.77\times10^{-3}$\\
+$\alpha=4$ & 50 & $0.07275645543946$ & $E_{\rm FCC}=0.07796767103$ & $G=6.68\times10^{-2}$\\
+$\alpha=8$ & 50 & $0.0003947602893426$ & $E_{\rm FCC}=0.0005032413016$ & $G=0.216$\\\bottomrule
+\end{tabular}
+\end{center}
+\textbf{Reading.} The gate passes at $K=50$ with a margin of $9.4\times10^{-9}$, so the $\alpha=2,4,8$ values are registered
+results: \emph{certified} lower bounds on the Gaussian energy per point of every unit-density configuration in $\mathbb R^3$,
+$0.48\%$, $6.7\%$ and $21.6\%$ below the best lattice. Version~2's numerical statement --- two-point bounds at this degree do not
+settle the three-dimensional Gaussian-core question at $\alpha=2,4,8$ --- now holds with rigorous bounds (with the same
+caveat at $\alpha=2$: it assumes no non-lattice state more than about $0.4\%$ below BCC). The V3 value rises monotonically with
+$K$ ($+3.0\times10^{-8}$ from 40 to 50, $+5.2\times10^{-9}$ from 50 to 60), so H1$''$'s shortfall is accounted for by
+truncation at $K=40$; the other candidates (snapped $b$, row margin) were not tested and are not needed. That $K=60$ exceeds
+$0.22321782$ is consistent with the published digits being truncated. The registered prediction (gate passes, $G>10^{-3}$ at
+all three, values within $10^{-6}$ relative of H1$'$'s) failed in its last part at $\alpha=8$: the certified value is
+$8.3\times10^{-6}$ below H1$'$'s uncertified LP objective, which overshot. Not shown: convergence in $K$, the best two-point
+bound at $K=50$ ($b$ was not re-optimised), anything about three-point or semidefinite bounds.

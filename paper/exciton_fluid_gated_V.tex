@@ -30,7 +30,7 @@ sliding walls in the Fenris container study.}
 {\Large\textbf{Gated exciton fluids V:}\\[2pt]
 \large three dimensions --- what the T-duality, holography and projection analogies\\ do and do not give, measured}\\[8pt]
 Xavier Callens\\ {\small SocrateAI Research \quad\url{https://github.com/xaviercallens/SocrateAI-Scientific-QuantumFluids}}\\[2pt]
-{\small October 2026 \quad (version 2: adds H1$'$)}
+{\small October 2026 \quad (version 2: adds H1$'$; version 3: adds H1$''$ and H1$'''$, certified bounds)}
 \end{center}
 \vspace{-0.4em}
 
@@ -59,7 +59,11 @@ not run in $d=3$. \emph{Version~2} adds H1$'$: the $\alpha=\pi$ question of H1 t
 (two-point bound $0.2232$ against $0.2315$ in $d=3$); after an attempt at rigorous certificates was abandoned in development, a
 re-registered \emph{numerical, not certified} run reproduces the published $d=1,2,3$ values within the registered windows and
 gives gaps of $0.48\%$, $6.7\%$ and $21.6\%$ below the best lattice in $d=3$ at $\alpha=2,4,8$: numerically, at polynomial
-degree $\le40$ and with the best lattice as reference, two-point bounds do not settle the 3D question at any $\alpha$ tested. Everything is small-scale, classical and
+degree $\le40$ and with the best lattice as reference, two-point bounds do not settle the 3D question at any $\alpha$ tested.
+\emph{Version~3} adds interval-certified bounds (256-bit interior point, exact cutting planes, arb certificate): at polynomial
+degree $40$ the $d=3$, $\alpha=\pi$ gate failed by $3\times10^{-8}$ (H1$''$); at degree $50$ it passed (H1$'''$, certified
+$0.2232178194$ against the published $0.22321782$), and the certified bounds at $\alpha=2,4,8$ lie $0.48\%$, $6.7\%$ and
+$21.6\%$ below the best lattice. Everything is small-scale, classical and
 single-engine; nothing uses the unrefereed planar lattice theorem; written with an AI system and not refereed.
 \end{abstract}
 
@@ -241,9 +245,12 @@ at $K\le40$ and with the best lattice as reference, two-point bounds do not sett
 $\alpha=2,\pi,4,8$; at $\alpha=2$ the reading assumes no non-lattice state lies more than about $0.4\%$ below BCC, which we did not check.
 Choosing $\beta$ by the largest value favours the most-violating accepted solution, and at $\alpha=8$ the $\beta$ optimum is not
 bracketed (irrelevant at a $22\%$ gap). This is what the literature value at $\alpha=\pi$ led us to expect, and the $\alpha=2,4,8$ numbers are new only
-in the sense that we did not find them published. Rigorous certification at $10^{-8}$ remains open. The hostile review found no
+in the sense that we did not find them published. Rigorous certification at $10^{-8}$ remained open in version~2; version~3 supplies it (Sec.~\ref{sec:h1pp}). The hostile review found no
 blocking item; its corrections (a residual, the ``8 digits'' claim for $d=2$, the size of the slack, prior knowledge of the $K=30$
 $d=1$ outcomes from H1, the $\alpha=2$ reference caveat) are applied here and in \texttt{H1p/RESULTS.md}.
+
+\section{Version 3: H1$''$ and H1$'''$, certified two-point bounds}\label{sec:h1pp}
+\input{exciton_fluid_gated_V_h1pp}
 
 \section{What this does and does not show}
 \begin{itemize}[leftmargin=1.2em,itemsep=1pt]
@@ -256,10 +263,13 @@ measurement (papers IV, this paper); the ``KK tower'' picture is a real and mode
 correct explanation of a negative fact.
 \item Round~2 adds no positive result. Its main product is a measured limit: with our optimisers, a homotopy in the kernel does
 not find a proved optimum on $S^3$ (the 600-cell) that plain restarts find at $a=4$, the formal-duality search cannot distinguish a known
-formally self-dual structure from nearby non-self-dual ones, and our LP code is not certified at the $10^{-8}$ level (version~2: it reproduces published values numerically, Sec.~\ref{sec:h1p}).
+formally self-dual structure from nearby non-self-dual ones, and our LP code is not certified at the $10^{-8}$ level (version~2: it reproduces published values numerically, Sec.~\ref{sec:h1p}; version~3 certifies at $K=50$, Sec.~\ref{sec:h1pp}).
 These are statements about our methods, not about the Gaussian-core conjecture.
 \item Version~2 (H1$'$) adds a reproduction, not a result: our LP code matches published two-point values numerically, and
 the $d=3$ gaps at $\alpha=2,4,8$ are of the size the literature led us to expect; nothing is certified.
+\item Version~3 (H1$''$, H1$'''$) certifies those gaps: rigorous two-point lower bounds at polynomial degree $50$, validated against
+the published $d=3$, $\alpha=\pi$ value after a failed attempt at degree $40$. They restate a known limitation of two-point bounds
+with certificates; they neither prove nor refute FCC/BCC optimality.
 \item Nothing here involves the planar lattice theorem of \texttt{openai/math}, which remains AI-generated and unrefereed, nor any
 claim about excitons.
 \end{itemize}
@@ -269,7 +279,7 @@ Round~1 deviations: B restart counts reduced (100/100/60/40/40); A reruns after 
 $\ge45/50$ and the $a=1$ rerun added after review; D's comparator defined by the run's author before running but not registered;
 L3's pre-registration untracked at run time; L3 annulus G2 cases run twice with the second overwriting the first; a timing check on
 an uncounted seed. L1: mpmath reference at 10 of 160 points; first run discarded for a reference bug. Round~2 deviations are listed
-with the results. All raw records, analysis scripts and the reviews (round~1, round~2, F1, and in version~2 H1$'$) are in the repository; the independent review of round~1
+with the results. All raw records, analysis scripts and the reviews (round~1, round~2, F1, in version~2 H1$'$, in version~3 H1$''$ and H1$'''$) are in the repository; the independent review of round~1
 (\texttt{docs/designs/EXCITON\_FLUID\_VERIFIER\_NOTES\_review\_3d.md}) recomputed every headline number from the records and asked for
 the wording changes applied here (D ``not met at matched cost'', B1 ``strictest reading'', C $a=1$ resolved by rerun).
 
