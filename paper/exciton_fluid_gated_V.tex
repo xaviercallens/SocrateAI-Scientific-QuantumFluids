@@ -64,11 +64,12 @@ degree $\le40$ and with the best lattice as reference, two-point bounds do not s
 (polynomial degree $39$) the $d=3$, $\alpha=\pi$ gate failed by $3\times10^{-8}$ (H1$''$); at $K=50$ (degree $49$) it passed
 (H1$'''$, certified $0.2232178194$ against the published $0.22321782$), and the certified lower bounds at $\alpha=2,4,8$ lie
 $0.48\%$, $6.7\%$ and $21.6\%$ below the best lattice. The bound values are rigorous; that two-point bounds cannot do better
-remains numerical. A review found a defect in our certificate code (sub-ulp negative intervals of $\hat f$ not checked); an
+remained numerical in version~3 (version~4 certifies it, below). A review found a defect in our certificate code (sub-ulp negative intervals of $\hat f$ not checked); an
 independent re-check confirms every reported bound, one of them ($K=60$, not a gate) only after adding a small lift.
 \emph{Version~4} adds the missing direction: rigorous \emph{upper} bounds on the two-point bound, by an energy adaptation of
 Li's discrete-reduction dual. They lie below $\min(E_{\rm FCC},E_{\rm BCC})$ by $0.414\%$, $5.82\%$ and $18.3\%$ at $\alpha=2,4,8$,
-so the two-point bound provably cannot prove FCC or BCC optimal there, and at $\alpha=\pi$ the upper bound is below the known
+so the two-point bound (in the form of Cohn--de Courcy-Ireland's Prop.~2.2, whose full class is reached by a lemma added
+after registration) provably cannot prove FCC or BCC optimal there, and at $\alpha=\pi$ the upper bound is below the known
 coexistence record; with version~3 the two-point bound is bracketed, e.g.\ in $[0.2232178,0.2242867]$ at $\alpha=\pi$. Everything is small-scale, classical and
 single-engine; nothing uses the unrefereed planar lattice theorem; written with an AI system and not refereed.
 \end{abstract}
@@ -85,7 +86,7 @@ phrase ``solve the Cohn--Kumar conjecture in 3D''. What is open in three dimensi
 \begin{enumerate}[leftmargin=1.6em,itemsep=1pt]
 \item[Q1] the Gaussian-core conjecture: BCC ($\alpha<\pi$) and FCC ($\alpha>\pi$) minimise among \emph{all} periodic configurations
 (``no proof is known''~\cite{CKS09}); at $\alpha=\pi$ itself the lowest known energy (``putative ground state'') is a Maxwell coexistence of the two at densities
-$0.99899854\le\rho\le1.00100312$, about $4\times10^{-6}$ below either pure lattice~\cite{CKS09};
+$0.99899854\le\rho\le1.00100312$, about $4\times10^{-6}$ (relative) below either pure lattice~\cite{CKS09};
 \item[Q2] crystallisation (periodicity of minimisers) for soft repulsions;
 \item[Q3] kernels whose Bernstein measure charges both sides of $\pi$, for which nothing excludes a non-Bravais minimiser.
 \end{enumerate}
@@ -102,7 +103,8 @@ Version~3: H1$''$ (\texttt{three\_d/H1pp/PREREG.md}, \texttt{b1d2de5}) and H1$''
 \texttt{1e50f4b}; evaluator replaced during the runs, \texttt{162dfc3}, see \texttt{H1ppp/DEVIATIONS.md}).
 Version~4: H1d (\texttt{three\_d/H1d/PREREG.md}, \texttt{4e596f0}; evaluator tightened during the runs, \texttt{1ee1714}, see
 \texttt{H1d/DEVIATIONS.md}).
-All gates, restart counts and thresholds were fixed before the runs; deviations are dated in each \texttt{RESULTS.md} and
+All gates, restart counts and thresholds were fixed before the runs, except that H1d's evaluator was tightened during the runs
+(a $10^{-12}$ margin and stricter voiding); deviations are dated in each \texttt{RESULTS.md} and
 summarised in \S\ref{sec:process}. An independent adversarial review preceded this write-up; its corrections are applied and
 listed.
 \end{keybox}
@@ -282,8 +284,8 @@ These are statements about our methods, not about the Gaussian-core conjecture.
 the $d=3$ gaps at $\alpha=2,4,8$ are of the size the literature led us to expect; nothing is certified.
 \item Version~3 (H1$''$, H1$'''$) certifies the bound values: rigorous two-point lower bounds at $K=50$ (degree $49$),
 validated against the published $d=3$, $\alpha=\pi$ value after a failed attempt at $K=40$. The gaps to the best lattice are
-upper estimates of the true two-point gap at this degree; that two-point bounds cannot settle these cases is not certified (it
-would need a dual certificate). Rigour here rests on the frozen certificate plus an independent re-check that closed a defect
+upper estimates of the true two-point gap at this degree; that two-point bounds cannot settle these cases was not certified in version~3 (it
+needed a dual certificate, supplied in version~4, Sec.~\ref{sec:h1d}). Rigour here rests on the frozen certificate plus an independent re-check that closed a defect
 found in review. Nothing here proves or refutes FCC/BCC optimality.
 \item Version~4 (H1d) closes the direction version~3 left open: certified upper bounds show that the two-point bound (in the
 form of CdCI's Prop.~2.2) lies below $\min(E_{\rm FCC},E_{\rm BCC})$ at $\alpha=2,4,8$ and below the coexistence record at

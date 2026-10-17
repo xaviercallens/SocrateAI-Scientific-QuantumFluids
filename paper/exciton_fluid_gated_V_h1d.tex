@@ -1,10 +1,12 @@
-% Version 4 section (H1d), included from exciton_fluid_gated_V.tex. Numbers: exploration/exciton/three_d/H1d/summary.json, RESULTS.md.
+% Version 4 section (H1d), included from exciton_fluid_gated_V.tex. Numbers: H1d/records/*.json (certificate UB_upper), RESULTS.md; summary.json lists looser rounded values.
 \emph{Added in version~4 (\texttt{exploration/exciton/three\_d/H1d/}, pre-registration and frozen code \texttt{4e596f0}, results
 \texttt{dd67a12}, after review \texttt{c977fa7}).} Version~3's certified values are lower bounds on the two-point bound; they
 cannot show that the two-point bound stays below the lattice energy, which needs an \emph{upper} bound on the LP optimum.
 
 \textbf{Method.} We adapt the discrete-reduction dual of Li~\cite{Li22}, who used it for the Cohn--Elkies sphere-packing LP, to
-the energy LP of~\cite[Prop.~2.2]{CdCI16} at density~1, $\mathrm{LP}(\alpha)=\sup_h \hat h(0)-h(0)$. Fix rational $s>1$ and an
+the energy LP of~\cite[Prop.~2.2]{CdCI16} at density~1, $\mathrm{LP}(\alpha)=\sup_h \hat h(0)-h(0)$ over continuous positive
+definite integrable $h$ (so $\hat h\ge0$) with $h(x)\le g(x)=e^{-\alpha|x|^2}$ for $x\ne0$; $\hat G$ denotes the discrete
+Fourier transform on $\mathbb Z_m^d$. Fix rational $s>1$ and an
 integer $m\ge2$, fold the samples of an admissible $h$ on $s^{-1}\mathbb Z^d$ modulo $m$, $G(x)=\sum_{n\equiv x}h(n/s)$, and put
 $\Gamma(x)=\sum_{n\equiv x,\,n\ne0}e^{-\alpha|n|^2/s^2}$. Poisson summation gives $\hat G\ge0$ and $\hat h(0)\le s^{-d}\sum_xG(x)$;
 $h\le g$ off $0$ gives $G\le\Gamma$ off $0$ and $-h(0)\le-G(0)+\Gamma(0)$. For any $\lambda\ge0$ on $\mathbb Z_m^d$ with
@@ -17,14 +19,14 @@ made exactly rational and renormalised, and $\mu$ (at every orbit) and UB are ev
 registered class of $h$ assumed decay $O((1+|x|)^{-d-\delta})$ of $h$ and $\hat h$; a lemma added after registration (a pre-run
 reviewer's argument, checked by us; Gaussian damping $h\,e^{-\pi\varepsilon|x|^2}$ and a weak form of Poisson summation) removes
 the decay and radial assumptions, so UB bounds the LP bound for every $h$ admitted by~\cite[Prop.~2.2]{CdCI16}. Cohn and
-Kumar's original, wider formulation is not claimed. A literature search (CdCI, Li, two alphaXiv searches, one web search) found
+Kumar's original, wider formulation is not claimed. A literature search (CdCI, Li, two alphaXiv searches by us; a reviewer's further alphaXiv and web searches) found
 dual bounds only for sphere packing; we did not find a published rigorous upper bound on the Gaussian-energy LP bound in
 $d=3$, but the search was limited.
 
 \textbf{Gates and runs.} V1 ($d=1$, $\alpha=\pi$, where the LP bound is sharp): certified $\mathrm{UB}$ within $7.3\times10^{-8}$
 (relative) of $E_{\mathbb Z}$, inside the registered $10^{-6}$: pass. V2 ($d=2$, $\alpha=\pi$): consistent with the certified
-lower bound, $0.71\%$ above $E_{A_2}$ (not gated). In $d=3$, six grids $(s,m)$ per $\alpha$ were registered; 29 of the 31 runs
-certified, and two ($\alpha=\pi$ at $(8,48)$, $\alpha=8$ at $(6,48)$) ended with a solver status ``unknown'' and gave no bound;
+lower bound, $0.71\%$ above $E_{A_2}$ (a consistency gate only; tightness not gated). Of the 31 registered runs (3 in $d=1$,
+4 in $d=2$, six grids $(s,m)$ for each of the four $\alpha$ in $d=3$), 29 certified; in $d=3$ 22 of 24 certified, and two ($\alpha=\pi$ at $(8,48)$, $\alpha=8$ at $(6,48)$) ended with a solver status ``unknown'' and gave no bound;
 they were not rerun. Each grid's UB is valid on its own, so reporting the smallest is not a selection effect.
 \begin{center}\small
 \begin{tabular}{lllll}\toprule
@@ -40,10 +42,11 @@ $\min(E_{\rm FCC},E_{\rm BCC})$, so it cannot prove FCC or BCC optimal there; th
 numerically. At $\alpha=\pi$, FCC and BCC are not the putative ground state (a coexistence state is lower~\cite{CKS09}); there the
 relevant statement is that UB lies $0.00724$ below the record $0.23153532$ quoted in~\cite{CdCI16}, so the two-point bound cannot
 prove that state optimal either. The interval $[B,\mathrm{UB}]$ at $\alpha=\pi$ contains the numerically optimised value
-$0.22321782$ of~\cite{CdCI16}; the gap there was visible numerically before, and the certificate is what is new. The prediction
+printed as ``$0.22321782\ldots$'' in~\cite{CdCI16}; the gap there was visible numerically before, and the certificate is what is new. The prediction
 (V1, V2 pass; all four $d=3$ cases below $\min(E_{\rm FCC},E_{\rm BCC})$, $\alpha=2$ with the smallest margin; below the record at
 $\alpha=\pi$) held in full. A pre-run review of the mathematics and code found no blocking item; it found an evaluator flaw
-(a void case would not have gated the cases already evaluated), which was fixed before evaluation, when 21 of the 31 records
-existed (\texttt{H1d/DEVIATIONS.md}); the fix only tightens the criterion. A results review re-verified all 29 certificates
-with independent code in 256-bit arithmetic. Not shown: anything about three-point or semidefinite bounds, the true minimal
+(a void case would not have gated the cases already evaluated), which was fixed, together with a new $10^{-12}$ margin on the
+lattice comparison, before evaluation but during the runs: 21 of the 31 records existed, one solver failure was already logged,
+and per-grid values had been seen (\texttt{H1d/DEVIATIONS.md}); the fix only tightens the criterion. A results review re-verified all 29 certificates
+with independent code in 256-bit arithmetic and found no blocking item. Not shown: anything about three-point or semidefinite bounds, the true minimal
 energy, other $\alpha$, or where in $[B,\mathrm{UB}]$ the LP bound lies.

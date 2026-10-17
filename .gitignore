@@ -125,3 +125,4 @@ data/external/godfrin_papers/**/*.eps
 # closed-form equations; not committed to avoid silently serving a stale cache if the formulas change
 exploration/cmb/pdt_exact_table.npz
 exploration/exciton/three_d/H1ppp/records/ckpt/
+exploration/exciton/three_d/H1d/logs_launch.out
