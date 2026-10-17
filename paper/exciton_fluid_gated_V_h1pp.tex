@@ -14,7 +14,7 @@ $R<0$ beyond its largest real root; $f/g\le1+\tau_0$ on the rest by bisection wi
 e^{-\pi|y|^2/(\lambda\beta)}\ge0$ (a Gaussian lift, $\lambda\ge1/b$, which adds at most $\delta(\lambda\beta)^{d/2}$ to $f/g$), so
 that $f_{\rm tot}\le(1+\tau)g$ and the Cohn--Kumar proposition in the form of~\cite[Prop.~2.2]{CdCI16} gives the certified
 bound $B=[\hat f(0)+\delta-f(0)-\delta(\lambda\beta)^{d/2}]/(1+\tau)$, whose lower interval end is reported. The best
-certified $B$ over at most 25 rounds is kept (any certified vector is a valid bound, so the choice cannot invalidate it).
+certified $B$ over at most 25 rounds is kept (but see the defect in this certificate described below) (any certified vector is a valid bound, so the choice cannot invalidate it).
 Development was at non-gate parameters only and found four defects of our own before registration (a real-root filter that
 saw no roots, a $6\times10^{-7}$ spike of $f/g$ at a contact missed by a 20\,000-point grid, row pruning that made violations
 recur, too narrow a lift); they are listed in \texttt{H1pp/DEV\_NOTES.md}.
@@ -31,7 +31,7 @@ row grids, certificate, $b$ values and gate window of H1$''$ are unchanged; only
 The registered evaluator turned out to be an unmodified copy of H1$''$'s, which reads only $K=40/30$ records; a replacement
 applying the same criteria was committed (\texttt{162dfc3}) while the runs were in flight and before any record existed, after
 intermediate per-round values in the logs had been seen (\texttt{H1ppp/DEVIATIONS.md}). The five runs ran uninterrupted
-(about 10\,h at most). Certificates: $\tau\le1.1\times10^{-13}$, Gaussian lift $\delta\le2\times10^{-28}$. In three of the five
+(about 10\,h at most). Certificates: $\tau\le1.1\times10^{-13}$, recorded Gaussian lift $\delta\le2\times10^{-28}$ ($K=60$: $\delta=0$ recorded, $10^{-25}$ after the re-check below). In three of the five
 runs the vectors of the last 4--5 rounds could not be certified ($\hat f$ check failed for every $\lambda$); the reported values come
 from rounds 13, 17, 13, 13 and 11, by which point the LP objective had stopped changing.
 \begin{center}\small
@@ -48,7 +48,7 @@ $\alpha=8$ & 50 & $0.0003947602893426$ & $E_{\rm FCC}=0.0005032413016$ & $G=0.21
 {\footnotesize $^{*}$Certified only after the post-hoc re-check below, with a lift $\delta=10^{-25}$ added; $B$ unchanged to 20 digits.}
 
 \textbf{A defect in the certificate code, found by review.} The hostile review of this version found that the frozen
-certificate (\texttt{rig2.py}/\texttt{rig3.py}) does not check $\hat f\ge0$ between near-double real roots of $Q$ (pairs
+certificate (\texttt{rig2.py}/\texttt{rig3.py}) does not check $\hat f\ge0$ between near-double real roots of $Q$ (in the V3 records, pairs
 $2\times10^{-15}$ to $3\times10^{-14}$ apart, with $Q<0$ between them) whose enclosures round to the same or adjacent
 doubles, and that its bisection boxes, centred at floating-point midpoints, do not cover very narrow intervals exactly. An
 independent re-check with exact box covering, outward-rounded root enclosures merged into clusters and the exact sign of $Q$ in

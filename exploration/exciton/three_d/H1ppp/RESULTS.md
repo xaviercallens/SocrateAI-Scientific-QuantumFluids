@@ -17,7 +17,7 @@ H8), by which point the LP objective had stopped changing (registered rule: best
 | H8 (d=3, a=8) | 50 | 0.00039476028934256 | +4.36e-10 | E_FCC 0.000503241302 | G = 0.2156 > 1e-3 |
 
 Certificate parameters (records/*.json, `certificate`): tau = 3.6e-14 (V3 K50), 1.8e-16 (V3 K60), 3.7e-14 (H2), 1.1e-13 (H4),
-1.8e-16 (H8); Gaussian-lift delta <= 1.7e-28; lambda used 6, 3, 8, 3, 5 (the registered ladder; V3 K50 and H2 needed a
+1.8e-16 (H8); recorded Gaussian-lift delta <= 1.7e-28 (V3 K60: 0 recorded, 1e-25 after the re-check below); lambda used 6, 3, 8, 3, 5 (the registered ladder; V3 K50 and H2 needed a
 second/third lambda after the first failed the fhat check). The certification loss tau x B is <= 1e-14 in every case.
 
 **Registered outcome: the V3 gate passes at K = 50 (margin 9.4e-9 above the window's lower edge), so the H2/H4/H8 results at
@@ -30,7 +30,7 @@ certificate, with b also optimised), which was not computed. That statement rema
 pi). The registered reading in ../H1pp/PREREG.md ("insufficient ... (certified)") overstated what a lower bound can show.
 
 **Post-hoc finding (hostile review, docs/designs/EXCITON_FLUID_VERIFIER_NOTES_H1ppp.md, item B1).** The frozen certificate code
-(rig2.py/rig3.py `certify()`) does not check fhat >= 0 between near-double real roots of Q (pairs 1.8e-15 to 3e-14 apart, Q < 0
+(rig2.py/rig3.py `certify()`) does not check fhat >= 0 between near-double real roots of Q (in the V3 records, pairs 1.8e-15 to 3e-14 apart, Q < 0
 between them) when their enclosures round to the same or adjacent doubles, and its bisection uses float box midpoints that do
 not exactly cover very narrow boxes. An independent re-check (`recertify.py`, output `recertify_output.txt`: exact box cover,
 outward-rounded root enclosures merged into clusters, exact sign in every gap) confirms all 14 H1'' records and the four
@@ -45,7 +45,7 @@ parts hold. The third holds for V3 (-2.5e-8), H2 (-4.0e-8), H4 (+4.4e-9) and **f
 0.000394763557 at K=40 vs certified 0.000394760289 at K=50). Most likely the H1' value overshot (the H1'' certified K=40 value
 0.000394759853 is also ~9e-6 below it): it is an uncertified LP objective with residual
 violation 9.8e-11 in f - g; at B ~ 4e-4 that residual is 2.5e-7 relative, and the LP objective's slack can be a large multiple
-of the residual (H1' RESULTS: up to 35x), so the H1' value overshot. This is a failed prediction about a numerical value, not a
+of the residual (H1' RESULTS: up to 35x), so an overshoot of this size is plausible. This is a failed prediction about a numerical value, not a
 failed gate; it does not affect the G reading (G = 21.6% either way).
 
 **On the H1'' V3 failure (CLAIM-128).** B(V3) rises monotonically with K: 0.2232177895 (K=40), 0.2232178194 (K=50),
