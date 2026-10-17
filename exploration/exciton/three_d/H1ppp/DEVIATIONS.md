@@ -8,3 +8,10 @@
    Disclosure: the per-round intermediate certified values in `logs/` had been looked at before this was written
    (V3 K = 50 round 6 certB 0.2232178192). No criterion was changed; the evaluator only reads records written by
    the frozen driver.
+
+2. **Driver detail (noted by the review, M5).** `run_h1pp.py` also skips a case whose record exists (needed for relaunch), so
+   "rig3 = rig2 + checkpointing only" holds for rig3.py but the driver has this extra logic; its docstring still says "K in 40 30".
+   No case was skipped (no relaunch). `records/ckpt/` (intermediate state, ~1 MB) is not committed; the final records contain the
+   certified coefficients.
+3. **Post-hoc re-check (review item B1, 2026-10-17, after all records).** `recertify.py` added; V3 K = 60 is certified only
+   with a lift added by the re-check (RESULTS.md). Frozen code and records unchanged.

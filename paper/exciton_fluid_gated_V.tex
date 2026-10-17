@@ -60,10 +60,12 @@ not run in $d=3$. \emph{Version~2} adds H1$'$: the $\alpha=\pi$ question of H1 t
 re-registered \emph{numerical, not certified} run reproduces the published $d=1,2,3$ values within the registered windows and
 gives gaps of $0.48\%$, $6.7\%$ and $21.6\%$ below the best lattice in $d=3$ at $\alpha=2,4,8$: numerically, at polynomial
 degree $\le40$ and with the best lattice as reference, two-point bounds do not settle the 3D question at any $\alpha$ tested.
-\emph{Version~3} adds interval-certified bounds (256-bit interior point, exact cutting planes, arb certificate): at polynomial
-degree $40$ the $d=3$, $\alpha=\pi$ gate failed by $3\times10^{-8}$ (H1$''$); at degree $50$ it passed (H1$'''$, certified
-$0.2232178194$ against the published $0.22321782$), and the certified bounds at $\alpha=2,4,8$ lie $0.48\%$, $6.7\%$ and
-$21.6\%$ below the best lattice. Everything is small-scale, classical and
+\emph{Version~3} adds interval-certified bounds (256-bit interior point, exact cutting planes, arb certificate): at $K=40$
+(polynomial degree $39$) the $d=3$, $\alpha=\pi$ gate failed by $3\times10^{-8}$ (H1$''$); at $K=50$ (degree $49$) it passed
+(H1$'''$, certified $0.2232178194$ against the published $0.22321782$), and the certified lower bounds at $\alpha=2,4,8$ lie
+$0.48\%$, $6.7\%$ and $21.6\%$ below the best lattice. The bound values are rigorous; that two-point bounds cannot do better
+remains numerical. A review found a defect in our certificate code (sub-ulp negative intervals of $\hat f$ not checked); an
+independent re-check confirms every reported bound, one of them ($K=60$, not a gate) only after adding a small lift. Everything is small-scale, classical and
 single-engine; nothing uses the unrefereed planar lattice theorem; written with an AI system and not refereed.
 \end{abstract}
 
@@ -92,6 +94,8 @@ B (non-Bravais cells), C ($S^3$), D (hybrid mesh); L3 (\texttt{fenris-gated/L3\_
 L1 (\texttt{exploration/exciton/kk/PREREG.md}). Round~2 (\texttt{PREREG\_round2.md}, commit \texttt{51a85b1}): F1, T2, T1, H1.
 Version~2: H1$'$ (\texttt{three\_d/H1p/PREREG.md}, \texttt{d668109}; amendments A1 \texttt{83a3500}, A2 \texttt{968dd32}, both before
 any gate run, but A2's acceptance tolerance and windows were set after H1's outcomes were known).
+Version~3: H1$''$ (\texttt{three\_d/H1pp/PREREG.md}, \texttt{b1d2de5}) and H1$'''$ (\texttt{three\_d/H1ppp/PREREG.md},
+\texttt{1e50f4b}; evaluator replaced during the runs, \texttt{162dfc3}, see \texttt{H1ppp/DEVIATIONS.md}).
 All gates, restart counts and thresholds were fixed before the runs; deviations are dated in each \texttt{RESULTS.md} and
 summarised in \S\ref{sec:process}. An independent adversarial review preceded this write-up; its corrections are applied and
 listed.
@@ -245,7 +249,7 @@ at $K\le40$ and with the best lattice as reference, two-point bounds do not sett
 $\alpha=2,\pi,4,8$; at $\alpha=2$ the reading assumes no non-lattice state lies more than about $0.4\%$ below BCC, which we did not check.
 Choosing $\beta$ by the largest value favours the most-violating accepted solution, and at $\alpha=8$ the $\beta$ optimum is not
 bracketed (irrelevant at a $22\%$ gap). This is what the literature value at $\alpha=\pi$ led us to expect, and the $\alpha=2,4,8$ numbers are new only
-in the sense that we did not find them published. Rigorous certification at $10^{-8}$ remained open in version~2; version~3 supplies it (Sec.~\ref{sec:h1pp}). The hostile review found no
+in the sense that we did not find them published. Rigorous certification at $10^{-8}$ remained open in version~2; version~3 supplies it with a different, interval-certified construction, after a post-hoc re-check that closed a defect in its certificate code (Sec.~\ref{sec:h1pp}). The hostile review found no
 blocking item; its corrections (a residual, the ``8 digits'' claim for $d=2$, the size of the slack, prior knowledge of the $K=30$
 $d=1$ outcomes from H1, the $\alpha=2$ reference caveat) are applied here and in \texttt{H1p/RESULTS.md}.
 
@@ -263,13 +267,15 @@ measurement (papers IV, this paper); the ``KK tower'' picture is a real and mode
 correct explanation of a negative fact.
 \item Round~2 adds no positive result. Its main product is a measured limit: with our optimisers, a homotopy in the kernel does
 not find a proved optimum on $S^3$ (the 600-cell) that plain restarts find at $a=4$, the formal-duality search cannot distinguish a known
-formally self-dual structure from nearby non-self-dual ones, and our LP code is not certified at the $10^{-8}$ level (version~2: it reproduces published values numerically, Sec.~\ref{sec:h1p}; version~3 certifies at $K=50$, Sec.~\ref{sec:h1pp}).
+formally self-dual structure from nearby non-self-dual ones, and our original LP code is not certified at the $10^{-8}$ level (version~2 reproduces published values numerically with it, Sec.~\ref{sec:h1p}; version~3 uses a new, interval-certified construction, Sec.~\ref{sec:h1pp}).
 These are statements about our methods, not about the Gaussian-core conjecture.
 \item Version~2 (H1$'$) adds a reproduction, not a result: our LP code matches published two-point values numerically, and
 the $d=3$ gaps at $\alpha=2,4,8$ are of the size the literature led us to expect; nothing is certified.
-\item Version~3 (H1$''$, H1$'''$) certifies those gaps: rigorous two-point lower bounds at polynomial degree $50$, validated against
-the published $d=3$, $\alpha=\pi$ value after a failed attempt at degree $40$. They restate a known limitation of two-point bounds
-with certificates; they neither prove nor refute FCC/BCC optimality.
+\item Version~3 (H1$''$, H1$'''$) certifies the bound values: rigorous two-point lower bounds at $K=50$ (degree $49$),
+validated against the published $d=3$, $\alpha=\pi$ value after a failed attempt at $K=40$. The gaps to the best lattice are
+upper estimates of the true two-point gap at this degree; that two-point bounds cannot settle these cases is not certified (it
+would need a dual certificate). Rigour here rests on the frozen certificate plus an independent re-check that closed a defect
+found in review. Nothing here proves or refutes FCC/BCC optimality.
 \item Nothing here involves the planar lattice theorem of \texttt{openai/math}, which remains AI-generated and unrefereed, nor any
 claim about excitons.
 \end{itemize}
@@ -279,7 +285,7 @@ Round~1 deviations: B restart counts reduced (100/100/60/40/40); A reruns after 
 $\ge45/50$ and the $a=1$ rerun added after review; D's comparator defined by the run's author before running but not registered;
 L3's pre-registration untracked at run time; L3 annulus G2 cases run twice with the second overwriting the first; a timing check on
 an uncounted seed. L1: mpmath reference at 10 of 160 points; first run discarded for a reference bug. Round~2 deviations are listed
-with the results. All raw records, analysis scripts and the reviews (round~1, round~2, F1, in version~2 H1$'$, in version~3 H1$''$ and H1$'''$) are in the repository; the independent review of round~1
+with the results. All raw records, analysis scripts and the reviews (round~1, round~2, F1, in version~2 H1$'$, in version~3 H1$'''$ with its re-check script) are in the repository (the H1$''$ review's corrections were applied in commit \texttt{25eecce}, but the review text itself was not saved); the independent review of round~1
 (\texttt{docs/designs/EXCITON\_FLUID\_VERIFIER\_NOTES\_review\_3d.md}) recomputed every headline number from the records and asked for
 the wording changes applied here (D ``not met at matched cost'', B1 ``strictest reading'', C $a=1$ resolved by rerun).
 

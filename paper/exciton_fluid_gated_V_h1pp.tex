@@ -1,4 +1,4 @@
-% Version 3 section (H1''), included from exciton_fluid_gated_V.tex. Numbers: exploration/exciton/three_d/H1pp/summary.json.
+% Version 3 section (H1''), included from exciton_fluid_gated_V.tex. Numbers: exploration/exciton/three_d/H1pp/summary.json and H1ppp/summary.json, H1ppp/recertify_output.txt.
 \emph{Added in version~3 (\texttt{exploration/exciton/three\_d/H1pp/}, pre-registration and frozen code \texttt{b1d2de5}).}
 Version~2 left rigorous certification open. Its obstacle was arithmetic: with the constraint rewritten as $f/g\le1$, the
 $O(1)$ terms of $f$ must cancel to the size of $g$ ($10^{-14}$ at the first contacts), about 23 significant digits, which
@@ -31,26 +31,49 @@ row grids, certificate, $b$ values and gate window of H1$''$ are unchanged; only
 The registered evaluator turned out to be an unmodified copy of H1$''$'s, which reads only $K=40/30$ records; a replacement
 applying the same criteria was committed (\texttt{162dfc3}) while the runs were in flight and before any record existed, after
 intermediate per-round values in the logs had been seen (\texttt{H1ppp/DEVIATIONS.md}). The five runs ran uninterrupted
-(10\,h at most). Certificates: $\tau\le1.1\times10^{-13}$, Gaussian lift $\delta\le2\times10^{-28}$.
+(about 10\,h at most). Certificates: $\tau\le1.1\times10^{-13}$, Gaussian lift $\delta\le2\times10^{-28}$. In three of the five
+runs the vectors of the last 4--5 rounds could not be certified ($\hat f$ check failed for every $\lambda$); the reported values come
+from rounds 13, 17, 13, 13 and 11, by which point the LP objective had stopped changing.
 \begin{center}\small
 \begin{tabular}{lllll}\toprule
 case & $K$ & certified $B$ & reference & verdict\\\midrule
 V3 ($\alpha=\pi$) & 40 (H1$''$) & $0.2232177894732$ & published $0.22321782$; $-3.05\times10^{-8}$ & fail\\
 V3 ($\alpha=\pi$) & \textbf{50} & $0.2232178193590$ & $-6.4\times10^{-10}$; window edge $0.22321781$ & \textbf{pass (gate)}\\
-V3 ($\alpha=\pi$) & 60 & $0.2232178245495$ & $+4.5\times10^{-9}$ & reported\\\midrule
+V3 ($\alpha=\pi$) & 60 & $0.2232178245495$ & $+4.5\times10^{-9}$ & reported$^{*}$\\\midrule
 $\alpha=2$ & 50 & $1.011018246684$ & $E_{\rm BCC}=1.015862816$ & $G=4.77\times10^{-3}$\\
 $\alpha=4$ & 50 & $0.07275645543946$ & $E_{\rm FCC}=0.07796767103$ & $G=6.68\times10^{-2}$\\
 $\alpha=8$ & 50 & $0.0003947602893426$ & $E_{\rm FCC}=0.0005032413016$ & $G=0.216$\\\bottomrule
 \end{tabular}
 \end{center}
+{\footnotesize $^{*}$Certified only after the post-hoc re-check below, with a lift $\delta=10^{-25}$ added; $B$ unchanged to 20 digits.}
+
+\textbf{A defect in the certificate code, found by review.} The hostile review of this version found that the frozen
+certificate (\texttt{rig2.py}/\texttt{rig3.py}) does not check $\hat f\ge0$ between near-double real roots of $Q$ (pairs
+$2\times10^{-15}$ to $3\times10^{-14}$ apart, with $Q<0$ between them) whose enclosures round to the same or adjacent
+doubles, and that its bisection boxes, centred at floating-point midpoints, do not cover very narrow intervals exactly. An
+independent re-check with exact box covering, outward-rounded root enclosures merged into clusters and the exact sign of $Q$ in
+every gap (\texttt{H1ppp/recertify.py}) confirms all fourteen H1$''$ certificates and the four H1$'''$ $K=50$ certificates with
+their recorded $\lambda$ and lift, reproducing $B$ to about 20 digits. The $K=60$ record, which had no lift ($\delta=0$), is
+\emph{not} a valid certificate as recorded: $Q$ is negative at exact rational points in 13 sub-ulp intervals (down to
+$-9.9\times10^{3}$ near $t=210.5$), so $\hat f<0$ there. With $\delta=10^{-25}$ it is certified and $B$ does not change to 20
+digits. ``Certified'' in this section therefore rests on the frozen certificate together with this re-check; the frozen code and
+records are unchanged.
+
 \textbf{Reading.} The gate passes at $K=50$ with a margin of $9.4\times10^{-9}$, so the $\alpha=2,4,8$ values are registered
-results: \emph{certified} lower bounds on the Gaussian energy per point of every unit-density configuration in $\mathbb R^3$,
-$0.48\%$, $6.7\%$ and $21.6\%$ below the best lattice. Version~2's numerical statement --- two-point bounds at this degree do not
-settle the three-dimensional Gaussian-core question at $\alpha=2,4,8$ --- now holds with rigorous bounds (with the same
-caveat at $\alpha=2$: it assumes no non-lattice state more than about $0.4\%$ below BCC). The V3 value rises monotonically with
-$K$ ($+3.0\times10^{-8}$ from 40 to 50, $+5.2\times10^{-9}$ from 50 to 60), so H1$''$'s shortfall is accounted for by
-truncation at $K=40$; the other candidates (snapped $b$, row margin) were not tested and are not needed. That $K=60$ exceeds
-$0.22321782$ is consistent with the published digits being truncated. The registered prediction (gate passes, $G>10^{-3}$ at
-all three, values within $10^{-6}$ relative of H1$'$'s) failed in its last part at $\alpha=8$: the certified value is
-$8.3\times10^{-6}$ below H1$'$'s uncertified LP objective, which overshot. Not shown: convergence in $K$, the best two-point
-bound at $K=50$ ($b$ was not re-optimised), anything about three-point or semidefinite bounds.
+results: \emph{certified} lower bounds on the lower Gaussian energy of every unit-density configuration in $\mathbb R^3$ (energy
+per point summed over ordered pairs, as in~\cite[Def.~1.1]{CdCI16} and in our lattice sums), $0.48\%$, $6.7\%$ and $21.6\%$
+below the best lattice. Certification makes the \emph{bound values} rigorous. It does not make rigorous the statement that
+two-point bounds at this degree cannot settle the three-dimensional Gaussian-core question at $\alpha=2,4,8$: that would need
+a certified \emph{upper} bound on the LP optimum (a dual certificate, with $b$ optimised as well), which we did not compute. That
+statement remains numerical, as in version~2 (with the same caveat at $\alpha=2$: it assumes no non-lattice state more than about
+$0.4\%$ below BCC); the registered reading of H1$''$, which called it certified, overstated what a lower bound can show. At
+$\alpha=\pi$ the reference is $\min(E_{\rm FCC},E_{\rm BCC})=0.2315363$, slightly above the coexistence record $0.2315353$ quoted
+above; this does not matter for the gate. The V3 value rises monotonically with $K$ ($+3.0\times10^{-8}$ from 40 to 50,
+$+5.2\times10^{-9}$ from 50 to 60): raising $K$ alone, with $b$, rows and row margin fixed, is \emph{sufficient} to bring the
+certified value into the window. It does not identify the \emph{cause} of H1$''$'s shortfall: H1$'$'s uncertified LP objective at
+the same $K=40$ and $b$ was already $0.2232178249$, while H1$''$'s $K=40$ objective is $0.2232177895$, so H1$''$'s formulation
+(tail rows, row margin) may cost as much as the degree does, or H1$'$ overshot; we did not separate these. The registered
+prediction (gate passes, $G>10^{-3}$ at all three, values within $10^{-6}$ relative of H1$'$'s) failed in its last part at
+$\alpha=8$: the certified value is $8.3\times10^{-6}$ below H1$'$'s uncertified LP objective, which most likely overshot (the
+H1$''$ certified $K=40$ value is also about $9\times10^{-6}$ below it). Not shown: convergence in $K$, the best two-point bound
+at $K=50$ ($b$ was not re-optimised), anything about three-point or semidefinite bounds.
